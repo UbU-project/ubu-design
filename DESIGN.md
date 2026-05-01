@@ -200,6 +200,7 @@ Worker mode may run on a local machine, a server, or a thin controller that star
 The core model includes:
 
 - Objective
+- Technique
 - Preference
 - WorkItem
 - Task
@@ -208,6 +209,7 @@ The core model includes:
 - Snapshot
 - Plan
 - Calendar
+- Log
 - Identity
 - Relationship
 - Zone
@@ -802,7 +804,43 @@ Open questions remain:
 
 ---
 
-## 16. Identities
+## 16. Logs
+
+A **Log** is the canonical record of what actually happened in the universe.
+
+A Log consists of timestamped entries recording:
+
+- Task completion or failure
+- External Events that occurred
+- Observed Snapshots (user-declared or sensor-derived state)
+- Objective status transitions
+- Plan realizations
+- Decisions made and by whom
+- System recalculations
+
+Logs are immutable once written, but may be annotated or corrected through new entries.
+
+### 16.1 Log vs Plan
+
+- **Plan**: a possible ordered sequence of future Tasks, representing prediction
+- **Log**: a timestamped record of what actually occurred, representing reality
+
+Plans are inherently multiple. Logs are singular and authoritative for the specific timeline that occurred.
+
+### 16.2 Log and Feedback
+
+Logs enable feedback loops. A Log records the gap between prediction and reality, enabling better future planning.
+
+The comparison of Logs against Plans is essential for:
+
+- detecting estimation errors
+- updating probability models
+- surfacing unmodeled constraints
+- improving forecasting algorithms
+
+---
+
+## 17. Identities
 
 An **Identity** is the external-facing communication and authorization surface.
 
@@ -823,7 +861,7 @@ Examples:
 
 ---
 
-## 17. Relationships
+## 18. Relationships
 
 A **Relationship** is structured UniverseState data representing the relationship between two Identities.
 
@@ -840,7 +878,7 @@ Objectives attach to Relationships indirectly through UniverseState.
 
 ---
 
-## 18. Zones, Devices, and Compartments
+## 19. Zones, Devices, and Compartments
 
 ### 18.1 Device
 
@@ -890,7 +928,7 @@ Un-compartmented content is treated as low-security and may require per-integrat
 
 ---
 
-## 19. Automation Workers and Super Automation
+## 20. Automation Workers and Super Automation
 
 ### 19.1 Automation Worker
 
@@ -935,7 +973,7 @@ It may include:
 
 ---
 
-## 20. Organization Mode
+## 21. Organization Mode
 
 Organization mode is an instance-wide option.
 
@@ -954,7 +992,7 @@ For MVP, roles/RBAC may be omitted and all users treated as admin-equivalent.
 
 ---
 
-## 21. GitHub Dogfooding and Projection
+## 22. GitHub Dogfooding and Projection
 
 GitHub is a projection of UbU state, not the source of truth.
 
@@ -1017,7 +1055,7 @@ Possible comparisons:
 
 ---
 
-## 22. Risk Reporting
+## 23. Risk Reporting
 
 Risk is not a first-class object in MVP.
 
@@ -1039,7 +1077,7 @@ Burnout / affect exhaustion is modeled as a constraint violation.
 
 ---
 
-## 23. Recalculation Triggers
+## 24. Recalculation Triggers
 
 Candidate MVP recalculation triggers:
 
@@ -1059,13 +1097,14 @@ Final trigger list remains open.
 
 ---
 
-## 24. Current Major Open Questions
+## 25. Current Major Open Questions
 
 The major remaining questions are tracked in `OPEN_QUESTIONS.md`.
 
 Key unresolved areas include:
 
-- Phase 1 MVP scope freeze
+- Phase 1 MVP scope **not yet frozen**
+- Log structure and fields
 - Worker identity/capability model
 - Worker mutation request schema
 - GitHub projection/reconciliation rules
@@ -1080,7 +1119,7 @@ Key unresolved areas include:
 
 ---
 
-## 25. Design Process
+## 26. Design Process
 
 The GitHub repository is the canonical public design process for UbU.
 

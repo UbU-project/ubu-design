@@ -40,25 +40,45 @@ That is the core difference. UbU does not merely track work. It tries to help us
 
 ---
 
+## Current Design Status
+
+UbU is actively evolving. The project has moved from pure exploration to **structured decision-making**.
+
+**Design status:**
+- **55 architectural decisions** have been formally accepted (see `DECISIONS.md`)
+- **30 open questions** remain, with clear MVP blockers identified (see `OPEN_QUESTIONS.md`)
+- **Phase 1 MVP scope is not yet frozen**, but the core model is stable enough for implementation to begin
+
+This is the ideal time to contribute. The design is concrete enough to review and critique, but flexible enough to incorporate fresh perspectives.
+
+Recent accepted decisions include:
+- User sovereignty as foundational
+- Explicit value and planning constraints
+- Privacy-first architecture
+- Three mutually exclusive UbU modes (user/organization/worker)
+- GitHub as a projection of UbU state, not the source of truth
+
+---
+
 ## The Core Model
 
 UbU begins with the idea that a user wants to move the world from one state to another.
 
-A **Goal** or **Objective** represents a desired state of the world. An Objective may be concrete, like “file my taxes,” or abstract, like “maintain a healthy relationship with my sibling,” “release UbU Alpha,” or “live according to my values.”
+An **Objective**—sometimes informally called a goal—is a desired state of the world. An Objective may be concrete, like “file my taxes,” or abstract, like “maintain a healthy relationship with my sibling,” “release UbU Alpha,” or “live according to my values.”
 
-A **Technique** is a way to satisfy or complete an Objective. A Technique consists of **Steps**, which can be instantiated into concrete **WorkItems**.
+A **Technique** is a way to satisfy or complete an Objective. A Technique consists of **Steps**, which can be instantiated into concrete **Tasks**.
 
-A **WorkItem** is an action or unit of work with explicit constraints. It may have dependencies, required preconditions, expected effects, duration distributions, cost distributions, affective impacts, resource requirements, privacy restrictions, identity boundaries, and resulting changes to the modeled state of the world.
+A **Task**—sometimes abstractly called a WorkItem—is an action or unit of work with explicit constraints. It may have dependencies, required preconditions, expected effects, duration distributions, cost distributions, affective impacts, resource requirements, privacy restrictions, identity boundaries, and resulting changes to the modeled state of the world.
 
-A **Plan** is a possible ordered realization of WorkItems. A **Log** is what actually happened. A **Calendar**, in the UbU sense, is not merely a Google-style event grid. It is a compact representation of possible Plans and their realizations. A Calendar can be evaluated by how much of its possibility space satisfies the Objective or constraints under consideration.
+A **Plan** is a possible ordered realization of Tasks. A **Log** is what actually happened. A **Calendar**, in the UbU sense, is not merely a Google-style event grid. It is a set of possible Plans and their realizations. A compact Calendar is a storage/transport representation of that possibility space. A Calendar can be evaluated by how much of its possibility space satisfies the Objective or constraints under consideration.
 
 This gives UbU a powerful general planning structure:
 
 ```text
 Objectives define desired states.
 Techniques describe ways to reach them.
-WorkItems perform state transitions.
-Plans order WorkItems.
+Tasks perform state transitions.
+Plans order Tasks.
 Calendars compactly represent possible realized Plans.
 Logs record reality.
 Feedback updates future modeling.
@@ -79,16 +99,16 @@ That insight remains correct. But UbU generalizes it.
 A traditional PERT model can be represented as a simplified projection of a UbU Calendar:
 
 ```text
-PERT activity        → UbU WorkItem
+PERT activity        → UbU Task
 PERT duration        → UbU duration PDF
 PERT dependency      → UbU dependency / precondition subset
 PERT project network → UbU Calendar projection
 PERT completion date → UbU Calendar coverage query
 ```
 
-In PERT, dependencies are often encoded implicitly through events and graph structure. In UbU, dependencies and preconditions are explicit. A WorkItem can require not merely that another task has finished, but that the relevant state of the world exists.
+In PERT, dependencies are often encoded implicitly through events and graph structure. In UbU, dependencies and preconditions are explicit. A Task can require not merely that another task has finished, but that the relevant state of the world exists.
 
-For example, a WorkItem might require:
+For example, a Task might require:
 
 ```text
 The design decision has been accepted.
@@ -110,7 +130,7 @@ But it can also ask much richer questions:
 
 > What percentage of possible release plans preserve maintainer capacity?
 >
-> Which WorkItem most improves Calendar coverage?
+> Which Task most improves Calendar coverage?
 >
 > Which dependency causes the largest failure mass?
 >
@@ -148,7 +168,7 @@ Decision timing
 Actual-vs-predicted feedback
 ```
 
-UbU can model these through explicit WorkItems, Calendars, Logs, probability distributions, and coverage evaluation.
+UbU can model these through explicit Tasks, Calendars, Logs, probability distributions, and coverage evaluation.
 
 For small teams and FOSS projects, this is especially important. Large organizations often have internal planning, risk, finance, and forecasting machinery. Small teams usually have issue trackers, spreadsheets, chat rooms, and hope. UbU’s long-term opportunity is to bring richer planning theory to individuals and small teams without requiring enterprise infrastructure or centralized control.
 
@@ -175,7 +195,7 @@ UbU’s project management ambitions are not limited to software projects. The s
 
 UbU should dogfood itself aggressively.
 
-The project’s own development should become one of the first serious test cases for UbU-style planning. Issues can become WorkItems. Milestones can become Calendars. Design notes can become Objectives, Techniques, and open questions. Merged pull requests can become Logs. Contributor availability can become a resource constraint. Documentation gaps can become generated WorkItems. Release plans can be evaluated for coverage rather than treated as fixed promises.
+The project’s own development should become one of the first serious test cases for UbU-style planning. Issues can become Tasks. Milestones can become Calendars. Design notes can become Objectives, Techniques, and open questions. Merged pull requests can become Logs. Contributor availability can become a resource constraint. Documentation gaps can become generated Tasks. Release plans can be evaluated for coverage rather than treated as fixed promises.
 
 This is the “UbU runs UbU” principle.
 
@@ -221,8 +241,8 @@ Examples:
 
 ```text
 Meal photo → nutrition estimate → health Measurement → user correction → future calibration
-GitHub issue → WorkItem → dependency graph → release Calendar
-Email thread → obligation candidate → Objective or WorkItem
+GitHub issue → Task → dependency graph → release Calendar
+Email thread → obligation candidate → Objective or Task
 Calendar history → relationship maintenance signal
 Design conversation → architecture memo → implementation issues
 Receipt photo → expense classification → financial log
@@ -256,7 +276,7 @@ public
 private project operations
 ```
 
-A WorkItem, Objective, Distribution, Measurement, or Log entry should carry information about what compartment it belongs to, where it may be processed, and whether it may be shared, exported, summarized, or used by agents.
+A Task, Objective, Distribution, Measurement, or Log entry should carry information about what compartment it belongs to, where it may be processed, and whether it may be shared, exported, summarized, or used by agents.
 
 This is essential for trust. UbU should never become a surveillance graph. It should help users govern their own data and actions.
 
@@ -299,6 +319,34 @@ How can a FOSS project maintain itself without burning out contributors?
 ```
 
 This is not a CRUD app with a productivity skin. It is an attempt to build self-governance infrastructure.
+
+---
+
+## Core Open Questions Blocking Phase 1
+
+These four areas need design input before implementation can accelerate. If you want to influence UbU's direction, these are the highest-leverage contribution points:
+
+### 1. **GitHub ↔ UbU Association Model**
+How do many-to-many relationships between GitHub objects (Issues, PRs, reviews) and UbU objects (Objectives, Tasks) get represented and synchronized? This directly affects dogfooding.
+
+**Relevant discussion:** `OPEN_QUESTIONS.md` #3
+
+### 2. **Automation Worker Identity and Capabilities**
+Worker-mode UbU instances need bounded authority. What capabilities can workers receive? How are they scoped and revoked? This enables scaling UbU's planning beyond a single person.
+
+**Relevant discussion:** `OPEN_QUESTIONS.md` #7
+
+### 3. **Worker Mutation Request Schema**
+How do workers submit changes back to canonical UbU state safely? This needs a schema that prevents accidental overwrites, enables auditing, and supports retries.
+
+**Relevant discussion:** `OPEN_QUESTIONS.md` #9
+
+### 4. **Compact Calendar DFS Grammar**
+The compact Calendar representation is crucial for recursive self-analysis and device sync. Should it use deterministic expansion or probability-seeded sampling? What is the grammar?
+
+**Relevant discussion:** `OPEN_QUESTIONS.md` #16
+
+If you have strong opinions on any of these, the project needs your input. These are not settled, and fresh perspectives are valuable.
 
 ---
 
@@ -346,3 +394,55 @@ That is the vision: a privacy-first, FOSS, AI-assisted self-governance engine th
 UbU is for people who believe software should not merely capture tasks.
 
 It should help users govern their lives, projects, relationships, and communities with clarity, dignity, and agency.
+
+---
+
+## How to Contribute Now
+
+You don't need to wait for a finished codebase. UbU needs contributors at every level:
+
+### **Design & Modeling**
+- Review and critique `DESIGN.md` and `DECISIONS.md`
+- Propose solutions to open questions in `OPEN_QUESTIONS.md`
+- Contribute domain expertise (project management, stochastic planning, privacy, LLMs)
+- Sketch UI/UX concepts
+- Write threat models for privacy architecture
+
+### **Architecture & Planning**
+- Help define Phase 1 MVP scope boundaries
+- Design schemas for UniverseState mutations, Task preconditions, and Worker requests
+- Model dogfooding workflows: how should UbU manage its own GitHub issues and releases?
+- Prototype the compact Calendar representation
+
+### **Coding (When Scope Freezes)**
+- Rust/TypeScript core systems
+- Local-first data storage and sync
+- GitHub integration
+- Planning algorithms and Calendar evaluation
+- UI prototypes
+
+### **FOSS & Community**
+- Documentation and tutorials
+- Help onboard new contributors
+- Test proposals and report friction
+- Connect UbU to adjacent projects (local-first tools, AI safety, project management theory)
+
+**Start here:** Read `DESIGN.md` (full design), then `OPEN_QUESTIONS.md` (what needs debate). Join the conversation.
+
+---
+
+## Join Us
+
+UbU is built in public. The design process is transparent. Your voice matters.
+
+- **Read:** Start with `README.md` (overview), then `DESIGN.md` (full model), then `OPEN_QUESTIONS.md` (where you can contribute)
+- **Discuss:** Open GitHub Issues to propose ideas, critique designs, or ask clarifying questions
+- **Contribute:** Help resolve open questions, refine schemas, or prototype ideas
+- **Follow:** This repository evolves frequently as decisions are made and feedback arrives
+
+This is the right time to get involved in UbU. The foundation is solid enough to build on, but flexible enough to shape. Large design decisions remain open. Serious contributors can influence what UbU becomes.
+
+UbU is for you if you believe software should help people govern themselves, not surveil them. If you think planning should model uncertainty, not hide it. If you want to build infrastructure that respects privacy, agency, and autonomy.
+
+Welcome. We're building something real.
+

@@ -911,6 +911,41 @@ The MVP should demonstrate that UbU is real and worth contributing to.
 
 ---
 
+# 31. Log Structure and Fields
+
+**Priority:** MVP important
+
+A Log is the canonical record of what actually happened. Its structure and fields need specification.
+
+## Open questions
+
+1. What are MVP required Log entry fields?
+   - timestamp
+   - event type
+   - actor/Identity
+   - target object
+   - old value / new value
+   - result (success/failure)
+   - notes / reason
+2. How are different event types represented?
+   - Task completion
+   - Task failure
+   - External Event
+   - Snapshot observation
+   - Objective transition
+   - Plan realization
+   - Recalculation trigger
+3. Are Log entries immutable once written?
+4. Can Log entries be annotated or corrected?
+5. Does correction create a new entry or modify the original?
+6. What is the retention/archive policy for Logs?
+7. Are Logs stored per instance or per device?
+8. How does Log query/search work for large histories?
+9. Should Logs include confidence/provenance metadata?
+10. How do Automation Workers contribute to Logs?
+
+---
+
 # Suggested Initial GitHub Issues
 
 Create these first:

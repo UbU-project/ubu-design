@@ -12,9 +12,9 @@ This repository is the public design workspace for UbU.
 
 ## Project status
 
-UbU is in the **pre-MVP design and scope-freezing stage**.
+UbU is in the **pre-MVP design stage** with active scope definition underway.
 
-The current focus is to define a small enough data model and implementation scope to begin building a working MVP, while preserving compatibility with the project’s long-term architecture.
+Phase 1 MVP scope is **not yet frozen**. The current focus is to define a small enough data model and implementation scope to begin building a working MVP, while preserving compatibility with the project’s long-term architecture.
 
 The first MVP target is **dogfooding**: using UbU to coordinate UbU’s own design, development, release, and maintenance.
 
@@ -115,4 +115,5 @@ README.md
 DESIGN.md
 DECISIONS.md
 OPEN_QUESTIONS.md
+OUTREACH.md
 LICENSE.txt
