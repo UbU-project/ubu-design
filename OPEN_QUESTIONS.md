@@ -9,6 +9,7 @@ The goal is not to answer everything before development begins. The goal is to i
 
 ---
 
+
 ## Priority Legend
 
 - **MVP blocker**: Must be resolved before or during Phase 1 implementation.
@@ -17,6 +18,7 @@ The goal is not to answer everything before development begins. The goal is to i
 - **Research**: Needs experimentation, external feedback, or theoretical refinement.
 
 ---
+
 
 ## Question block schema
 
@@ -41,6 +43,7 @@ Scored from commit: None | commit SHA
 ```
 
 ---
+
 
 ## UBU-Q0001: Phase 1 MVP Scope Freeze
 
@@ -76,6 +79,7 @@ Phase 1 may include abstractions needed for future compatibility, but only imple
 Unresolved.
 
 ---
+
 
 ## UBU-Q0002: GitHub Projection and Reconciliation
 
@@ -127,6 +131,7 @@ UbU should write only clearly marked UbU-managed labels, comments, or blocks, an
 Unresolved.
 
 ---
+
 
 ## UBU-Q0003: GitHub ↔ UbU Association Model
 
@@ -183,6 +188,7 @@ Unresolved.
 
 ---
 
+
 ## UBU-Q0004: Pipeline State
 
 Status: Open
@@ -229,6 +235,7 @@ complete
 Unresolved.
 
 ---
+
 
 ## UBU-Q0005: GitHub Event Triage Rules
 
@@ -282,6 +289,7 @@ Unresolved.
 
 ---
 
+
 ## UBU-Q0006: Objective and Task Explosion Control
 
 Status: Open
@@ -316,6 +324,7 @@ GitHub events may create analysis Objectives or Tasks. This could generate exces
 Unresolved.
 
 ---
+
 
 ## UBU-Q0007: Automation Worker Identity and Capabilities
 
@@ -375,6 +384,7 @@ Unresolved.
 
 ---
 
+
 ## UBU-Q0008: Worker Assignment Model
 
 Status: Open
@@ -414,6 +424,7 @@ Explicit assignment is likely simplest.
 Unresolved.
 
 ---
+
 
 ## UBU-Q0009: Worker Mutation Request Schema
 
@@ -466,6 +477,7 @@ Unresolved.
 
 ---
 
+
 ## UBU-Q0010: GitHub Token Custody
 
 Status: Open
@@ -512,6 +524,7 @@ Unresolved.
 
 ---
 
+
 ## UBU-Q0011: Inter-Instance Protocol
 
 Status: Open
@@ -551,6 +564,7 @@ Automation Worker communication may overlap with future user-to-user or instance
 Unresolved.
 
 ---
+
 
 ## UBU-Q0012: Organization Mode Object Rules
 
@@ -599,6 +613,7 @@ All users in organization mode may be treated as admin-equivalent in MVP.
 Unresolved.
 
 ---
+
 
 ## UBU-Q0013: Authority Source Vocabulary
 
@@ -649,6 +664,7 @@ user_override
 Unresolved.
 
 ---
+
 
 ## UBU-Q0014: UniverseState Mutation Schema
 
@@ -718,6 +734,7 @@ Unresolved.
 
 ---
 
+
 ## UBU-Q0015: Task Precondition Schema
 
 Status: Open
@@ -774,6 +791,7 @@ Failed precondition should mean blocked, not invalid.
 Unresolved.
 
 ---
+
 
 ## UBU-Q0016: Compact Calendar DFS Grammar
 
@@ -840,6 +858,7 @@ Unresolved.
 
 ---
 
+
 ## UBU-Q0017: Compact Calendar Coverage and Regeneration
 
 Status: Open
@@ -887,6 +906,7 @@ Unresolved.
 
 ---
 
+
 ## UBU-Q0018: Risk Reporting Primitives
 
 Status: Open
@@ -931,6 +951,7 @@ Risk is not a first-class object in MVP. Risk is reportable from Calendar/Plan a
 Unresolved.
 
 ---
+
 
 ## UBU-Q0019: Recalculation Trigger Taxonomy
 
@@ -983,6 +1004,7 @@ Unresolved.
 
 ---
 
+
 ## UBU-Q0020: Automation Worker Retry Semantics
 
 Status: Open
@@ -1029,6 +1051,7 @@ Unresolved.
 
 ---
 
+
 ## UBU-Q0021: Automation Worker Parent / Child Structure
 
 Status: Open
@@ -1061,6 +1084,7 @@ Automation Workers may create canonical child Tasks.
 Unresolved.
 
 ---
+
 
 ## UBU-Q0022: Moot Reason-Code Taxonomy
 
@@ -1107,6 +1131,7 @@ Unresolved.
 
 ---
 
+
 ## UBU-Q0023: Container Mutation Semantics
 
 Status: Open
@@ -1140,6 +1165,7 @@ Tasks may mutate into Containers, especially during preemption or decomposition.
 Unresolved.
 
 ---
+
 
 ## UBU-Q0024: Objective Status Transition Table
 
@@ -1186,6 +1212,7 @@ Unresolved.
 
 ---
 
+
 ## UBU-Q0025: Snapshot Application Semantics
 
 Status: Open
@@ -1222,6 +1249,7 @@ Snapshots override simulated state when conflicting, but application details rem
 Unresolved.
 
 ---
+
 
 ## UBU-Q0026: Relationship Maintenance Modeling
 
@@ -1264,6 +1292,7 @@ Unresolved.
 
 ---
 
+
 ## UBU-Q0027: Organization Mode and Worker Mode Public UX
 
 Status: Open
@@ -1295,6 +1324,7 @@ Organization mode and worker mode may use web admin UIs.
 Unresolved.
 
 ---
+
 
 ## UBU-Q0028: Minimum Privacy / Compartment Promise for MVP
 
@@ -1334,6 +1364,7 @@ UbU is privacy-first, but MVP implementation must avoid overclaiming.
 Unresolved.
 
 ---
+
 
 ## UBU-Q0029: Open-Core / FOSS Contribution Boundary
 
@@ -1375,6 +1406,7 @@ Unresolved.
 
 ---
 
+
 ## UBU-Q0030: Phase 1 Public Demo Criteria
 
 Status: Open
@@ -1410,6 +1442,7 @@ The MVP should demonstrate that UbU is real and worth contributing to.
 Unresolved.
 
 ---
+
 
 ## UBU-Q0031: Log Structure and Fields
 
@@ -1462,6 +1495,7 @@ Unresolved.
 
 ---
 
+
 ## UBU-Q0032: Model Committee Process and Authority
 
 Status: Open
@@ -1497,6 +1531,7 @@ Unresolved.
 
 ---
 
+
 ## UBU-Q0033: Phase 1 MVP Readiness Scoring Rubric
 
 Status: Open
@@ -1522,6 +1557,7 @@ How should UbU estimate how close the project is to Phase 1 scope freeze and MVP
 Unresolved.
 
 ---
+
 
 ## UBU-Q0034: Design Automation Stop Rule
 
@@ -1558,6 +1594,7 @@ Unresolved.
 
 ---
 
+
 ## UBU-Q0035: Automation Coverage Taxonomy
 
 Status: Open
@@ -1583,6 +1620,7 @@ How should remaining design work be classified by automation eligibility?
 Unresolved.
 
 ---
+
 
 ## UBU-Q0036: Committee Log and Provenance Format
 
@@ -1610,6 +1648,7 @@ Unresolved.
 
 ---
 
+
 ## UBU-Q0037: Post-MVP Question Lifecycle
 
 Status: Open
@@ -1635,6 +1674,7 @@ How should post-MVP design questions be preserved, re-ranked, reopened, or retir
 Unresolved.
 
 ---
+
 
 ## Suggested Initial GitHub Issues
 

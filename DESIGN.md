@@ -6,6 +6,7 @@ Purpose: Canonical public design document for the UbU project
 
 ---
 
+
 ## 1. Overview
 
 **UbU** is a privacy-first planning, coordination, and self-governance system.
@@ -17,6 +18,7 @@ UbU is not merely a task list or calendar application. It is intended to become 
 The first MVP is designed around **dogfooding**: using UbU to coordinate the design, development, release, and maintenance of UbU itself.
 
 ---
+
 
 ## 2. Core Principles
 
@@ -106,6 +108,7 @@ Short-turnaround execution decisions should be computed by UbU’s explicit deci
 
 ---
 
+
 ## 3. Model-committee dogfooding
 
 UbU may use model-committee automation to help maintain its own design process.
@@ -139,6 +142,7 @@ Model-committee automation must be bounded by a stop rule. It should recommend f
 The first implementation of this process is intentionally constrained by the v0.1 restrictions recorded in `DECISIONS.md`.
 
 ---
+
 
 ## 4. MVP Release Phases
 
@@ -177,6 +181,7 @@ Multiple humans coordinate through explicit Identities, capabilities, limited di
 Phase 3 should enable coordination without surveillance or shared global truth.
 
 ---
+
 
 ## 5. Operating Modes
 
@@ -229,6 +234,7 @@ Worker mode may run on a local machine, a server, or a thin controller that star
 
 ---
 
+
 ## 6. Core Entity Summary
 
 The core model includes:
@@ -255,6 +261,7 @@ The core model includes:
 Some entities are implemented in MVP. Others are documented now to avoid future contradiction.
 
 ---
+
 
 ## 7. Objectives
 
@@ -349,6 +356,7 @@ For MVP:
 
 ---
 
+
 ## 8. Preferences and Value
 
 A **Preference** is a relation between Objectives.
@@ -418,6 +426,7 @@ Default MVP direction:
 Util derivation is typically local to the Objective subset being compared in a single planning process.
 
 ---
+
 
 ## 9. WorkItems, Tasks, and Containers
 
@@ -528,6 +537,7 @@ Candidate MVP moot reason codes:
 
 ---
 
+
 ## 10. Task Preconditions and Effects
 
 ### 10.1 Preconditions
@@ -573,6 +583,7 @@ A Task may have:
 Task duration PDFs likely use seconds as the canonical time unit in MVP.
 
 ---
+
 
 ## 11. UniverseState
 
@@ -626,6 +637,7 @@ Recommended direction:
 
 ---
 
+
 ## 12. Snapshots
 
 A **Snapshot** is an observed state update.
@@ -653,6 +665,7 @@ Snapshot application semantics remain partially open:
 - confidence per snapshot vs per field
 
 ---
+
 
 ## 13. Affect
 
@@ -718,6 +731,7 @@ Burnout / affect exhaustion is modeled as a constraint violation rather than a f
 
 ---
 
+
 ## 14. External Events
 
 An **External Event** is an instantaneous change in the universe.
@@ -744,6 +758,7 @@ External Events may trigger:
 - worker assignment
 
 ---
+
 
 ## 15. Plans and Calendars
 
@@ -796,6 +811,7 @@ For MVP, gap suggestions are UI suggestions outside the Plan. Future versions ma
 
 ---
 
+
 ## 16. Compact Calendar
 
 A compact Calendar is a transport/storage representation of a Calendar.
@@ -838,6 +854,7 @@ Open questions remain:
 
 ---
 
+
 ## 17. Logs
 
 A **Log** is the canonical record of what actually happened in the universe.
@@ -874,6 +891,7 @@ The comparison of Logs against Plans is essential for:
 
 ---
 
+
 ## 18. Identities
 
 An **Identity** is the external-facing communication and authorization surface.
@@ -895,6 +913,7 @@ Examples:
 
 ---
 
+
 ## 19. Relationships
 
 A **Relationship** is structured UniverseState data representing the relationship between two Identities.
@@ -911,6 +930,7 @@ Communication and maintenance metadata are not stored directly on Relationship i
 Objectives attach to Relationships indirectly through UniverseState.
 
 ---
+
 
 ## 20. Zones, Devices, and Compartments
 
@@ -962,6 +982,7 @@ Un-compartmented content is treated as low-security and may require per-integrat
 
 ---
 
+
 ## 21. Automation Workers and Super Automation
 
 ### 21.1 Automation Worker
@@ -1007,6 +1028,7 @@ It may include:
 
 ---
 
+
 ## 22. Organization Mode
 
 Organization mode is an instance-wide option.
@@ -1025,6 +1047,7 @@ Organization mode:
 For MVP, roles/RBAC may be omitted and all users treated as admin-equivalent.
 
 ---
+
 
 ## 23. GitHub Dogfooding and Projection
 
@@ -1089,6 +1112,7 @@ Possible comparisons:
 
 ---
 
+
 ## 24. Risk Reporting
 
 Risk is not a first-class object in MVP.
@@ -1111,6 +1135,7 @@ Burnout / affect exhaustion is modeled as a constraint violation.
 
 ---
 
+
 ## 25. Recalculation Triggers
 
 Candidate MVP recalculation triggers:
@@ -1130,6 +1155,7 @@ Candidate MVP recalculation triggers:
 Final trigger list remains open.
 
 ---
+
 
 ## 26. Current Major Open Questions
 
@@ -1152,6 +1178,7 @@ Key unresolved areas include:
 - Moot reason-code taxonomy
 
 ---
+
 
 ## 27. Design Process
 

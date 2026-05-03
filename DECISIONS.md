@@ -7,15 +7,18 @@ This file records accepted design decisions so they do not need to be rediscover
 
 ---
 
+
 ## UBU-D0001: GitHub repository is canonical for public design
 
 **Status:** Accepted
+
 
 The public GitHub repository is the canonical public design process for UbU.
 
 Private chats, notes, and external documents may generate proposals, but accepted decisions become official only when reflected in the repository.
 
 **Consequences:**
+
 
 - `DESIGN.md` holds the current canonical design summary.
 - `DECISIONS.md` records accepted decisions.
@@ -24,9 +27,11 @@ Private chats, notes, and external documents may generate proposals, but accepte
 
 ---
 
+
 ## UBU-D0002: Start public design documentation with four Markdown files
 
 **Status:** Accepted
+
 
 The initial public design repo should remain simple and LLM-friendly.
 
@@ -39,6 +44,7 @@ Initial files:
 
 **Consequences:**
 
+
 - Avoid premature documentation architecture.
 - Avoid splitting the model into many files before public contributors can understand it.
 - Keep the design easy to copy into LLMs for review.
@@ -47,9 +53,11 @@ This decision describes the initial repo structure. Later derived public-facing 
 
 ---
 
+
 ## UBU-D0003: UbU is a privacy-first planning and coordination system
 
 **Status:** Accepted
+
 
 UbU is not merely a task list, calendar, or project-management dashboard.
 
@@ -69,6 +77,7 @@ Inputs may include:
 
 **Consequences:**
 
+
 - Planning must be explicit.
 - Value must be explicit.
 - Constraints must be explicit.
@@ -76,15 +85,18 @@ Inputs may include:
 
 ---
 
+
 ## UBU-D0004: User sovereignty is foundational
 
 **Status:** Accepted
+
 
 The user is the final authority over what the user wants and what occurred.
 
 UbU may recommend, infer, estimate, warn, and automate, but it must not override user sovereignty.
 
 **Consequences:**
+
 
 - User overrides are authoritative.
 - LLM recommendations are advisory.
@@ -93,9 +105,11 @@ UbU may recommend, infer, estimate, warn, and automate, but it must not override
 
 ---
 
+
 ## UBU-D0005: Distinguish logistical consistency from philosophical consistency
 
 **Status:** Accepted
+
 
 UbU distinguishes:
 
@@ -110,15 +124,18 @@ A cyclic active preference relation is a logistical contradiction. Ignoring a me
 
 **Consequences:**
 
+
 - The user may behave inconsistently.
 - The data model may not remain logistically inconsistent.
 - Reports may later reveal philosophical inconsistency.
 
 ---
 
+
 ## UBU-D0006: LLMs are bounded assistants, not the canonical decision engine
 
 **Status:** Accepted
+
 
 LLMs may assist UbU, but they are not the canonical real-time planner or decision engine.
 
@@ -133,21 +150,25 @@ LLMs may serve as:
 
 **Consequences:**
 
+
 - Canonical Plans are owned by UbU, not the LLM.
 - LLM-generated structures are advisory unless transformed into canonical objects through UbU logic.
 - Short-turnaround decision loops must not depend on live LLM calls.
 
 ---
 
+
 ## UBU-D0007: Value is attached to Objectives
 
 **Status:** Accepted
+
 
 From a data-model perspective, value is anchored to Objectives.
 
 Tasks may derive value from the Objectives they serve, but Tasks are not the canonical source of value.
 
 **Consequences:**
+
 
 - Every schedulable Task must link to an Objective.
 - Ad hoc Tasks should still have an Objective.
@@ -156,9 +177,11 @@ Tasks may derive value from the Objectives they serve, but Tasks are not the can
 
 ---
 
+
 ## UBU-D0008: Preference is a first-class relation object
 
 **Status:** Accepted
+
 
 Objective value is derived from Preference objects.
 
@@ -178,6 +201,7 @@ MVP Preference fields:
 
 **Consequences:**
 
+
 - Preferences may be pairwise or compiled from ordinal ranking input.
 - Indifference is explicit.
 - Disabled Preferences need no richer MVP structure beyond logging.
@@ -185,9 +209,11 @@ MVP Preference fields:
 
 ---
 
+
 ## UBU-D0009: Ordinal rankings compile into pairwise Preferences
 
 **Status:** Accepted
+
 
 If the user provides an ordinal ranking, UbU compiles it immediately into pairwise Preference objects.
 
@@ -195,15 +221,18 @@ The original ordinal input may be retained in the log, but the canonical value m
 
 **Consequences:**
 
+
 - The canonical Preference graph remains simple.
 - UI may choose pairwise or ordinal questioning.
 - Value derivation algorithms operate on pairwise relations.
 
 ---
 
+
 ## UBU-D0010: Preference cycles are logistical consistency errors
 
 **Status:** Accepted
+
 
 Active cyclic Preferences are not allowed.
 
@@ -217,15 +246,18 @@ This is a logistical contradiction.
 
 **Consequences:**
 
+
 - UbU must query the user for resolution with high priority.
 - LLMs may assist in identifying the problem but cannot decide the canonical correction.
 - Cycles are not treated as indifference.
 
 ---
 
+
 ## UBU-D0011: Derived utils are transient computational artifacts
 
 **Status:** Accepted
+
 
 Numeric utility values may be derived from Preferences, but they are transient and volatile.
 
@@ -233,15 +265,18 @@ They may be cached on Objectives, but must be recalculated when needed.
 
 **Consequences:**
 
+
 - Derived utils are not canonical user values.
 - Different algorithms may assign different util spacing.
 - Util derivation may be local to the Objective subset under consideration.
 
 ---
 
+
 ## UBU-D0012: Default util spacing uses √2 per preference level
 
 **Status:** Accepted as MVP default, subject to future revision
+
 
 The default MVP util derivation assigns:
 
@@ -252,15 +287,18 @@ Indifferent Objectives are placed at the same level and receive equal util value
 
 **Consequences:**
 
+
 - The topology of the Preference DAG determines ordering and equality.
 - The exact spacing is algorithm-dependent and may change later.
 - Plan scores can be sensitive to util-spacing choices.
 
 ---
 
+
 ## UBU-D0013: UbU has three mutually exclusive operating modes
 
 **Status:** Accepted
+
 
 Each UbU instance runs in exactly one mode:
 
@@ -272,15 +310,18 @@ The mode is chosen at initialization and cannot change afterward.
 
 **Consequences:**
 
+
 - Mode selection is instance-wide.
 - Mode migration, if ever needed, is a separate process.
 - Mode-specific behavior can be reasoned about cleanly.
 
 ---
 
+
 ## UBU-D0014: User mode models intrinsic human affect
 
 **Status:** Accepted
+
 
 `user_mode` is the mode for an autonomous human user.
 
@@ -288,21 +329,25 @@ Only user mode models intrinsic human affect.
 
 **Consequences:**
 
+
 - Affect belongs to the human user, not to Identities, organizations, or machines.
 - User mode may include sensors, affect snapshots, personal Objectives, personal Preferences, and relationship data.
 - Affect-related data requires strong privacy consideration.
 
 ---
 
+
 ## UBU-D0015: Organization mode does not model intrinsic affect
 
 **Status:** Accepted
+
 
 `organization_mode` represents an organization/project planning instance, but an organization is not a human.
 
 Organization mode does not model intrinsic affect.
 
 **Consequences:**
+
 
 - Affect fields are absent or disabled.
 - Organization Preferences represent directives rather than personal emotional value.
@@ -311,9 +356,11 @@ Organization mode does not model intrinsic affect.
 
 ---
 
+
 ## UBU-D0016: Worker mode is a special UbU mode for delegated work
 
 **Status:** Accepted
+
 
 `worker_mode` is a one-device or one-enclave UbU mode used by Automation Workers.
 
@@ -327,6 +374,7 @@ Worker mode may run as:
 
 **Consequences:**
 
+
 - Worker mode is distinct from user mode and organization mode.
 - Worker mode receives assigned work from other UbU instances.
 - Worker mode is externally represented as an Identity.
@@ -334,9 +382,11 @@ Worker mode may run as:
 
 ---
 
+
 ## UBU-D0017: Automation Worker is the technical term; Super Automation is a UX/product pattern
 
 **Status:** Accepted
+
 
 An **Automation Worker** is the technical execution entity.
 
@@ -344,21 +394,25 @@ An **Automation Worker** is the technical execution entity.
 
 **Consequences:**
 
+
 - Super Automation is not limited to screenshot workflows.
 - Automation Workers may support Super Automation but are not synonymous with it.
 - The data model should use Automation Worker / worker mode terminology for technical structure.
 
 ---
 
+
 ## UBU-D0018: GitHub is a projection of UbU, not the source of truth
 
 **Status:** Accepted
+
 
 For dogfooding, GitHub is treated as a low-dimensional projection of canonical UbU state.
 
 UbU is the source of truth.
 
 **Consequences:**
+
 
 - GitHub Issues, PRs, comments, labels, reviews, CI, and milestones must be interpreted into UbU objects/events.
 - UbU may project selected state back into GitHub.
@@ -367,9 +421,11 @@ UbU is the source of truth.
 
 ---
 
+
 ## UBU-D0019: GitHub projection requires reconciliation
 
 **Status:** Accepted
+
 
 Missed GitHub updates are expected in MVP.
 
@@ -377,15 +433,18 @@ UbU should support a reconciliation report comparing GitHub state to UbU state.
 
 **Consequences:**
 
+
 - Resynchronization is an expected MVP concern.
 - The reconciliation report may compare GitHub Issues, labels, comments, PRs, CI state, and milestones against UbU objects/events.
 - Drift may create reports and/or Tasks for repair.
 
 ---
 
+
 ## UBU-D0020: Objective status and pipeline state are separate
 
 **Status:** Accepted
+
 
 `Objective.status` is the canonical UbU lifecycle status.
 
@@ -393,15 +452,18 @@ UbU should support a reconciliation report comparing GitHub state to UbU state.
 
 **Consequences:**
 
+
 - GitHub workflow states do not overload Objective lifecycle status.
 - One Objective may eventually support multiple workflow states for multiple projections.
 - Pipeline state is projection/workflow metadata.
 
 ---
 
+
 ## UBU-D0021: One GitHub object may map to many UbU objects and vice versa
 
 **Status:** Accepted
+
 
 GitHub ↔ UbU association is many-to-many.
 
@@ -413,15 +475,18 @@ Examples:
 
 **Consequences:**
 
+
 - A simple one-to-one external reference field may be insufficient.
 - A dedicated association model may be needed.
 - Association/reconciliation remains an open design question.
 
 ---
 
+
 ## UBU-D0022: Objective has minimal MVP fields
 
 **Status:** Accepted
+
 
 MVP Objective required fields:
 
@@ -450,9 +515,11 @@ Not in MVP:
 
 ---
 
+
 ## UBU-D0023: Objective modes are one-time or evergreen
 
 **Status:** Accepted
+
 
 Objectives have mode:
 
@@ -465,14 +532,17 @@ Evergreen Objectives can become satisfied and later active again.
 
 **Consequences:**
 
+
 - Relationship maintenance, affect collection, GitHub issue management, and recurring maintenance can be modeled as evergreen Objectives.
 - Evergreen recurrence/reactivation may be modeled through elapsed-time rules and UniverseState changes.
 
 ---
 
+
 ## UBU-D0024: Objective satisfaction is derived in MVP
 
 **Status:** Accepted
+
 
 Objective satisfaction is not stored directly on Objective in MVP.
 
@@ -485,15 +555,18 @@ It is inferred from:
 
 **Consequences:**
 
+
 - Objective satisfaction must be recalculated.
 - Observed state can override simulated state.
 - User-declared state has top priority in MVP.
 
 ---
 
+
 ## UBU-D0025: WorkItems include Tasks and Containers
 
 **Status:** Accepted
+
 
 A WorkItem is the abstraction over work-like entities.
 
@@ -505,15 +578,18 @@ A WorkItem may be:
 
 **Consequences:**
 
+
 - Tasks are schedulable.
 - Containers group WorkItems but do not directly appear in Plans.
 - Future WorkItem subtypes remain possible.
 
 ---
 
+
 ## UBU-D0026: Plans contain Tasks, not Containers
 
 **Status:** Accepted
+
 
 Plans contain an ordered array of Tasks.
 
@@ -526,19 +602,23 @@ Plans do not directly contain:
 
 **Consequences:**
 
+
 - Containers remain logical/grouping structures.
 - Plans are calendar-view objects.
 - Preempted work can appear as multiple Tasks whose lineage is tracked outside the Plan.
 
 ---
 
+
 ## UBU-D0027: Static Tasks appear in Plans
 
 **Status:** Accepted
 
+
 Static Tasks are included directly in Plans.
 
 **Consequences:**
+
 
 - A Plan is a complete time-ordered view.
 - Fixed meetings/appointments/classes appear alongside Dynamic Tasks.
@@ -546,9 +626,11 @@ Static Tasks are included directly in Plans.
 
 ---
 
+
 ## UBU-D0028: MVP Task schedulability invariant
 
 **Status:** Accepted
+
 
 A Task is schedulable in MVP if it has:
 
@@ -568,9 +650,11 @@ Permitted:
 
 ---
 
+
 ## UBU-D0029: Task preconditions are deterministic UniverseState constraints in MVP
 
 **Status:** Accepted
+
 
 Task preconditions are deterministic constraints over UniverseState.
 
@@ -585,14 +669,17 @@ Numeric comparisons are not in MVP.
 
 **Consequences:**
 
+
 - Unknown or partially modeled preconditions are treated as absent.
 - Failed preconditions should generally make a Task blocked, not invalid.
 
 ---
 
+
 ## UBU-D0030: Task effects mutate UniverseState
 
 **Status:** Accepted
+
 
 A Task effect describes predicted mutation of UniverseState if the Task succeeds.
 
@@ -607,9 +694,11 @@ If a Task fails, UniverseState is unchanged in MVP.
 
 ---
 
+
 ## UBU-D0031: Duration uncertainty and effect success probability are distinct
 
 **Status:** Accepted
+
 
 A Task may have:
 
@@ -620,15 +709,18 @@ These are separate.
 
 **Consequences:**
 
+
 - Task duration uncertainty affects scheduling.
 - Task success probability affects UniverseState simulation.
 - A Task may complete yet fail to produce its modeled effect in MVP.
 
 ---
 
+
 ## UBU-D0032: UniverseState is first-class
 
 **Status:** Accepted
+
 
 UniverseState is a first-class data object.
 
@@ -647,15 +739,18 @@ Core fields:
 
 **Consequences:**
 
+
 - Plans can simulate UniverseState changes.
 - Objectives can be evaluated against UniverseState.
 - Affect and Relationship data may live in UniverseState.
 
 ---
 
+
 ## UBU-D0033: UniverseState uses lightweight free-form keys in MVP
 
 **Status:** Accepted
+
 
 MVP UniverseState keys are free-form strings.
 
@@ -665,15 +760,18 @@ Values may be text / JSON-like payloads.
 
 **Consequences:**
 
+
 - MVP remains flexible.
 - A stricter ontology can be added later.
 - Namespacing should be encouraged but not enforced.
 
 ---
 
+
 ## UBU-D0034: UniverseState mutation vocabulary
 
 **Status:** Accepted
+
 
 MVP mutations support:
 
@@ -689,9 +787,11 @@ Exact mutation-item schema remains open.
 
 ---
 
+
 ## UBU-D0035: Snapshots are observed state updates
 
 **Status:** Accepted
+
 
 A Snapshot is an observed update to UniverseState.
 
@@ -707,14 +807,17 @@ MVP snapshot fields include:
 
 **Consequences:**
 
+
 - User and sensor observations can share infrastructure.
 - Confidence can be stored even if not deeply used in MVP.
 
 ---
 
+
 ## UBU-D0036: Latest observed snapshot overrides simulation on conflict
 
 **Status:** Accepted
+
 
 MVP precedence rule:
 
@@ -724,14 +827,17 @@ MVP precedence rule:
 
 **Consequences:**
 
+
 - Simulated Plan state cannot override observed reality.
 - User declaration has “word of god” authority in MVP.
 
 ---
 
+
 ## UBU-D0037: Affect belongs to UniverseState in user mode
 
 **Status:** Accepted
+
 
 Affect is part of UniverseState in `user_mode`.
 
@@ -739,15 +845,18 @@ Affect is not intrinsic to organizations or machines.
 
 **Consequences:**
 
+
 - Affect data is disabled/absent in organization mode and worker mode.
 - Human affect is a core planning constraint.
 - Affect data should be treated as sensitive.
 
 ---
 
+
 ## UBU-D0038: MVP affect dimensions
 
 **Status:** Accepted
+
 
 MVP affect dimensions:
 
@@ -768,9 +877,11 @@ Interested/bored is independent and derived.
 
 ---
 
+
 ## UBU-D0039: Affect confidence decays by age in MVP
 
 **Status:** Accepted
+
 
 In MVP, affect confidence decreases over time due to staleness.
 
@@ -778,14 +889,17 @@ The threshold/frequency is an algorithm configuration setting.
 
 **Consequences:**
 
+
 - Missing/stale affect data may activate an affect-collection Objective.
 - Per-dimension confidence is post-MVP.
 
 ---
 
+
 ## UBU-D0040: Affect collection is modeled through an evergreen Objective
 
 **Status:** Accepted
+
 
 UbU may include an evergreen Objective:
 
@@ -795,15 +909,18 @@ When affect data is missing or stale, the planning algorithm may create UI surve
 
 **Consequences:**
 
+
 - Affect feedback is not automatically requested after every Task.
 - Affect collection is itself planned work.
 - UI feedback Tasks can be scheduled and prioritized.
 
 ---
 
+
 ## UBU-D0041: External Events are instantaneous
 
 **Status:** Accepted
+
 
 An External Event is an instantaneous change in the universe.
 
@@ -813,15 +930,18 @@ They are not part of feasibility evaluation for an individual Plan in MVP.
 
 **Consequences:**
 
+
 - External Events can appear in Plans/Logs.
 - External Events may trigger recalculation, new Tasks, or Objective updates.
 - Other agents’ actions can later be modeled as External Events.
 
 ---
 
+
 ## UBU-D0042: Calendar is a set of possible Plans
 
 **Status:** Accepted
+
 
 A Calendar is a set of possible Plans.
 
@@ -831,15 +951,18 @@ The default Plan is a current best recommendation, not a user commitment.
 
 **Consequences:**
 
+
 - Plans model modal futures.
 - Logs/history are distinct from unrealized Plans.
 - The user remains final authority over what occurred.
 
 ---
 
+
 ## UBU-D0043: Compact Calendar coverage belongs to compact serialization
 
 **Status:** Accepted
+
 
 Coverage is a property of a compact Calendar representation, not of the abstract Calendar itself.
 
@@ -847,15 +970,18 @@ Coverage represents the probability mass of possible futures covered by the comp
 
 **Consequences:**
 
+
 - Coverage is useful for transport, pruning, and regeneration.
 - The abstract Calendar does not store a single intrinsic coverage value.
 - Compact Calendar grammar remains an open design question.
 
 ---
 
+
 ## UBU-D0044: Compact Calendar may use deterministic DFS instead of PRNG seeds
 
 **Status:** Provisional
+
 
 A compact Calendar may not require PRNG seeds.
 
@@ -863,15 +989,18 @@ Instead, deterministic DFS expansion may explore likely branches using a probabi
 
 **Consequences:**
 
+
 - Seed-based Plan identity may not be needed.
 - DFS grammar and `p` semantics remain open.
 - Compact Calendar is an important MVP design issue.
 
 ---
 
+
 ## UBU-D0045: Identity is the external-facing interaction surface
 
 **Status:** Accepted
+
 
 UbU interacts with outside agents through Identities.
 
@@ -881,15 +1010,18 @@ Organizations and worker-mode instances are externally represented as Identities
 
 **Consequences:**
 
+
 - External communication is Identity-mediated.
 - Pseudonymous and compartmentalized operation are possible.
 - Worker authorization can be expressed through Identity capabilities.
 
 ---
 
+
 ## UBU-D0046: Relationship is structured UniverseState data
 
 **Status:** Accepted
+
 
 A Relationship is structured UniverseState payload data representing the relationship between two Identities.
 
@@ -902,15 +1034,18 @@ MVP Relationship data includes:
 
 **Consequences:**
 
+
 - Relationship Objectives attach indirectly through UniverseState.
 - Communication/maintenance metadata is not stored directly on Relationship in MVP.
 - Affect dimensions of Relationships are disabled/absent in organization mode.
 
 ---
 
+
 ## UBU-D0047: Device means execution enclave
 
 **Status:** Accepted
+
 
 A Device is an execution enclave, not physical hardware.
 
@@ -923,15 +1058,18 @@ Examples:
 
 **Consequences:**
 
+
 - One physical machine may host multiple Devices.
 - A Device belongs to one Zone.
 - This supports compartmentalization and multi-zone use on one machine.
 
 ---
 
+
 ## UBU-D0048: Zone is a workspace-like instance context
 
 **Status:** Accepted
+
 
 A Zone is a workspace-like UbU context.
 
@@ -943,9 +1081,11 @@ Zones maintain explicit allowlists/denylists of Compartments, defaulting to deny
 
 ---
 
+
 ## UBU-D0049: Compartment is first-class
 
 **Status:** Accepted
+
 
 A Compartment is a first-class data containment object.
 
@@ -960,15 +1100,18 @@ Compartments enforce hard invariants, such as:
 
 **Consequences:**
 
+
 - WorkItems can remain structurally usable while sensitive content stays compartment-contained.
 - UbU cannot casually override Compartment invariants.
 - Un-compartmented content is treated as low-security.
 
 ---
 
+
 ## UBU-D0050: Sensitive content is referenced, not embedded
 
 **Status:** Accepted
+
 
 If content is specific to a Compartment, a WorkItem should refer to it through a Compartment-scoped reference.
 
@@ -976,15 +1119,18 @@ WorkItems must remain structurally usable without dereferencing sensitive conten
 
 **Consequences:**
 
+
 - Plans can be structure-only.
 - Sensitive content can remain contained.
 - Planning can proceed even when content is inaccessible.
 
 ---
 
+
 ## UBU-D0051: Risk is reportable, not first-class in MVP
 
 **Status:** Accepted
+
 
 Risk is not a first-class object in MVP.
 
@@ -1002,15 +1148,18 @@ Examples:
 
 **Consequences:**
 
+
 - Plan scoring does not include explicit risk penalty in MVP.
 - Tasks are not marked as mitigation Tasks in MVP.
 - Burnout/affect exhaustion is modeled as constraint violation.
 
 ---
 
+
 ## UBU-D0052: Moot is first-class terminal Task status
 
 **Status:** Accepted
+
 
 `moot` is a terminal Task status.
 
@@ -1022,9 +1171,11 @@ Candidate reason codes remain open.
 
 ---
 
+
 ## UBU-D0053: GitHub managed state should be clearly marked
 
 **Status:** Accepted as MVP direction
+
 
 UbU should avoid fighting manual GitHub edits.
 
@@ -1034,15 +1185,18 @@ MVP direction:
 
 **Consequences:**
 
+
 - GitHub users can still interact normally.
 - UbU-managed projection is visible and bounded.
 - Reconciliation is still required.
 
 ---
 
+
 ## UBU-D0054: The Phase 1 MVP target is dogfooding
 
 **Status:** Accepted
+
 
 The first MVP should help coordinate the UbU project itself.
 
@@ -1050,21 +1204,25 @@ Phase 1 focuses on single-user GitHub dogfooding before multi-device sync or mul
 
 **Consequences:**
 
+
 - GitHub integration/projection is central.
 - Design questions should be tested against whether they help UbU run UbU.
 - Scope must be frozen aggressively to begin implementation.
 
 ---
 
+
 ## UBU-D0055: Scope freeze is now a priority
 
 **Status:** Accepted
+
 
 The data-model discussion has reached the point of diminishing private returns.
 
 Further unresolved questions should become public GitHub Issues when possible.
 
 **Consequences:**
+
 
 - Do not wait for the entire model to be complete before coding.
 - Freeze a Phase 1 MVP subset.
@@ -1073,9 +1231,11 @@ Further unresolved questions should become public GitHub Issues when possible.
 
 ---
 
+
 ## UBU-D0056: File authority model for model-committee runs
 
 **Status:** Accepted
+
 
 The canonical source files for model-committee question-answering are:
 
@@ -1087,6 +1247,7 @@ The canonical source files for model-committee question-answering are:
 
 **Consequences:**
 
+
 - Question-answering runs must not use `README.md` or `OUTREACH.md` as design authority.
 - Consistency checks should include all Markdown files.
 - If `README.md` or `OUTREACH.md` conflicts with canonical files, the derived file should normally be patched.
@@ -1094,15 +1255,18 @@ The canonical source files for model-committee question-answering are:
 
 ---
 
+
 ## UBU-D0057: Model-committee automation is advisory and repo-driven
 
 **Status:** Accepted
+
 
 The model-committee process may read the canonical design repo, identify unresolved questions, generate proposed answers, run consistency checks, estimate MVP readiness, score open questions, and propose patches.
 
 The model committee does not maintain its own durable question registry. `OPEN_QUESTIONS.md` remains the canonical unresolved-question queue.
 
 **Consequences:**
+
 
 - Committee runs are derived from the current repo state.
 - Accepted changes become official only when committed to `ubu-design`.
@@ -1111,9 +1275,11 @@ The model committee does not maintain its own durable question registry. `OPEN_Q
 
 ---
 
+
 ## UBU-D0058: Model-committee v0.1 is intentionally constrained
 
 **Status:** Accepted
+
 
 The first model-committee implementation should be a narrow local Python CLI, not a general model-governance platform.
 
@@ -1134,15 +1300,18 @@ The first model-committee implementation should be a narrow local Python CLI, no
 
 ---
 
+
 ## UBU-D0059: Model committee outputs are weighted by capability and observed reliability
 
 **Status:** Accepted
+
 
 Model-committee synthesis should not use equal one-model-one-vote aggregation. Models may differ in reasoning quality, context length, instruction-following, access tier, cost, and observed reliability.
 
 Premium or deeper cloud models may receive higher default trust weights than free-tier or smaller local models.
 
 **Consequences:**
+
 
 - Committee synthesis should use weighted support, not raw vote count.
 - Local models remain useful for diversity, dissent, fallback, and offline review.
@@ -1151,9 +1320,11 @@ Premium or deeper cloud models may receive higher default trust weights than fre
 
 ---
 
+
 ## UBU-D0060: Open questions are ranked by automation-likelihood before importance
 
 **Status:** Accepted
+
 
 After consistency checks, the model-committee process should score every open question for:
 
@@ -1165,21 +1336,25 @@ The next question should normally be selected by automation-likelihood first, th
 
 **Consequences:**
 
+
 - The process should create visible progress before attempting the hardest human-governance questions.
 - Question scores are derived metadata and may be updated after every consistency phase.
 - The committee must track whether it is reducing or increasing unresolved design burden.
 
 ---
 
+
 ## UBU-D0061: DECISIONS.md is a bounded decision-memory index
 
 **Status:** Accepted
+
 
 `DECISIONS.md` is not an unbounded historical transcript. It is a bounded decision-memory index used to preserve accepted constraints and prevent settled questions from being rediscovered.
 
 Full decision history is preserved by git history and model-committee logs.
 
 **Consequences:**
+
 
 - Stable design details should migrate into `DESIGN.md`.
 - `DECISIONS.md` should retain compact active rules, resolved-question links, and anti-regression notes.
@@ -1191,13 +1366,16 @@ Initial hard warning threshold: approximately 20,000 estimated tokens.
 
 ---
 
+
 ## UBU-D0062: Model-committee is a bootstrap UbU dogfooding workload
 
 **Status:** Accepted
 
+
 The model-committee project should begin as a constrained external bootstrap tool, but should move toward the mainline UbU implementation as soon as the mainline codebase can host it cleanly.
 
 **Consequences:**
+
 
 - The model-committee loop is an early example of UbU coordinating its own design and implementation.
 - Its logs, question rankings, consistency reports, and patch proposals should inform the first real UbU dogfooding workflows.
