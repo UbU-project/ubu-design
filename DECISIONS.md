@@ -7,7 +7,7 @@ This file records accepted design decisions so they do not need to be rediscover
 
 ---
 
-## Decision 001: GitHub repository is canonical for public design
+## UBU-D0001: GitHub repository is canonical for public design
 
 **Status:** Accepted
 
@@ -24,7 +24,7 @@ Private chats, notes, and external documents may generate proposals, but accepte
 
 ---
 
-## Decision 002: Start public design documentation with four Markdown files
+## UBU-D0002: Start public design documentation with four Markdown files
 
 **Status:** Accepted
 
@@ -43,9 +43,11 @@ Initial files:
 - Avoid splitting the model into many files before public contributors can understand it.
 - Keep the design easy to copy into LLMs for review.
 
+This decision describes the initial repo structure. Later derived public-facing files such as `OUTREACH.md` may exist, but are not canonical design inputs.
+
 ---
 
-## Decision 003: UbU is a privacy-first planning and coordination system
+## UBU-D0003: UbU is a privacy-first planning and coordination system
 
 **Status:** Accepted
 
@@ -74,7 +76,7 @@ Inputs may include:
 
 ---
 
-## Decision 004: User sovereignty is foundational
+## UBU-D0004: User sovereignty is foundational
 
 **Status:** Accepted
 
@@ -91,7 +93,7 @@ UbU may recommend, infer, estimate, warn, and automate, but it must not override
 
 ---
 
-## Decision 005: Distinguish logistical consistency from philosophical consistency
+## UBU-D0005: Distinguish logistical consistency from philosophical consistency
 
 **Status:** Accepted
 
@@ -114,7 +116,7 @@ A cyclic active preference relation is a logistical contradiction. Ignoring a me
 
 ---
 
-## Decision 006: LLMs are bounded assistants, not the canonical decision engine
+## UBU-D0006: LLMs are bounded assistants, not the canonical decision engine
 
 **Status:** Accepted
 
@@ -137,7 +139,7 @@ LLMs may serve as:
 
 ---
 
-## Decision 007: Value is attached to Objectives
+## UBU-D0007: Value is attached to Objectives
 
 **Status:** Accepted
 
@@ -154,7 +156,7 @@ Tasks may derive value from the Objectives they serve, but Tasks are not the can
 
 ---
 
-## Decision 008: Preference is a first-class relation object
+## UBU-D0008: Preference is a first-class relation object
 
 **Status:** Accepted
 
@@ -183,7 +185,7 @@ MVP Preference fields:
 
 ---
 
-## Decision 009: Ordinal rankings compile into pairwise Preferences
+## UBU-D0009: Ordinal rankings compile into pairwise Preferences
 
 **Status:** Accepted
 
@@ -199,7 +201,7 @@ The original ordinal input may be retained in the log, but the canonical value m
 
 ---
 
-## Decision 010: Preference cycles are logistical consistency errors
+## UBU-D0010: Preference cycles are logistical consistency errors
 
 **Status:** Accepted
 
@@ -221,7 +223,7 @@ This is a logistical contradiction.
 
 ---
 
-## Decision 011: Derived utils are transient computational artifacts
+## UBU-D0011: Derived utils are transient computational artifacts
 
 **Status:** Accepted
 
@@ -237,7 +239,7 @@ They may be cached on Objectives, but must be recalculated when needed.
 
 ---
 
-## Decision 012: Default util spacing uses √2 per preference level
+## UBU-D0012: Default util spacing uses √2 per preference level
 
 **Status:** Accepted as MVP default, subject to future revision
 
@@ -256,7 +258,7 @@ Indifferent Objectives are placed at the same level and receive equal util value
 
 ---
 
-## Decision 013: UbU has three mutually exclusive operating modes
+## UBU-D0013: UbU has three mutually exclusive operating modes
 
 **Status:** Accepted
 
@@ -276,7 +278,7 @@ The mode is chosen at initialization and cannot change afterward.
 
 ---
 
-## Decision 014: User mode models intrinsic human affect
+## UBU-D0014: User mode models intrinsic human affect
 
 **Status:** Accepted
 
@@ -292,7 +294,7 @@ Only user mode models intrinsic human affect.
 
 ---
 
-## Decision 015: Organization mode does not model intrinsic affect
+## UBU-D0015: Organization mode does not model intrinsic affect
 
 **Status:** Accepted
 
@@ -309,7 +311,7 @@ Organization mode does not model intrinsic affect.
 
 ---
 
-## Decision 016: Worker mode is a special UbU mode for delegated work
+## UBU-D0016: Worker mode is a special UbU mode for delegated work
 
 **Status:** Accepted
 
@@ -332,7 +334,7 @@ Worker mode may run as:
 
 ---
 
-## Decision 017: Automation Worker is the technical term; Super Automation is a UX/product pattern
+## UBU-D0017: Automation Worker is the technical term; Super Automation is a UX/product pattern
 
 **Status:** Accepted
 
@@ -348,7 +350,7 @@ An **Automation Worker** is the technical execution entity.
 
 ---
 
-## Decision 018: GitHub is a projection of UbU, not the source of truth
+## UBU-D0018: GitHub is a projection of UbU, not the source of truth
 
 **Status:** Accepted
 
@@ -365,7 +367,7 @@ UbU is the source of truth.
 
 ---
 
-## Decision 019: GitHub projection requires reconciliation
+## UBU-D0019: GitHub projection requires reconciliation
 
 **Status:** Accepted
 
@@ -381,7 +383,7 @@ UbU should support a reconciliation report comparing GitHub state to UbU state.
 
 ---
 
-## Decision 020: Objective status and pipeline state are separate
+## UBU-D0020: Objective status and pipeline state are separate
 
 **Status:** Accepted
 
@@ -397,7 +399,7 @@ UbU should support a reconciliation report comparing GitHub state to UbU state.
 
 ---
 
-## Decision 021: One GitHub object may map to many UbU objects and vice versa
+## UBU-D0021: One GitHub object may map to many UbU objects and vice versa
 
 **Status:** Accepted
 
@@ -417,7 +419,7 @@ Examples:
 
 ---
 
-## Decision 022: Objective has minimal MVP fields
+## UBU-D0022: Objective has minimal MVP fields
 
 **Status:** Accepted
 
@@ -448,7 +450,7 @@ Not in MVP:
 
 ---
 
-## Decision 023: Objective modes are one-time or evergreen
+## UBU-D0023: Objective modes are one-time or evergreen
 
 **Status:** Accepted
 
@@ -468,7 +470,7 @@ Evergreen Objectives can become satisfied and later active again.
 
 ---
 
-## Decision 024: Objective satisfaction is derived in MVP
+## UBU-D0024: Objective satisfaction is derived in MVP
 
 **Status:** Accepted
 
@@ -489,7 +491,7 @@ It is inferred from:
 
 ---
 
-## Decision 025: WorkItems include Tasks and Containers
+## UBU-D0025: WorkItems include Tasks and Containers
 
 **Status:** Accepted
 
@@ -509,7 +511,7 @@ A WorkItem may be:
 
 ---
 
-## Decision 026: Plans contain Tasks, not Containers
+## UBU-D0026: Plans contain Tasks, not Containers
 
 **Status:** Accepted
 
@@ -530,7 +532,7 @@ Plans do not directly contain:
 
 ---
 
-## Decision 027: Static Tasks appear in Plans
+## UBU-D0027: Static Tasks appear in Plans
 
 **Status:** Accepted
 
@@ -544,7 +546,7 @@ Static Tasks are included directly in Plans.
 
 ---
 
-## Decision 028: MVP Task schedulability invariant
+## UBU-D0028: MVP Task schedulability invariant
 
 **Status:** Accepted
 
@@ -566,7 +568,7 @@ Permitted:
 
 ---
 
-## Decision 029: Task preconditions are deterministic UniverseState constraints in MVP
+## UBU-D0029: Task preconditions are deterministic UniverseState constraints in MVP
 
 **Status:** Accepted
 
@@ -588,7 +590,7 @@ Numeric comparisons are not in MVP.
 
 ---
 
-## Decision 030: Task effects mutate UniverseState
+## UBU-D0030: Task effects mutate UniverseState
 
 **Status:** Accepted
 
@@ -605,7 +607,7 @@ If a Task fails, UniverseState is unchanged in MVP.
 
 ---
 
-## Decision 031: Duration uncertainty and effect success probability are distinct
+## UBU-D0031: Duration uncertainty and effect success probability are distinct
 
 **Status:** Accepted
 
@@ -624,7 +626,7 @@ These are separate.
 
 ---
 
-## Decision 032: UniverseState is first-class
+## UBU-D0032: UniverseState is first-class
 
 **Status:** Accepted
 
@@ -651,7 +653,7 @@ Core fields:
 
 ---
 
-## Decision 033: UniverseState uses lightweight free-form keys in MVP
+## UBU-D0033: UniverseState uses lightweight free-form keys in MVP
 
 **Status:** Accepted
 
@@ -669,7 +671,7 @@ Values may be text / JSON-like payloads.
 
 ---
 
-## Decision 034: UniverseState mutation vocabulary
+## UBU-D0034: UniverseState mutation vocabulary
 
 **Status:** Accepted
 
@@ -687,7 +689,7 @@ Exact mutation-item schema remains open.
 
 ---
 
-## Decision 035: Snapshots are observed state updates
+## UBU-D0035: Snapshots are observed state updates
 
 **Status:** Accepted
 
@@ -710,7 +712,7 @@ MVP snapshot fields include:
 
 ---
 
-## Decision 036: Latest observed snapshot overrides simulation on conflict
+## UBU-D0036: Latest observed snapshot overrides simulation on conflict
 
 **Status:** Accepted
 
@@ -727,7 +729,7 @@ MVP precedence rule:
 
 ---
 
-## Decision 037: Affect belongs to UniverseState in user mode
+## UBU-D0037: Affect belongs to UniverseState in user mode
 
 **Status:** Accepted
 
@@ -743,7 +745,7 @@ Affect is not intrinsic to organizations or machines.
 
 ---
 
-## Decision 038: MVP affect dimensions
+## UBU-D0038: MVP affect dimensions
 
 **Status:** Accepted
 
@@ -766,7 +768,7 @@ Interested/bored is independent and derived.
 
 ---
 
-## Decision 039: Affect confidence decays by age in MVP
+## UBU-D0039: Affect confidence decays by age in MVP
 
 **Status:** Accepted
 
@@ -781,7 +783,7 @@ The threshold/frequency is an algorithm configuration setting.
 
 ---
 
-## Decision 040: Affect collection is modeled through an evergreen Objective
+## UBU-D0040: Affect collection is modeled through an evergreen Objective
 
 **Status:** Accepted
 
@@ -799,7 +801,7 @@ When affect data is missing or stale, the planning algorithm may create UI surve
 
 ---
 
-## Decision 041: External Events are instantaneous
+## UBU-D0041: External Events are instantaneous
 
 **Status:** Accepted
 
@@ -817,7 +819,7 @@ They are not part of feasibility evaluation for an individual Plan in MVP.
 
 ---
 
-## Decision 042: Calendar is a set of possible Plans
+## UBU-D0042: Calendar is a set of possible Plans
 
 **Status:** Accepted
 
@@ -835,7 +837,7 @@ The default Plan is a current best recommendation, not a user commitment.
 
 ---
 
-## Decision 043: Compact Calendar coverage belongs to compact serialization
+## UBU-D0043: Compact Calendar coverage belongs to compact serialization
 
 **Status:** Accepted
 
@@ -851,7 +853,7 @@ Coverage represents the probability mass of possible futures covered by the comp
 
 ---
 
-## Decision 044: Compact Calendar may use deterministic DFS instead of PRNG seeds
+## UBU-D0044: Compact Calendar may use deterministic DFS instead of PRNG seeds
 
 **Status:** Provisional
 
@@ -867,7 +869,7 @@ Instead, deterministic DFS expansion may explore likely branches using a probabi
 
 ---
 
-## Decision 045: Identity is the external-facing interaction surface
+## UBU-D0045: Identity is the external-facing interaction surface
 
 **Status:** Accepted
 
@@ -885,7 +887,7 @@ Organizations and worker-mode instances are externally represented as Identities
 
 ---
 
-## Decision 046: Relationship is structured UniverseState data
+## UBU-D0046: Relationship is structured UniverseState data
 
 **Status:** Accepted
 
@@ -906,7 +908,7 @@ MVP Relationship data includes:
 
 ---
 
-## Decision 047: Device means execution enclave
+## UBU-D0047: Device means execution enclave
 
 **Status:** Accepted
 
@@ -927,7 +929,7 @@ Examples:
 
 ---
 
-## Decision 048: Zone is a workspace-like instance context
+## UBU-D0048: Zone is a workspace-like instance context
 
 **Status:** Accepted
 
@@ -941,7 +943,7 @@ Zones maintain explicit allowlists/denylists of Compartments, defaulting to deny
 
 ---
 
-## Decision 049: Compartment is first-class
+## UBU-D0049: Compartment is first-class
 
 **Status:** Accepted
 
@@ -964,7 +966,7 @@ Compartments enforce hard invariants, such as:
 
 ---
 
-## Decision 050: Sensitive content is referenced, not embedded
+## UBU-D0050: Sensitive content is referenced, not embedded
 
 **Status:** Accepted
 
@@ -980,7 +982,7 @@ WorkItems must remain structurally usable without dereferencing sensitive conten
 
 ---
 
-## Decision 051: Risk is reportable, not first-class in MVP
+## UBU-D0051: Risk is reportable, not first-class in MVP
 
 **Status:** Accepted
 
@@ -1006,7 +1008,7 @@ Examples:
 
 ---
 
-## Decision 052: Moot is first-class terminal Task status
+## UBU-D0052: Moot is first-class terminal Task status
 
 **Status:** Accepted
 
@@ -1020,7 +1022,7 @@ Candidate reason codes remain open.
 
 ---
 
-## Decision 053: GitHub managed state should be clearly marked
+## UBU-D0053: GitHub managed state should be clearly marked
 
 **Status:** Accepted as MVP direction
 
@@ -1038,7 +1040,7 @@ MVP direction:
 
 ---
 
-## Decision 054: The Phase 1 MVP target is dogfooding
+## UBU-D0054: The Phase 1 MVP target is dogfooding
 
 **Status:** Accepted
 
@@ -1054,7 +1056,7 @@ Phase 1 focuses on single-user GitHub dogfooding before multi-device sync or mul
 
 ---
 
-## Decision 055: Scope freeze is now a priority
+## UBU-D0055: Scope freeze is now a priority
 
 **Status:** Accepted
 
@@ -1071,7 +1073,7 @@ Further unresolved questions should become public GitHub Issues when possible.
 
 ---
 
-## Decision 056: File authority model for model-committee runs
+## UBU-D0056: File authority model for model-committee runs
 
 **Status:** Accepted
 
@@ -1092,7 +1094,7 @@ The canonical source files for model-committee question-answering are:
 
 ---
 
-## Decision 057: Model-committee automation is advisory and repo-driven
+## UBU-D0057: Model-committee automation is advisory and repo-driven
 
 **Status:** Accepted
 
@@ -1109,7 +1111,7 @@ The model committee does not maintain its own durable question registry. `OPEN_Q
 
 ---
 
-## Decision 058: Model-committee v0.1 is intentionally constrained
+## UBU-D0058: Model-committee v0.1 is intentionally constrained
 
 **Status:** Accepted
 
@@ -1132,7 +1134,7 @@ The first model-committee implementation should be a narrow local Python CLI, no
 
 ---
 
-## Decision 059: Model committee outputs are weighted by capability and observed reliability
+## UBU-D0059: Model committee outputs are weighted by capability and observed reliability
 
 **Status:** Accepted
 
@@ -1149,7 +1151,7 @@ Premium or deeper cloud models may receive higher default trust weights than fre
 
 ---
 
-## Decision 060: Open questions are ranked by automation-likelihood before importance
+## UBU-D0060: Open questions are ranked by automation-likelihood before importance
 
 **Status:** Accepted
 
@@ -1169,7 +1171,7 @@ The next question should normally be selected by automation-likelihood first, th
 
 ---
 
-## Decision 061: DECISIONS.md is a bounded decision-memory index
+## UBU-D0061: DECISIONS.md is a bounded decision-memory index
 
 **Status:** Accepted
 
@@ -1184,9 +1186,12 @@ Full decision history is preserved by git history and model-committee logs.
 - Superseded or absorbed decisions should leave compact tombstones.
 - The consistency process should warn when `DECISIONS.md` exceeds the configured prompt budget.
 
+Initial prompt-budget warning threshold: approximately 12,000 estimated tokens.
+Initial hard warning threshold: approximately 20,000 estimated tokens.
+
 ---
 
-## Decision 062: Model-committee is a bootstrap UbU dogfooding workload
+## UBU-D0062: Model-committee is a bootstrap UbU dogfooding workload
 
 **Status:** Accepted
 

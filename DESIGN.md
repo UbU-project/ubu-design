@@ -124,6 +124,8 @@ The model committee is not the canonical decision engine. It is an advisory Auto
 
 Accepted design state exists only when committed to the canonical design repo.
 
+Question rankings are derived planning metadata. They may guide the next committee run, but they are not canonical design truth.
+
 Model-committee automation has three expected lifecycle modes:
 
 1. **Pre-MVP:** design-freeze assistant.
@@ -133,6 +135,8 @@ Model-committee automation has three expected lifecycle modes:
 The goal is to accelerate implementation, not to create unlimited pre-implementation design work.
 
 Model-committee automation must be bounded by a stop rule. It should recommend further design work only when that work has greater expected value than beginning or continuing implementation.
+
+The first implementation of this process is intentionally constrained by the v0.1 restrictions recorded in `DECISIONS.md`.
 
 ---
 

@@ -26,7 +26,7 @@ Each open question block uses the following format:
 ## UBU-Q0001: Question title
 
 Status: Open | Solved | Deferred | Superseded | Archived
-Priority: MVP blocker | MVP important | Post-MVP | Research | Product | Governance
+Priority: MVP blocker | MVP important | Post-MVP | Research
 Phase: Phase 1 | Phase 2 | Phase 3 | Post-MVP
 Decision type: Scope | Data model | Process | Governance | Product | Security | Architecture
 Auto-choice eligibility: Auto eligible | Human approval required | Human only
@@ -138,7 +138,7 @@ Auto-choice eligibility: Human approval required
 Importance score: TBD
 Automation-likelihood score: TBD
 Risk score: TBD
-Depends on: UBU-Q0002
+Depends on: None
 Blocks: Phase 1 GitHub dogfooding
 Resolved by: Unresolved
 Last scored: Never
@@ -1338,7 +1338,7 @@ Unresolved.
 ## UBU-Q0029: Open-Core / FOSS Contribution Boundary
 
 Status: Open
-Priority: Governance
+Priority: MVP important
 Phase: Phase 1
 Decision type: Governance
 Auto-choice eligibility: Human only
@@ -1455,6 +1455,180 @@ A Log is the canonical record of what actually happened. Its structure and field
 8. How does Log query/search work for large histories?
 9. Should Logs include confidence/provenance metadata?
 10. How do Automation Workers contribute to Logs?
+
+### Resolution
+
+Unresolved.
+
+---
+
+## UBU-Q0032: Model Committee Process and Authority
+
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Process
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Model-committee v0.1 correctness
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
+
+### Question
+
+What authority should the model-committee process have when proposing answers, patches, consistency checks, readiness scores, and new open questions?
+
+### Subquestions
+
+1. Which actions may be automated?
+2. Which actions require human review?
+3. Which actions are forbidden in v0.1?
+4. How are model outputs weighted?
+5. How are failed provider calls logged?
+6. What quorum is required for a valid committee result?
+
+### Resolution
+
+Unresolved.
+
+---
+
+## UBU-Q0033: Phase 1 MVP Readiness Scoring Rubric
+
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Process
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: UBU-Q0001
+Blocks: README readiness signal
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
+
+### Question
+
+How should UbU estimate how close the project is to Phase 1 scope freeze and MVP readiness?
+
+### Resolution
+
+Unresolved.
+
+---
+
+## UBU-Q0034: Design Automation Stop Rule
+
+Status: Open
+Priority: MVP blocker
+Phase: Phase 1
+Decision type: Process
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: UBU-Q0001
+Blocks: Phase 1 scope freeze
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
+
+### Question
+
+When should UbU stop answering additional pre-MVP design questions and begin coding the MVP?
+
+### Subquestions
+
+1. What categories of questions may block Phase 1?
+2. What categories must be deferred even if unresolved?
+3. What MVP readiness score is sufficient to begin implementation?
+4. What maximum rate of new MVP-blocker creation is acceptable?
+5. How should the value of answering another question be compared against coding?
+6. Can the model committee recommend that no further pre-MVP design work is justified?
+
+### Resolution
+
+Unresolved.
+
+---
+
+## UBU-Q0035: Automation Coverage Taxonomy
+
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Process
+Auto-choice eligibility: Auto eligible
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: UBU-Q0032
+Blocks: Question-ranking accuracy
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
+
+### Question
+
+How should remaining design work be classified by automation eligibility?
+
+### Resolution
+
+Unresolved.
+
+---
+
+## UBU-Q0036: Committee Log and Provenance Format
+
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Process
+Auto-choice eligibility: Auto eligible
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: UBU-Q0032
+Blocks: model-committee v0.1 logging
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
+
+### Question
+
+What minimum files and fields must a model-committee run log preserve?
+
+### Resolution
+
+Unresolved.
+
+---
+
+## UBU-Q0037: Post-MVP Question Lifecycle
+
+Status: Open
+Priority: Post-MVP
+Phase: Post-MVP
+Decision type: Process
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: UBU-Q0032
+Blocks: None
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
+
+### Question
+
+How should post-MVP design questions be preserved, re-ranked, reopened, or retired after the first MVP release?
 
 ### Resolution
 
