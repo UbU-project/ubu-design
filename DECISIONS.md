@@ -1068,3 +1068,132 @@ Further unresolved questions should become public GitHub Issues when possible.
 - Freeze a Phase 1 MVP subset.
 - Move unresolved questions into `OPEN_QUESTIONS.md`.
 - Use public feedback to refine scope.
+
+---
+
+## Decision 056: File authority model for model-committee runs
+
+**Status:** Accepted
+
+The canonical source files for model-committee question-answering are:
+
+- `DESIGN.md`
+- `DECISIONS.md`
+- `OPEN_QUESTIONS.md`
+
+`README.md` and `OUTREACH.md` are derived public-facing projections of the canonical design state.
+
+**Consequences:**
+
+- Question-answering runs must not use `README.md` or `OUTREACH.md` as design authority.
+- Consistency checks should include all Markdown files.
+- If `README.md` or `OUTREACH.md` conflicts with canonical files, the derived file should normally be patched.
+- If a derived-file inconsistency reveals a genuine source-level design issue, the issue should be added to `OPEN_QUESTIONS.md`.
+
+---
+
+## Decision 057: Model-committee automation is advisory and repo-driven
+
+**Status:** Accepted
+
+The model-committee process may read the canonical design repo, identify unresolved questions, generate proposed answers, run consistency checks, estimate MVP readiness, score open questions, and propose patches.
+
+The model committee does not maintain its own durable question registry. `OPEN_QUESTIONS.md` remains the canonical unresolved-question queue.
+
+**Consequences:**
+
+- Committee runs are derived from the current repo state.
+- Accepted changes become official only when committed to `ubu-design`.
+- The model committee may generate patches but must not become the canonical decision engine.
+- Full run logs should live outside `ubu-design`.
+
+---
+
+## Decision 058: Model-committee v0.1 is intentionally constrained
+
+**Status:** Accepted
+
+The first model-committee implementation should be a narrow local Python CLI, not a general model-governance platform.
+
+**v0.1 restrictions:**
+
+1. Supports only the `ubu-design` repo shape.
+2. Requires structured `OPEN_QUESTIONS.md` question blocks.
+3. Runs one selected question per committee run.
+4. Does not auto-merge.
+5. Embeds Markdown file contents directly; no file-upload APIs.
+6. Requires strict JSON-schema model outputs.
+7. Uses static model weights.
+8. Supports only `ollama`, `openai_compatible`, and `manual` providers.
+9. Uses a simple priority-order scheduler.
+10. Writes filesystem logs only.
+11. Does not implement semantic diffing.
+12. Does not use the GitHub API in v0.1.
+
+---
+
+## Decision 059: Model committee outputs are weighted by capability and observed reliability
+
+**Status:** Accepted
+
+Model-committee synthesis should not use equal one-model-one-vote aggregation. Models may differ in reasoning quality, context length, instruction-following, access tier, cost, and observed reliability.
+
+Premium or deeper cloud models may receive higher default trust weights than free-tier or smaller local models.
+
+**Consequences:**
+
+- Committee synthesis should use weighted support, not raw vote count.
+- Local models remain useful for diversity, dissent, fallback, and offline review.
+- Static configured weights are sufficient for v0.1.
+- Adaptive reliability weighting is deferred.
+
+---
+
+## Decision 060: Open questions are ranked by automation-likelihood before importance
+
+**Status:** Accepted
+
+After consistency checks, the model-committee process should score every open question for:
+
+- automation-likelihood,
+- importance,
+- risk.
+
+The next question should normally be selected by automation-likelihood first, then importance, subject to a minimum importance threshold.
+
+**Consequences:**
+
+- The process should create visible progress before attempting the hardest human-governance questions.
+- Question scores are derived metadata and may be updated after every consistency phase.
+- The committee must track whether it is reducing or increasing unresolved design burden.
+
+---
+
+## Decision 061: DECISIONS.md is a bounded decision-memory index
+
+**Status:** Accepted
+
+`DECISIONS.md` is not an unbounded historical transcript. It is a bounded decision-memory index used to preserve accepted constraints and prevent settled questions from being rediscovered.
+
+Full decision history is preserved by git history and model-committee logs.
+
+**Consequences:**
+
+- Stable design details should migrate into `DESIGN.md`.
+- `DECISIONS.md` should retain compact active rules, resolved-question links, and anti-regression notes.
+- Superseded or absorbed decisions should leave compact tombstones.
+- The consistency process should warn when `DECISIONS.md` exceeds the configured prompt budget.
+
+---
+
+## Decision 062: Model-committee is a bootstrap UbU dogfooding workload
+
+**Status:** Accepted
+
+The model-committee project should begin as a constrained external bootstrap tool, but should move toward the mainline UbU implementation as soon as the mainline codebase can host it cleanly.
+
+**Consequences:**
+
+- The model-committee loop is an early example of UbU coordinating its own design and implementation.
+- Its logs, question rankings, consistency reports, and patch proposals should inform the first real UbU dogfooding workflows.
+- The tool should remain constrained enough to produce useful results before becoming a general UbU runtime component.

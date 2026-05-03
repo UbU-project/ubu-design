@@ -18,13 +18,47 @@ The goal is not to answer everything before development begins. The goal is to i
 
 ---
 
-# 1. Phase 1 MVP Scope Freeze
+## Question block schema
 
-**Priority:** MVP blocker
+Each open question block uses the following format:
 
-UbU’s data model has grown large. Phase 1 must be constrained enough to implement.
+```text
+## UBU-Q0001: Question title
 
-## Open questions
+Status: Open | Solved | Deferred | Superseded | Archived
+Priority: MVP blocker | MVP important | Post-MVP | Research | Product | Governance
+Phase: Phase 1 | Phase 2 | Phase 3 | Post-MVP
+Decision type: Scope | Data model | Process | Governance | Product | Security | Architecture
+Auto-choice eligibility: Auto eligible | Human approval required | Human only
+Importance score: TBD | 0-100
+Automation-likelihood score: TBD | 0-100
+Risk score: TBD | 0-100
+Depends on: None | UBU-Qxxxx
+Blocks: None | Phase 1 implementation | Phase 1 scope freeze | etc.
+Resolved by: Unresolved | UBU-Dxxxx
+Last scored: Never | YYYY-MM-DD
+Scored from commit: None | commit SHA
+```
+
+---
+
+## UBU-Q0001: Phase 1 MVP Scope Freeze
+
+Status: Open
+Priority: MVP blocker
+Phase: Phase 1
+Decision type: Scope
+Auto-choice eligibility: Human only
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
+
+### Question
 
 1. What is the exact Phase 1 MVP feature set?
 2. What is explicitly deferred to Phase 2?
@@ -33,19 +67,33 @@ UbU’s data model has grown large. Phase 1 must be constrained enough to implem
 5. What rule prevents new abstractions from delaying Phase 1 indefinitely?
 6. What is the minimum dogfooding loop that proves UbU’s core model?
 
-## Candidate MVP rule
+### Candidate MVP rule
 
 Phase 1 may include abstractions needed for future compatibility, but only implements the subset required for single-user GitHub dogfooding.
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 2. GitHub Projection and Reconciliation
+## UBU-Q0002: GitHub Projection and Reconciliation
 
-**Priority:** MVP blocker
+Status: Open
+Priority: MVP blocker
+Phase: Phase 1
+Decision type: Data model
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: UBU-Q0003
+Blocks: Phase 1 GitHub dogfooding
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
-GitHub is a projection of UbU state, not the source of truth. However, external users may interact with GitHub directly. Missed GitHub updates can leave UbU stale.
-
-## Open questions
+### Question
 
 1. Which GitHub fields does UbU write?
    - labels
@@ -70,15 +118,31 @@ GitHub is a projection of UbU state, not the source of truth. However, external 
 7. Does drift create a report only, or also Tasks to repair drift?
 8. Does GitHub reconciliation run in the main UbU instance or an Automation Worker?
 
-## Current direction
+### Current direction
 
 UbU should write only clearly marked UbU-managed labels, comments, or blocks, and treat other GitHub edits as External Events.
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 3. GitHub ↔ UbU Association Model
+## UBU-Q0003: GitHub ↔ UbU Association Model
 
-**Priority:** MVP blocker
+Status: Open
+Priority: MVP blocker
+Phase: Phase 1
+Decision type: Data model
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: UBU-Q0002
+Blocks: Phase 1 GitHub dogfooding
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 GitHub objects and UbU objects have many-to-many relationships.
 
@@ -88,7 +152,7 @@ Examples:
 - one Objective may map to many GitHub Issues;
 - PRs, comments, reviews, and CI runs may associate with Objectives or Tasks.
 
-## Open questions
+### Question
 
 1. Should association be represented with generic `external_refs[]`?
 2. Or should there be a dedicated `ExternalAssociation` object?
@@ -109,19 +173,35 @@ Examples:
 6. How are duplicate associations detected?
 7. Can an Automation Worker create or modify associations?
 
-## Current leaning
+### Current leaning
 
 A dedicated `ExternalAssociation` object is likely cleaner than embedding all external refs directly on core objects.
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 4. Pipeline State
+## UBU-Q0004: Pipeline State
 
-**Priority:** MVP important
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Data model
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: UBU-Q0003
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 `Objective.status` is the canonical UbU lifecycle status. `pipeline_state` is workflow/project-management state.
 
-## Open questions
+### Question
 
 1. Is `pipeline_state` generic or GitHub-specific?
 2. Can one Objective have multiple pipeline states for multiple projections?
@@ -130,7 +210,7 @@ A dedicated `ExternalAssociation` object is likely cleaner than embedding all ex
 5. Can Automation Workers mutate `pipeline_state`?
 6. Does every pipeline state transition create an event/log entry?
 
-## Candidate MVP enum
+### Candidate MVP enum
 
 ```text
 unlabeled
@@ -144,15 +224,31 @@ awaiting_ci
 complete
 ```
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 5. GitHub Event Triage Rules
+## UBU-Q0005: GitHub Event Triage Rules
 
-**Priority:** MVP blocker
+Status: Open
+Priority: MVP blocker
+Phase: Phase 1
+Decision type: Process
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: UBU-Q0002
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 GitHub events must be interpreted into UbU events, Tasks, Objectives, or recalculation triggers.
 
-## Open questions
+### Question
 
 1. Which GitHub events are logged only?
 2. Which GitHub events create External Events?
@@ -164,7 +260,7 @@ GitHub events must be interpreted into UbU events, Tasks, Objectives, or recalcu
 8. How are duplicate GitHub events detected?
 9. How are missed events reconstructed during reconciliation?
 
-## Candidate MVP event classes
+### Candidate MVP event classes
 
 ```text
 issue_opened
@@ -180,15 +276,31 @@ ci_passed
 milestone_changed
 ```
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 6. Objective and Task Explosion Control
+## UBU-Q0006: Objective and Task Explosion Control
 
-**Priority:** MVP important
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Process
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: UBU-Q0005
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 GitHub events may create analysis Objectives or Tasks. This could generate excessive noise.
 
-## Open questions
+### Question
 
 1. When does a GitHub event deserve a new Objective?
 2. When is it appended to an existing Objective?
@@ -199,15 +311,31 @@ GitHub events may create analysis Objectives or Tasks. This could generate exces
 7. Do analysis Objectives automatically become moot or completed after resolution?
 8. How does UbU prevent its own management process from becoming too noisy?
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 7. Automation Worker Identity and Capabilities
+## UBU-Q0007: Automation Worker Identity and Capabilities
 
-**Priority:** MVP blocker
+Status: Open
+Priority: MVP blocker
+Phase: Phase 1
+Decision type: Security
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 A worker-mode UbU instance is externally represented as an Identity. Workers need bounded authority.
 
-## Open questions
+### Question
 
 1. What capabilities can a worker Identity receive?
 
@@ -237,19 +365,35 @@ A worker-mode UbU instance is externally represented as an Identity. Workers nee
 6. How are worker credentials rotated?
 7. Does worker capability state live on Identity, a capability object, or both?
 
-## Current direction
+### Current direction
 
 Automation Worker = worker-mode UbU instance externally represented as an Identity.
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 8. Worker Assignment Model
+## UBU-Q0008: Worker Assignment Model
 
-**Priority:** MVP important
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Process
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: UBU-Q0007
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 Workers need a way to discover or receive work.
 
-## Open questions
+### Question
 
 1. Does an organization-mode instance explicitly assign Tasks to workers?
 2. Or do workers poll for Tasks matching their capabilities?
@@ -261,19 +405,35 @@ Workers need a way to discover or receive work.
 8. Can workers request clarification Tasks?
 9. Can workers spawn child Tasks?
 
-## Current MVP leaning
+### Current MVP leaning
 
 Explicit assignment is likely simplest.
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 9. Worker Mutation Request Schema
+## UBU-Q0009: Worker Mutation Request Schema
 
-**Priority:** MVP blocker
+Status: Open
+Priority: MVP blocker
+Phase: Phase 1
+Decision type: Data model
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: UBU-Q0007
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 Automation Workers need a bounded way to submit changes back to canonical UbU state.
 
-## Open questions
+### Question
 
 1. Does a worker submit:
 
@@ -300,15 +460,31 @@ Automation Workers need a bounded way to submit changes back to canonical UbU st
 7. Are worker mutations reversible?
 8. How does UbU prevent stale worker mutations from overwriting newer canonical state?
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 10. GitHub Token Custody
+## UBU-Q0010: GitHub Token Custody
 
-**Priority:** MVP important
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Security
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: UBU-Q0007
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 Automation Workers may interact with GitHub using access tokens.
 
-## Open questions
+### Question
 
 1. Are GitHub tokens stored:
 
@@ -326,19 +502,35 @@ Automation Workers may interact with GitHub using access tokens.
 6. Does UbU verify GitHub writes by re-reading GitHub?
 7. What is the MVP security assumption?
 
-## Current leaning
+### Current leaning
 
 For MVP, workers may own their GitHub tokens. The canonical UbU instance stores external refs/results, not necessarily the token.
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 11. Inter-Instance Protocol
+## UBU-Q0011: Inter-Instance Protocol
 
-**Priority:** Post-MVP / Architecture
+Status: Open
+Priority: Post-MVP
+Phase: Phase 3
+Decision type: Architecture
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Phase 3 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 Automation Worker communication may overlap with future user-to-user or instance-to-instance communication.
 
-## Open questions
+### Question
 
 1. Is there one generic UbU inter-instance protocol?
 2. Or is worker communication a separate MVP API?
@@ -354,15 +546,31 @@ Automation Worker communication may overlap with future user-to-user or instance
 4. Can this protocol later support Phase 3 multi-user Identity coordination?
 5. Does the MVP worker API intentionally approximate the future inter-instance protocol?
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 12. Organization Mode Object Rules
+## UBU-Q0012: Organization Mode Object Rules
 
-**Priority:** MVP important
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Data model
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 Organization mode does not model intrinsic affect but otherwise shares much of the same data model.
 
-## Open questions
+### Question
 
 1. Are all core objects available in organization mode?
 
@@ -382,19 +590,35 @@ Organization mode does not model intrinsic affect but otherwise shares much of t
 5. Is `authority_source` required on organization-created Preferences, Objectives, and Tasks?
 6. How are organization users represented before RBAC exists?
 
-## Current direction
+### Current direction
 
 All users in organization mode may be treated as admin-equivalent in MVP.
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 13. Authority Source Vocabulary
+## UBU-Q0013: Authority Source Vocabulary
 
-**Priority:** MVP important
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Data model
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: UBU-Q0012
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 Organizational directives and worker updates need authority/source metadata.
 
-## Open questions
+### Question
 
 1. Which objects carry `authority_source`?
 
@@ -408,7 +632,7 @@ Organizational directives and worker updates need authority/source metadata.
 2. Is `authority_source` required only in organization mode?
 3. What are MVP authority-source values?
 
-## Candidate values
+### Candidate values
 
 ```text
 human_admin
@@ -420,15 +644,31 @@ llm_advisory
 user_override
 ```
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 14. UniverseState Mutation Schema
+## UBU-Q0014: UniverseState Mutation Schema
 
-**Priority:** MVP blocker
+Status: Open
+Priority: MVP blocker
+Phase: Phase 1
+Decision type: Data model
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 UniverseState mutation vocabulary is accepted, but the concrete schema remains open.
 
-## Accepted MVP mutation operations
+### Accepted MVP mutation operations
 
 ```text
 set_fact
@@ -440,7 +680,7 @@ remove_membership
 append_event_marker
 ```
 
-## Open questions
+### Question
 
 1. What target key format should MVP use?
 
@@ -468,19 +708,35 @@ append_event_marker
 7. Should mutation items contain confidence?
 8. Should mutation items contain provenance in MVP?
 
-## Current leaning
+### Current leaning
 
 Use dotted string targets and JSON-compatible payloads.
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 15. Task Precondition Schema
+## UBU-Q0015: Task Precondition Schema
 
-**Priority:** MVP blocker
+Status: Open
+Priority: MVP blocker
+Phase: Phase 1
+Decision type: Data model
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 Preconditions are deterministic constraints over UniverseState.
 
-## Accepted MVP precondition types
+### Accepted MVP precondition types
 
 * equality
 * membership
@@ -489,7 +745,7 @@ Preconditions are deterministic constraints over UniverseState.
 
 Numeric comparisons are not in MVP.
 
-## Open questions
+### Question
 
 1. Should preconditions use:
 
@@ -509,19 +765,35 @@ Numeric comparisons are not in MVP.
 5. Can preconditions reference affect fields?
 6. Can preconditions reference Relationship payloads?
 
-## Current leaning
+### Current leaning
 
 Failed precondition should mean blocked, not invalid.
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 16. Compact Calendar DFS Grammar
+## UBU-Q0016: Compact Calendar DFS Grammar
 
-**Priority:** MVP blocker / Research
+Status: Open
+Priority: MVP blocker
+Phase: Phase 1
+Decision type: Architecture
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 Compact Calendar support is important for recursive self-analysis and future sync/transport. The current direction is deterministic DFS rather than PRNG seed sampling.
 
-## Open questions
+### Question
 
 1. What is a DFS node?
 
@@ -562,15 +834,31 @@ Compact Calendar support is important for recursive self-analysis and future syn
 8. How is coverage recalculated after time advances?
 9. What is the minimum MVP implementation?
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 17. Compact Calendar Coverage and Regeneration
+## UBU-Q0017: Compact Calendar Coverage and Regeneration
 
-**Priority:** MVP important
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Data model
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: UBU-Q0016
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 Coverage belongs to compact Calendar serialization.
 
-## Open questions
+### Question
 
 1. Is coverage exact or estimated in MVP?
 2. Does coverage include:
@@ -589,19 +877,35 @@ Coverage belongs to compact Calendar serialization.
    * Task,
    * worker assignment?
 
-## Current direction
+### Current direction
 
 Default threshold may be `0.5`, but this is not final.
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 18. Risk Reporting Primitives
+## UBU-Q0018: Risk Reporting Primitives
 
-**Priority:** MVP important
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Process
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 Risk is not a first-class object in MVP. Risk is reportable from Calendar/Plan analysis.
 
-## Open questions
+### Question
 
 1. Which reports are MVP?
 
@@ -622,15 +926,31 @@ Risk is not a first-class object in MVP. Risk is reportable from Calendar/Plan a
 4. Which risk reports demonstrate that UbU supersedes PERT?
 5. Can risk reports create Tasks?
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 19. Recalculation Trigger Taxonomy
+## UBU-Q0019: Recalculation Trigger Taxonomy
 
-**Priority:** MVP blocker
+Status: Open
+Priority: MVP blocker
+Phase: Phase 1
+Decision type: Architecture
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 The decision layer is a pure function over Plans + current state, so recalculation triggers must be explicit.
 
-## Candidate MVP triggers
+### Candidate MVP triggers
 
 ```text
 task_completed
@@ -646,7 +966,7 @@ low_compact_calendar_coverage
 worker_request
 ```
 
-## Open questions
+### Question
 
 1. Which triggers are Phase 1?
 2. Which triggers are Phase 2?
@@ -657,15 +977,31 @@ worker_request
 7. Which triggers force immediate recalculation?
 8. Which triggers merely mark the Calendar stale?
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 20. Automation Worker Retry Semantics
+## UBU-Q0020: Automation Worker Retry Semantics
 
-**Priority:** MVP important
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Process
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: UBU-Q0008
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 Automation Workers may fail or produce failed child Tasks.
 
-## Open questions
+### Question
 
 1. If a worker-created child Task fails, does UbU:
 
@@ -683,19 +1019,35 @@ Automation Workers may fail or produce failed child Tasks.
 4. How are repeated failures prevented from creating infinite loops?
 5. Does a worker failure affect risk reports?
 
-## Current leaning
+### Current leaning
 
 Failed attempt + retry sibling is likely best for auditability.
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 21. Automation Worker Parent / Child Structure
+## UBU-Q0021: Automation Worker Parent / Child Structure
 
-**Priority:** MVP important
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Data model
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: UBU-Q0008
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 Automation Workers may create canonical child Tasks.
 
-## Open questions
+### Question
 
 1. Is the outer Automation/Super Automation Task also the Container?
 2. Or is a separate Container created under it?
@@ -704,15 +1056,31 @@ Automation Workers may create canonical child Tasks.
 5. If child Tasks are ordinary Dynamic Tasks, how is automation-specific metadata stored?
 6. How are retries connected to the original child Task?
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 22. Moot Reason-Code Taxonomy
+## UBU-Q0022: Moot Reason-Code Taxonomy
 
-**Priority:** MVP important
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Data model
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 `moot` is a terminal Task status and requires a reason code.
 
-## Candidate MVP reason codes
+### Candidate MVP reason codes
 
 ```text
 externally_satisfied
@@ -726,22 +1094,38 @@ automation_obsolete
 duplicate
 ```
 
-## Open questions
+### Question
 
 1. Is this list sufficient for MVP?
 2. Should `duplicate` be included?
 3. Should `delegated` be separate from `externally_satisfied`?
 4. Are reason codes free-form extensible or enum-only in MVP?
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 23. Container Mutation Semantics
+## UBU-Q0023: Container Mutation Semantics
 
-**Priority:** MVP important
+Status: Open
+Priority: MVP important
+Phase: Phase 2
+Decision type: Data model
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Phase 2 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 Tasks may mutate into Containers, especially during preemption or decomposition.
 
-## Open questions
+### Question
 
 1. When a Task mutates into a Container, does the original Task handle become the Container handle?
 2. Do all child Tasks always get new handles?
@@ -751,15 +1135,31 @@ Tasks may mutate into Containers, especially during preemption or decomposition.
 6. How does this interact with GitHub-linked Tasks?
 7. How does this interact with Automation Worker child Tasks?
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 24. Objective Status Transition Table
+## UBU-Q0024: Objective Status Transition Table
 
-**Priority:** MVP important
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Data model
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 Objective statuses are accepted, but the precise transition table remains open.
 
-## Accepted Objective statuses
+### Accepted Objective statuses
 
 ```text
 active
@@ -770,7 +1170,7 @@ invalid
 superseded
 ```
 
-## Open questions
+### Question
 
 1. What are legal transitions for one-time Objectives?
 2. What are legal transitions for evergreen Objectives?
@@ -780,15 +1180,31 @@ superseded
 6. Can evergreen Objectives transition `satisfied → active` only by observation, or also by simulation?
 7. Does transition always create a log event?
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 25. Snapshot Application Semantics
+## UBU-Q0025: Snapshot Application Semantics
 
-**Priority:** MVP important
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Data model
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 Snapshots override simulated state when conflicting, but application details remain open.
 
-## Open questions
+### Question
 
 1. Are snapshots patches or full assertions?
 2. Are snapshots immutable once logged?
@@ -801,15 +1217,31 @@ Snapshots override simulated state when conflicting, but application details rem
 5. Can a Snapshot be revoked or corrected?
 6. Does correction create a new Snapshot?
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 26. Relationship Maintenance Modeling
+## UBU-Q0026: Relationship Maintenance Modeling
 
-**Priority:** MVP important / Product
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Data model
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 Relationship is modeled as structured UniverseState payload between two Identities.
 
-## Open questions
+### Question
 
 1. Where does communication cadence live?
 
@@ -826,15 +1258,31 @@ Relationship is modeled as structured UniverseState payload between two Identiti
 4. Can GitHub contributor interactions update relationship state?
 5. Is relationship maintenance in MVP, or only documented for future use?
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 27. Organization Mode and Worker Mode Public UX
+## UBU-Q0027: Organization Mode and Worker Mode Public UX
 
-**Priority:** Post-MVP / Product
+Status: Open
+Priority: Post-MVP
+Phase: Post-MVP
+Decision type: Product
+Auto-choice eligibility: Human only
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Post-MVP product
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 Organization mode and worker mode may use web admin UIs.
 
-## Open questions
+### Question
 
 1. What does the organization-mode UI show first?
 2. What does the worker-mode UI show first?
@@ -842,15 +1290,31 @@ Organization mode and worker mode may use web admin UIs.
 4. Does organization mode expose pipeline state, risk reports, worker assignments, GitHub projection status?
 5. Which UI is required for Phase 1?
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 28. Minimum Privacy / Compartment Promise for MVP
+## UBU-Q0028: Minimum Privacy / Compartment Promise for MVP
 
-**Priority:** MVP important
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Security
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 UbU is privacy-first, but MVP implementation must avoid overclaiming.
 
-## Open questions
+### Question
 
 1. Are Compartments implemented in Phase 1?
 2. If yes, what hard invariants exist?
@@ -865,15 +1329,31 @@ UbU is privacy-first, but MVP implementation must avoid overclaiming.
 5. What can UbU honestly claim about local-first operation in Phase 1?
 6. What can UbU honestly claim about cloud LLM usage in Phase 1?
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 29. Open-Core / FOSS Contribution Boundary
+## UBU-Q0029: Open-Core / FOSS Contribution Boundary
 
-**Priority:** Product / Governance
+Status: Open
+Priority: Governance
+Phase: Phase 1
+Decision type: Governance
+Auto-choice eligibility: Human only
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 UbU is intended to recruit FOSS contributors.
 
-## Open questions
+### Question
 
 1. Which components are definitely open source?
 
@@ -889,15 +1369,31 @@ UbU is intended to recruit FOSS contributors.
 4. What licensing strategy should implementation repos use?
 5. What is the commercial/premium boundary, if any?
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 30. Phase 1 Public Demo Criteria
+## UBU-Q0030: Phase 1 Public Demo Criteria
 
-**Priority:** MVP blocker / Product
+Status: Open
+Priority: MVP blocker
+Phase: Phase 1
+Decision type: Product
+Auto-choice eligibility: Human only
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Phase 1 release
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 The MVP should demonstrate that UbU is real and worth contributing to.
 
-## Open questions
+### Question
 
 1. What demo proves Phase 1 works?
 2. Does the demo use real GitHub issues from UbU?
@@ -909,15 +1405,31 @@ The MVP should demonstrate that UbU is real and worth contributing to.
 8. Does it show worker assignment?
 9. What is the smallest demo that is still persuasive?
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# 31. Log Structure and Fields
+## UBU-Q0031: Log Structure and Fields
 
-**Priority:** MVP important
+Status: Open
+Priority: MVP important
+Phase: Phase 1
+Decision type: Data model
+Auto-choice eligibility: Human approval required
+Importance score: TBD
+Automation-likelihood score: TBD
+Risk score: TBD
+Depends on: None
+Blocks: Phase 1 implementation
+Resolved by: Unresolved
+Last scored: Never
+Scored from commit: None
 
 A Log is the canonical record of what actually happened. Its structure and fields need specification.
 
-## Open questions
+### Question
 
 1. What are MVP required Log entry fields?
    - timestamp
@@ -944,20 +1456,24 @@ A Log is the canonical record of what actually happened. Its structure and field
 9. Should Logs include confidence/provenance metadata?
 10. How do Automation Workers contribute to Logs?
 
+### Resolution
+
+Unresolved.
+
 ---
 
-# Suggested Initial GitHub Issues
+## Suggested Initial GitHub Issues
 
 Create these first:
 
-1. Define Phase 1 MVP Scope Freeze
-2. Define GitHub Projection and Reconciliation Model
-3. Define GitHub ↔ UbU Association Model
-4. Define Automation Worker Identity and Capability Model
-5. Define Worker Mutation Request Schema
-6. Define UniverseState Mutation and Precondition Schemas
-7. Define Compact Calendar DFS Grammar
-8. Define Risk Reporting Primitives
-9. Define Recalculation Trigger Taxonomy
-10. Define Phase 1 Public Demo Criteria
+1. `UBU-Q0001`: Define Phase 1 MVP Scope Freeze
+2. `UBU-Q0002`: Define GitHub Projection and Reconciliation Model
+3. `UBU-Q0003`: Define GitHub ↔ UbU Association Model
+4. `UBU-Q0007`: Define Automation Worker Identity and Capability Model
+5. `UBU-Q0009`: Define Worker Mutation Request Schema
+6. `UBU-Q0014` + `UBU-Q0015`: Define UniverseState Mutation and Precondition Schemas
+7. `UBU-Q0016`: Define Compact Calendar DFS Grammar
+8. `UBU-Q0018`: Define Risk Reporting Primitives
+9. `UBU-Q0019`: Define Recalculation Trigger Taxonomy
+10. `UBU-Q0030`: Define Phase 1 Public Demo Criteria
 

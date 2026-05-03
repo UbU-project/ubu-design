@@ -106,9 +106,39 @@ Short-turnaround execution decisions should be computed by UbU’s explicit deci
 
 ---
 
-## 3. MVP Release Phases
+## 3. Model-committee dogfooding
 
-### 3.1 Phase 1: Single-user GitHub dogfooding
+UbU may use model-committee automation to help maintain its own design process.
+
+The model committee is not the canonical decision engine. It is an advisory Automation Worker pattern that can:
+
+- read the canonical design repo,
+- identify unresolved questions,
+- propose answers,
+- critique alternatives,
+- generate candidate patches,
+- run consistency checks,
+- estimate MVP readiness,
+- rank remaining open questions,
+- identify follow-up questions.
+
+Accepted design state exists only when committed to the canonical design repo.
+
+Model-committee automation has three expected lifecycle modes:
+
+1. **Pre-MVP:** design-freeze assistant.
+2. **MVP dogfooding:** repo-maintenance and planning worker.
+3. **Post-MVP:** continuous design-governance assistant.
+
+The goal is to accelerate implementation, not to create unlimited pre-implementation design work.
+
+Model-committee automation must be bounded by a stop rule. It should recommend further design work only when that work has greater expected value than beginning or continuing implementation.
+
+---
+
+## 4. MVP Release Phases
+
+### 4.1 Phase 1: Single-user GitHub dogfooding
 
 A single user uses UbU to coordinate development of UbU itself.
 
@@ -120,7 +150,7 @@ Primary goals:
 - update GitHub as a low-dimensional projection of UbU state;
 - expose limitations and open questions through dogfooding.
 
-### 3.2 Phase 2: Single-user multi-device synchronization
+### 4.2 Phase 2: Single-user multi-device synchronization
 
 A single user runs UbU across multiple Devices / execution enclaves.
 
@@ -136,7 +166,7 @@ Design rubric:
 
 > Phase 2 should feel like multi-agent coordination, but all agents happen to agree.
 
-### 3.3 Phase 3: Minimal multi-user / Identity coordination
+### 4.3 Phase 3: Minimal multi-user / Identity coordination
 
 Multiple humans coordinate through explicit Identities, capabilities, limited disclosure, and commitments.
 
@@ -144,11 +174,11 @@ Phase 3 should enable coordination without surveillance or shared global truth.
 
 ---
 
-## 4. Operating Modes
+## 5. Operating Modes
 
 Each UbU instance runs in exactly one mode. Modes are mutually exclusive and cannot change after initialization.
 
-### 4.1 `user_mode`
+### 5.1 `user_mode`
 
 A personal UbU instance operated for an autonomous human user.
 
@@ -159,7 +189,7 @@ Properties:
 - may integrate with personal calendars, tasks, messages, sensors, and devices;
 - supports personal Zones and Compartments.
 
-### 4.2 `organization_mode`
+### 5.2 `organization_mode`
 
 An organizational UbU instance operated on behalf of a project or organization.
 
@@ -178,7 +208,7 @@ Properties:
 
 For MVP, all organization-mode users may be treated as admin-equivalent to avoid premature RBAC complexity.
 
-### 4.3 `worker_mode`
+### 5.3 `worker_mode`
 
 A worker-mode instance performs delegated work assigned by another UbU instance.
 
@@ -195,7 +225,7 @@ Worker mode may run on a local machine, a server, or a thin controller that star
 
 ---
 
-## 5. Core Entity Summary
+## 6. Core Entity Summary
 
 The core model includes:
 
@@ -222,7 +252,7 @@ Some entities are implemented in MVP. Others are documented now to avoid future 
 
 ---
 
-## 6. Objectives
+## 7. Objectives
 
 An **Objective** is a desired or maintained state of the universe.
 
@@ -236,7 +266,7 @@ Examples:
 
 Objectives are the canonical anchor for value.
 
-### 6.1 Objective modes
+### 7.1 Objective modes
 
 An Objective has one of two modes:
 
@@ -258,7 +288,7 @@ Example:
 - “Collect affect information”
 - “Manage GitHub issue queue”
 
-### 6.2 MVP Objective fields
+### 7.2 MVP Objective fields
 
 Required:
 
@@ -285,7 +315,7 @@ Not present in MVP:
 - explicit satisfaction field
 - required provenance
 
-### 6.3 Objective statuses
+### 7.3 Objective statuses
 
 Candidate MVP statuses:
 
@@ -303,7 +333,7 @@ Rules:
 - Evergreen Objectives may transition from `satisfied` back to `active`.
 - One-time Objectives do not reactivate after completion.
 
-### 6.4 Evergreen recurrence
+### 7.4 Evergreen recurrence
 
 Evergreen Objectives may include recurrence/reactivation behavior.
 
@@ -315,13 +345,13 @@ For MVP:
 
 ---
 
-## 7. Preferences and Value
+## 8. Preferences and Value
 
 A **Preference** is a relation between Objectives.
 
 Value is derived from Preferences, not directly authored as an absolute scalar.
 
-### 7.1 Preference object
+### 8.1 Preference object
 
 MVP fields:
 
@@ -344,19 +374,19 @@ MVP fields:
 
 More detailed method metadata may be added later.
 
-### 7.2 Ordinal rankings
+### 8.2 Ordinal rankings
 
 Ordinal UI input compiles immediately into pairwise Preference objects.
 
 The original ordinal ranking may be retained in the log, but Preferences remain pairwise in the canonical model.
 
-### 7.3 Indifference
+### 8.3 Indifference
 
 Indifference is explicit.
 
 Indifferent Objectives are assigned equal derived util values.
 
-### 7.4 Preference contradictions
+### 8.4 Preference contradictions
 
 Preference cycles are logistical consistency errors.
 
@@ -368,7 +398,7 @@ Example:
 
 UbU must query the user for resolution with high priority.
 
-### 7.5 Derived utils
+### 8.5 Derived utils
 
 Derived util values are transient and may be cached on Objectives.
 
@@ -385,9 +415,9 @@ Util derivation is typically local to the Objective subset being compared in a s
 
 ---
 
-## 8. WorkItems, Tasks, and Containers
+## 9. WorkItems, Tasks, and Containers
 
-### 8.1 WorkItem
+### 9.1 WorkItem
 
 A **WorkItem** is the abstraction over concrete work-like entities.
 
@@ -397,7 +427,7 @@ A WorkItem may be:
 - Container
 - possible future subtype
 
-### 8.2 Task
+### 9.2 Task
 
 A **Task** is a schedulable WorkItem.
 
@@ -433,7 +463,7 @@ Dynamic Tasks may have:
 - affect delta
 - expected cost
 
-### 8.3 MVP Task schedulability invariant
+### 9.3 MVP Task schedulability invariant
 
 A Task is schedulable in MVP if it has:
 
@@ -453,7 +483,7 @@ Permitted:
 
 Tasks with no known modeled effect may be reportable as low-utility or “meaningless” for plan scoring.
 
-### 8.4 Container
+### 9.4 Container
 
 A **Container** groups WorkItems.
 
@@ -474,7 +504,7 @@ A Container is complete when all child Tasks are either:
 - completed
 - moot
 
-### 8.5 Moot
+### 9.5 Moot
 
 `moot` is a first-class terminal Task status.
 
@@ -494,9 +524,9 @@ Candidate MVP moot reason codes:
 
 ---
 
-## 9. Task Preconditions and Effects
+## 10. Task Preconditions and Effects
 
-### 9.1 Preconditions
+### 10.1 Preconditions
 
 Preconditions are deterministic constraints over UniverseState.
 
@@ -513,7 +543,7 @@ Numeric comparisons are not in MVP.
 
 Failed preconditions should generally make a Task blocked, not invalid.
 
-### 9.2 Effects
+### 10.2 Effects
 
 A Task effect describes predicted mutation of UniverseState if the Task succeeds.
 
@@ -526,7 +556,7 @@ If success probability is `1` or `null`, the effect is assumed to occur when the
 
 If a Task fails, UniverseState is unchanged in MVP.
 
-### 9.3 Duration and success probability
+### 10.3 Duration and success probability
 
 Duration uncertainty and success probability are distinct.
 
@@ -540,13 +570,13 @@ Task duration PDFs likely use seconds as the canonical time unit in MVP.
 
 ---
 
-## 10. UniverseState
+## 11. UniverseState
 
 **UniverseState** is a first-class object representing the modeled state of the world relevant to UbU planning.
 
 For MVP, UniverseState is a lightweight shell with loosely typed facts and events.
 
-### 10.1 MVP UniverseState fields
+### 11.1 MVP UniverseState fields
 
 Core shell:
 
@@ -559,7 +589,7 @@ Core shell:
 - `source_summary`
 - `confidence_summary` optional
 
-### 10.2 UniverseState values
+### 11.2 UniverseState values
 
 MVP value discipline:
 
@@ -569,7 +599,7 @@ MVP value discipline:
 
 A stricter ontology can be added later.
 
-### 10.3 Mutation vocabulary
+### 11.3 Mutation vocabulary
 
 MVP mutations support:
 
@@ -592,7 +622,7 @@ Recommended direction:
 
 ---
 
-## 11. Snapshots
+## 12. Snapshots
 
 A **Snapshot** is an observed state update.
 
@@ -606,7 +636,7 @@ MVP snapshot fields:
 - per-dimension or per-field values
 - confidence
 
-### 11.1 Snapshot precedence rule
+### 12.1 Snapshot precedence rule
 
 - Latest observed snapshot overrides simulation on conflicting fields.
 - User-declared snapshots are top-priority observations.
@@ -620,7 +650,7 @@ Snapshot application semantics remain partially open:
 
 ---
 
-## 12. Affect
+## 13. Affect
 
 Affect is core in `user_mode`.
 
@@ -628,7 +658,7 @@ Affect belongs to UniverseState.
 
 Affect is not intrinsic to organizations or machines.
 
-### 12.1 MVP affect dimensions
+### 13.1 MVP affect dimensions
 
 MVP uses simplified user-reportable dimensions:
 
@@ -638,7 +668,7 @@ MVP uses simplified user-reportable dimensions:
 
 Values are reported in the range `0.0` to `1.0`.
 
-### 12.2 Mood
+### 13.2 Mood
 
 Mood is represented as:
 
@@ -650,7 +680,7 @@ Mood is represented as:
 
 `interested/bored` is an independent derived dimension.
 
-### 12.3 Affect snapshots
+### 13.3 Affect snapshots
 
 Affect snapshots are ordinary UniverseState data produced by user query.
 
@@ -660,7 +690,7 @@ They include:
 - source: `user`
 - per-dimension values
 
-### 12.4 Affect confidence
+### 13.4 Affect confidence
 
 In MVP, affect confidence decays with age.
 
@@ -668,7 +698,7 @@ Low confidence is determined by algorithm configuration.
 
 Confidence is global across affect dimensions in MVP and may become per-dimension later.
 
-### 12.5 Affect collection Objective
+### 13.5 Affect collection Objective
 
 UbU may include an evergreen high-value Objective such as:
 
@@ -676,7 +706,7 @@ UbU may include an evergreen high-value Objective such as:
 
 When affect data is missing or stale, the planning algorithm may create direct UI survey Tasks.
 
-### 12.6 Affect constraints
+### 13.6 Affect constraints
 
 Affect is a constraint-satisfaction concern.
 
@@ -684,7 +714,7 @@ Burnout / affect exhaustion is modeled as a constraint violation rather than a f
 
 ---
 
-## 13. External Events
+## 14. External Events
 
 An **External Event** is an instantaneous change in the universe.
 
@@ -711,9 +741,9 @@ External Events may trigger:
 
 ---
 
-## 14. Plans and Calendars
+## 15. Plans and Calendars
 
-### 14.1 Plan
+### 15.1 Plan
 
 A **Plan** is a finite ordered set of Tasks from a start time to an end time, satisfying Calendar Logic.
 
@@ -732,7 +762,7 @@ A Plan does not directly contain:
 
 Those are logical/model relations outside the calendar-view layer.
 
-### 14.2 Calendar
+### 15.2 Calendar
 
 A **Calendar** is a group of possible Plans.
 
@@ -742,7 +772,7 @@ The default Plan is the current best recommendation, not a commitment.
 
 The user controls what actually becomes historical log.
 
-### 14.3 Calendar Logic
+### 15.3 Calendar Logic
 
 Calendar Logic includes constraints such as:
 
@@ -752,7 +782,7 @@ Calendar Logic includes constraints such as:
 - preconditions evaluated;
 - affect constraints respected in user mode.
 
-### 14.4 Gaps
+### 15.4 Gaps
 
 Plans may contain gaps.
 
@@ -762,7 +792,7 @@ For MVP, gap suggestions are UI suggestions outside the Plan. Future versions ma
 
 ---
 
-## 15. Compact Calendar
+## 16. Compact Calendar
 
 A compact Calendar is a transport/storage representation of a Calendar.
 
@@ -770,7 +800,7 @@ It is intended to efficiently represent a large set of possible Plans.
 
 Compact Calendar support is considered important for MVP because it enables recursive self-analysis and transport between devices/workers.
 
-### 15.1 Compact Calendar concept
+### 16.1 Compact Calendar concept
 
 A compact Calendar may include:
 
@@ -783,13 +813,13 @@ A compact Calendar may include:
 - expansion threshold(s)
 - coverage value
 
-### 15.2 Coverage
+### 16.2 Coverage
 
 Coverage belongs to the compact serialization, not the abstract Calendar.
 
 Coverage represents the probability mass of possible futures covered by the compact representation.
 
-### 15.3 Deterministic DFS direction
+### 16.3 Deterministic DFS direction
 
 A compact Calendar may not need PRNG seeds.
 
@@ -804,7 +834,7 @@ Open questions remain:
 
 ---
 
-## 16. Logs
+## 17. Logs
 
 A **Log** is the canonical record of what actually happened in the universe.
 
@@ -820,14 +850,14 @@ A Log consists of timestamped entries recording:
 
 Logs are immutable once written, but may be annotated or corrected through new entries.
 
-### 16.1 Log vs Plan
+### 17.1 Log vs Plan
 
 - **Plan**: a possible ordered sequence of future Tasks, representing prediction
 - **Log**: a timestamped record of what actually occurred, representing reality
 
 Plans are inherently multiple. Logs are singular and authoritative for the specific timeline that occurred.
 
-### 16.2 Log and Feedback
+### 17.2 Log and Feedback
 
 Logs enable feedback loops. A Log records the gap between prediction and reality, enabling better future planning.
 
@@ -840,7 +870,7 @@ The comparison of Logs against Plans is essential for:
 
 ---
 
-## 17. Identities
+## 18. Identities
 
 An **Identity** is the external-facing communication and authorization surface.
 
@@ -861,7 +891,7 @@ Examples:
 
 ---
 
-## 18. Relationships
+## 19. Relationships
 
 A **Relationship** is structured UniverseState data representing the relationship between two Identities.
 
@@ -878,9 +908,9 @@ Objectives attach to Relationships indirectly through UniverseState.
 
 ---
 
-## 19. Zones, Devices, and Compartments
+## 20. Zones, Devices, and Compartments
 
-### 18.1 Device
+### 20.1 Device
 
 A **Device** is an execution enclave, not necessarily physical hardware.
 
@@ -893,7 +923,7 @@ Examples:
 
 One physical machine may host multiple Devices.
 
-### 18.2 Zone
+### 20.2 Zone
 
 A **Zone** is a workspace-like UbU instance context.
 
@@ -903,7 +933,7 @@ A Zone may have many Devices.
 
 Zones maintain explicit allowlists/denylists of Compartments, defaulting to deny.
 
-### 18.3 Compartment
+### 20.3 Compartment
 
 A **Compartment** is a first-class data containment object.
 
@@ -918,7 +948,7 @@ Hard invariants may include:
 - retention constraints
 - audit constraints
 
-### 18.4 Sensitive content
+### 20.4 Sensitive content
 
 WorkItems must remain structurally usable without dereferencing sensitive content.
 
@@ -928,9 +958,9 @@ Un-compartmented content is treated as low-security and may require per-integrat
 
 ---
 
-## 20. Automation Workers and Super Automation
+## 21. Automation Workers and Super Automation
 
-### 19.1 Automation Worker
+### 21.1 Automation Worker
 
 An **Automation Worker** is a worker-mode UbU instance or compatible execution unit that performs delegated work.
 
@@ -943,9 +973,9 @@ Automation Workers may:
 - run document analysis;
 - submit authorized mutations to a canonical UbU instance.
 
-A worker-mode instance is externally represented as an Identity.
+A worker-mode instance is externally represented as an Identity. A model-committee worker is an Automation Worker that reads the canonical design state, runs local and cloud LLMs against a selected open question, synthesizes candidate answers, and proposes reviewable patches.
 
-### 19.2 Worker mode
+### 21.2 Worker mode
 
 Worker mode:
 
@@ -956,7 +986,7 @@ Worker mode:
 - often runs on GPU-capable hardware;
 - may control cloud compute resources.
 
-### 19.3 Super Automation
+### 21.3 Super Automation
 
 **Super Automation** is a product/UX pattern, not the technical name of the device.
 
@@ -973,7 +1003,7 @@ It may include:
 
 ---
 
-## 21. Organization Mode
+## 22. Organization Mode
 
 Organization mode is an instance-wide option.
 
@@ -992,13 +1022,13 @@ For MVP, roles/RBAC may be omitted and all users treated as admin-equivalent.
 
 ---
 
-## 22. GitHub Dogfooding and Projection
+## 23. GitHub Dogfooding and Projection
 
 GitHub is a projection of UbU state, not the source of truth.
 
 UbU should be able to use GitHub as an interface for FOSS contributors while maintaining canonical state internally.
 
-### 21.1 GitHub object mapping
+### 23.1 GitHub object mapping
 
 Provisional mapping:
 
@@ -1010,7 +1040,7 @@ Provisional mapping:
 - Milestone/release → Objective with Calendar detail
 - Contributor comment → External Event and/or analysis Objective
 
-### 21.2 Pipeline state
+### 23.2 Pipeline state
 
 `pipeline_state` is distinct from `Objective.status`.
 
@@ -1026,7 +1056,7 @@ Candidate pipeline states:
 - `awaiting_ci`
 - `complete`
 
-### 21.3 GitHub projection
+### 23.3 GitHub projection
 
 UbU may project data to GitHub through:
 
@@ -1040,7 +1070,7 @@ Recommended MVP rule:
 
 > UbU should only write clearly marked UbU-managed labels, comments, or blocks, and treat all other GitHub edits as external events.
 
-### 21.4 GitHub reconciliation
+### 23.4 GitHub reconciliation
 
 Missed GitHub updates are expected in MVP.
 
@@ -1055,7 +1085,7 @@ Possible comparisons:
 
 ---
 
-## 23. Risk Reporting
+## 24. Risk Reporting
 
 Risk is not a first-class object in MVP.
 
@@ -1077,7 +1107,7 @@ Burnout / affect exhaustion is modeled as a constraint violation.
 
 ---
 
-## 24. Recalculation Triggers
+## 25. Recalculation Triggers
 
 Candidate MVP recalculation triggers:
 
@@ -1097,7 +1127,7 @@ Final trigger list remains open.
 
 ---
 
-## 25. Current Major Open Questions
+## 26. Current Major Open Questions
 
 The major remaining questions are tracked in `OPEN_QUESTIONS.md`.
 
@@ -1119,7 +1149,7 @@ Key unresolved areas include:
 
 ---
 
-## 26. Design Process
+## 27. Design Process
 
 The GitHub repository is the canonical public design process for UbU.
 
@@ -1133,3 +1163,12 @@ Design changes should be recorded as:
 - or GitHub Issues linked from `OPEN_QUESTIONS.md`.
 
 The project should prefer explicit decisions over hidden assumptions.
+
+### Canonical and derived project documents
+
+For UbU design governance:
+
+- `DESIGN.md`, `DECISIONS.md`, and `OPEN_QUESTIONS.md` are canonical design inputs.
+- `README.md` and `OUTREACH.md` are derived public-facing projections.
+
+Question-answering uses canonical files. Consistency checking includes derived files and patches them when they fall out of sync.
