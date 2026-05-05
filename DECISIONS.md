@@ -1283,20 +1283,40 @@ The model committee does not maintain its own durable question registry. `OPEN_Q
 
 The first model-committee implementation should be a narrow local Python CLI, not a general model-governance platform.
 
-**v0.1 restrictions:**
+v0.1 must implement:
 
-1. Supports only the `ubu-design` repo shape.
-2. Requires structured `OPEN_QUESTIONS.md` question blocks.
-3. Runs one selected question per committee run.
-4. Does not auto-merge.
-5. Embeds Markdown file contents directly; no file-upload APIs.
-6. Requires strict JSON-schema model outputs.
-7. Uses static model weights.
-8. Supports only `ollama`, `openai_compatible`, and `manual` providers.
-9. Uses a simple priority-order scheduler.
-10. Writes filesystem logs only.
-11. Does not implement semantic diffing.
-12. Does not use the GitHub API in v0.1.
+- parse `OPEN_QUESTIONS.md`
+- run consistency checks
+- rank answerable questions
+- generate ChatGPT work prompt
+- launch external ChatGPT process
+- run configured Ollama work models
+- import/validate candidate work proposals
+- mechanically validate patches
+- generate ChatGPT scoring prompt
+- launch external ChatGPT scorer process
+- select winning patch
+- write `selected.patch`, `commit_message.txt`, `review.md`, and logs
+
+v0.1 must not implement:
+
+- direct OpenAI/Anthropic/Gemini API calls
+- GitHub API
+- auto-merge
+- auto-push
+- automatic PR creation
+- adaptive model scoring
+- readiness score updates to `README.md`
+- derived `README.md`/`OUTREACH.md` consistency
+
+**Consequences:**
+
+
+- v0.1 remains narrow enough to implement quickly.
+- ChatGPT web/premium access is represented through an external-process provider, not a direct API provider.
+- Local Ollama execution remains in the earliest implementation.
+- Direct cloud APIs, GitHub integration, derived-file consistency, and adaptive scoring are deferred.
+- v0.1 may create review artifacts but must not mutate remote GitHub state.
 
 ---
 
@@ -1321,23 +1341,32 @@ Premium or deeper cloud models may receive higher default trust weights than fre
 ---
 
 
-## UBU-D0060: Open questions are ranked by automation-likelihood before importance
+## UBU-D0060: Open questions are selected by answerability, automation-likelihood, importance, and risk
 
 **Status:** Accepted
 
 
 After consistency checks, the model-committee process should score every open question for:
 
+- answerability,
 - automation-likelihood,
 - importance,
 - risk.
 
-The next question should normally be selected by automation-likelihood first, then importance, subject to a minimum importance threshold.
+Question selection uses answerability as the first gate.
+
+A question should not be selected for ordinary answer/work execution if it has unresolved dependencies, unless those dependencies are answered in the same work item.
+
+Blocked questions may be selected for decomposition work when decomposition can produce replacement questions with fewer, simpler, or no dependencies.
+
+After answerability is established, questions are ranked by automation-likelihood, then importance, then risk ascending.
 
 **Consequences:**
 
 
-- The process should create visible progress before attempting the hardest human-governance questions.
+- The process should not attempt to answer questions that are logically blocked by unresolved dependencies.
+- Dependency-free or dependency-resolved questions are preferred for ordinary work.
+- Blocked but important questions may still be selected for decomposition.
 - Question scores are derived metadata and may be updated after every consistency phase.
 - The committee must track whether it is reducing or increasing unresolved design burden.
 
@@ -1380,3 +1409,176 @@ The model-committee project should begin as a constrained external bootstrap too
 - The model-committee loop is an early example of UbU coordinating its own design and implementation.
 - Its logs, question rankings, consistency reports, and patch proposals should inform the first real UbU dogfooding workflows.
 - The tool should remain constrained enough to produce useful results before becoming a general UbU runtime component.
+
+---
+
+
+## UBU-D0063: Model-committee work is changeset-based
+
+**Status:** Accepted
+
+
+The model-committee process should not rely on a hidden external editor, VS Code agent, or other opaque implementation actor to apply accepted answers.
+
+After the conceptual answer phase, the committee should run an explicit work phase in which models produce concrete changesets.
+
+The work phase is followed by work scoring, work selection, local patch application in later versions, and review artifact generation before consistency checks run.
+
+**Consequences:**
+
+
+- The implementation step becomes auditable.
+- VS Code may be used for human review, but is not part of the canonical committee loop.
+- Work proposals should be represented as patches or equivalent changesets.
+- Work scoring evaluates whether proposed changesets implement the selected answer cleanly.
+- v0.1 writes `selected.patch`, `commit_message.txt`, `review.md`, and logs.
+- Later versions may create local review-branch commits after work selection.
+- v0.1 must not push, merge, create pull requests, or mutate remote GitHub state.
+- This abstraction allows the same loop to later handle code changes, bug fixes, tests, and implementation tasks.
+
+---
+
+
+## UBU-D0064: Model-committee v0.1 uses a provisional filesystem log format
+
+**Status:** Accepted
+
+
+For v0.1, the model-committee implementation should define a provisional filesystem log format in code.
+
+The final log and provenance format may be refined later by the model-committee process itself.
+
+**Consequences:**
+
+
+- `UBU-Q0036` remains open for final log/provenance design.
+- v0.1 development is not blocked on fully resolving `UBU-Q0036`.
+- The provisional log format should be simple, inspectable, and filesystem-based.
+- Logs should preserve enough information to audit prompts, provider results, selected work proposals, selected changesets, consistency reports, question-ranking reports, and generated review artifacts.
+
+Provisional v0.1 log layout:
+
+```text
+runs/
+  <timestamp>-<question-id>/
+    manifest.json
+    snapshot/
+      DESIGN.md
+      DECISIONS.md
+      OPEN_QUESTIONS.md
+    prompts/
+      chatgpt_work_prompt.md
+      ollama_work_prompt.md
+      chatgpt_score_prompt.md
+    responses/
+      chatgpt_work_response.txt
+      ollama_<safe_model_name>_response.txt
+      chatgpt_score_response.txt
+    parsed/
+      chatgpt_work_proposal.json
+      ollama_<safe_model_name>_proposal.json
+      score_result.json
+    patches/
+      chatgpt.patch
+      ollama_<safe_model_name>.patch
+      selected.patch
+    review.md
+    commit_message.txt
+````
+
+---
+
+## UBU-D0065: Model-committee v0.1 uses provisional quorum and provider-failure rules
+
+**Status:** Accepted
+
+For v0.1, model-committee runs should use simple provisional quorum and provider-failure rules.
+
+These rules are sufficient to begin implementation and may be refined later.
+
+Provisional quorum rules:
+
+* Minimum valid work proposals: 1.
+* Preferred valid work proposals: 2 or more.
+* At least one ChatGPT external-process work response should be attempted before selecting a patch.
+* If no valid work proposal exists, the run writes logs and exits nonzero.
+* Provider failures are logged but do not invalidate the run if quorum is met.
+* The ChatGPT scorer external-process response is required for automatic patch selection.
+* If the ChatGPT scorer does not produce a valid score result, the run writes logs and exits nonzero unless the user explicitly chooses a patch manually.
+
+**Consequences:**
+
+* v0.1 does not need a perfect provider scheduler before development begins.
+* Failed, unavailable, invalid-output, or interrupted providers are recorded as run events.
+* The committee can continue when enough valid structured results exist.
+* More sophisticated quorum, retry, weighting, cooldown, and provider-health rules are deferred.
+
+---
+
+## UBU-D0066: Model-committee follows a prioritized recursive loop
+
+**Status:** Accepted
+
+The model-committee project should be developed as a bootstrap version of UbU’s future self-automation and dogfooding loop.
+
+The loop has three prioritized modes:
+
+1. system-wide consistency check,
+2. question/problem prioritization selection,
+3. work.
+
+System-wide consistency checks have highest priority and should run after every merge, UbU directive change, LLM model update, or other state-changing event that could invalidate the project model.
+
+Question/problem prioritization runs after consistency checks and selects the next work item by scoring answerability, automation-likelihood, importance, and risk.
+
+Work is lowest priority and should normally run only after the current project state is coherent and the next work item has been selected.
+
+**Consequences:**
+
+* `model-committee` is not merely a question-answering tool.
+* Consistency failures should usually become higher-priority work than unrelated future questions.
+* Work should not proceed against a known-inconsistent repo unless the work item is specifically to repair that inconsistency.
+* Early releases should preserve this structure even if the first implementation is simple.
+* This loop should later map naturally into UbU’s own self-governance and Automation Worker model.
+
+---
+
+## UBU-D0067: Directive decisions may be appended directly
+
+**Status:** Accepted
+
+The UbU project may receive direct project-owner directives that are appended to `DECISIONS.md` as accepted decisions without first passing through the ordinary model-committee question-answering loop.
+
+These directive decisions are treated as canonical once committed to `DECISIONS.md`.
+
+**Consequences:**
+
+* The model committee must treat directive decisions as authoritative.
+* Directive decisions may override prior provisional decisions.
+* If a directive decision creates inconsistencies, the next system-wide consistency check must detect them.
+* Directive decisions may create, close, split, or reclassify open questions.
+* Directive decisions should still use normal `UBU-Dxxxx` numbering.
+* Directive decisions should identify affected `UBU-Qxxxx` questions where practical.
+
+---
+
+## UBU-D0068: Model-committee may decompose hard questions into easier questions
+
+**Status:** Accepted
+
+The model-committee process should not treat every increase in open-question count as a failure.
+
+A work proposal may validly split, narrow, or restate a hard question into multiple simpler questions.
+
+**Consequences:**
+
+* The committee should track unresolved design burden, not merely question count.
+* A decomposition is valid only if the resulting questions are clearer, narrower, lower-risk, or easier to automatically answer than the original.
+* Replacement questions should not be harder to automatically answer than the question they replace unless the exception is explicitly justified.
+* The original question should be marked as narrowed, partially resolved, superseded, or decomposed.
+* Work scoring should reward useful decomposition and penalize scope-expanding decomposition.
+* Decomposition is especially valuable when it reduces dependency blocking.
+* A blocked question may be decomposed into replacement questions when at least one replacement question has fewer dependencies, simpler dependencies, or no dependencies.
+* Replacement questions should explicitly declare their dependencies so the consistency checker can determine which questions are answerable next.
+
+```

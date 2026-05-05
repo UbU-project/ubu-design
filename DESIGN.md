@@ -6,7 +6,6 @@ Purpose: Canonical public design document for the UbU project
 
 ---
 
-
 ## 1. Overview
 
 **UbU** is a privacy-first planning, coordination, and self-governance system.
@@ -18,7 +17,6 @@ UbU is not merely a task list or calendar application. It is intended to become 
 The first MVP is designed around **dogfooding**: using UbU to coordinate the design, development, release, and maintenance of UbU itself.
 
 ---
-
 
 ## 2. Core Principles
 
@@ -108,7 +106,6 @@ Short-turnaround execution decisions should be computed by UbU’s explicit deci
 
 ---
 
-
 ## 3. Model-committee dogfooding
 
 UbU may use model-committee automation to help maintain its own design process.
@@ -119,7 +116,7 @@ The model committee is not the canonical decision engine. It is an advisory Auto
 - identify unresolved questions,
 - propose answers,
 - critique alternatives,
-- generate candidate patches,
+- generate candidate changesets,
 - run consistency checks,
 - estimate MVP readiness,
 - rank remaining open questions,
@@ -141,8 +138,102 @@ Model-committee automation must be bounded by a stop rule. It should recommend f
 
 The first implementation of this process is intentionally constrained by the v0.1 restrictions recorded in `DECISIONS.md`.
 
----
+### 3.1 Changeset-based work phase
 
+Model-committee automation should make implementation explicit.
+
+After a selected question or problem is chosen, models may be asked to produce concrete changesets. A changeset may be a documentation patch, code patch, schema patch, or other explicit repo-state transition artifact.
+
+Other models, or a designated scoring model, then score those changesets. The best changeset is selected and written as reviewable artifacts such as:
+
+- `selected.patch`
+- `commit_message.txt`
+- `review.md`
+- run logs
+
+This prevents implementation from being hidden inside an external editor agent and makes the committee loop applicable to documentation changes, code changes, bug fixes, and future UbU implementation work.
+
+VS Code or another editor may still be used for human review, but it is not part of the canonical committee loop.
+
+### 3.2 Prioritized recursive loop
+
+Model-committee automation is expected to evolve into a prioritized recursive loop:
+
+1. **System-wide consistency check** verifies that the current project state is coherent.
+2. **Question/problem prioritization selection** chooses the next work item only after consistency is known.
+3. **Work** produces and scores concrete changesets.
+
+Consistency has the highest priority because an inconsistent project state invalidates future planning.
+
+Prioritization is second because it selects the next intended state transition.
+
+Work is third because it should implement only a selected and justified transition.
+
+This structure is intended to make `model-committee` an early dogfooding example of UbU coordinating its own development.
+
+### 3.3 Consistency requirements
+
+System-wide consistency checks should include both document consistency and logical consistency.
+
+For `model-committee`, consistency checking should verify at least:
+
+- canonical files exist and are parseable;
+- question IDs are unique;
+- decision IDs are unique;
+- question dependencies point to existing questions;
+- question dependencies do not contain cycles;
+- `Resolved by` fields point to existing decisions or are explicitly unresolved;
+- solved, decomposed, deferred, or superseded questions are marked consistently;
+- question metadata satisfies the declared schema;
+- derived documents do not contradict canonical files when derived-document checks are enabled.
+
+A question should not be selected for ordinary answer/work execution if it has unresolved dependencies, unless those dependencies are answered in the same work item.
+
+Blocked questions may still be selected for decomposition work when decomposition can produce replacement questions with fewer, simpler, or no dependencies.
+
+### 3.4 Direct project directives
+
+The UbU project may receive direct project-owner directives that are appended to `DECISIONS.md` as accepted decisions.
+
+These directive decisions are treated as canonical once committed.
+
+Directive decisions are a “word of God” mechanism for project governance, but they are still represented as explicit repo state rather than hidden chat context.
+
+If a directive decision creates inconsistency, the next system-wide consistency check should detect it and convert the inconsistency into a problem report, question update, or work item.
+
+### 3.5 Decomposition and design-burden reduction
+
+Model-committee should not treat every increase in open-question count as failure.
+
+A hard, ambiguous, or blocked question may be validly split into multiple simpler questions when the replacement questions are clearer, narrower, lower-risk, or easier to automatically answer.
+
+This is especially valuable when a blocked question can be decomposed into replacement questions where at least one replacement question has fewer dependencies, simpler dependencies, or no dependencies.
+
+The relevant metric is unresolved design burden, not merely raw open-question count.
+
+A decomposition is bad when it creates more, harder, vaguer, or more coupled questions.
+
+A decomposition is good when it exposes smaller answerable units and improves future automation.
+
+### 3.6 Answerability-first prioritization
+
+Question selection should use answerability as the first gate.
+
+A question is eligible for ordinary work only if:
+
+- it has no dependencies;
+- all dependencies are solved;
+- or all dependencies are being answered in the same work item.
+
+After answerability is established, questions are ranked by:
+
+1. automation-likelihood,
+2. importance,
+3. risk ascending.
+
+Questions blocked by unresolved dependencies may be selected for decomposition rather than ordinary answering.
+
+---
 
 ## 4. MVP Release Phases
 
@@ -181,7 +272,6 @@ Multiple humans coordinate through explicit Identities, capabilities, limited di
 Phase 3 should enable coordination without surveillance or shared global truth.
 
 ---
-
 
 ## 5. Operating Modes
 
@@ -234,7 +324,6 @@ Worker mode may run on a local machine, a server, or a thin controller that star
 
 ---
 
-
 ## 6. Core Entity Summary
 
 The core model includes:
@@ -261,7 +350,6 @@ The core model includes:
 Some entities are implemented in MVP. Others are documented now to avoid future contradiction.
 
 ---
-
 
 ## 7. Objectives
 
@@ -356,7 +444,6 @@ For MVP:
 
 ---
 
-
 ## 8. Preferences and Value
 
 A **Preference** is a relation between Objectives.
@@ -426,7 +513,6 @@ Default MVP direction:
 Util derivation is typically local to the Objective subset being compared in a single planning process.
 
 ---
-
 
 ## 9. WorkItems, Tasks, and Containers
 
@@ -537,7 +623,6 @@ Candidate MVP moot reason codes:
 
 ---
 
-
 ## 10. Task Preconditions and Effects
 
 ### 10.1 Preconditions
@@ -583,7 +668,6 @@ A Task may have:
 Task duration PDFs likely use seconds as the canonical time unit in MVP.
 
 ---
-
 
 ## 11. UniverseState
 
@@ -637,7 +721,6 @@ Recommended direction:
 
 ---
 
-
 ## 12. Snapshots
 
 A **Snapshot** is an observed state update.
@@ -665,7 +748,6 @@ Snapshot application semantics remain partially open:
 - confidence per snapshot vs per field
 
 ---
-
 
 ## 13. Affect
 
@@ -731,7 +813,6 @@ Burnout / affect exhaustion is modeled as a constraint violation rather than a f
 
 ---
 
-
 ## 14. External Events
 
 An **External Event** is an instantaneous change in the universe.
@@ -758,7 +839,6 @@ External Events may trigger:
 - worker assignment
 
 ---
-
 
 ## 15. Plans and Calendars
 
@@ -811,7 +891,6 @@ For MVP, gap suggestions are UI suggestions outside the Plan. Future versions ma
 
 ---
 
-
 ## 16. Compact Calendar
 
 A compact Calendar is a transport/storage representation of a Calendar.
@@ -854,7 +933,6 @@ Open questions remain:
 
 ---
 
-
 ## 17. Logs
 
 A **Log** is the canonical record of what actually happened in the universe.
@@ -891,7 +969,6 @@ The comparison of Logs against Plans is essential for:
 
 ---
 
-
 ## 18. Identities
 
 An **Identity** is the external-facing communication and authorization surface.
@@ -913,7 +990,6 @@ Examples:
 
 ---
 
-
 ## 19. Relationships
 
 A **Relationship** is structured UniverseState data representing the relationship between two Identities.
@@ -930,7 +1006,6 @@ Communication and maintenance metadata are not stored directly on Relationship i
 Objectives attach to Relationships indirectly through UniverseState.
 
 ---
-
 
 ## 20. Zones, Devices, and Compartments
 
@@ -982,7 +1057,6 @@ Un-compartmented content is treated as low-security and may require per-integrat
 
 ---
 
-
 ## 21. Automation Workers and Super Automation
 
 ### 21.1 Automation Worker
@@ -998,7 +1072,9 @@ Automation Workers may:
 - run document analysis;
 - submit authorized mutations to a canonical UbU instance.
 
-A worker-mode instance is externally represented as an Identity. A model-committee worker is an Automation Worker that reads the canonical design state, runs local and cloud LLMs against a selected open question, synthesizes candidate answers, and proposes reviewable patches.
+A worker-mode instance is externally represented as an Identity.
+
+A model-committee worker is an Automation Worker that reads canonical project state, runs local and external-process LLM queries against a selected open question or problem, produces candidate changesets, scores candidate changesets, and writes reviewable artifacts.
 
 ### 21.2 Worker mode
 
@@ -1028,7 +1104,6 @@ It may include:
 
 ---
 
-
 ## 22. Organization Mode
 
 Organization mode is an instance-wide option.
@@ -1047,7 +1122,6 @@ Organization mode:
 For MVP, roles/RBAC may be omitted and all users treated as admin-equivalent.
 
 ---
-
 
 ## 23. GitHub Dogfooding and Projection
 
@@ -1112,7 +1186,6 @@ Possible comparisons:
 
 ---
 
-
 ## 24. Risk Reporting
 
 Risk is not a first-class object in MVP.
@@ -1135,7 +1208,6 @@ Burnout / affect exhaustion is modeled as a constraint violation.
 
 ---
 
-
 ## 25. Recalculation Triggers
 
 Candidate MVP recalculation triggers:
@@ -1156,7 +1228,6 @@ Final trigger list remains open.
 
 ---
 
-
 ## 26. Current Major Open Questions
 
 The major remaining questions are tracked in `OPEN_QUESTIONS.md`.
@@ -1176,9 +1247,11 @@ Key unresolved areas include:
 - Recalculation trigger taxonomy
 - Container mutation semantics
 - Moot reason-code taxonomy
+- Model-committee work phase
+- Model-committee prioritized recursive loop
+- Model-committee question decomposition and answerability semantics
 
 ---
-
 
 ## 27. Design Process
 
@@ -1203,3 +1276,13 @@ For UbU design governance:
 - `README.md` and `OUTREACH.md` are derived public-facing projections.
 
 Question-answering uses canonical files. Consistency checking includes derived files and patches them when they fall out of sync.
+
+### Directive decisions
+
+Direct project-owner directives may be appended to `DECISIONS.md` as accepted decisions.
+
+Directive decisions are canonical once committed.
+
+They may override provisional decisions, create new questions, close questions, split questions, or require consistency repairs.
+
+The model-committee process must treat directive decisions as authoritative input during the next system-wide consistency check.
