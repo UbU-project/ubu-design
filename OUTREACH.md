@@ -1,448 +1,412 @@
-# UbU: A FOSS Self-Governance Engine for Reality-Aware Planning
+# UbU Outreach
 
-UbU is a free and open-source software project for building the next generation of personal and collaborative planning tools. It is not merely a task manager, calendar app, habit tracker, project board, or AI assistant. UbU is an attempt to model planning as a living relationship between values, actions, constraints, uncertainty, and real-world consequences.
-
-Most planning software asks a narrow question:
-
-> What tasks do you want to do, and when?
-
-UbU asks a deeper question:
-
-> Given what you value, what state of the world are you trying to reach, what actions could move you there, what constraints govern those actions, and how well do your possible plans cover the futures you actually care about?
-
-This makes UbU both a practical software project and an applied research project. It is intended for people who care about privacy, self-governance, FOSS infrastructure, local-first design, AI agents, stochastic planning, project management theory, and human-centered computing.
-
-UbU is early. Its ontology is still evolving. That is exactly why this is the right time for serious FOSS developers, researchers, and technically minded contributors to get involved.
+**Status:** Derived public-facing outreach document  
+**Source of truth:** `DESIGN.md`, `DECISIONS.md`, and `OPEN_QUESTIONS.md`  
+**Audience:** FOSS developers, project maintainers, planning-tool researchers, privacy engineers, and automation builders
 
 ---
 
-## Why UbU Exists
+## Build software that helps humans govern their own time
 
-Modern productivity tools flatten human life into lists, due dates, events, and notifications. They help users remember obligations, but they do not model why those obligations matter, what dependencies they have, what state of the world they require, or whether completing them actually improves the user’s life.
+UbU is a privacy-first planning, coordination, and self-governance system.
 
-A conventional task manager can tell you:
+It is designed for people who are tired of tools that merely collect tasks, display calendars, or summarize messages without understanding the deeper question:
 
-> Call Alex.
+> Given what matters, what constraints exist, what has changed, and what human limitations are real, what should happen next?
 
-UbU should eventually be able to say:
+UbU aims to become a planning kernel for individuals and organizations. It models Objectives, Tasks, Preferences, Plans, Calendars, Logs, UniverseState, external events, worker automation, privacy compartments, and human affect. It turns messy real-world inputs into explicit, inspectable, recalculable plans.
 
-> You say this relationship matters to you. Your history shows that long silences make reconnection harder, but short check-ins reliably improve the relationship. A low-friction check-in today preserves future relationship options at low emotional and time cost.
+The first MVP is intentionally practical: UbU should help coordinate the development of UbU itself.
 
-A conventional project board can tell a maintainer:
+That means using UbU to manage its own GitHub issues, open questions, pull requests, reviews, CI events, release milestones, design changes, contributor relationships, and automation loops.
 
-> Release Alpha is scheduled for June 1.
-
-UbU should eventually be able to say:
-
-> The June 1 release is only well-covered if the data model stabilizes this week and contributor review capacity remains available. The largest coverage risk is not implementation time; it is unresolved design uncertainty and maintainer fatigue. The highest-value next action is to resolve the WorkItem schema before adding new features.
-
-That is the core difference. UbU does not merely track work. It tries to help users and teams govern themselves.
+UbU’s first proving ground is its own project.
 
 ---
 
-## Current Design Status
+## Why UbU matters
 
-UbU is actively evolving. The project has moved from pure exploration to **structured decision-making**.
+Most productivity systems fail because they treat the user like a machine.
 
-**Design status:**
-- **55 architectural decisions** have been formally accepted (see `DECISIONS.md`)
-- **30 open questions** remain, with clear MVP blockers identified (see `OPEN_QUESTIONS.md`)
-- **Phase 1 MVP scope is not yet frozen**, but the core model is stable enough for implementation to begin
+They assume that if a task appears on a list or calendar, the user can simply execute it. They rarely model energy, stress, attention, boredom, emotional load, uncertainty, dependencies, external interruptions, or changing reality.
 
-This is the ideal time to contribute. The design is concrete enough to review and critique, but flexible enough to incorporate fresh perspectives.
+Project-management systems have a related failure mode. They often represent status, assignment, and deadlines, but they do not model the full decision problem:
 
-Recent accepted decisions include:
-- User sovereignty as foundational
-- Explicit value and planning constraints
-- Privacy-first architecture
-- Three mutually exclusive UbU modes (user/organization/worker)
-- GitHub as a projection of UbU state, not the source of truth
+- What is the actual objective?
+- What dependencies block the work?
+- What external events changed the plan?
+- What is the risk of missing a deadline?
+- Which tasks are meaningful versus merely noisy?
+- Which work should be deferred?
+- Which work should be decomposed?
+- Which automation can be trusted?
+- Which decisions are canonical?
+- Which claims are just projections into another system?
 
----
-
-## The Core Model
-
-UbU begins with the idea that a user wants to move the world from one state to another.
-
-An **Objective**—sometimes informally called a goal—is a desired state of the world. An Objective may be concrete, like “file my taxes,” or abstract, like “maintain a healthy relationship with my sibling,” “release UbU Alpha,” or “live according to my values.”
-
-A **Technique** is a way to satisfy or complete an Objective. A Technique consists of **Steps**, which can be instantiated into concrete **Tasks**.
-
-A **Task**—sometimes abstractly called a WorkItem—is an action or unit of work with explicit constraints. It may have dependencies, required preconditions, expected effects, duration distributions, cost distributions, affective impacts, resource requirements, privacy restrictions, identity boundaries, and resulting changes to the modeled state of the world.
-
-A **Plan** is a possible ordered realization of Tasks. A **Log** is what actually happened. A **Calendar**, in the UbU sense, is not merely a Google-style event grid. It is a set of possible Plans and their realizations. A compact Calendar is a storage/transport representation of that possibility space. A Calendar can be evaluated by how much of its possibility space satisfies the Objective or constraints under consideration.
-
-This gives UbU a powerful general planning structure:
-
-```text
-Objectives define desired states.
-Techniques describe ways to reach them.
-Tasks perform state transitions.
-Plans order Tasks.
-Calendars compactly represent possible realized Plans.
-Logs record reality.
-Feedback updates future modeling.
-```
-
-This structure can support ordinary personal planning, FOSS project management, relationship maintenance, health tracking, household logistics, software release planning, collaborative commitments, and AI-assisted automation.
+UbU is designed to make those things explicit.
 
 ---
 
-## PERT as a Special Case of UbU Calendars
+## The core idea
 
-UbU has an important relationship to project management theory.
+UbU models planning as a state-transition problem.
 
-PERT was one of the early inspirations for UbU’s planning model. PERT’s central insight was that project schedules should not pretend the future is certain. Task durations are uncertain, dependencies matter, and a responsible planning system should represent completion as a distribution rather than a single date.
+A task is not merely a note. It is a proposed action that begins from some assumed state of the universe and, if successful, changes that state.
 
-That insight remains correct. But UbU generalizes it.
+A plan is not merely a calendar layout. It is a possible ordered sequence of actions that should satisfy constraints, respect dependencies, and move the modeled universe toward desired Objectives.
 
-A traditional PERT model can be represented as a simplified projection of a UbU Calendar:
+A log is not merely history. It is the canonical record of what actually happened, allowing the system to compare prediction against reality and improve future planning.
 
-```text
-PERT activity        → UbU Task
-PERT duration        → UbU duration PDF
-PERT dependency      → UbU dependency / precondition subset
-PERT project network → UbU Calendar projection
-PERT completion date → UbU Calendar coverage query
-```
+This makes UbU naturally suited to recursive self-governance:
 
-In PERT, dependencies are often encoded implicitly through events and graph structure. In UbU, dependencies and preconditions are explicit. A Task can require not merely that another task has finished, but that the relevant state of the world exists.
+1. Check the current state for consistency.
+2. Decide which problem or question is answerable and worth addressing next.
+3. Perform work as an explicit state transition.
+4. Record the result.
+5. Re-check consistency.
+6. Repeat.
 
-For example, a Task might require:
-
-```text
-The design decision has been accepted.
-The user has enough available energy.
-The relevant identity has permission to act.
-The privacy compartment allows export.
-The collaborator has committed to review.
-The external API token is valid.
-The required relationship context is not in conflict.
-```
-
-PERT-style optimistic, likely, and pessimistic estimates are also only a low-information form of UbU’s probability model. UbU can support full mathematically continuous PDFs with parameters, provenance, confidence, and update rules. P10/P50/P90 estimates are not primitive planning concepts in UbU; they are derived summaries from richer distribution objects.
-
-This means UbU can answer PERT-like questions:
-
-> What is the probability this release completes by June 1?
-
-But it can also ask much richer questions:
-
-> What percentage of possible release plans preserve maintainer capacity?
->
-> Which Task most improves Calendar coverage?
->
-> Which dependency causes the largest failure mass?
->
-> Which commitment destroys useful option value?
->
-> Which public roadmap promise is unsafe given private project uncertainty?
->
-> Which plan satisfies both external delivery and internal human constraints?
-
-UbU does not discard PERT. It preserves PERT as a useful projection while embedding it in a more expressive model of reality.
+That loop is central to the project.
 
 ---
 
-## Why This Matters for Project Management Theory
+## Privacy-first by design
 
-Most project management tools still operate as if work is deterministic. Gantt charts, issue boards, kanban columns, and spreadsheets are useful visualizations, but they are usually weak models of reality. They often hide uncertainty, collapse disagreement, ignore affective cost, and treat deadlines as facts rather than claims about possible futures.
+UbU is not designed around a centralized service owning user data.
 
-UbU is designed to support a richer project management model.
+The long-term architecture emphasizes:
 
-A serious project management system should represent:
+- local-first operation;
+- user-controlled sync;
+- explicit Zones;
+- execution-enclave Devices;
+- first-class Compartments;
+- compartment-scoped references instead of careless data embedding;
+- multiple Identities;
+- bounded disclosure;
+- user sovereignty.
 
-```text
-Uncertain duration
-Uncertain cost
-Uncertain quality
-Uncertain contributor availability
-Dependencies and preconditions
-External events
-Resource limits
-Human energy and attention
-Privacy constraints
-Conflicting estimates
-Option value
-Decision timing
-Actual-vs-predicted feedback
-```
+Sensitive content should not leak merely because structural planning metadata is useful.
 
-UbU can model these through explicit Tasks, Calendars, Logs, probability distributions, and coverage evaluation.
+A WorkItem should remain structurally usable even when sensitive compartmented content cannot be dereferenced.
 
-For small teams and FOSS projects, this is especially important. Large organizations often have internal planning, risk, finance, and forecasting machinery. Small teams usually have issue trackers, spreadsheets, chat rooms, and hope. UbU’s long-term opportunity is to bring richer planning theory to individuals and small teams without requiring enterprise infrastructure or centralized control.
+This matters because serious planning systems inevitably touch sensitive data: personal relationships, health-related affect, work obligations, financial priorities, private messages, calendars, and organizational strategy.
 
-That makes UbU relevant to several overlapping markets and research areas:
-
-```text
-FOSS project management
-AI-assisted planning
-local-first software
-privacy-preserving personal data systems
-stochastic project management
-human-centered productivity
-affective computing
-self-hosted collaboration
-agentic software workflows
-decision-support systems
-```
-
-UbU’s project management ambitions are not limited to software projects. The same primitives can apply to household renovation, health routines, job searches, travel planning, relationship maintenance, research programs, and personal life design.
+UbU’s privacy model is not an afterthought. It is part of the planning model.
 
 ---
 
-## UbU Runs UbU
+## Human-aware planning
 
-UbU should dogfood itself aggressively.
+UbU treats human limitations as real constraints.
 
-The project’s own development should become one of the first serious test cases for UbU-style planning. Issues can become Tasks. Milestones can become Calendars. Design notes can become Objectives, Techniques, and open questions. Merged pull requests can become Logs. Contributor availability can become a resource constraint. Documentation gaps can become generated Tasks. Release plans can be evaluated for coverage rather than treated as fixed promises.
+In `user_mode`, affect belongs to UniverseState. Energy, tiredness, stress, mood, and related signals are part of the planning problem.
 
-This is the “UbU runs UbU” principle.
+This does not mean the system should constantly interrogate the user. Affect collection is itself modeled as planned work. If affect information is missing or stale, UbU may create an Objective or Task to collect it.
 
-It means the project should progressively use its own model to manage:
+The goal is not emotional surveillance. The goal is self-governance.
 
-```text
-roadmap design
-issue triage
-release planning
-documentation gaps
-contributor onboarding
-project-support Objectives
-maintainer capacity
-dogfooding reports
-design-decision records
-risk and uncertainty
-```
-
-This is more than a slogan. It is a validity test.
-
-If UbU cannot help manage UbU, then UbU has not yet become the system it claims to be. If UbU can manage UbU, then the project becomes a living demonstration of its own philosophy.
+A system that ignores fatigue, boredom, stress, and attention is not helping a human plan. It is producing fiction.
 
 ---
 
-## AI Agents and SuperAutomation
+## Dogfooding: UbU runs UbU
 
-UbU is designed for a world where AI agents can transform messy real-world data into structured, reviewable planning objects.
+The Phase 1 MVP is focused on single-user GitHub dogfooding.
 
-An AI agent should not replace the user’s values. It should help apply the user’s values to the world. UbU’s automation model should therefore distinguish between:
+UbU should help coordinate the UbU project itself by observing and modeling:
 
-```text
-What the user values
-What the world currently appears to be
-What actions could change the world
-What constraints govern those actions
-What risks and uncertainties exist
-What the user has authorized the system to do
-```
+- GitHub issues;
+- pull requests;
+- review requests;
+- CI events;
+- comments;
+- labels;
+- milestones;
+- design questions;
+- release-readiness checks;
+- contributor interactions;
+- automation-worker outputs.
 
-This creates the basis for **SuperAutomations**: user-authorized workflows that transform real-world inputs into structured UbU state.
+GitHub is treated as a projection of UbU state, not the source of truth.
 
-Examples:
+UbU may write selected information back to GitHub through clearly marked managed labels, comments, or issue-body blocks. Other GitHub edits are treated as external events.
 
-```text
-Meal photo → nutrition estimate → health Measurement → user correction → future calibration
-GitHub issue → Task → dependency graph → release Calendar
-Email thread → obligation candidate → Objective or Task
-Calendar history → relationship maintenance signal
-Design conversation → architecture memo → implementation issues
-Receipt photo → expense classification → financial log
-```
-
-SuperAutomations are not just scripts. They are structured pipelines from observation to interpretation to user-authorized state update.
-
-For FOSS developers, this opens many contribution paths: connectors, local-first storage, LLM pipelines, schema design, privacy boundaries, review workflows, agent orchestration, UI, and formal planning semantics.
+This allows FOSS contributors to keep using normal GitHub workflows while UbU maintains a richer canonical model internally.
 
 ---
 
-## Privacy and Identity
+## Model-committee: the bootstrap automation project
 
-UbU’s model is privacy-first by necessity. The system may eventually reason over extremely sensitive data: calendars, messages, relationship histories, health logs, work habits, finances, affective diaries, and private project notes.
+Before the main UbU MVP is implemented, the project is preparing a bootstrap automation tool called `model-committee`.
 
-That means privacy cannot be added later.
+`model-committee` is an early dogfooding system. It helps the project use LLMs and local automation to resolve design questions, propose changesets, and move toward implementation.
 
-UbU’s identity model treats people, accounts, roles, pseudonyms, institutions, and collaborators carefully. A human may have multiple identities. A relationship may involve different identities in different contexts. A project may expose public state while preserving private constraints. A user may want to disclose that a delay exists without disclosing the personal reason for the delay.
+It is not the canonical decision engine. Accepted design state exists only when committed to the canonical repository.
 
-UbU’s compartment model should allow data to be segmented by context and policy:
+The v0.1 loop is deliberately constrained:
 
-```text
-personal
-family
-health
-financial
-work
-FOSS
-pseudonymous
-public
-private project operations
-```
+1. Parse `OPEN_QUESTIONS.md`.
+2. Run consistency checks.
+3. Rank answerable questions.
+4. Generate a ChatGPT work prompt.
+5. Launch an external ChatGPT browser workflow.
+6. Run configured local Ollama models.
+7. Import and validate candidate work proposals.
+8. Mechanically validate patches.
+9. Generate a ChatGPT scoring prompt.
+10. Launch the external ChatGPT scorer workflow.
+11. Select a winning patch.
+12. Write `selected.patch`, `commit_message.txt`, `review.md`, and logs.
 
-A Task, Objective, Distribution, Measurement, or Log entry should carry information about what compartment it belongs to, where it may be processed, and whether it may be shared, exported, summarized, or used by agents.
+This keeps the process auditable.
 
-This is essential for trust. UbU should never become a surveillance graph. It should help users govern their own data and actions.
+The work phase is changeset-based. It should not hide implementation inside VS Code, an editor agent, or undocumented human magic. Models produce concrete changesets. A scorer evaluates them. The selected result becomes a reviewable artifact.
 
----
-
-## Why FOSS Developers Should Care
-
-UbU is a large, ambitious project, but it has many approachable contribution surfaces.
-
-Potential contributors can work on:
-
-```text
-Rust/TypeScript core systems
-local-first data storage
-task and calendar schemas
-PDF/distribution modeling
-GitHub integration
-LLM agent pipelines
-privacy compartments
-UI prototypes
-documentation
-project management theory
-relationship maintenance models
-health and measurement automations
-release-planning dogfooding
-testing and simulation
-```
-
-The project is intellectually rich because it combines practical software engineering with deep modeling questions:
-
-```text
-What is a task?
-What is a plan?
-What is a commitment?
-What does it mean for a plan to cover a desired future?
-How should software represent uncertainty?
-How should AI agents act without replacing user values?
-How should private constraints affect public collaboration?
-How can a FOSS project maintain itself without burning out contributors?
-```
-
-This is not a CRUD app with a productivity skin. It is an attempt to build self-governance infrastructure.
+That same loop can later generalize from design-doc patches to code changes, bug fixes, tests, refactors, release checks, and issue triage.
 
 ---
 
-## Core Open Questions Blocking Phase 1
+## The prioritized recursive loop
 
-These four areas need design input before implementation can accelerate. If you want to influence UbU's direction, these are the highest-leverage contribution points:
+UbU’s self-automation model is organized around three priorities:
 
-### 1. **GitHub ↔ UbU Association Model**
-How do many-to-many relationships between GitHub objects (Issues, PRs, reviews) and UbU objects (Objectives, Tasks) get represented and synchronized? This directly affects dogfooding.
+1. **System-wide consistency check**
+2. **Question/problem prioritization selection**
+3. **Work**
 
-**Relevant discussion:** `OPEN_QUESTIONS.md` #3
+Consistency comes first because an inconsistent project state invalidates future planning.
 
-### 2. **Automation Worker Identity and Capabilities**
-Worker-mode UbU instances need bounded authority. What capabilities can workers receive? How are they scoped and revoked? This enables scaling UbU's planning beyond a single person.
+Prioritization comes second because the system must choose the next intended state transition.
 
-**Relevant discussion:** `OPEN_QUESTIONS.md` #7
+Work comes third because work should implement only a selected and justified transition.
 
-### 3. **Worker Mutation Request Schema**
-How do workers submit changes back to canonical UbU state safely? This needs a schema that prevents accidental overwrites, enables auditing, and supports retries.
+This principle is important. The system should not blindly generate more work. It should first understand whether the current state is coherent, then decide what is answerable and worth doing, then perform the chosen work.
 
-**Relevant discussion:** `OPEN_QUESTIONS.md` #9
-
-### 4. **Compact Calendar DFS Grammar**
-The compact Calendar representation is crucial for recursive self-analysis and device sync. Should it use deterministic expansion or probability-seeded sampling? What is the grammar?
-
-**Relevant discussion:** `OPEN_QUESTIONS.md` #16
-
-If you have strong opinions on any of these, the project needs your input. These are not settled, and fresh perspectives are valuable.
+This is the project’s own philosophy applied to its development process.
 
 ---
 
-## The Long-Term Vision
+## Question decomposition and automation
 
-UbU’s long-term ideal is a system that helps users and teams move from values to action with increasing autonomy, without surrendering agency.
+UbU does not treat every increase in open questions as failure.
 
-For individuals, UbU should help answer:
+Sometimes a hard question should not be answered directly. It should be decomposed.
 
-```text
-What do I care about?
-What am I neglecting?
-What actions would improve my world?
-What plans are realistic?
-What patterns contradict my declared values?
-What should I learn from what actually happened?
-```
+A question blocked by unresolved dependencies may be split into several smaller questions if at least one new question has fewer dependencies, simpler dependencies, or no dependencies.
 
-For teams, UbU should help answer:
+The relevant metric is not raw question count. The relevant metric is unresolved design burden.
 
-```text
-What are we trying to achieve?
-What commitments have we made?
-Where is uncertainty hiding?
-Which dependencies matter most?
-Which contributors are overloaded?
-Which plans preserve useful options?
-Which release promises are realistic?
-What should we do next?
-```
+A good decomposition makes future work easier, clearer, less risky, or more automatable.
 
-For the UbU project itself, UbU should help answer:
+A bad decomposition creates more vague, coupled, or harder questions.
 
-```text
-What should UbU build next?
-Which design questions block progress?
-Which features best dogfood the model?
-Where is maintainer effort being wasted?
-What public contribution opportunities exist?
-How can UbU become better at managing UbU?
-```
-
-That is the vision: a privacy-first, FOSS, AI-assisted self-governance engine that treats planning as reality-aware, value-aware, uncertainty-aware, and human-aware.
-
-UbU is for people who believe software should not merely capture tasks.
-
-It should help users govern their lives, projects, relationships, and communities with clarity, dignity, and agency.
+This distinction matters because UbU aims to automate not just task execution, but also the process of improving its own planning model.
 
 ---
 
-## How to Contribute Now
+## Why FOSS developers should care
 
-You don't need to wait for a finished codebase. UbU needs contributors at every level:
+FOSS development is full of hidden coordination costs.
 
-### **Design & Modeling**
-- Review and critique `DESIGN.md` and `DECISIONS.md`
-- Propose solutions to open questions in `OPEN_QUESTIONS.md`
-- Contribute domain expertise (project management, stochastic planning, privacy, LLMs)
-- Sketch UI/UX concepts
-- Write threat models for privacy architecture
+Maintainers must juggle:
 
-### **Architecture & Planning**
-- Help define Phase 1 MVP scope boundaries
-- Design schemas for UniverseState mutations, Task preconditions, and Worker requests
-- Model dogfooding workflows: how should UbU manage its own GitHub issues and releases?
-- Prototype the compact Calendar representation
+- issue triage;
+- design decisions;
+- release planning;
+- CI failures;
+- pull request review;
+- contributor onboarding;
+- roadmap drift;
+- stale discussions;
+- duplicated issues;
+- ambiguous priorities;
+- burnout risk;
+- under-documented decisions;
+- project governance.
 
-### **Coding (When Scope Freezes)**
-- Rust/TypeScript core systems
-- Local-first data storage and sync
-- GitHub integration
-- Planning algorithms and Calendar evaluation
-- UI prototypes
+Most projects rely on a mixture of GitHub issues, chat threads, ad hoc documents, maintainer memory, and personal judgment.
 
-### **FOSS & Community**
-- Documentation and tutorials
-- Help onboard new contributors
-- Test proposals and report friction
-- Connect UbU to adjacent projects (local-first tools, AI safety, project management theory)
+UbU wants to make that coordination explicit.
 
-**Start here:** Read `DESIGN.md` (full design), then `OPEN_QUESTIONS.md` (what needs debate). Join the conversation.
+For FOSS projects, UbU can eventually help answer:
+
+- Which issues are actually blocked?
+- Which issues are underspecified?
+- Which design decisions are already settled?
+- Which open questions are answerable now?
+- Which work is high-value but low-risk?
+- Which PRs are waiting on review?
+- Which contributors need responses?
+- Which project claims are stale?
+- Which release blockers are real?
+- Which tasks are merely noise?
+- Which automation can safely proceed?
+
+That is directly useful to maintainers.
+
+It is also a strong first use case because the UbU project can dogfood every part of the process in public.
 
 ---
 
-## Join Us
+## What makes UbU different
 
-UbU is built in public. The design process is transparent. Your voice matters.
+UbU is not trying to be another task manager.
 
-- **Read:** Start with `README.md` (overview), then `DESIGN.md` (full model), then `OPEN_QUESTIONS.md` (where you can contribute)
-- **Discuss:** Open GitHub Issues to propose ideas, critique designs, or ask clarifying questions
-- **Contribute:** Help resolve open questions, refine schemas, or prototype ideas
-- **Follow:** This repository evolves frequently as decisions are made and feedback arrives
+UbU combines several ideas that are usually separate:
 
-This is the right time to get involved in UbU. The foundation is solid enough to build on, but flexible enough to shape. Large design decisions remain open. Serious contributors can influence what UbU becomes.
+- explicit objective modeling;
+- preference-derived value;
+- task preconditions and effects;
+- UniverseState simulation;
+- log-based feedback;
+- affect-aware planning;
+- privacy compartments;
+- identity-mediated coordination;
+- worker-mode automation;
+- GitHub dogfooding;
+- LLM-assisted but non-LLM-canonical planning;
+- recursive project self-governance.
 
-UbU is for you if you believe software should help people govern themselves, not surveil them. If you think planning should model uncertainty, not hide it. If you want to build infrastructure that respects privacy, agency, and autonomy.
+This combination is the point.
 
-Welcome. We're building something real.
+A task manager records things you might do.
 
+A calendar shows where time might go.
+
+A project board shows workflow state.
+
+UbU aims to model why work matters, what it depends on, what state it changes, how it interacts with human constraints, and when the plan should be recalculated.
+
+---
+
+## Current development status
+
+The project is currently preparing to move from design documentation into bootstrap automation and then MVP implementation.
+
+The canonical design files are:
+
+- `DESIGN.md`
+- `DECISIONS.md`
+- `OPEN_QUESTIONS.md`
+
+Derived public-facing files include:
+
+- `README.md`
+- `OUTREACH.md`
+
+The current immediate implementation target is `model-committee v0.1`.
+
+The first practical development milestone is to build a Python CLI that can:
+
+- parse canonical design files;
+- validate question metadata;
+- validate question dependency graphs;
+- validate decision references;
+- generate ChatGPT and Ollama prompts;
+- import structured model responses;
+- mechanically validate patches;
+- run a scoring prompt;
+- select a patch;
+- write reviewable artifacts and logs.
+
+---
+
+## Where contributors can help
+
+Contributors can help immediately by working on:
+
+- `model-committee` parser design;
+- single-line `OPEN_QUESTIONS.md` metadata parsing;
+- consistency checks;
+- dependency-DAG validation;
+- decision-reference validation;
+- prompt template design;
+- JSON schema validation;
+- Ollama integration;
+- external-process provider integration;
+- patch extraction and validation;
+- filesystem log layout;
+- test fixtures;
+- review workflow;
+- Phase 1 MVP scope freeze.
+
+Later contributors will be needed for:
+
+- GitHub ingestion and projection;
+- Objective/Task/UniverseState data model implementation;
+- planner algorithms;
+- compact Calendar representation;
+- risk reports;
+- local-first sync;
+- worker-mode execution;
+- privacy compartments;
+- UI/UX;
+- release engineering.
+
+---
+
+## Technical direction for `model-committee`
+
+The first `model-committee` implementation should be intentionally boring.
+
+Recommended stack:
+
+- Python 3.12+
+- `uv`
+- `typer`
+- `pydantic`
+- `pytest`
+- `ruff`
+- custom Markdown parser for `OPEN_QUESTIONS.md`
+- external-process ChatGPT provider
+- local Ollama provider
+- `git apply --check` for patch validation
+- filesystem logs
+
+The v0.1 implementation should not include:
+
+- direct OpenAI, Anthropic, or Gemini APIs;
+- GitHub API;
+- automatic PR creation;
+- auto-push;
+- auto-merge;
+- adaptive model scoring;
+- derived `README.md` or `OUTREACH.md` consistency updates;
+- readiness score updates to `README.md`.
+
+The goal is to get a small, auditable loop working first.
+
+---
+
+## Why join now?
+
+UbU is at the transition point where the design is coherent enough to begin implementation, but early enough that contributors can meaningfully shape the architecture.
+
+This is a good project for developers interested in:
+
+- privacy-first software;
+- local-first systems;
+- planning algorithms;
+- AI-assisted development;
+- LLM orchestration;
+- FOSS governance;
+- project-management theory;
+- self-hosted automation;
+- human-centered computing;
+- applied software architecture;
+- tools that help users govern themselves rather than manipulate them.
+
+UbU is ambitious, but the immediate next step is modest: build the bootstrap tool that helps the project finish becoming buildable.
+
+---
+
+## Project stance
+
+UbU should empower users.
+
+It should not trap them in a platform, hide decisions inside opaque AI behavior, centralize their private data, or pretend humans are machines.
+
+The project’s long-term goal is self-governance: software that helps people and groups understand their constraints, choose their actions, and revise their plans when reality changes.
+
+That starts with UbU learning to govern its own development.
