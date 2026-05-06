@@ -1,119 +1,456 @@
-# UbU Design
+# UbU
 
-Public design notes, decisions, and open questions for the **UbU** project.
-
-UbU is a privacy-first planning and coordination system intended to help people and organizations convert messy real-world inputs—tasks, calendar events, messages, external events, constraints, preferences, and affective state—into explicit, recalculable plans.
-
-UbU is being designed as a local-first, user-sovereign alternative to conventional productivity and project-management tools. Its goal is not merely to store tasks, but to model what the user wants, what constraints exist, what risks threaten those outcomes, and what plan should be followed next.
-
-This repository is the public design workspace for UbU.
+**Status:** Pre-MVP design / bootstrap automation preparation  
+**Repository:** `ubu-design`  
+**Primary purpose:** Canonical public design state for the UbU project
 
 ---
 
-## Project status
+## What is UbU?
 
-UbU is in the **pre-MVP design stage** with active scope definition underway.
+**UbU** is a privacy-first planning, coordination, and self-governance system.
 
-Phase 1 MVP scope is **not yet frozen**. The current focus is to define a small enough data model and implementation scope to begin building a working MVP, while preserving compatibility with the project’s long-term architecture.
+UbU is intended to convert messy real-world inputs—tasks, calendar events, messages, external events, user preferences, physical and affective state, GitHub/project data, and integration data—into explicit, inspectable, recalculable plans.
 
-The first MVP target is **dogfooding**: using UbU to coordinate UbU’s own design, development, release, and maintenance.
+UbU is not merely a task list, calendar application, or project-management dashboard. It is intended to become a planning kernel for individuals and organizations: a system that models desired outcomes, constraints, risks, dependencies, available time, and human limitations, then helps determine what should happen next.
+
+The first MVP is designed around **dogfooding**: using UbU to coordinate the design, development, release, and maintenance of UbU itself.
 
 ---
 
-## Core idea
+## Core philosophy
 
-UbU treats planning as an explicit model of possible futures.
+UbU is based on several design principles:
 
-A user has Objectives. Objectives have user-defined value. Tasks and other WorkItems affect the state of the world. Plans arrange Tasks over time while respecting constraints. A Calendar is a set of possible Plans. As time passes, one possible Plan is realized into history, while others expire or become irrelevant.
+1. **User sovereignty**  
+   The user is the final authority over what the user wants and what occurred.
 
-UbU’s planning logic should remain explicit and recalculable outside of LLMs.
+2. **Explicit value**  
+   Value is attached to Objectives through user-defined Preferences. Numeric utilities may be derived for planning, but they are transient computational artifacts, not canonical user values.
 
-LLMs may assist with interpretation, structuring, candidate suggestions, screenshots, external-system workflows, and advisory analysis, but they are not the canonical decision engine.
+3. **Explicit planning**  
+   Planning must remain explicit and constraint-based. LLMs may assist, but canonical planning and decision logic must remain inspectable and recalculable outside the LLM.
+
+4. **Privacy-first architecture**  
+   UbU is designed around local-first operation, compartmentalized data, multiple Identities, and user-controlled sharing.
+
+5. **Affect-aware planning**  
+   In `user_mode`, human affective state is part of the planning problem. Energy, stress, tiredness, mood, and related human limitations are constraints that planning must respect.
+
+6. **Dogfooding**  
+   The Phase 1 MVP should help coordinate UbU’s own GitHub issues, pull requests, reviews, CI events, release milestones, design questions, and contributor interactions.
+
+---
+
+## Canonical design files
+
+The canonical public design state is maintained in:
+
+- [`DESIGN.md`](DESIGN.md)
+- [`DECISIONS.md`](DECISIONS.md)
+- [`OPEN_QUESTIONS.md`](OPEN_QUESTIONS.md)
+
+Derived public-facing projection files, such as `README.md` and `OUTREACH.md`, should summarize the canonical design state but are not themselves design authority.
+
+When these derived files conflict with canonical files, the canonical files win.
+
+---
+
+## Current project status
+
+UbU is currently in **pre-MVP design and automation-preparation**.
+
+The design has reached the point where private discussion has diminishing returns. The project is preparing to begin implementation by using a bootstrap automation project, `model-committee`, to help finalize remaining design questions and generate reviewable repo changes.
+
+The Phase 1 MVP scope is not yet fully frozen. The first implementation target is still:
+
+> Single-user GitHub dogfooding: UbU helps coordinate the development of UbU itself.
 
 ---
 
 ## MVP release phases
 
-The current MVP is expected to proceed in three phases:
-
 ### Phase 1: Single-user GitHub dogfooding
 
-A single user uses UbU to coordinate work on UbU itself.
+A single user uses UbU to coordinate the UbU project.
 
-Initial integrations focus on GitHub issues, pull requests, reviews, CI events, milestones, and project-maintenance work.
+Primary goals:
 
-GitHub is treated as a projection of UbU state, not the canonical source of truth.
+- import or observe GitHub issues, PRs, reviews, CI events, and milestones;
+- represent them in UbU’s Objective/Task/Calendar model;
+- generate useful Plans;
+- update GitHub as a low-dimensional projection of UbU state;
+- expose limitations and open questions through dogfooding.
 
 ### Phase 2: Single-user multi-device synchronization
 
 A single user runs UbU across multiple devices or execution enclaves.
 
-This phase validates local-first synchronization, partial replication, device roles, and Zone/Compartment boundaries.
+Phase 2 validates:
 
-A useful design rubric is:
-
-> Phase 2 should feel like multi-agent coordination, but all agents happen to agree.
+- local-first sync;
+- partial replication;
+- Zone and Compartment boundaries;
+- device roles;
+- conflict handling.
 
 ### Phase 3: Minimal multi-user / Identity coordination
 
-Multiple users coordinate through explicit Identities, capabilities, commitments, and limited disclosure.
+Multiple humans coordinate through explicit Identities, capabilities, limited disclosure, and commitments.
 
-The goal is coordination without requiring surveillance, shared global truth, or centralized ownership of user data.
-
----
-
-## Major design themes
-
-### Self-governance
-
-UbU is designed to help users govern their own time, attention, commitments, and constraints.
-
-The user remains the final authority over what they want and what occurred.
-
-### Explicit value
-
-Value is not hidden inside prompts or inferred silently by an AI model.
-
-UbU represents value explicitly through Objectives and user-defined Preference relations. Numeric utilities may be derived for planning, but those numbers are transient computational artifacts.
-
-### Explicit planning
-
-Dependencies, constraints, preconditions, effects, Tasks, Plans, and Calendars are represented explicitly.
-
-The system should be inspectable, recalculable, and explainable.
-
-### Privacy-first architecture
-
-UbU is intended to support local-first operation, multiple Identities, Zones, Compartments, and strict containment of sensitive data.
-
-Sensitive data should not leak merely because planning metadata is useful.
-
-### Affect-aware planning
-
-Human beings are not machines.
-
-In user mode, affective state—energy, stress, mood, tiredness, and related constraints—is part of the planning problem. UbU should respect emotional and physical constraints rather than treating them as inconvenient noise.
-
-### Dogfooding
-
-UbU should be useful for managing its own development.
-
-The project’s GitHub workflow should eventually be coordinated by UbU itself, making the system’s strengths and weaknesses visible to contributors.
-
-### Open design
-
-This repository exists so that contributors can review, critique, and improve the design before and during MVP development.
+Phase 3 should enable coordination without surveillance or shared global truth.
 
 ---
 
-## Repository structure
+## Core model summary
 
-This repository intentionally starts simple.
+The UbU model currently includes:
 
-```text
-README.md
-DESIGN.md
-DECISIONS.md
-OPEN_QUESTIONS.md
-OUTREACH.md
-LICENSE.txt
+- Objective
+- Technique
+- Preference
+- WorkItem
+- Task
+- Container
+- UniverseState
+- Snapshot
+- Plan
+- Calendar
+- Log
+- Identity
+- Relationship
+- Zone
+- Compartment
+- Automation Worker
+- External Event
+- External Association
+
+Some entities are intended for Phase 1 implementation. Others are documented now to avoid future contradiction.
+
+---
+
+## Operating modes
+
+Each UbU instance runs in exactly one mode:
+
+- `user_mode`
+- `organization_mode`
+- `worker_mode`
+
+### `user_mode`
+
+A personal UbU instance operated for an autonomous human user.
+
+Only `user_mode` models intrinsic human affect.
+
+### `organization_mode`
+
+An organizational UbU instance operated on behalf of a project or organization.
+
+Organization mode does not model intrinsic affect. For MVP, organization-mode users may be treated as admin-equivalent to avoid premature RBAC complexity.
+
+### `worker_mode`
+
+A worker-mode instance performs delegated work assigned by another UbU instance.
+
+Worker mode is used by Automation Workers and may perform LLM calls, GitHub processing, document analysis, external API work, or other delegated tasks.
+
+---
+
+## GitHub dogfooding
+
+For dogfooding, GitHub is treated as a low-dimensional projection of canonical UbU state.
+
+UbU is the source of truth. GitHub Issues, PRs, comments, labels, reviews, CI, and milestones must be interpreted into UbU objects and events.
+
+UbU may project selected state back into GitHub through clearly marked managed labels, comments, or body blocks. Other GitHub edits are treated as external events by default.
+
+Missed GitHub updates are expected in MVP, so reconciliation is a first-class concern.
+
+---
+
+## Model-committee bootstrap project
+
+`model-committee` is a planned bootstrap automation project that will help UbU move from design preparation into implementation.
+
+The project is an early example of UbU dogfooding: UbU uses an automation loop to help coordinate its own design and development.
+
+`model-committee` is not the canonical decision engine. It is an advisory Automation Worker pattern that reads canonical repo state, identifies open questions, generates candidate changesets, scores those changesets, and writes reviewable artifacts.
+
+Accepted design state exists only when committed to the canonical repo.
+
+---
+
+## Model-committee v0.1 feature boundary
+
+`model-committee` v0.1 must implement:
+
+- parse `OPEN_QUESTIONS.md`
+- run consistency checks
+- rank answerable questions
+- generate ChatGPT work prompt
+- launch external ChatGPT process
+- run configured Ollama work models
+- import/validate candidate work proposals
+- mechanically validate patches
+- generate ChatGPT scoring prompt
+- launch external ChatGPT scorer process
+- select winning patch
+- write `selected.patch`, `commit_message.txt`, `review.md`, and logs
+
+`model-committee` v0.1 must not implement:
+
+- direct OpenAI/Anthropic/Gemini API calls
+- GitHub API
+- auto-merge
+- auto-push
+- automatic PR creation
+- adaptive model scoring
+- readiness score updates to `README.md`
+- derived `README.md`/`OUTREACH.md` consistency
+
+---
+
+## Model-committee execution model
+
+The early `model-committee` loop is ChatGPT-first and Ollama-secondary.
+
+1. Parse `OPEN_QUESTIONS.md`.
+2. Run consistency checks.
+3. Rank answerable questions.
+4. Generate the ChatGPT work prompt first.
+5. Launch the external ChatGPT process.
+6. Run configured local Ollama work models.
+7. Import and validate candidate work proposals.
+8. Mechanically validate candidate patches.
+9. Generate the ChatGPT scoring prompt.
+10. Launch the external ChatGPT scorer process.
+11. Select the winning patch.
+12. Write reviewable artifacts and logs.
+
+The ChatGPT web/premium workflow is represented as an external-process provider.
+
+The configured command contract is:
+
+```bash
+/path/to/chatgpt_launcher --prompt-file PROMPT --response-file RESPONSE
+
+The launcher blocks until the response file is saved. Exit code 0 means success. Any other exit code is an error. The intended cancellation code is -1; the intended browser/helper failure code is -2.
+
+Before launch, old response files should be deleted.
+
+The saved response is raw text, expected to contain JSON due to the prompt structure.
+
+If the same external launcher cannot be invoked twice in one run, v0.1 should treat ChatGPT work generation and ChatGPT scoring as separate orchestrated invocations or separate CLI phases while preserving the same provider contract.
+
+
+---
+
+Prioritized recursive loop
+
+model-committee is expected to evolve into a prioritized recursive loop:
+
+1. System-wide consistency check
+
+
+2. Question/problem prioritization selection
+
+
+3. Work
+
+
+
+Consistency has the highest priority because an inconsistent project state invalidates future planning.
+
+Prioritization is second because it selects the next intended state transition.
+
+Work is third because it should implement only a selected and justified transition.
+
+Work should not proceed against a known-inconsistent repo unless the selected work item is specifically to repair that inconsistency.
+
+
+---
+
+Question selection policy
+
+model-committee uses answerability as the first gate.
+
+A question is eligible for ordinary work only if:
+
+it has no dependencies;
+
+all dependencies are solved;
+
+or all dependencies are being answered in the same work item.
+
+
+Blocked questions may still be selected for decomposition work if decomposition is expected to produce replacement questions with fewer, simpler, or no dependencies.
+
+After answerability is established, questions are ranked by:
+
+1. automation-likelihood score,
+
+
+2. importance score,
+
+
+3. risk score ascending.
+
+
+
+
+---
+
+Question metadata format
+
+OPEN_QUESTIONS.md may use single-line metadata.
+
+The metadata fields always appear in the same order and use exact, case-sensitive labels:
+
+Status:
+Priority:
+Phase:
+Decision type:
+Auto-choice eligibility:
+Importance score:
+Automation-likelihood score:
+Risk score:
+Answerability score:
+Depends on:
+Blocks:
+Resolved by:
+Last scored:
+Scored from commit:
+
+Optional fields may appear after Scored from commit::
+
+Supersedes:
+Superseded by:
+Decomposes:
+Decomposed into:
+
+Allowed sentinel values include:
+
+TBD
+
+Never
+
+None
+
+Unresolved
+
+
+
+---
+
+Changeset-based work
+
+model-committee work is changeset-based.
+
+The implementation step should not be hidden inside VS Code or another opaque external editor agent.
+
+Candidate models produce explicit changesets, usually as patches. A scoring model evaluates those changesets. The selected result is written as reviewable artifacts:
+
+selected.patch
+
+commit_message.txt
+
+review.md
+
+run logs
+
+
+VS Code or another editor may still be used for human review, but it is not part of the canonical committee loop.
+
+
+---
+
+Direct project directives
+
+The project owner may append direct accepted decisions to DECISIONS.md.
+
+These directive decisions are treated as canonical once committed.
+
+Directive decisions are a “word of God” mechanism for project governance, but they remain explicit repo state rather than hidden chat context.
+
+If a directive decision creates inconsistency, the next system-wide consistency check should detect it and convert the inconsistency into a report, question update, or work item.
+
+
+---
+
+Decomposition and design-burden reduction
+
+model-committee should not treat every increase in open-question count as failure.
+
+A hard, ambiguous, or blocked question may be validly split into multiple simpler questions when the replacement questions are clearer, narrower, lower-risk, or easier to automatically answer.
+
+This is especially valuable when a blocked question can be decomposed into replacement questions where at least one replacement question has fewer dependencies, simpler dependencies, or no dependencies.
+
+The relevant metric is unresolved design burden, not merely raw open-question count.
+
+
+---
+
+Development readiness
+
+The current design baseline is intended to support beginning model-committee development.
+
+The first development milestone should be:
+
+parse canonical design files;
+
+validate question metadata;
+
+validate question dependency DAGs;
+
+validate decision references;
+
+generate ChatGPT and Ollama work prompts;
+
+import structured model responses;
+
+mechanically validate patches;
+
+generate scoring prompt;
+
+import scorer response;
+
+write selected patch and review artifacts.
+
+
+
+---
+
+Contributing
+
+This repository is currently a design repository, not the main implementation repository.
+
+Good contributions include:
+
+clarifying open questions;
+
+identifying contradictions in the canonical design files;
+
+proposing precise patches to DESIGN.md, DECISIONS.md, or OPEN_QUESTIONS.md;
+
+helping convert open questions into implementation-ready issues;
+
+reviewing whether Phase 1 scope is sufficiently frozen.
+
+
+The project prefers explicit patches over hidden discussion.
+
+
+---
+
+Repository map
+
+README.md — derived public-facing project summary
+
+DESIGN.md — canonical design summary
+
+DECISIONS.md — accepted design decisions and anti-regression memory
+
+OPEN_QUESTIONS.md — unresolved questions, prioritization metadata, and automation queue
+
+OUTREACH.md — derived public-facing outreach and recruiting document
