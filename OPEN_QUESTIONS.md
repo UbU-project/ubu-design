@@ -25,7 +25,7 @@ Each open question block uses the following format.
 The metadata line may be stored as a single physical line. `model-committee` v0.1 must parse this single-line metadata format.
 
 ```text
-## UBU-Q0001: Question title
+## UBU-X0001: Question title
 
 Status: Open | Solved | Deferred | Superseded | Archived | Decomposed Priority: MVP blocker | MVP important | Post-MVP | Research Phase: Phase 1 | Phase 2 | Phase 3 | Post-MVP Decision type: Scope | Data model | Process | Governance | Product | Security | Architecture Auto-choice eligibility: Auto eligible | Human approval required | Human only Importance score: TBD | 0-100 Automation-likelihood score: TBD | 0-100 Risk score: TBD | 0-100 Answerability score: TBD | 0-100 Depends on: None | UBU-Qxxxx Blocks: None | Phase 1 implementation | Phase 1 scope freeze | etc. Resolved by: Unresolved | UBU-Dxxxx Last scored: Never | YYYY-MM-DD Scored from commit: None | commit SHA
 ```
