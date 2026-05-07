@@ -2,7 +2,7 @@
 
 **Status:** Derived public-facing outreach document  
 **Source of truth:** `DESIGN.md`, `DECISIONS.md`, and `OPEN_QUESTIONS.md`  
-**Audience:** FOSS developers, project maintainers, planning-tool researchers, privacy engineers, and automation builders
+**Audience:** FOSS developers, project maintainers, planning-tool researchers, privacy engineers, automation builders, and technically curious contributors
 
 ---
 
@@ -140,7 +140,7 @@ This allows FOSS contributors to keep using normal GitHub workflows while UbU ma
 
 Before the main UbU MVP is implemented, the project is preparing a bootstrap automation tool called `model-committee`.
 
-`model-committee` is an early dogfooding system. It helps the project use LLMs and local automation to resolve design questions, propose changesets, and move toward implementation.
+`model-committee` is an early dogfooding system. It helps the project use LLMs and local automation to resolve design questions, propose changesets, score candidate patches, and move toward implementation.
 
 It is not the canonical decision engine. Accepted design state exists only when committed to the canonical repository.
 
@@ -149,13 +149,13 @@ The v0.1 loop is deliberately constrained:
 1. Parse `OPEN_QUESTIONS.md`.
 2. Run consistency checks.
 3. Rank answerable questions.
-4. Generate a ChatGPT work prompt.
-5. Launch an external ChatGPT browser workflow.
-6. Run configured local Ollama models.
+4. Generate a Codex work prompt.
+5. Launch the Codex CLI work provider.
+6. Run configured local Ollama proposal models sequentially by priority.
 7. Import and validate candidate work proposals.
 8. Mechanically validate patches.
-9. Generate a ChatGPT scoring prompt.
-10. Launch the external ChatGPT scorer workflow.
+9. Generate a Codex scoring prompt.
+10. Launch the Codex CLI scoring provider.
 11. Select a winning patch.
 12. Write `selected.patch`, `commit_message.txt`, `review.md`, and logs.
 
@@ -164,6 +164,51 @@ This keeps the process auditable.
 The work phase is changeset-based. It should not hide implementation inside VS Code, an editor agent, or undocumented human magic. Models produce concrete changesets. A scorer evaluates them. The selected result becomes a reviewable artifact.
 
 That same loop can later generalize from design-doc patches to code changes, bug fixes, tests, refactors, release checks, and issue triage.
+
+---
+
+## Codex-first, Ollama-secondary automation
+
+`model-committee v0.1` is Codex-first and Ollama-secondary.
+
+Codex CLI is the primary schema-constrained provider for:
+
+- work proposal generation;
+- work scoring.
+
+Local Ollama models are secondary proposal providers. They provide local diversity, dissent, fallback, and offline review.
+
+If Ollama responses finish within timeout and validate, they are included in Codex scoring. If an Ollama provider fails, the failure is logged and the run may continue if Codex produces at least one valid work proposal.
+
+Codex scoring is required for automatic patch selection in v0.1.
+
+Codex is not allowed to directly mutate canonical repo files in v0.1. It produces JSON work proposals and score results. Patches are validated and selected by `model-committee`, then written as review artifacts.
+
+---
+
+## Bounded automation, not runaway agents
+
+`model-committee v0.1` is intentionally narrow.
+
+It must not implement:
+
+- direct OpenAI, Anthropic, or Gemini API calls;
+- GitHub API calls;
+- automatic patch application;
+- auto-merge;
+- auto-push;
+- automatic pull request creation;
+- adaptive model scoring;
+- readiness-score updates to `README.md`;
+- derived `README.md` or `OUTREACH.md` consistency updates;
+- arbitrary network calls outside approved providers.
+
+The tool may communicate only with:
+
+- local Ollama `base_url`;
+- Codex CLI subprocesses.
+
+This constraint matters. UbU’s automation should remain explicit, inspectable, and bounded. The goal is not an uncontrolled agent that mutates the project. The goal is a reviewable state-transition system.
 
 ---
 
@@ -303,10 +348,10 @@ The first practical development milestone is to build a Python CLI that can:
 - validate question metadata;
 - validate question dependency graphs;
 - validate decision references;
-- generate ChatGPT and Ollama prompts;
+- generate Codex and Ollama prompts;
 - import structured model responses;
 - mechanically validate patches;
-- run a scoring prompt;
+- run Codex scoring;
 - select a patch;
 - write reviewable artifacts and logs.
 
@@ -322,9 +367,12 @@ Contributors can help immediately by working on:
 - dependency-DAG validation;
 - decision-reference validation;
 - prompt template design;
-- JSON schema validation;
+- JSON Schema validation;
+- Pydantic model validation;
+- Codex CLI provider integration;
 - Ollama integration;
-- external-process provider integration;
+- fake provider mode;
+- `doctor` command implementation;
 - patch extraction and validation;
 - filesystem log layout;
 - test fixtures;
@@ -354,13 +402,14 @@ Recommended stack:
 
 - Python 3.12+
 - `uv`
-- `typer`
+- `argparse`
 - `pydantic`
+- `httpx`
 - `pytest`
 - `ruff`
 - custom Markdown parser for `OPEN_QUESTIONS.md`
-- external-process ChatGPT provider
-- local Ollama provider
+- Codex CLI provider through subprocess
+- local Ollama provider through configured `base_url`
 - `git apply --check` for patch validation
 - filesystem logs
 
@@ -373,7 +422,8 @@ The v0.1 implementation should not include:
 - auto-merge;
 - adaptive model scoring;
 - derived `README.md` or `OUTREACH.md` consistency updates;
-- readiness score updates to `README.md`.
+- readiness score updates to `README.md`;
+- automatic patch application.
 
 The goal is to get a small, auditable loop working first.
 

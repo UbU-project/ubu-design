@@ -1288,15 +1288,18 @@ v0.1 must implement:
 - parse `OPEN_QUESTIONS.md`
 - run consistency checks
 - rank answerable questions
-- generate ChatGPT work prompt
-- launch external ChatGPT process
-- run configured Ollama work models
-- import/validate candidate work proposals
+- generate Codex work prompt
+- launch Codex CLI work provider
+- run configured Ollama work models sequentially by priority
+- import and validate candidate work proposals
 - mechanically validate patches
-- generate ChatGPT scoring prompt
-- launch external ChatGPT scorer process
+- generate Codex scoring prompt
+- launch Codex CLI scoring provider
 - select winning patch
 - write `selected.patch`, `commit_message.txt`, `review.md`, and logs
+- support fake provider mode for tests
+- include a `doctor` command for environment checks
+- include a `version` command
 
 v0.1 must not implement:
 
@@ -1308,15 +1311,48 @@ v0.1 must not implement:
 - adaptive model scoring
 - readiness score updates to `README.md`
 - derived `README.md`/`OUTREACH.md` consistency
+- automatic patch application
+- arbitrary network calls outside approved providers
+
+v0.1 tooling and architecture:
+
+- Python 3.12+
+- `uv`
+- `argparse`
+- `pydantic`
+- `httpx`
+- `pytest`
+- `ruff`
+- custom Markdown parser for `OPEN_QUESTIONS.md`
+- `git apply --check` for patch validation
+- filesystem logs
+
+v0.1 provider/network policy:
+
+- `model-committee` itself may communicate only with:
+  - local Ollama `base_url`;
+  - Codex CLI subprocesses.
+- It must not call:
+  - GitHub;
+  - OpenAI APIs directly;
+  - Anthropic APIs;
+  - Gemini APIs;
+  - arbitrary HTTP URLs.
+- `httpx` may be used only for the configured Ollama `base_url`.
+- Codex must be invoked only through subprocess.
 
 **Consequences:**
 
 
 - v0.1 remains narrow enough to implement quickly.
-- ChatGPT web/premium access is represented through an external-process provider, not a direct API provider.
-- Local Ollama execution remains in the earliest implementation.
+- Codex CLI is represented as the primary work and scoring provider.
+- Local Ollama execution remains in the earliest implementation as a secondary proposal source.
 - Direct cloud APIs, GitHub integration, derived-file consistency, and adaptive scoring are deferred.
 - v0.1 may create review artifacts but must not mutate remote GitHub state.
+- v0.1 must not allow Codex to directly modify canonical repo files.
+- Fake provider mode allows deterministic tests without calling Codex or Ollama.
+- The `doctor` command improves reproducibility by checking local runtime prerequisites.
+- The no-network rule preserves the intended bootstrap architecture and avoids accidental API creep.
 
 ---
 
@@ -1454,7 +1490,7 @@ The final log and provenance format may be refined later by the model-committee 
 - `UBU-Q0036` remains open for final log/provenance design.
 - v0.1 development is not blocked on fully resolving `UBU-Q0036`.
 - The provisional log format should be simple, inspectable, and filesystem-based.
-- Logs should preserve enough information to audit prompts, provider results, selected work proposals, selected changesets, consistency reports, question-ranking reports, and generated review artifacts.
+- Logs should preserve enough information to audit prompts, provider results, selected work proposals, selected changesets, consistency reports, question-ranking reports, generated review artifacts, Codex JSONL event logs, and provider stderr.
 
 Provisional v0.1 log layout:
 
@@ -1466,31 +1502,40 @@ runs/
       DESIGN.md
       DECISIONS.md
       OPEN_QUESTIONS.md
+    schemas/
+      work_proposal.schema.json
+      score_result.schema.json
     prompts/
-      chatgpt_work_prompt.md
+      codex_work_prompt.md
       ollama_work_prompt.md
-      chatgpt_score_prompt.md
+      codex_score_prompt.md
     responses/
-      chatgpt_work_response.txt
+      codex_work_response.json
+      codex_work_events.jsonl
+      codex_work_stderr.txt
       ollama_<safe_model_name>_response.txt
-      chatgpt_score_response.txt
+      codex_score_response.json
+      codex_score_events.jsonl
+      codex_score_stderr.txt
     parsed/
-      chatgpt_work_proposal.json
+      codex_work_proposal.json
       ollama_<safe_model_name>_proposal.json
       score_result.json
     patches/
-      chatgpt.patch
+      codex.patch
       ollama_<safe_model_name>.patch
       selected.patch
     review.md
     commit_message.txt
-````
+```
 
 ---
+
 
 ## UBU-D0065: Model-committee v0.1 uses provisional quorum and provider-failure rules
 
 **Status:** Accepted
+
 
 For v0.1, model-committee runs should use simple provisional quorum and provider-failure rules.
 
@@ -1498,26 +1543,35 @@ These rules are sufficient to begin implementation and may be refined later.
 
 Provisional quorum rules:
 
-* Minimum valid work proposals: 1.
-* Preferred valid work proposals: 2 or more.
-* At least one ChatGPT external-process work response should be attempted before selecting a patch.
-* If no valid work proposal exists, the run writes logs and exits nonzero.
-* Provider failures are logged but do not invalidate the run if quorum is met.
-* The ChatGPT scorer external-process response is required for automatic patch selection.
-* If the ChatGPT scorer does not produce a valid score result, the run writes logs and exits nonzero unless the user explicitly chooses a patch manually.
+- Minimum valid work proposals: 1.
+- Preferred valid work proposals: 2 or more.
+- A Codex work proposal should be attempted before selecting a patch.
+- Ollama work proposals should be attempted sequentially by configured priority.
+- If Ollama responses finish within timeout and validate, they are included in Codex scoring.
+- If an Ollama provider fails, the failure is logged and the run may continue if Codex produces at least one valid work proposal.
+- If no valid work proposal exists, the run writes logs and exits nonzero.
+- Provider failures are logged but do not invalidate the run if quorum is met.
+- The Codex scoring response is required for automatic patch selection.
+- If Codex scoring does not produce a valid score result, the run writes logs and exits nonzero.
+- Manual override is not allowed in v0.1.
+- If `selected_proposal_id` refers to a proposal that failed mechanical validation, `work-select` fails with exit code `7`, does not write `selected.patch`, and writes `review.md` explaining the failure if possible.
 
 **Consequences:**
 
-* v0.1 does not need a perfect provider scheduler before development begins.
-* Failed, unavailable, invalid-output, or interrupted providers are recorded as run events.
-* The committee can continue when enough valid structured results exist.
-* More sophisticated quorum, retry, weighting, cooldown, and provider-health rules are deferred.
+
+- v0.1 does not need a perfect provider scheduler before development begins.
+- Failed, unavailable, invalid-output, timed-out, or interrupted providers are recorded as run events.
+- The committee can continue when enough valid structured results exist.
+- Codex is the required scoring provider in v0.1.
+- More sophisticated quorum, retry, weighting, cooldown, and provider-health rules are deferred.
 
 ---
+
 
 ## UBU-D0066: Model-committee follows a prioritized recursive loop
 
 **Status:** Accepted
+
 
 The model-committee project should be developed as a bootstrap version of UbU’s future self-automation and dogfooding loop.
 
@@ -1535,17 +1589,20 @@ Work is lowest priority and should normally run only after the current project s
 
 **Consequences:**
 
-* `model-committee` is not merely a question-answering tool.
-* Consistency failures should usually become higher-priority work than unrelated future questions.
-* Work should not proceed against a known-inconsistent repo unless the work item is specifically to repair that inconsistency.
-* Early releases should preserve this structure even if the first implementation is simple.
-* This loop should later map naturally into UbU’s own self-governance and Automation Worker model.
+
+- `model-committee` is not merely a question-answering tool.
+- Consistency failures should usually become higher-priority work than unrelated future questions.
+- Work should not proceed against a known-inconsistent repo unless the work item is specifically to repair that inconsistency.
+- Early releases should preserve this structure even if the first implementation is simple.
+- This loop should later map naturally into UbU’s own self-governance and Automation Worker model.
 
 ---
+
 
 ## UBU-D0067: Directive decisions may be appended directly
 
 **Status:** Accepted
+
 
 The UbU project may receive direct project-owner directives that are appended to `DECISIONS.md` as accepted decisions without first passing through the ordinary model-committee question-answering loop.
 
@@ -1553,18 +1610,21 @@ These directive decisions are treated as canonical once committed to `DECISIONS.
 
 **Consequences:**
 
-* The model committee must treat directive decisions as authoritative.
-* Directive decisions may override prior provisional decisions.
-* If a directive decision creates inconsistencies, the next system-wide consistency check must detect them.
-* Directive decisions may create, close, split, or reclassify open questions.
-* Directive decisions should still use normal `UBU-Dxxxx` numbering.
-* Directive decisions should identify affected `UBU-Qxxxx` questions where practical.
+
+- The model committee must treat directive decisions as authoritative.
+- Directive decisions may override prior provisional decisions.
+- If a directive decision creates inconsistencies, the next system-wide consistency check must detect them.
+- Directive decisions may create, close, split, or reclassify open questions.
+- Directive decisions should still use normal `UBU-Dxxxx` numbering.
+- Directive decisions should identify affected `UBU-Qxxxx` questions where practical.
 
 ---
+
 
 ## UBU-D0068: Model-committee may decompose hard questions into easier questions
 
 **Status:** Accepted
+
 
 The model-committee process should not treat every increase in open-question count as a failure.
 
@@ -1572,13 +1632,43 @@ A work proposal may validly split, narrow, or restate a hard question into multi
 
 **Consequences:**
 
-* The committee should track unresolved design burden, not merely question count.
-* A decomposition is valid only if the resulting questions are clearer, narrower, lower-risk, or easier to automatically answer than the original.
-* Replacement questions should not be harder to automatically answer than the question they replace unless the exception is explicitly justified.
-* The original question should be marked as narrowed, partially resolved, superseded, or decomposed.
-* Work scoring should reward useful decomposition and penalize scope-expanding decomposition.
-* Decomposition is especially valuable when it reduces dependency blocking.
-* A blocked question may be decomposed into replacement questions when at least one replacement question has fewer dependencies, simpler dependencies, or no dependencies.
-* Replacement questions should explicitly declare their dependencies so the consistency checker can determine which questions are answerable next.
 
-```
+- The committee should track unresolved design burden, not merely question count.
+- A decomposition is valid only if the resulting questions are clearer, narrower, lower-risk, or easier to automatically answer than the original.
+- Replacement questions should not be harder to automatically answer than the question they replace unless the exception is explicitly justified.
+- The original question should be marked as narrowed, partially resolved, superseded, or decomposed.
+- Work scoring should reward useful decomposition and penalize scope-expanding decomposition.
+- Decomposition is especially valuable when it reduces dependency blocking.
+- A blocked question may be decomposed into replacement questions when at least one replacement question has fewer dependencies, simpler dependencies, or no dependencies.
+- Replacement questions should explicitly declare their dependencies so the consistency checker can determine which questions are answerable next.
+
+---
+
+
+## UBU-D0069: Model-committee v0.1 uses Codex CLI as the primary model provider
+
+**Status:** Accepted
+
+
+`model-committee` v0.1 uses Codex CLI as the primary model provider for work proposal generation and work scoring.
+
+The runtime calls `codex exec` with schema-constrained output. Prompts are passed through stdin. Final responses are written to JSON files. JSONL event streams and stderr are preserved in run logs.
+
+Every runtime Codex call must pass `--skip-git-repo-check`.
+
+`model-committee` does not pass deprecated `--disable web_search` flags. If web search must be disabled, that is handled through Codex configuration or profile state outside `model-committee`.
+
+Codex must not directly modify repository files in v0.1. It produces JSON work proposals and score results. Patches are validated and selected by `model-committee`, then written as review artifacts.
+
+**Consequences:**
+
+
+- Browser-mediated ChatGPT copy/paste is removed from v0.1.
+- Codex is the primary proposal and scoring provider.
+- Ollama remains a secondary local proposal provider.
+- v0.1 does not call OpenAI APIs directly.
+- v0.1 does not allow Codex to mutate canonical repo state directly.
+- All Codex outputs must be schema-constrained and logged.
+- Runtime Codex calls use stdin prompt mode.
+- Runtime Codex calls preserve JSONL event output and stderr output.
+- Codex web-search configuration is treated as external Codex profile/config state, not managed by `model-committee` v0.1.

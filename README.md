@@ -52,7 +52,7 @@ The canonical public design state is maintained in:
 
 Derived public-facing projection files, such as `README.md` and `OUTREACH.md`, should summarize the canonical design state but are not themselves design authority.
 
-When these derived files conflict with canonical files, the canonical files win.
+When derived files conflict with canonical files, the canonical files win.
 
 ---
 
@@ -185,128 +185,134 @@ Accepted design state exists only when committed to the canonical repo.
 
 `model-committee` v0.1 must implement:
 
-- parse `OPEN_QUESTIONS.md`
-- run consistency checks
-- rank answerable questions
-- generate ChatGPT work prompt
-- launch external ChatGPT process
-- run configured Ollama work models
-- import/validate candidate work proposals
-- mechanically validate patches
-- generate ChatGPT scoring prompt
-- launch external ChatGPT scorer process
-- select winning patch
-- write `selected.patch`, `commit_message.txt`, `review.md`, and logs
+- parse `OPEN_QUESTIONS.md`;
+- run consistency checks;
+- rank answerable questions;
+- generate Codex work prompts;
+- launch Codex CLI work provider;
+- run configured Ollama work models sequentially by priority;
+- import and validate candidate work proposals;
+- mechanically validate patches;
+- generate Codex scoring prompts;
+- launch Codex CLI scoring provider;
+- select winning patch;
+- write `selected.patch`, `commit_message.txt`, `review.md`, and logs;
+- support fake provider mode for tests;
+- include a `doctor` command for environment checks;
+- include a `version` command.
 
 `model-committee` v0.1 must not implement:
 
-- direct OpenAI/Anthropic/Gemini API calls
-- GitHub API
-- auto-merge
-- auto-push
-- automatic PR creation
-- adaptive model scoring
-- readiness score updates to `README.md`
-- derived `README.md`/`OUTREACH.md` consistency
+- direct OpenAI/Anthropic/Gemini API calls;
+- GitHub API;
+- auto-merge;
+- auto-push;
+- automatic PR creation;
+- adaptive model scoring;
+- readiness score updates to `README.md`;
+- derived `README.md`/`OUTREACH.md` consistency;
+- automatic patch application;
+- arbitrary network calls outside approved providers.
 
 ---
 
 ## Model-committee execution model
 
-The early `model-committee` loop is ChatGPT-first and Ollama-secondary.
+The early `model-committee` loop is **Codex-first and Ollama-secondary**.
 
 1. Parse `OPEN_QUESTIONS.md`.
 2. Run consistency checks.
 3. Rank answerable questions.
-4. Generate the ChatGPT work prompt first.
-5. Launch the external ChatGPT process.
-6. Run configured local Ollama work models.
+4. Generate the Codex work prompt.
+5. Launch the Codex CLI work provider.
+6. Run configured local Ollama work models sequentially by priority.
 7. Import and validate candidate work proposals.
 8. Mechanically validate candidate patches.
-9. Generate the ChatGPT scoring prompt.
-10. Launch the external ChatGPT scorer process.
+9. Generate the Codex scoring prompt.
+10. Launch the Codex CLI scoring provider.
 11. Select the winning patch.
 12. Write reviewable artifacts and logs.
 
-The ChatGPT web/premium workflow is represented as an external-process provider.
+Codex CLI is represented as the primary schema-constrained proposal and scoring provider.
 
-The configured command contract is:
+Local Ollama models are secondary proposal providers. If Ollama responses finish within timeout and validate, they are included in Codex scoring. If an Ollama provider fails, the failure is logged and the run may continue if Codex produces at least one valid work proposal.
 
-```bash
-/path/to/chatgpt_launcher --prompt-file PROMPT --response-file RESPONSE
-
-The launcher blocks until the response file is saved. Exit code 0 means success. Any other exit code is an error. The intended cancellation code is -1; the intended browser/helper failure code is -2.
-
-Before launch, old response files should be deleted.
-
-The saved response is raw text, expected to contain JSON due to the prompt structure.
-
-If the same external launcher cannot be invoked twice in one run, v0.1 should treat ChatGPT work generation and ChatGPT scoring as separate orchestrated invocations or separate CLI phases while preserving the same provider contract.
-
+Codex scoring is required for automatic patch selection in v0.1.
 
 ---
 
-Prioritized recursive loop
+## Codex provider behavior
 
-model-committee is expected to evolve into a prioritized recursive loop:
+`model-committee` v0.1 calls `codex exec` with schema-constrained output.
 
-1. System-wide consistency check
+Runtime Codex calls:
 
+- pass prompts through stdin;
+- write final responses to JSON files;
+- preserve JSONL event streams;
+- preserve stderr output;
+- always pass `--skip-git-repo-check`;
+- do not use deprecated `--disable web_search` flags;
+- do not directly modify canonical repo files.
 
-2. Question/problem prioritization selection
+If Codex web search must be disabled, that is handled through Codex configuration or profile state outside `model-committee`.
 
-
-3. Work
-
-
-
-Consistency has the highest priority because an inconsistent project state invalidates future planning.
-
-Prioritization is second because it selects the next intended state transition.
-
-Work is third because it should implement only a selected and justified transition.
-
-Work should not proceed against a known-inconsistent repo unless the selected work item is specifically to repair that inconsistency.
-
+Codex produces JSON work proposals and score results. Patches are validated and selected by `model-committee`, then written as review artifacts.
 
 ---
 
-Question selection policy
+## v0.1 provider and network policy
 
-model-committee uses answerability as the first gate.
+`model-committee` v0.1 is a narrow local Python CLI.
+
+It may communicate only with:
+
+- local Ollama `base_url`;
+- Codex CLI subprocesses.
+
+It must not call:
+
+- GitHub;
+- OpenAI APIs directly;
+- Anthropic APIs;
+- Gemini APIs;
+- arbitrary HTTP URLs.
+
+`httpx` may be used only for the configured Ollama `base_url`.
+
+Codex must be invoked only through subprocess.
+
+This no-network policy preserves the bootstrap architecture and prevents accidental API creep.
+
+---
+
+## Question selection policy
+
+`model-committee` uses answerability as the first gate.
 
 A question is eligible for ordinary work only if:
 
-it has no dependencies;
-
-all dependencies are solved;
-
-or all dependencies are being answered in the same work item.
-
+- it has no dependencies;
+- all dependencies are solved;
+- or all dependencies are being answered in the same work item.
 
 Blocked questions may still be selected for decomposition work if decomposition is expected to produce replacement questions with fewer, simpler, or no dependencies.
 
 After answerability is established, questions are ranked by:
 
-1. automation-likelihood score,
-
-
-2. importance score,
-
-
+1. automation-likelihood score;
+2. importance score;
 3. risk score ascending.
-
-
-
 
 ---
 
-Question metadata format
+## Question metadata format
 
-OPEN_QUESTIONS.md may use single-line metadata.
+`OPEN_QUESTIONS.md` may use single-line metadata.
 
 The metadata fields always appear in the same order and use exact, case-sensitive labels:
 
+```text
 Status:
 Priority:
 Phase:
@@ -321,53 +327,66 @@ Blocks:
 Resolved by:
 Last scored:
 Scored from commit:
+```
 
-Optional fields may appear after Scored from commit::
+Optional fields may appear after `Scored from commit:`:
 
+```text
 Supersedes:
 Superseded by:
 Decomposes:
 Decomposed into:
+```
 
 Allowed sentinel values include:
 
-TBD
-
-Never
-
-None
-
-Unresolved
-
-
+- `TBD`
+- `Never`
+- `None`
+- `Unresolved`
 
 ---
 
-Changeset-based work
+## Changeset-based work
 
-model-committee work is changeset-based.
+`model-committee` work is changeset-based.
 
 The implementation step should not be hidden inside VS Code or another opaque external editor agent.
 
 Candidate models produce explicit changesets, usually as patches. A scoring model evaluates those changesets. The selected result is written as reviewable artifacts:
 
-selected.patch
-
-commit_message.txt
-
-review.md
-
-run logs
-
+- `selected.patch`
+- `commit_message.txt`
+- `review.md`
+- run logs
 
 VS Code or another editor may still be used for human review, but it is not part of the canonical committee loop.
 
+`work-select` does not apply patches in v0.1. It writes review artifacts only.
 
 ---
 
-Direct project directives
+## Prioritized recursive loop
 
-The project owner may append direct accepted decisions to DECISIONS.md.
+`model-committee` is expected to evolve into a prioritized recursive loop:
+
+1. **System-wide consistency check**
+2. **Question/problem prioritization selection**
+3. **Work**
+
+Consistency has the highest priority because an inconsistent project state invalidates future planning.
+
+Prioritization is second because the system must choose the next intended state transition.
+
+Work is third because work should implement only a selected and justified transition.
+
+Work should not proceed against a known-inconsistent repo unless the selected work item is specifically to repair that inconsistency.
+
+---
+
+## Direct project directives
+
+The project owner may append direct accepted decisions to `DECISIONS.md`.
 
 These directive decisions are treated as canonical once committed.
 
@@ -375,12 +394,11 @@ Directive decisions are a “word of God” mechanism for project governance, bu
 
 If a directive decision creates inconsistency, the next system-wide consistency check should detect it and convert the inconsistency into a report, question update, or work item.
 
-
 ---
 
-Decomposition and design-burden reduction
+## Decomposition and design-burden reduction
 
-model-committee should not treat every increase in open-question count as failure.
+`model-committee` should not treat every increase in open-question count as failure.
 
 A hard, ambiguous, or blocked question may be validly split into multiple simpler questions when the replacement questions are clearer, narrower, lower-risk, or easier to automatically answer.
 
@@ -388,69 +406,68 @@ This is especially valuable when a blocked question can be decomposed into repla
 
 The relevant metric is unresolved design burden, not merely raw open-question count.
 
-
 ---
 
-Development readiness
+## Development readiness
 
-The current design baseline is intended to support beginning model-committee development.
+The current design baseline is intended to support beginning `model-committee` development.
 
 The first development milestone should be:
 
-parse canonical design files;
-
-validate question metadata;
-
-validate question dependency DAGs;
-
-validate decision references;
-
-generate ChatGPT and Ollama work prompts;
-
-import structured model responses;
-
-mechanically validate patches;
-
-generate scoring prompt;
-
-import scorer response;
-
-write selected patch and review artifacts.
-
-
+- parse canonical design files;
+- validate question metadata;
+- validate question dependency DAGs;
+- validate decision references;
+- generate Codex and Ollama work prompts;
+- import structured model responses;
+- mechanically validate patches;
+- generate Codex scoring prompt;
+- import scorer response;
+- write selected patch and review artifacts.
 
 ---
 
-Contributing
+## Recommended `model-committee` v0.1 stack
+
+The first implementation should be intentionally boring.
+
+Recommended stack:
+
+- Python 3.12+
+- `uv`
+- `argparse`
+- `pydantic`
+- `httpx`
+- `pytest`
+- `ruff`
+- custom Markdown parser for `OPEN_QUESTIONS.md`
+- Codex CLI provider through subprocess
+- local Ollama provider through configured `base_url`
+- `git apply --check` for patch validation
+- filesystem logs
+
+---
+
+## Contributing
 
 This repository is currently a design repository, not the main implementation repository.
 
 Good contributions include:
 
-clarifying open questions;
-
-identifying contradictions in the canonical design files;
-
-proposing precise patches to DESIGN.md, DECISIONS.md, or OPEN_QUESTIONS.md;
-
-helping convert open questions into implementation-ready issues;
-
-reviewing whether Phase 1 scope is sufficiently frozen.
-
+- clarifying open questions;
+- identifying contradictions in the canonical design files;
+- proposing precise patches to `DESIGN.md`, `DECISIONS.md`, or `OPEN_QUESTIONS.md`;
+- helping convert open questions into implementation-ready issues;
+- reviewing whether Phase 1 scope is sufficiently frozen.
 
 The project prefers explicit patches over hidden discussion.
 
-
 ---
 
-Repository map
+## Repository map
 
-README.md — derived public-facing project summary
-
-DESIGN.md — canonical design summary
-
-DECISIONS.md — accepted design decisions and anti-regression memory
-
-OPEN_QUESTIONS.md — unresolved questions, prioritization metadata, and automation queue
-
-OUTREACH.md — derived public-facing outreach and recruiting document
+- `README.md` — derived public-facing project summary
+- `DESIGN.md` — canonical design summary
+- `DECISIONS.md` — accepted design decisions and anti-regression memory
+- `OPEN_QUESTIONS.md` — unresolved questions, prioritization metadata, and automation queue
+- `OUTREACH.md` — derived public-facing outreach and recruiting document

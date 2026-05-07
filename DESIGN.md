@@ -138,7 +138,26 @@ Model-committee automation must be bounded by a stop rule. It should recommend f
 
 The first implementation of this process is intentionally constrained by the v0.1 restrictions recorded in `DECISIONS.md`.
 
-### 3.1 Changeset-based work phase
+### 3.1 Codex-first provider model
+
+`model-committee` v0.1 uses Codex CLI as the primary model provider.
+
+The runtime calls `codex exec` for:
+
+- primary work proposal generation;
+- work scoring.
+
+Codex outputs are schema-constrained. Prompts are passed through stdin. Final responses are written to JSON files. JSONL event streams and stderr output are preserved in run logs.
+
+Codex is used only as a proposal and scoring provider in v0.1. It must not directly mutate canonical repo files. It produces JSON work proposals and score results. Patches are validated and selected by `model-committee`, then written as review artifacts.
+
+Every runtime Codex call must pass `--skip-git-repo-check`.
+
+`model-committee` does not pass deprecated `--disable web_search` flags. If Codex web search must be disabled, that is handled through Codex configuration or profile state outside `model-committee`.
+
+Local Ollama models remain secondary work proposal providers. They provide local diversity, dissent, fallback, and offline review, but Codex is the required scoring provider for automatic patch selection in v0.1.
+
+### 3.2 Changeset-based work phase
 
 Model-committee automation should make implementation explicit.
 
@@ -155,7 +174,7 @@ This prevents implementation from being hidden inside an external editor agent a
 
 VS Code or another editor may still be used for human review, but it is not part of the canonical committee loop.
 
-### 3.2 Prioritized recursive loop
+### 3.3 Prioritized recursive loop
 
 Model-committee automation is expected to evolve into a prioritized recursive loop:
 
@@ -171,7 +190,7 @@ Work is third because it should implement only a selected and justified transiti
 
 This structure is intended to make `model-committee` an early dogfooding example of UbU coordinating its own development.
 
-### 3.3 Consistency requirements
+### 3.4 Consistency requirements
 
 System-wide consistency checks should include both document consistency and logical consistency.
 
@@ -191,7 +210,7 @@ A question should not be selected for ordinary answer/work execution if it has u
 
 Blocked questions may still be selected for decomposition work when decomposition can produce replacement questions with fewer, simpler, or no dependencies.
 
-### 3.4 Direct project directives
+### 3.5 Direct project directives
 
 The UbU project may receive direct project-owner directives that are appended to `DECISIONS.md` as accepted decisions.
 
@@ -201,7 +220,7 @@ Directive decisions are a “word of God” mechanism for project governance, bu
 
 If a directive decision creates inconsistency, the next system-wide consistency check should detect it and convert the inconsistency into a problem report, question update, or work item.
 
-### 3.5 Decomposition and design-burden reduction
+### 3.6 Decomposition and design-burden reduction
 
 Model-committee should not treat every increase in open-question count as failure.
 
@@ -215,7 +234,7 @@ A decomposition is bad when it creates more, harder, vaguer, or more coupled que
 
 A decomposition is good when it exposes smaller answerable units and improves future automation.
 
-### 3.6 Answerability-first prioritization
+### 3.7 Answerability-first prioritization
 
 Question selection should use answerability as the first gate.
 
@@ -232,6 +251,48 @@ After answerability is established, questions are ranked by:
 3. risk ascending.
 
 Questions blocked by unresolved dependencies may be selected for decomposition rather than ordinary answering.
+
+### 3.8 v0.1 provider and network boundaries
+
+`model-committee` v0.1 is a narrow local Python CLI.
+
+It may communicate only with:
+
+- local Ollama `base_url`;
+- Codex CLI subprocesses.
+
+It must not call:
+
+- GitHub;
+- OpenAI APIs directly;
+- Anthropic APIs;
+- Gemini APIs;
+- arbitrary HTTP URLs.
+
+`httpx` may be used only for the configured Ollama `base_url`.
+
+Codex must be invoked only through subprocess.
+
+This no-network policy preserves the bootstrap architecture and prevents accidental API creep.
+
+### 3.9 v0.1 testing and diagnostics
+
+`model-committee` v0.1 should include fake provider mode for deterministic tests.
+
+Fake provider mode should not call Codex or Ollama. It should load canned fixture responses, then run normal JSON validation, patch validation, scoring, selection, and artifact-writing logic.
+
+`model-committee` v0.1 should also include a `doctor` command that checks the local environment:
+
+- Python version;
+- `git` availability;
+- `codex` availability;
+- required `codex exec` flags;
+- Ollama reachability;
+- configured Ollama model availability;
+- required target repo files;
+- runs directory writability.
+
+A `version` command should print the installed `model-committee` version.
 
 ---
 
@@ -1074,7 +1135,9 @@ Automation Workers may:
 
 A worker-mode instance is externally represented as an Identity.
 
-A model-committee worker is an Automation Worker that reads canonical project state, runs local and external-process LLM queries against a selected open question or problem, produces candidate changesets, scores candidate changesets, and writes reviewable artifacts.
+A model-committee worker is an Automation Worker pattern that reads canonical project state, runs Codex CLI and local Ollama proposal workflows against a selected open question or problem, produces candidate changesets, scores candidate changesets, and writes reviewable artifacts.
+
+In v0.1, model-committee is still an external bootstrap tool rather than a fully integrated UbU worker-mode runtime component.
 
 ### 21.2 Worker mode
 
@@ -1250,6 +1313,7 @@ Key unresolved areas include:
 - Model-committee work phase
 - Model-committee prioritized recursive loop
 - Model-committee question decomposition and answerability semantics
+- Model-committee Codex provider behavior
 
 ---
 
