@@ -1086,7 +1086,7 @@ Unresolved.
 
 ## UBU-Q0032: Model Committee Process and Authority
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Model-committee v0.1 correctness Resolved by: UBU-D0057, UBU-D0058, UBU-D0059, UBU-D0060, UBU-D0065, UBU-D0069 Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Model-committee v0.1 correctness Resolved by: UBU-D0057, UBU-D0058, UBU-D0059, UBU-D0060, UBU-D0065, UBU-D0069, UBU-D0070 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1109,7 +1109,13 @@ What authority should the model-committee process have when proposing answers, p
 
 ### Resolution
 
-Partially resolved by accepted decisions covering advisory authority, v0.1 restrictions, model weighting, question ranking, provisional quorum/provider-failure behavior, and Codex CLI provider behavior. Remaining details may be refined after v0.1 exists.
+Solved for v0.1 by accepted decisions covering advisory authority, v0.1 restrictions, model weighting, question ranking, provisional quorum/provider-failure behavior, Codex CLI provider behavior, and the explicit v0.1 authority boundary.
+
+`model-committee` may automate derived analysis and review artifact generation, including consistency checks, question rankings, readiness estimates, candidate questions, candidate changesets, patch validation, Codex scoring, and selected-patch artifact writing. It may not create accepted design state without a human-reviewed committed repo change.
+
+Direct API calls, GitHub mutation, automatic patch application, auto-merge, auto-push, automatic PR creation, internal manual override of failed selection, readiness-score writes to derived public files, and direct model edits to canonical files remain outside v0.1 authority.
+
+Detailed mechanics remain open in the narrower follow-up questions for log/provenance format, changeset validation/scoring, recursive-loop blocking semantics, and decomposition/design-burden scoring.
 
 ---
 

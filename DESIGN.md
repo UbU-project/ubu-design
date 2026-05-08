@@ -294,6 +294,49 @@ Fake provider mode should not call Codex or Ollama. It should load canned fixtur
 
 A `version` command should print the installed `model-committee` version.
 
+### 3.10 v0.1 authority boundary
+
+`model-committee` v0.1 has advisory authority only. It may produce derived analysis and review artifacts, but it must not directly create accepted design state. Accepted design state exists only after an ordinary human-reviewed repo change is committed to the canonical repo.
+
+The following actions may be automated in v0.1:
+
+- read `DESIGN.md`, `DECISIONS.md`, and `OPEN_QUESTIONS.md`;
+- parse open questions and their metadata;
+- run consistency checks over canonical files;
+- rank answerable questions using answerability, automation-likelihood, importance, and risk;
+- generate schema-constrained Codex work proposals and score results;
+- collect Ollama work proposals as secondary proposal inputs;
+- validate proposal JSON and candidate patches mechanically;
+- select a patch only from mechanically valid proposals using a valid Codex score result;
+- write run logs, review artifacts, selected patches, and commit-message suggestions.
+
+The following actions require human repository review in v0.1:
+
+- accepting a proposed answer as design state;
+- applying, editing, or committing any candidate patch to canonical files;
+- changing question status, priority, dependencies, or resolved-by metadata in the canonical repo;
+- treating readiness estimates as release, scope-freeze, or go/no-go decisions;
+- converting a proposed open question into canonical `OPEN_QUESTIONS.md` state;
+- changing provider weights, quorum rules, or network/provider boundaries.
+
+The following actions are outside v0.1 authority:
+
+- direct OpenAI, Anthropic, Gemini, GitHub, or arbitrary HTTP API calls;
+- auto-merge, auto-push, automatic PR creation, or GitHub mutation;
+- automatic patch application to canonical repo files;
+- allowing Codex CLI or Ollama providers to directly edit canonical repo files;
+- internal manual override of Codex scoring or patch-selection failures;
+- readiness-score writes to derived public files such as `README.md`;
+- deriving canonical user value, project directives, or release commitments from model output alone.
+
+Provider outputs are weighted by configured trust weights and observed reliability metadata, not by one-provider-one-vote counting. Static configured weights are sufficient for v0.1; adaptive weighting remains deferred.
+
+Provider failures are logged as run events. A failure should record the provider, model, run phase, failure class, timeout or exit status when available, stderr/response artifact path when available, and whether quorum remained satisfied.
+
+A valid v0.1 committee result requires at least one mechanically valid work proposal and a valid Codex score result. Two or more valid proposals are preferred but not required. Failed secondary providers do not invalidate a run when quorum is met.
+
+Codex CLI authority differs from direct API authority because Codex is invoked only through `codex exec` as a subprocess provider. Codex outputs are proposal and scoring artifacts only. Direct OpenAI API authority is zero in v0.1 because direct OpenAI API calls are forbidden.
+
 ---
 
 ## 4. MVP Release Phases

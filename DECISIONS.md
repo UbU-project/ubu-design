@@ -1672,3 +1672,54 @@ Codex must not directly modify repository files in v0.1. It produces JSON work p
 - Runtime Codex calls use stdin prompt mode.
 - Runtime Codex calls preserve JSONL event output and stderr output.
 - Codex web-search configuration is treated as external Codex profile/config state, not managed by `model-committee` v0.1.
+
+---
+
+## UBU-D0070: Model-committee v0.1 authority boundary is explicit
+
+**Status:** Accepted
+
+`model-committee` v0.1 has authority to produce derived analysis, candidate answers, candidate questions, readiness estimates, consistency reports, provider scores, candidate changesets, and review artifacts. It has no authority to create accepted design state without an ordinary committed change to the canonical repo.
+
+Automated actions allowed in v0.1:
+
+- reading canonical design files;
+- parsing and scoring open questions;
+- running consistency checks;
+- generating Codex and Ollama work proposals;
+- mechanically validating structured outputs and patches;
+- invoking Codex CLI for required scoring;
+- selecting a mechanically valid patch from valid proposals when Codex scoring succeeds;
+- writing filesystem run logs and review artifacts.
+
+Human review is required for:
+
+- accepting answers, patches, or new questions into canonical design state;
+- applying or committing patches to `DESIGN.md`, `DECISIONS.md`, or `OPEN_QUESTIONS.md`;
+- closing, decomposing, superseding, archiving, or reprioritizing questions in the canonical repo;
+- treating readiness scores as scope-freeze, release, or implementation go/no-go decisions;
+- changing provider weights, quorum rules, or provider/network boundaries.
+
+Forbidden actions in v0.1:
+
+- direct OpenAI, Anthropic, Gemini, GitHub, or arbitrary HTTP API calls;
+- auto-merge, auto-push, automatic PR creation, or remote GitHub mutation;
+- automatic patch application to canonical repo files;
+- direct canonical-file edits by Codex CLI, Ollama, or any model provider;
+- internal manual override that bypasses failed Codex scoring or patch validation;
+- updating derived readiness signals in `README.md` or `OUTREACH.md`;
+- treating model output as project-owner directives, canonical user value, or release commitment.
+
+Provider outputs are weighted by configured trust weights and observed reliability metadata rather than raw vote count. Static configured weights are sufficient in v0.1. Adaptive reliability weighting is deferred.
+
+Provider failures are logged as run events. Each failure should preserve the provider ID, model name when known, run phase, failure class, timeout or exit status when available, stderr or raw response artifact path when available, and whether the run still met quorum.
+
+A valid v0.1 committee result requires at least one mechanically valid work proposal and a valid Codex score result. A Codex work proposal should be attempted before patch selection. Two or more valid work proposals are preferred but not required. Failed secondary providers do not invalidate the run when quorum is met.
+
+Codex CLI has subprocess-provider authority only. It may produce schema-constrained proposal and scoring artifacts through `codex exec`, but those artifacts are non-canonical until validated, selected, reviewed by a human, and committed. Direct OpenAI API authority is zero in v0.1 because direct OpenAI API calls are forbidden.
+
+**Consequences:**
+
+- `UBU-Q0032` is resolved for v0.1 authority.
+- Future refinements to logs, scoring, changeset validation, recursive-loop blocking, and decomposition metrics remain in their dedicated follow-up questions.
+- The committee remains an advisory Automation Worker pattern until a later accepted decision expands its authority.
