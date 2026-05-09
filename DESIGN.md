@@ -353,6 +353,22 @@ Primary goals:
 - update GitHub as a low-dimensional projection of UbU state;
 - expose limitations and open questions through dogfooding.
 
+### 4.1.1 Phase 1 public demo criteria
+
+The Phase 1 public demo should use real UbU GitHub issues or a frozen fixture captured from real UbU GitHub data when live access is unsafe, unavailable, or non-reproducible.
+
+The smallest persuasive demo is an end-to-end single-user dogfooding loop:
+
+1. import a curated set of UbU issues, PR/review/CI signals, and milestone context;
+2. map those inputs into Objectives, schedulable Tasks, External Events, and traceable source links;
+3. generate a Calendar with a default Plan for the next work window;
+4. show why the Plan was chosen, including dependencies and worker assignment or worker status;
+5. show user-mode affect constraints by applying a current affect Snapshot or by creating an affect-collection Task when affect data is stale or missing;
+6. write or preview clearly marked UbU-managed GitHub projection labels, comments, or managed blocks;
+7. show a risk summary covering at least deadline risk, dependency fragility, and worker or automation bottlenecks.
+
+The demo must not require Phase 2 sync, Phase 3 multi-user coordination, full RBAC, a complete Compact Calendar UI, or autonomous remote GitHub mutation. If live GitHub writes are unsafe for the public recording, a dry-run projection is acceptable only when it shows the exact payload that would be written after human approval.
+
 ### 4.2 Phase 2: Single-user multi-device synchronization
 
 A single user runs UbU across multiple Devices / execution enclaves.

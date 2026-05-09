@@ -1749,3 +1749,25 @@ Automation Workers contribute to Logs through worker Identities by submitting ev
 - Logs can support audit, reconciliation, worker accountability, plan-vs-reality feedback, and correction without losing historical claims.
 - Detailed event-specific payload schemas may be refined alongside Task, Snapshot, Objective transition, worker mutation, and recalculation-trigger schemas.
 - Large-history search can rely on rebuildable indexes over the append-only Log rather than treating indexes as canonical state.
+
+---
+
+
+## UBU-D0072: Phase 1 public demo is an end-to-end GitHub dogfooding loop
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0030`.
+
+The Phase 1 public demo must prove that UbU can coordinate UbU's own development in a single-user dogfooding loop. It should use real UbU GitHub issues, PR/review/CI events, and milestone context when possible; if live access is unsafe, unavailable, or non-reproducible, a frozen fixture captured from real UbU GitHub data may be used with fixture provenance shown.
+
+The smallest persuasive demo imports a curated issue set, maps it to Objectives and schedulable Tasks, generates a Calendar with a default Plan, explains the chosen Plan, displays at least one risk report, respects a user-mode affect Snapshot or stale-affect collection Task, shows Automation Worker assignment/status for delegated analysis or GitHub projection work, and writes or previews clearly marked UbU-managed GitHub projection labels/comments/blocks.
+
+Live GitHub mutation is not required in a public recording. A dry-run projection is acceptable if it uses the same projection payloads and validation path that would be written after human approval. The demo must not depend on Phase 2 multi-device sync, Phase 3 multi-user coordination, full RBAC, fully settled Compact Calendar DFS grammar, or autonomous remote GitHub mutation.
+
+**Consequences:**
+
+- `UBU-Q0030` is resolved for Phase 1 release criteria.
+- The demo bar is end-to-end behavior, not complete implementation of every unresolved Phase 1 design question.
+- Remaining GitHub projection, worker authority, risk-reporting, affect, and Compact Calendar details may still be refined in their dedicated open questions.
+- Public messaging should describe any fixture, dry-run, or human-approval boundary explicitly.
