@@ -1723,3 +1723,29 @@ Codex CLI has subprocess-provider authority only. It may produce schema-constrai
 - `UBU-Q0032` is resolved for v0.1 authority.
 - Future refinements to logs, scoring, changeset validation, recursive-loop blocking, and decomposition metrics remain in their dedicated follow-up questions.
 - The committee remains an advisory Automation Worker pattern until a later accepted decision expands its authority.
+
+---
+
+
+## UBU-D0071: MVP Logs are append-only per-instance event records
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0031`.
+
+MVP Logs use a shared append-only entry envelope with event-specific payloads. Required fields are `log_entry_id`, `schema_version`, `instance_id`, `recorded_at`, `effective_at`, `event_type`, `actor_identity_ref`, `recorded_by_device_ref`, `target_ref`, `result`, `event_payload`, and `provenance`. Optional fields include old/new values, reason, notes, confidence, related Plan references, external references, annotation/correction links, and idempotency keys.
+
+MVP event types are `task_completed`, `task_failed`, `task_moot`, `external_event_observed`, `snapshot_observed`, `objective_transitioned`, `plan_realized`, `decision_recorded`, `recalculation_triggered`, worker mutation submission/application/rejection events, and Log annotation/correction events.
+
+Log entries are immutable once written. An annotation or correction creates a new Log entry that points to the original entry; it does not modify or delete the original. Corrections supersede interpretation of the original entry for query views while preserving the historical record.
+
+Canonical Logs are stored per UbU instance, with device references recorded on entries. Device-local queues may exist for transport and audit, especially in later multi-device sync. MVP retention is indefinite for canonical Logs; archival may move old entries to colder local storage while preserving queryability and integrity. Deletion or redaction is deferred except where required by Compartment retention invariants.
+
+Automation Workers contribute to Logs through worker Identities by submitting events or mutation requests. The canonical instance validates authority and records applied or rejected worker contributions with provenance, confidence when available, evidence references when available, and idempotency keys.
+
+**Consequences:**
+
+- `UBU-Q0031` is resolved for Phase 1 MVP.
+- Logs can support audit, reconciliation, worker accountability, plan-vs-reality feedback, and correction without losing historical claims.
+- Detailed event-specific payload schemas may be refined alongside Task, Snapshot, Objective transition, worker mutation, and recalculation-trigger schemas.
+- Large-history search can rely on rebuildable indexes over the append-only Log rather than treating indexes as canonical state.

@@ -1047,7 +1047,7 @@ Unresolved.
 
 ## UBU-Q0031: Log Structure and Fields
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: UBU-D0071 Last scored: Never Scored from commit: None
 
 A Log is the canonical record of what actually happened. Its structure and fields need specification.
 
@@ -1080,7 +1080,9 @@ A Log is the canonical record of what actually happened. Its structure and field
 
 ### Resolution
 
-Unresolved.
+Solved by `UBU-D0071`. MVP Logs are append-only per-instance event records using a shared entry envelope and event-specific payloads. Required fields are `log_entry_id`, `schema_version`, `instance_id`, `recorded_at`, `effective_at`, `event_type`, `actor_identity_ref`, `recorded_by_device_ref`, `target_ref`, `result`, `event_payload`, and `provenance`. Optional fields cover old/new values, reason, notes, confidence, related Plan references, external references, correction/annotation links, and idempotency keys.
+
+MVP event types cover Task completion/failure/moot, External Event observation, Snapshot observation, Objective transition, Plan realization, decision recording, recalculation trigger, worker mutation submission/application/rejection, and Log annotation/correction. Log entries are immutable; annotation or correction creates a new entry pointing to the original rather than modifying it. Canonical Logs are stored per instance, with device references recorded on entries. MVP retention is indefinite, with archival allowed only if queryability and integrity are preserved. Large-history search uses rebuildable indexes and cursor-paginated time-window queries. Automation Workers contribute through worker Identities by submitting events or mutation requests that the canonical instance validates and records as applied or rejected.
 
 ---
 

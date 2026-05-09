@@ -1053,14 +1053,89 @@ A Log consists of timestamped entries recording:
 
 Logs are immutable once written, but may be annotated or corrected through new entries.
 
-### 17.1 Log vs Plan
+### 17.1 MVP Log entry fields
+
+MVP Log entries use a shared event envelope. Required fields:
+
+- `log_entry_id`
+- `schema_version`
+- `instance_id`
+- `recorded_at`
+- `effective_at`
+- `event_type`
+- `actor_identity_ref`
+- `recorded_by_device_ref`
+- `target_ref`
+- `result`
+- `event_payload`
+- `provenance`
+
+`recorded_at` is when UbU accepted the entry. `effective_at` is when the modeled event occurred and may be earlier for imported or reconstructed events. `target_ref` identifies the primary canonical object or imported External Event. `result` is one of `success`, `failure`, `partial`, or `not_applicable`. `event_payload` is JSON-compatible event-specific data.
+
+Optional fields:
+
+- `old_value`
+- `new_value`
+- `reason`
+- `notes`
+- `confidence`
+- `related_plan_ref`
+- `external_refs`
+- `annotation_of`
+- `correction_of`
+- `idempotency_key`
+
+`old_value` and `new_value` are used for mutation-like events and may be absent for observational, external-only, or compartment-sensitive records. `provenance` records the source kind and source reference; `confidence` is stored when the entry is inferred, sensor-derived, imported, or worker-submitted.
+
+### 17.2 MVP Log event types
+
+MVP event types are:
+
+- `task_completed`
+- `task_failed`
+- `task_moot`
+- `external_event_observed`
+- `snapshot_observed`
+- `objective_transitioned`
+- `plan_realized`
+- `decision_recorded`
+- `recalculation_triggered`
+- `worker_mutation_submitted`
+- `worker_mutation_applied`
+- `worker_mutation_rejected`
+- `log_annotation_added`
+- `log_correction_added`
+
+All event types share the required envelope. Event-specific details live in `event_payload` and may be validated by event-specific schemas.
+
+### 17.3 Immutability, annotation, and correction
+
+Log entries are append-only. Annotation and correction never modify the original entry. They create a new Log entry with `event_type` set to `log_annotation_added` or `log_correction_added`, and with `annotation_of` or `correction_of` pointing to the original `log_entry_id`.
+
+Corrections supersede interpretation of the original entry but do not erase the original historical claim. Later queries should resolve corrected views by following correction links.
+
+### 17.4 Storage, retention, and query
+
+Canonical Logs are stored per UbU instance. Device-local Logs or queues may exist as transport and audit buffers, but canonical history belongs to the instance; each entry records `recorded_by_device_ref` when known.
+
+MVP retention is indefinite for canonical Logs. Archival may move old entries to colder local storage, but must preserve queryability and integrity. Deletion or redaction policies are governed by Compartment retention rules and remain post-MVP except where required by a hard Compartment invariant.
+
+MVP query/search is index-backed over `recorded_at`, `effective_at`, `event_type`, `actor_identity_ref`, `target_ref`, `external_refs`, and correction/annotation links. Large histories should be queried by time-windowed, cursor-paginated APIs. Derived search indexes may be rebuilt from the append-only Log.
+
+### 17.5 Automation Worker contributions
+
+Automation Workers contribute to Logs through their worker Identity. A worker may submit events or mutation requests, but the canonical instance validates authority and writes the canonical Log entry. Accepted worker mutations create applied entries; invalid or unauthorized attempts create rejected entries.
+
+Worker-supplied `idempotency_key`, provenance, evidence references, and confidence metadata are retained when available so duplicate submissions and stale worker results can be detected.
+
+### 17.6 Log vs Plan
 
 - **Plan**: a possible ordered sequence of future Tasks, representing prediction
 - **Log**: a timestamped record of what actually occurred, representing reality
 
 Plans are inherently multiple. Logs are singular and authoritative for the specific timeline that occurred.
 
-### 17.2 Log and Feedback
+### 17.7 Log and Feedback
 
 Logs enable feedback loops. A Log records the gap between prediction and reality, enabling better future planning.
 
@@ -1341,7 +1416,6 @@ The major remaining questions are tracked in `OPEN_QUESTIONS.md`.
 Key unresolved areas include:
 
 - Phase 1 MVP scope **not yet frozen**
-- Log structure and fields
 - Worker identity/capability model
 - Worker mutation request schema
 - GitHub projection/reconciliation rules
