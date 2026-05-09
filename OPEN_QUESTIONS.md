@@ -996,7 +996,7 @@ Unresolved.
 
 ## UBU-Q0029: Open-Core / FOSS Contribution Boundary
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Governance Auto-choice eligibility: Human only Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Governance Auto-choice eligibility: Human only Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: UBU-D0073 Last scored: Never Scored from commit: None
 
 UbU is intended to recruit FOSS contributors.
 
@@ -1017,7 +1017,11 @@ UbU is intended to recruit FOSS contributors.
 
 ### Resolution
 
-Unresolved.
+Solved by `UBU-D0073`. UbU uses an open-core strategy, but the open core includes the planning kernel and contributor-facing integration surface: data model schemas and migrations, explicit planner and Calendar-generation logic needed for Phase 1 dogfooding, GitHub import/projection/reconciliation tooling, worker-mode runtime surfaces, compact Calendar serialization needed for transport or analysis, local-first storage and sync protocols when implemented, and the Super Automation extension/API boundary.
+
+Private or commercial code may exist only outside that boundary, such as hosted-service operations, managed cloud infrastructure, paid support/packaging, premium hosted worker capacity, enterprise administration or compliance layers, proprietary connectors to closed third-party systems, and short-lived experiments that are not required for the public dogfooding loop. If a private experiment becomes required for the advertised open-source workflow, it must be opened before public reliance or the public promise must be narrowed.
+
+Core implementation repos should default to MPL-2.0, with stronger copyleft considered for network-hosted service code and permissive licenses allowed for examples, SDK stubs, or interoperability fixtures. Repositories and packages should be labeled clearly as open core, private experiment, premium hosted service, or external connector so contributors are not misled about the commercial boundary.
 
 ---
 

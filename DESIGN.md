@@ -1465,6 +1465,27 @@ Design changes should be recorded as:
 
 The project should prefer explicit decisions over hidden assumptions.
 
+### Open-core and FOSS boundary
+
+UbU treats the planning kernel and contributor-facing integration surface as the open core. A public contributor must be able to inspect, run, modify, and self-host the core system needed for ordinary single-user and project dogfooding without depending on private replacement components.
+
+The definitely open-source surface includes:
+
+- canonical data model schemas and migrations for Objectives, Preferences, WorkItems, Tasks, Containers, UniverseState, Snapshots, Plans, Calendars, Logs, Identities, Relationships, Zones, Compartments, External Events, External Associations, worker assignments, mutation requests, and projection state;
+- explicit planner and Calendar-generation logic required for Phase 1 dogfooding, including constraint evaluation, recalculation triggers, compact Calendar serialization needed for transport or analysis, and MVP risk-report generation;
+- GitHub import, triage, projection, reconciliation, fixture/demo tooling, and the managed-label/comment/block formats used for FOSS collaboration;
+- worker-mode runtime surfaces required for delegated work, including Identity/capability checks, assignment, status, mutation request, and audit/log contribution APIs;
+- local-first storage and sync protocols when implemented;
+- the Super Automation extension/API boundary needed for third-party workers, connectors, or local services.
+
+Private or commercial code may exist only outside that core boundary. Acceptable private areas include hosted-service operations, managed cloud infrastructure, paid support/packaging, premium hosted worker capacity, enterprise administration/compliance layers, proprietary connectors to closed third-party systems, and short-lived experimental prototypes that are not required for the public dogfooding loop.
+
+Private experiments must not become hidden mandatory dependencies for public contributors. If an experimental component becomes necessary for the advertised open-source workflow, UbU must either open it before relying on it publicly or explicitly narrow the public promise.
+
+Implementation repositories should use OSI-approved licenses. The default license for core implementation repos is MPL-2.0 so modifications to core files remain shareable while integrations can be built without relicensing unrelated code. Stronger copyleft may be considered for network-hosted service code, and permissive licensing may be used for small examples, SDK stubs, or interoperability fixtures when that better serves adoption.
+
+Contributor trust requires clear labeling of each repository or package as open core, private experiment, premium hosted service, or external connector. UbU should not recruit FOSS contributors around a capability that depends on an undisclosed private substitute for the open implementation.
+
 ### Canonical and derived project documents
 
 For UbU design governance:
