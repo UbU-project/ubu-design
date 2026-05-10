@@ -950,7 +950,7 @@ Unresolved.
 
 ## UBU-Q0027: Organization Mode and Worker Mode Public UX
 
-Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Product Auto-choice eligibility: Human only Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Post-MVP product Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: Post-MVP Phase: Post-MVP Decision type: Product Auto-choice eligibility: Human only Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Post-MVP product Resolved by: UBU-D0075 Last scored: Never Scored from commit: None
 
 Organization mode and worker mode may use web admin UIs.
 
@@ -964,7 +964,13 @@ Organization mode and worker mode may use web admin UIs.
 
 ### Resolution
 
-Unresolved.
+Solved by `UBU-D0075`. Organization-mode public UX is a project operations dashboard. Its first screen shows pipeline state, Plan/risk summaries, worker assignments and health, pending worker mutation requests, GitHub projection/reconciliation status, and recent decision/projection/worker Log entries requiring operator attention.
+
+Worker-mode public UX is an operator console. Its first screen shows connection and Identity status, service health and last check-in, active assignment and assignment queue, granted capability scopes, recent Log or mutation submissions, rejection/error state, and local resource status such as GPU availability or cloud compute state when applicable.
+
+Both modes may expose operational logs and status appropriate to that mode, but they must default to summarized/redacted views and must not leak Compartment-protected payloads, broader planning state, or personal affect data.
+
+No organization-mode or worker-mode web admin UI is required for Phase 1. Phase 1 requires only the single-user GitHub dogfooding surface and enough visible worker assignment/status information for the public demo, which may be shown in that UI, CLI output, or run artifacts.
 
 ---
 

@@ -1305,6 +1305,23 @@ Worker mode:
 - often runs on GPU-capable hardware;
 - may control cloud compute resources.
 
+### 21.2.1 Worker-mode public UX
+
+Worker-mode public UX is an administrative console for the worker operator, not the primary planning UI.
+
+The first worker-mode screen should show:
+
+- connection and identity status for the parent UbU instance;
+- current service health and last check-in;
+- active assignment, assignment queue, and retry/error state;
+- granted capabilities and their scopes;
+- recent Log submissions, mutation requests, and rejection reasons;
+- local resource status, including GPU availability and cloud compute state when applicable.
+
+The worker UI may expose detailed logs and operational controls, but it should default to summarized, redacted views. It must not expose Compartment-protected payloads, broader organization planning state, or personal affect data merely because the worker executed related work.
+
+No worker-mode web admin UI is required for Phase 1. Phase 1 only needs enough visible worker assignment/status information for the GitHub dogfooding demo, which may be shown in the user-mode dogfooding UI, CLI output, or run artifacts.
+
 ### 21.3 Super Automation
 
 **Super Automation** is a product/UX pattern, not the technical name of the device.
@@ -1338,6 +1355,22 @@ Organization mode:
 - may expose a web interface.
 
 For MVP, roles/RBAC may be omitted and all users treated as admin-equivalent.
+
+### 22.1 Organization-mode public UX
+
+Organization-mode public UX is a project operations dashboard for human operators of an organization or project instance.
+
+The first organization-mode screen should show:
+
+- pipeline state for imported/project WorkItems and Objectives;
+- risk summary for current Plans, including deadline, dependency, and worker bottleneck risk;
+- worker assignments, worker health, and pending mutation requests;
+- GitHub projection and reconciliation status;
+- recent decision, projection, and worker Log entries that need operator attention.
+
+Organization mode may expose pipeline state, risk reports, worker assignments, and GitHub projection status as first-class public UI concepts. It should not expose personal user-mode affect surfaces, and admin-equivalent MVP assumptions must be labeled when no full RBAC is implemented.
+
+No organization-mode web admin UI is required for Phase 1. The Phase 1 public demo may show organization-like project coordination data, but the required UI is the single-user dogfooding surface defined by the Phase 1 demo criteria, not a general organization console.
 
 ---
 

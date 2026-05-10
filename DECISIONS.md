@@ -1823,3 +1823,27 @@ Phase 1 may claim local-first operation only in the limited sense that canonical
 - Public messaging must distinguish privacy-first architecture from the narrower implemented Phase 1 privacy baseline.
 - Full Compartment enforcement across sync, retention, device eligibility, and cryptographic isolation remains future work unless separately accepted and implemented.
 - Implementations must label un-compartmented content as low-security rather than implying default protection.
+
+---
+
+
+## UBU-D0075: Organization and worker web admin UIs are post-MVP public surfaces
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0027`.
+
+Organization-mode public UX is a project operations dashboard. The first screen should emphasize pipeline state, Plan/risk summaries, worker assignments and health, pending worker mutation requests, GitHub projection/reconciliation status, and recent decision/projection/worker Log entries requiring attention. It should avoid personal affect UX and should label admin-equivalent operation when full RBAC is absent.
+
+Worker-mode public UX is an operator console for a worker instance. The first screen should emphasize connection and Identity status, service health and last check-in, active assignment and assignment queue, granted capability scopes, recent Log or mutation submissions, rejection/error state, and local resource status such as GPU availability or cloud compute state where applicable.
+
+Both UIs may expose logs, queues, capability grants, resource status, pipeline state, risk reports, worker assignments, and GitHub projection status when the data is relevant to that mode. These views must default to summarized and redacted operational information and must not leak Compartment-protected payloads, broader planning state, or personal affect data through worker/admin convenience views.
+
+No organization-mode or worker-mode web admin UI is required for Phase 1. Phase 1 requires only the single-user GitHub dogfooding surface and enough visible worker assignment/status information to satisfy the public demo criteria; that information may appear in the user-mode dogfooding UI, CLI output, or run artifacts.
+
+**Consequences:**
+
+- `UBU-Q0027` is resolved as a Post-MVP product direction rather than a Phase 1 implementation requirement.
+- Phase 1 public UX scope remains focused on the single-user dogfooding loop.
+- Future organization and worker admin UIs have a stable default first-screen direction without forcing RBAC or full admin products into MVP.
+- Admin views must respect Compartment boundaries and mode boundaries.
