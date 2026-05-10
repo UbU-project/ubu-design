@@ -970,7 +970,7 @@ Unresolved.
 
 ## UBU-Q0028: Minimum Privacy / Compartment Promise for MVP
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: UBU-D0074 Last scored: Never Scored from commit: None
 
 UbU is privacy-first, but MVP implementation must avoid overclaiming.
 
@@ -990,7 +990,13 @@ UbU is privacy-first, but MVP implementation must avoid overclaiming.
 
 ### Resolution
 
-Unresolved.
+Solved by `UBU-D0074`. Phase 1 implements a minimal Compartment guardrail layer, not the full Phase 2 multi-device containment system. Compartments may classify content with policies such as `local_only`, `no_cloud_llm`, `no_external_export`, allowed integrations, and allowed Devices within the single local Device model.
+
+The hard MVP invariants are narrow: `no_cloud_llm` content is not routed to cloud LLMs; `no_external_export` content is not exported, projected, or handed to workers except as redacted structural references; Compartment-marked content crosses boundaries only through allowed routes and user-visible actions; and boundary-crossing attempts that reach UbU are logged as allowed or denied. Sensitive Compartment content is referenced rather than embedded in ordinary WorkItem structure.
+
+Phase 1 does not claim complete privacy isolation, cryptographic isolation, hardware attestation, secure multi-device partial replication, protection from a malicious local administrator, or automated retention deletion/redaction. Retention policies may be recorded, but enforcement beyond append-only Log retention is post-MVP unless separately implemented and disclosed.
+
+Un-compartmented content is labeled `security_level: low`. Phase 1 may claim local-first operation only in the limited sense that canonical planning state, Logs, and source-linked project model data live in the local single-user UbU instance by default. Cloud LLM use may be optional, explicit, integration-scoped, and advisory, but cloud LLMs are not the canonical planner and must not receive `no_cloud_llm` Compartment content.
 
 ---
 

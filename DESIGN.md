@@ -1242,6 +1242,19 @@ Hard invariants may include:
 - retention constraints
 - audit constraints
 
+#### Phase 1 Compartment baseline
+
+Phase 1 implements Compartments as explicit classification and routing guardrails, not as the complete Phase 2 multi-device containment system. The minimum Phase 1 promise is:
+
+- Compartment-marked content stores a `compartment_ref` and is handled through references rather than embedded in ordinary WorkItem structure.
+- A Compartment may declare `local_only`, `no_cloud_llm`, `no_external_export`, `allowed_integration_refs`, and `allowed_device_refs` policies.
+- Content in a `no_cloud_llm` Compartment must not be sent to cloud LLM routes. Content in a `no_external_export` Compartment must not be exported, projected, or handed to workers except as redacted structural references.
+- Other Compartment-marked content may cross a boundary only through an allowed route and a user-visible action. Boundary-crossing attempts that reach UbU are recorded in Logs as allowed or denied.
+- In Phase 1, device eligibility is limited to the current single local Device / execution enclave and configured allowlists. Hardware attestation, cross-device partial replication enforcement, and cryptographic isolation are not MVP claims.
+- Phase 1 does not promise automated retention deletion or redaction for Compartment content. Retention policies may be recorded, but enforcement beyond append-only Log retention is post-MVP unless separately implemented and disclosed.
+
+Phase 1 public messaging must describe this as a minimal Compartment guardrail layer. It must not claim complete privacy isolation, complete retention enforcement, secure multi-device Compartments, or protection from a malicious local administrator.
+
 ### 20.4 Sensitive content
 
 WorkItems must remain structurally usable without dereferencing sensitive content.
@@ -1249,6 +1262,14 @@ WorkItems must remain structurally usable without dereferencing sensitive conten
 Sensitive Compartment data should be referenced by link/reference, not embedded in WorkItem structure.
 
 Un-compartmented content is treated as low-security and may require per-integration prompts.
+
+In Phase 1, un-compartmented content is explicitly labeled `security_level: low`. Low-security content may be used by configured integrations or cloud LLM-backed Automation Workers after a user-visible integration or worker action, but UbU must not market that content as compartment-protected.
+
+### 20.5 Phase 1 local-first and cloud LLM disclosure
+
+Phase 1 can honestly claim that canonical planning state, Logs, and source-linked project model data live in the local single-user UbU instance by default. It cannot claim Phase 2 local-first sync, conflict handling, partial replication, or secure multi-device Compartment propagation.
+
+Phase 1 can honestly claim that cloud LLM usage is optional, explicit, and advisory. Cloud LLMs may be used by configured Automation Workers, Super Automation flows, or bootstrap tools such as model-committee, but they are not the canonical planner and must not receive `no_cloud_llm` Compartment content. When a workflow uses cloud LLMs on un-compartmented low-security content, the UI or run artifact must disclose that routing before or at execution time.
 
 ---
 
