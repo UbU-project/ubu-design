@@ -2,7 +2,7 @@
 
 **Status:** Derived public-facing outreach document  
 **Source of truth:** `DESIGN.md`, `DECISIONS.md`, and `OPEN_QUESTIONS.md`  
-**Audience:** FOSS developers, project maintainers, planning-tool researchers, privacy engineers, automation builders, and technically curious contributors
+**Audience:** FOSS developers, project maintainers, Ethereum project leads, privacy engineers, automation builders, planning-tool researchers, and technically curious contributors
 
 ---
 
@@ -10,13 +10,19 @@
 
 UbU is a privacy-first planning, coordination, and self-governance system.
 
-It is designed for people who are tired of tools that merely collect tasks, display calendars, or summarize messages without understanding the deeper question:
+It is designed for people who are tired of tools that merely collect tasks, display calendars, summarize messages, or report status without understanding the deeper question:
 
 > Given what matters, what constraints exist, what has changed, and what human limitations are real, what should happen next?
 
-UbU aims to become a planning kernel for individuals and organizations. It models Objectives, Tasks, Preferences, Plans, Calendars, Logs, UniverseState, external events, worker automation, privacy compartments, and human affect. It turns messy real-world inputs into explicit, inspectable, recalculable plans.
+UbU aims to become a planning kernel for individuals and organizations.
 
-The first MVP is intentionally practical: UbU should help coordinate the development of UbU itself.
+It models Objectives, Tasks, Preferences, Plans, Calendars, Logs, UniverseState, external events, worker automation, privacy compartments, Identities, and human affect.
+
+It turns messy real-world inputs into explicit, inspectable, recalculable plans.
+
+The first MVP is intentionally practical:
+
+> UbU should help coordinate the development of UbU itself.
 
 That means using UbU to manage its own GitHub issues, open questions, pull requests, reviews, CI events, release milestones, design changes, contributor relationships, and automation loops.
 
@@ -28,9 +34,24 @@ UbU’s first proving ground is its own project.
 
 Most productivity systems fail because they treat the user like a machine.
 
-They assume that if a task appears on a list or calendar, the user can simply execute it. They rarely model energy, stress, attention, boredom, emotional load, uncertainty, dependencies, external interruptions, or changing reality.
+They assume that if a task appears on a list or calendar, the user can simply execute it.
 
-Project-management systems have a related failure mode. They often represent status, assignment, and deadlines, but they do not model the full decision problem:
+They rarely model:
+
+- energy;
+- stress;
+- attention;
+- boredom;
+- emotional load;
+- uncertainty;
+- dependencies;
+- external interruptions;
+- changing reality;
+- hidden coordination cost.
+
+Project-management systems have a related failure mode.
+
+They often represent status, assignment, and deadlines, but they do not model the full decision problem:
 
 - What is the actual objective?
 - What dependencies block the work?
@@ -90,7 +111,15 @@ Sensitive content should not leak merely because structural planning metadata is
 
 A WorkItem should remain structurally usable even when sensitive compartmented content cannot be dereferenced.
 
-This matters because serious planning systems inevitably touch sensitive data: personal relationships, health-related affect, work obligations, financial priorities, private messages, calendars, and organizational strategy.
+This matters because serious planning systems inevitably touch sensitive data:
+
+- personal relationships;
+- health-related affect;
+- work obligations;
+- financial priorities;
+- private messages;
+- calendars;
+- organizational strategy.
 
 UbU’s privacy model is not an afterthought. It is part of the planning model.
 
@@ -104,7 +133,9 @@ In `user_mode`, affect belongs to UniverseState. Energy, tiredness, stress, mood
 
 This does not mean the system should constantly interrogate the user. Affect collection is itself modeled as planned work. If affect information is missing or stale, UbU may create an Objective or Task to collect it.
 
-The goal is not emotional surveillance. The goal is self-governance.
+The goal is not emotional surveillance.
+
+The goal is self-governance.
 
 A system that ignores fatigue, boredom, stress, and attention is not helping a human plan. It is producing fiction.
 
@@ -130,9 +161,113 @@ UbU should help coordinate the UbU project itself by observing and modeling:
 
 GitHub is treated as a projection of UbU state, not the source of truth.
 
-UbU may write selected information back to GitHub through clearly marked managed labels, comments, or issue-body blocks. Other GitHub edits are treated as external events.
+UbU may write selected information back to GitHub through clearly marked managed labels, comments, or issue-body blocks.
+
+Other GitHub edits are treated as external events.
 
 This allows FOSS contributors to keep using normal GitHub workflows while UbU maintains a richer canonical model internally.
+
+---
+
+## ETHConf 2026 feedback focus
+
+UbU is seeking feedback from people who coordinate highly autonomous technical teams, especially in Ethereum, FOSS, protocol engineering, developer tooling, privacy engineering, and infrastructure projects.
+
+The project is especially interested in speaking with:
+
+- FOSS maintainers;
+- protocol leads;
+- engineering managers;
+- technical founders;
+- DevRel and ecosystem leads;
+- grants and milestone coordinators;
+- senior autonomous contributors;
+- people responsible for release coordination, reviews, audits, or contributor onboarding.
+
+The question is not merely whether another project-management tool would be useful.
+
+The question is whether autonomous contributors need a self-governance layer that helps them privately model work, constraints, dependencies, commitments, fatigue, and priorities, then selectively disclose only the coordination facts the team needs.
+
+Useful coordination facts may include:
+
+- blockers;
+- real commitments;
+- review needs;
+- dependency status;
+- milestone risk;
+- selected availability;
+- need for a decision;
+- need for escalation;
+- risk that a plan has become fiction.
+
+Private human state should not become team telemetry.
+
+---
+
+## Problems we are testing
+
+UbU outreach is currently testing whether autonomous developer teams have recurring problems that conventional tools do not model well:
+
+- real work state split across GitHub, chat, calendars, private notes, maintainer memory, CI, and informal commitments;
+- unclear distinction between aspirational work and real commitments;
+- blocked issues or PRs that are not clearly visible;
+- overloaded maintainers who do not want surveillance;
+- async messages that imply work but never become explicit tasks;
+- contributors who need autonomy but teams that still need coordination;
+- project status projections that drift away from reality;
+- tools that track assignment and deadline state but not objective, dependency, risk, uncertainty, or human constraint state.
+
+Feedback is most useful when it describes a real workflow, failure mode, or coordination breakdown.
+
+A single precise example is more useful than broad enthusiasm.
+
+---
+
+## What we want to learn from interviews
+
+Useful interview information includes:
+
+- what role the person plays in coordination;
+- where the team’s real operational state lives;
+- which tools the team actually uses;
+- what current tools fail to represent;
+- what work falls through the cracks;
+- how blocked work is discovered;
+- how overload is detected;
+- how real commitments are distinguished from hopeful plans;
+- what contributors would refuse to disclose;
+- what contributors would willingly disclose to protect autonomy;
+- what first integration would make UbU worth trying;
+- what would make the tool valuable enough to fund or adopt.
+
+The best conversations produce one or more of:
+
+- a repeated pain point;
+- a concrete workflow;
+- a design-partner lead;
+- a contributor lead;
+- a funding or career lead;
+- a clear objection that improves the pitch;
+- a precise reason why UbU should not target a given market.
+
+---
+
+## How to help after meeting us
+
+After a conversation, useful next steps include:
+
+1. Send an anonymized example of a coordination failure from your project.
+2. Review the repository and identify one unclear or incorrect design claim.
+3. Describe your team’s current tool stack and where real work state is lost.
+4. Help convert a workflow pain point into a precise open question or implementation-ready issue.
+5. Volunteer for a narrow `model-committee v0.1` implementation area.
+6. Review whether the Phase 1 dogfooding scope is concrete enough.
+7. Identify a FOSS, Ethereum, protocol, or research project that would be a useful design partner.
+8. Suggest a privacy-preserving boundary between private planning state and public coordination state.
+
+The best early help is specific.
+
+A single workflow example, failing tool-stack pattern, or precise patch is more valuable than general agreement.
 
 ---
 
@@ -142,7 +277,9 @@ Before the main UbU MVP is implemented, the project is preparing a bootstrap aut
 
 `model-committee` is an early dogfooding system. It helps the project use LLMs and local automation to resolve design questions, propose changesets, score candidate patches, and move toward implementation.
 
-It is not the canonical decision engine. Accepted design state exists only when committed to the canonical repository.
+It is not the canonical decision engine.
+
+Accepted design state exists only when committed to the canonical repository.
 
 The v0.1 loop is deliberately constrained:
 
@@ -161,7 +298,9 @@ The v0.1 loop is deliberately constrained:
 
 This keeps the process auditable.
 
-The work phase is changeset-based. It should not hide implementation inside VS Code, an editor agent, or undocumented human magic. Models produce concrete changesets. A scorer evaluates them. The selected result becomes a reviewable artifact.
+The work phase is changeset-based. It should not hide implementation inside VS Code, an editor agent, or undocumented human magic.
+
+Models produce concrete changesets. A scorer evaluates them. The selected result becomes a reviewable artifact.
 
 That same loop can later generalize from design-doc patches to code changes, bug fixes, tests, refactors, release checks, and issue triage.
 
@@ -176,9 +315,13 @@ Codex CLI is the primary schema-constrained provider for:
 - work proposal generation;
 - work scoring.
 
-Local Ollama models are secondary proposal providers. They provide local diversity, dissent, fallback, and offline review.
+Local Ollama models are secondary proposal providers.
 
-If Ollama responses finish within timeout and validate, they are included in Codex scoring. If an Ollama provider fails, the failure is logged and the run may continue if Codex produces at least one valid work proposal.
+They provide local diversity, dissent, fallback, and offline review.
+
+If Ollama responses finish within timeout and validate, they are included in Codex scoring.
+
+If an Ollama provider fails, the failure is logged and the run may continue if Codex produces at least one valid work proposal.
 
 Codex scoring is required for automatic patch selection in v0.1.
 
@@ -208,7 +351,13 @@ The tool may communicate only with:
 - local Ollama `base_url`;
 - Codex CLI subprocesses.
 
-This constraint matters. UbU’s automation should remain explicit, inspectable, and bounded. The goal is not an uncontrolled agent that mutates the project. The goal is a reviewable state-transition system.
+This constraint matters.
+
+UbU’s automation should remain explicit, inspectable, and bounded.
+
+The goal is not an uncontrolled agent that mutates the project.
+
+The goal is a reviewable state-transition system.
 
 ---
 
@@ -226,7 +375,9 @@ Prioritization comes second because the system must choose the next intended sta
 
 Work comes third because work should implement only a selected and justified transition.
 
-This principle is important. The system should not blindly generate more work. It should first understand whether the current state is coherent, then decide what is answerable and worth doing, then perform the chosen work.
+This principle is important.
+
+The system should not blindly generate more work. It should first understand whether the current state is coherent, then decide what is answerable and worth doing, then perform the chosen work.
 
 This is the project’s own philosophy applied to its development process.
 
@@ -240,7 +391,9 @@ Sometimes a hard question should not be answered directly. It should be decompos
 
 A question blocked by unresolved dependencies may be split into several smaller questions if at least one new question has fewer dependencies, simpler dependencies, or no dependencies.
 
-The relevant metric is not raw question count. The relevant metric is unresolved design burden.
+The relevant metric is not raw question count.
+
+The relevant metric is unresolved design burden.
 
 A good decomposition makes future work easier, clearer, less risky, or more automatable.
 
@@ -291,6 +444,28 @@ For FOSS projects, UbU can eventually help answer:
 That is directly useful to maintainers.
 
 It is also a strong first use case because the UbU project can dogfood every part of the process in public.
+
+---
+
+## ETHConf and autonomous-team relevance
+
+Ethereum and FOSS teams are useful early feedback sources because many of them are:
+
+- remote or distributed;
+- async-heavy;
+- autonomy-heavy;
+- GitHub-heavy;
+- contributor-driven;
+- cross-organizational;
+- dependent on informal commitments;
+- sensitive to surveillance and centralization;
+- forced to coordinate across chats, governance forums, code review, audits, releases, and calendars.
+
+That makes them a strong test case for UbU’s professional coordination thesis.
+
+The goal is not to convert UbU into a conventional project-management product.
+
+The goal is to learn whether self-governance primitives can improve the work lives of autonomous contributors while also making project coordination more truthful.
 
 ---
 
@@ -394,6 +569,65 @@ Later contributors will be needed for:
 
 ---
 
+## Contributor ladder
+
+UbU should scale carefully.
+
+Early contributors should enter through bounded contribution paths:
+
+1. **Workflow informant**
+
+   Describe real coordination pain, tool-stack fragmentation, maintainer overload, or autonomous-team failure modes.
+
+2. **Design reviewer**
+
+   Identify contradictions, missing definitions, unclear Phase 1 scope, or risky assumptions.
+
+3. **Small patch contributor**
+
+   Propose precise changes to canonical design files or derived public-facing files.
+
+4. **Implementation contributor**
+
+   Help build isolated `model-committee v0.1` components.
+
+5. **Module owner**
+
+   Take responsibility for a bounded subsystem after trust, alignment, and technical fit are established.
+
+This project should not grow faster than its architecture, privacy model, and governance process can absorb.
+
+The project prefers concrete patches, structured issue proposals, test fixtures, and workflow examples over broad abstract discussion.
+
+---
+
+## First small tasks
+
+Useful early tasks include:
+
+- create parser fixtures for `OPEN_QUESTIONS.md`;
+- test single-line question metadata parsing;
+- test allowed sentinel values such as `TBD`, `Never`, `None`, and `Unresolved`;
+- test question dependency DAG validation;
+- test cycle detection;
+- test decision-reference validation;
+- design fake provider mode for deterministic tests;
+- draft Codex work prompt templates;
+- draft Codex scoring prompt templates;
+- define Ollama provider timeout behavior;
+- define provider-failure log formats;
+- test `git apply --check` patch validation;
+- define review-artifact directory layout;
+- create example GitHub issue data that should become UbU WorkItems;
+- create example PR-review queues that should become UbU planning inputs;
+- document one real maintainer coordination failure that conventional tools failed to model.
+
+These tasks are intentionally small.
+
+Small, correct, reviewable work is more valuable than sweeping architectural enthusiasm.
+
+---
+
 ## Technical direction for `model-committee`
 
 The first `model-committee` implementation should be intentionally boring.
@@ -429,6 +663,73 @@ The goal is to get a small, auditable loop working first.
 
 ---
 
+## Post-ETHConf scaling plan
+
+If ETHConf or other outreach produces serious interest, the project should convert that interest into bounded artifacts:
+
+- follow-up interviews;
+- anonymized workflow examples;
+- design-review comments;
+- implementation-ready issues;
+- test fixtures;
+- small patches;
+- isolated `model-committee v0.1` tasks.
+
+The project should not convert interest directly into unstructured community growth.
+
+A larger community is useful only if it reduces unresolved design burden, increases implementation velocity, or improves the self-governance model.
+
+Good post-ETHConf outcomes include:
+
+- repeated pain points from multiple teams;
+- concrete examples of fragmented work state;
+- clear disclosure-boundary preferences;
+- a ranked first wedge for the PM-facing use case;
+- one or more design partners;
+- one or more serious implementation contributors;
+- one or more possible funding or career paths compatible with UbU’s self-governance mission.
+
+Bad post-ETHConf outcomes include:
+
+- vague praise without follow-up;
+- popularity without contributors;
+- requests for surveillance dashboards;
+- token-first proposals;
+- pressure to become a generic PM clone;
+- architecture debates that do not reduce design burden.
+
+---
+
+## Non-negotiable project boundaries
+
+UbU’s project-management use case must remain subordinate to the self-governance mission.
+
+UbU should not become:
+
+- manager-first surveillance software;
+- a productivity-scoring system for employees;
+- a generic task-board clone;
+- a centralized data trap;
+- an opaque agent that mutates canonical state without review;
+- a popularity-driven project that loses its self-governance core.
+
+The professional and FOSS use cases are valuable when they help build the same primitives required by the personal self-governance product:
+
+- Objectives;
+- Preferences;
+- WorkItems;
+- Plans;
+- Logs;
+- UniverseState;
+- Identities;
+- Compartments;
+- bounded disclosure;
+- recalculable planning.
+
+Professional opportunity is compatible with UbU only if it funds or accelerates the trunk of the project, not a distracting branch.
+
+---
+
 ## Why join now?
 
 UbU is at the transition point where the design is coherent enough to begin implementation, but early enough that contributors can meaningfully shape the architecture.
@@ -447,7 +748,11 @@ This is a good project for developers interested in:
 - applied software architecture;
 - tools that help users govern themselves rather than manipulate them.
 
-UbU is ambitious, but the immediate next step is modest: build the bootstrap tool that helps the project finish becoming buildable.
+UbU is ambitious, but the immediate next step is modest:
+
+> Build the bootstrap tool that helps the project finish becoming buildable.
+
+That is the first practical path toward UbU running UbU.
 
 ---
 

@@ -10,7 +10,7 @@
 
 **UbU** is a privacy-first planning, coordination, and self-governance system.
 
-UbU is intended to convert messy real-world inputs—tasks, calendar events, messages, external events, user preferences, physical and affective state, GitHub/project data, and integration data—into explicit, inspectable, recalculable plans.
+UbU is intended to convert messy real-world inputs - tasks, calendar events, messages, external events, user preferences, physical and affective state, GitHub/project data, and integration data - into explicit, inspectable, recalculable plans.
 
 UbU is not merely a task list, calendar application, or project-management dashboard. It is intended to become a planning kernel for individuals and organizations: a system that models desired outcomes, constraints, risks, dependencies, available time, and human limitations, then helps determine what should happen next.
 
@@ -22,22 +22,28 @@ The first MVP is designed around **dogfooding**: using UbU to coordinate the des
 
 UbU is based on several design principles:
 
-1. **User sovereignty**  
+1. **User sovereignty**
+
    The user is the final authority over what the user wants and what occurred.
 
-2. **Explicit value**  
+2. **Explicit value**
+
    Value is attached to Objectives through user-defined Preferences. Numeric utilities may be derived for planning, but they are transient computational artifacts, not canonical user values.
 
-3. **Explicit planning**  
+3. **Explicit planning**
+
    Planning must remain explicit and constraint-based. LLMs may assist, but canonical planning and decision logic must remain inspectable and recalculable outside the LLM.
 
-4. **Privacy-first architecture**  
+4. **Privacy-first architecture**
+
    UbU is designed around local-first operation, compartmentalized data, multiple Identities, and user-controlled sharing.
 
-5. **Affect-aware planning**  
+5. **Affect-aware planning**
+
    In `user_mode`, human affective state is part of the planning problem. Energy, stress, tiredness, mood, and related human limitations are constraints that planning must respect.
 
-6. **Dogfooding**  
+6. **Dogfooding**
+
    The Phase 1 MVP should help coordinate UbU’s own GitHub issues, pull requests, reviews, CI events, release milestones, design questions, and contributor interactions.
 
 ---
@@ -62,9 +68,47 @@ UbU is currently in **pre-MVP design and automation-preparation**.
 
 The design has reached the point where private discussion has diminishing returns. The project is preparing to begin implementation by using a bootstrap automation project, `model-committee`, to help finalize remaining design questions and generate reviewable repo changes.
 
-The Phase 1 MVP scope is not yet fully frozen. The first implementation target is still:
+The Phase 1 MVP scope is not yet fully frozen.
+
+The first implementation target is still:
 
 > Single-user GitHub dogfooding: UbU helps coordinate the development of UbU itself.
+
+---
+
+## ETHConf 2026 / autonomous-team feedback focus
+
+UbU is preparing to gather feedback from FOSS maintainers, Ethereum project leads, protocol teams, and other people who coordinate highly autonomous technical contributors.
+
+The project is especially interested in workflows where the real state of work is split across GitHub, calendars, chat, private notes, maintainer memory, CI, reviews, release obligations, audit constraints, and informal commitments.
+
+The immediate goal is not to replace existing project-management tools. The immediate goal is to understand how a privacy-first self-governance system can help contributors plan privately while publishing only the coordination facts a team actually needs:
+
+- blockers;
+- commitments;
+- dependency status;
+- review needs;
+- milestone risks;
+- selected availability;
+- explicit requests for decisions or intervention.
+
+This feedback should improve the Phase 1 dogfooding target: UbU coordinating the development of UbU itself.
+
+---
+
+## What UbU is not
+
+UbU should not become:
+
+- a generic Jira, Linear, Asana, Trello, or Monday replacement;
+- an employee-surveillance dashboard;
+- a centralized productivity telemetry system;
+- a manager-first capacity scoring system;
+- a tokenized coordination product before the planning model works;
+- an opaque autonomous agent that mutates canonical project state without review;
+- a popularity-driven project that loses its personal self-governance core.
+
+Project-management functionality is a derivative use case. It is valuable only when it helps build the same primitives needed by the personal self-governance product.
 
 ---
 
@@ -278,9 +322,7 @@ It must not call:
 - Gemini APIs;
 - arbitrary HTTP URLs.
 
-`httpx` may be used only for the configured Ollama `base_url`.
-
-Codex must be invoked only through subprocess.
+`httpx` may be used only for the configured Ollama `base_url`. Codex must be invoked only through subprocess.
 
 This no-network policy preserves the bootstrap architecture and prevents accidental API creep.
 
@@ -351,9 +393,9 @@ Allowed sentinel values include:
 
 `model-committee` work is changeset-based.
 
-The implementation step should not be hidden inside VS Code or another opaque external editor agent.
+The implementation step should not be hidden inside VS Code or another opaque external editor agent. Candidate models produce explicit changesets, usually as patches. A scoring model evaluates those changesets.
 
-Candidate models produce explicit changesets, usually as patches. A scoring model evaluates those changesets. The selected result is written as reviewable artifacts:
+The selected result is written as reviewable artifacts:
 
 - `selected.patch`
 - `commit_message.txt`
@@ -378,9 +420,7 @@ Consistency has the highest priority because an inconsistent project state inval
 
 Prioritization is second because the system must choose the next intended state transition.
 
-Work is third because work should implement only a selected and justified transition.
-
-Work should not proceed against a known-inconsistent repo unless the selected work item is specifically to repair that inconsistency.
+Work is third because work should implement only a selected and justified transition. Work should not proceed against a known-inconsistent repo unless the selected work item is specifically to repair that inconsistency.
 
 ---
 
@@ -452,22 +492,99 @@ Recommended stack:
 
 This repository is currently a design repository, not the main implementation repository.
 
+The project does not yet need a large standing community. It needs precise help that reduces design burden and moves the project toward implementation.
+
 Good contributions include:
 
 - clarifying open questions;
 - identifying contradictions in the canonical design files;
 - proposing precise patches to `DESIGN.md`, `DECISIONS.md`, or `OPEN_QUESTIONS.md`;
 - helping convert open questions into implementation-ready issues;
-- reviewing whether Phase 1 scope is sufficiently frozen.
+- reviewing whether Phase 1 scope is sufficiently frozen;
+- providing real workflow examples from FOSS, Ethereum, protocol, research, or other autonomous-team contexts;
+- helping define narrow `model-committee v0.1` implementation tasks.
 
 The project prefers explicit patches over hidden discussion.
+
+### Current contribution path
+
+Useful contributor roles currently include:
+
+1. **Design reviewer**
+
+   Identify contradictions, underspecified concepts, ambiguous dependencies, or unclear scope boundaries.
+
+2. **Workflow informant**
+
+   Describe real FOSS or autonomous-team coordination failures that UbU should eventually model.
+
+3. **Small patch contributor**
+
+   Improve canonical design files or create implementation-ready issue descriptions.
+
+4. **Early implementation contributor**
+
+   Help build the `model-committee v0.1` bootstrap tool once implementation begins.
+
+5. **Module owner**
+
+   Take responsibility for a bounded subsystem after trust, alignment, and technical fit are established.
+
+The best early contributions are narrow, reviewable, and explicit. The project prefers concrete patches, structured issue proposals, test fixtures, and workflow examples over broad abstract discussion.
+
+### First useful contribution areas
+
+Useful early work includes:
+
+- parser tests for `OPEN_QUESTIONS.md`;
+- metadata validation fixtures;
+- question dependency DAG validation;
+- decision-reference validation;
+- fake provider mode design;
+- Codex prompt-template review;
+- Ollama provider timeout and failure behavior;
+- patch-validation tests;
+- review-artifact format design;
+- examples of GitHub issue/PR state that should become UbU WorkItems;
+- examples of maintainer coordination failures that conventional tools fail to model.
+
+### Scope boundaries for early contributors
+
+UbU is a personal self-governance system first. Project-management functionality is a derivative dogfooding and coordination use case.
+
+Team coordination should emerge through explicit Identities, commitments, capabilities, and bounded disclosure. Private human state should not become manager-visible telemetry.
+
+In particular:
+
+- `user_mode` may model intrinsic human affect;
+- `organization_mode` should not model intrinsic affect;
+- project-management views should receive selected coordination facts, not raw private state;
+- GitHub should remain a projection of richer UbU state, not the canonical planning model;
+- LLMs and automation workers should produce reviewable artifacts, not unreviewed canonical mutations.
+
+### Post-ETHConf scaling note
+
+If ETHConf or other outreach produces serious interest, new contributors should start through bounded paths:
+
+- design review;
+- workflow examples;
+- test fixtures;
+- implementation-ready issues;
+- narrow patches;
+- isolated `model-committee v0.1` components.
+
+Major architectural changes should be proposed as explicit patches to canonical files, not as informal chat threads or private decisions.
+
+If the contributor base grows, some material currently embedded in this `README.md` may later be extracted into dedicated files such as `CONTRIBUTING.md`, `ARCHITECTURE.md`, `ROADMAP.md`, or `GOOD_FIRST_ISSUES.md`.
+
+Those files are not required yet.
 
 ---
 
 ## Repository map
 
-- `README.md` — derived public-facing project summary
-- `DESIGN.md` — canonical design summary
-- `DECISIONS.md` — accepted design decisions and anti-regression memory
-- `OPEN_QUESTIONS.md` — unresolved questions, prioritization metadata, and automation queue
-- `OUTREACH.md` — derived public-facing outreach and recruiting document
+- `README.md` - derived public-facing project summary
+- `DESIGN.md` - canonical design summary
+- `DECISIONS.md` - accepted design decisions and anti-regression memory
+- `OPEN_QUESTIONS.md` - unresolved questions, prioritization metadata, and automation queue
+- `OUTREACH.md` - derived public-facing outreach and recruiting document
