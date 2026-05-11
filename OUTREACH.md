@@ -2,7 +2,7 @@
 
 **Status:** Derived public-facing outreach document  
 **Source of truth:** `DESIGN.md`, `DECISIONS.md`, and `OPEN_QUESTIONS.md`  
-**Audience:** FOSS developers, project maintainers, Ethereum project leads, privacy engineers, automation builders, planning-tool researchers, and technically curious contributors
+**Audience:** FOSS developers, project maintainers, Ethereum project leads, privacy engineers, automation builders, planning-tool researchers, independent technical consultants, prototype funders, and technically curious contributors
 
 ---
 
@@ -129,7 +129,7 @@ UbU’s privacy model is not an afterthought. It is part of the planning model.
 
 UbU treats human limitations as real constraints.
 
-In `user_mode`, affect belongs to UniverseState. Energy, tiredness, stress, mood, and related signals are part of the planning problem.
+In `user_mode`, affect belongs to UniverseState. Energy, tiredness, stress, mood, motivation, boredom, emotional load, recovery needs, and related signals are part of the planning problem.
 
 This does not mean the system should constantly interrogate the user. Affect collection is itself modeled as planned work. If affect information is missing or stale, UbU may create an Objective or Task to collect it.
 
@@ -137,7 +137,11 @@ The goal is not emotional surveillance.
 
 The goal is self-governance.
 
-A system that ignores fatigue, boredom, stress, and attention is not helping a human plan. It is producing fiction.
+Most planning systems are affect-blind: they model tasks, deadlines, statuses, and calendar blocks, but not the emotional and physical reality of the person who must execute the plan.
+
+A system that ignores fatigue, boredom, stress, attention, dignity, and recovery is not helping a human plan. It is producing fiction.
+
+UbU should give users fast feedback when plans succeed or fail, suggest improvement after failure, respect dignity and emotional limits, and still help users grow beyond current limitations.
 
 ---
 
@@ -271,11 +275,98 @@ A single workflow example, failing tool-stack pattern, or precise patch is more 
 
 ---
 
+
+## Current outreach posture
+
+UbU is no longer only a design vision.
+
+The `model-committee` v0.1 baseline provides the first runnable bootstrap path for dogfooding UbU’s own design process.
+
+The outreach goal is therefore changing from “explain the vision” to “convert aligned people into concrete next actions.”
+
+Useful next actions include:
+
+1. Review a `model-committee` run artifact.
+2. Help improve the question-and-answer dogfooding loop.
+3. Provide a real autonomous-team coordination failure.
+4. Help define the first consultant/prototype-funder workflow.
+5. Contribute to a narrow implementation issue.
+6. Discuss serious ongoing contributor involvement.
+
+---
+
+## Who we most want to meet now
+
+UbU is seeking a small core cohort of serious, self-directed contributors.
+
+The project is especially interested in people who want to help build the trunk of UbU rather than a distracting branch.
+
+Strong contributor candidates may be people who:
+
+- understand why planning must be explicit and recalculable;
+- are skeptical of opaque AI productivity tools;
+- care about local-first and privacy-first software;
+- can turn abstract design into practical systems;
+- want software that respects human emotion without surrendering discipline;
+- are willing to own a bounded subsystem over time.
+
+There is not a single slot. Several serious contributors could meaningfully accelerate the project.
+
+Another high-priority contact category is prototype funders or design partners from the independent knowledge-worker market.
+
+A further high-priority contact category is maintainers or autonomous-team leads who can provide concrete coordination failure cases.
+
+---
+
+## Prototype-funder beachhead
+
+UbU is exploring a first commercial beachhead among independent knowledge workers who manage complex private professional obligations.
+
+Examples include:
+
+- independent technical consultants;
+- freelance developers;
+- security researchers;
+- solo founders;
+- independent academics;
+- technical writers;
+- privacy-sensitive professional advisors.
+
+These users often manage work across multiple clients, projects, deadlines, contexts, and confidentiality boundaries.
+
+They are a strong fit for UbU because their professional work already requires personal self-governance. They need planning that respects commitments, dependencies, attention, fatigue, confidentiality, and context switching.
+
+UbU should not chase funding that requires surveillance features, generic enterprise dashboards, or a pivot away from personal self-governance.
+
+---
+
+## Technical essay project
+
+UbU should publish a problem-first technical essay explaining why conventional planning tools fail humans.
+
+Working title:
+
+> The Planning Kernel: Why Your Task Manager Is Lying to You
+
+Core claim:
+
+Most planning tools are affect-blind. They model tasks, deadlines, statuses, and calendar blocks, but not the emotional and physical reality of the person who must execute the plan.
+
+A humane planner must provide fast feedback from reality, suggest improvements after failure, respect dignity and emotional limits, and still help the user grow beyond current limitations.
+
+The essay should argue that real planning requires explicit Objectives, state transitions, dependencies, constraints, logs, uncertainty, affect, and recalculation.
+
+The essay should also explain why LLMs are useful but should remain advisory rather than canonical: they can interpret and suggest, but the planning model must remain inspectable.
+
+The essay should point to `model-committee` as UbU’s first visible dogfooding loop and invite concrete participation.
+
+---
+
 ## Model-committee: the bootstrap automation project
 
-Before the main UbU MVP is implemented, the project is preparing a bootstrap automation tool called `model-committee`.
+Before the main UbU MVP is implemented, the project is using a bootstrap automation tool called `model-committee`.
 
-`model-committee` is an early dogfooding system. It helps the project use LLMs and local automation to resolve design questions, propose changesets, score candidate patches, and move toward implementation.
+`model-committee v0.1` is the first runnable early dogfooding system. It helps the project use LLMs and local automation to resolve design questions, propose changesets, score candidate patches, and move toward implementation.
 
 It is not the canonical decision engine.
 
@@ -727,6 +818,21 @@ The professional and FOSS use cases are valuable when they help build the same p
 - recalculable planning.
 
 Professional opportunity is compatible with UbU only if it funds or accelerates the trunk of the project, not a distracting branch.
+
+---
+
+
+## Why this project may matter
+
+UbU comes from a long-running attempt to solve a difficult problem: how software can help a person govern their own life without reducing them to tasks, metrics, reminders, or manager-visible productivity signals.
+
+The idea has become more practical because modern LLMs can help interpret messy human context, while explicit planning logic can keep decisions inspectable and recalculable.
+
+That combination creates a new opening.
+
+UbU is not claiming inevitability. It is claiming that the time may finally be right to build a humane planning kernel: one that respects privacy, emotion, ambition, failure, learning, and growth.
+
+For the right contributors, this is a chance to work on software that could matter for a long time.
 
 ---
 

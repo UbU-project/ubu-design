@@ -1,6 +1,6 @@
 # UbU Design
 
-Status: Draft  
+Status: Draft / active pre-MVP dogfooding  
 Repository: `ubu-design`  
 Purpose: Canonical public design document for the UbU project
 
@@ -80,6 +80,25 @@ In `user_mode`, affective state is part of the planning problem. Energy, stress,
 
 UbU should not assume that users can simply execute arbitrary work because a schedule says they should.
 
+### 2.5.1 Human-complete planning quality
+
+UbU treats affect as a core part of planning, not a decorative wellness feature.
+
+A plan that ignores fatigue, stress, boredom, motivation, emotional load, recovery, and dignity is not merely incomplete. It may become actively misleading.
+
+A high-quality plan should:
+
+- produce fast feedback about success or failure;
+- make failure informative rather than humiliating;
+- suggest revision after failure;
+- respect the user’s dignity;
+- respect emotional and physical limits;
+- distinguish sustainable stretch from destructive pressure;
+- help the user grow beyond current limitations when appropriate;
+- remain recalculable when reality contradicts the model.
+
+The goal is neither comfort-maximization nor coercive productivity. The goal is humane self-governance: disciplined action that respects the user’s emotional and physical reality.
+
 ### 2.6 Dogfooding
 
 UbU should be useful for managing its own development.
@@ -137,6 +156,16 @@ The goal is to accelerate implementation, not to create unlimited pre-implementa
 Model-committee automation must be bounded by a stop rule. It should recommend further design work only when that work has greater expected value than beginning or continuing implementation.
 
 The first implementation of this process is intentionally constrained by the v0.1 restrictions recorded in `DECISIONS.md`.
+
+### 3.0 Current dogfooding status
+
+`model-committee v0.1` is the first runnable bootstrap artifact for UbU’s dogfooding process.
+
+It is not the full UbU planner, but it exercises the recursive project-governance loop: parse canonical state, check consistency, select answerable work, generate candidate changesets, score them, validate patches, and produce reviewable artifacts.
+
+This establishes active pre-MVP dogfooding while preserving the rule that accepted design state exists only when committed to the canonical design repository.
+
+The current strategic emphasis is to use visible dogfooding, contributor recruitment, and prototype-funder discovery to accelerate the trunk of UbU rather than to expand design philosophy indefinitely.
 
 ### 3.1 Codex-first provider model
 
@@ -1506,6 +1535,11 @@ Key unresolved areas include:
 - Model-committee prioritized recursive loop
 - Model-committee question decomposition and answerability semantics
 - Model-committee Codex provider behavior
+- Contributor recruitment language and small-core-cohort onboarding
+- Independent knowledge-worker prototype-funder workflow
+- Public technical essay claim and request
+- Public dogfooding artifact publication policy
+- Funding red lines for self-governance compatibility
 
 ---
 
@@ -1523,6 +1557,25 @@ Design changes should be recorded as:
 - or GitHub Issues linked from `OPEN_QUESTIONS.md`.
 
 The project should prefer explicit decisions over hidden assumptions.
+
+
+### Current strategic posture
+
+UbU has moved from pure design preparation into active pre-MVP dogfooding.
+
+The project should now prioritize:
+
+- visible `model-committee` dogfooding output;
+- recruitment of a small core cohort of serious, self-directed contributors;
+- prototype-funder discovery among privacy-sensitive independent knowledge workers;
+- conversion of outreach into concrete next actions;
+- implementation of trunk features needed by the personal self-governance product.
+
+Further broad philosophical elaboration should generally be subordinated to implementation, recruitment, dogfooding, or market discovery.
+
+Public-facing materials should avoid implying that there is only one meaningful contributor role. They should welcome several serious contributors while still distinguishing committed work from passive interest.
+
+Public materials should also avoid negative metaphors when criticizing planning systems that fail to model affect. Preferred terms include affect-blind, emotionally incomplete, human-incomplete, mechanistic planning, or affect-insensitive planning.
 
 ### Open-core and FOSS boundary
 

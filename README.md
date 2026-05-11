@@ -1,6 +1,6 @@
 # UbU
 
-**Status:** Pre-MVP design / bootstrap automation preparation  
+**Status:** Active pre-MVP dogfooding / contributor and prototype-funder discovery  
 **Repository:** `ubu-design`  
 **Primary purpose:** Canonical public design state for the UbU project
 
@@ -64,15 +64,67 @@ When derived files conflict with canonical files, the canonical files win.
 
 ## Current project status
 
-UbU is currently in **pre-MVP design and automation-preparation**.
+UbU is currently in **active pre-MVP dogfooding**.
 
-The design has reached the point where private discussion has diminishing returns. The project is preparing to begin implementation by using a bootstrap automation project, `model-committee`, to help finalize remaining design questions and generate reviewable repo changes.
+The design has reached the point where additional broad philosophical elaboration has diminishing returns unless it directly supports implementation, recruitment, dogfooding, or market discovery.
+
+The `model-committee` v0.1 baseline is now the first runnable bootstrap artifact for using model-assisted review to process UbU design questions and generate reviewable changesets.
 
 The Phase 1 MVP scope is not yet fully frozen.
 
-The first implementation target is still:
+The current operational target is:
 
-> Single-user GitHub dogfooding: UbU helps coordinate the development of UbU itself.
+> Use `model-committee` and related dogfooding artifacts to help UbU coordinate the development of UbU itself.
+
+---
+
+## Current recruitment priority
+
+UbU is seeking a small core cohort of serious, self-directed builders.
+
+The project does not need popularity for its own sake, but it can productively absorb multiple committed contributors who are willing to work on the trunk of the project: the planning kernel, dogfooding loop, privacy model, local-first architecture, and self-governance UX.
+
+Good early collaborators may have experience with:
+
+- local-first software;
+- privacy-preserving systems;
+- developer tooling;
+- planning or scheduling systems;
+- GitHub automation;
+- LLM orchestration;
+- FOSS maintenance;
+- high-autonomy technical work;
+- emotionally humane productivity tools.
+
+Casual interest is welcome, but the highest-value contributions are concrete: code, test fixtures, design review, workflow examples, prototype funding, and sustained subsystem ownership.
+
+---
+
+## Prototype-funder hypothesis
+
+A plausible first commercial beachhead is privacy-sensitive independent knowledge work: independent technical consultants, freelance developers, security researchers, solo founders, independent academics, technical writers, and similar workers who manage complex multi-client obligations.
+
+This group is strategically relevant because it combines:
+
+- real deadline and dependency complexity;
+- strong privacy and compartmentalization needs;
+- willingness to pay for tools that improve professional leverage;
+- direct experience with self-governance failures;
+- overlap with UbU’s long-term personal planning mission.
+
+Prototype funding is compatible with UbU only if it funds trunk features needed by the personal self-governance product.
+
+---
+
+## Human-complete planning
+
+UbU treats affect as a core part of planning, not a decorative wellness feature.
+
+A plan that ignores fatigue, stress, boredom, motivation, emotional load, recovery, and dignity is not merely incomplete. It may become actively misleading.
+
+UbU should help users receive fast feedback about whether a plan is working, revise plans when reality disagrees, and grow beyond current limits without treating themselves like machines.
+
+The goal is neither comfort-maximization nor coercive productivity. The goal is humane self-governance: disciplined action that respects the user’s emotional and physical reality.
 
 ---
 
@@ -215,9 +267,9 @@ Missed GitHub updates are expected in MVP, so reconciliation is a first-class co
 
 ## Model-committee bootstrap project
 
-`model-committee` is a planned bootstrap automation project that will help UbU move from design preparation into implementation.
+`model-committee` is the first runnable bootstrap automation project for active pre-MVP UbU dogfooding.
 
-The project is an early example of UbU dogfooding: UbU uses an automation loop to help coordinate its own design and development.
+The project is an early example of UbU dogfooding: UbU uses an automation loop to help coordinate its own design and development through reviewable run artifacts and changesets.
 
 `model-committee` is not the canonical decision engine. It is an advisory Automation Worker pattern that reads canonical repo state, identifies open questions, generates candidate changesets, scores those changesets, and writes reviewable artifacts.
 
@@ -450,7 +502,7 @@ The relevant metric is unresolved design burden, not merely raw open-question co
 
 ## Development readiness
 
-The current design baseline is intended to support beginning `model-committee` development.
+The current design baseline supports continuing `model-committee` dogfooding and preparing the Phase 1 implementation path.
 
 The first development milestone should be:
 
@@ -492,7 +544,7 @@ Recommended stack:
 
 This repository is currently a design repository, not the main implementation repository.
 
-The project does not yet need a large standing community. It needs precise help that reduces design burden and moves the project toward implementation.
+The project welcomes a small core cohort of serious, self-directed contributors. It does not need popularity for its own sake. It needs precise help that reduces design burden, improves dogfooding, and moves the project toward implementation.
 
 Good contributions include:
 
@@ -524,13 +576,13 @@ Useful contributor roles currently include:
 
 4. **Early implementation contributor**
 
-   Help build the `model-committee v0.1` bootstrap tool once implementation begins.
+   Help maintain, test, and extend the `model-committee v0.1` bootstrap loop as active dogfooding continues.
 
 5. **Module owner**
 
    Take responsibility for a bounded subsystem after trust, alignment, and technical fit are established.
 
-The best early contributions are narrow, reviewable, and explicit. The project prefers concrete patches, structured issue proposals, test fixtures, and workflow examples over broad abstract discussion.
+The best early contributions are narrow, reviewable, and explicit. The project prefers concrete patches, structured issue proposals, test fixtures, workflow examples, review of dogfooding artifacts, and sustained subsystem ownership over broad abstract discussion.
 
 ### First useful contribution areas
 

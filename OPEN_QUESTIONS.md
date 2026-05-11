@@ -1327,6 +1327,221 @@ Partially resolved by `UBU-D0068`; detailed scoring mechanics remain open.
 
 ---
 
+
+## UBU-Q0041: Public recruitment language for a small core cohort
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Contributor recruitment Resolved by: UBU-D0078, UBU-D0085 Last scored: Never Scored from commit: None
+
+### Question
+
+What public language best recruits a small core cohort of serious, self-directed contributors without implying scarcity, exclusion, or competition for a single privileged role?
+
+### Subquestions
+
+1. How should UbU distinguish serious contributors from passive interest without sounding unwelcome?
+2. How should public materials invite multiple committed contributors while preserving bounded contribution paths?
+3. Which contributor roles should be named publicly?
+4. What language should be avoided because it implies a single co-builder slot?
+5. How should ETHConf follow-up route interested people into concrete next actions?
+
+### Current direction
+
+Use language such as “small core cohort of serious, self-directed contributors” rather than “the highest-priority contact is a co-builder.” Several serious contributors are welcome if they work on the trunk of UbU and can own bounded subsystems.
+
+### Resolution
+
+Partially resolved by `UBU-D0078` and `UBU-D0085`; exact outreach copy remains open.
+
+---
+
+## UBU-Q0042: Feedback, dignity, emotional limits, and growth pressure
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Affect-aware planning quality Resolved by: UBU-D0081, UBU-D0082 Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU model fast feedback, dignity, emotional limits, and growth pressure as part of plan quality?
+
+### Subquestions
+
+1. What observable signals show that a plan is succeeding or failing quickly enough?
+2. How should UbU distinguish informative failure from humiliating or demoralizing failure?
+3. How should UbU suggest improvement after failure without user-blaming?
+4. How should UbU represent sustainable stretch versus destructive pressure?
+5. How should affect-related plan fragility appear in risk reports?
+6. How should plan quality account for whether a plan leaves the user better or worse off?
+7. Which parts belong in Phase 1 and which are post-MVP?
+
+### Current direction
+
+A plan is not high-quality merely because it is internally consistent or time-feasible. High-quality plans should produce fast feedback, respect dignity and emotional limits, distinguish sustainable stretch from destructive pressure, and remain recalculable when reality contradicts the model.
+
+### Resolution
+
+Partially resolved by `UBU-D0081` and `UBU-D0082`; detailed modeling remains open.
+
+---
+
+## UBU-Q0043: First technical essay claim, avoidances, and request
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Public outreach Resolved by: UBU-D0083 Last scored: Never Scored from commit: None
+
+### Question
+
+What should the first public technical essay claim, avoid, and request?
+
+### Subquestions
+
+1. Should the working title be “The Planning Kernel: Why Your Task Manager Is Lying to You”?
+2. How should the essay explain affect-blind planning without using negative metaphors?
+3. How should the essay distinguish UbU from task managers, calendars, project boards, and opaque AI assistants?
+4. How should the essay explain LLMs as advisory rather than canonical planners?
+5. How should the essay point to `model-committee` as visible dogfooding?
+6. What single concrete next action should the essay request?
+
+### Current direction
+
+The essay should be problem-first, not a product brochure. It should argue that real planning requires explicit objectives, state transitions, dependencies, constraints, logs, uncertainty, affect, and recalculation.
+
+### Resolution
+
+Partially resolved by `UBU-D0083`; final essay outline and publication plan remain open.
+
+---
+
+## UBU-Q0044: Long-arc project narrative without grandiosity
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Public narrative Resolved by: UBU-D0084 Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU present its long intellectual development history and recent LLM-enabled viability without sounding grandiose, unrealistic, or inevitable?
+
+### Subquestions
+
+1. How much of the long personal-development history should be public-facing?
+2. How should UbU explain that LLM capabilities changed the feasibility frontier?
+3. How should outreach communicate durable significance without overpromising world-historical impact?
+4. Where should this narrative appear: essay, outreach, README, talks, or interviews?
+5. What language should be avoided?
+
+### Current direction
+
+UbU may describe itself as a long-running personal and technical project whose time may now be arriving. Public language should remain grounded and prefer “could matter for a long time” over “will change the world.”
+
+### Resolution
+
+Partially resolved by `UBU-D0084`; final public copy remains open.
+
+---
+
+## UBU-Q0045: Smallest prototype-funder workflow for independent technical consultants
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Prototype-funder discovery Resolved by: UBU-D0079 Last scored: Never Scored from commit: None
+
+### Question
+
+What is the smallest prototype-funder workflow for privacy-sensitive independent technical consultants and similar independent knowledge workers?
+
+### Subquestions
+
+1. What exact pain should the first funded prototype address?
+2. Which inputs are required: calendar, GitHub, tasks, email, notes, invoices, or manual declarations?
+3. What can be implemented without violating privacy-first architecture?
+4. What output would be valuable enough to fund: daily plan, commitment-risk report, client-compartment view, or weekly review?
+5. How should paid prototype work remain on the trunk of the personal self-governance product?
+6. What price, prepayment, or sponsorship structure is plausible?
+
+### Current direction
+
+Independent technical consultants, freelance developers, security researchers, solo founders, independent academics, technical writers, and similar users are a leading commercial beachhead hypothesis because they combine privacy, multi-client complexity, deadlines, dependency management, and personal self-governance pressure.
+
+### Resolution
+
+Partially resolved by `UBU-D0079`; exact prototype workflow remains open.
+
+---
+
+## UBU-Q0046: Public dogfooding artifacts for contributor credibility
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0036, UBU-Q0038 Blocks: Contributor recruitment Resolved by: UBU-D0077, UBU-D0086 Last scored: Never Scored from commit: None
+
+### Question
+
+What public dogfooding artifacts should `model-committee` expose to make UbU credible and actionable to potential contributors?
+
+### Subquestions
+
+1. Which run artifacts should be committed, linked, summarized, or ignored?
+2. How should selected patches, review notes, and commit messages be presented?
+3. How should public artifacts avoid leaking private reasoning or unsafe provider outputs?
+4. What would convince a developer that the loop is real and reviewable?
+5. How should artifacts connect to GitHub Issues or PRs?
+6. How should failed or partially successful runs be shown without damaging credibility?
+
+### Current direction
+
+The project should show the dogfooding loop, not merely describe it. Artifacts should demonstrate that open questions become model-assisted proposals, reviewable patches, decisions, and updated canonical state.
+
+### Resolution
+
+Partially resolved by `UBU-D0077` and `UBU-D0086`; exact artifact publication policy remains open.
+
+---
+
+## UBU-Q0047: Minimum committed-contributor onboarding path
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Contributor recruitment Resolved by: UBU-D0078, UBU-D0086 Last scored: Never Scored from commit: None
+
+### Question
+
+What is the minimum onboarding path for serious, self-directed contributors who may join the small core cohort?
+
+### Subquestions
+
+1. What should a contributor read first?
+2. What command should a contributor run first?
+3. What first issue or fixture should a contributor touch first?
+4. What architectural boundaries must be understood before implementation work?
+5. How should contributors move from workflow informant to design reviewer to implementation contributor to module owner?
+6. How can onboarding avoid requiring direct access to the project owner’s private context?
+
+### Current direction
+
+A contributor should be routed into bounded contribution paths: design review, workflow examples, test fixtures, implementation-ready issues, review of `model-committee` artifacts, and narrow implementation tasks.
+
+### Resolution
+
+Partially resolved by `UBU-D0078` and `UBU-D0086`; detailed onboarding path remains open.
+
+---
+
+## UBU-Q0048: Funding offers incompatible with self-governance mission
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Governance Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Prototype-funder discovery Resolved by: UBU-D0079, UBU-D0080 Last scored: Never Scored from commit: None
+
+### Question
+
+What funding offers, consulting opportunities, or commercial prototypes would be incompatible with UbU’s self-governance mission?
+
+### Subquestions
+
+1. Which requested features would push UbU toward surveillance project management?
+2. Which enterprise-dashboard features are incompatible with contributor sovereignty?
+3. What funding terms would create unacceptable control or IP risk?
+4. What crypto/tokenization requests should be rejected or deferred?
+5. How should UbU distinguish acceptable prototype funding from distracting custom work?
+6. What rules ensure paid work funds trunk features rather than distracting branches?
+
+### Current direction
+
+Funding is compatible only when it funds trunk features needed by the full personal self-governance product. Funding that requires surveillance, generic enterprise dashboards, centralized productivity telemetry, manager-first reporting, token-first coordination, or a pivot away from personal self-governance should be rejected or deferred.
+
+### Resolution
+
+Partially resolved by `UBU-D0079` and `UBU-D0080`; detailed commercial red-line policy remains open.
+
+
 ## Suggested Initial GitHub Issues
 
 Create these first:
@@ -1345,3 +1560,10 @@ Create these first:
 12. `UBU-Q0038`: Define Changeset-Based Work Phase
 13. `UBU-Q0039`: Define Prioritized Recursive Loop Semantics
 14. `UBU-Q0040`: Define Question Decomposition and Design Burden Scoring
+15. `UBU-Q0041`: Define public recruitment language for a small core cohort
+16. `UBU-Q0042`: Define feedback, dignity, limits, and growth-pressure planning quality
+17. `UBU-Q0043`: Define the first technical essay claim and concrete request
+18. `UBU-Q0045`: Define the smallest prototype-funder workflow
+19. `UBU-Q0046`: Define public dogfooding artifacts for contributor credibility
+20. `UBU-Q0047`: Define minimum committed-contributor onboarding path
+21. `UBU-Q0048`: Define commercial funding red lines

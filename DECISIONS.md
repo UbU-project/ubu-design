@@ -1877,3 +1877,238 @@ For Phase 1, relationship maintenance is supported only through existing Objecti
 - Communication cadence remains schedulable and recalculable through Objective recurrence.
 - GitHub dogfooding can model contributor follow-up without adding a new relationship subsystem to MVP.
 - Future richer relationship-management features can refine cadence evidence and private notes without changing the MVP anchor model.
+
+---
+
+## UBU-D0077: Model-committee v0.1 marks active pre-MVP dogfooding
+
+**Status:** Accepted
+
+`model-committee v0.1` marks a transition from pure design preparation into active pre-MVP dogfooding.
+
+The project now has a runnable bootstrap artifact that can help process UbU design questions, generate reviewable changesets, and make the dogfooding loop visible.
+
+This does not make `model-committee` the full UbU planner. It is a constrained bootstrap workload and advisory Automation Worker pattern.
+
+**Consequences:**
+
+- Public messaging should no longer imply that UbU is only an ideal design without runnable project machinery.
+- The next strategic bottleneck is no longer the absence of a runnable skeleton.
+- The next strategic bottlenecks are contributor conversion, visible dogfooding output, first-use workflow selection, and prototype-funder discovery.
+- Further design writing should generally be subordinated to implementation, recruitment, dogfooding, or market discovery.
+- `README.md` and `OUTREACH.md` should describe active pre-MVP dogfooding while preserving the canonical authority of `DESIGN.md`, `DECISIONS.md`, and `OPEN_QUESTIONS.md`.
+
+---
+
+## UBU-D0078: Recruitment targets a small core cohort, not a single co-builder
+
+**Status:** Accepted
+
+UbU’s near-term recruitment goal is to attract a small core cohort of serious, self-directed contributors.
+
+The project should avoid public language implying that there is only one meaningful contributor role or that interested developers are competing for a single privileged position.
+
+Popularity is not the goal, but multiple committed builders could materially accelerate UbU toward sustained full-time development.
+
+**Consequences:**
+
+- Public outreach should welcome several serious contributors.
+- Contributor language should emphasize self-direction, seriousness, alignment, and concrete work rather than scarcity.
+- The project should prefer committed contributors who can own bounded subsystems over broad passive interest.
+- Casual interest remains useful when it produces workflow examples, design feedback, contributor leads, or prototype-funder leads.
+- Recruitment success should be measured by concrete follow-up, contributions, design review, prototype funding, or subsystem ownership rather than raw attention.
+
+---
+
+## UBU-D0079: Independent knowledge workers are the first commercial beachhead hypothesis
+
+**Status:** Accepted
+
+UbU will treat privacy-sensitive independent knowledge workers as a leading commercial beachhead hypothesis.
+
+This includes independent technical consultants, freelance developers, security researchers, solo founders, independent academics, technical writers, and similar workers who manage complex multi-client work privately.
+
+This market is compatible with UbU’s north-star vision because these users experience personal self-governance, confidentiality, dependency, deadline, attention, and affect constraints directly.
+
+Prototype funding from this market is acceptable only when it funds trunk features needed by the full personal self-governance product.
+
+**Consequences:**
+
+- Commercial discovery should include interviews with independent knowledge workers, not only FOSS maintainers or Ethereum teams.
+- Prototype-funder outreach should test whether these users would fund or prepay for concrete core functionality.
+- Acceptable funded work includes the planning kernel, local-first data model, privacy/Compartment model, affect-aware planning, GitHub/calendar/task ingestion, Logs, and recalculable Plans.
+- Funding that requires surveillance, generic enterprise dashboards, centralized productivity telemetry, or manager-first reporting is incompatible unless a later accepted decision changes the project boundary.
+- This decision is a market hypothesis, not a commitment to abandon FOSS or personal self-governance.
+
+---
+
+## UBU-D0080: Ethereum and FOSS outreach are recruitment and validation channels
+
+**Status:** Accepted
+
+Ethereum, FOSS, protocol, and autonomous developer communities are valuable early outreach channels because they expose UbU to high-autonomy contributors, complex coordination failures, anti-surveillance norms, and developer-tooling expectations.
+
+These communities are not necessarily the first commercial buyer market.
+
+Their primary near-term role is recruitment, workflow discovery, dogfooding validation, contributor-sustainability research, and project-management pain discovery.
+
+**Consequences:**
+
+- ETHConf and similar events should be treated as discovery and recruitment opportunities, not as proof that UbU is primarily a crypto project.
+- FOSS outreach should seek concrete workflow examples, contributor candidates, design partners, and maintainers willing to discuss real coordination failures.
+- Ethereum/protocol outreach should avoid token-first positioning.
+- Project-management positioning should remain subordinate to personal self-governance and contributor sovereignty.
+- UbU should not chase generic crypto speculation communities.
+
+---
+
+## UBU-D0081: Affect-aware planning is a core humane-planning requirement
+
+**Status:** Accepted
+
+UbU treats affect-aware planning as a core requirement, not a secondary wellness feature.
+
+Planning systems that ignore fatigue, stress, boredom, motivation, emotional load, recovery, and dignity can produce plans that are technically organized but humanly unrealistic or harmful.
+
+UbU should provide fast feedback about plan success or failure, suggest improvement after failure, respect emotional and physical limits, and still help users grow beyond current limitations.
+
+The goal is neither comfort-maximization nor coercive productivity. The goal is humane self-governance: disciplined action that respects the user’s emotional and physical reality.
+
+**Consequences:**
+
+- Affect belongs to the core planning model in `user_mode`.
+- Plans should be evaluated not only for logistical feasibility but also for human realism.
+- A plan that repeatedly fails due to affect, fatigue, stress, boredom, or overload should cause model revision rather than user-blaming.
+- Risk reports should eventually identify affect-related plan fragility.
+- Public messaging may describe conventional planning tools as affect-blind, emotionally incomplete, human-incomplete, or mechanistic.
+
+---
+
+## UBU-D0082: High-quality plans need feedback, dignity, limits, and growth pressure
+
+**Status:** Accepted
+
+A UbU plan is not high-quality merely because it is internally consistent or time-feasible.
+
+A high-quality plan should:
+
+- produce fast feedback about success or failure;
+- make failure informative rather than humiliating;
+- suggest revision after failure;
+- respect the user’s dignity;
+- respect emotional and physical limits;
+- distinguish sustainable stretch from destructive pressure;
+- help the user grow beyond current limitations when appropriate;
+- remain recalculable when reality contradicts the model.
+
+This invariant is especially important in `user_mode`, where affect belongs to UniverseState.
+
+**Consequences:**
+
+- Plan evaluation should eventually consider whether a plan supports learning, adaptation, and sustainable self-improvement.
+- Failure should generally produce improved modeling, revised constraints, or new suggested actions rather than moralized blame.
+- UbU should push users toward growth only within a humane and feedback-sensitive planning loop.
+- A plan that leaves the user worse off despite achieving nominal task completion should be considered suspect.
+- This decision should inform `DESIGN.md` planning-quality language and future UI/UX choices.
+
+---
+
+## UBU-D0083: Technical essay should present a problem-first planning-kernel thesis
+
+**Status:** Accepted
+
+UbU should publish a problem-first technical essay that explains the planning-kernel thesis without reducing UbU to a product brochure.
+
+The essay should argue that ordinary task managers, calendars, project boards, and opaque AI assistants fail to model real work because they do not represent objectives, state transitions, dependencies, constraints, logs, uncertainty, affect, and human limitations explicitly.
+
+The essay should emphasize that most existing planning tools are affect-blind. They model tasks, deadlines, statuses, and calendar blocks, but not the emotional and physical reality of the person who must execute the plan.
+
+The essay should explain why LLMs are useful but advisory: they can interpret, summarize, propose, and critique, but canonical planning must remain explicit, inspectable, and recalculable.
+
+The essay should point to `model-committee` as UbU’s first visible dogfooding loop and end with a concrete contribution, interview, or prototype-funder request.
+
+**Consequences:**
+
+- The essay should lead with the problem, not with a feature list.
+- The essay should avoid generic startup marketing language.
+- The essay should invite concrete next actions from developers, maintainers, autonomous-team leads, and prototype funders.
+- `OUTREACH.md` may summarize the essay project, but the essay itself may live outside the canonical design files.
+
+---
+
+## UBU-D0084: Public narrative may use moderated long-arc framing
+
+**Status:** Accepted
+
+UbU may publicly describe its long intellectual development history and the fact that modern LLMs have made the project newly viable.
+
+This narrative may be used to attract contributors who want to work on software with durable significance.
+
+Public framing should remain grounded, humble, and specific. It should avoid unrealistic claims, inevitability claims, or overstated promises about changing the world.
+
+**Consequences:**
+
+- Outreach may describe UbU as a long-running personal and technical project whose time may now be arriving.
+- The narrative may help explain why the project has a mature design before it has a mature product.
+- The narrative should be used to communicate commitment and depth, not destiny or superiority.
+- Contributor recruitment should connect the long arc to concrete present work.
+
+---
+
+## UBU-D0085: Avoid exclusionary and scarcity-implying public framing
+
+**Status:** Accepted
+
+UbU public materials should avoid language that unintentionally makes interested contributors feel unwelcome, replaceable, or in competition for a single meaningful role.
+
+UbU should also avoid accusatory language when describing planning systems that fail to model affect.
+
+Preferred terms include:
+
+- affect-blind;
+- emotionally incomplete;
+- human-incomplete;
+- mechanistic planning;
+- machine-like planning;
+- non-humane planning;
+- affect-insensitive planning.
+
+**Consequences:**
+
+- Public recruitment language should refer to a small core cohort or several serious contributors rather than a single highest-priority co-builder slot.
+- Public language may still distinguish between serious contributors and passive interest.
+- The project may strongly criticize mechanistic planning systems without using negative metaphors.
+- Derived public-facing files should be updated when they imply scarcity or exclusion.
+- Canonical design files should remain precise and humane in how they discuss affect, dignity, limits, and growth.
+
+---
+
+## UBU-D0086: Public outreach should convert interest into concrete next actions
+
+**Status:** Accepted
+
+UbU should not treat popularity as achievement.
+
+Public outreach is successful when it produces concrete next actions that accelerate the project toward a working self-governance product.
+
+Concrete next actions include:
+
+- code contributions;
+- test fixtures;
+- design review;
+- workflow examples;
+- maintainer interviews;
+- prototype-funder conversations;
+- implementation-ready issues;
+- review of `model-committee` run artifacts;
+- sustained subsystem ownership;
+- credible paths toward full-time development of core features.
+
+**Consequences:**
+
+- Outreach artifacts should contain clear next steps.
+- ETHConf follow-up should classify contacts by likely concrete action, not by enthusiasm alone.
+- Broad interest is welcome if it can be routed into bounded contribution paths.
+- Vague praise without follow-up should not be treated as validation.
+- The project should preserve its north-star self-governance mission when evaluating funding, contributors, and market opportunities.
+
