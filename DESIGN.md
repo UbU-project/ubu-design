@@ -1196,9 +1196,11 @@ MVP Relationship data includes:
 - user-stated affect state toward the other identity;
 - inferred/speculated affect state of the other identity toward the user.
 
-Communication and maintenance metadata are not stored directly on Relationship in MVP. They may be accessed through Compartments or external storage.
+Communication and maintenance metadata are not stored directly on Relationship in MVP. Cadence policy for "keep this relationship warm" lives on an evergreen Objective's recurrence/reactivation rule. Observed interactions live in Logs, External Events, Task history, or Compartment/external references, depending on source and sensitivity.
 
-Objectives attach to Relationships indirectly through UniverseState.
+Objectives attach to Relationships indirectly through UniverseState. A relationship-maintenance Objective points at the Relationship or relationship-relevant UniverseState key, and its Tasks mutate ordinary UniverseState or append events; they do not add a special Relationship-maintenance schema in MVP.
+
+Neglect risk is not stored on Relationship in MVP. It is a risk-report finding derived from the maintenance Objective's recurrence rule plus observed interaction history and current Plan state.
 
 ---
 
@@ -1392,6 +1394,8 @@ Provisional mapping:
 - Milestone/release → Objective with Calendar detail
 - Contributor comment → External Event and/or analysis Objective
 
+Contributor interactions may also be associated with a GitHub Identity and relationship-maintenance Objective when the user has explicitly modeled that contributor relationship. These imported events may update relationship-relevant UniverseState or satisfy/reactivate the maintenance Objective, but they do not directly rewrite private Relationship affect fields without user acceptance.
+
 ### 23.2 Pipeline state
 
 `pipeline_state` is distinct from `Objective.status`.
@@ -1451,6 +1455,7 @@ Possible MVP reports:
 - affect constraint violation probability
 - low compact-calendar coverage warning
 - dependency fragility
+- relationship-maintenance neglect warning
 - worker failure / automation bottleneck
 
 Plan scoring does not include explicit risk penalty in MVP.

@@ -923,7 +923,7 @@ Unresolved.
 
 ## UBU-Q0026: Relationship Maintenance Modeling
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: UBU-D0076 Last scored: Never Scored from commit: None
 
 Relationship is modeled as structured UniverseState payload between two Identities.
 
@@ -944,7 +944,15 @@ Relationship is modeled as structured UniverseState payload between two Identiti
 
 ### Resolution
 
-Unresolved.
+Solved by `UBU-D0076`. Communication cadence lives on the evergreen Objective's recurrence/reactivation rule. Interaction evidence lives in Logs, External Events, Task history, or Compartment/external references; it is not stored directly on the Relationship payload.
+
+Neglect risk is a risk-report finding derived from the maintenance Objective recurrence, observed interaction history, and current Plan/Calendar state. It is not stored on Relationship and does not make risk first-class in MVP.
+
+"Maintain relationship with contributor X" is modeled as an evergreen Objective linked indirectly to the contributor Relationship or relationship-relevant UniverseState key. The Objective may create ordinary Dynamic Tasks such as reply, review, check in, or follow up, whose effects update UniverseState or append event markers.
+
+GitHub contributor interactions may update relationship-relevant modeled state when imported as External Events associated with the user's GitHub Identity and the contributor Identity. They may satisfy or reactivate the maintenance Objective, but they do not overwrite user-stated affect or canonicalize sensitive inferred relationship facts without user acceptance.
+
+Phase 1 supports relationship maintenance only through existing Objective, Task, Log, External Event, UniverseState, Identity, Relationship, and risk-report mechanisms. Dedicated relationship-management UI, cadence fields on Relationship, and full personal CRM behavior are deferred.
 
 ---
 

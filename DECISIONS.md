@@ -1847,3 +1847,33 @@ No organization-mode or worker-mode web admin UI is required for Phase 1. Phase 
 - Phase 1 public UX scope remains focused on the single-user dogfooding loop.
 - Future organization and worker admin UIs have a stable default first-screen direction without forcing RBAC or full admin products into MVP.
 - Admin views must respect Compartment boundaries and mode boundaries.
+
+
+---
+
+
+## UBU-D0076: Relationship maintenance uses Objectives, history, and risk reports
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0026`.
+
+In MVP, Relationship remains a structured UniverseState payload between two Identities and stores only the minimal relationship state already accepted: identity refs, the user-controlled Identity, user-stated affect toward the other Identity, and inferred/speculated affect of the other Identity where applicable.
+
+Communication cadence belongs to an evergreen Objective recurrence/reactivation rule, not to the Relationship payload. Interaction evidence belongs in Logs, External Events, Task history, or Compartment/external references depending on source and sensitivity. Message bodies, private notes, or integration-specific history should remain behind Compartment or external-storage references when sensitive.
+
+"Maintain relationship with contributor X" is modeled as an evergreen Objective linked indirectly to the contributor Relationship or relationship-relevant UniverseState key. That Objective can generate Dynamic Tasks such as reply, review, check in, or follow up. Task effects and imported External Events update ordinary UniverseState facts or event markers used to evaluate the Objective; they do not require a special Relationship-maintenance object in Phase 1.
+
+Neglect risk is a risk-report finding derived from the Objective recurrence, observed interaction history, and current Plan/Calendar state. It is not stored on Relationship and does not make risk a first-class MVP object.
+
+GitHub contributor interactions may update relationship-relevant modeled state when they are imported as External Events and associated with the user's GitHub Identity and the contributor Identity. They may satisfy or reactivate a relationship-maintenance Objective, but they must not overwrite user-stated private affect fields or infer sensitive relationship facts as canonical without user acceptance.
+
+For Phase 1, relationship maintenance is supported only through existing Objective, Task, Log, External Event, UniverseState, Identity, Relationship, and risk-report mechanisms. A dedicated relationship-management UI, special cadence schema on Relationship, and full personal CRM behavior are deferred.
+
+**Consequences:**
+
+- `UBU-Q0026` is resolved for Phase 1 modeling.
+- Relationship payload stays small and privacy-sensitive.
+- Communication cadence remains schedulable and recalculable through Objective recurrence.
+- GitHub dogfooding can model contributor follow-up without adding a new relationship subsystem to MVP.
+- Future richer relationship-management features can refine cadence evidence and private notes without changing the MVP anchor model.
