@@ -1518,7 +1518,7 @@ Partially resolved by `UBU-D0078` and `UBU-D0086`; detailed onboarding path rema
 
 ## UBU-Q0048: Funding offers incompatible with self-governance mission
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Governance Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Prototype-funder discovery Resolved by: UBU-D0079, UBU-D0080 Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Governance Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Prototype-funder discovery Resolved by: UBU-D0079, UBU-D0080, UBU-D0087 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1539,7 +1539,17 @@ Funding is compatible only when it funds trunk features needed by the full perso
 
 ### Resolution
 
-Partially resolved by `UBU-D0079` and `UBU-D0080`; detailed commercial red-line policy remains open.
+Solved by `UBU-D0087`, building on `UBU-D0079` and `UBU-D0080`.
+
+UbU may accept funding, consulting, sponsorship, prepayment, or prototype work only when it accelerates reusable trunk capabilities needed by the personal self-governance product and preserves user sovereignty, contributor sovereignty, privacy, and the open-core boundary.
+
+Offers requiring surveillance project management, activity scoring, keystroke or screen monitoring, manager-first ranking dashboards, centralized productivity telemetry, exposure of affect or Compartment-protected data to managers or funders, generic enterprise reporting, token-first coordination, speculation-first crypto positioning, or bespoke private branches are incompatible.
+
+Funding terms are incompatible when they require funder control over the roadmap or canonical design process, exclusive ownership or proprietary relicensing of open-core work, private replacement components for public dogfooding capabilities, confidentiality that prevents honest public explanation of constraints, or a pivot away from privacy-first personal self-governance.
+
+Crypto, tokenization, and DAO-specific requests should be rejected when token-first or speculation-first, and deferred when merely integration-specific rather than needed for the personal self-governance trunk.
+
+Paid work should be trunk-first by default. Customer-specific configuration, hosting, support, packaging, compliance, or proprietary connectors may remain commercial only when they stay outside the open-core boundary and do not become required for public dogfooding.
 
 
 ## Suggested Initial GitHub Issues

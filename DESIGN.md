@@ -1577,6 +1577,34 @@ Public-facing materials should avoid implying that there is only one meaningful 
 
 Public materials should also avoid negative metaphors when criticizing planning systems that fail to model affect. Preferred terms include affect-blind, emotionally incomplete, human-incomplete, mechanistic planning, or affect-insensitive planning.
 
+### Commercial funding red lines
+
+Funding is acceptable only when it accelerates trunk capabilities needed by the personal self-governance product and preserves the user's authority over objectives, logs, plans, affect data, compartments, and external projections.
+
+Acceptable prototype funding may pay for planning-kernel, local-first, privacy, Compartment, affect-aware planning, GitHub/calendar/task ingestion, Log, risk-report, worker, or projection features that generalize to the open core.
+
+Incompatible funding includes requests for:
+
+- surveillance-style project management, activity scoring, keystroke or screen monitoring, or always-on productivity telemetry;
+- manager-first dashboards that rank, pressure, or compare contributors instead of helping a person or project operator govern commitments explicitly;
+- centralized productivity telemetry across users, teams, clients, or contributors without explicit user-controlled sharing;
+- generic enterprise dashboards that make UbU a conventional reporting layer rather than a self-governance planner;
+- features that expose affect, private relationship data, Compartment payloads, or low-security personal context to managers, funders, or customers as a condition of use;
+- token-first, speculation-first, governance-token, DAO-dashboard, or financialized coordination work that would reposition UbU as a crypto product;
+- custom branches whose value depends on one funder's private workflow and would not become trunk capability.
+
+Funding terms are incompatible when they require:
+
+- funder control over the product roadmap, canonical design process, licensing boundary, or accepted decisions;
+- exclusive ownership, assignment, or proprietary relicensing of open-core planning-kernel work;
+- a closed-source replacement for functionality that public contributors need for ordinary dogfooding;
+- confidentiality terms that prevent honest public explanation of architectural constraints, privacy limits, or contributor-facing behavior;
+- urgency, deliverables, or support obligations that materially displace Phase 1 implementation, recruitment, or public dogfooding.
+
+Crypto, tokenization, or DAO-specific requests should be rejected when they are token-first or speculation-first, and deferred when they are merely integration-specific rather than needed for the personal self-governance trunk.
+
+Paid work should fund trunk features by default. When a funded prototype needs customer-specific configuration, that configuration should remain outside the core boundary unless it exposes a reusable open-core abstraction.
+
 ### Open-core and FOSS boundary
 
 UbU treats the planning kernel and contributor-facing integration surface as the open core. A public contributor must be able to inspect, run, modify, and self-host the core system needed for ordinary single-user and project dogfooding without depending on private replacement components.

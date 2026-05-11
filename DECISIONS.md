@@ -2112,3 +2112,47 @@ Concrete next actions include:
 - Vague praise without follow-up should not be treated as validation.
 - The project should preserve its north-star self-governance mission when evaluating funding, contributors, and market opportunities.
 
+---
+
+## UBU-D0087: Commercial funding must preserve self-governance
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0048`.
+
+UbU may accept funding, consulting, sponsorship, prepayment, or commercial prototype work only when the work accelerates trunk capabilities needed by the personal self-governance product and preserves user sovereignty, contributor sovereignty, privacy, and the open-core boundary.
+
+A funding offer is compatible when it pays for reusable core work such as the planning kernel, local-first data model, privacy and Compartment guardrails, affect-aware planning, GitHub/calendar/task ingestion, Logs, recalculable Plans, risk reports, worker assignment/status, projection/reconciliation, or other features that become ordinary trunk capability.
+
+Incompatible requested features include:
+
+- surveillance-style project management, activity scoring, keystroke or screen monitoring, or always-on productivity telemetry;
+- manager-first dashboards that rank, pressure, compare, or discipline contributors instead of supporting explicit self-governance and project coordination;
+- centralized productivity telemetry across users, teams, clients, or contributors without explicit user-controlled sharing;
+- generic enterprise reporting dashboards that pull UbU away from the planning kernel and toward conventional management software;
+- features that expose affect, relationship state, Compartment payloads, or low-security personal context to managers, funders, or customers as a condition of use;
+- token-first, speculation-first, governance-token, DAO-dashboard, or financialized coordination work that would reposition UbU as a crypto product;
+- bespoke custom branches whose value depends on one funder's private workflow and does not produce reusable trunk capability.
+
+Incompatible funding terms include:
+
+- funder veto or control over the roadmap, canonical design process, accepted decisions, licensing boundary, or contributor access;
+- exclusive ownership, assignment, or unilateral proprietary relicensing of open-core work;
+- private replacement components for functionality that public contributors need for ordinary dogfooding;
+- confidentiality terms that prevent honest public explanation of architecture, privacy limits, funded influence, or contributor-facing behavior;
+- required pivot away from personal self-governance, privacy-first architecture, or the open-core planning kernel.
+
+Acceptable prototype funding must default to trunk-first implementation. Customer-specific configuration, connectors, hosting, packaging, support, or compliance work may remain commercial when it stays outside the open-core boundary and does not become required for public dogfooding.
+
+Crypto, tokenization, and DAO-specific requests should be rejected when they are token-first or speculation-first. They should be deferred when they are merely integration-specific and not required for the personal self-governance trunk. Ethereum and FOSS communities remain useful for recruitment, validation, and workflow discovery, not as a reason to reposition UbU as a crypto product.
+
+Paid work should be evaluated with a simple rule: if the funded deliverable would make the open personal self-governance trunk better for independent knowledge workers and future public dogfooding, it may be considered; if it creates a private branch, surveillance surface, or funder-controlled roadmap, it should be rejected or renegotiated.
+
+**Consequences:**
+
+- `UBU-Q0048` is resolved for Phase 1 commercial red-line policy.
+- Prototype-funder discovery can proceed with a clear accept/reject screen.
+- Commercial discovery should prioritize independent knowledge-worker workflows that fund core planning, privacy, affect, worker, and projection capabilities.
+- Enterprise opportunities are acceptable only when they preserve contributor sovereignty and remain subordinate to the planning-kernel trunk.
+- Ethereum or DAO-related opportunities must not drive token-first positioning.
+- Governance review remains required for ambiguous funding terms, especially exclusivity, IP assignment, confidentiality, roadmap control, and custom-branch obligations.
