@@ -1535,11 +1535,10 @@ Key unresolved areas include:
 - Model-committee prioritized recursive loop
 - Model-committee question decomposition and answerability semantics
 - Model-committee Codex provider behavior
-- Contributor recruitment language and small-core-cohort onboarding
+- Contributor recruitment language
 - Independent knowledge-worker prototype-funder workflow
 - Public technical essay claim and request
 - Public dogfooding artifact publication policy
-- Funding red lines for self-governance compatibility
 
 ---
 
@@ -1576,6 +1575,16 @@ Further broad philosophical elaboration should generally be subordinated to impl
 Public-facing materials should avoid implying that there is only one meaningful contributor role. They should welcome several serious contributors while still distinguishing committed work from passive interest.
 
 Public materials should also avoid negative metaphors when criticizing planning systems that fail to model affect. Preferred terms include affect-blind, emotionally incomplete, human-incomplete, mechanistic planning, or affect-insensitive planning.
+
+### Contributor onboarding baseline
+
+Committed-contributor onboarding should be public, bounded, and fixture-first. The minimum path is: read the project overview/core principles, model-committee dogfooding, Phase 1 demo, GitHub dogfooding, open-core, Compartment, and design-process sections; run the no-private-access local smoke command for the relevant repo; make a small public contribution; then earn broader ownership through reviewed work.
+
+For `model-committee`, the first command should be `uv run model-committee doctor`, followed by a fake-provider or fixture-backed run/test when available. The first task should touch a synthetic or redacted fixture, parser or validation test, model-committee artifact review, public workflow example, or narrow implementation-ready issue with explicit acceptance criteria.
+
+Contributors should understand the core boundaries before implementation: canonical state lives only in committed canonical files; model-committee is advisory; v0.1 provider/network and no-auto-apply boundaries are hard; GitHub is a projection; LLMs are advisory; Compartment and low-security rules constrain data routing; and the open-core planning kernel must remain inspectable and self-hostable.
+
+Contributor progression runs from workflow informant to design reviewer to fixture/test contributor to implementation contributor to bounded module owner. Work that requires private project-owner context is not onboarding-ready; it should be converted into a public issue, fixture, design note, or open question with sensitive details redacted or synthesized.
 
 ### Commercial funding red lines
 

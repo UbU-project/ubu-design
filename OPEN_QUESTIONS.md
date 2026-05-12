@@ -1491,7 +1491,7 @@ Partially resolved by `UBU-D0077` and `UBU-D0086`; exact artifact publication po
 
 ## UBU-Q0047: Minimum committed-contributor onboarding path
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Contributor recruitment Resolved by: UBU-D0078, UBU-D0086 Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Contributor recruitment Resolved by: UBU-D0078, UBU-D0086, UBU-D0088 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1512,7 +1512,15 @@ A contributor should be routed into bounded contribution paths: design review, w
 
 ### Resolution
 
-Partially resolved by `UBU-D0078` and `UBU-D0086`; detailed onboarding path remains open.
+Solved by `UBU-D0088`, building on `UBU-D0078` and `UBU-D0086`.
+
+The minimum onboarding path is public, bounded, and fixture-first. A serious contributor should read the project overview/core principles, model-committee dogfooding material, Phase 1 demo criteria, GitHub dogfooding/projection rules, open-core boundary, Phase 1 Compartment baseline, design-process rules, and the accepted recruitment/outreach decisions relevant to their first task.
+
+The first command should be a no-private-access local smoke check. For `model-committee`, the expected first command is `uv run model-committee doctor`, followed by a fake-provider or fixture-backed run/test when available. First tasks should touch synthetic or redacted workflow examples, fixtures, parser or validation tests, `model-committee` artifact review, public design review, or narrow implementation-ready issues with explicit acceptance criteria.
+
+Before implementation work, contributors must understand the canonical/derived document boundary, advisory `model-committee` authority, v0.1 provider/network limits, no-auto-apply rule, GitHub-as-projection, LLM advisory boundary, Compartment and low-security-content promises, user sovereignty, mode boundaries, and open-core contributor surface.
+
+Contributor progression runs from workflow informant to design reviewer to fixture/test contributor to implementation contributor to bounded module owner. Work that requires private project-owner context is not onboarding-ready; missing context should become a public issue, fixture, design note, or open question with sensitive details redacted or replaced by synthetic examples.
 
 ---
 

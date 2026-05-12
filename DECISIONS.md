@@ -2156,3 +2156,44 @@ Paid work should be evaluated with a simple rule: if the funded deliverable woul
 - Enterprise opportunities are acceptable only when they preserve contributor sovereignty and remain subordinate to the planning-kernel trunk.
 - Ethereum or DAO-related opportunities must not drive token-first positioning.
 - Governance review remains required for ambiguous funding terms, especially exclusivity, IP assignment, confidentiality, roadmap control, and custom-branch obligations.
+
+---
+
+## UBU-D0088: Committed-contributor onboarding is public, bounded, and fixture-first
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0047`.
+
+The minimum onboarding path for serious, self-directed contributors is a public, bounded path from context to a small verified contribution. It must not depend on private project-owner chats, unstated roadmap knowledge, private calendars, private GitHub data, or credentials.
+
+A contributor should first read:
+
+- the project overview and core principles in `DESIGN.md`;
+- the model-committee dogfooding, Phase 1 public demo, GitHub dogfooding, design-process, open-core, and Phase 1 Compartment sections of `DESIGN.md`;
+- the accepted decisions for open-core boundary, minimal Compartment promise, small core cohort recruitment, concrete outreach actions, and commercial self-governance red lines;
+- the specific public issue, fixture, or model-committee artifact they intend to touch.
+
+The first command should be a no-private-access local smoke check. For `model-committee`, the expected first command is `uv run model-committee doctor`, followed by a fake-provider or fixture-backed test/run when the implementation repo supports it. Equivalent first commands for later modules must avoid private tokens and should make missing optional providers or credentials visible as diagnostics rather than hidden prerequisites.
+
+The first contribution should be one of: a synthetic or redacted workflow example, a fixture, a parser/validation test, review of a `model-committee` run artifact, documentation tied to a specific open question, or a narrow implementation-ready issue with explicit acceptance criteria. New contributors should not begin with hidden-roadmap work, direct GitHub mutation, Compartment-sensitive payloads, private-context reconstruction, broad planner rewrites, or module ownership.
+
+Before implementation work, contributors must understand these boundaries: canonical design state lives only in committed canonical files; `model-committee` is advisory; v0.1 provider/network and no-auto-apply limits are hard; GitHub is a projection, not the source of truth; LLMs are advisory, not canonical planners; Compartment and low-security-content promises constrain data routing; the planning kernel and contributor-facing integration surface are open core; user sovereignty and mode boundaries are non-negotiable.
+
+Contributor progression is staged:
+
+1. Workflow informant: provides a concrete workflow, pain point, or fixture candidate.
+2. Design reviewer: reviews a canonical question, decision, or model-committee artifact against public acceptance criteria.
+3. Fixture/test contributor: adds or repairs a public fixture, fake-provider response, parser case, or validation test.
+4. Implementation contributor: takes a narrow implementation-ready issue with tests and no hidden context dependency.
+5. Module owner: earns bounded ownership after repeated reviewed contributions, demonstrated boundary understanding, and willingness to keep public docs, fixtures, tests, and interfaces coherent.
+
+If a task requires private explanation to do correctly, it is not ready for contributor onboarding. The project should convert that missing context into a public issue, fixture, design note, or open question, with sensitive details redacted or replaced by synthetic examples.
+
+**Consequences:**
+
+- `UBU-Q0047` is resolved for Phase 1 onboarding.
+- Contributor recruitment can point to bounded contribution paths without promising a single privileged role.
+- First contributions should prove public reproducibility and boundary understanding before broad implementation authority.
+- Implementation-ready issues should include enough context and acceptance criteria that direct access to the project owner's private context is unnecessary.
+- Contributor progression is based on reviewed public work, not enthusiasm or private alignment claims.
