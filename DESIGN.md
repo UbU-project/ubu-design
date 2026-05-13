@@ -1576,6 +1576,16 @@ Public-facing materials should avoid implying that there is only one meaningful 
 
 Public materials should also avoid negative metaphors when criticizing planning systems that fail to model affect. Preferred terms include affect-blind, emotionally incomplete, human-incomplete, mechanistic planning, or affect-insensitive planning.
 
+### Long-arc public narrative baseline
+
+UbU may publicly say it is a long-running personal and technical project whose architecture predates the current LLM moment, and that recent LLM capabilities make the plan more practical by improving interpretation, summarization, proposal generation, fixture creation, and advisory automation.
+
+Public copy should share only enough personal history to explain commitment, design maturity, and why the project exists. It should avoid memoir, destiny claims, and claims that UbU was inevitable. The preferred framing is: `I have worked on this problem for a long time; the toolchain is now good enough to build and test a narrow, inspectable version in public.`
+
+Durable significance should be stated as a possibility to test through dogfooding, contributors, and prototype-funder discovery. Preferred language includes `could matter for a long time`, `worth building carefully`, and `a serious attempt at privacy-first self-governance software`. Avoid `will change the world`, `inevitable`, `once-in-a-generation`, `solves coordination`, `the future of work`, `the only real solution`, `world-historical`, and similar totalizing claims.
+
+The narrative belongs mainly in the first technical essay, selected outreach, talks, and interviews. README-level use should be short and point back to current dogfooding and contribution paths, not long personal history.
+
 ### Contributor onboarding baseline
 
 Committed-contributor onboarding should be public, bounded, and fixture-first. The minimum path is: read the project overview/core principles, model-committee dogfooding, Phase 1 demo, GitHub dogfooding, open-core, Compartment, and design-process sections; run the no-private-access local smoke command for the relevant repo; make a small public contribution; then earn broader ownership through reviewed work.

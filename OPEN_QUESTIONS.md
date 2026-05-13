@@ -1411,7 +1411,7 @@ Partially resolved by `UBU-D0083`; final essay outline and publication plan rema
 
 ## UBU-Q0044: Long-arc project narrative without grandiosity
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Public narrative Resolved by: UBU-D0084 Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Public narrative Resolved by: UBU-D0084, UBU-D0090 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1431,7 +1431,17 @@ UbU may describe itself as a long-running personal and technical project whose t
 
 ### Resolution
 
-Partially resolved by `UBU-D0084`; final public copy remains open.
+Solved by `UBU-D0090`, building on `UBU-D0084`.
+
+Public materials may use the long arc, but only as compact context: UbU grew out of a long personal and technical effort, which explains commitment and design maturity. Detailed personal history belongs in essays, talks, and interviews when relevant; README and outreach copy should keep it brief and return quickly to current dogfooding and concrete next actions.
+
+LLM-enabled viability should be explained as a practical change in the feasibility frontier. Modern LLMs make interpretation, summarization, proposal generation, review, fixture creation, and advisory automation cheap enough to help build and test an explicit planning kernel. They do not make UbU inevitable, and they do not replace the canonical planner, user sovereignty, or inspectable model.
+
+Durable significance should be framed as a possibility to validate, not a promised outcome. Preferred language is `could matter for a long time`, `worth building carefully`, `the tools may finally be good enough for a narrow public version`, and `a serious attempt at privacy-first self-governance software`.
+
+Avoid destiny, superiority, inevitability, totalizing, and world-historical claims, including `will change the world`, `inevitable`, `once-in-a-generation`, `the future of work`, `solves coordination`, `the only real solution`, `decades ahead`, `everyone will need this`, and `LLMs make this inevitable`.
+
+This provides enough canonical guidance for final public copy in derived files without adding another narrative-blocking question.
 
 ---
 

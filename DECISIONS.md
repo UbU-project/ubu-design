@@ -2225,3 +2225,29 @@ Prototype-funder discovery should test prepaid design-partner structures, not op
 - Initial implementation should prioritize manual declarations, Compartments, Logs, risk reports, Calendar/Plan generation, affect Snapshot handling, and optional calendar/GitHub structural imports.
 - Full email, notes, invoices, and private document ingestion are deferred until explicit privacy-preserving connector routes are designed.
 - Funding that only produces a customer-private workflow branch should be rejected or renegotiated into trunk capability.
+
+---
+
+## UBU-D0090: Long-arc public narrative stays modest and testable
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0044`.
+
+UbU may say that it grew out of a long personal and technical effort to understand planning, self-governance, privacy, and humane coordination. Public materials should include only enough of that history to explain commitment, design maturity, and why the project has more structure than a fresh prototype.
+
+Modern LLMs should be described as changing the feasibility frontier for UbU, not as making success automatic. The grounded claim is that LLMs now make interpretation, summarization, proposal generation, fixture creation, review, and advisory automation cheap enough to support an explicit planning kernel. LLMs remain bounded assistants; they do not replace UbU's canonical planner, user sovereignty, or inspectable data model.
+
+The long-arc narrative should communicate seriousness and durable possibility. Preferred public phrasing includes `long-running personal and technical project`, `the tools may finally be good enough to build the first narrow version`, `could matter for a long time if the dogfooding and contributor work prove it`, and `worth building carefully in public`.
+
+The detailed version belongs in the first technical essay, selected outreach, talks, and interviews. README-level use should stay short and connect immediately to active dogfooding, concrete contribution paths, and prototype-funder discovery.
+
+Avoid language that implies destiny, superiority, inevitability, or guaranteed world-historical impact. Avoid claims such as `will change the world`, `inevitable`, `once-in-a-generation`, `the future of work`, `solves coordination`, `the only real solution`, `decades ahead`, `everyone will need this`, and `LLMs make this inevitable`.
+
+**Consequences:**
+
+- `UBU-Q0044` is resolved for Phase 1 public narrative guidance.
+- Public copy may use the long personal arc, but only as evidence of commitment and depth.
+- LLM-enabled viability should be explained through concrete capability changes and bounded advisory use.
+- Durable significance should be framed as a possibility to test through dogfooding, contributors, and prototype-funder discovery.
+- Derived public-facing files may now be patched against this guidance without adding more canonical narrative questions.
