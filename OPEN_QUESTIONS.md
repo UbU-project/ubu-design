@@ -1356,7 +1356,7 @@ Partially resolved by `UBU-D0078` and `UBU-D0085`; exact outreach copy remains o
 
 ## UBU-Q0042: Feedback, dignity, emotional limits, and growth pressure
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Affect-aware planning quality Resolved by: UBU-D0081, UBU-D0082 Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Affect-aware planning quality Resolved by: UBU-D0081, UBU-D0082, UBU-D0092 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1378,7 +1378,17 @@ A plan is not high-quality merely because it is internally consistent or time-fe
 
 ### Resolution
 
-Partially resolved by `UBU-D0081` and `UBU-D0082`; detailed modeling remains open.
+Solved by `UBU-D0092`, building on `UBU-D0081` and `UBU-D0082`.
+
+Phase 1 models human-complete plan quality as a derived, recalculable assessment over existing objects rather than a new first-class canonical object. Signals include feedback latency, checkpoint coverage, affect margin, failure pattern, stretch pressure, and expected post-plan state.
+
+Informative failure is failure that improves future planning by exposing bad estimates, missing constraints, stale affect data, interruptions, dependency problems, or changed Objectives. Humiliating or demoralizing failure is indicated by repeated overload, late discovery, avoidable public exposure, dignity-risking presentation, or repeated disregard of observed limits.
+
+After failure, UbU should suggest model repairs rather than user blame: smaller Tasks, added checkpoints, revised estimates, recovery, clarification, delegation, changed constraints, or Objective reconsideration. Failure should normally be presented as a failed plan assumption or changed world state unless the user records another interpretation.
+
+Sustainable stretch is allowed when the Plan exceeds the user's baseline while preserving near-term feedback, recovery margin, and a plausible improvement path. Destructive pressure is a warning condition when the Plan depends on overriding observed limits, hides failure until too late, lacks recovery, or is expected to leave the user worse off.
+
+Affect-related fragility appears in Phase 1 risk reports as derived findings such as stale affect data, affect constraint violation probability, repeated late-failure pattern, destructive-pressure warning, dignity/demoralization warning, and post-plan depletion warning. Richer growth models, personalized baseline learning, and UI-specific coaching language are post-MVP.
 
 ---
 

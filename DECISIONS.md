@@ -2297,3 +2297,41 @@ Publication plan: draft the essay outside the canonical design files, then publi
 - The first essay has a stable thesis, title direction, outline, avoidances, dogfooding reference, and reader request.
 - Derived outreach copy can summarize this essay without reopening the core claim.
 - Publication work can move to execution rather than another canonical design question.
+
+---
+
+
+## UBU-D0092: Plan quality includes fast feedback, dignity, limits, and humane stretch
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0042`.
+
+Phase 1 models human-complete plan quality as derived analysis over Plans, Tasks, Logs, Snapshots, affect constraints, and risk reports. It does not add a first-class canonical PlanQuality object in MVP. Any cached assessment is advisory and recalculable.
+
+A candidate Plan should be checked for:
+
+- fast feedback: important work has an observable checkpoint soon enough to revise before large loss;
+- checkpoint coverage: success, failure, blocked preconditions, user overrides, affect Snapshots, or External Events can reveal whether the Plan is still accurate;
+- affect margin: scheduled work does not consume energy, stress, mood, or recovery capacity beyond configured user-mode limits;
+- dignity preservation: failure presentation does not moralize the user, expose avoidable embarrassment, or reuse wording that frames observed limits as character flaws;
+- non-blaming revision: failed execution should suggest model repair, smaller Tasks, added checkpoints, updated estimates, recovery, clarification, delegation, or Objective reconsideration;
+- humane stretch: the Plan may exceed the current baseline when feedback is close, recovery margin remains, and the expected post-plan state is not worse;
+- destructive pressure: the Plan depends on overriding observed limits, lacks recovery, hides failure until too late, or repeatedly requires performance above observed capacity.
+
+Task failure remains an ordinary Log result, but the interpretation of that failure should be plan-centered. UbU should treat failure as evidence about estimates, constraints, dependencies, affect state, interruptions, or Objective fit unless the user explicitly records another interpretation.
+
+Affect-related plan fragility appears in Phase 1 risk reports as derived findings, not first-class Risk objects. Candidate findings include stale affect data, affect constraint violation probability, repeated late-failure pattern, destructive-pressure warning, dignity or demoralization warning, and post-plan depletion warning.
+
+Plan quality should account for the expected state after the Plan, not only nominal completion. A Plan that completes tasks while predictably leaving the user depleted, ashamed, overloaded, or unable to continue should be treated as suspect and should trigger a revised Plan or risk report.
+
+Post-MVP work may add longitudinal baseline learning, richer growth-pressure models, UI-specific coaching language, morale/dignity trend analysis, and more personalized recovery models. Phase 1 requires only derived assessment, reportable signals, recalculation-trigger integration, and humane revision suggestions.
+
+**Consequences:**
+
+- `UBU-Q0042` is resolved for Phase 1 modeling.
+- No new canonical MVP object is required solely for plan quality.
+- Human-complete plan-quality reports remain inspectable and recalculable from existing core objects.
+- Failure handling should repair plans and estimates instead of blaming users.
+- Risk reports gain affect-fragility findings without making Risk first-class in MVP.
+- Rich longitudinal growth modeling remains post-MVP.

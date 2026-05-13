@@ -99,6 +99,27 @@ A high-quality plan should:
 
 The goal is neither comfort-maximization nor coercive productivity. The goal is humane self-governance: disciplined action that respects the user’s emotional and physical reality.
 
+For Phase 1, UbU models this as a derived `human_complete_plan_quality` assessment rather than a new first-class canonical object.
+
+Phase 1 plan-quality analysis is derived from the candidate Plan, current affect Snapshot, Task duration and success estimates, modeled affect deltas, Log history, and user overrides. It may be cached with Plan/risk-report artifacts, but it is recalculable and non-canonical.
+
+The minimum Phase 1 signals are:
+
+- `feedback_latency`: expected time until the Plan produces observable evidence through Task completion, Task failure, a blocked precondition, an affect Snapshot, a user override, or an External Event.
+- `checkpoint_coverage`: whether important work windows contain a near-term observation point instead of relying on end-of-day hindsight.
+- `affect_margin`: how close the Plan comes to configured energy, stress, tiredness, mood, and recovery limits.
+- `failure_pattern`: whether recent failures point to wrong estimates, missing dependencies, stale affect data, interruption, overload, or a changed Objective rather than a character judgment about the user.
+- `stretch_pressure`: a derived label of `comfort`, `sustainable_stretch`, or `destructive_pressure`.
+- `post_plan_state_delta`: whether completing the Plan is expected to leave the user better off, neutral, depleted, or at elevated risk despite nominal task completion.
+
+Informative failure is failure that improves the model: it shortens future feedback loops, reveals an unmodeled constraint, updates duration or success estimates, or changes the next Plan. Humiliating or demoralizing failure is indicated by repeated overload, repeated late discovery, avoidable public exposure, dignity-risking wording or presentation, or a pattern where the same user-limits are ignored after they have been observed.
+
+UbU should present failed execution as a failed plan assumption or changed world state unless the user explicitly records another interpretation. Suggested improvements should be framed as model repairs, constraint changes, smaller Tasks, added checkpoints, revised timing, recovery, clarification, delegation, or Objective reconsideration.
+
+Sustainable stretch means a Plan asks for more than the user's current baseline while retaining near-term feedback, recovery margin, and a plausible improvement path. Destructive pressure means the Plan depends on overriding observed limits, lacks recovery, hides failure until too late, repeatedly requires success above observed capacity, or leaves the user worse off even if tasks are completed.
+
+Post-MVP work may add richer growth models, personalized baseline learning, longitudinal dignity and morale trend reports, and UI-specific coaching language. Phase 1 only needs derived assessment, risk-report findings, recalculation triggers, and non-blaming revision suggestions.
+
 ### 2.6 Dogfooding
 
 UbU should be useful for managing its own development.
@@ -1485,11 +1506,15 @@ Possible MVP reports:
 - low compact-calendar coverage warning
 - dependency fragility
 - relationship-maintenance neglect warning
+- destructive-pressure warning
+- dignity / demoralization warning
 - worker failure / automation bottleneck
 
 Plan scoring does not include explicit risk penalty in MVP.
 
 Burnout / affect exhaustion is modeled as a constraint violation.
+
+Affect-related risk reports should name plan fragility, not user blame. Phase 1 reports may include affect constraint violation probability, destructive-pressure warnings, stale-affect warnings, repeated late-failure warnings, and post-plan depletion warnings. These findings are derived from Plans, Logs, Snapshots, and risk-report analysis rather than first-class Risk objects.
 
 ---
 
