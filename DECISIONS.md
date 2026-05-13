@@ -2197,3 +2197,31 @@ If a task requires private explanation to do correctly, it is not ready for cont
 - First contributions should prove public reproducibility and boundary understanding before broad implementation authority.
 - Implementation-ready issues should include enough context and acceptance criteria that direct access to the project owner's private context is unnecessary.
 - Contributor progression is based on reviewed public work, not enthusiasm or private alignment claims.
+
+---
+
+## UBU-D0089: First prototype-funder workflow is commitment-risk review plus next-day plan
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0045`.
+
+The smallest fundable workflow for privacy-sensitive independent technical consultants is a local client commitment-risk review plus next-day Plan. It addresses the pain of discovering too late that multi-client commitments, deadlines, dependencies, energy, and unavailable time no longer fit.
+
+The first prototype should not require full inbox, notes, invoice, or message-body ingestion. Required inputs are manual client/project declarations, current commitments/deadlines, tasks or work items, current availability, compartment labels, and a current or stale affect Snapshot. Optional inputs are calendar busy/free blocks and GitHub issue/PR references when the consultant explicitly connects them. Email, notes, invoices, and private client documents may be represented only as user-approved structural references or later explicit connectors that obey Compartment rules.
+
+The primary output is a compartment-aware weekly commitment-risk report with a next-day default Plan. The report should show each client/project compartment at a structural level, identify overcommitment, deadline risk, stale or blocked work, cross-client dependency pressure, and affect/energy constraint risk, then propose the next concrete work window. The output must be inspectable and recalculable from explicit data; it must not rank client value secretly or expose one client's sensitive payload in another client view.
+
+A daily plan alone is too generic for the first funded prototype. A client-compartment view alone is too static. A weekly review alone may be too passive. The smallest valuable bundle is the weekly risk review plus the next-day Plan because it converts private commitments into immediate action without requiring broad surveillance-style ingestion.
+
+Paid prototype work remains on the trunk only if the implementation uses reusable open-core structures: Objectives for client/project outcomes, Tasks for commitments, Compartments for client separation, Logs for declarations and actuals, Calendar/Plan generation for schedule recommendations, risk reports for commitment and dependency pressure, and optional GitHub/calendar ingestion through user-visible routes. Customer-specific templates, data imports, hosting, credentials, and support may remain commercial configuration.
+
+Prototype-funder discovery should test prepaid design-partner structures, not open-ended bespoke consulting. Plausible offers to test are: a paid discovery/review session, a prepaid prototype sponsorship that funds an implementation slice, or a monthly design-partner retainer. As a working hypothesis, discovery can test roughly USD 250-750 for a focused review, USD 2,000-10,000 for a prototype sponsorship, and USD 1,000-3,000/month for a limited design-partner retainer. These are discovery hypotheses, not permanent pricing policy.
+
+**Consequences:**
+
+- `UBU-Q0045` is resolved for prototype-funder workflow selection.
+- Prototype-funder outreach should ask whether consultants will prepay for commitment-risk clarity, not a generic productivity assistant.
+- Initial implementation should prioritize manual declarations, Compartments, Logs, risk reports, Calendar/Plan generation, affect Snapshot handling, and optional calendar/GitHub structural imports.
+- Full email, notes, invoices, and private document ingestion are deferred until explicit privacy-preserving connector routes are designed.
+- Funding that only produces a customer-private workflow branch should be rejected or renegotiated into trunk capability.

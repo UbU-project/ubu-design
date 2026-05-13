@@ -1437,7 +1437,7 @@ Partially resolved by `UBU-D0084`; final public copy remains open.
 
 ## UBU-Q0045: Smallest prototype-funder workflow for independent technical consultants
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Prototype-funder discovery Resolved by: UBU-D0079 Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Prototype-funder discovery Resolved by: UBU-D0079, UBU-D0089 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1458,7 +1458,17 @@ Independent technical consultants, freelance developers, security researchers, s
 
 ### Resolution
 
-Partially resolved by `UBU-D0079`; exact prototype workflow remains open.
+Solved by `UBU-D0089`, building on `UBU-D0079`.
+
+The smallest fundable workflow is a local client commitment-risk review plus next-day Plan for independent consultants. It addresses the pain of realizing too late that commitments across clients, deadlines, dependencies, availability, and energy no longer fit.
+
+Required inputs are manual client/project declarations, commitments/deadlines, tasks, current availability, compartment labels, and a current or stale affect Snapshot. Calendar busy/free blocks and GitHub issue/PR refs are optional explicit imports. Full email, notes, invoices, and private documents are deferred unless represented as structural references or later privacy-preserving connectors.
+
+The output is a compartment-aware weekly risk report paired with a next-day default Plan. It reports overcommitment, deadline risk, blocked/stale commitments, cross-client dependency pressure, and affect/energy risk without exposing client payloads across compartments.
+
+Funded work remains on trunk by implementing reusable open-core structures: Objectives, Tasks, Compartments, Logs, Calendar/Plan generation, risk reports, and optional calendar/GitHub ingestion. Customer-specific templates, private imports, credentials, hosting, and support may remain commercial configuration.
+
+Prototype-funder discovery should test prepaid design-partner offers: roughly USD 250-750 for a focused workflow review, USD 2,000-10,000 for a prototype sponsorship, or USD 1,000-3,000/month for a limited design-partner retainer. These ranges are discovery hypotheses rather than permanent pricing policy.
 
 ---
 

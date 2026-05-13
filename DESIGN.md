@@ -1614,6 +1614,20 @@ Crypto, tokenization, or DAO-specific requests should be rejected when they are 
 
 Paid work should fund trunk features by default. When a funded prototype needs customer-specific configuration, that configuration should remain outside the core boundary unless it exposes a reusable open-core abstraction.
 
+### Prototype-funder workflow baseline
+
+The first fundable independent-consultant prototype is a local commitment-risk and weekly-planning workflow, not a general inbox assistant or enterprise dashboard.
+
+The prototype should answer one buyer question: whether the consultant is about to miss, overrun, or quietly under-service a client commitment this week, and what to do next without exposing private client content.
+
+Minimum inputs are manual client/project declarations, manually entered or imported deadlines, task declarations, current availability, optional calendar busy/free blocks, optional GitHub issue/PR references, and an affect Snapshot. Email, notes, invoices, and full message bodies are excluded from the first prototype unless represented by user-approved structural references.
+
+The primary output is a compartment-aware weekly commitment-risk review plus a next-day default Plan. It should show client/project compartments, deadlines, dependency and overcommitment risk, blocked or stale commitments, affect/energy constraints, and the exact structural data used. It should not expose one client's payload in another client's view.
+
+The prototype remains on the trunk when every funded feature maps to reusable open-core objects: Objectives, Tasks, Logs, Compartments, Calendar/Plan generation, risk reports, optional GitHub/calendar ingestion, and user-visible import/projection boundaries. Customer-specific templates, connector credentials, private examples, and support may remain outside the core.
+
+Prototype-funder discovery should test paid design-partner structures before custom consulting: a small prepaid discovery/review session, a larger prepaid prototype sponsorship, or a design-partner retainer whose deliverable is trunk functionality plus customer-specific configuration. Exact pricing is market-discovery data rather than canonical product policy, but offers that cannot fund reusable trunk work should be rejected or renegotiated.
+
 ### Open-core and FOSS boundary
 
 UbU treats the planning kernel and contributor-facing integration surface as the open core. A public contributor must be able to inspect, run, modify, and self-host the core system needed for ordinary single-user and project dogfooding without depending on private replacement components.
