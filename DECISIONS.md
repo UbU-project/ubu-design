@@ -2251,3 +2251,49 @@ Avoid language that implies destiny, superiority, inevitability, or guaranteed w
 - LLM-enabled viability should be explained through concrete capability changes and bounded advisory use.
 - Durable significance should be framed as a possibility to test through dogfooding, contributors, and prototype-funder discovery.
 - Derived public-facing files may now be patched against this guidance without adding more canonical narrative questions.
+
+---
+
+
+## UBU-D0091: First technical essay makes a precise planning-kernel request
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0043`.
+
+The first public technical essay should make one central claim: ordinary task managers, calendars, project boards, and opaque AI assistants are useful projections, but they are not enough for real planning because they usually do not model objectives, state transitions, dependencies, constraints, logs, uncertainty, affect, and recalculation as explicit objects.
+
+The working title should be:
+
+> The Planning Kernel: What Task Managers Leave Out
+
+The previously proposed title, `The Planning Kernel: Why Your Task Manager Is Lying to You`, should not be used as the working public title. It is memorable, but it implies accusation and undermines the humane, problem-first tone.
+
+The essay should explain affect-blind planning as human-incomplete planning. Fatigue, stress, boredom, motivation, emotional load, recovery, and dignity are planning constraints. They are not excuses, decorative wellness features, or moral failures. A plan that ignores them can be internally organized while still being unrealistic for the human who must execute it.
+
+The essay should distinguish UbU from adjacent tools as follows:
+
+- task managers record intended work;
+- calendars allocate time;
+- project boards track workflow status;
+- opaque AI assistants can generate plausible suggestions;
+- UbU is intended to be an explicit planning kernel that relates Objectives, Tasks, UniverseState, Plans, Calendars, Logs, constraints, uncertainty, affect, and recalculation.
+
+The essay should explain LLMs as advisory systems. They may interpret messy input, summarize state, propose structures, critique plans, generate fixtures, and assist `model-committee`, but they are not the canonical planner. Accepted planning state must remain inspectable, explicit, and recalculable outside the LLM.
+
+The essay should use `model-committee` as the first visible dogfooding example: UbU is already using a constrained automation loop to read canonical project state, propose reviewable changesets, score them, and preserve human-reviewed canonical authority. The essay must not imply that `model-committee` is the full UbU planner.
+
+The essay should end with one concrete request:
+
+> Send one real or carefully anonymized planning workflow that current tools cannot represent cleanly, including the objective, current state, dependencies, constraints, uncertainty, affect or energy limits, and what decision needs recalculation.
+
+That request may route readers into a public issue, fixture contribution, design review, interview, or prototype-funder conversation, but the requested action remains one concrete workflow example.
+
+Publication plan: draft the essay outside the canonical design files, then publish it with links to the canonical design repo, one visible `model-committee` artifact or summary, and a public path for submitting workflow examples. The essay should be updated only when canonical decisions change enough to alter the claim, avoidances, or request.
+
+**Consequences:**
+
+- `UBU-Q0043` is resolved for Phase 1 public outreach.
+- The first essay has a stable thesis, title direction, outline, avoidances, dogfooding reference, and reader request.
+- Derived outreach copy can summarize this essay without reopening the core claim.
+- Publication work can move to execution rather than another canonical design question.

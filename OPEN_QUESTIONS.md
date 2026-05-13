@@ -1384,7 +1384,7 @@ Partially resolved by `UBU-D0081` and `UBU-D0082`; detailed modeling remains ope
 
 ## UBU-Q0043: First technical essay claim, avoidances, and request
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Public outreach Resolved by: UBU-D0083 Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Public outreach Resolved by: UBU-D0083, UBU-D0091 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1405,7 +1405,26 @@ The essay should be problem-first, not a product brochure. It should argue that 
 
 ### Resolution
 
-Partially resolved by `UBU-D0083`; final essay outline and publication plan remain open.
+Solved by `UBU-D0091`, building on `UBU-D0083`.
+
+Use `The Planning Kernel: What Task Managers Leave Out` as the working title. Do not use `The Planning Kernel: Why Your Task Manager Is Lying to You` as the working public title because it is accusatory and weakens the humane, problem-first tone.
+
+The essay should make the planning-kernel claim: task managers, calendars, project boards, and opaque AI assistants are useful projections, but they are not enough for real planning unless objectives, state transitions, dependencies, constraints, logs, uncertainty, affect, and recalculation are explicit.
+
+The outline is:
+
+1. Start with a concrete planning failure that a list, calendar, board, or opaque assistant cannot represent cleanly.
+2. Explain affect-blind planning as human-incomplete planning, using terms such as affect-blind, emotionally incomplete, human-incomplete, mechanistic planning, or affect-insensitive planning.
+3. Contrast adjacent tools: task managers record intended work, calendars allocate time, boards track status, and opaque AI assistants suggest plausible next steps, while UbU aims to model the planning kernel explicitly.
+4. Explain LLMs as advisory systems that interpret, summarize, propose, critique, and generate fixtures, not as canonical planners.
+5. Show `model-committee` as visible dogfooding: a constrained loop that reads canonical design state, proposes reviewable changesets, scores them, and preserves human-reviewed canonical authority.
+6. End with one reader request for a concrete planning-kernel workflow example.
+
+The essay should avoid product-brochure structure, negative metaphors for affect-blind systems, grandiose inevitability claims, privacy overclaims, scarcity-implying contributor language, and language implying that LLMs own the plan.
+
+The concrete reader request is: send one real or carefully anonymized planning workflow that current tools cannot represent cleanly, including the objective, current state, dependencies, constraints, uncertainty, affect or energy limits, and the decision that needs recalculation.
+
+Publication should happen outside the canonical design files, with links to the canonical design repo, one visible `model-committee` artifact or summary, and a public path for workflow-example submissions.
 
 ---
 

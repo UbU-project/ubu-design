@@ -1537,7 +1537,6 @@ Key unresolved areas include:
 - Model-committee Codex provider behavior
 - Contributor recruitment language
 - Independent knowledge-worker prototype-funder workflow
-- Public technical essay claim and request
 - Public dogfooding artifact publication policy
 
 ---
@@ -1575,6 +1574,12 @@ Further broad philosophical elaboration should generally be subordinated to impl
 Public-facing materials should avoid implying that there is only one meaningful contributor role. They should welcome several serious contributors while still distinguishing committed work from passive interest.
 
 Public materials should also avoid negative metaphors when criticizing planning systems that fail to model affect. Preferred terms include affect-blind, emotionally incomplete, human-incomplete, mechanistic planning, or affect-insensitive planning.
+
+### First technical essay baseline
+
+The first public technical essay should use `The Planning Kernel: What Task Managers Leave Out` as the working title. It should lead with a precise problem claim: list, calendar, board, and opaque assistant tools are useful projections, but they are not enough for real planning unless objectives, state transitions, dependencies, constraints, logs, uncertainty, affect, and recalculation are explicit.
+
+The essay should avoid accusatory title language such as `your task manager is lying to you`, negative metaphors for affect-blind systems, generic startup brochure copy, grandiose inevitability claims, privacy overclaims, scarcity contributor framing, and claims that LLMs are the planner. It should explain LLMs as advisory tools that help interpret, summarize, propose, critique, and generate fixtures, while canonical planning remains inspectable and recalculable. It should point to `model-committee` as visible dogfooding and request one concrete planning-kernel workflow example that can become a public issue, fixture, interview, or prototype-funder conversation.
 
 ### Long-arc public narrative baseline
 
