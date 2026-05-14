@@ -2431,3 +2431,44 @@ A worker may serve multiple organization-mode or user-mode parent instances only
 - Worker authority is least-privilege, revocable, auditable, and parent-specific.
 - Worker mutation and projection behavior remains routed through request/validation/logging flows instead of direct canonical writes.
 - `UBU-Q0008`, `UBU-Q0009`, and `UBU-Q0010` can refine assignment, mutation request, and GitHub token custody without reopening the basic worker capability model.
+
+---
+
+## UBU-D0096: Phase 1 requires bootstrap interview and next-action focus UX
+
+**Status:** Accepted
+
+Direct project directive.
+
+UbU Phase 1 must include a minimal first-person user-facing loop, not merely an internal planner, GitHub importer, model-committee loop, or project-state analyzer.
+
+Phase 1 requires two user-facing UX primitives:
+
+1. **Bootstrap interview**: UbU begins by asking a small number of questions that help form an initial model of the user, current context, important Objectives, relevant constraints, current or stale affect Snapshot, and immediate dogfooding/project context.
+
+2. **Next-action focus mode**: UbU can present one recommended next Task at a time, with an explanation of why that Task matters now. The full Plan remains inspectable, but the default user experience may reduce immediate cognitive load by showing a single next action.
+
+The Phase 1 next-action screen should include, at minimum:
+
+- the recommended Task;
+- estimated duration or work window when available;
+- why this Task matters now;
+- what inputs or constraints UbU considered;
+- current affect or stale-affect status when relevant;
+- dependency, deadline, or risk explanation when relevant;
+- user controls to start, complete, reject, snooze, decompose, or request more explanation;
+- a feedback prompt after completion, failure, rejection, or override.
+
+This UX requirement applies first to UbU-runs-UbU dogfooding. The first recommended Tasks may be GitHub, design-document, model-committee, release-management, or Release Outreach Pipeline Tasks.
+
+Phase 1 must not claim full personal-data ingestion, full email/text/file understanding, therapeutic authority, autonomous life coaching, or complete privacy isolation merely because the bootstrap and next-action UX exist. The bootstrap interview may collect explicit user answers and may use approved fixtures or explicitly configured integrations, but broad personal-data ingestion remains future work unless separately implemented and disclosed.
+
+**Consequences:**
+
+- Phase 1 public demos should show the bootstrap interview and next-action focus mode.
+- The Phase 1 implementation path must include a minimal user-facing UI surface, not only CLI or backend artifacts.
+- The next-action UI becomes the primary nontechnical explanation of UbU.
+- The full Plan must remain inspectable so that one-task focus does not become opaque automation.
+- Release Outreach Pipeline scripts should treat this loop as the main public demonstration pattern.
+- `UBU-Q0050` tracks the remaining product and implementation-detail questions for the minimum useful bootstrap interview and next-action focus mode.
+

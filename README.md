@@ -42,7 +42,11 @@ UbU is based on several design principles:
 
    In `user_mode`, human affective state is part of the planning problem. Energy, stress, tiredness, mood, and related human limitations are constraints that planning must respect.
 
-6. **Dogfooding**
+6. **First-person legibility**
+
+   Phase 1 must be understandable as a simple first-person loop: answer a few bootstrapping questions, receive one recommended next Task, inspect why it matters now, act or override, and let UbU learn from the result.
+
+7. **Dogfooding**
 
    The Phase 1 MVP should help coordinate UbU’s own GitHub issues, pull requests, reviews, CI events, release milestones, design questions, and contributor interactions.
 
@@ -128,6 +132,21 @@ The goal is neither comfort-maximization nor coercive productivity. The goal is 
 
 ---
 
+## Phase 1 user-facing loop
+
+Phase 1 should be usable as a simple first-person experience:
+
+1. UbU asks a few bootstrapping questions.
+2. UbU builds an initial explicit model from the answers and approved dogfooding inputs.
+3. UbU recommends one next Task.
+4. UbU explains why that Task matters now.
+5. The user acts, rejects, snoozes, decomposes, or asks for more explanation.
+6. UbU records what happened and recalculates.
+
+This is the public-facing shape of the product. The full Plan remains inspectable, but the default mode may reduce cognitive load by showing one next action at a time.
+
+---
+
 ## ETHConf 2026 / autonomous-team feedback focus
 
 UbU is preparing to gather feedback from FOSS maintainers, Ethereum project leads, protocol teams, and other people who coordinate highly autonomous technical contributors.
@@ -191,6 +210,8 @@ Primary goals:
 - import or observe GitHub issues, PRs, reviews, CI events, and milestones;
 - represent them in UbU’s Objective/Task/Calendar model;
 - generate useful Plans;
+- run a minimal bootstrap interview to seed the user/project context;
+- show a next-action focus screen with one recommended Task and an explanation of why it matters now;
 - update GitHub as a low-dimensional projection of UbU state;
 - expose limitations and open questions through dogfooding.
 

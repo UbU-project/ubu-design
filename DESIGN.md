@@ -16,6 +16,8 @@ UbU is not merely a task list or calendar application. It is intended to become 
 
 The first MVP is designed around **dogfooding**: using UbU to coordinate the design, development, release, and maintenance of UbU itself.
 
+For Phase 1, UbU must also be understandable as a first-person user experience. The minimal user-facing loop is: answer a small number of bootstrapping questions, allow UbU to construct an initial context model, receive one recommended next Task, inspect why that Task matters now, act or override, then let UbU learn from the result through Logs, Snapshots, and recalculation.
+
 ---
 
 ## 2. Core Principles
@@ -136,14 +138,26 @@ Publication is gated by default. UbU may draft, assemble, render, and prepare re
 
 The Release Outreach Pipeline is not UbU-specific marketing glue. It is intended to generalize to project-management configurations: open-source projects, research groups, internal teams, product teams, community projects, and personal projects may all define communication Objectives that explain progress to their relevant audiences.
 
+### 2.7 First-person legibility
 
-### 2.7 Dogfooding
+UbU must be legible to users who do not think in programming, planning theory, or project-management jargon. The system may use explicit internal objects such as Objectives, Tasks, Plans, Logs, UniverseState, Compartments, and Snapshots, but the first user-facing experience should make the core loop obvious:
+
+1. What matters?
+2. What is true now?
+3. What should I do next?
+4. Why this action?
+5. What happened when I tried?
+6. What should change in the model?
+
+For Phase 1, first-person legibility is implemented through a minimal bootstrap interview and next-action focus mode. These are UX requirements over existing core objects, not new canonical ontology objects.
+
+### 2.8 Dogfooding
 
 UbU should be useful for managing its own development.
 
 The Phase 1 MVP should coordinate UbU’s GitHub issues, pull requests, reviews, CI events, release milestones, design questions, and contributor interactions.
 
-### 2.8 LLM boundary
+### 2.9 LLM boundary
 
 LLMs are useful but bounded.
 
@@ -417,6 +431,8 @@ Primary goals:
 - import or observe GitHub issues, PRs, reviews, CI events, and milestones;
 - represent them in UbU’s Objective/Task/Calendar model;
 - generate useful Plans;
+- provide a minimal bootstrap interview that creates an initial dogfooding context, current or stale affect Snapshot, and prioritized Objective/Task seed set;
+- provide a next-action focus mode that shows one recommended next Task with an inspectable explanation of why it matters now;
 - update GitHub as a low-dimensional projection of UbU state;
 - expose limitations and open questions through dogfooding.
 
@@ -436,8 +452,38 @@ The smallest persuasive demo is an end-to-end single-user dogfooding loop:
 
 The demo must not require Phase 2 sync, Phase 3 multi-user coordination, full RBAC, a complete Compact Calendar UI, or autonomous remote GitHub mutation. If live GitHub writes are unsafe for the public recording, a dry-run projection is acceptable only when it shows the exact payload that would be written after human approval.
 
+### 4.1.2 Phase 1 user-facing loop
 
-### 4.1.2 Release Outreach Pipeline dogfooding
+Phase 1 must include a minimal first-person UX loop for dogfooding:
+
+1. **Bootstrap interview**
+   - Ask a small number of questions about the current user/project context.
+   - Capture current or stale affect state.
+   - Identify initial Objectives relevant to UbU-runs-UbU.
+   - Identify immediate constraints, deadlines, available time, and preferred work style.
+   - Record the answers as explicit Logs, Snapshots, Preferences, Objectives, Tasks, or source-linked facts.
+
+2. **Plan generation**
+   - Generate a candidate default Plan from the modeled state.
+   - Preserve inspectability of the full Plan.
+   - Explain relevant constraints, dependencies, risk findings, and affect constraints.
+
+3. **Next-action focus mode**
+   - Present one recommended next Task as the default UI surface.
+   - Show why the Task matters now.
+   - Show what UbU considered when selecting it.
+   - Provide controls for start, done, snooze, reject, decompose, and explain more.
+   - Avoid hiding the existence of the full Plan from users who want inspection.
+
+4. **Feedback and recalculation**
+   - Ask for lightweight feedback after completion, failure, rejection, or override.
+   - Record the outcome in Logs.
+   - Update estimates, affect Snapshots, Objective status, or recalculation triggers when appropriate.
+   - Treat failure or rejection as model evidence, not user blame.
+
+The Phase 1 version may be simple and fixture-backed. It does not require broad email, text-message, file, or personal-data ingestion. It must not claim complete life-modeling. The purpose is to demonstrate the core UbU experience: one meaningful next action, with an explanation, grounded in explicit state.
+
+### 4.1.3 Release Outreach Pipeline dogfooding
 
 The Release Outreach Pipeline should become part of ordinary UbU-runs-UbU release management. A minor release should produce a release outreach package when the current project state contains enough user-visible, developer-visible, or contributor-visible change to justify public explanation.
 

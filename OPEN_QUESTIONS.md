@@ -1655,6 +1655,39 @@ What is the minimum useful artifact model and implementation boundary for the Re
 
 Partially established by `UBU-D0094`; detailed artifact schema, implementation boundaries, provenance requirements, and review gates remain open.
 
+---
+
+## UBU-Q0050: Minimum Phase 1 bootstrap interview and next-action focus UX
+
+Status: Open Priority: MVP blocking Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 public demo, nontechnical onboarding, mock app prototype, Release Outreach Pipeline demo scripts Resolved by: UBU-D0096 Last scored: Never Scored from commit: None
+
+### Question
+
+What is the smallest useful Phase 1 bootstrap interview and next-action focus mode that demonstrates UbU’s user-facing value without overclaiming personal-data ingestion, therapeutic authority, or complete planning automation?
+
+### Subquestions
+
+1. What exact questions should the Phase 1 bootstrap interview ask?
+2. Which answers become Objectives, Preferences, Snapshots, Tasks, Logs, or UniverseState facts?
+3. What minimum data is required to recommend one next Task?
+4. What must the “why this matters now” explanation include?
+5. What controls must the next-action screen expose: start, done, snooze, reject, decompose, explain more, or override?
+6. How should the UI preserve full-Plan inspectability while defaulting to one-task focus?
+7. What feedback should UbU collect after completion, failure, rejection, or override?
+8. How should the Phase 1 mock app distinguish hardcoded/fixture behavior from implemented planning behavior?
+9. How should this loop appear in Release Outreach Pipeline videos and public demos?
+10. What claims must public materials avoid until broader integrations exist?
+
+### Current direction
+
+The Phase 1 UX should be narrow, explicit, and dogfooding-centered. It should ask a few bootstrapping questions, collect or refresh a simple affect Snapshot, create an initial Objective/Task seed set, generate a candidate Plan, and show one recommended next Task with an explanation. The mock app may be fixture-backed, but the canonical Phase 1 implementation should ground the recommendation in explicit UbU objects and Logs.
+
+The UI should not imply that UbU already understands all of the user’s emails, texts, files, and personal life. Broad personal-data ingestion is future work unless separately implemented and disclosed. The first version should prove the experience: “UbU can recommend one meaningful next action and explain why.”
+
+### Resolution
+
+Partially established by `UBU-D0096`; detailed bootstrap-question content, UI controls, fixture boundaries, implementation boundary, and demo-script treatment remain open.
+
 ## Suggested Initial GitHub Issues
 
 Create these first:
@@ -1681,3 +1714,4 @@ Create these first:
 20. `UBU-Q0047`: Define minimum committed-contributor onboarding path
 21. `UBU-Q0048`: Define commercial funding red lines
 22. `UBU-Q0049`: Define the Release Outreach Pipeline artifact model and implementation boundary
+23. `UBU-Q0050`: Define the minimum Phase 1 bootstrap interview and next-action focus UX

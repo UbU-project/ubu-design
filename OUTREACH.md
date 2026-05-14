@@ -24,6 +24,8 @@ The first MVP is intentionally practical:
 
 > UbU should help coordinate the development of UbU itself.
 
+Phase 1 also needs to feel like UbU to a nontechnical user: it should ask a few bootstrapping questions, recommend one next action, explain why that action matters now, and learn from the user’s response.
+
 That means using UbU to manage its own GitHub issues, open questions, pull requests, reviews, CI events, release milestones, design changes, contributor relationships, and automation loops.
 
 UbU’s first proving ground is its own project.
@@ -142,6 +144,31 @@ Most planning systems are affect-blind: they model tasks, deadlines, statuses, a
 A system that ignores fatigue, boredom, stress, attention, dignity, and recovery is not helping a human plan. It is producing fiction.
 
 UbU should give users fast feedback when plans succeed or fail, suggest improvement after failure, respect dignity and emotional limits, and still help users grow beyond current limitations.
+
+---
+
+## The first user experience
+
+The first UbU experience should be easy to understand even for people who do not think like programmers.
+
+UbU starts by asking a few questions:
+
+- What are you trying to make better?
+- What are you trying to maintain?
+- What is currently urgent?
+- What drains or restores your energy?
+- What kind of work can you realistically do right now?
+- What information may UbU use?
+
+Then UbU shows one recommended next action, not a giant intimidating list.
+
+Example:
+
+> **Next action:** Review the inspection document for 20 minutes.  
+> **Why this matters now:** It blocks tomorrow’s decision, fits your current energy, and reduces later stress.  
+> **UbU considered:** deadline pressure, current mood, available time, related obligations, and privacy rules.
+
+The full Plan remains inspectable, but the default experience is humane: one meaningful next action, with a reason.
 
 ---
 
