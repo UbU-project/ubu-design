@@ -1761,7 +1761,7 @@ Partially established by `UBU-D0096`; detailed bootstrap-question content, UI co
 
 ## UBU-Q0051: Minimum preference-calibration examples for Phase 1 onboarding and review
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product / Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0050 Blocks: Phase 1 onboarding quality, Preference calibration, Calendar preview, Log review Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0050 Blocks: Phase 1 onboarding quality, Preference calibration, Calendar preview, Log review Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1788,7 +1788,7 @@ Open.
 
 ## UBU-Q0052: Discovery-mode action inference and override semantics
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product / Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0050 Blocks: Discovery mode, mobile sensor workflow, behavior reconciliation, habit-pattern inference Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0050 Blocks: Discovery mode, mobile sensor workflow, behavior reconciliation, habit-pattern inference Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1816,7 +1816,7 @@ Open.
 
 ## UBU-Q0053: Calendar preview and Log review psychological annotations
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product / Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0050 Blocks: Regular review Tasks, preview UX, Log review UX, psychological annotation boundary Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0050 Blocks: Regular review Tasks, preview UX, Log review UX, psychological annotation boundary Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1844,7 +1844,7 @@ Open.
 
 ## UBU-Q0054: Social identity theory impact on Identity, role, group membership, and mode switching
 
-Status: Open Priority: Post-MVP / Research Phase: Post-MVP Decision type: Data model / Governance Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0025 Blocks: Post-MVP multi-user Identity modeling, group-membership modeling, mode-switching policy Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0025 Blocks: Post-MVP multi-user Identity modeling, group-membership modeling, mode-switching policy Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1870,7 +1870,7 @@ Open.
 
 ## UBU-Q0055: Social choice theory and collective decision legitimacy
 
-Status: Open Priority: Post-MVP / Research Phase: Post-MVP Decision type: Governance Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0025 Blocks: Post-MVP organizational governance, multi-user decision procedures, collective legitimacy Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Governance Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0025 Blocks: Post-MVP organizational governance, multi-user decision procedures, collective legitimacy Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1897,7 +1897,7 @@ Open.
 
 ## UBU-Q0056: Game theory, strategic interaction, and counterparty modeling
 
-Status: Open Priority: Post-MVP / Research Phase: Post-MVP Decision type: Data model / Governance Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0025 Blocks: Strategic interaction modeling, counterparty incentives, post-MVP coordination protocols Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0025 Blocks: Strategic interaction modeling, counterparty incentives, post-MVP coordination protocols Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
