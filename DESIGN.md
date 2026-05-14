@@ -1089,25 +1089,27 @@ A **Snapshot** is an observed state update.
 
 User-declared and sensor-derived observations use the same object type.
 
+Snapshots are partial observed assertions over specific UniverseState fields. They are not full-state replacements and do not assert anything about omitted fields.
+
 MVP snapshot fields:
 
 - `snapshot_id`
-- `timestamp`
+- `timestamp` or valid-at instant
 - `source`
 - per-dimension or per-field values
-- confidence
+- snapshot-level confidence
+- optional per-field confidence overrides
+- correction or revocation status derived from Log correction links
 
 ### 12.1 Snapshot precedence rule
 
 - Latest observed snapshot overrides simulation on conflicting fields.
 - User-declared snapshots are top-priority observations.
 - Confidence is stored, but does not override explicit user declaration in MVP.
+- Between conflicting user-declared Snapshots for the same field, latest effective timestamp wins unless a later Log correction says otherwise.
+- Between conflicting non-user observations, source priority, effective timestamp, and confidence may be used by the Snapshot application algorithm.
 
-Snapshot application semantics remain partially open:
-
-- patch vs full assertion
-- immutable log behavior
-- confidence per snapshot vs per field
+Snapshot records are immutable once accepted into the append-only Log. A Snapshot may be corrected or revoked only by a later Log correction entry that points to the original Snapshot observation. A correction that asserts replacement state creates a new Snapshot and links it to the corrected Snapshot or Log entry; a revocation without replacement simply removes the original Snapshot from corrected query views while preserving the historical claim.
 
 ### 12.2 Discovery mode
 

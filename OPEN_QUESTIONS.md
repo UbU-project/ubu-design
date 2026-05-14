@@ -976,7 +976,7 @@ Unresolved.
 
 ## UBU-Q0025: Snapshot Application Semantics
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: UBU-D0100 Last scored: Never Scored from commit: None
 
 Snapshots override simulated state when conflicting, but application details remain open.
 
@@ -994,7 +994,15 @@ Snapshots override simulated state when conflicting, but application details rem
 
 ### Resolution
 
-Unresolved.
+Solved by `UBU-D0100`. Snapshots are partial observed assertions over specific UniverseState fields, not full assertions of all UniverseState. Applying a Snapshot updates only included fields and says nothing about omitted fields.
+
+Snapshots are immutable once accepted into the append-only Log. The original observation is preserved as historical evidence. Annotation, correction, and revocation are represented by later Log entries that point to the original Snapshot observation or Log entry.
+
+MVP confidence is stored both per Snapshot and, when needed, per field. Snapshot-level confidence is required as the default; optional per-field confidence overrides allow different dimensions to carry different reliability. Affect Snapshots may continue using global confidence across affect dimensions unless per-field confidence is explicitly provided.
+
+Conflict resolution is field-local. Latest observed Snapshot data overrides simulated state. User-declared Snapshots have top priority in MVP. If two user-declared Snapshots conflict on the same field, the latest `effective_at` or Snapshot timestamp wins unless a later correction supersedes it. Non-user observations may use source priority, timestamp, and confidence, but confidence does not defeat explicit user declaration in MVP.
+
+A Snapshot can be corrected or revoked only through a new Log entry. Correction that replaces observed state creates a new Snapshot linked to the corrected Snapshot or Log entry. Revocation without replacement creates a correction/revocation Log entry that removes the original Snapshot from corrected query views while preserving the historical claim.
 
 ---
 

@@ -2613,3 +2613,29 @@ Narrative identity is partly addressed through Objectives and Reports. Social id
 - Calendar preview and Log review should be represented as regular user-facing Tasks or recurring review workflows, not hidden background judgments.
 - Discovery mode must preserve user sovereignty: it may collect evidence for later reconciliation, but the user remains the final authority over what occurred and what it meant.
 
+
+---
+
+## UBU-D0100: Snapshots are immutable partial observed assertions
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0025`.
+
+Snapshots are partial observed assertions over specific UniverseState fields. They are not full assertions of all UniverseState and do not imply that omitted fields are absent, unchanged, or unknown. Applying a Snapshot updates only the fields included in that Snapshot.
+
+Snapshot records are immutable once accepted into the append-only Log. The original Snapshot observation is never edited or deleted as canonical history. Annotation, correction, and revocation are represented by later Log entries that point to the original Snapshot observation or Log entry.
+
+MVP confidence is stored at both levels: a required snapshot-level confidence summarizes the observation as a whole, and optional per-field confidence overrides may be present when different observed dimensions have different reliability. If a field has no per-field confidence, it inherits the snapshot-level confidence. For affect Snapshots, the existing MVP rule remains: affect confidence may be treated globally across affect dimensions, with per-dimension confidence deferred unless a Snapshot explicitly provides per-field confidence.
+
+Conflict resolution is field-local. Latest observed Snapshot data overrides simulated state for conflicting fields. User-declared Snapshots have top priority over sensor-derived, imported, inferred, or worker-submitted observations in MVP. If two user-declared Snapshots conflict on the same field, the latest `effective_at` or Snapshot timestamp wins unless a later correction supersedes it. For non-user observations, the application algorithm may use source priority, effective timestamp, and confidence, but confidence does not defeat an explicit user declaration in MVP.
+
+A Snapshot can be corrected or revoked, but only through a new Log entry. Correction that replaces the observed state creates a new Snapshot and links it to the corrected Snapshot or Log entry. Revocation without replacement creates a correction/revocation Log entry that excludes the original Snapshot from corrected query views while preserving the historical claim.
+
+**Consequences:**
+
+- `UBU-Q0025` is resolved for Phase 1 Snapshot application semantics.
+- Sparse observations, affect reports, sensor evidence, GitHub-derived facts, and review corrections can share one Snapshot model without requiring full UniverseState replacement.
+- Snapshot query APIs must distinguish raw historical views from corrected/current views that follow correction and revocation links.
+- Snapshot correction aligns with accepted append-only Log semantics and preserves user sovereignty without erasing historical evidence.
+- Detailed source-priority tables for non-user observations may be refined alongside discovery mode, worker mutation requests, and import-specific schemas.
