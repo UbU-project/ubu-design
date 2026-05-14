@@ -120,13 +120,30 @@ Sustainable stretch means a Plan asks for more than the user's current baseline 
 
 Post-MVP work may add richer growth models, personalized baseline learning, longitudinal dignity and morale trend reports, and UI-specific coaching language. Phase 1 only needs derived assessment, risk-report findings, recalculation triggers, and non-blaming revision suggestions.
 
-### 2.6 Dogfooding
+### 2.6 Release Outreach Pipeline
+
+The Release Outreach Pipeline is an accepted future feature bundle with the tagline:
+
+> UbU should make every release explain itself.
+
+Release management should not stop at code, tests, changelogs, and deployment artifacts. For UbU-runs-UbU, every meaningful minor release should also create reviewable explanation artifacts for the audiences affected by the release. These artifacts may include user-facing release notes, developer-facing release notes, screenshots, scripted UI-demo captures, short video scripts, narration text, captions, YouTube descriptions, thumbnail concepts, public posts, known-limitations summaries, and contributor calls-to-action.
+
+The pipeline is a communication Objective implemented through ordinary UbU primitives: Objectives, Techniques, WorkItems, Logs, Automation Worker outputs, release artifacts, and export/projection gates. A later implementation may add specialized schemas for release artifacts or communication objectives, but the design requirement does not depend on a new first-class MVP entity.
+
+Release outreach must be evidence-bound. Generated claims should be traceable to implemented features, accepted design decisions, closed issues, release notes, automated UI screenshots, demo recordings, or clearly labeled future plans. The pipeline should not let AI-generated video scripts drift into unsupported hype.
+
+Publication is gated by default. UbU may draft, assemble, render, and prepare release communication artifacts automatically, but uploading to YouTube, publishing posts, sending announcements, or mutating external public channels should require explicit human approval unless a project has configured a narrow trusted auto-publication rule.
+
+The Release Outreach Pipeline is not UbU-specific marketing glue. It is intended to generalize to project-management configurations: open-source projects, research groups, internal teams, product teams, community projects, and personal projects may all define communication Objectives that explain progress to their relevant audiences.
+
+
+### 2.7 Dogfooding
 
 UbU should be useful for managing its own development.
 
 The Phase 1 MVP should coordinate UbU’s GitHub issues, pull requests, reviews, CI events, release milestones, design questions, and contributor interactions.
 
-### 2.7 LLM boundary
+### 2.8 LLM boundary
 
 LLMs are useful but bounded.
 
@@ -419,6 +436,30 @@ The smallest persuasive demo is an end-to-end single-user dogfooding loop:
 
 The demo must not require Phase 2 sync, Phase 3 multi-user coordination, full RBAC, a complete Compact Calendar UI, or autonomous remote GitHub mutation. If live GitHub writes are unsafe for the public recording, a dry-run projection is acceptable only when it shows the exact payload that would be written after human approval.
 
+
+### 4.1.2 Release Outreach Pipeline dogfooding
+
+The Release Outreach Pipeline should become part of ordinary UbU-runs-UbU release management. A minor release should produce a release outreach package when the current project state contains enough user-visible, developer-visible, or contributor-visible change to justify public explanation.
+
+A release outreach package may include:
+
+- a public release-note summary;
+- a developer release-note summary;
+- a short user-facing video script;
+- a developer-facing video segment or call-to-action;
+- screenshot and screen-recording references from automated UI runs, fixtures, or explicitly approved mock data;
+- captions or narration text;
+- YouTube title, description, and chapter outline;
+- social or mailing-list announcement drafts;
+- known limitations and future-work notes;
+- a contributor next-action list tied to real issues or artifacts.
+
+The package should record provenance. Each claim should identify whether it came from an implemented feature, accepted design decision, closed issue, test fixture, UI capture, release note, or future-plan label. Public artifacts should not represent planned or mock behavior as implemented behavior.
+
+The Phase 1 minimum may be manual but structured: the project operator can write or approve the release notes, screenshots, and script while UbU records the artifact set as a WorkItem sequence. Later phases should automate screenshot capture from UI tests, demo-flow export, script drafting, voice/narration preparation, caption generation, video-render-plan generation, publication metadata, and review gates.
+
+The full video-generation pipeline is future work. Phase 1 should preserve the model boundary: generate reviewable communication artifacts before trying to automate external publication.
+
 ### 4.2 Phase 2: Single-user multi-device synchronization
 
 A single user runs UbU across multiple Devices / execution enclaves.
@@ -532,6 +573,7 @@ Examples:
 - “Maintain relationship with contributor X”
 - “Collect affect information relevant to important usage”
 - “Finish documentation draft”
+- “Explain the latest release to users and contributors”
 
 Objectives are the canonical anchor for value.
 
@@ -1613,6 +1655,19 @@ Public materials may name the staged roles already used by onboarding: workflow 
 Avoid language such as `the co-builder`, `highest-priority contact`, `one founding slot`, `competing for a role`, `exclusive inner circle`, `prove you belong`, `hand-picked elite`, or any phrasing that treats passive interest as worthless. Casual interest should be welcomed when it can become a workflow example, design feedback, contributor lead, prototype-funder lead, or public issue.
 
 ETHConf and similar follow-up should route each person into one concrete next action: send a workflow example, review a model-committee artifact, comment on a public design question, contribute a fixture or test, take a narrow implementation-ready issue, introduce a serious contributor, or discuss a trunk-compatible prototype sponsorship.
+
+
+### Release Outreach Pipeline baseline
+
+Public and project-facing release communication should be treated as a first-class planning output. The standard tagline is:
+
+> UbU should make every release explain itself.
+
+For UbU itself, a minor release should normally produce a release outreach package when there is enough change to explain. The package should be grounded in current repository state, release notes, accepted decisions, closed issues, automated UI screenshots, scripted demo recordings, test fixtures, known limitations, and future-plan labels.
+
+The public-audience script should explain what changed and why it matters without assuming deep computer knowledge. The developer-facing segment should briefly show dogfooding, current implementation artifacts, and concrete ways serious contributors can help. This lets a single release package serve users, nontechnical supporters, FOSS developers, project maintainers, design partners, and prototype funders.
+
+Release outreach automation should draft and assemble artifacts before it publishes them. Human or policy approval is required before public upload, announcement, or mutation of external channels unless a project explicitly configures a narrow trusted auto-publication rule. Export must respect Compartment, Identity, and public-projection boundaries.
 
 ### First technical essay baseline
 

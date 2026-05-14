@@ -2366,3 +2366,43 @@ ETHConf and similar follow-up should classify people by their most useful next c
 - Contributor recruitment can be selective about commitment while remaining welcoming to multiple serious contributors.
 - ETHConf follow-up should be triaged by concrete next action rather than raw excitement.
 - Public copy should preserve the open-core, privacy-first, and trunk-first boundaries already accepted for onboarding and funding.
+
+---
+
+## UBU-D0094: Release Outreach Pipeline makes releases explain themselves
+
+**Status:** Accepted
+
+Direct project directive.
+
+UbU accepts the Release Outreach Pipeline feature bundle, with the tagline:
+
+> UbU should make every release explain itself.
+
+Release management in UbU should treat public and project-facing explanation artifacts as first-class release outputs. In addition to code, tests, changelogs, builds, and deployment artifacts, a meaningful release may require user-facing release notes, developer-facing release notes, screenshots, scripted UI-demo captures, video scripts, narration text, captions, YouTube metadata, public posts, known-limitations summaries, and contributor calls-to-action.
+
+For UbU-runs-UbU, each minor release should normally produce a release outreach package when there is enough change to explain. The package should be derived from current repo state, release notes, accepted decisions, closed issues, updated design files, automated UI screenshots, scripted demo recordings, test fixtures, and explicitly labeled future plans.
+
+Generated outreach must be evidence-bound. Claims about implemented behavior should be traceable to implemented features, accepted decisions, closed issues, release notes, test artifacts, screenshots, demo recordings, or other recorded evidence. Mock behavior, future plans, and speculative goals must be labeled as such.
+
+The pipeline should support a fast public explanation path for nontechnical or lightly technical users and a sharper developer call-to-action path for serious contributors. A video can show the simple user-facing loop - bootstrap, one next task, explanation, feedback, and humane relationship or goal prompts - then close by showing UbU dogfooding its own GitHub issues, design docs, release tasks, and contributor needs.
+
+The feature generalizes beyond UbU's own outreach. Project-management configurations should be able to define communication Objectives for users, developers, maintainers, funders, internal stakeholders, customers, community members, or other audiences. Release communication should become ordinary project work, not an afterthought.
+
+Publication is gated by default. UbU may draft, assemble, render, and prepare outreach artifacts automatically, but external publication requires explicit human approval unless a project has configured a narrow trusted auto-publication policy. The pipeline must respect Compartment, Identity, export, and public-projection boundaries, and it must not leak private planning notes, contributor communications, personal data, or sensitive screenshots into public artifacts.
+
+The implementation should be staged:
+
+- Phase 0: manually structured release notes, screenshot lists, scripts, and calls-to-action.
+- Phase 1: script and release-copy generation from repo state, release notes, closed issues, design decisions, and manually approved screenshots.
+- Phase 2: automated screenshot and demo-flow capture from UI tests or approved fixtures.
+- Phase 3: structured release outreach packages containing scripts, narration text, captions, storyboard, assets, render plan, platform metadata, and review checklist.
+- Phase 4: automated rough video rendering for human review.
+- Phase 5: gated publication workflow for YouTube, blogs, release pages, newsletters, and social posts.
+
+**Consequences:**
+
+- Release communication becomes part of the UbU project-management model.
+- UbU-runs-UbU must eventually explain its own releases using the same planning and artifact-provenance principles it applies to other work.
+- Future design should define the release outreach artifact schema, screenshot/demo provenance model, review gates, publication policy, and Compartment export checks.
+- `UBU-Q0049` tracks the remaining implementation and schema questions for the Release Outreach Pipeline.

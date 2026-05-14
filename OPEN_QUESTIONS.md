@@ -1618,6 +1618,34 @@ Crypto, tokenization, and DAO-specific requests should be rejected when token-fi
 
 Paid work should be trunk-first by default. Customer-specific configuration, hosting, support, packaging, compliance, or proprietary connectors may remain commercial only when they stay outside the open-core boundary and do not become required for public dogfooding.
 
+---
+
+## UBU-Q0049: Release Outreach Pipeline artifact model and implementation boundary
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0030, UBU-Q0036, UBU-Q0038 Blocks: Release Outreach Pipeline implementation, release communication, contributor recruitment Resolved by: UBU-D0094 Last scored: Never Scored from commit: None
+
+### Question
+
+What is the minimum useful artifact model and implementation boundary for the Release Outreach Pipeline?
+
+### Subquestions
+
+1. What files and metadata should a release outreach package contain?
+2. How should screenshots, UI-test exports, fixture captures, and demo recordings record provenance?
+3. What schema should distinguish implemented behavior, mock behavior, future plans, and speculative goals?
+4. What human approval gates are required before video rendering, platform upload, public posting, or external channel mutation?
+5. How should Compartment, Identity, public-projection, and export rules prevent private data leakage?
+6. Which parts of the pipeline belong in Phase 1 dogfooding and which should remain post-MVP?
+7. How should project configurations define audience-specific communication Objectives?
+8. Which video-generation tools or local renderers should be treated as Automation Workers versus external publication systems?
+
+### Current direction
+
+`UBU-D0094` accepts the feature bundle and tagline: "UbU should make every release explain itself." The minimum path should start with manually reviewed release outreach packages generated from repo state, release notes, accepted decisions, closed issues, and approved screenshots. Full automated video generation and publication should be deferred until the artifact schema, provenance model, privacy gates, and review workflow are explicit.
+
+### Resolution
+
+Partially established by `UBU-D0094`; detailed artifact schema, implementation boundaries, provenance requirements, and review gates remain open.
 
 ## Suggested Initial GitHub Issues
 
@@ -1644,3 +1672,4 @@ Create these first:
 19. `UBU-Q0046`: Define public dogfooding artifacts for contributor credibility
 20. `UBU-Q0047`: Define minimum committed-contributor onboarding path
 21. `UBU-Q0048`: Define commercial funding red lines
+22. `UBU-Q0049`: Define the Release Outreach Pipeline artifact model and implementation boundary

@@ -171,6 +171,33 @@ Other GitHub edits are treated as external events.
 
 This allows FOSS contributors to keep using normal GitHub workflows while UbU maintains a richer canonical model internally.
 
+
+---
+
+## Release Outreach Pipeline
+
+UbU should make every release explain itself.
+
+The Release Outreach Pipeline is a future feature bundle that treats public explanation as part of release management. A release should not only produce code, tests, changelogs, and deployment artifacts. It should also produce explanation artifacts for the people who need to understand what changed and what to do next.
+
+For UbU itself, a minor release should eventually generate a release outreach package with:
+
+- user-facing release notes;
+- developer-facing release notes;
+- screenshots from automated UI runs or approved fixtures;
+- scripted demo recordings;
+- short public video scripts;
+- narration text and captions;
+- YouTube titles, descriptions, and chapter outlines;
+- known limitations;
+- concrete contributor calls-to-action.
+
+The first public videos should be fast and concrete. They should show the user-facing loop - bootstrap, one next task, explanation, feedback, and humane prompts - then briefly show UbU dogfooding its own GitHub issues, design docs, release tasks, and contributor needs.
+
+The developer ending should not be a boring tutorial. It should show that the project is early enough for serious contributors to shape the planning kernel, privacy model, UI, local-first architecture, dogfooding loop, release pipeline, and automation workers.
+
+Release outreach should be evidence-bound and privacy-aware. Claims should trace to implemented features, accepted decisions, closed issues, release notes, screenshots, demo recordings, or explicitly labeled future plans. Publication should remain gated by human or configured project-policy approval.
+
 ---
 
 ## ETHConf 2026 feedback focus
@@ -346,11 +373,11 @@ UbU should publish a problem-first technical essay explaining why conventional p
 
 Working title:
 
-> The Planning Kernel: Why Your Task Manager Is Lying to You
+> The Planning Kernel: What Task Managers Leave Out
 
 Core claim:
 
-Most planning tools are affect-blind. They model tasks, deadlines, statuses, and calendar blocks, but not the emotional and physical reality of the person who must execute the plan.
+List, calendar, board, and opaque assistant tools are useful projections, but they are not enough for real planning unless objectives, state transitions, dependencies, constraints, logs, uncertainty, affect, and recalculation are explicit.
 
 A humane planner must provide fast feedback from reality, suggest improvements after failure, respect dignity and emotional limits, and still help the user grow beyond current limitations.
 
@@ -656,6 +683,8 @@ Later contributors will be needed for:
 - worker-mode execution;
 - privacy compartments;
 - UI/UX;
+- Release Outreach Pipeline artifact schemas and review gates;
+- automated screenshot and demo-flow capture;
 - release engineering.
 
 ---
@@ -711,7 +740,9 @@ Useful early tasks include:
 - define review-artifact directory layout;
 - create example GitHub issue data that should become UbU WorkItems;
 - create example PR-review queues that should become UbU planning inputs;
-- document one real maintainer coordination failure that conventional tools failed to model.
+- document one real maintainer coordination failure that conventional tools failed to model;
+- draft a fixture-backed release outreach package for a minor UbU release;
+- define screenshot and demo-capture provenance metadata for the Release Outreach Pipeline.
 
 These tasks are intentionally small.
 

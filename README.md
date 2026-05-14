@@ -146,6 +146,22 @@ The immediate goal is not to replace existing project-management tools. The imme
 
 This feedback should improve the Phase 1 dogfooding target: UbU coordinating the development of UbU itself.
 
+
+---
+
+## Release Outreach Pipeline
+
+UbU accepts the **Release Outreach Pipeline** as a future feature bundle:
+
+> UbU should make every release explain itself.
+
+For UbU-runs-UbU, a meaningful minor release should eventually produce a release outreach package: public release notes, developer release notes, screenshots, scripted demo captures, short video scripts, narration text, captions, YouTube metadata, known limitations, and contributor calls-to-action.
+
+These artifacts should be grounded in evidence from repo state, release notes, accepted decisions, closed issues, UI-test screenshots, demo recordings, fixtures, and clearly labeled future plans. UbU should not let generated outreach drift into unsupported hype.
+
+The pipeline should begin manually and become more automated over time: script generation, screenshot capture, demo-flow export, storyboard generation, narration preparation, rough video rendering, and gated publication. Publication to external channels should require human or explicit policy approval by default.
+
+This feature is not only for UbU marketing. Project-management configurations should be able to define communication Objectives for users, developers, maintainers, funders, community members, internal stakeholders, and other audiences.
 ---
 
 ## What UbU is not
