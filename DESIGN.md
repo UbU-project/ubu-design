@@ -436,6 +436,65 @@ Primary goals:
 - update GitHub as a low-dimensional projection of UbU state;
 - expose limitations and open questions through dogfooding.
 
+The frozen Phase 1 implementation set is:
+
+- local single-user `user_mode` instance for UbU-runs-UbU;
+- bootstrap interview and explicit seed model creation;
+- GitHub issue, PR, review, CI, milestone, and comment import from live data or approved fixtures;
+- ExternalAssociation-style source links sufficient to trace imported GitHub objects;
+- Objective, Preference, Task, Container, UniverseState, Snapshot, Plan, Calendar, Log, Identity, Relationship, Compartment, Automation Worker, External Event, and External Association schemas only to the depth required by the dogfooding loop;
+- schedulable Static and Dynamic Tasks with Objective links, durations, dependency/precondition/effect fields, active/completed/failed/moot lifecycle handling, and moot reason codes sufficient for the demo;
+- lightweight UniverseState facts, affect Snapshot handling, accepted mutation vocabulary, and deterministic precondition evaluation;
+- append-only per-instance Logs with correction, annotation, provenance, worker-submission, and recalculation-trigger entries;
+- Plan and Calendar generation for a next work window with a default Plan and inspectable explanation;
+- next-action focus mode with start, done, snooze, reject, decompose, explain-more, and feedback controls;
+- derived risk and human-complete plan-quality reports covering deadline risk, dependency fragility, worker or automation bottlenecks, stale affect, affect-margin, destructive pressure, and post-plan depletion warnings;
+- minimal Compartment guardrails for `local_only`, `no_cloud_llm`, `no_external_export`, allowed integration/device references, low-security labeling, and logged boundary decisions;
+- Automation Worker identity, scoped capability grants, explicit assignment/status display, and mutation or projection request submission without direct canonical writes;
+- clearly marked GitHub projection previews or human-approved writes for UbU-managed labels, comments, or blocks, plus reconciliation reporting;
+- manually structured Release Outreach Pipeline work items and artifact records for release notes, screenshots, scripts, and contributor calls-to-action.
+
+Phase 2 explicitly defers:
+
+- multi-device local-first sync;
+- partial replication across Devices, Zones, or Compartments;
+- secure cross-device Compartment propagation;
+- sync conflict handling;
+- cross-device worker or enclave coordination beyond the single local instance boundary.
+
+Phase 3 explicitly defers:
+
+- multi-human coordination;
+- shared global or partially shared project truth between users;
+- user-to-user Identity commitments, capabilities, and limited disclosure;
+- multi-party governance, invitation, revocation, or trust protocols.
+
+Phase 1 keeps these abstractions documented for compatibility but does not implement them:
+
+- Technique as a first-class planning object;
+- full Compact Calendar DFS grammar and high-coverage transport format;
+- complete Zone and Device system beyond the current local execution enclave;
+- organization-mode and worker-mode web admin consoles;
+- richer relationship-management, personal CRM, and longitudinal affect/growth models;
+- full Release Outreach Pipeline video generation, rendering, and publication workflow;
+- broad email, text-message, file, invoice, note, or personal-data ingestion;
+- adaptive model-committee weighting, automatic patch application, GitHub mutation, and direct cloud-provider APIs.
+
+Stop rule:
+
+> A new abstraction may be added to Phase 1 only when it is required to complete the single-user GitHub dogfooding loop, enforce an accepted hard invariant, or avoid a known irreversible schema contradiction. Otherwise it must be documented as a Phase 2, Phase 3, or post-MVP concern and must not block Phase 1 implementation.
+
+The minimum dogfooding loop that proves UbU’s core model is:
+
+1. bootstrap the operator, project context, available work window, constraints, and current or stale affect Snapshot;
+2. import or load a curated UbU GitHub fixture with issues, PR/review/CI signals, milestone context, and source links;
+3. map those inputs into Objectives, Tasks, External Events, Logs, UniverseState facts, and External Associations;
+4. generate a Calendar with a default Plan for the next work window;
+5. present one recommended next Task with an explanation of Objective value, dependencies, deadlines, affect constraints, worker status, and risk findings;
+6. record completion, failure, snooze, rejection, decomposition, or override as Log evidence and trigger recalculation when appropriate;
+7. preview or perform a human-approved UbU-managed GitHub projection update;
+8. show a reconciliation or risk summary that makes the changed model inspectable.
+
 ### 4.1.1 Phase 1 public demo criteria
 
 The Phase 1 public demo should use real UbU GitHub issues or a frozen fixture captured from real UbU GitHub data when live access is unsafe, unavailable, or non-reproducible.

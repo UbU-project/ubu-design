@@ -2472,3 +2472,80 @@ Phase 1 must not claim full personal-data ingestion, full email/text/file unders
 - Release Outreach Pipeline scripts should treat this loop as the main public demonstration pattern.
 - `UBU-Q0050` tracks the remaining product and implementation-detail questions for the minimum useful bootstrap interview and next-action focus mode.
 
+---
+
+## UBU-D0097: Phase 1 MVP scope is frozen around single-user GitHub dogfooding
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0001`.
+
+Phase 1 is frozen as the minimum single-user `user_mode` implementation that proves UbU can coordinate UbU's own development through explicit state, an inspectable Plan, one recommended next action, feedback, recalculation, and bounded GitHub projection.
+
+The exact Phase 1 feature set is:
+
+- local single-user UbU instance for UbU-runs-UbU;
+- bootstrap interview, current or stale affect Snapshot handling, and initial Objective/Task seed creation;
+- live or fixture-backed GitHub import for issues, PRs, reviews, CI events, milestones, comments, and source links;
+- ExternalAssociation-style mapping between GitHub objects and UbU Objectives, Tasks, External Events, and Logs;
+- MVP Objective, Preference, Task, Container, UniverseState, Snapshot, Plan, Calendar, Log, Identity, Relationship, Compartment, Automation Worker, External Event, and External Association schemas only to the depth required for the dogfooding loop;
+- schedulable Static and Dynamic Tasks with Objective links, duration, dependency/precondition/effect fields, lifecycle status, and moot handling;
+- lightweight UniverseState mutation and precondition evaluation sufficient for Task effects, affect, relationship-relevant facts, and GitHub/project facts;
+- append-only per-instance Logs with provenance, correction, annotation, worker-submission, and recalculation-trigger entries;
+- Plan and Calendar generation for the next work window, including a default Plan and inspectable explanation;
+- next-action focus mode with start, done, snooze, reject, decompose, explain-more, and feedback controls;
+- derived risk and human-complete plan-quality reports covering deadline risk, dependency fragility, worker bottlenecks, stale affect, affect-margin, destructive pressure, and post-plan depletion warnings;
+- minimal Compartment guardrails, low-security labeling, cloud-LLM/export blocking for protected content, and logged boundary decisions;
+- Automation Worker Identity, scoped capability grants, explicit assignment/status, and mutation or projection request submission without direct canonical writes;
+- clearly marked GitHub projection previews or human-approved writes for UbU-managed labels, comments, or blocks, plus reconciliation reporting;
+- manually structured Release Outreach Pipeline work items and artifact records for release notes, screenshots, scripts, and contributor calls-to-action.
+
+Phase 2 explicitly defers:
+
+- multi-device local-first sync;
+- partial replication across Devices, Zones, or Compartments;
+- secure cross-device Compartment propagation;
+- sync conflict handling;
+- cross-device worker or enclave coordination beyond the single local instance boundary.
+
+Phase 3 explicitly defers:
+
+- multi-human coordination;
+- shared or partially shared truth between user instances;
+- user-to-user Identity commitments, capabilities, and limited disclosure;
+- multi-party governance, invitation, revocation, or trust protocols.
+
+Abstractions documented but not implemented in Phase 1 include:
+
+- Technique as a first-class planning object;
+- full Compact Calendar DFS grammar and high-coverage transport format;
+- complete Zone and Device system beyond the current local execution enclave;
+- organization-mode and worker-mode web admin consoles;
+- richer relationship-management, personal CRM, and longitudinal affect/growth models;
+- full Release Outreach Pipeline video generation, rendering, and publication workflow;
+- broad email, text-message, file, invoice, note, or personal-data ingestion;
+- adaptive model-committee weighting, automatic patch application, GitHub mutation, and direct cloud-provider APIs.
+
+The Phase 1 stop rule is:
+
+> A new abstraction may be added to Phase 1 only when it is required to complete the single-user GitHub dogfooding loop, enforce an accepted hard invariant, or avoid a known irreversible schema contradiction. Otherwise it must be documented as a Phase 2, Phase 3, or post-MVP concern and must not block Phase 1 implementation.
+
+The minimum dogfooding loop that proves UbU's core model is:
+
+1. bootstrap the operator, project context, available work window, constraints, and current or stale affect Snapshot;
+2. import or load a curated UbU GitHub fixture with issues, PR/review/CI signals, milestone context, and source links;
+3. map those inputs into Objectives, Tasks, External Events, Logs, UniverseState facts, and External Associations;
+4. generate a Calendar with a default Plan for the next work window;
+5. present one recommended next Task with an explanation of Objective value, dependencies, deadlines, affect constraints, worker status, and risk findings;
+6. record completion, failure, snooze, rejection, decomposition, or override as Log evidence and trigger recalculation when appropriate;
+7. preview or perform a human-approved UbU-managed GitHub projection update;
+8. show a reconciliation or risk summary that makes the changed model inspectable.
+
+**Consequences:**
+
+- `UBU-Q0001` is resolved for Phase 1 scope freeze.
+- Phase 1 implementation may begin without resolving every remaining MVP-important schema detail.
+- Future-compatible abstractions may remain in the design, but implementation must stay limited to the dogfooding loop and accepted hard invariants.
+- Detailed follow-up questions for GitHub mapping, mutation schemas, Compact Calendar grammar, risk reports, recalculation triggers, worker requests, Release Outreach artifacts, and bootstrap UX remain valid only as bounded implementation questions.
+- New abstractions require explicit proof that they are necessary for the Phase 1 loop or must be deferred.
+- Public claims must describe Phase 1 as a narrow single-user dogfooding MVP, not as full sync, full multi-user coordination, complete privacy isolation, or broad personal-data automation.
