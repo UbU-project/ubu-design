@@ -1384,6 +1384,29 @@ Automation Workers may:
 
 A worker-mode instance is externally represented as an Identity.
 
+### 21.1.1 Worker identity and capabilities
+
+A worker Identity may receive only explicit capability grants. The Identity stores stable external identity metadata and credential references; authority lives in separate capability-grant objects attached to that Identity and issued by a specific parent UbU instance. A grant names allowed actions, scope limits, lifecycle state, issuance time, expiration time when present, and audit/provenance metadata.
+
+Phase 1 capability verbs are:
+
+- `task.read`;
+- `objective.read`;
+- `universe_state.read_subset`;
+- `external_event.append`;
+- `snapshot.submit`;
+- `mutation_request.submit`;
+- `recalculation.request`;
+- `projection.github.request_update`.
+
+Workers do not directly mutate canonical Task, Objective, UniverseState, `pipeline_state`, or GitHub projection state in Phase 1. They may submit mutation requests or projection update requests, and the canonical instance validates those requests, writes accepted changes, and logs applied or rejected outcomes. Task creation, Objective creation, Task mutation, Objective mutation, `pipeline_state` mutation, and direct external writes are represented through `mutation_request.submit` or a narrower projection request rather than through direct write authority.
+
+Capability grants may be scoped by object ID, Objective subtree, Task set, Compartment, external integration, operation kind, and time window. Compartment policy is a hard upper bound on worker authority: a capability grant cannot authorize access, export, or worker handoff that the relevant Compartment forbids.
+
+A worker may be revoked by disabling or deleting its capability grants, rotating or invalidating credentials, and rejecting later submissions from that grant. Revocation does not rewrite prior Logs. Credential rotation creates a new credential version linked to the same worker Identity and capability grants unless the grant is also changed.
+
+A single worker-mode instance may serve multiple parent organization-mode or user-mode instances only through separate parent-specific capability grants, credentials, and audit trails. Cross-parent data sharing is forbidden unless each parent explicitly grants a route and all relevant Compartment policies allow it. Workers may operate for user-mode instances, but affect and other personal data require especially narrow read-subset grants and must respect `no_cloud_llm`, `no_external_export`, and low-security disclosure rules.
+
 A model-committee worker is an Automation Worker pattern that reads canonical project state, runs Codex CLI and local Ollama proposal workflows against a selected open question or problem, produces candidate changesets, scores candidate changesets, and writes reviewable artifacts.
 
 In v0.1, model-committee is still an external bootstrap tool rather than a fully integrated UbU worker-mode runtime component.

@@ -272,7 +272,7 @@ Unresolved.
 
 ## UBU-Q0007: Automation Worker Identity and Capabilities
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: UBU-D0095 Last scored: Never Scored from commit: None
 
 A worker-mode UbU instance is externally represented as an Identity. Workers need bounded authority.
 
@@ -310,7 +310,15 @@ Automation Worker = worker-mode UbU instance externally represented as an Identi
 
 ### Resolution
 
-Unresolved.
+Solved by `UBU-D0095`. Worker authority is represented by explicit capability grants attached to a worker Identity. The Identity is the external actor and credential subject; capability grants are separate authority objects issued by a specific parent UbU instance.
+
+Phase 1 worker capabilities are `task.read`, `objective.read`, `universe_state.read_subset`, `external_event.append`, `snapshot.submit`, `mutation_request.submit`, `recalculation.request`, and `projection.github.request_update`. Workers do not directly create or mutate canonical Tasks, Objectives, UniverseState, `pipeline_state`, or GitHub projection state in Phase 1. Those changes are submitted as mutation or projection requests for validation by the canonical instance.
+
+Capabilities may be scoped by object ID, Objective subtree, Task set, Compartment, external integration, operation kind, and time window. Compartment policy is a hard upper bound on worker access and export authority. A grant cannot authorize a worker to receive, route, or export data that the relevant Compartment forbids.
+
+Workers can be revoked by disabling or deleting grants and rotating or invalidating credentials. Credential rotation keeps audit continuity by versioning credentials under the worker Identity unless the grant itself changes. Prior Logs are not rewritten.
+
+A worker may operate for multiple organization-mode or user-mode instances only through separate parent-specific grants, credentials, and audit trails. Cross-parent data sharing is forbidden unless explicitly granted by each parent and allowed by all relevant Compartment policies. User-mode worker operation is allowed, but affect and other personal data require narrow read-subset grants and must obey Compartment and low-security disclosure rules.
 
 ---
 

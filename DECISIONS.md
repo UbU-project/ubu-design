@@ -2406,3 +2406,28 @@ The implementation should be staged:
 - UbU-runs-UbU must eventually explain its own releases using the same planning and artifact-provenance principles it applies to other work.
 - Future design should define the release outreach artifact schema, screenshot/demo provenance model, review gates, publication policy, and Compartment export checks.
 - `UBU-Q0049` tracks the remaining implementation and schema questions for the Release Outreach Pipeline.
+
+---
+
+## UBU-D0095: Worker authority uses scoped capability grants
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0007`.
+
+Automation Worker authority is represented through explicit capability grants associated with a worker Identity. The Identity is the external-facing actor and credential subject; the capability grant is the authoritative object that says what the worker may do for a specific parent UbU instance.
+
+Phase 1 capability verbs are `task.read`, `objective.read`, `universe_state.read_subset`, `external_event.append`, `snapshot.submit`, `mutation_request.submit`, `recalculation.request`, and `projection.github.request_update`. Direct creation or mutation of Tasks, Objectives, UniverseState, `pipeline_state`, or GitHub projection state is not granted to workers in Phase 1. Workers submit mutation or projection requests, and the canonical instance validates, applies, rejects, and logs the result.
+
+Capability grants may be scoped by object ID, Objective subtree, Task set, Compartment, external integration, operation kind, and time window. Compartment policy is a hard upper bound on any worker grant: a grant cannot authorize cloud LLM routing, external export, worker handoff, or payload disclosure that the relevant Compartment forbids.
+
+Workers can be revoked by disabling or deleting grants and invalidating or rotating credentials. Revocation affects future access and submissions only; prior Log entries remain append-only history. Credential rotation creates a new credential version for the worker Identity while preserving audit continuity unless the underlying grants are changed.
+
+A worker may serve multiple organization-mode or user-mode parent instances only through separate parent-specific grants, credentials, and audit trails. Cross-parent data sharing is forbidden unless each parent explicitly grants the route and all relevant Compartment policies allow it. User-mode workers are allowed, but access to affect or other personal data must use narrow read-subset grants and obey Compartment and low-security disclosure rules.
+
+**Consequences:**
+
+- `UBU-Q0007` is resolved for Phase 1 security modeling.
+- Worker authority is least-privilege, revocable, auditable, and parent-specific.
+- Worker mutation and projection behavior remains routed through request/validation/logging flows instead of direct canonical writes.
+- `UBU-Q0008`, `UBU-Q0009`, and `UBU-Q0010` can refine assignment, mutation request, and GitHub token custody without reopening the basic worker capability model.
