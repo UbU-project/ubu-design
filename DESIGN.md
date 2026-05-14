@@ -46,7 +46,17 @@ Value must be explicit in the UbU data model.
 
 Value is attached to **Objectives** through user-defined **Preferences**. Numeric “utils” may be derived for plan scoring, but these are transient computational artifacts, not canonical facts about the user.
 
+UbU should not expose derived utility as if it were the user's real value. User-facing value formation should rely on direct Preference statements, review, reflection, examples, and later correction.
+
 LLMs may estimate or suggest value-related structures, but AI-generated value is non-canonical unless accepted through UbU’s explicit model.
+
+#### 2.2.1 Preference calibration
+
+Phase 1 may use preference-calibration examples during onboarding, Calendar preview, and Log review. These examples describe common situations, likely emotional costs, likely emotional rewards, and plausible tradeoffs so the user can make more thoughtful Preference judgments.
+
+Examples are not canonical Preferences. They are prompts for self-reporting. A calibration example becomes canonical only if the user accepts, edits, or answers it in a way that UbU records as a Preference, Snapshot, Log entry, Objective annotation, or review note.
+
+Preference calibration should reduce shallow, reactive, or situationally distorted guesses without manipulating the user into a hidden value model. The user remains the final authority over Preferences.
 
 ### 2.3 Explicit planning
 
@@ -150,6 +160,8 @@ UbU must be legible to users who do not think in programming, planning theory, o
 6. What should change in the model?
 
 For Phase 1, first-person legibility is implemented through a minimal bootstrap interview and next-action focus mode. These are UX requirements over existing core objects, not new canonical ontology objects.
+
+Calendar preview and Log review are also first-person legibility requirements. They are notable Tasks that should run regularly so the user can inspect what UbU is about to recommend, compare planned behavior against actual behavior, correct mistaken assumptions, and decide whether Preferences, Objectives, Tasks, affect Snapshots, or estimates need revision.
 
 ### 2.8 Dogfooding
 
@@ -520,6 +532,7 @@ Phase 1 must include a minimal first-person UX loop for dogfooding:
    - Capture current or stale affect state.
    - Identify initial Objectives relevant to UbU-runs-UbU.
    - Identify immediate constraints, deadlines, available time, and preferred work style.
+   - Use preference-calibration examples when they help the user make accurate Preference statements.
    - Record the answers as explicit Logs, Snapshots, Preferences, Objectives, Tasks, or source-linked facts.
 
 2. **Plan generation**
@@ -527,18 +540,31 @@ Phase 1 must include a minimal first-person UX loop for dogfooding:
    - Preserve inspectability of the full Plan.
    - Explain relevant constraints, dependencies, risk findings, and affect constraints.
 
-3. **Next-action focus mode**
+3. **Calendar preview**
+   - Treat Calendar preview as a notable Task that should run regularly.
+   - Let the user inspect the candidate Calendar or default Plan before relying on it.
+   - Ask whether the Plan feels plausible, motivating, humane, and consistent with the user's current context.
+   - Allow the user to correct Preferences, Objectives, Tasks, affect Snapshots, availability, or estimates before execution.
+
+4. **Next-action focus mode**
    - Present one recommended next Task as the default UI surface.
    - Show why the Task matters now.
    - Show what UbU considered when selecting it.
-   - Provide controls for start, done, snooze, reject, decompose, and explain more.
+   - Provide controls for start, done, snooze, reject, decompose, override, and explain more.
    - Avoid hiding the existence of the full Plan from users who want inspection.
 
-4. **Feedback and recalculation**
+5. **Feedback, Log review, and recalculation**
    - Ask for lightweight feedback after completion, failure, rejection, or override.
    - Record the outcome in Logs.
+   - Treat Log review as a notable Task that should run regularly.
+   - Use Log review to compare planned behavior against actual behavior, reconcile under-specified time, and improve future modeling.
    - Update estimates, affect Snapshots, Objective status, or recalculation triggers when appropriate.
-   - Treat failure or rejection as model evidence, not user blame.
+   - Treat failure, rejection, override, and deviation as model evidence, not user blame.
+
+6. **Discovery mode when appropriate**
+   - Allow the user to choose discovery mode at any time.
+   - Use discovery mode to collect or preserve evidence about what the user is doing or did, especially from mobile sensors or configured integrations.
+   - Defer ambiguous interpretation until later Log review or user-visible reconciliation.
 
 The Phase 1 version may be simple and fixture-backed. It does not require broad email, text-message, file, or personal-data ingestion. It must not claim complete life-modeling. The purpose is to demonstrate the core UbU experience: one meaningful next action, with an explanation, grounded in explicit state.
 
@@ -829,6 +855,25 @@ Default MVP direction:
 
 Util derivation is typically local to the Objective subset being compared in a single planning process.
 
+### 8.6 Preference calibration examples
+
+A **PreferenceCalibrationExample** is a user-facing prompt or scenario used to help the user make better Preference judgments. It may describe a common emotional cost, common emotional reward, motivation ambiguity, social-pressure pattern, or tradeoff.
+
+Preference calibration examples are MVP-important onboarding and review aids. They are not canonical value objects unless the user accepts or edits the resulting judgment into a Preference or other canonical entry.
+
+Candidate fields for a calibration example include:
+
+- `example_id`
+- `situation_summary`
+- `common_emotional_costs`
+- `common_emotional_rewards`
+- `possible_tradeoffs`
+- `calibration_question`
+- `resulting_object_refs`
+- `source`
+
+Open details are tracked in `UBU-Q0051`.
+
 ---
 
 ## 9. WorkItems, Tasks, and Containers
@@ -1063,6 +1108,16 @@ Snapshot application semantics remain partially open:
 - patch vs full assertion
 - immutable log behavior
 - confidence per snapshot vs per field
+
+### 12.2 Discovery mode
+
+**Discovery mode** is a user-selectable workflow state, not a fourth instance operating mode. A user may choose discovery mode at any time to let UbU gather or preserve evidence about actual behavior for later reconciliation.
+
+Discovery mode is especially important for a mobile app because embedded sensors, location categories, motion state, app activity, calendar context, and explicit quick notes may help reconstruct what happened during undetailed or under-specified time periods.
+
+Discovery mode must preserve user sovereignty. Sensor-derived, integration-derived, or inferred observations are evidence, not final truth. Ambiguous periods should be reconciled through later Log review, user clarification, or correction before UbU treats them as stable habit patterns, Preference changes, or Objective evidence.
+
+Open details are tracked in `UBU-Q0052`.
 
 ---
 
@@ -1390,6 +1445,20 @@ The comparison of Logs against Plans is essential for:
 - surfacing unmodeled constraints
 - improving forecasting algorithms
 
+### 17.8 Regular Log review
+
+Log review is a notable Task that should run regularly. Its purpose is to keep UbU's model aligned with the user's actual behavior, later reflection, and corrections.
+
+A Log review Task may:
+
+- reconcile undetailed or under-specified time periods;
+- ask whether a user override reflected a better local judgment, bad timing, missing preconditions, wrong duration estimate, stale affect data, social pressure, or changed Preference;
+- compare planned Tasks against completed, failed, moot, snoozed, rejected, or unobserved Tasks;
+- convert user-approved observations into corrected Logs, Snapshots, Preferences, Objective annotations, Task estimate updates, or recalculation triggers;
+- mark proposed habit patterns as user-endorsed, tolerated, unwanted, or unresolved.
+
+Log review should not become a blame ritual. It is a model-maintenance Task for self-governance. Open details are tracked in `UBU-Q0053`.
+
 ---
 
 ## 18. Identities
@@ -1710,6 +1779,11 @@ Possible MVP reports:
 - destructive-pressure warning
 - dignity / demoralization warning
 - worker failure / automation bottleneck
+- preference uncertainty
+- repeated override or deviation pattern
+- motivation mismatch
+- stale or missing discovery-mode reconciliation
+- Calendar preview or Log review overdue
 
 Plan scoring does not include explicit risk penalty in MVP.
 
@@ -1731,6 +1805,9 @@ Candidate MVP recalculation triggers:
 - `external_event`
 - `github_update`
 - `user_override`
+- `calendar_preview_due`
+- `log_review_due`
+- `discovery_mode_reconciliation_due`
 - `elapsed_time`
 - `low_compact_calendar_coverage`
 - `worker_request`

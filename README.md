@@ -28,7 +28,7 @@ UbU is based on several design principles:
 
 2. **Explicit value**
 
-   Value is attached to Objectives through user-defined Preferences. Numeric utilities may be derived for planning, but they are transient computational artifacts, not canonical user values.
+   Value is attached to Objectives through user-defined Preferences. Numeric utilities may be derived for planning, but they are transient computational artifacts, not canonical user values. UbU may use preference-calibration examples during onboarding and review, but those examples become canonical only if the user accepts or edits them.
 
 3. **Explicit planning**
 
@@ -74,11 +74,11 @@ The design has reached the point where additional broad philosophical elaboratio
 
 The `model-committee` v0.1 baseline is now the first runnable bootstrap artifact for using model-assisted review to process UbU design questions and generate reviewable changesets.
 
-The Phase 1 MVP scope is not yet fully frozen.
+The Phase 1 MVP scope is frozen around single-user GitHub dogfooding.
 
 The current operational target is:
 
-> Use `model-committee` and related dogfooding artifacts to help UbU coordinate the development of UbU itself.
+> Use UbU's explicit model, `model-committee`, GitHub dogfooding inputs, regular Calendar preview, regular Log review, and bounded projection artifacts to help UbU coordinate the development of UbU itself.
 
 ---
 
@@ -136,12 +136,13 @@ The goal is neither comfort-maximization nor coercive productivity. The goal is 
 
 Phase 1 should be usable as a simple first-person experience:
 
-1. UbU asks a few bootstrapping questions.
+1. UbU asks a few bootstrapping questions, using preference-calibration examples when useful.
 2. UbU builds an initial explicit model from the answers and approved dogfooding inputs.
-3. UbU recommends one next Task.
-4. UbU explains why that Task matters now.
-5. The user acts, rejects, snoozes, decomposes, or asks for more explanation.
-6. UbU records what happened and recalculates.
+3. UbU runs Calendar preview so the user can inspect and correct the candidate Plan.
+4. UbU recommends one next Task.
+5. UbU explains why that Task matters now.
+6. The user acts, rejects, snoozes, overrides, decomposes, chooses Discovery mode, or asks for more explanation.
+7. UbU records what happened, runs Log review when appropriate, and recalculates.
 
 This is the public-facing shape of the product. The full Plan remains inspectable, but the default mode may reduce cognitive load by showing one next action at a time.
 
@@ -211,6 +212,9 @@ Primary goals:
 - represent them in UbU’s Objective/Task/Calendar model;
 - generate useful Plans;
 - run a minimal bootstrap interview to seed the user/project context;
+- use preference-calibration examples as MVP-important onboarding and review aids;
+- run regular Calendar preview and Log review Tasks to keep the model aligned with the user's behavior;
+- allow the user to select Discovery mode at any time, especially from a mobile app with useful sensors;
 - show a next-action focus screen with one recommended Task and an explanation of why it matters now;
 - update GitHub as a low-dimensional projection of UbU state;
 - expose limitations and open questions through dogfooding.

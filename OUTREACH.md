@@ -24,7 +24,7 @@ The first MVP is intentionally practical:
 
 > UbU should help coordinate the development of UbU itself.
 
-Phase 1 also needs to feel like UbU to a nontechnical user: it should ask a few bootstrapping questions, recommend one next action, explain why that action matters now, and learn from the user’s response.
+Phase 1 also needs to feel like UbU to a nontechnical user: it should ask a few bootstrapping questions, use preference-calibration examples when helpful, preview the candidate Calendar, recommend one next action, explain why that action matters now, and learn from the user’s response through Log review.
 
 That means using UbU to manage its own GitHub issues, open questions, pull requests, reviews, CI events, release milestones, design changes, contributor relationships, and automation loops.
 
@@ -133,7 +133,9 @@ UbU treats human limitations as real constraints.
 
 In `user_mode`, affect belongs to UniverseState. Energy, tiredness, stress, mood, motivation, boredom, emotional load, recovery needs, and related signals are part of the planning problem.
 
-This does not mean the system should constantly interrogate the user. Affect collection is itself modeled as planned work. If affect information is missing or stale, UbU may create an Objective or Task to collect it.
+This does not mean the system should constantly interrogate the user. Affect collection, Calendar preview, and Log review are themselves planned work. If affect information is missing or stale, UbU may create an Objective or Task to collect it.
+
+Discovery mode is a user-selectable workflow state, not covert surveillance. The user can choose it at any time, especially from a mobile app, so sensors and quick notes can help later Log review reconstruct under-specified periods. UbU must treat those signals as evidence for reconciliation, not as final truth against the user.
 
 The goal is not emotional surveillance.
 
@@ -160,7 +162,7 @@ UbU starts by asking a few questions:
 - What kind of work can you realistically do right now?
 - What information may UbU use?
 
-Then UbU shows one recommended next action, not a giant intimidating list.
+Then UbU previews the candidate Calendar, lets the user correct obvious mismatches, and shows one recommended next action, not a giant intimidating list.
 
 Example:
 
@@ -168,7 +170,7 @@ Example:
 > **Why this matters now:** It blocks tomorrow’s decision, fits your current energy, and reduces later stress.  
 > **UbU considered:** deadline pressure, current mood, available time, related obligations, and privacy rules.
 
-The full Plan remains inspectable, but the default experience is humane: one meaningful next action, with a reason.
+The full Plan remains inspectable, but the default experience is humane: regular preview, one meaningful next action, later Log review, and a reasoned model update when reality disagrees with the plan.
 
 ---
 
@@ -219,7 +221,7 @@ For UbU itself, a minor release should eventually generate a release outreach pa
 - known limitations;
 - concrete contributor calls-to-action.
 
-The first public videos should be fast and concrete. They should show the user-facing loop - bootstrap, one next task, explanation, feedback, and humane prompts - then briefly show UbU dogfooding its own GitHub issues, design docs, release tasks, and contributor needs.
+The first public videos should be fast and concrete. They should show the user-facing loop - bootstrap, preference calibration, Calendar preview, one next task, explanation, Discovery mode when useful, Log review, feedback, and humane prompts - then briefly show UbU dogfooding its own GitHub issues, design docs, release tasks, and contributor needs.
 
 The developer ending should not be a boring tutorial. It should show that the project is early enough for serious contributors to shape the planning kernel, privacy model, UI, local-first architecture, dogfooding loop, release pipeline, and automation workers.
 

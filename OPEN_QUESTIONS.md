@@ -1757,6 +1757,171 @@ The UI should not imply that UbU already understands all of the user’s emails,
 
 Partially established by `UBU-D0096`; detailed bootstrap-question content, UI controls, fixture boundaries, implementation boundary, and demo-script treatment remain open.
 
+---
+
+## UBU-Q0051: Minimum preference-calibration examples for Phase 1 onboarding and review
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product / Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0050 Blocks: Phase 1 onboarding quality, Preference calibration, Calendar preview, Log review Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What is the minimum useful set of preference-calibration examples for Phase 1 onboarding, Calendar preview, and Log review?
+
+### Subquestions
+
+1. Which common situations should UbU use to emotionally ground early Preference judgments?
+2. How many examples are enough for Phase 1 without making onboarding burdensome?
+3. Which answers become Preferences, Snapshots, Logs, Objective annotations, or noncanonical review notes?
+4. How should examples avoid leading the user toward an assumed value model?
+5. How should calibration examples distinguish urgent value, emotional cost, social pressure, recovery value, and long-term importance?
+6. How should UbU revise or retire examples that repeatedly fail to help the user make accurate judgments?
+
+### Current direction
+
+Preference calibration is MVP important but not an MVP blocker. UbU should use examples of common emotional costs, rewards, and tradeoffs to help users make better Preference statements. Examples are grounding aids, not canonical Preferences, unless the user accepts or edits them into canonical entries.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0052: Discovery-mode action inference and override semantics
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product / Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0050 Blocks: Discovery mode, mobile sensor workflow, behavior reconciliation, habit-pattern inference Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What is the minimum Phase 1 model for discovery mode, actual-action inference, and user override semantics?
+
+### Subquestions
+
+1. How does the user select discovery mode, pause it, exit it, and inspect what it collected?
+2. Which mobile sensor, integration, quick-note, or app-state signals are acceptable Phase 1 discovery inputs?
+3. How should UbU represent actual user action when it differs from the Calendar?
+4. When does an override become a Log entry, Snapshot, Preference update, Task status change, Objective reconsideration, or unresolved review item?
+5. What clarification prompt is required before treating repeated behavior as a habit pattern?
+6. How should UbU reconcile undetailed or under-specified time periods without overclaiming certainty?
+7. How should Discovery mode preserve user sovereignty and avoid covert surveillance semantics?
+
+### Current direction
+
+Discovery mode is a user-selectable workflow state available at any time, especially from the mobile app. It may gather evidence useful for later Log review and UbU-directed reconciliation, but inferred observations are not final truth until accepted, corrected, or otherwise handled according to user-visible rules.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0053: Calendar preview and Log review psychological annotations
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product / Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0050 Blocks: Regular review Tasks, preview UX, Log review UX, psychological annotation boundary Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What psychological annotations should Phase 1 Calendar preview and Log review collect, store, or report?
+
+### Subquestions
+
+1. What is the minimum recurring Calendar preview Task?
+2. What is the minimum recurring Log review Task?
+3. How often should these Tasks run by default, and how should the user adjust cadence?
+4. Which annotations belong in canonical Logs, Preferences, Snapshots, Objectives, Tasks, or Reports?
+5. Which annotations should remain noncanonical review notes?
+6. Should autonomy, competence, relatedness, social pressure, attitude, subjective norms, perceived control, and expected execution be modeled directly or only through preview/review comments?
+7. How should UbU ask useful consistency questions without becoming therapeutic, accusatory, or paternalistic?
+
+### Current direction
+
+Calendar preview and Log review are notable Tasks that should run regularly to ensure that UbU is correctly modeling the user's intended behavior, actual behavior, affective constraints, and Preference judgments. Self-determination theory and theory of planned behavior mostly inform these interface and reporting layers rather than Phase 1 core ontology.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0054: Social identity theory impact on Identity, role, group membership, and mode switching
+
+Status: Open Priority: Post-MVP / Research Phase: Post-MVP Decision type: Data model / Governance Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0025 Blocks: Post-MVP multi-user Identity modeling, group-membership modeling, mode-switching policy Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should social identity theory affect UbU's Identity model, role model, group-membership model, and mode-switching semantics?
+
+### Subquestions
+
+1. How should UbU distinguish Identity as external presentation, permission boundary, social role, self-concept, group membership, and mode-switching context?
+2. How should group membership affect Objectives, Preferences, disclosure, trust, and coordination behavior?
+3. How should UbU represent in-group and out-group effects without hard-coding stereotypes or paternalistic judgments?
+4. How should social identity interact with Compartments, Relationships, and organization-mode planning?
+5. Which parts are needed for Phase 3 multi-user coordination and which remain later research?
+
+### Current direction
+
+Identity is already central to UbU. Social identity theory may require richer group-membership, salience, and role-switching semantics, but its impact is post-MVP and must not block Phase 1 implementation.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0055: Social choice theory and collective decision legitimacy
+
+Status: Open Priority: Post-MVP / Research Phase: Post-MVP Decision type: Governance Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0025 Blocks: Post-MVP organizational governance, multi-user decision procedures, collective legitimacy Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should social choice theory affect UbU's model of collective decisions, organizational legitimacy, dissent, and exit?
+
+### Subquestions
+
+1. What collective decision procedures should UbU be able to represent?
+2. How should UbU distinguish authority, consent, voting, delegation, consensus, veto, and exit rights?
+3. How should collective Preferences or directives be aggregated without pretending they are one person's Preferences?
+4. How should UbU preserve dissent, minority reports, or unresolved disagreement?
+5. What minimum governance semantics are required for Phase 3 multi-user / Identity coordination?
+6. Which social-choice impossibility or legitimacy problems should UbU surface rather than hide?
+
+### Current direction
+
+Social choice theory is post-MVP. UbU should eventually model collective decision legitimacy explicitly for organizations and multi-user coordination, but Phase 1 should remain single-user dogfooding.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0056: Game theory, strategic interaction, and counterparty modeling
+
+Status: Open Priority: Post-MVP / Research Phase: Post-MVP Decision type: Data model / Governance Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0025 Blocks: Strategic interaction modeling, counterparty incentives, post-MVP coordination protocols Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should game theory affect UbU's model of strategic interaction, counterparty incentives, commitments, and adversarial or cooperative behavior?
+
+### Subquestions
+
+1. Which strategic patterns can be represented through External Events and Techniques?
+2. Which patterns require explicit strategic-interaction objects or counterparty models?
+3. How should UbU represent credible commitments, signaling, free-riding, principal-agent problems, bargaining, and trust-but-verify workflows?
+4. How should strategic reasoning interact with Identity, capability grants, Compartments, and external projections?
+5. How should UbU avoid overconfident game-theoretic recommendations when the counterparty model is speculative?
+6. Which strategic-interaction features are useful for FOSS coordination, contractors, grants, issue triage, bug bounties, and future skill-barter systems?
+
+### Current direction
+
+Many strategic patterns can be represented through External Events and reusable Techniques. Deeper counterparty modeling and strategic-interaction primitives are post-MVP research areas and should not block Phase 1.
+
+### Resolution
+
+Open.
+
+---
+
 ## Suggested Initial GitHub Issues
 
 Create these first:
@@ -1784,3 +1949,9 @@ Create these first:
 21. `UBU-Q0048`: Define commercial funding red lines
 22. `UBU-Q0049`: Define the Release Outreach Pipeline artifact model and implementation boundary
 23. `UBU-Q0050`: Define the minimum Phase 1 bootstrap interview and next-action focus UX
+24. `UBU-Q0051`: Define minimum preference-calibration examples for Phase 1 onboarding and review
+25. `UBU-Q0052`: Define discovery-mode action inference and override semantics
+26. `UBU-Q0053`: Define Calendar preview and Log review psychological annotations
+27. `UBU-Q0054`: Analyze social identity theory impact on Identity, role, group membership, and mode switching
+28. `UBU-Q0055`: Analyze social choice theory and collective decision legitimacy
+29. `UBU-Q0056`: Analyze game theory, strategic interaction, and counterparty modeling

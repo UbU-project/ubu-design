@@ -2576,3 +2576,40 @@ Automation Workers cannot directly create or mutate canonical External Associati
 - `UBU-Q0002`, `UBU-Q0004`, and `UBU-Q0005` can build on a stable association object instead of reopening source-link representation.
 - GitHub import, reconciliation, and projection can preserve traceability without overloading Objective, Task, or External Event schemas.
 - Worker-created association changes stay inside the accepted mutation-request authority boundary.
+
+---
+
+## UBU-D0099: Psychological theory inputs are calibration, discovery, preview, and review layers
+
+**Status:** Accepted
+
+Direct project directive.
+
+UbU should not expose internally computed utility values as user-facing truth. Derived utils remain transient computational artifacts used for scheduling, ranking, and comparison. User-facing value remains grounded in explicit Preferences, user declarations, Logs, Snapshots, review, and later correction.
+
+Psychological and philosophical decision-theory inputs should usually enter Phase 1 through calibration, discovery, Calendar preview, Log review, reports, and reusable Tasks rather than through a large new psychology ontology.
+
+Prospect-theory implications are accepted as preference-calibration requirements, not as an exposed utility model. UbU may show default preference examples and common-situation emotional-value examples during onboarding, Calendar preview, or Log review so the user can make more thoughtful Preference statements. These examples are grounding aids. They do not become canonical Preferences unless accepted by the user.
+
+Temporal discounting is usually part of Preference for short-horizon Phase 1 planning. Long-horizon Objectives may later require explicit future-self or commitment-device modeling, but this is not a Phase 1 blocker.
+
+Habit-related behavior should be handled through discovery mode, Logs, Snapshots, configured integrations, sensor-derived observations, and later clarification prompts. Discovery mode is a user-selectable workflow state that the user may choose at any time, especially from a mobile app with useful embedded sensors. Discovery mode supports later Log review and UbU-directed reconciliation for undetailed or under-specified time periods.
+
+The Calendar is advisory. User overrides remain authoritative and should be treated as model evidence, not disobedience. Repeated overrides may trigger review, preference recalibration, Task decomposition, Objective reconsideration, or habit-pattern hypotheses only after appropriate user-visible reconciliation.
+
+Calendar preview and Log review are notable Tasks that should run on a regular basis. They help verify whether UbU is correctly modeling the user's intended behavior, actual behavior, affective constraints, and preference judgments. These review Tasks should remain inspectable, interruptible, and adjustable by the user.
+
+Self-determination theory and theory of planned behavior should primarily inform Calendar preview, Log review, reporting annotations, and optional user comments about motivation, autonomy, competence, relatedness, attitude, subjective norms, perceived control, and expected execution. Detailed modeling of those constructs remains open unless required by a concrete MVP workflow.
+
+Narrative identity is partly addressed through Objectives and Reports. Social identity theory, social choice theory, and game theory are important post-MVP open-question areas and should be tracked explicitly without blocking Phase 1 implementation.
+
+**Consequences:**
+
+- `UBU-D0011` remains authoritative: derived utils are transient artifacts, not canonical user values.
+- Preference calibration is MVP important, but not an MVP blocker.
+- `UBU-Q0050` remains focused on the minimum bootstrap interview and next-action focus UX.
+- Preference calibration, discovery-mode semantics, and Calendar preview / Log review annotations require separate MVP open questions.
+- Social identity theory, social choice theory, and game theory impacts are accepted as post-MVP research/open-question areas.
+- Calendar preview and Log review should be represented as regular user-facing Tasks or recurring review workflows, not hidden background judgments.
+- Discovery mode must preserve user sovereignty: it may collect evidence for later reconciliation, but the user remains the final authority over what occurred and what it meant.
+
