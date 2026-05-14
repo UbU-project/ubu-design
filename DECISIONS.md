@@ -2549,3 +2549,30 @@ The minimum dogfooding loop that proves UbU's core model is:
 - Detailed follow-up questions for GitHub mapping, mutation schemas, Compact Calendar grammar, risk reports, recalculation triggers, worker requests, Release Outreach artifacts, and bootstrap UX remain valid only as bounded implementation questions.
 - New abstractions require explicit proof that they are necessary for the Phase 1 loop or must be deferred.
 - Public claims must describe Phase 1 as a narrow single-user dogfooding MVP, not as full sync, full multi-user coordination, complete privacy isolation, or broad personal-data automation.
+
+---
+
+## UBU-D0098: GitHub associations use first-class External Associations
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0003`.
+
+GitHub-to-UbU links are represented by first-class `ExternalAssociation` objects rather than by embedding all many-to-many source links directly on core objects. Lightweight `external_refs` fields may still appear on Log entries, provenance payloads, or import artifacts as convenience references, but they are not the authoritative association model.
+
+MVP `ExternalAssociation` required fields are `association_id`, `external_system`, `external_object_type`, `external_object_id`, `ubu_object_type`, `ubu_object_id`, `relation_type`, `confidence`, `created_by_identity_ref`, `created_at`, `last_verified_at`, `sync_policy`, `projection_policy`, and `provenance`.
+
+Phase 1 associations may target Objectives, Tasks, External Events, and Log entries. This supports GitHub Issues mapping to multiple Objectives, Objectives mapping to multiple Issues, PRs and CI runs being retained as External Events, and comments or reviews acting as evidence for Tasks, Objective transitions, reconciliation, or projection decisions.
+
+MVP relation types are `represents`, `supports`, `evidence_for`, `source_event_for`, `projection_of`, `duplicate_of`, and `supersedes`. Relation types are schema-controlled enums in MVP, not free-form labels.
+
+Duplicate detection uses a normalized uniqueness key over `external_system`, `external_object_type`, `external_object_id`, `ubu_object_type`, `ubu_object_id`, and `relation_type`. Importers must normalize equivalent GitHub identifiers such as repository name, issue or PR number, node ID, URL, comment ID, run ID, and webhook delivery ID before comparing. Reobserving the same association updates verification metadata or creates an idempotent no-op Log entry rather than duplicating the association. Distinct relation types between the same objects are allowed.
+
+Automation Workers cannot directly create or mutate canonical External Associations in Phase 1. They may submit association mutation requests only through authorized `mutation_request.submit` capability grants. The canonical instance validates authority, Compartment/export policy, duplicate keys, expected prior version, and provenance, then logs applied or rejected outcomes.
+
+**Consequences:**
+
+- `UBU-Q0003` is resolved for Phase 1 GitHub dogfooding.
+- `UBU-Q0002`, `UBU-Q0004`, and `UBU-Q0005` can build on a stable association object instead of reopening source-link representation.
+- GitHub import, reconciliation, and projection can preserve traceability without overloading Objective, Task, or External Event schemas.
+- Worker-created association changes stay inside the accepted mutation-request authority boundary.

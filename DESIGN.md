@@ -1155,6 +1155,37 @@ External Events may trigger:
 - recalculation
 - worker assignment
 
+### 14.1 External Associations
+
+An **External Association** is the canonical many-to-many link between an outside object and a UbU object.
+
+For Phase 1 GitHub dogfooding, External Associations are first-class objects. They are preferred over embedding all external links directly on Objectives, Tasks, or External Events. Small `external_refs` arrays may still appear on Logs or provenance payloads as convenience pointers, but they are not the authoritative association model.
+
+MVP required fields:
+
+- `association_id`
+- `external_system`
+- `external_object_type`
+- `external_object_id`
+- `ubu_object_type`
+- `ubu_object_id`
+- `relation_type`
+- `confidence`
+- `created_by_identity_ref`
+- `created_at`
+- `last_verified_at`
+- `sync_policy`
+- `projection_policy`
+- `provenance`
+
+MVP target object types include Objective, Task, External Event, and Log entry. This allows one GitHub Issue to support multiple Objectives, one Objective to reference multiple GitHub Issues, a PR or CI run to become an External Event, and comments, reviews, or CI signals to be retained as evidence for Tasks or Objective updates.
+
+MVP relation types should be a small enum sufficient for GitHub dogfooding: `represents`, `supports`, `evidence_for`, `source_event_for`, `projection_of`, `duplicate_of`, and `supersedes`. Later integrations may add relation types through explicit schema migration rather than free-form strings.
+
+Duplicate detection uses a normalized uniqueness key over `external_system`, `external_object_type`, `external_object_id`, `ubu_object_type`, `ubu_object_id`, and `relation_type`. Importers should normalize repository identity, object numbers, node IDs, URLs, and delivery IDs before comparison. A repeated observation of the same normalized association updates verification metadata or logs an idempotent no-op; it does not create another association. Different relation types between the same objects are allowed when semantically distinct.
+
+Automation Workers may not directly create or mutate canonical External Associations in Phase 1. A worker may submit an association mutation request when its capability grants allow `mutation_request.submit` for the relevant scope. The canonical instance validates authority, Compartment/export policy, duplicate keys, expected prior version, and provenance before applying or rejecting the request and writing the corresponding Log entry.
+
 ---
 
 ## 15. Plans and Calendars

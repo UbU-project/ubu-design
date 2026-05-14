@@ -192,7 +192,7 @@ Unresolved.
 
 ## UBU-Q0003: GitHub ↔ UbU Association Model
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 GitHub dogfooding Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 GitHub dogfooding Resolved by: UBU-D0098 Last scored: Never Scored from commit: None
 
 GitHub objects and UbU objects have many-to-many relationships.
 
@@ -229,7 +229,15 @@ A dedicated `ExternalAssociation` object is likely cleaner than embedding all ex
 
 ### Resolution
 
-Unresolved.
+Solved by `UBU-D0098`. GitHub-to-UbU links are represented by first-class `ExternalAssociation` objects. Generic `external_refs[]` may still be used as lightweight references on Logs, provenance, or import artifacts, but they are not the authoritative many-to-many association model.
+
+MVP `ExternalAssociation` fields are `association_id`, `external_system`, `external_object_type`, `external_object_id`, `ubu_object_type`, `ubu_object_id`, `relation_type`, `confidence`, `created_by_identity_ref`, `created_at`, `last_verified_at`, `sync_policy`, `projection_policy`, and `provenance`.
+
+Associations may target Objectives, Tasks, External Events, and Log entries in Phase 1. This lets GitHub Issues, PRs, comments, reviews, CI runs, and milestones remain traceable without forcing them into one-to-one mappings. MVP relation types are schema-controlled enums: `represents`, `supports`, `evidence_for`, `source_event_for`, `projection_of`, `duplicate_of`, and `supersedes`.
+
+Duplicate detection uses a normalized uniqueness key over `external_system`, `external_object_type`, `external_object_id`, `ubu_object_type`, `ubu_object_id`, and `relation_type`. Reobserving the same association updates verification metadata or logs an idempotent no-op rather than creating a duplicate. Distinct relation types between the same objects are allowed.
+
+Automation Workers cannot directly create or mutate canonical External Associations in Phase 1. They may submit association mutation requests through authorized `mutation_request.submit` capability grants; the canonical instance validates and logs applied or rejected outcomes.
 
 ---
 
