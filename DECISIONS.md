@@ -2335,3 +2335,34 @@ Post-MVP work may add longitudinal baseline learning, richer growth-pressure mod
 - Failure handling should repair plans and estimates instead of blaming users.
 - Risk reports gain affect-fragility findings without making Risk first-class in MVP.
 - Rich longitudinal growth modeling remains post-MVP.
+
+---
+
+
+## UBU-D0093: Public recruitment invites several serious contributors into bounded paths
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0041`.
+
+UbU's public recruitment copy should invite a small core cohort of serious, self-directed contributors, not a single co-builder, founding slot, or privileged insider. Seriousness is shown by concrete public follow-up: a workflow example, design review, fixture/test contribution, model-committee artifact review, narrow implementation-ready issue, or repeated reviewed work on a bounded subsystem.
+
+Baseline public copy:
+
+> UbU is looking for a small core cohort of serious, self-directed contributors. Good first contributions include workflow examples, design review, synthetic or redacted fixtures, parser or validation tests, model-committee artifact review, and narrow implementation-ready issues. If the work keeps the planning kernel inspectable, privacy-first, and useful for dogfooding, there is room for multiple contributors to earn bounded ownership over subsystems.
+
+Public materials may name the contributor stages from onboarding: workflow informant, design reviewer, fixture/test contributor, implementation contributor, and bounded module owner. They may also route prototype funders and design partners into discovery, but prototype funding is not a contributor rank and must remain governed by the self-governance funding red lines.
+
+The distinction between serious contribution and passive interest should be concrete rather than exclusionary. Passive interest is welcome when it produces workflow examples, design feedback, useful introductions, prototype-funder leads, public issue comments, or future contributor candidates. Serious contributor language should emphasize bounded public work, tests or fixtures, reviewed artifacts, and eventual subsystem ownership.
+
+Avoid public phrases that imply scarcity or competition for one role, including `the co-builder`, `highest-priority contact`, `one founding slot`, `only serious builder`, `competing for a role`, `exclusive inner circle`, `prove you belong`, `hand-picked elite`, and similar language. If `co-builder` is ever used informally, it should not be singular or described as the single highest-priority outcome.
+
+ETHConf and similar follow-up should classify people by their most useful next concrete action: send one workflow example, review a model-committee artifact, comment on a public design question, contribute a fixture/test, take a narrow implementation-ready issue, introduce a serious contributor, or discuss a trunk-compatible prototype sponsorship. Enthusiasm alone is not validation until it becomes one of these follow-ups.
+
+**Consequences:**
+
+- `UBU-Q0041` is resolved for Phase 1 public recruitment language.
+- Derived public-facing files can use the baseline copy without reopening the recruitment question.
+- Contributor recruitment can be selective about commitment while remaining welcoming to multiple serious contributors.
+- ETHConf follow-up should be triaged by concrete next action rather than raw excitement.
+- Public copy should preserve the open-core, privacy-first, and trunk-first boundaries already accepted for onboarding and funding.

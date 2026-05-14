@@ -1600,6 +1600,20 @@ Public-facing materials should avoid implying that there is only one meaningful 
 
 Public materials should also avoid negative metaphors when criticizing planning systems that fail to model affect. Preferred terms include affect-blind, emotionally incomplete, human-incomplete, mechanistic planning, or affect-insensitive planning.
 
+### Public recruitment language baseline
+
+Public recruitment copy should say that UbU is looking for a small core cohort of serious, self-directed contributors who want to help build an inspectable, privacy-first planning kernel in public. It should make clear that several contributors are welcome, and that commitment means taking a bounded public path from concrete context to reviewed work, not competing for one privileged role.
+
+Reusable public copy:
+
+> UbU is looking for a small core cohort of serious, self-directed contributors. Good first contributions include workflow examples, design review, synthetic or redacted fixtures, parser or validation tests, model-committee artifact review, and narrow implementation-ready issues. If the work keeps the planning kernel inspectable, privacy-first, and useful for dogfooding, there is room for multiple contributors to earn bounded ownership over subsystems.
+
+Public materials may name the staged roles already used by onboarding: workflow informant, design reviewer, fixture/test contributor, implementation contributor, and bounded module owner. Prototype-funder or design-partner leads may also be routed through outreach, but should not be presented as a privileged contributor rank.
+
+Avoid language such as `the co-builder`, `highest-priority contact`, `one founding slot`, `competing for a role`, `exclusive inner circle`, `prove you belong`, `hand-picked elite`, or any phrasing that treats passive interest as worthless. Casual interest should be welcomed when it can become a workflow example, design feedback, contributor lead, prototype-funder lead, or public issue.
+
+ETHConf and similar follow-up should route each person into one concrete next action: send a workflow example, review a model-committee artifact, comment on a public design question, contribute a fixture or test, take a narrow implementation-ready issue, introduce a serious contributor, or discuss a trunk-compatible prototype sponsorship.
+
 ### First technical essay baseline
 
 The first public technical essay should use `The Planning Kernel: What Task Managers Leave Out` as the working title. It should lead with a precise problem claim: list, calendar, board, and opaque assistant tools are useful projections, but they are not enough for real planning unless objectives, state transitions, dependencies, constraints, logs, uncertainty, affect, and recalculation are explicit.

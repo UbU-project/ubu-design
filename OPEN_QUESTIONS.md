@@ -1330,7 +1330,7 @@ Partially resolved by `UBU-D0068`; detailed scoring mechanics remain open.
 
 ## UBU-Q0041: Public recruitment language for a small core cohort
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Contributor recruitment Resolved by: UBU-D0078, UBU-D0085 Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Contributor recruitment Resolved by: UBU-D0078, UBU-D0085, UBU-D0093 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1350,7 +1350,17 @@ Use language such as “small core cohort of serious, self-directed contributors
 
 ### Resolution
 
-Partially resolved by `UBU-D0078` and `UBU-D0085`; exact outreach copy remains open.
+Solved by `UBU-D0093`, building on `UBU-D0078` and `UBU-D0085`. Public recruitment should invite a small core cohort of serious, self-directed contributors, not a single co-builder or privileged slot. Seriousness is distinguished by concrete public follow-up: workflow examples, design review, synthetic or redacted fixtures, parser or validation tests, model-committee artifact review, narrow implementation-ready issues, or repeated reviewed work on bounded subsystems.
+
+Baseline public copy:
+
+> UbU is looking for a small core cohort of serious, self-directed contributors. Good first contributions include workflow examples, design review, synthetic or redacted fixtures, parser or validation tests, model-committee artifact review, and narrow implementation-ready issues. If the work keeps the planning kernel inspectable, privacy-first, and useful for dogfooding, there is room for multiple contributors to earn bounded ownership over subsystems.
+
+Public materials may name workflow informant, design reviewer, fixture/test contributor, implementation contributor, and bounded module owner as staged contributor roles. Prototype-funder or design-partner conversations may be routed through outreach, but they are not privileged contributor ranks.
+
+Avoid phrases such as `the co-builder`, `highest-priority contact`, `one founding slot`, `only serious builder`, `competing for a role`, `exclusive inner circle`, `prove you belong`, and `hand-picked elite`. Casual interest should not be dismissed; it should be routed into workflow examples, design feedback, useful introductions, prototype-funder leads, public issue comments, or future contributor paths.
+
+ETHConf and similar follow-up should classify interested people by one concrete next action: send a workflow example, review a model-committee artifact, comment on a public design question, contribute a fixture or test, take a narrow implementation-ready issue, introduce a serious contributor, or discuss a trunk-compatible prototype sponsorship. Enthusiasm alone is not validation until it becomes concrete follow-up.
 
 ---
 
