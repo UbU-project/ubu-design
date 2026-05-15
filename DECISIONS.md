@@ -2639,3 +2639,34 @@ A Snapshot can be corrected or revoked, but only through a new Log entry. Correc
 - Snapshot query APIs must distinguish raw historical views from corrected/current views that follow correction and revocation links.
 - Snapshot correction aligns with accepted append-only Log semantics and preserves user sovereignty without erasing historical evidence.
 - Detailed source-priority tables for non-user observations may be refined alongside discovery mode, worker mutation requests, and import-specific schemas.
+
+---
+
+
+## UBU-D0101: Organization mode uses shared objects without intrinsic affect
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0012`.
+
+Organization mode uses the shared UbU core object model except where fields or behavior are intrinsically personal-affect-specific. Objective, Preference, Task, Container, UniverseState, Snapshot, Plan, Calendar, Log, Identity, Relationship, Compartment, Automation Worker, External Event, and External Association objects are available in organization mode to the depth required by the organization or project planning workflow.
+
+Organization mode does not model intrinsic affect. In mode-specific schemas, intrinsic affect fields are absent. In shared implementation schemas that contain affect-capable fields for storage or migration convenience, those fields are disabled in organization mode and validators must reject organization-created intrinsic-affect values rather than silently treating them as unused.
+
+Relationship objects may exist in organization mode without affect dimensions. Organization-mode Relationships represent structured UniverseState between Identities such as contributors, maintainers, workers, projects, vendors, integrations, or external organizations. Non-affect relationship-relevant project information belongs in ordinary UniverseState facts, External Events, Logs, External Associations, Objectives, Tasks, or risk reports. Organization mode must not claim that the organization has a private emotional state toward another Identity.
+
+Organization-created Objectives, Preferences, and Tasks require `authority_source` metadata. In MVP this metadata may be coarse, but it must identify the authority path for the object, such as an admin-equivalent operator Identity, imported project policy, imported external event, Automation Worker submission, or human-approved import/projection action. The detailed vocabulary remains open in `UBU-Q0013`.
+
+Before RBAC exists, organization-mode human users are represented as operator Identities with admin-equivalent authority over the instance. This is an MVP simplification only. Their actions must still be logged with actor Identity and provenance so future RBAC can be introduced without rewriting history.
+
+Organization-mode instances may later receive limited signals from personal user-mode instances only through explicit user-controlled sharing, Identity-mediated authorization, Compartment/export checks, and clear provenance. Phase 1 does not implement personal-to-organization cross-instance sharing. Future designs should prefer structural signals such as availability, commitment status, task completion, or user-approved projection summaries rather than raw affect, private relationship state, or broad personal context.
+
+**Consequences:**
+
+- `UBU-Q0012` is resolved for MVP organization-mode object availability and affect exclusion.
+- Organization mode can reuse the core planning model without inventing a separate organization ontology.
+- Affect-bearing user-mode behavior remains excluded from organization-mode schemas and validators.
+- Organization-mode Relationship payloads are valid without affect dimensions.
+- `authority_source` is required on organization-created Objectives, Preferences, and Tasks, while `UBU-Q0013` remains responsible for the exact vocabulary and other authority-bearing objects.
+- Admin-equivalent MVP operation is represented through operator Identities and Logs rather than premature RBAC.
+- Later personal-to-organization signal sharing must be explicit, structural, consented, and bounded by Compartment/export policy.

@@ -1680,6 +1680,20 @@ Organization mode:
 
 For MVP, roles/RBAC may be omitted and all users treated as admin-equivalent.
 
+### 22.1 Organization-mode object rules
+
+Organization mode uses the shared core object model unless a field or behavior is intrinsically personal-affect-specific. Objective, Preference, Task, Container, UniverseState, Snapshot, Plan, Calendar, Log, Identity, Relationship, Compartment, Automation Worker, External Event, and External Association objects are available in organization mode to the depth needed by the instance's project-planning workflow.
+
+Intrinsic affect fields are structurally absent from organization-mode objects where a mode-specific schema is used. Where a shared storage schema contains affect-capable fields for implementation convenience, those fields are disabled in organization mode and validation must reject organization-created intrinsic-affect values rather than merely ignoring them. Organization mode may still store non-intrinsic human-related project constraints, availability facts, risk-report findings, or externally supplied structural signals when those signals are allowed by source authority, Compartment policy, and consent/export rules.
+
+Relationship objects may exist in organization mode without affect dimensions. An organization-mode Relationship represents structured UniverseState between Identities, such as contributor, maintainer, worker, project, vendor, or integration relationships. It may carry non-affect project metadata through ordinary UniverseState facts, External Events, Logs, External Associations, Objectives, or Tasks, but it must not claim the organization has a private emotional state toward another Identity.
+
+Organization-created Objectives, Preferences, and Tasks require `authority_source` metadata. For MVP, `authority_source` may be coarse and may identify an admin-equivalent operator Identity, imported project policy, imported external event, Automation Worker submission, or human-approved projection/import action. The detailed authority-source vocabulary remains tracked by `UBU-Q0013`.
+
+Before RBAC exists, organization-mode users are represented as human operator Identities with admin-equivalent authority over the organization-mode instance. This is an MVP authority simplification, not a claim that all future organization users have the same role. Actions still write Logs with actor Identity and provenance so later RBAC can be introduced without erasing earlier history.
+
+Future personal `user_mode` instances may provide limited signals to an organization-mode instance only through explicit user-controlled sharing, Identity-mediated authorization, Compartment/export checks, and clear provenance. Phase 1 does not implement cross-instance personal-to-organization sharing. Later designs should prefer structural signals such as availability, commitment status, task completion, or user-approved projection summaries rather than raw affect, private relationship state, or broad personal context.
+
 ### 22.1 Organization-mode public UX
 
 Organization-mode public UX is a project operations dashboard for human operators of an organization or project instance.

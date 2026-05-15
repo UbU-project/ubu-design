@@ -517,7 +517,7 @@ Unresolved.
 
 ## UBU-Q0012: Organization Mode Object Rules
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: UBU-D0101 Last scored: Never Scored from commit: None
 
 Organization mode does not model intrinsic affect but otherwise shares much of the same data model.
 
@@ -546,7 +546,17 @@ All users in organization mode may be treated as admin-equivalent in MVP.
 
 ### Resolution
 
-Unresolved.
+Solved by `UBU-D0101`. Organization mode uses the shared UbU core object model except where fields or behavior are intrinsically personal-affect-specific. Objective, Preference, Task, Container, UniverseState, Snapshot, Plan, Calendar, Log, Identity, Relationship, Compartment, Automation Worker, External Event, and External Association objects are available in organization mode to the depth required by the organization or project-planning workflow.
+
+Intrinsic affect fields are absent from mode-specific organization schemas. If a shared implementation schema contains affect-capable fields for storage or migration convenience, those fields are disabled in organization mode and validation must reject organization-created intrinsic-affect values rather than merely ignoring them.
+
+Relationship objects may exist in organization mode without affect dimensions. They represent structured UniverseState between Identities such as contributors, maintainers, workers, projects, vendors, integrations, or external organizations. Non-affect relationship-relevant project information belongs in ordinary UniverseState facts, External Events, Logs, External Associations, Objectives, Tasks, or risk reports; organization mode must not claim private organizational emotional state.
+
+Organization-created Objectives, Preferences, and Tasks require `authority_source` metadata. MVP authority metadata may be coarse, but it must identify the authority path, such as an admin-equivalent operator Identity, imported project policy, imported external event, Automation Worker submission, or human-approved import/projection action. The detailed authority-source vocabulary and other authority-bearing objects remain open in `UBU-Q0013`.
+
+Before RBAC exists, organization-mode human users are represented as operator Identities with admin-equivalent authority over the instance. Their actions still write Logs with actor Identity and provenance so future RBAC can be introduced without rewriting history.
+
+Organization-mode instances may later receive limited signals from personal user-mode instances only through explicit user-controlled sharing, Identity-mediated authorization, Compartment/export checks, and clear provenance. Phase 1 does not implement personal-to-organization cross-instance sharing. Future designs should prefer structural signals such as availability, commitment status, task completion, or user-approved projection summaries rather than raw affect, private relationship state, or broad personal context.
 
 ---
 
