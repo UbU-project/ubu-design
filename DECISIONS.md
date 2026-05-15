@@ -2704,3 +2704,41 @@ Phase 1 public materials must avoid claims of broad email, text, file, invoice, 
 - Phase 1 demos may use fixtures, but fixture and hardcoded behavior must be labeled.
 - The first nontechnical UX claim is one meaningful next action with an inspectable explanation, not complete life automation.
 - Follow-up questions for preference calibration, discovery mode, Calendar preview, and Log review remain valid refinements rather than blockers for this UX baseline.
+
+
+---
+
+
+## UBU-D0103: Compact Calendar uses deterministic DFS over partial timed Plan states
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0016`.
+
+Phase 1 Compact Calendar uses deterministic DFS rather than PRNG seed sampling. The compact representation is a transport and analysis artifact for likely Plan futures, not the canonical Calendar itself.
+
+A Compact Calendar DFS node is a partial timed Plan prefix plus simulated UniverseState, path probability mass, and reconstruction metadata. The Plan prefix contains ordered Task refs, scheduled start/end bounds, and inserted Static Tasks. The simulated state applies successful prefix effects and observed Snapshot precedence. Reconstruction metadata records predecessor edge, branch reason, accumulated probability, and deterministic heuristic score.
+
+Phase 1 expansion adds the next feasible planning step from the current node. It inserts Static Tasks at fixed times, selects a feasible Dynamic Task whose deterministic preconditions are satisfied, branches over duration buckets when a Task has a duration PDF, branches over effect success/failure when success probability is less than `1`, and applies successful Task effects to the simulated UniverseState. External Event distributions and Objective recurrence distributions are not expanded as probabilistic DFS branches in Phase 1; they create recalculation or regeneration triggers when observed or due.
+
+The single threshold `p` is split into two explicit parameters. `p_min_branch` is the minimum child path probability retained during DFS expansion. `p_target_coverage` is the target cumulative represented probability mass for the compact serialization. This avoids conflating branch pruning with coverage goals.
+
+DFS traversal order is deterministic and uses a composite heuristic: descending path probability, then higher derived Objective value, then deadline urgency, then critical-path or dependency-unblocking priority, then stable Task ID as a final tie-breaker. Derived utility remains transient planner state and must not be presented as canonical user value.
+
+A compact Calendar stores grammar inputs and reconstruction data: Task set snapshot refs, Static Task placements, ordering/dependency/precondition/temporal constraints, duration PDFs or fixed durations, Task effect success probabilities and mutation refs, deterministic affect-constraint inputs, threshold configuration, and coverage metadata.
+
+Concrete Plans are not the canonical compact storage format. UbU may cache the default Plan, inspectable alternatives, and recently materialized branches for UI and diagnostics, but Plans are reconstructable on demand and caches are invalidated by recalculation triggers.
+
+Coverage is recalculated after time advances by applying authoritative Logs and Snapshots, discarding branches inconsistent with observed reality, trimming elapsed prefixes, renormalizing remaining represented probability mass relative to the new current state, and regenerating when retained coverage falls below threshold or a hard recalculation trigger occurs.
+
+The Phase 1 minimum implementation may cover only the next work window. It must serialize enough to reconstruct the default Plan and inspectable alternatives from active schedulable Tasks, Static Tasks, fixed durations or coarse duration buckets, success probabilities, deterministic preconditions/effects, affect constraints, coverage metadata, and low-coverage warning or recalculation-trigger support.
+
+External-event distribution expansion, Objective recurrence probability modeling, exact coverage math, default threshold values, and regeneration policy details remain in `UBU-Q0017` or later follow-up work.
+
+**Consequences:**
+
+- `UBU-Q0016` is resolved for Phase 1 architecture.
+- `UBU-Q0017` remains open for detailed coverage, regeneration thresholds, and low-coverage behavior.
+- Phase 1 can implement compact Calendar serialization without a complete high-coverage stochastic future grammar.
+- Compact Calendar stores reconstructable grammar state and optional caches, not a canonical list of every concrete Plan.
+- The design avoids PRNG seed identity and keeps expansion reproducible from explicit state.

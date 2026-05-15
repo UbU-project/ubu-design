@@ -1335,18 +1335,55 @@ Coverage belongs to the compact serialization, not the abstract Calendar.
 
 Coverage represents the probability mass of possible futures covered by the compact representation.
 
-### 16.3 Deterministic DFS direction
+### 16.3 Deterministic DFS Compact Calendar grammar
 
-A compact Calendar may not need PRNG seeds.
+A compact Calendar does not use PRNG seeds for MVP expansion.
 
-Instead, a deterministic DFS expansion may explore likely branches using a probability threshold `p`.
+For Phase 1, deterministic DFS expands a compact representation of likely Plan futures from the current modeled state.
 
-Open questions remain:
+A DFS node contains:
 
-- What is a DFS node?
-- What does expansion add?
-- What exactly does `p` mean?
-- Is DFS sorted by probability, value, deadline urgency, or composite heuristic?
+- a partial timed Plan prefix: ordered Task refs, scheduled start/end bounds, and inserted Static Tasks;
+- the simulated UniverseState after applying completed prefix effects and observed Snapshots;
+- path probability mass from duration buckets and Task effect success/failure branches;
+- coverage and reconstruction metadata, including predecessor edge, branch reason, and accumulated heuristic score.
+
+Expansion is deterministic from the same Calendar input, UniverseState, configuration, and Log prefix.
+
+Phase 1 expansion includes:
+
+- inserting applicable Static Tasks at their fixed times;
+- selecting the next feasible Dynamic Task from active schedulable Tasks whose deterministic preconditions are satisfied;
+- branching over configured duration buckets for Tasks with duration PDFs;
+- branching over Task effect success/failure when success probability is less than `1`;
+- applying successful Task effects to the simulated UniverseState.
+
+Phase 1 expansion does not branch over arbitrary External Event distributions or Objective recurrence distributions. External Events, Objective reactivation, elapsed time, stale affect, and other observations trigger recalculation or regeneration from the new current state.
+
+Compact Calendar thresholding uses two parameters rather than one overloaded `p`:
+
+- `p_min_branch`: minimum child path probability retained during DFS expansion;
+- `p_target_coverage`: target cumulative probability mass to retain in the compact serialization before stopping or warning.
+
+DFS child order is deterministic and uses a composite heuristic: descending path probability first, then higher derived Objective value, then deadline urgency, then critical-path or dependency-unblocking priority, then stable Task ID as a final tie-breaker. Derived utility remains a transient planning artifact and is not exposed as canonical user value.
+
+Concrete Plans may be cached for the default Plan, inspectable alternatives, and recently materialized branches, but they are not canonical storage. Plans can be reconstructed on demand from the compact grammar, current state, and Log/Snapshot prefix. Cached Plans are invalidated by recalculation triggers.
+
+The compact representation encodes the minimum data needed for deterministic reconstruction:
+
+- Task identifiers and schedulable Task set snapshot refs;
+- ordering, dependency, precondition, and temporal constraints;
+- duration PDFs or fixed durations;
+- Task effect success probabilities and mutation refs;
+- deterministic precondition and affect-constraint inputs;
+- Static Task placements;
+- coverage metadata and threshold configuration.
+
+After time advances, UbU applies authoritative Logs and Snapshots, discards branches inconsistent with observed reality, trims elapsed prefixes, renormalizes remaining represented probability mass relative to the new state, and regenerates the compact Calendar when retained coverage falls below the configured threshold or when a hard recalculation trigger occurs.
+
+The minimum MVP implementation may serialize only the next work-window compact Calendar: active schedulable Tasks, Static Tasks in the window, fixed durations or coarse duration buckets, effect success probabilities, deterministic preconditions/effects, affect constraints, default Plan reconstruction, coverage metadata, and low-coverage warning or recalculation trigger support.
+
+Coverage/regeneration details remain tracked by `UBU-Q0017`.
 
 ---
 

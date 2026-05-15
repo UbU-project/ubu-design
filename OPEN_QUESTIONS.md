@@ -694,7 +694,7 @@ Unresolved.
 
 ## UBU-Q0016: Compact Calendar DFS Grammar
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: UBU-D0103 Last scored: Never Scored from commit: None
 
 Compact Calendar support is important for recursive self-analysis and future sync/transport. The current direction is deterministic DFS rather than PRNG seed sampling.
 
@@ -736,7 +736,23 @@ Compact Calendar support is important for recursive self-analysis and future syn
 
 ### Resolution
 
-Unresolved.
+Solved by `UBU-D0103`. Phase 1 Compact Calendar uses deterministic DFS over partial timed Plan states rather than PRNG seed sampling.
+
+A DFS node is a partial timed Plan prefix plus simulated UniverseState, path probability mass, and reconstruction metadata. It combines ordered Task refs, scheduled start/end bounds, inserted Static Tasks, successful prefix effects, observed Snapshot precedence, predecessor edge, branch reason, accumulated probability, and deterministic heuristic score.
+
+Expansion adds the next feasible planning step: fixed Static Task insertion, next feasible Dynamic Task selection, duration-bucket branching for duration PDFs, success/failure branching for Task effects, and successful effect application to the simulated UniverseState. Phase 1 does not expand arbitrary External Event or Objective recurrence distributions as DFS branches; those remain recalculation/regeneration inputs when observed or due.
+
+Threshold `p` is split into `p_min_branch` for minimum retained child path probability and `p_target_coverage` for cumulative represented probability mass. DFS is sorted by a deterministic composite heuristic: probability, derived Objective value, deadline urgency, critical-path or dependency-unblocking priority, and stable Task ID tie-breaker.
+
+The Compact Calendar encodes Task set snapshot refs, Static Task placements, ordering/dependency/precondition/temporal constraints, duration PDFs or fixed durations, Task success probabilities and mutation refs, deterministic affect-constraint inputs, threshold configuration, and coverage metadata.
+
+Concrete Plans are optional caches for the default Plan, inspectable alternatives, and recently materialized branches. They are not canonical compact storage and must be reconstructable on demand from the compact grammar and current Log/Snapshot prefix.
+
+After time advances, UbU applies Logs and Snapshots, discards inconsistent branches, trims elapsed prefixes, renormalizes remaining represented mass relative to the new current state, and regenerates when retained coverage falls below threshold or a hard recalculation trigger occurs.
+
+The minimum MVP implementation may serialize only the next work-window compact Calendar with active schedulable Tasks, Static Tasks, fixed durations or coarse duration buckets, success probabilities, deterministic preconditions/effects, affect constraints, default Plan reconstruction, coverage metadata, and low-coverage warning or recalculation-trigger support.
+
+Detailed coverage math, threshold defaults, low-coverage behavior, external-event distributions, and Objective recurrence distribution modeling remain open in `UBU-Q0017` or later follow-up work.
 
 ---
 
