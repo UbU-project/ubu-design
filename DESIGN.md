@@ -568,6 +568,18 @@ Phase 1 must include a minimal first-person UX loop for dogfooding:
 
 The Phase 1 version may be simple and fixture-backed. It does not require broad email, text-message, file, or personal-data ingestion. It must not claim complete life-modeling. The purpose is to demonstrate the core UbU experience: one meaningful next action, with an explanation, grounded in explicit state.
 
+Minimum Phase 1 bootstrap specifics:
+
+The minimum interview asks eight prompts: project/context; one primary outcome for the next few work sessions; up to two competing Objectives; one visible deadline or risk; available work window; fixed constraints or blocked preconditions; current energy, stress, and mood; and a simple Preference ranking among the surfaced Objectives. These prompts may be prefilled from an approved UbU GitHub fixture, but the user must be able to see and correct the modeled answers.
+
+The minimum modeled state is one user Identity, one project/context fact, one current or stale affect Snapshot, one to three active Objectives, one to three schedulable Tasks with Objective links and durations, any known deadline or dependency facts, one current work-window fact, and Log entries for bootstrap answers and recommendation selection. A recommendation is allowed only when at least one active schedulable Task has a title, Objective link, duration, active status, and no known failed precondition.
+
+The next-action screen shows the recommended Task, estimated duration or work window, the linked Objective, urgency or dependency reason, affect/stale-affect status, risk findings when present, and the exact inputs considered. It exposes start, done, snooze, reject, decompose, override, and explain-more controls. The full Plan remains available through an explicit inspect-Plan control that shows the ordered default Plan, alternatives or blocked Tasks when available, and the state facts used for scoring.
+
+After completion, failure, rejection, snooze, decomposition, or override, UbU records lightweight feedback as Log evidence and triggers recalculation when the result changes Task status, affect state, availability, preconditions, Objective fit, or estimates. Feedback asks what happened, whether the estimate was plausible, whether the Task still matters, whether affect or context changed, and whether the model should update a Task, Objective, Snapshot, Preference, or constraint.
+
+Mock apps and demos must label fixture-backed behavior, hardcoded recommendations, dry-run projections, advisory LLM text, and implemented planner behavior separately. Release Outreach Pipeline videos should show the loop as bootstrap, explicit model creation, one next action, inspectable why, user control, feedback Log, recalculation, and honest limitation note. Public materials must avoid claiming broad personal-data ingestion, therapeutic authority, autonomous life coaching, complete planning automation, complete privacy isolation, or implemented integrations beyond the approved fixture or configured routes.
+
 ### 4.1.3 Release Outreach Pipeline dogfooding
 
 The Release Outreach Pipeline should become part of ordinary UbU-runs-UbU release management. A minor release should produce a release outreach package when the current project state contains enough user-visible, developer-visible, or contributor-visible change to justify public explanation.

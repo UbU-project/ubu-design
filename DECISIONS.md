@@ -2670,3 +2670,37 @@ Organization-mode instances may later receive limited signals from personal user
 - `authority_source` is required on organization-created Objectives, Preferences, and Tasks, while `UBU-Q0013` remains responsible for the exact vocabulary and other authority-bearing objects.
 - Admin-equivalent MVP operation is represented through operator Identities and Logs rather than premature RBAC.
 - Later personal-to-organization signal sharing must be explicit, structural, consented, and bounded by Compartment/export policy.
+
+
+---
+
+
+## UBU-D0102: Phase 1 bootstrap and next-action UX stays narrow and inspectable
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0050`.
+
+The minimum Phase 1 bootstrap interview is an explicit dogfooding setup flow, not a broad personal-data import. It asks eight prompts: what project or context UbU is helping with now; the main outcome the user wants in the next few work sessions; up to two competing or supporting Objectives; one visible deadline, risk, or pressure; the available work window; fixed constraints, blocked preconditions, or interruptions; current energy, stress, and mood; and a simple ranking or indifference judgment among the surfaced Objectives. Approved fixtures may prefill answers for demos, but the user must be able to inspect and correct the modeled state.
+
+Bootstrap answers become explicit model objects. The project/context answer becomes a UniverseState fact and Log entry. Desired outcomes become active Objectives. The simple ranking becomes pairwise Preferences or an explicit Log note when the user declines to rank. Current energy, stress, and mood become a user-declared affect Snapshot. Available time, deadlines, constraints, and blocked preconditions become UniverseState facts, Task fields, preconditions, or Log entries. Seed work becomes one to three active schedulable Tasks linked to Objectives.
+
+The minimum state required to recommend one next Task is: one active Objective, one active schedulable Task linked to that Objective, a duration or work-window estimate, current availability, current or stale affect status, known dependencies or preconditions if any, and a Log/provenance trail showing whether the data came from the user, an approved fixture, or an imported GitHub source. If affect is missing or stale, UbU may either recommend an affect-collection Task or show stale-affect status as a risk in the explanation.
+
+The Phase 1 next-action focus screen defaults to one recommended Task while keeping the full Plan inspectable. It shows the Task title, Objective link, estimated duration or work window, why the Task matters now, inputs considered, current affect or stale-affect status, relevant deadline/dependency/risk findings, worker status when relevant, and fixture/import provenance when relevant. The screen exposes start, done, snooze, reject, decompose, override, and explain-more controls. It also exposes an inspect-Plan control showing the ordered default Plan, alternatives or blocked Tasks when available, and the state facts used by the recommendation.
+
+The `why this matters now` explanation must be evidence-bound. It should name the linked Objective, the relevant Preference or declared priority, deadline or dependency pressure, affect or availability constraint, risk-report finding, worker/projection status when relevant, and the specific source category for each important input. It must not present derived utility as the user's real value or hide fixture-backed behavior as implemented intelligence.
+
+Feedback after completion, failure, rejection, snooze, decomposition, or override is lightweight and non-blaming. UbU asks what happened, whether the estimate was plausible, whether the Task still matters, whether affect or context changed, and whether the model should update a Task, Objective, Snapshot, Preference, constraint, or estimate. The outcome is recorded as Log evidence and triggers recalculation when it changes Task status, availability, affect, preconditions, Objective fit, or estimates.
+
+Mock apps, public demos, and Release Outreach Pipeline scripts must distinguish fixture-backed recommendations, hardcoded UI prototypes, dry-run GitHub projections, advisory LLM text, and implemented planner behavior. The public demo pattern is: answer or inspect bootstrap prompts, show the explicit objects created, generate a candidate Plan, focus on one next Task, inspect why it matters, act or override, record feedback, recalculate, and show the changed model or risk summary.
+
+Phase 1 public materials must avoid claims of broad email, text, file, invoice, note, or personal-life ingestion; therapeutic authority; autonomous life coaching; complete planning automation; complete privacy isolation; secure multi-device sync; hidden user-value inference; or implemented integrations beyond approved fixtures and explicitly configured routes. The honest claim is narrower: UbU can recommend one meaningful next action for the dogfooding context and explain that recommendation from explicit, inspectable state.
+
+**Consequences:**
+
+- `UBU-Q0050` is resolved for Phase 1 product scope.
+- The bootstrap interview and next-action focus mode can be implemented without adding new canonical ontology objects.
+- Phase 1 demos may use fixtures, but fixture and hardcoded behavior must be labeled.
+- The first nontechnical UX claim is one meaningful next action with an inspectable explanation, not complete life automation.
+- Follow-up questions for preference calibration, discovery mode, Calendar preview, and Log review remain valid refinements rather than blockers for this UX baseline.
