@@ -93,6 +93,33 @@ That loop is central to the project.
 
 ---
 
+## The planning kernel has to be fast enough to trust
+
+UbU's Calendar preview depends on a complete default Plan. The user should be able to inspect the ordered path ahead and ask why each Task is there.
+
+The planner direction is explicit rather than agentic magic:
+
+- a DFS or DFS-like layer produces the complete default Plan for the Calendar scope;
+- the default Plan is selected by modeled Plan probability among deterministic candidate Plans;
+- a short-horizon BFS or BFS-like reactive layer handles likely near-term divergence;
+- early completion should usually pull the next valid Dynamic Task forward;
+- known offline windows should trigger precomputation;
+- mobile and low-power modes may switch to coarser time deltas.
+
+This matters because UbU should remain useful on a mobile device, on battery, and offline. LLMs may help interpret, summarize, propose, or critique, but the real-time planning loop must remain explicit, inspectable, and locally runnable.
+
+---
+
+## Compute choice is part of user sovereignty
+
+UbU should not force one execution provider. A user may run locally on mobile, use a laptop or desktop as a personal worker, later use a dedicated worker appliance, or opt into a hosted service. A third-party provider should be able to offer compatible execution without becoming the canonical owner of the UbU model.
+
+The FOSS core should stay backend-agnostic. Cloud or external compute may provide better granularity, deeper analysis, and heavier branch search, but it must not become a hidden mandatory dependency for the open-core planning loop.
+
+For privacy-oriented contributors, the long-term direction is stronger than ordinary cloud trust: minimize data, enforce Compartments, preserve provenance, support self-hosting, and prioritize future privacy-preserving compute such as practical encrypted computation when it becomes viable.
+
+---
+
 ## Privacy-first by design
 
 UbU is not designed around a centralized service owning user data.

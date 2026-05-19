@@ -568,18 +568,6 @@ Phase 1 must include a minimal first-person UX loop for dogfooding:
 
 The Phase 1 version may be simple and fixture-backed. It does not require broad email, text-message, file, or personal-data ingestion. It must not claim complete life-modeling. The purpose is to demonstrate the core UbU experience: one meaningful next action, with an explanation, grounded in explicit state.
 
-Minimum Phase 1 bootstrap specifics:
-
-The minimum interview asks eight prompts: project/context; one primary outcome for the next few work sessions; up to two competing Objectives; one visible deadline or risk; available work window; fixed constraints or blocked preconditions; current energy, stress, and mood; and a simple Preference ranking among the surfaced Objectives. These prompts may be prefilled from an approved UbU GitHub fixture, but the user must be able to see and correct the modeled answers.
-
-The minimum modeled state is one user Identity, one project/context fact, one current or stale affect Snapshot, one to three active Objectives, one to three schedulable Tasks with Objective links and durations, any known deadline or dependency facts, one current work-window fact, and Log entries for bootstrap answers and recommendation selection. A recommendation is allowed only when at least one active schedulable Task has a title, Objective link, duration, active status, and no known failed precondition.
-
-The next-action screen shows the recommended Task, estimated duration or work window, the linked Objective, urgency or dependency reason, affect/stale-affect status, risk findings when present, and the exact inputs considered. It exposes start, done, snooze, reject, decompose, override, and explain-more controls. The full Plan remains available through an explicit inspect-Plan control that shows the ordered default Plan, alternatives or blocked Tasks when available, and the state facts used for scoring.
-
-After completion, failure, rejection, snooze, decomposition, or override, UbU records lightweight feedback as Log evidence and triggers recalculation when the result changes Task status, affect state, availability, preconditions, Objective fit, or estimates. Feedback asks what happened, whether the estimate was plausible, whether the Task still matters, whether affect or context changed, and whether the model should update a Task, Objective, Snapshot, Preference, or constraint.
-
-Mock apps and demos must label fixture-backed behavior, hardcoded recommendations, dry-run projections, advisory LLM text, and implemented planner behavior separately. Release Outreach Pipeline videos should show the loop as bootstrap, explicit model creation, one next action, inspectable why, user control, feedback Log, recalculation, and honest limitation note. Public materials must avoid claiming broad personal-data ingestion, therapeutic authority, autonomous life coaching, complete planning automation, complete privacy isolation, or implemented integrations beyond the approved fixture or configured routes.
-
 ### 4.1.3 Release Outreach Pipeline dogfooding
 
 The Release Outreach Pipeline should become part of ordinary UbU-runs-UbU release management. A minor release should produce a release outreach package when the current project state contains enough user-visible, developer-visible, or contributor-visible change to justify public explanation.
@@ -613,11 +601,14 @@ Phase 2 validates:
 - partial replication;
 - Zone and Compartment boundaries;
 - device roles;
-- conflict handling.
+- conflict handling;
+- user-owned worker execution on the user's laptop, desktop, or other trusted personal compute device.
 
 Design rubric:
 
 > Phase 2 should feel like multi-agent coordination, but all agents happen to agree.
+
+A Phase 2 personal worker is not a mandatory cloud dependency. It is an optional execution backend for a user's own UbU instance. It may provide more CPU, GPU, memory, storage, network availability, or battery-independent runtime than the mobile device while preserving the user's practical control over the compute environment.
 
 ### 4.3 Phase 3: Minimal multi-user / Identity coordination
 
@@ -1278,6 +1269,10 @@ A Plan does not directly contain:
 
 Those are logical/model relations outside the calendar-view layer.
 
+Once represented on a Calendar, a Plan is deterministic. It is best understood as a time-independent representation of predicted Actions, similar in shape to a future-facing Log projection. A Plan may eventually include predicted sensor states, expected UniverseState transitions, and other projected observations, but it does not internally evaluate its own probability after it has been materialized.
+
+Plan optimization and default Plan selection are separate operations. Each candidate Plan should be individually optimized for value while satisfying constraints within the modeled world-branch that produced it. The planning algorithm models uncertain parameters such as duration distributions, Task success or failure, external events, interruptions, affect uncertainty, availability changes, and sensor predictions. A particular modeled combination of those parameters can produce a deterministic candidate Plan. UbU may then ascribe a **Plan probability** to that candidate Plan: the probability mass of the modeled branch that yields that deterministic Plan.
+
 ### 15.2 Calendar
 
 A **Calendar** is a group of possible Plans.
@@ -1287,6 +1282,16 @@ A Calendar has a default Plan.
 The default Plan is the current best recommendation, not a commitment.
 
 The user controls what actually becomes historical log.
+
+### 15.2.1 Default Plan selection
+
+The default Plan is the Plan, or one of multiple tied Plans, with the highest Plan probability overall among the candidate Plans produced for the current Calendar scope.
+
+This does not mean the default Plan is an unoptimized low-value routine. The Plan itself is already value-optimized within its deterministic branch while satisfying dependencies, deadlines, affect constraints, preconditions, and other Calendar Logic. The default selection step chooses among deterministic optimized Plans by Plan probability.
+
+The default Plan is critical to UbU's user experience. Calendar preview must be able to show an ordered upcoming set of Tasks from the current time to the end of the Calendar scope, and each Task should have an explanation of why it appears there: Objective value, dependencies, deadlines, preconditions, affect constraints, worker status, risk findings, or other relevant scheduling reasons.
+
+The ideal search over candidate Plans may be NP-hard or otherwise combinatorially expensive. Practical Compact Calendar implementations should therefore use bounded finite Task instances, time-delta configuration, pruning, greedy selection, cached subplans, device-specific resource limits, and other heuristics. Exact ideality is a north-star property, not a Phase 1 runtime promise.
 
 ### 15.3 Calendar Logic
 
@@ -1322,12 +1327,18 @@ A compact Calendar may include:
 
 - Task set
 - Static Tasks
+- Dynamic Tasks
 - duration distributions
 - Task success probabilities
 - external-event trigger distributions
-- stochastic grammar
+- modeled interruption distributions
+- affect-state uncertainty and constraints
+- deterministic expansion grammar
 - expansion threshold(s)
 - coverage value
+- default Plan reference or materialized default Plan
+- short-horizon branch cache
+- execution-mode metadata such as time delta, branch horizon, and resource limits
 
 ### 16.2 Coverage
 
@@ -1335,55 +1346,65 @@ Coverage belongs to the compact serialization, not the abstract Calendar.
 
 Coverage represents the probability mass of possible futures covered by the compact representation.
 
-### 16.3 Deterministic DFS Compact Calendar grammar
+The provisional short-horizon branch coverage target is `0.99` probability mass. This should be treated as a configurable heuristic, not as a mathematical guarantee for every device, scope, or resource mode.
 
-A compact Calendar does not use PRNG seeds for MVP expansion.
+### 16.3 DFS default Plan direction
 
-For Phase 1, deterministic DFS expands a compact representation of likely Plan futures from the current modeled state.
+The current direction is that deterministic DFS, or a DFS-like depth-first candidate construction algorithm, produces the complete default Plan for the Calendar scope.
 
-A DFS node contains:
+The DFS layer should be capable of walking from the current time to the end of the Calendar scope and producing a deterministic, value-optimized, constraint-satisfying Plan. Candidate deterministic Plans receive Plan probabilities from the modeled probabilistic parameters used during generation. The default Plan is selected as the candidate Plan with the highest Plan probability overall.
 
-- a partial timed Plan prefix: ordered Task refs, scheduled start/end bounds, and inserted Static Tasks;
-- the simulated UniverseState after applying completed prefix effects and observed Snapshots;
-- path probability mass from duration buckets and Task effect success/failure branches;
-- coverage and reconstruction metadata, including predecessor edge, branch reason, and accumulated heuristic score.
+A DFS node should probably represent at least a partial timed Plan, simulated UniverseState, dependency/precondition frontier, accumulated constraint state, branch probability metadata, and lineage needed for explanation or reconstruction. `UBU-Q0016` remains open, but the current DFS/default-Plan direction may be close to a closable MVP answer.
 
-Expansion is deterministic from the same Calendar input, UniverseState, configuration, and Log prefix.
+### 16.4 Reactive short-horizon branch layer
 
-Phase 1 expansion includes:
+The default Plan is not enough for real-time use because reality can diverge from the modeled branch. UbU therefore also needs a lightweight reactive layer, likely BFS or BFS-like, that starts at the current instant and maintains a short-horizon cache of high-probability branches.
 
-- inserting applicable Static Tasks at their fixed times;
-- selecting the next feasible Dynamic Task from active schedulable Tasks whose deterministic preconditions are satisfied;
-- branching over configured duration buckets for Tasks with duration PDFs;
-- branching over Task effect success/failure when success probability is less than `1`;
-- applying successful Task effects to the simulated UniverseState.
+The reactive layer should cover near-term alternatives involving planned Tasks, duration variation, early completion, late completion, interruptions, relevant external events, and immediate recalculation triggers. The provisional default horizon is one hour. Mobile-only, low-power, or offline operation may shorten this horizon.
 
-Phase 1 expansion does not branch over arbitrary External Event distributions or Objective recurrence distributions. External Events, Objective reactivation, elapsed time, stale affect, and other observations trigger recalculation or regeneration from the new current state.
+This layer exists to let the user's current Calendar and Log update quickly when something actually happens. It should not attempt to enumerate every possible future to the end of the Calendar scope.
 
-Compact Calendar thresholding uses two parameters rather than one overloaded `p`:
+### 16.5 Early completion and forward-pull behavior
 
-- `p_min_branch`: minimum child path probability retained during DFS expansion;
-- `p_target_coverage`: target cumulative probability mass to retain in the compact serialization before stopping or warning.
+When a Task completes earlier than expected, the default behavior should be to pull the next valid Dynamic Task forward to the present time if dependencies, preconditions, affect constraints, location constraints, and other Calendar Logic allow it.
 
-DFS child order is deterministic and uses a composite heuristic: descending path probability first, then higher derived Objective value, then deadline urgency, then critical-path or dependency-unblocking priority, then stable Task ID as a final tie-breaker. Derived utility remains a transient planning artifact and is not exposed as canonical user value.
+This supports a conservative duration bias: when uncertain, the scheduler may prefer duration estimates that are not overly optimistic. Early completion then becomes easy to absorb by starting the next valid Dynamic Task immediately rather than leaving useless gaps or requiring disruptive global replanning.
 
-Concrete Plans may be cached for the default Plan, inspectable alternatives, and recently materialized branches, but they are not canonical storage. Plans can be reconstructed on demand from the compact grammar, current state, and Log/Snapshot prefix. Cached Plans are invalidated by recalculation triggers.
+Static Tasks retain fixed start times. If no predetermined Dynamic Task can validly fill time before the next Static Task, the planner should consider gap-filling suggestions. The design of evergreen Dynamic Tasks or evergreen Objective-maintenance Tasks is still open and tracked separately.
 
-The compact representation encodes the minimum data needed for deterministic reconstruction:
+### 16.6 Adaptive granularity and offline operation
 
-- Task identifiers and schedulable Task set snapshot refs;
-- ordering, dependency, precondition, and temporal constraints;
-- duration PDFs or fixed durations;
-- Task effect success probabilities and mutation refs;
-- deterministic precondition and affect-constraint inputs;
-- Static Task placements;
-- coverage metadata and threshold configuration.
+Compact Calendar planning should support configurable time deltas.
 
-After time advances, UbU applies authoritative Logs and Snapshots, discards branches inconsistent with observed reality, trims elapsed prefixes, renormalizes remaining represented probability mass relative to the new state, and regenerates the compact Calendar when retained coverage falls below the configured threshold or when a hard recalculation trigger occurs.
+Provisional defaults:
 
-The minimum MVP implementation may serialize only the next work-window compact Calendar: active schedulable Tasks, Static Tasks in the window, fixed durations or coarse duration buckets, effect success probabilities, deterministic preconditions/effects, affect constraints, default Plan reconstruction, coverage metadata, and low-coverage warning or recalculation trigger support.
+- full-detail planning delta: `1 minute`;
+- mobile moderate delta: `5 minutes`;
+- mobile low-power or offline delta: `15 minutes`;
+- reactive branch horizon: `1 hour`;
+- short-horizon branch coverage target: `0.99` probability mass.
 
-Coverage/regeneration details remain tracked by `UBU-Q0017`.
+A one-minute delta aligns with common calendar behavior and should be available when compute resources permit it. Mobile-only operation may use coarser granularity to preserve battery, reduce memory and CPU/GPU load, and keep local recalculation responsive. Offline or low-power mode may dynamically switch to a coarser delta, such as fifteen minutes, while preserving the core UbU experience.
+
+Known offline windows, such as flights or planned disconnection, should trigger preparatory precomputation while connectivity and compute are available. If the offline state is unexpected, UbU should gracefully degrade to cached state, local explicit algorithms, coarser deltas, and reduced branch depth.
+
+### 16.7 Execution backends and privacy boundary
+
+The open-core planning loop must not depend on a hidden cloud service. Mobile-only UbU must preserve the core UbU experience, but may use coarser planning granularity, shallower branch coverage, reduced analysis depth, and fewer LLM-assisted features.
+
+Cloud or external compute may improve performance, granularity, and analysis depth, but must not be a hidden mandatory dependency for the open-core planning loop.
+
+Possible execution backends include:
+
+- local mobile execution;
+- local desktop or laptop execution;
+- Phase 2 user-owned worker devices;
+- dedicated user-owned worker appliances;
+- UbU corporate hosted compute;
+- third-party UbU-compatible compute providers;
+- future privacy-preserving compute services such as practical FHE-backed or comparable encrypted computation.
+
+The FOSS planner and Compact Calendar representation should be backend-agnostic. Execution providers are interchangeable through explicit APIs, capability grants, Compartment policy, provenance, and user-visible routing decisions.
 
 ---
 
@@ -1894,7 +1915,10 @@ Key unresolved areas include:
 - GitHub event triage
 - UniverseState mutation schema
 - Precondition schema
-- Compact Calendar DFS grammar
+- Compact Calendar DFS grammar, now with a provisional DFS/default-Plan and BFS/reactive-layer direction
+- Evergreen Dynamic Task and gap-filling semantics
+- Adaptive planning granularity and offline precomputation policy
+- Execution-provider trust, privacy, and backend-agnostic worker boundaries
 - Risk reporting primitives
 - Recalculation trigger taxonomy
 - Container mutation semantics

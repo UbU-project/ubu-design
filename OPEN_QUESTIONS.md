@@ -694,9 +694,9 @@ Unresolved.
 
 ## UBU-Q0016: Compact Calendar DFS Grammar
 
-Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: UBU-D0103 Last scored: Never Scored from commit: None
+Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
 
-Compact Calendar support is important for recursive self-analysis and future sync/transport. The current direction is deterministic DFS rather than PRNG seed sampling.
+Compact Calendar support is important for recursive self-analysis, future sync/transport, and fast recalculation. The current direction is deterministic DFS or DFS-like candidate construction for the complete default Plan, plus a separate short-horizon BFS or BFS-like reactive branch layer. This question remains open, but the current direction may be ready to close once the node, expansion, and representation details are written precisely.
 
 ### Question
 
@@ -704,13 +704,17 @@ Compact Calendar support is important for recursive self-analysis and future syn
    - partial ordered Task sequence
    - partial timed Plan
    - partial UniverseState trajectory
-   - probability-mass state
+   - dependency/precondition frontier
+   - accumulated constraint state
+   - branch probability metadata
+   - explanation/reconstruction lineage
    - some combination of the above
 2. What does expansion add?
-   - next Task
+   - next Task placement
    - duration branch
    - success/failure branch
    - external event branch
+   - interruption branch
    - Objective recurrence branch
 3. What does threshold `p` mean?
    - branch pruning threshold
@@ -718,41 +722,45 @@ Compact Calendar support is important for recursive self-analysis and future syn
    - minimum child probability
    - or multiple parameters
 4. Is DFS sorted by:
-   - probability
-   - Objective value
+   - Plan probability
+   - Objective value within a branch
    - deadline urgency
-   - critical path
+   - dependency critical path
+   - affect feasibility
    - composite heuristic
-5. Does Compact Calendar encode:
+5. How is Plan probability represented?
+   - scalar probability
+   - log probability
+   - probability interval
+   - provenance expression over probabilistic inputs
+6. How does the implementation avoid naïve independence assumptions when probabilities are correlated?
+7. Does Compact Calendar encode:
    - ordering constraints
    - duration PDFs
    - success probabilities
    - external-event distributions
+   - interruption distributions
    - affect constraints
-6. Are concrete Plans stored at all?
-7. Or are Plans always reconstructed on demand?
-8. How is coverage recalculated after time advances?
-9. What is the minimum MVP implementation?
+   - execution-mode metadata such as time delta and resource limits
+8. Which concrete Plans are stored?
+   - the default Plan only
+   - user-previewed Plans
+   - risk-report Plans
+   - debug/reproducibility Plans
+   - all high-probability Plans within a horizon
+9. Which Plans are reconstructed on demand?
+10. How is coverage recalculated after time advances?
+11. What is the minimum MVP implementation?
+
+### Current direction
+
+DFS/default-Plan generation and BFS/reactive adaptation are separate responsibilities. DFS should produce the complete deterministic default Plan from the current time to the end of Calendar scope. Each represented Plan is individually value-optimized and constraint-satisfying for its modeled branch; Plan probability is ascribed by the planning algorithm from the probabilistic parameters that produced the branch. The default Plan is the candidate Plan with the highest Plan probability overall.
+
+The ideal search may be NP-hard or otherwise combinatorially expensive, but finite Task instances, bounded time scope, configurable deltas, pruning, greedy heuristics, cached subplans, and adaptive execution modes should make practical approximations tractable.
 
 ### Resolution
 
-Solved by `UBU-D0103`. Phase 1 Compact Calendar uses deterministic DFS over partial timed Plan states rather than PRNG seed sampling.
-
-A DFS node is a partial timed Plan prefix plus simulated UniverseState, path probability mass, and reconstruction metadata. It combines ordered Task refs, scheduled start/end bounds, inserted Static Tasks, successful prefix effects, observed Snapshot precedence, predecessor edge, branch reason, accumulated probability, and deterministic heuristic score.
-
-Expansion adds the next feasible planning step: fixed Static Task insertion, next feasible Dynamic Task selection, duration-bucket branching for duration PDFs, success/failure branching for Task effects, and successful effect application to the simulated UniverseState. Phase 1 does not expand arbitrary External Event or Objective recurrence distributions as DFS branches; those remain recalculation/regeneration inputs when observed or due.
-
-Threshold `p` is split into `p_min_branch` for minimum retained child path probability and `p_target_coverage` for cumulative represented probability mass. DFS is sorted by a deterministic composite heuristic: probability, derived Objective value, deadline urgency, critical-path or dependency-unblocking priority, and stable Task ID tie-breaker.
-
-The Compact Calendar encodes Task set snapshot refs, Static Task placements, ordering/dependency/precondition/temporal constraints, duration PDFs or fixed durations, Task success probabilities and mutation refs, deterministic affect-constraint inputs, threshold configuration, and coverage metadata.
-
-Concrete Plans are optional caches for the default Plan, inspectable alternatives, and recently materialized branches. They are not canonical compact storage and must be reconstructable on demand from the compact grammar and current Log/Snapshot prefix.
-
-After time advances, UbU applies Logs and Snapshots, discards inconsistent branches, trims elapsed prefixes, renormalizes remaining represented mass relative to the new current state, and regenerates when retained coverage falls below threshold or a hard recalculation trigger occurs.
-
-The minimum MVP implementation may serialize only the next work-window compact Calendar with active schedulable Tasks, Static Tasks, fixed durations or coarse duration buckets, success probabilities, deterministic preconditions/effects, affect constraints, default Plan reconstruction, coverage metadata, and low-coverage warning or recalculation-trigger support.
-
-Detailed coverage math, threshold defaults, low-coverage behavior, external-event distributions, and Objective recurrence distribution modeling remain open in `UBU-Q0017` or later follow-up work.
+Unresolved. May be ready to close after the MVP node and expansion grammar are finalized.
 
 ---
 
@@ -781,7 +789,7 @@ Coverage belongs to compact Calendar serialization.
 
 ### Current direction
 
-Default threshold may be `0.5`, but this is not final.
+The provisional short-horizon branch coverage target is `0.99` probability mass. Coverage and regeneration thresholds may be device-specific, Calendar-specific, or execution-mode-specific. This is not final.
 
 ### Resolution
 
@@ -1762,7 +1770,7 @@ Partially established by `UBU-D0094`; detailed artifact schema, implementation b
 
 ## UBU-Q0050: Minimum Phase 1 bootstrap interview and next-action focus UX
 
-Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 public demo, nontechnical onboarding, mock app prototype, Release Outreach Pipeline demo scripts Resolved by: UBU-D0096, UBU-D0102 Last scored: Never Scored from commit: None
+Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 public demo, nontechnical onboarding, mock app prototype, Release Outreach Pipeline demo scripts Resolved by: UBU-D0096 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1789,23 +1797,7 @@ The UI should not imply that UbU already understands all of the user’s emails,
 
 ### Resolution
 
-Solved by `UBU-D0102`, extending `UBU-D0096`. Phase 1 uses a narrow dogfooding bootstrap interview and one-task focus mode grounded in explicit UbU state.
-
-The minimum bootstrap interview asks eight prompts: current project/context; main desired outcome for the next few work sessions; up to two competing or supporting Objectives; one visible deadline, risk, or pressure; available work window; fixed constraints, blocked preconditions, or interruptions; current energy, stress, and mood; and a simple ranking or indifference judgment among the surfaced Objectives. Fixtures may prefill demo answers, but the user must be able to inspect and correct them.
-
-Answers become explicit objects: project/context becomes a UniverseState fact and Log entry; outcomes become active Objectives; rankings become pairwise Preferences or a Log note when declined; affect answers become a user-declared Snapshot; availability, deadlines, constraints, and blocked preconditions become UniverseState facts, Task fields, preconditions, or Logs; and seed work becomes one to three active schedulable Tasks linked to Objectives.
-
-The minimum data required to recommend one next Task is one active Objective, one active schedulable linked Task, a duration or work-window estimate, current availability, current or stale affect status, known dependencies or preconditions when any are modeled, and provenance showing whether each input came from the user, a fixture, or imported GitHub source. Missing or stale affect either creates an affect-collection Task or appears as a risk in the explanation.
-
-The `why this matters now` explanation names the linked Objective, declared priority or Preference, deadline or dependency pressure, affect or availability constraint, relevant risk finding, worker/projection status when relevant, and source category for important inputs. It must not expose derived utility as the user's real value or present fixture-backed behavior as implemented intelligence.
-
-The next-action screen exposes start, done, snooze, reject, decompose, override, and explain-more controls, plus an inspect-Plan control. Full-Plan inspection shows the ordered default Plan, alternatives or blocked Tasks when available, and the state facts used by the recommendation.
-
-Feedback after completion, failure, rejection, snooze, decomposition, or override asks what happened, whether the estimate was plausible, whether the Task still matters, whether affect or context changed, and whether the model should update a Task, Objective, Snapshot, Preference, constraint, or estimate. The result is recorded as Log evidence and triggers recalculation when it changes Task status, availability, affect, preconditions, Objective fit, or estimates.
-
-Mock apps, demos, and Release Outreach Pipeline scripts must distinguish fixture-backed recommendations, hardcoded UI prototypes, dry-run GitHub projections, advisory LLM text, and implemented planner behavior. The public demo loop is bootstrap, explicit model creation, candidate Plan, one next Task, inspectable why, user action or override, feedback Log, recalculation, and changed model or risk summary.
-
-Public materials must avoid claims of broad personal-data ingestion, therapeutic authority, autonomous life coaching, complete planning automation, complete privacy isolation, secure multi-device sync, hidden user-value inference, or implemented integrations beyond approved fixtures and explicitly configured routes. The honest Phase 1 claim is that UbU can recommend one meaningful next action for the dogfooding context and explain it from explicit, inspectable state.
+Partially established by `UBU-D0096`; detailed bootstrap-question content, UI controls, fixture boundaries, implementation boundary, and demo-script treatment remain open.
 
 ---
 
@@ -1972,6 +1964,106 @@ Open.
 
 ---
 
+## UBU-Q0057: Evergreen Dynamic Task and gap-filling semantics
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016 Blocks: Gap filling before Static Tasks, mobile next-action UX, Calendar preview quality Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU represent evergreen Dynamic Tasks or evergreen Objective-maintenance Tasks that can fill spare time when all predetermined Tasks before the next Static Task are complete, blocked, moot, or unsuitable?
+
+### Subquestions
+
+1. Are evergreen gap-fillers a Task subtype, a Task property, an Objective-maintenance pattern, a Technique-instantiation rule, or planner behavior?
+2. What fields are required?
+   - flexible start time
+   - flexible duration
+   - minimum useful duration
+   - maximum useful duration
+   - location invariance or broad location category
+   - required materials or device state
+   - affect suitability
+   - cooldown/frequency limit
+   - Objective link
+   - recurrence/reactivation rule
+3. How should UbU choose among evergreen candidates such as meditation, Calendar preview, Log review, lightweight cleanup, reflection, review queues, or relationship-maintenance prompts?
+4. How should evergreen Tasks avoid becoming filler that crowds out recovery, transition time, or user autonomy?
+5. How should the reactive branch layer consider evergreen Tasks when early completion creates a gap before the next Static Task?
+6. Which evergreen semantics are necessary for Phase 1 and which can wait?
+
+### Current direction
+
+The planner should not leave the user with unexplained idle gaps merely because all predetermined Dynamic Tasks before a Static Task are complete. UbU should be able to suggest or schedule useful evergreen Dynamic Tasks when constraints allow, but the exact representation remains open.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0058: Adaptive planning granularity and offline precomputation policy
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016 Blocks: Mobile-only planning, offline mode, low-power mode, Compact Calendar runtime policy Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU choose, switch, and explain Compact Calendar time delta, branch horizon, and branch coverage settings across full-detail, mobile, low-power, and offline execution modes?
+
+### Subquestions
+
+1. Should default deltas be exactly one minute, five minutes, and fifteen minutes, or configurable presets?
+2. What user-visible explanation is required when UbU switches to a coarser delta?
+3. Which triggers cause dynamic execution-mode switching?
+   - low battery
+   - thermal throttling
+   - offline state
+   - expected offline window
+   - heavy workload
+   - user setting
+   - missing external worker
+4. How much precomputation should UbU run before a known offline window?
+5. How should cached plans expire after the user's actual behavior diverges from the precomputed branch?
+6. What is the minimum mobile-only guarantee for preserving the core UbU experience?
+
+### Current direction
+
+Provisional defaults are one-minute full-detail delta, five-minute moderate mobile delta, fifteen-minute low-power/offline delta, one-hour reactive horizon, and `0.99` short-horizon branch coverage target. Mobile-only UbU must preserve the core experience, but may use coarser granularity, shallower branch coverage, reduced analysis depth, and fewer LLM-assisted features.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0059: Execution-provider trust, worker backends, and privacy-preserving compute roadmap
+
+Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016 Blocks: Phase 2 personal worker devices, hosted compute policy, third-party provider compatibility Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU define the trust, privacy, capability, API, and disclosure boundary for execution backends beyond the current local instance?
+
+### Subquestions
+
+1. What is the minimum Phase 2 personal worker protocol for a user-owned laptop, desktop, or server?
+2. How should the planner route work among mobile, local desktop/laptop, personal worker, corporate cloud, and third-party provider backends?
+3. What Compartment rules, PII stripping, encryption, redaction, and provenance are required before any external backend receives work?
+4. What must be open-core so FOSS contributors can inspect, run, modify, and self-host the planning loop without a hidden service?
+5. How should third-party UbU-compatible providers interoperate without being privileged over local execution?
+6. Should dedicated personal worker appliances be treated as commercial packaging, reference hardware, or future product work?
+7. How should future practical FHE-backed or comparable encrypted compute be prioritized if it becomes viable?
+8. Should idle compute monetization be an external API-enabled user choice rather than an UbU corporate marketplace?
+
+### Current direction
+
+Cloud or external compute may improve performance, granularity, and analysis depth, but must not be a hidden mandatory dependency for the open-core planning loop. User-owned worker devices are Phase 2. Dedicated appliances, corporate cloud, third-party providers, compute monetization, and FHE/private encrypted compute are future commercial or strategic-research directions.
+
+### Resolution
+
+Open.
+
+---
+
 ## Suggested Initial GitHub Issues
 
 Create these first:
@@ -2005,3 +2097,6 @@ Create these first:
 27. `UBU-Q0054`: Analyze social identity theory impact on Identity, role, group membership, and mode switching
 28. `UBU-Q0055`: Analyze social choice theory and collective decision legitimacy
 29. `UBU-Q0056`: Analyze game theory, strategic interaction, and counterparty modeling
+30. `UBU-Q0057`: Define Evergreen Dynamic Task and gap-filling semantics
+31. `UBU-Q0058`: Define adaptive planning granularity and offline precomputation policy
+32. `UBU-Q0059`: Define execution-provider trust, worker backends, and privacy-preserving compute roadmap

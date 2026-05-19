@@ -120,6 +120,34 @@ Prototype funding is compatible with UbU only if it funds trunk features needed 
 
 ---
 
+## Planning kernel direction
+
+UbU's Calendar model now distinguishes two planning responsibilities.
+
+First, the planner must produce a complete **default Plan** from the current time to the end of the Calendar scope. The default Plan is a deterministic, ordered, explainable set of upcoming Tasks. It is the Plan the user can preview and ask about: why this Task, why now, what dependency does it satisfy, what Objective does it advance, what risk does it reduce, and what constraint shaped the timing.
+
+Second, the runtime needs a short-horizon reactive branch layer so the system can adapt when reality diverges. Early completion, late completion, interruptions, external events, and user overrides should not require an expensive whole-world reanalysis before the user can continue. The provisional direction is DFS or DFS-like generation for the full default Plan, plus a bounded BFS or BFS-like cache of high-probability near-term alternatives.
+
+The default Plan is selected by **Plan probability** among deterministic candidate Plans. Each candidate Plan is individually optimized for value while satisfying constraints in its modeled branch; the default selection step chooses the candidate with the highest modeled probability.
+
+---
+
+## Mobile-first, local-first, and scalable compute
+
+UbU should remain useful in mobile-only mode. Mobile-only UbU must preserve the core experience, but may use coarser planning granularity, shallower branch coverage, reduced analysis depth, and fewer LLM-assisted features.
+
+Provisional Compact Calendar defaults are:
+
+- one-minute full-detail planning delta;
+- five-minute moderate mobile delta;
+- fifteen-minute low-power or offline delta;
+- one-hour reactive branch horizon;
+- `0.99` short-horizon branch coverage target.
+
+Cloud or external compute may improve performance, granularity, and analysis depth, but must not be a hidden mandatory dependency for the open-core planning loop. Future execution backends may include user-owned laptops/desktops, Phase 2 personal worker devices, dedicated appliances, UbU hosted services, third-party compatible providers, and future privacy-preserving compute such as practical encrypted computation.
+
+---
+
 ## Human-complete planning
 
 UbU treats affect as a core part of planning, not a decorative wellness feature.
