@@ -18,7 +18,7 @@ UbU aims to become a planning kernel for individuals and organizations.
 
 It models Objectives, Tasks, Preferences, Plans, Calendars, Logs, UniverseState, external events, worker automation, privacy compartments, Identities, and human affect.
 
-It turns messy real-world inputs into explicit, inspectable, recalculable plans.
+It turns messy real-world inputs into explicit, inspectable, recalculable plans. One major future product direction is turning flat messages into context-rich communication events that can be triaged by a user's plan instead of merely appearing as another notification.
 
 The first MVP is intentionally practical:
 
@@ -330,6 +330,32 @@ Private human state should not become team telemetry.
 
 ---
 
+
+## Context-rich messaging as a product wedge
+
+Legacy messaging systems are useful but context-poor. A WhatsApp text, Discord post, IRC line, Slack message, SMS, or email usually carries the message body and a little transport metadata. It rarely carries the explicit planning context that determines whether the receiver should interrupt their current work, defer the message, create a Task, update an Objective, or ask a clarifying question.
+
+UbU's Phase 3 cross-user communication should make this a premier feature.
+
+A UbU-to-UbU message can carry a bounded Message Context Envelope:
+
+- message kind;
+- topic;
+- related Objective or Task when shareable;
+- Association or channel context when appropriate;
+- priority and interrupt recommendation;
+- response expectation or deadline;
+- assumptions and ambiguities;
+- provenance, confidence, and disclosure policy.
+
+This can also work as a bridge from legacy systems. If only one person uses UbU, their instance can locally extract structure from flat messages and turn them into candidate Tasks, review items, or Relationship observations. If both people use UbU, the same legacy exchange can be upgraded by attaching, linking, or side-channeling richer metadata between UbU instances.
+
+That creates a natural adoption path: users can invite contacts to use UbU because both sides receive better priority handling, less ambiguity, and more respectful asynchronous coordination. This should be value-led, opt-in, and non-spammy. UbU should not use manipulative viral loops.
+
+A later communication feature may support optional personalized TTS or voice descriptors, where a text message plus consented voice metadata can be rendered as speech by the receiver's device. This is an expressive and accessibility-oriented direction, but voice metadata is sensitive and must be protected against impersonation.
+
+---
+
 ## Problems we are testing
 
 UbU outreach is currently testing whether autonomous developer teams have recurring problems that conventional tools do not model well:
@@ -339,6 +365,7 @@ UbU outreach is currently testing whether autonomous developer teams have recurr
 - blocked issues or PRs that are not clearly visible;
 - overloaded maintainers who do not want surveillance;
 - async messages that imply work but never become explicit tasks;
+- flat legacy messages that hide priority, topic, response expectation, assumptions, and ambiguity;
 - contributors who need autonomy but teams that still need coordination;
 - project status projections that drift away from reality;
 - tools that track assignment and deadline state but not objective, dependency, risk, uncertainty, or human constraint state.
@@ -841,6 +868,8 @@ Useful early tasks include:
 - create example GitHub issue data that should become UbU WorkItems;
 - create example PR-review queues that should become UbU planning inputs;
 - document one real maintainer coordination failure that conventional tools failed to model;
+- create example direct-message and group-chat snippets that should compile into Tasks, priority decisions, or clarification requests;
+- draft validation fixtures for Message Context Envelope and Message Extraction Result schemas;
 - draft a fixture-backed release outreach package for a minor UbU release;
 - define screenshot and demo-capture provenance metadata for the Release Outreach Pipeline.
 

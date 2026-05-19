@@ -2916,3 +2916,115 @@ The outreach process should later be submitted to LLM-assisted or manually revie
 - The strongest outreach challenge is: `Can your project prove from its records that it is actually committed to achieving its stated goals?`
 - The challenge should be memorable but not accusatory; it should invite shared discipline rather than imply that other maintainers are hypocrites.
 - Follow-up artifacts should convert social interest into explicit Tasks, commitments, contributor paths, and review questions.
+
+---
+
+## UBU-D0117: Context-rich cross-user messaging is a premier Phase 3 feature
+
+**Status:** Accepted
+
+Direct project directive.
+
+Phase 3 minimal multi-user coordination should include a limited but meaningful form of cross-user contextual messaging. This should be treated as a premier Phase 3 feature, not merely as an incidental transport detail.
+
+A UbU message is not only flat text. It is a communication event that may carry structured planning context. Even a minimal Phase 3 message envelope can help the receiving UbU instance decide whether a message should interrupt the current Plan, be deferred to a later review window, become a Task, update an Objective, or remain ordinary communication history.
+
+A minimal Phase 3 **Message Context Envelope** should include only fields that are safe, useful, and policy-permitted, such as:
+
+- sender and receiver Identity references or external references;
+- source system or transport;
+- raw or human-readable message body;
+- message kind, such as request, status update, question, commitment, blocker, reminder, or FYI;
+- topic or associated Objective/Task/Association references when disclosure policy allows them;
+- requested response kind and any explicit deadline;
+- priority and interrupt recommendation;
+- known assumptions and ambiguities;
+- provenance and confidence fields;
+- disclosure and Compartment policy metadata.
+
+Richer relationship reconstruction, subjective social context, long-term Relationship history exchange, Association synchronization, and detailed multi-party trust semantics may remain post-MVP.
+
+**Consequences:**
+
+- Phase 3 is not only about shared objects and commitments; it should include context-aware asynchronous communication.
+- The receiving UbU instance should be able to triage messages against its Calendar and current Plan.
+- Minimal metadata is valuable even before UbU can exchange deep subjective relationship models.
+- Metadata sharing must remain bounded by Identity, Compartment, and disclosure policy.
+
+---
+
+## UBU-D0118: Legacy messaging adapters may upgrade flat messages into UbU contextual messages
+
+**Status:** Accepted as product and interoperability direction
+
+UbU should be able to ingest and, where permitted, send through legacy communication systems such as WhatsApp, SMS, email, Discord, IRC, Slack, Matrix, or similar systems.
+
+When only one side uses UbU, the legacy message remains a flat external input. UbU may scan, classify, summarize, and convert it into local candidate Tasks, Events, Logs, Relationship observations, or Association evidence, subject to user permission and integration policy.
+
+When both sides use UbU, the two instances should be able to translate the legacy exchange into a UbU-native contextual message format. Depending on the transport and policy, this may happen through a side channel, an attached envelope, an agreed encoding, a linkable External Reference, or another adapter-specific mechanism. The raw legacy text remains the user-visible message; the UbU envelope supplies structured context.
+
+This creates a practical bridge from legacy systems into richer UbU-to-UbU communication without requiring the rest of the world to abandon existing messaging platforms first.
+
+**Consequences:**
+
+- UbU should define a stable internal message-envelope schema before binding it to any one legacy transport.
+- Legacy adapters must preserve user consent, platform constraints, and Compartment boundaries.
+- UbU-to-UbU metadata must not silently leak private Relationship, Objective, Task, or Association context.
+- This interoperability can become an adoption path: legacy contacts can experience the benefit of richer coordination and may choose to install UbU.
+
+---
+
+## UBU-D0119: Structured message extraction is a bounded LLM-assisted normalization layer
+
+**Status:** Accepted as architectural direction
+
+UbU will ingest large volumes of unstructured direct-message and group-chat text from legacy systems. A dedicated **Message Context Extractor** should normalize those inputs into strict UbU JSON structures.
+
+The extractor should take raw message text plus available metadata, such as source system, channel type, channel purpose, sender, receiver, Identity mapping, Association mapping, timestamp, thread context, Relationship context, and Compartment policy. It should output bounded structures describing message kind, topic, priority, interrupt level, candidate Tasks, Objective links, assumptions, ambiguities, actionability, response expectation, confidence, and provenance.
+
+The extractor is not the canonical planner and must not silently mutate canonical state. Its outputs are candidate interpretations that pass through schema validation, provenance marking, confidence scoring, repair loops, and user or policy acceptance where required.
+
+Phase 3 and early post-MVP implementations should begin with general LLMs constrained by strict schemas, grammar-constrained output where practical, validation, and repair. Fine-tuned, distilled, or adapter-trained extractor models may become attractive after UbU has stable schemas and enough corrected examples. Training a new foundation model from scratch is not currently justified.
+
+**Consequences:**
+
+- UbU should treat message ingestion as semantic compilation from unstructured communication into planning-relevant candidate state.
+- Every extracted field should distinguish explicit source facts from inferred, guessed, or user-confirmed facts.
+- Custom extractor models are plausible later for privacy, latency, cost, and reliability, but should not block MVP or Phase 3 schema work.
+- Group-channel interpretation should use channel and Association metadata where available, but must remain uncertainty-aware when context is missing.
+
+---
+
+## UBU-D0120: Personalized voice/TTS descriptors are optional consent-gated communication metadata
+
+**Status:** Accepted as future product direction, not Phase 1 scope
+
+UbU may eventually support optional voice or pronunciation descriptors so that a receiving UbU instance can render text messages using text-to-speech that approximates the sender's usual voice, pronunciation, cadence, or expressive style.
+
+This can be viewed as a communication-compression feature: instead of sending a noisy audio recording, a user may send text plus a voice descriptor or voice-profile reference, allowing the receiver's device to synthesize a locally rendered spoken version. The same idea may also help accessibility, hands-free interaction, language learning, and more expressive asynchronous updates.
+
+Voice data is sensitive. A voice descriptor or voice profile must be opt-in, revocable where practical, policy-governed, and clearly separated from authentication. UbU should not treat a synthesized voice as proof that a human actually spoke the words. Implementations should consider visible disclosure, watermarking or provenance markers, anti-impersonation controls, and restrictions on cross-context reuse.
+
+**Consequences:**
+
+- Personalized TTS belongs to communication UX and accessibility, not canonical planning correctness.
+- Voice profiles are biometric-like sensitive data and should require strong Compartment controls.
+- Legacy flat text can become richer on the receiving side without forcing the sender to transmit full audio.
+- This feature is post-MVP unless a very narrow accessibility-oriented version becomes necessary earlier.
+
+---
+
+## UBU-D0121: Messaging interoperability can support value-led viral outreach without coercive growth loops
+
+**Status:** Accepted as outreach/product direction
+
+Legacy messaging integration can create a natural adoption path. A UbU user interacting with a non-UbU contact may receive immediate value from local extraction, prioritization, task creation, and planning integration. If both people install UbU, they can exchange richer structured context and reduce ambiguity, missed requests, and priority confusion.
+
+This is a plausible viral outreach mechanism: the product becomes more useful when counterparties also use it. However, UbU should not use manipulative dark patterns, spammy invitations, forced signatures, or guilt-based prompts. The adoption message should be value-led: richer coordination, clearer priority, less lost context, and better respect for both users' time.
+
+**Consequences:**
+
+- Public messaging may describe UbU as a way to make legacy communication more actionable.
+- Invitation flows should be optional, user-authored or clearly user-approved, and respectful of the recipient.
+- Viral adoption should follow from real coordination value, not from artificial network pressure.
+- Cross-user features must preserve UbU's privacy and sovereignty commitments.

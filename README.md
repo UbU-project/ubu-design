@@ -10,7 +10,7 @@
 
 **UbU** is a privacy-first planning, coordination, and self-governance system.
 
-UbU is intended to convert messy real-world inputs - tasks, calendar events, messages, external events, user preferences, physical and affective state, GitHub/project data, and integration data - into explicit, inspectable, recalculable plans.
+UbU is intended to convert messy real-world inputs - tasks, calendar events, messages, external events, user preferences, physical and affective state, GitHub/project data, and integration data - into explicit, inspectable, recalculable plans. A message should eventually be treated as a context-bearing communication event, not merely a flat text string.
 
 UbU is not merely a task list, calendar application, or project-management dashboard. It is intended to become a planning kernel for individuals and organizations: a system that models desired outcomes, constraints, risks, dependencies, available time, and human limitations, then helps determine what should happen next.
 
@@ -63,6 +63,10 @@ UbU is based on several design principles:
 10. **Provider-neutral LLM execution**
 
    Local LLM execution remains the privacy-preserving baseline, but optional cloud LLMs, BYOK providers, UbUCorp managed inference, and user-owned workers should be routed through explicit policy rather than hidden dependency.
+
+11. **Context-rich communication**
+
+   Phase 3 should include minimal UbU-to-UbU contextual messaging so messages can carry priority, topic, response expectation, assumptions, ambiguities, provenance, and disclosure policy instead of forcing the receiver to infer everything from flat text.
 
 ---
 
@@ -282,9 +286,9 @@ Phase 2 validates:
 
 ### Phase 3: Minimal multi-user / Identity coordination
 
-Multiple humans coordinate through explicit Identities, capabilities, limited disclosure, and commitments.
+Multiple humans coordinate through explicit Identities, capabilities, limited disclosure, contextual messages, and commitments.
 
-Phase 3 should enable coordination without surveillance or shared global truth.
+Phase 3 should enable coordination without surveillance or shared global truth. A premier Phase 3 feature is a minimal Message Context Envelope that lets a receiver's UbU triage asynchronous messages by priority, interrupt level, topic, response expectation, and actionability.
 
 ---
 
@@ -303,6 +307,9 @@ The UbU model currently includes:
 - Plan
 - Calendar
 - Log
+- Message Context Envelope
+- Message Extraction Result
+- Voice Profile Descriptor
 - Identity
 - Relationship
 - Zone
@@ -346,6 +353,25 @@ Worker mode is used by Automation Workers and may perform LLM calls, GitHub proc
 
 ---
 
+
+
+## Contextual messaging and legacy communication
+
+UbU should eventually make communication more efficient by attaching structured context to messages.
+
+A legacy message such as a WhatsApp text, Discord post, IRC line, SMS, email, or Slack message is usually flat. It includes text, sender, time, and maybe a channel label, but it rarely carries the planning context that determines what the receiver should do with it.
+
+UbU-to-UbU communication can include a bounded Message Context Envelope: message kind, topic, related Objective or Task when shareable, Association context when appropriate, priority, interrupt recommendation, response expectation, assumptions, ambiguities, provenance, and disclosure policy.
+
+This is valuable even in minimal Phase 3 form because it helps the receiving UbU decide whether to interrupt the current Plan, create a Task, update an Objective, or defer the message to a communication-review window.
+
+Legacy integrations can still help one-sided users by extracting candidate structure from flat messages. When both parties use UbU, the same legacy transport may be upgraded through an attached, linked, or side-channeled UbU envelope.
+
+Structured message extraction should begin with schema-constrained LLMs or local models plus validation and repair. Fine-tuned extractor models may become useful later after UbU has stable schemas and corrected examples.
+
+Optional personalized TTS or voice descriptors are a future communication/accessibility direction, but voice metadata is sensitive and must be opt-in, compartmentalized, separated from authentication, and designed to avoid deceptive impersonation.
+
+---
 
 ## Association and organizational introspection
 

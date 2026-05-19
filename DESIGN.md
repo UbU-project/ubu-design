@@ -210,6 +210,23 @@ Local-first operation remains the philosophical baseline. Cloud LLM use may impr
 
 ---
 
+
+### 2.12 Context-rich messaging and legacy communication upgrade
+
+UbU should treat messages as planning-relevant communication events, not merely flat text strings.
+
+A normal WhatsApp, SMS, Discord, IRC, Slack, Matrix, or email message often lacks explicit context. The context exists in the sender's intent, the recipient's Relationship history, the channel purpose, the Association involved, the current Objective, the implied Task, the expected response time, and the consequences of ignoring or delaying the message.
+
+UbU should eventually support **context-rich asynchronous messaging** in which a message may carry a bounded metadata envelope: message kind, topic, related Objective or Task, related Association, priority, interrupt recommendation, response expectation, assumptions, ambiguities, provenance, and disclosure policy.
+
+For Phase 3, a minimal version of this is a premier feature because it allows a receiving UbU instance to decide whether the message should interrupt an existing Plan, become a Task, update an Objective, or wait for a normal communication-review window.
+
+Legacy-system integration can still provide value before native UbU-to-UbU messaging exists. UbU may ingest flat legacy messages and use a structured extraction layer to generate candidate planning state. When both parties have UbU, legacy transports may be upgraded by attaching, linking, or side-channeling a UbU Message Context Envelope while preserving the normal human-readable legacy message.
+
+This metadata must be intentionally bounded. UbU should not leak private Relationship history, hidden Objectives, private Association assumptions, or sensitive Compartment contents simply because the receiver would benefit from richer context.
+
+---
+
 ## 3. Model-committee dogfooding
 
 UbU may use model-committee automation to help maintain its own design process.
@@ -496,12 +513,21 @@ Phase 2 explicitly defers:
 - sync conflict handling;
 - cross-device worker or enclave coordination beyond the single local instance boundary.
 
-Phase 3 explicitly defers:
+Phase 3 explicitly includes:
 
-- multi-human coordination;
-- shared global or partially shared project truth between users;
-- user-to-user Identity commitments, capabilities, and limited disclosure;
-- multi-party governance, invitation, revocation, or trust protocols.
+- minimal cross-user contextual messaging between UbU instances;
+- user-to-user Identity-mediated requests, status updates, questions, commitments, and blockers;
+- bounded Message Context Envelopes carrying priority, interrupt recommendation, topic, response expectation, assumptions, ambiguities, provenance, and disclosure policy;
+- legacy-message ingestion and limited upgrade paths where both parties use UbU;
+- user-to-user Identity commitments, capabilities, and limited disclosure sufficient for narrow coordination.
+
+Phase 3 still defers:
+
+- shared global project truth between users;
+- rich subjective Relationship-model exchange;
+- full Association synchronization;
+- multi-party governance, invitation, revocation, or trust protocols;
+- broad personal-data ingestion beyond selected communication integrations.
 
 Phase 1 keeps these abstractions documented for compatibility but does not implement them:
 
@@ -511,7 +537,7 @@ Phase 1 keeps these abstractions documented for compatibility but does not imple
 - organization-mode and worker-mode web admin consoles;
 - richer relationship-management, personal CRM, and longitudinal affect/growth models;
 - full Release Outreach Pipeline video generation, rendering, and publication workflow;
-- broad email, text-message, file, invoice, note, or personal-data ingestion;
+- broad email, text-message, file, invoice, note, or personal-data ingestion outside narrow approved dogfooding fixtures;
 - adaptive model-committee weighting, automatic patch application, GitHub mutation, and direct cloud-provider APIs.
 
 Stop rule:
@@ -717,6 +743,9 @@ The core model includes:
 - Plan
 - Calendar
 - Log
+- Message Context Envelope
+- Message Extraction Result
+- Voice Profile Descriptor
 - Identity
 - Relationship
 - Zone
@@ -1693,7 +1722,80 @@ The organizational-introspection hook for outreach is: `Can your project prove f
 
 ---
 
-## 20. Relationships
+
+## 20. Contextual Messaging and Message Extraction
+
+A **Message Context Envelope** is a bounded metadata wrapper around a human-readable message or external message reference.
+
+It exists because ordinary legacy messages often under-specify the planning context needed by the receiver. A flat text request such as `can you grab milk?` may imply a household Objective, a grocery Task, a route constraint, a known Relationship, a typical milk type, a soft deadline, and a low-to-medium interrupt level. Legacy systems usually transmit only the text and a small amount of transport metadata.
+
+A future Message Context Envelope may include:
+
+- `message_id`;
+- `source_system`;
+- `transport_reference` or External Reference;
+- `sender_identity_ref`;
+- `receiver_identity_ref` or intended audience;
+- `channel_ref` or Association reference;
+- `raw_body` or content reference;
+- `message_kind`;
+- `topic`;
+- `objective_refs`;
+- `task_refs` or candidate Task description;
+- `priority`;
+- `interrupt_recommendation`;
+- `response_expectation`;
+- `deadline_or_review_window`;
+- `assumptions`;
+- `ambiguities`;
+- `provenance`;
+- `confidence`;
+- `disclosure_policy`;
+- `compartment_ref`.
+
+A **Message Extraction Result** is a candidate interpretation produced by an Automation Worker, parser, or LLM-assisted extractor from raw or semi-structured communication. It should distinguish:
+
+- facts explicit in the message;
+- facts explicit in channel or transport metadata;
+- facts inferred from thread context;
+- facts inferred from Relationship history;
+- facts inferred from Association context;
+- model guesses;
+- user-confirmed corrections.
+
+Message extraction is advisory until accepted into canonical state. The extractor may propose Tasks, Events, Objective updates, Relationship observations, AssociationAttestations, or communication-review items, but it should not silently mutate canonical state.
+
+### 20.1 Native UbU-to-UbU contextual messaging
+
+Native UbU-to-UbU communication should allow a sender to disclose selected context intentionally. The receiving instance can then use that context to triage the message against the current Plan.
+
+A minimal Phase 3 implementation should support enough metadata for priority and interrupt decisions. Richer subjective Relationship context, detailed Association reconciliation, and multi-party trust semantics may remain post-MVP.
+
+### 20.2 Legacy communication adapters
+
+Legacy adapters may ingest or emit messages through systems such as WhatsApp, SMS, email, Discord, IRC, Slack, Matrix, or similar systems when permitted by the user and the service boundary.
+
+If only one party has UbU, the message remains a flat legacy input and UbU may locally extract candidate structure. If both parties have UbU, the instances may upgrade the exchange by attaching, linking, side-channeling, or otherwise associating a Message Context Envelope with the legacy message.
+
+This is an interoperability bridge, not a reason to leak hidden local state. Each field must be filtered through Identity, Compartment, disclosure, and recipient policy.
+
+### 20.3 Structured extraction model strategy
+
+The initial extractor strategy should use general LLMs or local models constrained by schemas, validation, and repair loops. A specialized fine-tuned or distilled extractor model may become valuable later after UbU has stable schemas and corrected training examples.
+
+The system should not require a new foundation model. The likely requirement is reliable structured extraction, not open-ended conversation.
+
+### 20.4 Personalized TTS and voice descriptors
+
+A **Voice Profile Descriptor** is a future optional communication metadata object that may describe pronunciation, cadence, voice style, or a reference to an approved local voice profile.
+
+The intended use is expressive and accessibility-oriented rendering: a receiver may convert text into spoken audio approximating the sender's usual style without receiving a noisy full audio recording. This can compress communication from audio to text plus metadata.
+
+Voice descriptors are sensitive. They must be opt-in, policy-governed, clearly separated from authentication, and protected against deceptive impersonation.
+
+---
+
+## 21. Relationships
 
 A **Relationship** is structured UniverseState data representing the relationship between two Identities.
 
@@ -1712,7 +1814,7 @@ Neglect risk is not stored on Relationship in MVP. It is a risk-report finding d
 
 ---
 
-## 21. Zones, Devices, and Compartments
+## 22. Zones, Devices, and Compartments
 
 ### 21.1 Device
 
@@ -1783,7 +1885,7 @@ Phase 1 can honestly claim that cloud LLM usage is optional, explicit, and advis
 
 ---
 
-## 22. Automation Workers and Super Automation
+## 23. Automation Workers and Super Automation
 
 ### 22.1 Automation Worker
 
@@ -1872,7 +1974,7 @@ It may include:
 
 ---
 
-## 23. Organization Mode
+## 24. Organization Mode
 
 Organization mode is an instance-wide option.
 
@@ -1921,7 +2023,7 @@ No organization-mode web admin UI is required for Phase 1. The Phase 1 public de
 
 ---
 
-## 24. GitHub Dogfooding and Projection
+## 25. GitHub Dogfooding and Projection
 
 GitHub is a projection of UbU state, not the source of truth.
 
@@ -1986,7 +2088,7 @@ Possible comparisons:
 
 ---
 
-## 25. Risk Reporting
+## 26. Risk Reporting
 
 Risk is not a first-class object in MVP.
 
@@ -2018,7 +2120,7 @@ Affect-related risk reports should name plan fragility, not user blame. Phase 1 
 
 ---
 
-## 26. Recalculation Triggers
+## 27. Recalculation Triggers
 
 Candidate MVP recalculation triggers:
 
@@ -2041,7 +2143,7 @@ Final trigger list remains open.
 
 ---
 
-## 27. Current Major Open Questions
+## 28. Current Major Open Questions
 
 The major remaining questions are tracked in `OPEN_QUESTIONS.md`.
 
@@ -2071,12 +2173,16 @@ Key unresolved areas include:
 - Public dogfooding artifact publication policy
 - Association object model, subjective attestation, and reconciliation
 - Organizational introspection and AssociationAttestation extraction
+- Context-rich cross-user messaging and Message Context Envelope schema
+- Legacy communication adapter boundaries and UbU-to-UbU upgrade paths
+- Structured message extraction schema, provenance, and model strategy
+- Personalized TTS, voice descriptors, and anti-impersonation controls
 - Cloud LLM provider abstraction and UbUCorp boundary
 - Sovereign Skill Exchange as a future Association specialization
 
 ---
 
-## 28. Design Process
+## 29. Design Process
 
 The GitHub repository is the canonical public design process for UbU.
 

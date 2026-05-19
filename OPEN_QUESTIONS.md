@@ -2229,6 +2229,116 @@ Open.
 
 ---
 
+## UBU-Q0066: Minimal Phase 3 Message Context Envelope schema
+
+Status: Open Priority: MVP important Phase: Phase 3 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0061, UBU-Q0062 Blocks: Phase 3 cross-user communication, message priority triage, UbU-to-UbU interoperability Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What is the minimum Message Context Envelope schema required for Phase 3 cross-user communication to support useful priority, interrupt, Task, Objective, and response triage without leaking excessive private context?
+
+### Subquestions
+
+1. Which fields are required for Phase 3: sender Identity, receiver Identity, source system, raw body, message kind, topic, priority, interrupt recommendation, response expectation, deadline, assumptions, ambiguities, provenance, confidence, disclosure policy, and Compartment?
+2. Which fields may reference local-only objects without disclosing hidden identifiers or private Objective/Task details?
+3. How should the sender specify whether the receiver may treat the message as a Task, status update, blocker, commitment, or FYI?
+4. How should a receiver's UbU convert envelope metadata into Calendar interruption, communication review, or Task-creation suggestions?
+5. What provenance and confidence markings are required when metadata is inferred rather than explicitly provided?
+6. What minimum user controls prevent accidental disclosure of Relationship, Association, Objective, or Compartment state?
+
+### Current direction
+
+Phase 3 should include a small context-rich messaging envelope as a premier feature. The first useful version should prioritize message kind, topic, priority, interrupt recommendation, response expectation, assumptions, ambiguities, and provenance over deep relationship reconstruction.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0067: Legacy communication adapter and UbU-to-UbU upgrade protocol
+
+Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0066 Blocks: WhatsApp/SMS/Discord/IRC/Slack/email integration, viral interoperability, native contextual messaging Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU integrate with legacy messaging systems so a flat external message can be locally interpreted by one UbU instance, and upgraded into UbU-native contextual messaging when both sender and receiver use UbU?
+
+### Subquestions
+
+1. Which legacy systems should be represented first as examples: WhatsApp, SMS, email, Discord, IRC, Slack, Matrix, or other systems?
+2. What transport patterns are acceptable: side channel, attachment, linkable External Reference, embedded metadata, shared relay, or explicit native UbU transport?
+3. How should two UbU instances discover that both sides support richer contextual messaging without creating spam, surveillance, or platform-policy violations?
+4. How should raw legacy messages remain human-readable while contextual envelopes remain machine-readable?
+5. How should UbU handle one-sided use, where only the local user has UbU?
+6. What consent, disclosure, and Compartment checks are mandatory before sending structured context to another user?
+7. How should invitation flows encourage adoption without coercive or spammy viral loops?
+
+### Current direction
+
+UbU should define a stable internal message envelope first, then bind it to legacy transports through adapters. Legacy integration can become a value-led adoption path, but must preserve user consent, recipient respect, and privacy boundaries.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0068: Structured message extraction schema, validation, and model strategy
+
+Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0066 Blocks: direct-message ingestion, group-chat ingestion, communication-to-Task conversion, Association evidence extraction Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU implement the Message Context Extractor that converts unstructured direct-message and group-chat text plus available metadata into strict UbU JSON candidate structures?
+
+### Subquestions
+
+1. What input bundle should the extractor receive: raw message, source system, channel type, channel purpose, sender, receiver, Identity mapping, Association mapping, timestamp, thread context, Relationship history, and Compartment policy?
+2. What output schemas are required: message classification, candidate Task, Objective link, priority, interrupt recommendation, actionability, assumptions, ambiguities, response expectation, confidence, and provenance?
+3. How should validators and repair loops handle malformed JSON, invalid enum values, missing required fields, and overconfident inferences?
+4. How should UbU distinguish explicit facts, channel metadata, thread inference, Relationship inference, Association inference, model guesses, and user-confirmed corrections?
+5. Which extractor outputs can be accepted automatically, and which require user review?
+6. When should UbU consider fine-tuned, distilled, or adapter-trained extractor models instead of general LLMs with strict schemas?
+7. What training data and correction logs are needed before custom extractor models become justified?
+
+### Current direction
+
+Start with schema-constrained general LLMs or local models plus validation, repair, confidence, and provenance. Specialized extractor models are attractive later for privacy, latency, cost, and reliability, but should follow schema stabilization and labeled examples.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0069: Personalized TTS, voice-profile descriptors, and anti-impersonation controls
+
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0066 Blocks: expressive asynchronous messaging, accessibility, voice-compressed communication Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU represent optional voice or pronunciation metadata so text messages can be rendered as sender-like speech without creating unacceptable biometric, deception, or impersonation risk?
+
+### Subquestions
+
+1. What is the difference between a pronunciation descriptor, a style descriptor, a local voice profile, and a transferable voice model?
+2. Which forms should UbU allow to cross Identity, Device, Zone, Compartment, or user boundaries?
+3. How should users opt in, revoke, rotate, or restrict voice descriptors?
+4. What disclosure, watermarking, provenance, or UI indicators are required when speech is synthesized rather than actually recorded?
+5. How should UbU prevent voice synthesis from being treated as authentication or proof that the sender literally spoke the words?
+6. Are there narrow accessibility-first versions that could be implemented earlier without creating broad impersonation risk?
+
+### Current direction
+
+Voice descriptors are a promising post-MVP communication and accessibility feature. They should be consent-gated, compartmentalized, separated from authentication, and designed with anti-impersonation controls from the start.
+
+### Resolution
+
+Open.
+
+---
+
 ## Suggested Initial GitHub Issues
 
 Create these first:
@@ -2265,3 +2375,7 @@ Create these first:
 30. `UBU-Q0057`: Define Evergreen Dynamic Task and gap-filling semantics
 31. `UBU-Q0058`: Define adaptive planning granularity and offline precomputation policy
 32. `UBU-Q0059`: Define execution-provider trust, worker backends, and privacy-preserving compute roadmap
+33. `UBU-Q0066`: Define minimal Phase 3 Message Context Envelope schema
+34. `UBU-Q0067`: Define legacy communication adapter and UbU-to-UbU upgrade protocol
+35. `UBU-Q0068`: Define structured message extraction schema, validation, and model strategy
+36. `UBU-Q0069`: Define personalized TTS, voice-profile descriptors, and anti-impersonation controls
