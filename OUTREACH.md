@@ -30,6 +30,8 @@ That means using UbU to manage its own GitHub issues, open questions, pull reque
 
 UbU’s first proving ground is its own project.
 
+UbU also treats organizations broadly as **Associations**: formal or informal groups that emerge from shared Objectives, Relationships, commitments, norms, evidence, and bounded disclosure. A FOSS project, contributor crew, friend group, conference cohort, contractor network, nonprofit, company, DAO-like project, or marketplace can all be modeled as an Association without pretending that every group has one objective member list or central authority.
+
 ---
 
 ## Why UbU matters
@@ -256,6 +258,42 @@ Release outreach should be evidence-bound and privacy-aware. Claims should trace
 
 ---
 
+
+## Organizational introspection
+
+UbU should make organizational introspection a first-class feature.
+
+For a person, UbU asks whether actual behavior matches stated Objectives, Preferences, constraints, and values.
+
+For an Association, UbU asks whether actual work, decisions, resource allocation, overrides, and undocumented structure match the Association's declared mission and commitments.
+
+The product mechanism is evidence-backed review:
+
+- ingest public or permissioned records such as docs, issues, pull requests, meeting notes, public Discord or IRC logs, governance forums, board notes, calendars, and outreach notes;
+- generate candidate AssociationAttestations with provenance, confidence, source references, and review status;
+- ask uncomfortable but useful alignment questions;
+- convert accepted insights into Tasks, Objective updates, risk reports, retrospective artifacts, or explicit disputes.
+
+A useful outreach hook is:
+
+> Can your project prove from its records that it is actually committed to achieving its stated goals?
+
+This should be presented as a shared discipline, not an accusation. UbU will apply the same test to itself: EthConf notes, follow-ups, project artifacts, and public retrospectives can be submitted to LLM-assisted or manual review to ask whether UbU actually pursued its stated outreach goals.
+
+---
+
+## Sovereign coordination and skill exchange
+
+UbU's Association model also supports a future cypherpunk/privacy-builder direction: **Sovereign Skill Exchange**.
+
+This is a future specialization of lawful Association coordination, not an MVP feature and not a token-first product. The root idea is privacy-preserving skill barter and contractor coordination among autonomous Identities: pseudonymous profiles, scoped work agreements, reputation without unnecessary doxxing, explicit commitments, dispute workflows, and user-chosen settlement references where lawful.
+
+This lane may interest privacy engineers, crypto-anarchist builders, cypherpunks, Monero/privacy-coin people, and FOSS contributors who care about private coordination infrastructure.
+
+Public language should avoid illicit-market, tax-evasion, sanctions-evasion, or `darknet Upwork` framing. Prefer `lawful private settlement`, `pseudonymous skill barter`, `reputation without doxxing`, and `user-sovereign labor coordination`.
+
+---
+
 ## ETHConf 2026 feedback focus
 
 UbU is seeking feedback from people who coordinate highly autonomous technical teams, especially in Ethereum, FOSS, protocol engineering, developer tooling, privacy engineering, and infrastructure projects.
@@ -269,7 +307,8 @@ The project is especially interested in speaking with:
 - DevRel and ecosystem leads;
 - grants and milestone coordinators;
 - senior autonomous contributors;
-- people responsible for release coordination, reviews, audits, or contributor onboarding.
+- people responsible for release coordination, reviews, audits, or contributor onboarding;
+- privacy/cypherpunk builders interested in lawful sovereign skill exchange and pseudonymous coordination.
 
 The question is not merely whether another project-management tool would be useful.
 
@@ -351,6 +390,8 @@ After a conversation, useful next steps include:
 6. Review whether the Phase 1 dogfooding scope is concrete enough.
 7. Identify a FOSS, Ethereum, protocol, or research project that would be a useful design partner.
 8. Suggest a privacy-preserving boundary between private planning state and public coordination state.
+9. Share public or permissioned project records that could test organizational introspection.
+10. Help define how an Association can prove alignment between declared mission and actual work.
 
 The best early help is specific.
 
@@ -657,8 +698,11 @@ UbU combines several ideas that are usually separate:
 - affect-aware planning;
 - privacy compartments;
 - identity-mediated coordination;
+- Association modeling;
+- organizational introspection;
 - worker-mode automation;
 - GitHub dogfooding;
+- optional provider-neutral cloud LLM routing;
 - LLM-assisted but non-LLM-canonical planning;
 - recursive project self-governance.
 
@@ -863,6 +907,7 @@ Good post-ETHConf outcomes include:
 - concrete examples of fragmented work state;
 - clear disclosure-boundary preferences;
 - a ranked first wedge for the PM-facing use case;
+- a practical organizational-introspection workflow using public or permissioned records;
 - one or more design partners;
 - one or more serious implementation contributors;
 - one or more possible funding or career paths compatible with UbU’s self-governance mission.
@@ -873,6 +918,7 @@ Bad post-ETHConf outcomes include:
 - popularity without contributors;
 - requests for surveillance dashboards;
 - token-first proposals;
+- illicit-market or evasion-first interpretations of Sovereign Skill Exchange;
 - pressure to become a generic PM clone;
 - architecture debates that do not reduce design burden.
 
@@ -885,6 +931,7 @@ UbU’s project-management use case must remain subordinate to the self-governan
 UbU should not become:
 
 - manager-first surveillance software;
+- adversarial social-graph extraction or hidden organizational surveillance;
 - a productivity-scoring system for employees;
 - a generic task-board clone;
 - a centralized data trap;

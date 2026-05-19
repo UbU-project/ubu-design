@@ -14,6 +14,8 @@ UbU is intended to convert messy real-world inputs - tasks, calendar events, mes
 
 UbU is not merely a task list, calendar application, or project-management dashboard. It is intended to become a planning kernel for individuals and organizations: a system that models desired outcomes, constraints, risks, dependencies, available time, and human limitations, then helps determine what should happen next.
 
+UbU models organizations broadly as **Associations**: Identity-scoped, evidence-backed coordination structures that may be formal or informal. A FOSS project, contributor crew, friend group, event cohort, contractor network, nonprofit, company, DAO-like project, or marketplace can all be modeled as an Association when coordinated through shared Objectives, Relationships, commitments, norms, and bounded disclosure.
+
 The first MVP is designed around **dogfooding**: using UbU to coordinate the design, development, release, and maintenance of UbU itself.
 
 ---
@@ -49,6 +51,18 @@ UbU is based on several design principles:
 7. **Dogfooding**
 
    The Phase 1 MVP should help coordinate UbU’s own GitHub issues, pull requests, reviews, CI events, release milestones, design questions, and contributor interactions.
+
+8. **Association-aware coordination**
+
+   UbU treats formal organizations, informal groups, and ad hoc project communities as Associations rather than assuming every group has a single objective member list or central authority.
+
+9. **Organizational introspection**
+
+   UbU should help Associations inspect whether their real work, decisions, overrides, and undocumented structure align with their declared mission and commitments.
+
+10. **Provider-neutral LLM execution**
+
+   Local LLM execution remains the privacy-preserving baseline, but optional cloud LLMs, BYOK providers, UbUCorp managed inference, and user-owned workers should be routed through explicit policy rather than hidden dependency.
 
 ---
 
@@ -98,7 +112,9 @@ Good early collaborators may have experience with:
 - LLM orchestration;
 - FOSS maintenance;
 - high-autonomy technical work;
-- emotionally humane productivity tools.
+- emotionally humane productivity tools;
+- organizational introspection and evidence-backed project review;
+- privacy-preserving identity, reputation, and coordination systems.
 
 Casual interest is welcome, but the highest-value contributions are concrete: code, test fixtures, design review, workflow examples, prototype funding, and sustained subsystem ownership.
 
@@ -145,6 +161,8 @@ Provisional Compact Calendar defaults are:
 - `0.99` short-horizon branch coverage target.
 
 Cloud or external compute may improve performance, granularity, and analysis depth, but must not be a hidden mandatory dependency for the open-core planning loop. Future execution backends may include user-owned laptops/desktops, Phase 2 personal worker devices, dedicated appliances, UbU hosted services, third-party compatible providers, and future privacy-preserving compute such as practical encrypted computation.
+
+Cloud LLMs are optional execution providers, not the canonical planner. UbU should support local providers such as `ollama`, user-configured BYOK cloud APIs, optional UbUCorp managed inference, and user-owned remote workers through one policy-governed routing layer.
 
 ---
 
@@ -194,6 +212,8 @@ The immediate goal is not to replace existing project-management tools. The imme
 
 This feedback should improve the Phase 1 dogfooding target: UbU coordinating the development of UbU itself.
 
+UbU will also use EthConf outreach as an organizational-introspection dogfooding case. Notes, follow-ups, project artifacts, and public retrospectives can be reviewed to ask whether UbU actually pursued its stated outreach goals. The provocative but evidence-bound question is: can a project prove from its records that it is actually committed to achieving its stated goals?
+
 
 ---
 
@@ -210,6 +230,7 @@ These artifacts should be grounded in evidence from repo state, release notes, a
 The pipeline should begin manually and become more automated over time: script generation, screenshot capture, demo-flow export, storyboard generation, narration preparation, rough video rendering, and gated publication. Publication to external channels should require human or explicit policy approval by default.
 
 This feature is not only for UbU marketing. Project-management configurations should be able to define communication Objectives for users, developers, maintainers, funders, community members, internal stakeholders, and other audiences.
+
 ---
 
 ## What UbU is not
@@ -288,7 +309,10 @@ The UbU model currently includes:
 - Compartment
 - Automation Worker
 - External Event
-- External Association
+- External Reference
+- Association
+- AssociationAttestation
+- SharedAssociationDescriptor
 
 Some entities are intended for Phase 1 implementation. Others are documented now to avoid future contradiction.
 
@@ -319,6 +343,19 @@ Organization mode does not model intrinsic affect. For MVP, organization-mode us
 A worker-mode instance performs delegated work assigned by another UbU instance.
 
 Worker mode is used by Automation Workers and may perform LLM calls, GitHub processing, document analysis, external API work, or other delegated tasks.
+
+---
+
+
+## Association and organizational introspection
+
+An **Association** is UbU's term for a group-like coordination structure as perceived by an Identity. It can be a formal organization, informal project, contributor crew, event cohort, friend group, contractor network, or future marketplace.
+
+Associations are evidence-backed and perspective-bound by default. UbU should represent membership, roles, authority, priorities, norms, and commitments as claims and attestations with provenance rather than pretending every group has one objective global member list.
+
+Organizational introspection is the Association-level version of personal Log review. UbU can analyze permitted records - design docs, GitHub issues, meeting notes, chat logs, outreach notes, roadmaps, and public governance discussions - to generate reviewable AssociationAttestations and feedback questions about whether actual behavior matches declared mission and commitments.
+
+For UbU itself, EthConf outreach is the first concrete dogfooding case: the project will try to turn conversations into explicit follow-up Tasks, contributor paths, funding signals, and a redacted retrospective about whether the outreach actually served UbU's stated goals.
 
 ---
 
@@ -681,7 +718,8 @@ In particular:
 - `organization_mode` should not model intrinsic affect;
 - project-management views should receive selected coordination facts, not raw private state;
 - GitHub should remain a projection of richer UbU state, not the canonical planning model;
-- LLMs and automation workers should produce reviewable artifacts, not unreviewed canonical mutations.
+- LLMs and automation workers should produce reviewable artifacts, not unreviewed canonical mutations;
+- organizational introspection should generate evidence-backed review questions, not managerial surveillance or LLM-declared social truth.
 
 ### Post-ETHConf scaling note
 

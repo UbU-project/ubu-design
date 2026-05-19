@@ -95,8 +95,8 @@ The Phase 1 feature set includes:
 - local single-user `user_mode` instance for UbU-runs-UbU;
 - bootstrap interview, current or stale affect Snapshot handling, and initial Objective/Task seed creation;
 - live or fixture-backed GitHub issue, PR, review, CI, milestone, and comment import;
-- ExternalAssociation-style links from GitHub objects to UbU Objectives, Tasks, External Events, and Logs;
-- MVP Objective, Preference, Task, Container, UniverseState, Snapshot, Plan, Calendar, Log, Identity, Relationship, Compartment, Automation Worker, External Event, and External Association schemas only to the depth required for dogfooding;
+- ExternalReference-style links from GitHub objects to UbU Objectives, Tasks, External Events, and Logs;
+- MVP Objective, Preference, Task, Container, UniverseState, Snapshot, Plan, Calendar, Log, Identity, Relationship, Compartment, Automation Worker, External Event, and External Reference schemas only to the depth required for dogfooding;
 - schedulable Static and Dynamic Tasks with Objective links, duration, dependency/precondition/effect fields, lifecycle status, and moot handling;
 - lightweight UniverseState mutation, affect, and precondition evaluation;
 - append-only per-instance Logs with provenance, corrections, annotations, worker submissions, and recalculation-trigger entries;
@@ -142,7 +142,7 @@ Minimum dogfooding loop:
 
 1. bootstrap the operator, project context, available work window, constraints, and current or stale affect Snapshot;
 2. import or load a curated UbU GitHub fixture with issues, PR/review/CI signals, milestone context, and source links;
-3. map those inputs into Objectives, Tasks, External Events, Logs, UniverseState facts, and External Associations;
+3. map those inputs into Objectives, Tasks, External Events, Logs, UniverseState facts, and External References;
 4. generate a Calendar with a default Plan for the next work window;
 5. present one recommended next Task with an explanation of Objective value, dependencies, deadlines, affect constraints, worker status, and risk findings;
 6. record completion, failure, snooze, rejection, decomposition, or override as Log evidence and trigger recalculation when appropriate;
@@ -190,7 +190,7 @@ Unresolved.
 
 ---
 
-## UBU-Q0003: GitHub ↔ UbU Association Model
+## UBU-Q0003: GitHub ↔ UbU External Reference Model
 
 Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 GitHub dogfooding Resolved by: UBU-D0098 Last scored: Never Scored from commit: None
 
@@ -200,13 +200,13 @@ Examples:
 
 - one GitHub Issue may map to many Objectives;
 - one Objective may map to many GitHub Issues;
-- PRs, comments, reviews, and CI runs may associate with Objectives or Tasks.
+- PRs, comments, reviews, and CI runs may link to Objectives or Tasks.
 
 ### Question
 
-1. Should association be represented with generic `external_refs[]`?
-2. Or should there be a dedicated `ExternalAssociation` object?
-3. If using `ExternalAssociation`, what fields are required?
+1. Should external links be represented with generic `external_refs[]`?
+2. Or should there be a dedicated `ExternalReference` object?
+3. If using `ExternalReference`, what fields are required?
    - external system
    - external object type
    - external object ID
@@ -218,26 +218,26 @@ Examples:
    - last verified time
    - sync policy
    - projection policy
-4. Can associations target both Objectives and Tasks?
-5. Can associations target External Events?
-6. How are duplicate associations detected?
-7. Can an Automation Worker create or modify associations?
+4. Can External References target both Objectives and Tasks?
+5. Can External References target External Events?
+6. How are duplicate External References detected?
+7. Can an Automation Worker create or modify External References?
 
 ### Current leaning
 
-A dedicated `ExternalAssociation` object is likely cleaner than embedding all external refs directly on core objects.
+A dedicated `ExternalReference` object is likely cleaner than embedding all external refs directly on core objects.
 
 ### Resolution
 
-Solved by `UBU-D0098`. GitHub-to-UbU links are represented by first-class `ExternalAssociation` objects. Generic `external_refs[]` may still be used as lightweight references on Logs, provenance, or import artifacts, but they are not the authoritative many-to-many association model.
+Solved by `UBU-D0098`. GitHub-to-UbU links are represented by first-class `ExternalReference` objects. Generic `external_refs[]` may still be used as lightweight references on Logs, provenance, or import artifacts, but they are not the authoritative many-to-many external-link model.
 
-MVP `ExternalAssociation` fields are `association_id`, `external_system`, `external_object_type`, `external_object_id`, `ubu_object_type`, `ubu_object_id`, `relation_type`, `confidence`, `created_by_identity_ref`, `created_at`, `last_verified_at`, `sync_policy`, `projection_policy`, and `provenance`.
+MVP `ExternalReference` fields are `external_reference_id`, `external_system`, `external_object_type`, `external_object_id`, `ubu_object_type`, `ubu_object_id`, `relation_type`, `confidence`, `created_by_identity_ref`, `created_at`, `last_verified_at`, `sync_policy`, `projection_policy`, and `provenance`.
 
-Associations may target Objectives, Tasks, External Events, and Log entries in Phase 1. This lets GitHub Issues, PRs, comments, reviews, CI runs, and milestones remain traceable without forcing them into one-to-one mappings. MVP relation types are schema-controlled enums: `represents`, `supports`, `evidence_for`, `source_event_for`, `projection_of`, `duplicate_of`, and `supersedes`.
+External References may target Objectives, Tasks, External Events, and Log entries in Phase 1. This lets GitHub Issues, PRs, comments, reviews, CI runs, and milestones remain traceable without forcing them into one-to-one mappings. MVP relation types are schema-controlled enums: `represents`, `supports`, `evidence_for`, `source_event_for`, `projection_of`, `duplicate_of`, and `supersedes`.
 
-Duplicate detection uses a normalized uniqueness key over `external_system`, `external_object_type`, `external_object_id`, `ubu_object_type`, `ubu_object_id`, and `relation_type`. Reobserving the same association updates verification metadata or logs an idempotent no-op rather than creating a duplicate. Distinct relation types between the same objects are allowed.
+Duplicate detection uses a normalized uniqueness key over `external_system`, `external_object_type`, `external_object_id`, `ubu_object_type`, `ubu_object_id`, and `relation_type`. Reobserving the same external reference updates verification metadata or logs an idempotent no-op rather than creating a duplicate. Distinct relation types between the same objects are allowed.
 
-Automation Workers cannot directly create or mutate canonical External Associations in Phase 1. They may submit association mutation requests through authorized `mutation_request.submit` capability grants; the canonical instance validates and logs applied or rejected outcomes.
+Automation Workers cannot directly create or mutate canonical External References in Phase 1. They may submit external-reference mutation requests through authorized `mutation_request.submit` capability grants; the canonical instance validates and logs applied or rejected outcomes.
 
 ---
 
@@ -546,11 +546,11 @@ All users in organization mode may be treated as admin-equivalent in MVP.
 
 ### Resolution
 
-Solved by `UBU-D0101`. Organization mode uses the shared UbU core object model except where fields or behavior are intrinsically personal-affect-specific. Objective, Preference, Task, Container, UniverseState, Snapshot, Plan, Calendar, Log, Identity, Relationship, Compartment, Automation Worker, External Event, and External Association objects are available in organization mode to the depth required by the organization or project-planning workflow.
+Solved by `UBU-D0101`. Organization mode uses the shared UbU core object model except where fields or behavior are intrinsically personal-affect-specific. Objective, Preference, Task, Container, UniverseState, Snapshot, Plan, Calendar, Log, Identity, Relationship, Compartment, Automation Worker, External Event, External Reference, and deferred Association-related objects are available in organization mode to the depth required by the organization or project-planning workflow.
 
 Intrinsic affect fields are absent from mode-specific organization schemas. If a shared implementation schema contains affect-capable fields for storage or migration convenience, those fields are disabled in organization mode and validation must reject organization-created intrinsic-affect values rather than merely ignoring them.
 
-Relationship objects may exist in organization mode without affect dimensions. They represent structured UniverseState between Identities such as contributors, maintainers, workers, projects, vendors, integrations, or external organizations. Non-affect relationship-relevant project information belongs in ordinary UniverseState facts, External Events, Logs, External Associations, Objectives, Tasks, or risk reports; organization mode must not claim private organizational emotional state.
+Relationship objects may exist in organization mode without affect dimensions. They represent structured UniverseState between Identities such as contributors, maintainers, workers, projects, vendors, integrations, or external organizations. Non-affect relationship-relevant project information belongs in ordinary UniverseState facts, External Events, Logs, External References, candidate AssociationAttestations, Objectives, Tasks, or risk reports; organization mode must not claim private organizational emotional state.
 
 Organization-created Objectives, Preferences, and Tasks require `authority_source` metadata. MVP authority metadata may be coarse, but it must identify the authority path, such as an admin-equivalent operator Identity, imported project policy, imported external event, Automation Worker submission, or human-approved import/projection action. The detailed authority-source vocabulary and other authority-bearing objects remain open in `UBU-Q0013`.
 
@@ -2062,6 +2062,171 @@ Cloud or external compute may improve performance, granularity, and analysis dep
 
 Open.
 
+
+---
+
+## UBU-Q0060: External/cloud LLM provider abstraction and routing policy
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0028 Blocks: LLM provider routing, cloud LLM disclosure, UbUCorp inference boundary, BYOK configuration Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What is the minimum provider-neutral LLM routing model that supports local Ollama, user-configured BYOK cloud APIs, optional UbUCorp managed inference, user-owned remote workers, and future compatible providers while preserving Compartment policy and user sovereignty?
+
+### Subquestions
+
+1. What interface should normalize local and cloud model providers?
+2. What provider metadata is required for location, cost, context window, capability, retention/disclosure profile, and safety behavior?
+3. How should Compartment policy prevent `no_cloud_llm` or `no_external_export` payloads from crossing a provider boundary?
+4. What context-minimization, redaction, and provenance fields are required before cloud routing?
+5. How should BYOK mode store and scope provider credentials?
+6. How should UbUCorp managed inference be represented without becoming a mandatory dependency of the open core?
+7. What user-visible disclosure is required before a workflow uses a cloud LLM?
+
+### Current direction
+
+Cloud LLMs are optional execution providers, not the canonical planner. The FOSS core should remain local-capable, provider-neutral, BYOK-capable, and self-hostable. Cloud routing must be policy-governed, explicit, and advisory.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0061: Association object model and lifecycle
+
+Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0054, UBU-Q0055, UBU-Q0056 Blocks: Phase 3 multi-user coordination, Association reconciliation, future skill-barter systems Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Should UbU introduce a first-class Association object, and if so what minimum fields describe an Identity-scoped perceived coordination structure without pretending that membership, authority, or boundaries are globally objective?
+
+### Subquestions
+
+1. What distinguishes an Association from an Organization Identity, Relationship, or External Reference?
+2. Can an Association exist entirely inside one user's `user_mode` model?
+3. What minimum fields describe perceived members, roles, shared Objectives, commitments, lifecycle, norms, confidence, and disclosure policy?
+4. How should UbU represent informal groups such as friend groups, parties, amateur leagues, FOSS projects, conference cohorts, and contractor networks?
+5. How does an Association become formal enough to justify `organization_mode`?
+6. How are invitations, exits, revocations, dormancy, and dissolution represented?
+7. Which parts are required for Phase 3, and which remain later research?
+
+### Current direction
+
+An Association is an Identity-scoped, perspective-bound model of emergent coordination. Legal entities and institutional records are External References or evidence, not the whole Association.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0062: AssociationAttestation provenance, trust, and dispute semantics
+
+Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0061 Blocks: Association reconciliation, organizational introspection, pseudonymous reputation, multi-user trust Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU represent claims about Associations as attestations with provenance, confidence, disclosure policy, review status, and dispute or supersession semantics?
+
+### Subquestions
+
+1. What claim types are required: membership, non-membership, role, authority, commitment, objective, norm, governance rule, capability, reputation, relationship, priority, and dissolution?
+2. What is the difference between a user-authored attestation, imported attestation, worker-generated candidate, and LLM-generated candidate?
+3. What provenance is required for generated attestations: source locator, excerpt hash, timestamp range, model/prompt metadata, parser version, and Compartment?
+4. How should an affected Identity or Association dispute, annotate, accept, reject, or supersede an attestation?
+5. How should trust weights or confidence differ between public records, legal filings, signed descriptors, chat logs, meeting notes, and LLM interpretations?
+6. How should private or permissioned attestations avoid leaking membership, role, or relationship facts?
+
+### Current direction
+
+LLM-generated AssociationAttestations are candidate claims. They must be reviewable, evidence-backed, confidence-scored, and never treated as authoritative social truth merely because they came from a large corpus.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0063: Organizational introspection MVP/dogfooding workflow
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0046, UBU-Q0049, UBU-Q0050 Blocks: ETHConf follow-up, public dogfooding artifacts, organizational introspection demo Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What is the minimum useful Phase 1 workflow for dogfooding organizational introspection on the UbU project itself without implementing full Association automation?
+
+### Subquestions
+
+1. Which UbU artifacts should be used as evidence: design files, open questions, decisions, issue fixtures, outreach notes, follow-up Tasks, and public retrospectives?
+2. What structured output should be generated: candidate AssociationAttestations, mission-alignment questions, priority-drift observations, follow-up Tasks, and redacted retrospective notes?
+3. How should UbU ask whether its actual outreach behavior proves commitment to its stated goals?
+4. Which parts can be manual or fixture-backed in Phase 1?
+5. How should public artifacts avoid exposing private notes or contact details?
+6. What acceptance criteria show that UbU successfully applied organizational introspection to itself?
+
+### Current direction
+
+Phase 1 should use EthConf outreach and UbU project records as a manually structured dogfooding case. The result should be an evidence-backed retrospective and follow-up plan, not an automated surveillance system.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0064: SharedAssociationDescriptor model and reconciliation boundary
+
+Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0061, UBU-Q0062 Blocks: Multi-party Association coordination, formal project descriptors, public organizational introspection Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU represent a SharedAssociationDescriptor as a signed or reviewable shared artifact without turning it into a false global truth object?
+
+### Subquestions
+
+1. What fields belong in a descriptor: label, purpose, declared mission, public references, governance rules, participation criteria, disclosure policy, contribution paths, and signatures?
+2. How should descriptors be versioned, superseded, forked, or disputed?
+3. How should multiple Identities indicate acceptance, partial acceptance, rejection, or interpretation of a descriptor?
+4. How should organizational introspection compare actual behavior to declared descriptors?
+5. How should legal entity records and public registry references be linked as External References?
+6. How should descriptors avoid implying that all affected members consented or that membership is objectively settled?
+
+### Current direction
+
+A SharedAssociationDescriptor is a coordination artifact. Multiple Identities may reference or sign it, but each UbU instance still maintains perspective-bound Association models and attestations.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0065: Sovereign Skill Exchange and lawful private settlement boundary
+
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0054, UBU-Q0055, UBU-Q0056, UBU-Q0061, UBU-Q0062 Blocks: Future skill-barter and contractor-marketplace features Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU model Sovereign Skill Exchange as a future specialization of Association coordination without becoming token-first, speculation-first, platform-custodial, or illicit-market infrastructure?
+
+### Subquestions
+
+1. What primitives are required: pseudonymous Identity, capability claims, reputation attestations, scoped work agreements, bonds, escrow-like commitments, dispute workflows, and settlement references?
+2. Which payment rails can be represented as External References without UbU becoming a custodian or money transmitter?
+3. How should privacy-preserving settlement options be described without implying sanctions evasion, tax evasion, illicit services, or unlawful use?
+4. How should UbU distinguish skill barter, paid contracting, grants, bug bounties, and volunteer passion-project work?
+5. What public language must outreach avoid?
+6. What lawful-use and safety boundaries are required before implementation?
+
+### Current direction
+
+Sovereign Skill Exchange is a future cypherpunk/privacy-builder recruiting hook and product direction. It is a specialization of Association modeling, not the root concept and not an MVP commitment.
+
+### Resolution
+
+Open.
+
 ---
 
 ## Suggested Initial GitHub Issues
@@ -2070,7 +2235,7 @@ Create these first:
 
 1. `UBU-Q0001`: Define Phase 1 MVP Scope Freeze
 2. `UBU-Q0002`: Define GitHub Projection and Reconciliation Model
-3. `UBU-Q0003`: Define GitHub ↔ UbU Association Model
+3. `UBU-Q0003`: Define GitHub ↔ UbU External Reference Model
 4. `UBU-Q0007`: Define Automation Worker Identity and Capability Model
 5. `UBU-Q0009`: Define Worker Mutation Request Schema
 6. `UBU-Q0014` + `UBU-Q0015`: Define UniverseState Mutation and Precondition Schemas
