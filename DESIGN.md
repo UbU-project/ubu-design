@@ -1167,14 +1167,21 @@ MVP mutations support:
 - `remove_membership`
 - `append_event_marker`
 
-Exact mutation item schema remains open.
+MVP mutation items use a small deterministic schema. Required fields are `operation` and `target`; `payload` is required except for `clear_fact`; `note` is optional. Mutation items do not carry item-level confidence, source, or provenance in MVP. Those belong on the containing Task effect, Snapshot, Log entry, worker mutation request, External Reference, or other envelope.
 
-Recommended direction:
+Targets are dotted strings. The first segment names the UniverseState collection being changed: `facts`, `numeric_values`, `set_memberships`, or `event_markers`. Remaining segments form the lightweight namespaced key inside that collection. Example targets include `facts.github.issue.14.pipeline_state`, `numeric_values.affect.energy`, `set_memberships.github.issue.14.labels`, and `event_markers.relationship.rel_123.interactions`.
 
-- target key: dotted string
-- operation enum
-- payload: JSON-compatible value
-- optional note/source
+Payload rules by operation:
+
+- `set_fact`: any JSON-compatible value;
+- `clear_fact`: no payload;
+- `increment_numeric` / `decrement_numeric`: numeric delta payload;
+- `add_membership` / `remove_membership`: JSON scalar member payload, usually a string;
+- `append_event_marker`: JSON object payload describing the lightweight marker.
+
+A Task effect's mutation list is unconditional once that effect succeeds. Conditional behavior belongs in Task preconditions, effect success probability, or planner branching, not in individual mutation items. Implementations should validate the full mutation list before applying it and apply valid items in list order.
+
+Mutation targets may include affect-related UniverseState keys in `user_mode`; organization and worker modes must reject intrinsic-affect mutations. Mutation targets may include Relationship-relevant UniverseState keys, but inferred or worker-generated relationship facts remain subject to Compartment policy, mode rules, provenance/logging envelopes, and user acceptance where required. Task effects should not silently overwrite user-declared private affect or Relationship truths.
 
 ---
 

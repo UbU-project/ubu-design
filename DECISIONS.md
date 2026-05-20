@@ -3204,3 +3204,29 @@ Public materials must avoid claims that Phase 1 already performs broad personal-
 - Phase 1 implementation can proceed with existing Objectives, Preferences, Snapshots, Tasks, Logs, UniverseState facts, Plans, and External References.
 - Preference calibration, discovery mode, Calendar preview and Log review annotations, VoxPopuli, and broader message or file ingestion remain in their separate questions.
 - The mock app may be fixture-backed only when it visibly labels fixture behavior and does not present it as completed planner implementation.
+
+---
+
+## UBU-D0130: UniverseState mutations use dotted targets and envelope-level provenance
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0014`.
+
+MVP UniverseState mutation items use dotted string targets. The first target segment names the UniverseState collection: `facts`, `numeric_values`, `set_memberships`, or `event_markers`. Remaining segments form the lightweight namespaced key within that collection. Examples include `facts.github.issue.14.pipeline_state`, `numeric_values.affect.energy`, `set_memberships.github.issue.14.labels`, and `event_markers.relationship.rel_123.interactions`.
+
+A mutation item has required `operation` and `target` fields. `payload` is required for all operations except `clear_fact`. `note` is optional for human-readable context. Mutation items do not carry item-level `confidence`, `source`, or `provenance` in MVP; those belong on the containing Task effect, Snapshot, Log entry, worker mutation request, External Reference, import artifact, or projection envelope.
+
+Payload rules are operation-specific. `set_fact` accepts any JSON-compatible value. `clear_fact` has no payload. `increment_numeric` and `decrement_numeric` require numeric delta payloads. `add_membership` and `remove_membership` require JSON scalar member payloads, usually strings. `append_event_marker` requires a JSON object payload representing the lightweight marker.
+
+Mutation lists are unconditional once the containing Task effect succeeds. Per-item conditions are not part of the MVP mutation schema; conditional behavior belongs in Task preconditions, effect success probability, planner branching, or worker/request validation. Implementations should validate the full mutation list before application and apply valid items in list order.
+
+Mutation targets may include affect UniverseState keys in `user_mode`, subject to Snapshot precedence and user sovereignty rules. Organization-mode and worker-mode validators must reject intrinsic-affect mutations. Mutation targets may include Relationship-relevant UniverseState keys, including relationship interaction markers and maintenance facts, but they must respect Compartment policy, mode rules, provenance/logging envelopes, and user-acceptance requirements for private or inferred relationship claims. Task effects, workers, imports, and LLM-assisted flows must not silently overwrite user-declared private affect or Relationship truths.
+
+**Consequences:**
+
+- `UBU-Q0014` is resolved for Phase 1 implementation.
+- Task effects, worker mutation requests, Snapshots, and Logs can share a compact mutation vocabulary without duplicating provenance on every item.
+- `UBU-Q0015` can use the same dotted target convention for preconditions.
+- `UBU-Q0009` can wrap these mutation items in worker mutation requests that provide authority, expected prior version, evidence, confidence, idempotency, and provenance.
+- Future schema migrations may replace dotted strings with typed paths or JSON Pointer, but MVP implementations should not block on that stricter ontology.

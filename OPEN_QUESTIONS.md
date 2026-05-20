@@ -599,7 +599,7 @@ Unresolved.
 
 ## UBU-Q0014: UniverseState Mutation Schema
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: UBU-D0130 Last scored: Never Scored from commit: None
 
 UniverseState mutation vocabulary is accepted, but the concrete schema remains open.
 
@@ -646,7 +646,13 @@ Use dotted string targets and JSON-compatible payloads.
 
 ### Resolution
 
-Unresolved.
+Solved by `UBU-D0130`. MVP UniverseState mutation items use dotted string targets. The first segment names the target UniverseState collection: `facts`, `numeric_values`, `set_memberships`, or `event_markers`. The remaining segments form the namespaced key inside that collection.
+
+Required fields are `operation` and `target`. `payload` is required except for `clear_fact`. `note` is optional. Item-level `source`, `provenance`, and `confidence` are not part of the MVP mutation item because those belong on the containing Task effect, Snapshot, Log entry, worker mutation request, External Reference, or import/projection envelope.
+
+Payloads are operation-specific: `set_fact` accepts any JSON-compatible value; `clear_fact` has no payload; numeric increments/decrements require numeric deltas; membership operations use JSON scalar members, usually strings; and event markers use JSON object payloads. Mutation lists are unconditional once the containing Task effect succeeds, with conditional behavior handled through preconditions, effect success probability, planner branching, or request validation.
+
+Mutation targets may include affect keys in `user_mode`, subject to Snapshot precedence and user sovereignty. Organization and worker modes reject intrinsic-affect mutations. Mutation targets may include Relationship-relevant UniverseState keys, but private or inferred relationship facts remain subject to Compartment policy, mode rules, provenance/logging envelopes, and user acceptance where required. Task effects and worker/import/LLM flows must not silently overwrite user-declared private affect or Relationship truths.
 
 ---
 
