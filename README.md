@@ -142,19 +142,23 @@ Prototype funding is compatible with UbU only if it funds trunk features needed 
 
 ## Planning kernel direction
 
-UbU's Calendar model now distinguishes two planning responsibilities.
+UbU's Calendar model now distinguishes layered planning responsibilities.
 
-First, the planner must produce a complete **default Plan** from the current time to the end of the Calendar scope. The default Plan is a deterministic, ordered, explainable set of upcoming Tasks. It is the Plan the user can preview and ask about: why this Task, why now, what dependency does it satisfy, what Objective does it advance, what risk does it reduce, and what constraint shaped the timing.
+First, the planner creates a **skeleton Plan**: a dependency-valid foundation built by placing Static Tasks, walking backward through dependency DAGs, and scheduling prerequisites before dependents. A skeleton Plan is not enough by itself; it can be structurally valid while still being unrealistic for a human.
 
-Second, the runtime needs a short-horizon reactive branch layer so the system can adapt when reality diverges. Early completion, late completion, interruptions, external events, and user overrides should not require an expensive whole-world reanalysis before the user can continue. The provisional direction is DFS or DFS-like generation for the full default Plan, plus a bounded BFS or BFS-like cache of high-probability near-term alternatives.
+Second, UbU performs **legitimization**. Legitimization adds the minimum affect, recovery, transition, rest, and sustainability constraints needed to turn the skeleton Plan into a minimally human-viable baseline. The legitimized skeleton Plan becomes the baseline feasible Plan against which richer candidate Plans are compared.
 
-The default Plan is selected by **Plan probability** among deterministic candidate Plans. Each candidate Plan is individually optimized for value while satisfying constraints in its modeled branch; the default selection step chooses the candidate with the highest modeled probability.
+Third, the planner generates and evaluates candidate Plans with optional Dynamic Tasks, alternative placements, stochastic assumptions, and Plan probabilities. DFS-like search may be one implementation technique, but it is no longer the conceptual foundation by itself.
+
+Fourth, the runtime needs short-horizon reactive repair so the system can adapt when reality diverges. Early completion, late completion, interruptions, external events, affect shifts, and user overrides should not require an expensive whole-world reanalysis before the user can continue.
+
+The default Plan remains deterministic, ordered, inspectable, and explainable. It is selected by **Plan probability** among deterministic candidate Plans that have already been made legitimate and value-evaluated for their modeled branch. The internal planning horizon may look beyond the visible Calendar window, and fragile prerequisites may be scheduled earlier to reduce last-minute impossible choices.
 
 ---
 
 ## Mobile-first, local-first, and scalable compute
 
-UbU should remain useful in mobile-only mode. Mobile-only UbU must preserve the core experience, but may use coarser planning granularity, shallower branch coverage, reduced analysis depth, and fewer LLM-assisted features.
+UbU should remain useful in mobile-only mode, but mobile should not be treated as the full global optimizer. A mobile device should act as the real-time steward of Plan legitimacy, user agency, and next-action clarity.
 
 Provisional Compact Calendar defaults are:
 
@@ -164,7 +168,11 @@ Provisional Compact Calendar defaults are:
 - one-hour reactive branch horizon;
 - `0.99` short-horizon branch coverage target.
 
-Cloud or external compute may improve performance, granularity, and analysis depth, but must not be a hidden mandatory dependency for the open-core planning loop. Future execution backends may include user-owned laptops/desktops, Phase 2 personal worker devices, dedicated appliances, UbU hosted services, third-party compatible providers, and future privacy-preserving compute such as practical encrypted computation.
+For MVP, the mobile-friendly planning subset is Task criticality, last legitimate Plan storage, simple repair rules, conflict severity levels, cached explanations, next-best-action mode, and basic decision envelopes. Rich BFS branch packaging, learned local policies, and extensive stochastic repair are post-MVP by default.
+
+Solver selection should be GPU-aware. CPU or conservative exact logic should certify skeleton validity, hard constraints, contradiction diagnostics, and explanations. GPU-capable search, simulation, scoring, and learned-model inference should handle large candidate sets, affect scoring, robustness scoring, and premium cloud planning where available.
+
+Cloud or external compute may improve performance, granularity, branch coverage, and analysis depth, but must not be a hidden mandatory dependency for the open-core planning loop. Future execution backends may include user-owned laptops/desktops, Phase 2 personal worker devices, dedicated appliances, UbU hosted services, third-party compatible providers, and future privacy-preserving compute such as practical encrypted computation. Cloud planning payloads should minimize PII and transmit only the structured timing, dependency, value, constraint, criticality, and legitimacy information needed by the provider.
 
 Cloud LLMs are optional execution providers, not the canonical planner. UbU should support local providers such as `ollama`, user-configured BYOK cloud APIs, optional UbUCorp managed inference, and user-owned remote workers through one policy-governed routing layer.
 
@@ -217,6 +225,8 @@ The immediate goal is not to replace existing project-management tools. The imme
 This feedback should improve the Phase 1 dogfooding target: UbU coordinating the development of UbU itself.
 
 UbU will also use EthConf outreach as an organizational-introspection dogfooding case. Notes, follow-ups, project artifacts, and public retrospectives can be reviewed to ask whether UbU actually pursued its stated outreach goals. The provocative but evidence-bound question is: can a project prove from its records that it is actually committed to achieving its stated goals?
+
+An optional EthConf **VoxPopuli** demo may be used if cheap enough relative to higher-priority deliverables. In that flow, a user speaks freely about what they wish would happen, and an LLM-assisted extractor produces candidate Objectives, Tasks, constraints, preferences, and assumptions for inspection. This is a public demonstration hook, not a replacement for the narrow Phase 1 bootstrap loop.
 
 
 ---

@@ -532,7 +532,7 @@ Phase 3 still defers:
 Phase 1 keeps these abstractions documented for compatibility but does not implement them:
 
 - Technique as a first-class planning object;
-- full Compact Calendar DFS grammar and high-coverage transport format;
+- full Compact Calendar planner grammar and high-coverage transport format;
 - complete Zone and Device system beyond the current local execution enclave;
 - organization-mode and worker-mode web admin consoles;
 - richer relationship-management, personal CRM, and longitudinal affect/growth models;
@@ -649,6 +649,12 @@ The UbU project should treat outreach as an attempt to form an ad hoc Associatio
 For Phase 1, this does not require full multi-user Association implementation. It can be represented through structured outreach Objectives, Tasks, Logs, External Events, External References, and reviewable candidate AssociationAttestations generated manually or by local/allowed LLM review.
 
 The dogfooding question is: can UbU produce an evidence-backed retrospective showing whether UbU actually formed useful coordination around its own project?
+
+### 4.1.5 Optional VoxPopuli EthConf demo
+
+UbU may optionally demonstrate a **VoxPopuli** flow at EthConf if it does not displace higher-priority dogfooding, contributor, or funder deliverables. In this flow, a user speaks freely about what they wish would happen or what feels disorganized. An LLM-assisted extractor converts that natural-language input into candidate Objectives, Tasks, constraints, preferences, and planning assumptions for the user to inspect, correct, accept, or reject.
+
+VoxPopuli is a trust-building outreach hook, not a replacement for the narrow Phase 1 bootstrap interview. It should demonstrate how LLMs can help structure abstract human concerns while UbU remains the explicit, inspectable planning system.
 
 ### 4.2 Phase 2: Single-user multi-device synchronization
 
@@ -1356,7 +1362,25 @@ This does not mean the default Plan is an unoptimized low-value routine. The Pla
 
 The default Plan is critical to UbU's user experience. Calendar preview must be able to show an ordered upcoming set of Tasks from the current time to the end of the Calendar scope, and each Task should have an explanation of why it appears there: Objective value, dependencies, deadlines, preconditions, affect constraints, worker status, risk findings, or other relevant scheduling reasons.
 
-The ideal search over candidate Plans may be NP-hard or otherwise combinatorially expensive. Practical Compact Calendar implementations should therefore use bounded finite Task instances, time-delta configuration, pruning, greedy selection, cached subplans, device-specific resource limits, and other heuristics. Exact ideality is a north-star property, not a Phase 1 runtime promise.
+The ideal search over candidate Plans may be NP-hard or otherwise combinatorially expensive. Practical Compact Calendar implementations should therefore use bounded finite Task instances, time-delta configuration, pruning, greedy baselines, cached subplans, GPU-friendly batch scoring/simulation, device-specific resource limits, and other heuristics. Exact ideality is a north-star property, not a Phase 1 runtime promise.
+
+### 15.2.2 Skeleton Plans and legitimization
+
+The planning pipeline begins with a **skeleton Plan**. A skeleton Plan affixes all Static Tasks and recursively walks backward through dependency DAGs from terminal Static Tasks to dependency roots, then schedules root prerequisites before their dependents. The skeleton Plan is a causal/dependency foundation, not a complete optimized user Plan.
+
+A dependency is a requirement that some state be true before a dependent Task begins. During skeletonization, UbU must check whether that state is already satisfied by the initial UniverseState before inserting prerequisite Tasks. If a viable skeleton Plan cannot be created, the planning model is blocked, contradictory, incomplete, or impossible enough that UbU should stop ordinary planning and ask the user for clarification with a concrete diagnostic explanation.
+
+After skeletonization, UbU performs **legitimization**. Legitimization adds the minimum human-viability constraints and support Tasks needed to make the skeleton Plan plausibly executable by the user. Examples include affect constraints, breaks, recovery Tasks, meals, sleep, transition buffers, setup/teardown time, context-switch limits, and basic sustainability requirements.
+
+The legitimized skeleton Plan is the baseline feasible Plan. Optional Dynamic Tasks, gap-filling work, and richer candidate Plans are compared against it by value, risk, fragility, and user-fit. If full legitimization is cheap, it may be used directly while testing candidate Plans. If it is expensive, UbU should use semi-legitimization heuristics before invoking full legitimization on finalists.
+
+### 15.2.3 Planning horizon and early preparation
+
+The internal planning horizon may exceed the user-visible Calendar window. A one-day visible Calendar may require look-ahead beyond the day to avoid cutting off dependency chains, Techniques, deadlines, or future preparation sequences.
+
+Within reasonable detailed planning windows, such as one day to roughly one week, UbU may bias fragile prerequisite work earlier when that reduces the risk of future impossible choices. This protects users from being forced to make hard tradeoffs while tired, overwhelmed, interrupted, or otherwise emotionally compromised.
+
+This is a bounded operational bias. It should not imply that all distant future work should be pulled forward. For short operational windows, time discounting may usually be treated as negligible unless explicit user Preferences say otherwise. Longer horizons require separate preference and temporal-discounting modeling.
 
 ### 15.3 Calendar Logic
 
@@ -1413,23 +1437,44 @@ Coverage represents the probability mass of possible futures covered by the comp
 
 The provisional short-horizon branch coverage target is `0.99` probability mass. This should be treated as a configurable heuristic, not as a mathematical guarantee for every device, scope, or resource mode.
 
-### 16.3 DFS default Plan direction
+### 16.3 Planner grammar direction
 
-The current direction is that deterministic DFS, or a DFS-like depth-first candidate construction algorithm, produces the complete default Plan for the Calendar scope.
+Compact Calendar planning is no longer framed as a bare DFS process that directly produces the default Plan. The current architecture is:
 
-The DFS layer should be capable of walking from the current time to the end of the Calendar scope and producing a deterministic, value-optimized, constraint-satisfying Plan. Candidate deterministic Plans receive Plan probabilities from the modeled probabilistic parameters used during generation. The default Plan is selected as the candidate Plan with the highest Plan probability overall.
+1. Build the skeleton Plan from Static Tasks and dependency DAGs.
+2. Legitimize the skeleton Plan into a minimally human-viable baseline.
+3. Generate richer candidate Plans by adding optional Dynamic Tasks and alternative placements.
+4. Use semi-legitimization or full legitimization to reject unrealistic candidates.
+5. Validate finalists against hard constraints.
+6. Select the user-facing default Plan by Plan probability among deterministic candidate Plans.
+7. Package compact repair metadata for runtime use.
 
-A DFS node should probably represent at least a partial timed Plan, simulated UniverseState, dependency/precondition frontier, accumulated constraint state, branch probability metadata, and lineage needed for explanation or reconstruction. `UBU-Q0016` remains open, but the current DFS/default-Plan direction may be close to a closable MVP answer.
+DFS-like search may still be useful for candidate construction. BFS-like search may still be useful for near-term divergence. Greedy selection may still be useful as a deliberately unintelligent baseline. None of those algorithms is the complete planning architecture by itself.
 
 ### 16.4 Reactive short-horizon branch layer
 
-The default Plan is not enough for real-time use because reality can diverge from the modeled branch. UbU therefore also needs a lightweight reactive layer, likely BFS or BFS-like, that starts at the current instant and maintains a short-horizon cache of high-probability branches.
+The default Plan is not enough for real-time use because reality can diverge from the modeled branch. UbU therefore also needs a lightweight reactive layer, likely BFS-like, policy-based, or repair-recipe-based, that starts at the current instant and maintains a short-horizon cache or reconstruction path for high-probability near-term alternatives.
 
-The reactive layer should cover near-term alternatives involving planned Tasks, duration variation, early completion, late completion, interruptions, relevant external events, and immediate recalculation triggers. The provisional default horizon is one hour. Mobile-only, low-power, or offline operation may shorten this horizon.
+The reactive layer should cover near-term alternatives involving planned Tasks, duration variation, early completion, late completion, interruptions, relevant external events, affect shifts, user overrides, and immediate recalculation triggers. The provisional default horizon is one hour. Mobile-only, low-power, or offline operation may shorten this horizon.
 
 This layer exists to let the user's current Calendar and Log update quickly when something actually happens. It should not attempt to enumerate every possible future to the end of the Calendar scope.
 
-### 16.5 Early completion and forward-pull behavior
+### 16.5 Mobile stewardship metadata
+
+A compact Calendar should carry metadata that lets constrained devices preserve legitimacy without performing full global replanning. Useful metadata includes:
+
+- protected, flexible, and disposable Task criticality;
+- decision envelopes such as earliest start, latest finish, and movable windows;
+- cached explanations for why a Task matters and what depends on it;
+- conflict severity levels;
+- last-legitimate-Plan references;
+- simple repair recipes;
+- recovery-critical and deadline-fragile markers;
+- recalculation triggers and remote-assist eligibility.
+
+The MVP-friendly subset is Task criticality, last legitimate Plan storage, simple repair rules, conflict severity levels, cached explanations, next-best-action mode, and basic decision envelopes. Rich branch packaging and learned local policy models are post-MVP by default.
+
+### 16.6 Early completion and forward-pull behavior
 
 When a Task completes earlier than expected, the default behavior should be to pull the next valid Dynamic Task forward to the present time if dependencies, preconditions, affect constraints, location constraints, and other Calendar Logic allow it.
 
@@ -1437,7 +1482,7 @@ This supports a conservative duration bias: when uncertain, the scheduler may pr
 
 Static Tasks retain fixed start times. If no predetermined Dynamic Task can validly fill time before the next Static Task, the planner should consider gap-filling suggestions. The design of evergreen Dynamic Tasks or evergreen Objective-maintenance Tasks is still open and tracked separately.
 
-### 16.6 Adaptive granularity and offline operation
+### 16.7 Adaptive granularity and offline operation
 
 Compact Calendar planning should support configurable time deltas.
 
@@ -1451,13 +1496,13 @@ Provisional defaults:
 
 A one-minute delta aligns with common calendar behavior and should be available when compute resources permit it. Mobile-only operation may use coarser granularity to preserve battery, reduce memory and CPU/GPU load, and keep local recalculation responsive. Offline or low-power mode may dynamically switch to a coarser delta, such as fifteen minutes, while preserving the core UbU experience.
 
-Known offline windows, such as flights or planned disconnection, should trigger preparatory precomputation while connectivity and compute are available. If the offline state is unexpected, UbU should gracefully degrade to cached state, local explicit algorithms, coarser deltas, and reduced branch depth.
+Known offline windows, such as flights or planned disconnection, should trigger preparatory precomputation while connectivity and compute are available. If the offline state is unexpected, UbU should gracefully degrade to cached state, local explicit algorithms, coarser deltas, reduced branch depth, and mobile stewardship metadata.
 
-### 16.7 Execution backends and privacy boundary
+### 16.8 GPU-aware execution backends and privacy boundary
 
-The open-core planning loop must not depend on a hidden cloud service. Mobile-only UbU must preserve the core UbU experience, but may use coarser planning granularity, shallower branch coverage, reduced analysis depth, and fewer LLM-assisted features.
+The open-core planning loop must not depend on a hidden cloud service. Mobile-only UbU must preserve the core UbU experience, but it should do so as a real-time steward of Plan legitimacy, user agency, and next-action clarity rather than as the full global optimizer.
 
-Cloud or external compute may improve performance, granularity, and analysis depth, but must not be a hidden mandatory dependency for the open-core planning loop.
+Cloud or external compute may improve performance, granularity, analysis depth, branch coverage, and expensive legitimization, but must not be a hidden mandatory dependency for the open-core planning loop. Solver selection should treat GPU suitability as a first-class criterion. CPU or conservative exact logic should certify skeleton validity, hard constraints, contradiction diagnostics, and explanations; GPU-capable search, simulation, scoring, and learned-model inference should handle large candidate sets, stochastic robustness, affect scoring, and premium cloud planning where available.
 
 Possible execution backends include:
 
@@ -1469,7 +1514,7 @@ Possible execution backends include:
 - third-party UbU-compatible compute providers;
 - future privacy-preserving compute services such as practical FHE-backed or comparable encrypted computation.
 
-The FOSS planner and Compact Calendar representation should be backend-agnostic. Execution providers are interchangeable through explicit APIs, capability grants, Compartment policy, provenance, and user-visible routing decisions.
+The FOSS planner and Compact Calendar representation should be backend-agnostic. Execution providers are interchangeable through explicit APIs, capability grants, Compartment policy, provenance, and user-visible routing decisions. GPU search may propose candidate Plans, but hard constraints and final Plan validity must be certified by exact or conservative validation. Cloud planning payloads should minimize PII and transmit only the structured timing, dependency, value, constraint, criticality, and legitimacy information needed for the selected provider.
 
 ---
 
@@ -2156,7 +2201,7 @@ Key unresolved areas include:
 - GitHub event triage
 - UniverseState mutation schema
 - Precondition schema
-- Compact Calendar DFS grammar, now with a provisional DFS/default-Plan and BFS/reactive-layer direction
+- Compact Calendar planner grammar, including skeleton Plan, legitimization, planning horizon/look-ahead, candidate search, GPU-aware execution, and mobile stewardship
 - Evergreen Dynamic Task and gap-filling semantics
 - Adaptive planning granularity and offline precomputation policy
 - Execution-provider trust, privacy, and backend-agnostic worker boundaries

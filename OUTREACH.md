@@ -101,12 +101,13 @@ UbU's Calendar preview depends on a complete default Plan. The user should be ab
 
 The planner direction is explicit rather than agentic magic:
 
-- a DFS or DFS-like layer produces the complete default Plan for the Calendar scope;
-- the default Plan is selected by modeled Plan probability among deterministic candidate Plans;
-- a short-horizon BFS or BFS-like reactive layer handles likely near-term divergence;
-- early completion should usually pull the next valid Dynamic Task forward;
-- known offline windows should trigger precomputation;
-- mobile and low-power modes may switch to coarser time deltas.
+- a skeleton Plan first places Static Tasks and dependency chains;
+- legitimization then makes that skeleton Plan minimally human-viable by adding affect, recovery, transition, and sustainability constraints;
+- candidate Plans can then add optional Dynamic Tasks and be compared by value, fragility, legitimacy, and modeled Plan probability;
+- internal look-ahead may exceed the visible Calendar window so fragile prerequisites are not scheduled just in time;
+- a short-horizon reactive layer handles likely near-term divergence;
+- mobile devices use stewardship metadata, cached explanations, and simple repair rules when full replanning is too expensive;
+- GPU-capable search, simulation, and scoring should handle expensive candidate evaluation where available, while exact or conservative validation certifies hard constraints.
 
 This matters because UbU should remain useful on a mobile device, on battery, and offline. LLMs may help interpret, summarize, propose, or critique, but the real-time planning loop must remain explicit, inspectable, and locally runnable.
 
@@ -116,9 +117,9 @@ This matters because UbU should remain useful on a mobile device, on battery, an
 
 UbU should not force one execution provider. A user may run locally on mobile, use a laptop or desktop as a personal worker, later use a dedicated worker appliance, or opt into a hosted service. A third-party provider should be able to offer compatible execution without becoming the canonical owner of the UbU model.
 
-The FOSS core should stay backend-agnostic. Cloud or external compute may provide better granularity, deeper analysis, and heavier branch search, but it must not become a hidden mandatory dependency for the open-core planning loop.
+The FOSS core should stay backend-agnostic. Cloud or external compute may provide better granularity, deeper analysis, heavier branch search, more full legitimization passes, and wider planning horizons, but it must not become a hidden mandatory dependency for the open-core planning loop.
 
-For privacy-oriented contributors, the long-term direction is stronger than ordinary cloud trust: minimize data, enforce Compartments, preserve provenance, support self-hosting, and prioritize future privacy-preserving compute such as practical encrypted computation when it becomes viable.
+For privacy-oriented contributors, the long-term direction is stronger than ordinary cloud trust: minimize data, enforce Compartments, preserve provenance, support self-hosting, use PII-minimized structured planning payloads, and prioritize future privacy-preserving compute such as practical encrypted computation when it becomes viable.
 
 ---
 

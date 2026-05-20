@@ -126,7 +126,7 @@ Phase 3 defers:
 Documented but not implemented in Phase 1:
 
 - Technique as a first-class planning object;
-- full Compact Calendar DFS grammar and high-coverage transport format;
+- full Compact Calendar planner grammar and high-coverage transport format;
 - complete Zone and Device system beyond the current local execution enclave;
 - organization-mode and worker-mode web admin consoles;
 - richer relationship-management, personal CRM, and longitudinal affect/growth models;
@@ -692,42 +692,43 @@ Unresolved.
 
 ---
 
-## UBU-Q0016: Compact Calendar DFS Grammar
+## UBU-Q0016: Compact Calendar planner grammar and execution profile
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0014, UBU-Q0015 Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
 
-Compact Calendar support is important for recursive self-analysis, future sync/transport, and fast recalculation. The current direction is deterministic DFS or DFS-like candidate construction for the complete default Plan, plus a separate short-horizon BFS or BFS-like reactive branch layer. This question remains open, but the current direction may be ready to close once the node, expansion, and representation details are written precisely.
+Compact Calendar support is important for recursive self-analysis, future sync/transport, and fast recalculation. The current direction is no longer a bare DFS grammar. The planner architecture begins with skeleton Plan generation, then legitimization, then candidate Plan expansion and validation, with reactive mobile stewardship around the selected Plan.
 
 ### Question
 
-1. What is a DFS node?
-   - partial ordered Task sequence
-   - partial timed Plan
-   - partial UniverseState trajectory
-   - dependency/precondition frontier
-   - accumulated constraint state
-   - branch probability metadata
-   - explanation/reconstruction lineage
-   - some combination of the above
-2. What does expansion add?
-   - next Task placement
-   - duration branch
-   - success/failure branch
-   - external event branch
-   - interruption branch
-   - Objective recurrence branch
-3. What does threshold `p` mean?
-   - branch pruning threshold
-   - cumulative coverage target
-   - minimum child probability
-   - or multiple parameters
-4. Is DFS sorted by:
-   - Plan probability
-   - Objective value within a branch
-   - deadline urgency
-   - dependency critical path
-   - affect feasibility
-   - composite heuristic
+1. What is the minimum skeleton Plan representation?
+   - Static Task placement
+   - dependency DAG frontier
+   - prerequisite roots
+   - ordered prerequisite chains
+   - initial UniverseState assumptions
+   - unsatisfied dependency diagnostics
+2. What does legitimization add?
+   - affect constraints
+   - recovery Tasks
+   - transition buffers
+   - sleep/food/rest requirements
+   - setup/teardown time
+   - context-switch limits
+   - slack and fragility thresholds
+3. What is the minimum candidate Plan representation after legitimization?
+   - materialized Tasks
+   - decision envelopes
+   - Plan probability provenance
+   - value score
+   - legitimacy score or threshold result
+   - explanation lineage
+4. Which search methods are allowed in each execution profile?
+   - greedy baseline
+   - DFS-like candidate construction
+   - BFS-like near-term branch construction
+   - solver-backed exact validation
+   - GPU-friendly candidate scoring/simulation
+   - local repair recipes
 5. How is Plan probability represented?
    - scalar probability
    - log probability
@@ -735,32 +736,38 @@ Compact Calendar support is important for recursive self-analysis, future sync/t
    - provenance expression over probabilistic inputs
 6. How does the implementation avoid naïve independence assumptions when probabilities are correlated?
 7. Does Compact Calendar encode:
+   - skeleton Plan metadata
+   - legitimized skeleton baseline
    - ordering constraints
    - duration PDFs
    - success probabilities
    - external-event distributions
    - interruption distributions
    - affect constraints
-   - execution-mode metadata such as time delta and resource limits
+   - decision envelopes
+   - protected/flexible/disposable Task metadata
+   - cached explanations
+   - execution-mode metadata such as time delta, branch horizon, GPU/CPU resource limits, and privacy-routing limits
 8. Which concrete Plans are stored?
-   - the default Plan only
+   - the legitimized skeleton baseline
+   - the default Plan
    - user-previewed Plans
    - risk-report Plans
    - debug/reproducibility Plans
-   - all high-probability Plans within a horizon
-9. Which Plans are reconstructed on demand?
+   - high-probability near-term Plans within a horizon
+9. Which Plans or repairs are reconstructed on demand?
 10. How is coverage recalculated after time advances?
 11. What is the minimum MVP implementation?
 
 ### Current direction
 
-DFS/default-Plan generation and BFS/reactive adaptation are separate responsibilities. DFS should produce the complete deterministic default Plan from the current time to the end of Calendar scope. Each represented Plan is individually value-optimized and constraint-satisfying for its modeled branch; Plan probability is ascribed by the planning algorithm from the probabilistic parameters that produced the branch. The default Plan is the candidate Plan with the highest Plan probability overall.
+The planner should first create a skeleton Plan from Static Tasks and dependency DAGs, then legitimize that skeleton Plan into a minimally human-viable baseline. Candidate Plans are then generated, semi-legitimized or fully legitimized, validated, and compared. DFS-like search may be one candidate-construction strategy, but it is no longer the full conceptual foundation. BFS-like branch caching remains useful for near-term divergence, but mobile UX should also use decision envelopes, cached explanations, criticality metadata, last-legitimate-Plan repair, and conflict severity.
 
-The ideal search may be NP-hard or otherwise combinatorially expensive, but finite Task instances, bounded time scope, configurable deltas, pruning, greedy heuristics, cached subplans, and adaptive execution modes should make practical approximations tractable.
+The ideal search may be NP-hard or otherwise combinatorially expensive, but finite Task instances, bounded time scope, configurable deltas, pruning, greedy baselines, GPU-friendly scoring/simulation, cached subplans, and adaptive execution modes should make practical approximations tractable.
 
 ### Resolution
 
-Unresolved. May be ready to close after the MVP node and expansion grammar are finalized.
+Unresolved. Must be refined into an MVP planner grammar and execution profile before Phase 1 implementation can be considered stable.
 
 ---
 
@@ -2339,6 +2346,193 @@ Open.
 
 ---
 
+
+## UBU-Q0070: Skeleton Plan failure diagnostics and user clarification flow
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: UX/Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0014, UBU-Q0015, UBU-Q0016 Blocks: robust planning failure handling Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+When skeleton Plan generation fails, what exact diagnostic payload and user clarification flow should UbU produce?
+
+### Subquestions
+
+1. Which failure classes are required for MVP: missing starting state, impossible dependency, cyclic dependency, Static Task collision, insufficient Calendar window, unavailable resource, blocked External Event, or unknown precondition?
+2. How should UbU explain the failed causal chain without overwhelming the user?
+3. Which alternatives can UbU safely suggest: relax deadline, remove Task, add prerequisite, mark state already satisfied, choose alternate Technique, extend planning horizon, or ask for manual decision?
+4. When should this become an immediate blocking prompt instead of a normal planning warning?
+
+### Current direction
+
+Skeleton Plan failure is a critical model-consistency failure. UbU should not proceed as if the Plan merely needs optimization. It should explain the cause and request clarification or a user choice.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0071: Legitimization and semi-legitimization cost model
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Algorithm Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016, UBU-Q0053 Blocks: realistic candidate Plan search Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How expensive is full legitimization, and what semi-legitimization heuristics are needed before full candidate validation?
+
+### Subquestions
+
+1. Which constraints belong to full legitimization versus cheap semi-legitimization?
+2. Are affect budget, slack preservation, dependency fragility, user-mode compatibility, local repair, and legitimacy-delta estimates sufficient for MVP?
+3. Is legitimacy binary, graded, or both?
+4. How does the planner compare a high-value but brittle Plan against a lower-value but more humane Plan?
+5. How are recuperative Tasks represented when they are required for Plan legitimacy rather than optional gap-filling?
+
+### Current direction
+
+The legitimized skeleton Plan is the baseline feasible Plan. If full legitimization is cheap, it can be used as a frequent validity oracle. If expensive, UbU needs approximate semi-legitimization before full validation of finalists.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0072: GPU-aware planner kernels and solver selection
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Implementation Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016 Blocks: practical planner implementation, mobile/desktop/cloud execution profile Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Which parts of UbU planning should use CPU-exact logic, and which parts should use GPU-friendly search, simulation, scoring, or learned-model inference?
+
+### Subquestions
+
+1. Which solver/library candidates should be evaluated for skeleton validation, finalist validation, contradiction diagnosis, and candidate optimization?
+2. Which candidate expansion, stochastic simulation, affect scoring, and robustness scoring operations can be batched for GPU execution?
+3. What are the mobile GPU targets for Android and iOS, and what CPU fallback is required?
+4. What desktop/laptop GPU path is appropriate for power users?
+5. What cloud GPU path is appropriate for premium wide-horizon planning?
+6. How does UbU enforce the rule that GPU search may propose but exact/conservative validation must certify?
+
+### Current direction
+
+GPU suitability is a first-class solver-selection criterion. CPU logic should certify hard constraints and explanations. GPU-capable approaches should handle expensive candidate evaluation, stochastic robustness, affect scoring, and premium cloud planning where practical.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0073: Mobile stewardship metadata and MVP repair rules
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: UX/Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016, UBU-Q0058 Blocks: mobile/local planning UX Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What compact Calendar metadata and local repair rules are required so mobile UbU can preserve legitimacy and next-action clarity without full global optimization?
+
+### Subquestions
+
+1. What is the exact schema for protected, flexible, and disposable Task criticality?
+2. What is the MVP schema for decision envelopes?
+3. What conflict severity levels are required?
+4. What explanation fragments should be cached with each Task or Plan segment?
+5. What simple repair recipes are required for late Task, skipped Task, fatigue report, approaching Static Task, and missing prerequisite?
+6. How is the last legitimate Plan stored and compared with current reality?
+7. When should mobile ask the user, silently repair, or wait for desktop/cloud refinement?
+
+### Current direction
+
+Mobile should be a real-time steward of Plan legitimacy, user agency, and next-action clarity. MVP should include Task criticality, last legitimate Plan storage, simple repair rules, conflict severity, cached explanations, next-best-action mode, and basic decision envelopes.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0074: Stochastic personality and affect-disruption model
+
+Status: Open Priority: Research Phase: Post-MVP Decision type: Algorithm/Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0053 Blocks: advanced affect-aware planning, personalized legitimization Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU model user personality, current affect, and likely desired planning style as stochastic parameters without claiming false precision or reducing user sovereignty?
+
+### Subquestions
+
+1. What are the minimal user-mode categories: deep work, rest, socialization, autonomy, structure, switching, recovery?
+2. How should current affect shift candidate Plan probabilities or legitimacy scores?
+3. When should mood/affect changes be treated like External Event-like disruptions?
+4. How should ex post Log review update these distributions?
+5. How can the user explicitly choose to become more like a different preferred planning/personality pattern?
+6. How does UbU avoid manipulative nudging or pseudo-therapeutic overreach?
+
+### Current direction
+
+Stochastic personality modeling is plausible, but not required for MVP. The MVP can use explicit user inputs, conservative defaults, and Log review prompts before learning deeper distributions.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0075: Optional VoxPopuli EthConf demo boundary
+
+Status: Open Priority: MVP important Phase: Phase 1 outreach Decision type: Product/Outreach Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0050, UBU-Q0068 Blocks: optional EthConf public demo Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What is the smallest safe optional VoxPopuli demo that lets a user describe an unstructured planning problem in natural language and review the LLM-produced structured UbU candidate output?
+
+### Subquestions
+
+1. What input prompt should invite open-ended user speech without implying therapeutic authority or full life modeling?
+2. Which candidate outputs are safe to show: Objectives, Tasks, constraints, Preferences, assumptions, ambiguities, and suggested follow-up questions?
+3. How does the UI show that LLM output is candidate structure, not canonical state?
+4. What should be excluded from the demo to avoid overclaiming Phase 1 capability?
+5. When should this be skipped so it does not displace higher-priority EthConf deliverables?
+
+### Current direction
+
+VoxPopuli is an optional EthConf/public demonstration and populist hook. It is not a replacement for the narrow Phase 1 bootstrap interview and should only be implemented if cheap relative to higher-priority dogfooding, contributor, and funder work.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0076: Planning horizon, early-preparation bias, and short-horizon time discounting
+
+Status: Open Priority: Research Phase: Phase 1/Post-MVP Decision type: Algorithm Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016, UBU-Q0051 Blocks: detailed planning horizon policy, premium planning horizon design Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How far beyond the visible Calendar window should UbU look, when should prerequisite work be front-loaded, and when does time discounting become relevant to detailed planning?
+
+### Subquestions
+
+1. What is the default internal look-ahead for a one-day visible Calendar?
+2. When should a dependency chain be scheduled early rather than just in time?
+3. What makes a prerequisite chain fragile enough to justify early preparation?
+4. Should one week be the default upper bound for detailed local planning?
+5. Which longer-horizon plans belong to premium cloud, user-owned worker, or research modes?
+6. When should explicit temporal-discounting Preferences override the short-horizon zero-discount assumption?
+
+### Current direction
+
+The internal planning horizon may exceed the visible Calendar window. Fragile prerequisites should be completed as early as reasonably viable within short detailed horizons to avoid forced stressful choices later. For operational windows of one day to roughly one week, time discounting may usually be treated as negligible unless user Preferences say otherwise.
+
+### Resolution
+
+Open.
+
+---
+
 ## Suggested Initial GitHub Issues
 
 Create these first:
@@ -2349,7 +2543,7 @@ Create these first:
 4. `UBU-Q0007`: Define Automation Worker Identity and Capability Model
 5. `UBU-Q0009`: Define Worker Mutation Request Schema
 6. `UBU-Q0014` + `UBU-Q0015`: Define UniverseState Mutation and Precondition Schemas
-7. `UBU-Q0016`: Define Compact Calendar DFS Grammar
+7. `UBU-Q0016`: Define Compact Calendar planner grammar and execution profile
 8. `UBU-Q0018`: Define Risk Reporting Primitives
 9. `UBU-Q0019`: Define Recalculation Trigger Taxonomy
 10. `UBU-Q0030`: Define Phase 1 Public Demo Criteria
@@ -2379,3 +2573,9 @@ Create these first:
 34. `UBU-Q0067`: Define legacy communication adapter and UbU-to-UbU upgrade protocol
 35. `UBU-Q0068`: Define structured message extraction schema, validation, and model strategy
 36. `UBU-Q0069`: Define personalized TTS, voice-profile descriptors, and anti-impersonation controls
+37. `UBU-Q0070`: Define skeleton Plan failure diagnostics and user clarification flow
+38. `UBU-Q0071`: Define legitimization and semi-legitimization cost model
+39. `UBU-Q0072`: Evaluate GPU-aware planner kernels and solver selection
+40. `UBU-Q0073`: Define mobile stewardship metadata and MVP repair rules
+41. `UBU-Q0075`: Bound the optional VoxPopuli EthConf demo
+42. `UBU-Q0076`: Define planning horizon, early-preparation bias, and short-horizon time discounting
