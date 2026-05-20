@@ -1,0 +1,186 @@
+# UbU for Sovereign Coordination
+
+**Status:** Derived audience-facing brief  
+**Source of truth:** `DESIGN.md`, `DECISIONS.md`, and `OPEN_QUESTIONS.md`  
+**Audience:** cypherpunks, privacy engineers, Ethereum privacy builders, FHE/ZK/secure-compute researchers, privacy-coin-adjacent developers, FOSS contributors, and people interested in voluntary private coordination
+
+---
+
+## The core idea
+
+UbU is not just productivity software.
+
+UbU is intended to become a sovereignty-preserving coordination layer for human and AI labor.
+
+It starts with personal self-governance: the user models Objectives, Tasks, Plans, Calendars, Logs, Identities, Compartments, external events, and Preferences so they can decide what should happen next without handing their life model to an opaque centralized service.
+
+From that foundation, UbU can support broader coordination: FOSS projects, informal crews, privacy-preserving work agreements, delegated Tasks, user-owned agents, Association-level planning, and eventually lawful private skill exchange.
+
+---
+
+## Why this matters
+
+The AI market is moving toward assistants that want broad context, persistent memory, tool authority, realtime interaction, and background agency.
+
+That creates a sovereignty problem.
+
+A system that knows a user’s goals, calendar, messages, emotional state, work commitments, relationships, and private constraints can become useful enough to matter and dangerous enough to govern.
+
+UbU’s answer is not to trust one assistant harder. UbU’s answer is to make planning state explicit, compartmentalized, inspectable, correctable, and user-governed.
+
+LLMs, realtime models, local agents, cloud models, and external tools may help extract candidates or propose actions. They do not become the authority over canonical state.
+
+---
+
+## Sovereignty principles
+
+UbU’s sovereignty framing depends on several accepted design commitments:
+
+- local-first operation should remain a real execution tier;
+- cloud inference is optional and governed by policy, not hidden dependency;
+- users may use multiple Identities;
+- Compartments constrain storage, disclosure, export, retention, integrations, and device eligibility;
+- external agents submit candidate updates and evidence rather than receiving ambient authority;
+- GitHub, calendars, and other systems are projections or inputs, not the full canonical life model;
+- user overrides remain authoritative;
+- provider-neutral LLM execution prevents lock-in to one cognitive backend.
+
+The purpose is not purity for its own sake. The purpose is practical control over sensitive planning state.
+
+---
+
+## Identity, Compartments, and bounded disclosure
+
+UbU assumes that people operate through multiple Identities.
+
+A person may need a personal Identity, professional Identity, family Identity, pseudonymous Identity, project Identity, or compartment-specific Identity. These Identities should not be collapsed by default.
+
+UbU also treats data access as a first-class design problem. A Compartment can carry hard policy about:
+
+- storage backend;
+- allowed devices;
+- identity disclosure;
+- export restrictions;
+- integration bans;
+- retention rules;
+- audit expectations;
+- provider eligibility.
+
+This matters for sovereign coordination because useful collaboration often requires sharing selected facts without exposing the whole person.
+
+A team may need to know that a commitment is blocked. It does not need raw affect history, private messages, unrelated objectives, or another client’s confidential payload.
+
+---
+
+## Delegation Substrate
+
+UbU’s near-term marketplace-relevant primitive is the **Delegation Substrate**.
+
+A Task should be formalizable for execution by:
+
+- the user;
+- a local agent;
+- a remote/cloud agent;
+- a tool;
+- an Automation Worker;
+- a human Identity;
+- an Association;
+- a General Contractor role.
+
+A Delegation Substrate packet should make purpose, executor, authority, expected output, evidence, privacy scope, review, and escalation explicit.
+
+This is useful even when the user performs the Task solo. It records why the work matters, what result is expected, and how completion will be recognized.
+
+For sovereign coordination, it also creates a future path to private work agreements and bounded labor exchange without starting from a surveillance marketplace.
+
+---
+
+## Skill Barter future direction
+
+The **Skill Barter marketplace** is a future direction, not a Phase 1 marketplace commitment.
+
+The root idea is voluntary, privacy-preserving skilled-work coordination among autonomous Identities.
+
+A mature version could include:
+
+- pseudonymous skill profiles;
+- scoped work agreements;
+- reputation without unnecessary doxxing;
+- explicit commitments and deliverables;
+- privacy-preserving evidence of completion;
+- dispute workflows;
+- lawful settlement references;
+- agentic and human executors operating through the same delegation model.
+
+This is not token-first speculation and not a public Phase 1 product. Phase 1 should focus on the Delegation Substrate primitives that make such coordination credible later.
+
+---
+
+## Why privacy tech builders may care
+
+UbU creates natural demand for privacy-preserving infrastructure once the planning model works.
+
+Future versions could benefit from:
+
+- FHE and other privacy-preserving computation;
+- ZK proofs for selective claims;
+- private reputation and selective disclosure;
+- secure enclaves where appropriate;
+- encrypted local-first sync;
+- user-owned worker devices;
+- compartment-aware model routing;
+- private coordination protocols;
+- auditable agent authority and rollback.
+
+The important ordering is: first build the planning and delegation semantics; then apply advanced cryptography where it protects real coordination value.
+
+---
+
+## What UbU is not
+
+UbU should not be framed as:
+
+- a darknet labor market;
+- a tax-evasion or sanctions-evasion system;
+- a token launch;
+- a reputation casino;
+- a generic AI agent marketplace;
+- a centralized assistant that asks users to upload their life into a black box.
+
+Preferred framing:
+
+- lawful private settlement;
+- pseudonymous skill barter;
+- reputation without doxxing;
+- voluntary skilled-work coordination;
+- Delegation Substrate;
+- compartment-aware planning;
+- user-sovereign coordination.
+
+---
+
+## EthConf conversation focus
+
+The useful question for cypherpunk and privacy builders is:
+
+> What would it take for AI-assisted coordination to preserve user sovereignty instead of consuming it?
+
+Concrete subquestions:
+
+- What planning state should never leave the user’s device?
+- What can be safely projected to a team or marketplace?
+- What claims could be proven without exposing raw private data?
+- Which parts of reputation require cryptography versus social review?
+- What authority should a local or cloud agent never receive?
+- How can a user recover from a bad agent action?
+- What privacy primitives become valuable only after the Task and delegation model exists?
+
+---
+
+## Where to go next
+
+- Technical contributors should read `README.md`.
+- General FOSS maintainers and software engineers should read `OUTREACH.md`.
+- Project leads and technical PMs should read `PM_BRIEF.md`.
+- Funders and sponsors should read `FUNDER_BRIEF.md`.
+- Mission-driven projects should read `ORG_INTROSPECTION_BRIEF.md`.

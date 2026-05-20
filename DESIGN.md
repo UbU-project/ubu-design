@@ -2624,7 +2624,7 @@ Contributor trust requires clear labeling of each repository or package as open 
 For UbU design governance:
 
 - `DESIGN.md`, `DECISIONS.md`, and `OPEN_QUESTIONS.md` are canonical design inputs.
-- `README.md` and `OUTREACH.md` are derived public-facing projections.
+- `README.md`, `OUTREACH.md`, `PM_BRIEF.md`, `FUNDER_BRIEF.md`, `SOVEREIGN_COORDINATION.md`, and `ORG_INTROSPECTION_BRIEF.md` are derived public-facing projections.
 
 Question-answering uses canonical files. Consistency checking includes derived files and patches them when they fall out of sync.
 

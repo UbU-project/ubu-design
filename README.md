@@ -94,7 +94,16 @@ The canonical public design state is maintained in:
 - [`DECISIONS.md`](DECISIONS.md)
 - [`OPEN_QUESTIONS.md`](OPEN_QUESTIONS.md)
 
-Derived public-facing projection files, such as `README.md` and `OUTREACH.md`, should summarize the canonical design state but are not themselves design authority.
+Derived public-facing projection files should summarize the canonical design state but are not themselves design authority.
+
+Current derived public-facing files are:
+
+- [`README.md`](README.md) - technical contributor entry point and project summary
+- [`OUTREACH.md`](OUTREACH.md) - outreach document for FOSS maintainers and software engineers
+- [`PM_BRIEF.md`](PM_BRIEF.md) - project-lead and technical-PM brief
+- [`FUNDER_BRIEF.md`](FUNDER_BRIEF.md) - grantmaker, sponsor, and prototype-funder brief
+- [`SOVEREIGN_COORDINATION.md`](SOVEREIGN_COORDINATION.md) - cypherpunk, privacy, and sovereign-coordination brief
+- [`ORG_INTROSPECTION_BRIEF.md`](ORG_INTROSPECTION_BRIEF.md) - organizational-introspection brief for mission-driven projects
 
 When derived files conflict with canonical files, the canonical files win.
 
@@ -794,8 +803,12 @@ Those files are not required yet.
 
 ## Repository map
 
-- `README.md` - derived public-facing project summary
+- `README.md` - derived technical contributor entry point and project summary
 - `DESIGN.md` - canonical design summary
 - `DECISIONS.md` - accepted design decisions and anti-regression memory
 - `OPEN_QUESTIONS.md` - unresolved questions, prioritization metadata, and automation queue
-- `OUTREACH.md` - derived public-facing outreach and recruiting document
+- `OUTREACH.md` - derived outreach document for FOSS maintainers and software engineers
+- `PM_BRIEF.md` - derived brief for project leads and technical PMs
+- `FUNDER_BRIEF.md` - derived brief for grantmakers, sponsors, and prototype funders
+- `SOVEREIGN_COORDINATION.md` - derived brief for cypherpunks, privacy builders, and sovereign-coordination audiences
+- `ORG_INTROSPECTION_BRIEF.md` - derived brief for mission-driven projects and organizational introspection

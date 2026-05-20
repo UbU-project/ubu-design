@@ -1243,14 +1243,21 @@ The canonical source files for model-committee question-answering are:
 - `DECISIONS.md`
 - `OPEN_QUESTIONS.md`
 
-`README.md` and `OUTREACH.md` are derived public-facing projections of the canonical design state.
+Derived public-facing projections of the canonical design state currently include:
+
+- `README.md`
+- `OUTREACH.md`
+- `PM_BRIEF.md`
+- `FUNDER_BRIEF.md`
+- `SOVEREIGN_COORDINATION.md`
+- `ORG_INTROSPECTION_BRIEF.md`
 
 **Consequences:**
 
 
-- Question-answering runs must not use `README.md` or `OUTREACH.md` as design authority.
+- Question-answering runs must not use derived public-facing files as design authority.
 - Consistency checks should include all Markdown files.
-- If `README.md` or `OUTREACH.md` conflicts with canonical files, the derived file should normally be patched.
+- If a derived public-facing file conflicts with canonical files, the derived file should normally be patched.
 - If a derived-file inconsistency reveals a genuine source-level design issue, the issue should be added to `OPEN_QUESTIONS.md`.
 
 ---
@@ -3576,3 +3583,31 @@ The Phase 1 one-next-Task UX remains the narrow proof. Later interfaces may adap
 - The main interface should preserve one-next-action clarity while allowing deeper inspection.
 - The UX should make candidate versus canonical state visually and operationally distinct.
 
+---
+
+## UBU-D0143: Community-specific EthConf briefs are derived presentation layers
+
+**Status:** Accepted
+
+Direct project directive.
+
+UbU should maintain a small set of community-specific derived documents for EthConf and adjacent outreach when the audience has a materially different trust barrier, motivation, or call to action.
+
+The durable derived audience documents are:
+
+- `README.md` for upcoming technical contributors and technically serious readers who need the project entry point;
+- `OUTREACH.md` for FOSS maintainers and general software engineers who may become technical contributors;
+- `PM_BRIEF.md` for project leads, technical PMs, protocol leads, release coordinators, and people coordinating autonomous contributors;
+- `FUNDER_BRIEF.md` for grantmakers, sponsors, hackathon judges, aligned funders, and prototype funders;
+- `SOVEREIGN_COORDINATION.md` for cypherpunks, privacy engineers, Ethereum privacy builders, FHE/ZK/secure-compute researchers, and sovereign-coordination audiences;
+- `ORG_INTROSPECTION_BRIEF.md` for mission-driven projects, FOSS maintainers, nonprofits, DAOs, foundations, and teams that want evidence-backed mission alignment.
+
+These files are presentation layers. They must not introduce new design authority. Their source of truth remains `DESIGN.md`, `DECISIONS.md`, and `OPEN_QUESTIONS.md`.
+
+**Consequences:**
+
+- Audience-specific documents may reframe accepted decisions, but should not create new canonical claims.
+- Consistency checks should include all derived audience documents.
+- When a derived audience document conflicts with canonical design files, the derived document should normally be patched.
+- The documentation set should remain small; new audience files require a materially distinct audience frame or call to action.
+- EthConf outreach can route different communities to different briefs without fragmenting UbU's source of truth.

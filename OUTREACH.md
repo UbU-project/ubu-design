@@ -770,8 +770,12 @@ The canonical design files are:
 
 Derived public-facing files include:
 
-- `README.md`
-- `OUTREACH.md`
+- `README.md` - technical contributor entry point and project summary
+- `OUTREACH.md` - outreach document for FOSS maintainers and software engineers
+- `PM_BRIEF.md` - project-lead and technical-PM brief
+- `FUNDER_BRIEF.md` - grantmaker, sponsor, and prototype-funder brief
+- `SOVEREIGN_COORDINATION.md` - cypherpunk, privacy, and sovereign-coordination brief
+- `ORG_INTROSPECTION_BRIEF.md` - organizational-introspection brief for mission-driven projects
 
 The current immediate implementation target is `model-committee v0.1`.
 
