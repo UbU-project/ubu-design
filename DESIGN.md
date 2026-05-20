@@ -1088,16 +1088,19 @@ Preconditions are deterministic constraints over UniverseState.
 
 If preconditions are unknown or partially modeled, they are treated as absent in MVP.
 
-MVP preconditions support:
+MVP preconditions use a recursive object with `all_of` and `any_of` arrays for simple AND/OR composition. A leaf predicate has `target`, `predicate`, and optional `expected` fields. `target` uses the same dotted UniverseState target convention as mutations, beginning with `facts`, `numeric_values`, `set_memberships`, or `event_markers`.
 
-- equality checks
-- membership checks
-- absence checks
-- simple AND/OR logic
+MVP predicates are:
 
-Numeric comparisons are not in MVP.
+- `equals`, for exact JSON-compatible equality;
+- `member_of`, for checking that `expected` is present in a `set_memberships` target;
+- `absent`, for checking that a target is not present or has been cleared.
 
-Failed preconditions should generally make a Task blocked, not invalid.
+Numeric comparisons are not in MVP, even for `numeric_values` targets. Numeric values may be checked only by equality or absence.
+
+Preconditions may reference event markers, affect-related UniverseState keys in `user_mode`, and Relationship-relevant UniverseState keys when the containing Task is allowed to see those targets. Organization-mode and worker-mode validation must reject intrinsic-affect preconditions. Relationship-relevant and Compartment-protected targets remain subject to Compartment policy, mode rules, and user-acceptance requirements for private or inferred claims.
+
+A failed precondition means the Task is blocked for planning and execution, not invalid. `unschedulable` is a derived planner result when no placement satisfies otherwise valid preconditions and Calendar Logic; `invalid` is reserved for malformed Tasks, malformed precondition schema, forbidden targets, or contradictions in canonical state.
 
 ### 10.2 Effects
 

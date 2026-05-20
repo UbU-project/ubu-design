@@ -658,7 +658,7 @@ Mutation targets may include affect keys in `user_mode`, subject to Snapshot pre
 
 ## UBU-Q0015: Task Precondition Schema
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: UBU-D0131 Last scored: Never Scored from commit: None
 
 Preconditions are deterministic constraints over UniverseState.
 
@@ -694,7 +694,15 @@ Failed precondition should mean blocked, not invalid.
 
 ### Resolution
 
-Unresolved.
+Solved by `UBU-D0131`. MVP Task preconditions use a recursive boolean object with `all_of` and `any_of` arrays for simple AND/OR logic. A group node contains one of those arrays. A leaf predicate contains `target`, `predicate`, and optional `expected`.
+
+Targets use the same dotted UniverseState target convention as mutation items: the first segment is `facts`, `numeric_values`, `set_memberships`, or `event_markers`, and the remaining segments form the namespaced key.
+
+MVP predicates are `equals`, `member_of`, and `absent`. `equals` compares the target value with a JSON-compatible expected value. `member_of` checks that a JSON scalar expected value is present in a `set_memberships` target. `absent` checks that the target is missing or cleared and does not use `expected`. Numeric comparisons, ranges, thresholds, and arithmetic expressions are not in MVP.
+
+Preconditions may reference event markers. They may reference affect keys in `user_mode`, but organization-mode and worker-mode validators reject intrinsic-affect preconditions. They may reference Relationship-relevant UniverseState keys, including interaction markers and maintenance facts, subject to Compartment policy, mode rules, provenance/logging envelopes, and user acceptance for private or inferred claims.
+
+A failed precondition means the Task is blocked for planning and execution, not invalid. `unschedulable` is a derived planner result when an otherwise valid Task cannot be placed in the current Calendar scope while satisfying preconditions and Calendar Logic. `invalid` is reserved for malformed Tasks, malformed precondition schema, forbidden targets, or canonical-state contradictions. Unknown or partially modeled preconditions are treated as absent in MVP unless explicitly represented as deterministic predicates.
 
 ---
 
