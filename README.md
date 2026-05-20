@@ -10,11 +10,11 @@
 
 **UbU** is a privacy-first planning, coordination, and self-governance system.
 
-UbU is intended to convert messy real-world inputs - tasks, calendar events, messages, external events, user preferences, physical and affective state, GitHub/project data, and integration data - into explicit, inspectable, recalculable plans. A message should eventually be treated as a context-bearing communication event, not merely a flat text string.
+UbU is intended to convert messy real-world inputs - tasks, calendar events, messages, external events, user preferences, physical and affective state, GitHub/project data, realtime interaction streams, agent or worker outputs, and integration data - into explicit, inspectable, recalculable plans. A message should eventually be treated as a context-bearing communication event, not merely a flat text string.
 
 UbU is not merely a task list, calendar application, or project-management dashboard. It is intended to become a planning kernel for individuals and organizations: a system that models desired outcomes, constraints, risks, dependencies, available time, and human limitations, then helps determine what should happen next.
 
-UbU models organizations broadly as **Associations**: Identity-scoped, evidence-backed coordination structures that may be formal or informal. A FOSS project, contributor crew, friend group, event cohort, contractor network, nonprofit, company, DAO-like project, or marketplace can all be modeled as an Association when coordinated through shared Objectives, Relationships, commitments, norms, and bounded disclosure.
+UbU models organizations broadly as **Associations**: Identity-scoped, evidence-backed coordination structures that may be formal or informal. A FOSS project, contributor crew, friend group, event cohort, skill network, nonprofit, company, DAO-like project, or marketplace can all be modeled as an Association when coordinated through shared Objectives, Relationships, commitments, norms, and bounded disclosure.
 
 The first MVP is designed around **dogfooding**: using UbU to coordinate the design, development, release, and maintenance of UbU itself.
 
@@ -68,6 +68,22 @@ UbU is based on several design principles:
 
    Phase 3 should include minimal UbU-to-UbU contextual messaging so messages can carry priority, topic, response expectation, assumptions, ambiguities, provenance, and disclosure policy instead of forcing the receiver to infer everything from flat text.
 
+12. **Realtime and agentic AI boundary**
+
+   Realtime, multimodal, tool-using, and memory-bearing models are useful interaction backends, but they emit candidate updates. UbU's planner, Logs, Compartments, Identities, and review rules remain authoritative.
+
+13. **Delegation Substrate**
+
+   UbU should prepare Tasks for delegation by formalizing purpose, executor, authority, expected output, evidence, privacy scope, review, and escalation. The same structure is useful for solo Tasks as a self-reminder of how and why the Task should be performed.
+
+14. **MCP-style interoperability**
+
+   UbU should eventually operate as both an MCP-style client and server, exposing only narrow, capability-scoped, Compartment-aware tool surfaces.
+
+15. **Skill Barter future direction**
+
+   Skill Barter is a future privacy-preserving skilled-work marketplace direction and EthConf outreach hook. The MVP should implement Delegation Substrate primitives, not a public marketplace.
+
 ---
 
 ## Canonical design files
@@ -92,7 +108,7 @@ The design has reached the point where additional broad philosophical elaboratio
 
 The `model-committee` v0.1 baseline is now the first runnable bootstrap artifact for using model-assisted review to process UbU design questions and generate reviewable changesets.
 
-The Phase 1 MVP scope is frozen around single-user GitHub dogfooding.
+The Phase 1 MVP scope is frozen around single-user GitHub dogfooding, with Delegation Substrate-compatible fields only where they support dogfooding, worker assignment, or solo Task self-reminder clarity.
 
 The current operational target is:
 
@@ -385,7 +401,7 @@ Optional personalized TTS or voice descriptors are a future communication/access
 
 ## Association and organizational introspection
 
-An **Association** is UbU's term for a group-like coordination structure as perceived by an Identity. It can be a formal organization, informal project, contributor crew, event cohort, friend group, contractor network, or future marketplace.
+An **Association** is UbU's term for a group-like coordination structure as perceived by an Identity. It can be a formal organization, informal project, contributor crew, event cohort, friend group, skill network, or future marketplace.
 
 Associations are evidence-backed and perspective-bound by default. UbU should represent membership, roles, authority, priorities, norms, and commitments as claims and attestations with provenance rather than pretending every group has one objective global member list.
 

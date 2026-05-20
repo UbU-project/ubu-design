@@ -2841,7 +2841,7 @@ UbUCorp may offer managed hosted inference, model routing, support, integrations
 
 Direct project directive.
 
-UbU adopts **Association** as the canonical term for the earlier social-formation concept. An Association is an Identity-scoped model of an emergent group-like coordination pattern. It may represent a friend group, party, amateur league, FOSS project, contributor crew, contractor network, marketplace, nonprofit, company, DAO-like project, or other formal or informal group.
+UbU adopts **Association** as the canonical term for the earlier social-formation concept. An Association is an Identity-scoped model of an emergent group-like coordination pattern. It may represent a friend group, party, amateur league, FOSS project, contributor crew, skill network, marketplace, nonprofit, company, DAO-like project, or other formal or informal group.
 
 Associations are not assumed to have globally objective membership, authority, boundaries, or interpersonal identity. By default, an Association exists as a local, perspective-bound model perceived by an Identity and supported by evidence. Other Identities may maintain overlapping but non-identical models of what they call the same Association.
 
@@ -2893,14 +2893,14 @@ EthConf outreach should not splinter into many separate campaigns. The project s
 
 The shared thesis is that UbU is local-first, user-sovereign AI planning and coordination infrastructure. It can run locally for privacy, use optional cloud LLM execution when policy allows, and eventually help Associations coordinate through explicit Identities, commitments, evidence, and bounded disclosure.
 
-The cypherpunk/privacy lane should frame **Sovereign Skill Exchange** as a future specialization of Association modeling: lawful, privacy-preserving skill barter and contractor coordination through pseudonymous Identities, scoped work agreements, reputation without unnecessary doxxing, commitments, and user-chosen settlement references where lawful. It must not be framed as an illicit marketplace, sanctions-evasion tool, tax-evasion tool, or token-first product.
+The cypherpunk/privacy lane should frame **Skill Barter marketplace** as a future specialization of Association modeling: lawful, privacy-preserving skill barter and skilled-work coordination through pseudonymous Identities, scoped work agreements, reputation without unnecessary doxxing, commitments, and user-chosen settlement references where lawful. It must not be framed as an illicit marketplace, sanctions-evasion tool, tax-evasion tool, or token-first product.
 
 **Consequences:**
 
 - Outreach should prioritize FOSS contributors while keeping funder, general attendee, and cypherpunk variants prepared.
 - The cypherpunk lane is a recruiting hook for privacy-minded builders, not the center of the project.
 - Skill barter and private settlement remain future/post-MVP specializations, not Phase 1 commitments.
-- Public language should prefer `Sovereign Skill Exchange`, `privacy-preserving labor coordination`, `pseudonymous skill barter`, and `lawful private settlement` over anonymity/evasion framing.
+- Public language should prefer `Skill Barter marketplace`, `voluntary privacy-preserving skilled-work coordination`, `pseudonymous skill barter`, and `lawful private settlement` over anonymity/evasion framing.
 - EthConf follow-up should be classified by concrete next action, not enthusiasm alone.
 
 ---
@@ -3257,3 +3257,322 @@ A failed precondition makes the Task blocked for planning and execution. It does
 - Phase 1 gets deterministic blocked/not-blocked evaluation without adding numeric comparison logic or a richer ontology.
 - Event markers, affect keys, and Relationship-relevant keys are usable only within existing mode, Compartment, provenance, and user-acceptance boundaries.
 - Planner diagnostics can distinguish blocked, unschedulable, and invalid Tasks without treating ordinary failed preconditions as schema errors.
+
+---
+
+## UBU-D0132: Realtime multimodal LLMs are optional interaction backends, not authoritative planners
+
+**Status:** Accepted
+
+Direct project directive.
+
+Realtime multimodal LLMs may power live voice, video, interruption detection, meeting capture, discovery mode, pronunciation or activity feedback, and short-horizon task monitoring. They are interaction backends and perceptual/extraction aids, not the authoritative UbU planner.
+
+Realtime model output must enter UbU as structured, provenance-bearing candidate updates. Examples include `ObservedEvent`, `UserInterruption`, `TaskProgressDelta`, `AffectSignal`, `PlanDeviation`, `ExternalConditionChange`, `ClarificationQuestion`, `WorkItemCandidate`, `LogEntryCandidate`, and `AssociationAttestationCandidate`.
+
+UbU distinguishes **model-time awareness** from **planner-time semantics**. A realtime model may notice elapsed time, silence, overlapping speech, interruption, or a changing audiovisual scene. UbU's planner remains responsible for deciding whether that observation changes Task state, Calendar validity, Plan legitimacy, Logs, Objectives, or recalculation triggers.
+
+Realtime operation requires explicit user-visible modes, such as passive/off, text-only, voice session, active discovery mode, meeting/logging mode, high-privacy local-only mode, and cloud-assisted mode. Continuous capture must not become covert surveillance or an implied authorization to mutate canonical state.
+
+**Consequences:**
+
+- Realtime LLMs should be swappable providers behind a policy-routed interaction interface.
+- Realtime-derived observations are candidate evidence until admitted through UbU validation, review policy, and Logs.
+- The planner, Compartment policy, Identity model, and user-review rules remain authoritative.
+- UX should show when realtime/discovery/privacy modes are active and what kind of data may be captured, retained, or routed.
+
+---
+
+## UBU-D0133: LLMs are replaceable cognitive backends and structured outputs are candidate updates
+
+**Status:** Accepted
+
+Direct project directive.
+
+UbU should treat LLMs as replaceable cognitive backends. They may interpret, summarize, classify, translate, transcribe, propose structures, critique plans, call tools, generate UI drafts, and assist extraction. They do not own canonical truth, canonical value, canonical memory, or canonical planning state.
+
+Strict schemas and structured outputs are necessary but not sufficient. A JSON object that satisfies a schema may still be semantically wrong, policy-invalid, Compartment-invalid, dependency-invalid, affect-invalid, stale, maliciously influenced, or unsupported by evidence.
+
+The admission pipeline is therefore:
+
+```text
+LLM output
+  -> schema validation
+  -> semantic validation
+  -> policy and Compartment validation
+  -> provenance attachment
+  -> conflict detection
+  -> user-review classification
+  -> planner or Log admission
+```
+
+Memory must remain typed, scoped, provenance-bearing, and correctable. UbU should prefer explicit objects such as `Preference`, `Objective`, `Identity`, `Association`, `TaskPattern`, `AffectPattern`, `PlanningConstraint`, `ExternalReference`, `Attestation`, `Snapshot`, `LogEntry`, and `Evidence` over vague assistant personalization.
+
+**Consequences:**
+
+- LLM output is a candidate state update unless accepted through explicit UbU logic.
+- Corrections should preserve an audit trail and mark dependent interpretations stale where appropriate.
+- Generic model memory features do not replace UbU's typed memory model.
+- The FOSS core should avoid vendor-specific assumptions about model identity, memory behavior, or structured-output guarantees.
+
+---
+
+## UBU-D0134: Context assembly is a privacy-relevant governed act
+
+**Status:** Accepted
+
+Direct project directive.
+
+As LLM context windows grow, UbU must not assume that sending more context is automatically better. Context assembly is itself a privacy-relevant action that may cross Identity, Compartment, Association, provider, and retention boundaries.
+
+A future `ContextBundle` should describe why context was assembled and what it exposed:
+
+```text
+ContextBundle
+  - purpose
+  - source object references
+  - Compartments included
+  - Identities exposed
+  - Association references exposed
+  - provider or model destination
+  - redaction/minimization rules
+  - retention and expiration policy
+  - user-visible summary
+  - downstream candidate updates supported
+```
+
+**Consequences:**
+
+- Long-context models weaken naive RAG assumptions but strengthen the need for context-governance metadata.
+- Context minimization remains a core privacy principle even when a model can technically ingest a huge repository, chat archive, or life-log segment.
+- Compartment policy and disclosure rules apply to context construction, not only to final outputs.
+
+---
+
+## UBU-D0135: UbU should be both an MCP-style client and an MCP-style server with capability boundaries
+
+**Status:** Accepted
+
+Direct project directive.
+
+UbU should support MCP-style integration boundaries in both directions.
+
+As a client, UbU can connect to external tools and data sources such as GitHub, calendars, email, local scripts, file stores, home automation, and model/agent services.
+
+As a server, UbU may expose narrow, scoped, reviewable affordances to outside agents, such as:
+
+- create candidate Task;
+- read a current Plan summary;
+- append or submit a Log candidate;
+- request user clarification;
+- submit a proposed Plan repair;
+- query Objective status;
+- submit a candidate AssociationAttestation;
+- request a Delegation Substrate review packet.
+
+Every exposed tool must be bounded by Identity, Compartment, Objective, capability grant, operation kind, time window, provenance, and review policy. The dangerous pattern is letting an external AI agent access the user's life model as a broad ambient authority. The UbU pattern is exposing narrow capability surfaces under user-owned law.
+
+**Consequences:**
+
+- MCP-style interoperability belongs in the architecture, but it does not override Compartments or user sovereignty.
+- External agents should generally submit candidate updates, not direct canonical writes.
+- Tool exposure is part of the Delegation Substrate and should be auditable.
+
+---
+
+## UBU-D0136: Delegated agency is first-class in planning
+
+**Status:** Accepted
+
+Direct project directive.
+
+UbU Tasks may be performed by the user, a local agent, a cloud agent, a tool, another human Identity, an Association, or a delegated coordinator. The executor is part of the planning problem and must not be hidden inside an opaque automation step.
+
+A delegated Task should distinguish:
+
+- Task intent;
+- authorization source;
+- executor;
+- observer;
+- reviewer;
+- granted authority;
+- expected output;
+- completion evidence;
+- privacy/Compartment scope;
+- reversible and irreversible side effects;
+- failure and escalation path.
+
+An agent completing a Task is not semantically identical to the user completing it. Delegation changes trust, responsibility, review, provenance, affect cost, and side-effect risk.
+
+**Consequences:**
+
+- Task assignment should evolve from a simple user/worker field into an executor and authority model.
+- Computer-use agents, remote agents, human helpers, and Associations all require explicit scope and evidence rules.
+- Delegation belongs in the planning model even before a public marketplace exists.
+
+---
+
+## UBU-D0137: Delegation Substrate is the near-term model for preparing Task delegation
+
+**Status:** Accepted
+
+Direct project directive.
+
+Use **Delegation Substrate** as the near-term tool/model for preparing Task delegation. It is not the full Skill Barter marketplace. It is the explicit representation that makes a Task ready to be performed, reviewed, or handed off by clarifying purpose, executor, authority, expected output, evidence, constraints, and completion criteria.
+
+The Delegation Substrate is also valuable for Tasks the user intends to perform solo. Formalizing the same fields can act as a self-reminder of how and why the Task needs to be performed, what evidence would show completion, what authority is being used, and what constraints matter.
+
+A minimum Delegation Substrate packet may include:
+
+```text
+DelegationPacket
+  - Task or Objective reference
+  - intended executor type
+  - purpose / why this matters
+  - expected output
+  - authority granted or self-authority note
+  - required evidence of completion
+  - review requirement
+  - privacy and Compartment scope
+  - allowed tools or integrations
+  - deadline / timebox
+  - failure and escalation path
+```
+
+**Consequences:**
+
+- Phase 1 may include Delegation Substrate-compatible fields when needed for dogfooding, worker assignments, or self-reminder clarity.
+- The full Skill Barter marketplace remains future scope.
+- Delegation Substrate should integrate naturally with Automation Workers, MCP-style tools, Logs, and capability grants.
+
+---
+
+## UBU-D0138: General Contractor is a first-class delegated coordination role
+
+**Status:** Accepted
+
+Direct project directive.
+
+A **General Contractor** is an Identity, Agent, or Association delegated authority to coordinate multiple subordinate executors in order to satisfy an Objective or complete a Container of Tasks, subject to explicit authority, budget, privacy, review, evidence, and escalation constraints.
+
+This role is distinct from an ordinary executor. A General Contractor may decompose work, assign subtasks, supervise human or agent executors, collect evidence, report status, and submit candidate updates. UbU must still model the General Contractor's authority as bounded and reviewable.
+
+**Consequences:**
+
+- General Contractor belongs in the Delegation Substrate as a high-value coordination specialization.
+- General Contractor may be human, agentic, or Association-based.
+- Subdelegation requires explicit authority, provenance, evidence, and review semantics.
+- The role supports larger adaptive work campaigns without flattening humans, agents, and tools into a single undifferentiated actor type.
+
+---
+
+## UBU-D0139: Skill Barter marketplace is an outreach and future-market direction, not a Phase 1 marketplace commitment
+
+**Status:** Accepted
+
+Direct project directive.
+
+The **Skill Barter marketplace** should be presented as a future marketplace direction and EthConf NYC outreach hook, especially for cypherpunk and privacy-oriented audiences. It signals that UbU preserves much of the original cryptocurrency ethos: voluntary coordination, sovereign identity, privacy, open markets, FOSS development, pseudonymous capability, and user-controlled settlement references where lawful.
+
+Skill Barter can attract younger developers with drive, time, and interest in FOSS contribution by showing that UbU is not merely another productivity app. It is a coordination substrate that could eventually support privacy-preserving skilled-work exchange among human and agentic executors.
+
+A mature Skill Barter marketplace would naturally create demand for FHE, ZK, secure compute, private reputation, private escrow-like commitments, selective disclosure, and other high-privacy technologies compatible with the future Ethereum ecosystem. This should remain an architectural and outreach signal, not a token-first or speculation-first positioning.
+
+**Consequences:**
+
+- EthConf outreach may include Skill Barter as a cypherpunk “cool factor” lane.
+- MVP implements Delegation Substrate primitives, not a public marketplace.
+- Public language should avoid illicit-market, tax-evasion, sanctions-evasion, dark-market, worker-classification, or exploitative labor framing.
+- Skill Barter should be framed as voluntary, lawful, privacy-preserving coordination and FOSS contributor discovery.
+
+---
+
+## UBU-D0140: Computer-use and background agents require authority, audit, rollback, and prompt-injection handling
+
+**Status:** Accepted
+
+Direct project directive.
+
+Computer-use agents and background agents are high-risk external actors, not ordinary pure functions. They may operate browsers, accounts, files, credentials, APIs, and external systems where prompt injection, irreversible side effects, disclosure, or stale assumptions can cause harm.
+
+Future `AgentAction` or `BackgroundProcess` models should record:
+
+```text
+AgentAction / BackgroundProcess
+  - executor Identity or agent reference
+  - trigger or schedule
+  - authority scope
+  - credentials or integrations used
+  - Compartment and Identity scope
+  - external surface touched
+  - irreversible side-effect flag
+  - prompt-injection exposure level
+  - compute/cost budget
+  - notification policy
+  - rollback or mitigation path
+  - completion evidence
+  - failure and escalation policy
+```
+
+**Consequences:**
+
+- Background tasks are not automatically Calendar events because they may consume compute, credentials, money, privacy budget, or attention without occupying user time.
+- External agents should generally submit candidate updates and evidence rather than silently mutating canonical state.
+- Prompt-injection exposure should be tracked when agents read untrusted webpages, messages, documents, or tool outputs.
+
+---
+
+## UBU-D0141: Local/on-device inference is a first-class execution tier
+
+**Status:** Accepted
+
+Direct project directive.
+
+UbU should treat local and on-device inference as a first-class execution tier, not merely a fallback for unavailable cloud models. Local inference supports privacy, offline use, lower marginal cost, responsiveness, and user sovereignty.
+
+A provisional execution hierarchy is:
+
+```text
+Tier 0: deterministic local code
+Tier 1: small local/on-device model
+Tier 2: user-owned desktop or worker model
+Tier 3: user-selected cloud model via BYOK
+Tier 4: optional UbUCorp-managed hosted service
+```
+
+Local models may handle first-pass extraction, privacy classification, simple message triage, candidate Task/Log creation, affect journaling summaries, and compartment routing. Cloud or larger models may be reserved for high-complexity planning, deep design review, organizational introspection over large archives, difficult ambiguity resolution, and expensive multimodal reasoning when policy allows.
+
+**Consequences:**
+
+- The FOSS core should remain useful without mandatory hosted inference.
+- Provider routing should consider sensitivity, cost, latency, offline state, task complexity, and available local hardware.
+- Cloud assistance is a capability upgrade, not the philosophical center of UbU.
+
+---
+
+## UBU-D0142: UbU UX should evolve into a state-transition cockpit
+
+**Status:** Accepted
+
+Direct project directive.
+
+UbU should not be framed as chat plus calendar. The long-term UX should become a **state-transition cockpit**: a user interface that presents the current WorkItem, relevant state, candidate transitions, constraints, explanations, evidence, and review controls.
+
+The Phase 1 one-next-Task UX remains the narrow proof. Later interfaces may adapt the visible control surface to the current state transition:
+
+- reply to a message;
+- choose or start the next Task;
+- review a Log discrepancy;
+- repair a Plan conflict;
+- inspect a Delegation Substrate packet;
+- approve or reject an agent action;
+- review an AssociationAttestation;
+- run organizational introspection;
+- publish a projection.
+
+**Consequences:**
+
+- Generative UI and chat-native app surfaces can be interaction layers, but the user should remain oriented around explicit state transitions.
+- The main interface should preserve one-next-action clarity while allowing deeper inspection.
+- The UX should make candidate versus canonical state visually and operationally distinct.
+

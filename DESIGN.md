@@ -10,11 +10,13 @@ Purpose: Canonical public design document for the UbU project
 
 **UbU** is a privacy-first planning, coordination, and self-governance system.
 
-UbU takes messy real-world inputs—tasks, calendar events, messages, external events, user preferences, physical/emotional state, and integration data—and turns them into explicit, inspectable, recalculable Plans.
+UbU takes messy real-world inputs—tasks, calendar events, messages, external events, user preferences, physical/emotional state, integration data, realtime interaction streams, and agent or worker outputs—and turns them into explicit, inspectable, recalculable Plans.
 
 UbU is not merely a task list or calendar application. It is intended to become a personal and organizational planning kernel: a system that models desired outcomes, constraints, risks, dependencies, available time, and human limitations, then helps determine what should happen next.
 
 The first MVP is designed around **dogfooding**: using UbU to coordinate the design, development, release, and maintenance of UbU itself.
+
+Recent LLM and agentic-AI changes reinforce UbU's core boundary: realtime, multimodal, tool-using, memory-bearing models are valuable interaction and extraction backends, but UbU remains the user-sovereign state-transition, planning, logging, privacy, and review layer.
 
 For Phase 1, UbU must also be understandable as a first-person user experience. The minimal user-facing loop is: answer a small number of bootstrapping questions, allow UbU to construct an initial context model, receive one recommended next Task, inspect why that Task matters now, act or override, then let UbU learn from the result through Logs, Snapshots, and recalculation.
 
@@ -194,7 +196,7 @@ Short-turnaround execution decisions should be computed by UbU’s explicit deci
 
 UbU models formal and informal organizations as **Associations**: Identity-scoped, perspective-bound coordination structures that emerge from Relationships, shared Objectives, commitments, norms, Logs, External References, and evidence.
 
-An Association is not assumed to be a globally objective object with an authoritative member list. A legal entity, GitHub organization, Discord server, website, conference event, or contractor network may provide strong External References, but it does not eliminate the need for perspective-bound modeling and attestations.
+An Association is not assumed to be a globally objective object with an authoritative member list. A legal entity, GitHub organization, Discord server, website, conference event, or skill network may provide strong External References, but it does not eliminate the need for perspective-bound modeling and attestations.
 
 Organizational introspection is a first-class UbU feature. For individuals, UbU asks whether actual behavior matches stated Objectives and values. For Associations, UbU asks whether actual work, decisions, resource allocation, overrides, and undocumented structure match the Association's declared mission, values, and commitments.
 
@@ -224,6 +226,55 @@ For Phase 3, a minimal version of this is a premier feature because it allows a 
 Legacy-system integration can still provide value before native UbU-to-UbU messaging exists. UbU may ingest flat legacy messages and use a structured extraction layer to generate candidate planning state. When both parties have UbU, legacy transports may be upgraded by attaching, linking, or side-channeling a UbU Message Context Envelope while preserving the normal human-readable legacy message.
 
 This metadata must be intentionally bounded. UbU should not leak private Relationship history, hidden Objectives, private Association assumptions, or sensitive Compartment contents simply because the receiver would benefit from richer context.
+
+
+### 2.13 Realtime and agentic AI boundary
+
+Realtime multimodal LLMs are optional interaction backends. They may listen, speak, watch, transcribe, translate, detect interruptions, monitor Task progress, assist meeting capture, or generate candidate UI, but they do not become UbU's authoritative planner.
+
+UbU distinguishes **model-time awareness** from **planner-time semantics**. A model may notice elapsed time, silence, overlapping speech, or changed conditions; UbU decides whether those observations update a Task, Log, Snapshot, Calendar, Objective, or recalculation trigger.
+
+Realtime/discovery functionality must be mode-bound and visible. The user should know whether UbU is off, text-only, in a voice session, in active Discovery mode, in meeting/logging mode, local-only, or cloud-assisted.
+
+### 2.14 LLMs, structured outputs, and memory
+
+LLMs are replaceable cognitive backends. They may interpret, summarize, propose, critique, classify, transcribe, generate fixtures, or call tools, but accepted state remains typed, scoped, provenance-bearing, and correctable.
+
+Structured output is not sufficient for state admission. A schema-valid object is still a candidate until UbU validates semantics, Compartment policy, provenance, conflicts, and user-review requirements.
+
+UbU memory should be explicit objects such as Preferences, Objectives, Identities, Associations, PlanningConstraints, TaskPatterns, AffectPatterns, Snapshots, Logs, External References, and Attestations. Vague assistant memory does not replace the UbU data model.
+
+### 2.15 MCP-style integration boundary
+
+UbU should be both an MCP-style client and an MCP-style server.
+
+As a client, UbU may connect to tools, local services, repositories, calendars, email, files, model providers, and agent services. As a server, UbU may expose narrow capabilities such as candidate Task creation, Plan-summary reading, Log-candidate submission, clarification requests, Plan-repair proposals, Objective-status queries, and AssociationAttestation candidates.
+
+Every tool surface is bounded by Identity, Compartment, capability grant, Objective scope, operation kind, time window, provenance, and review policy. External agents should usually submit candidates rather than mutate canonical state directly.
+
+### 2.16 Delegation Substrate
+
+The **Delegation Substrate** is the near-term model for preparing Tasks for delegation. It formalizes purpose, executor, authority, expected output, evidence, privacy scope, constraints, review, and failure/escalation path.
+
+Delegation Substrate is useful even when the user performs a Task solo. A self-performed Task can still benefit from a clear statement of why the Task matters, what authority or context applies, what output is expected, and what evidence would prove completion.
+
+The full Skill Barter marketplace is not an MVP requirement. MVP-relevant work should implement the primitives that make future delegation and marketplace features possible without operating a public marketplace.
+
+### 2.17 General Contractor and Skill Barter direction
+
+A **General Contractor** is an Identity, Agent, or Association delegated authority to coordinate multiple subordinate executors toward an Objective or Container of Tasks. The role is a first-class coordination specialization, not merely another worker label.
+
+The **Skill Barter marketplace** is a future marketplace direction and EthConf outreach hook, especially for cypherpunk/privacy-oriented audiences. It signals voluntary coordination, sovereign identity, privacy, open markets, FOSS contribution, pseudonymous capability, and lawful user-controlled settlement references.
+
+Skill Barter should connect to future Ethereum-aligned privacy technologies such as FHE, ZK, secure compute, private reputation, and selective disclosure while avoiding token-first, speculation-first, illicit-market, or exploitative labor framing.
+
+### 2.18 Context assembly and background agency
+
+Context assembly is a privacy-relevant act. UbU should track why a context bundle was assembled, which objects and Compartments it included, which Identities or Associations it exposed, where it was routed, how it was minimized, and which downstream candidate updates it supported.
+
+Computer-use agents and background processes are high-risk actors because they may operate credentials, browsers, files, APIs, money, privacy budgets, and external systems. They require authority scopes, audit trails, prompt-injection exposure tracking, rollback or mitigation paths, and explicit notification/escalation policy.
+
+The long-term UX should evolve into a **state-transition cockpit** rather than chat plus calendar. The Phase 1 one-next-Task loop remains the narrow proof; later UIs should help the user inspect and approve state transitions such as Plan repairs, Log corrections, Delegation Substrate packets, agent actions, AssociationAttestations, and external projections.
 
 ---
 
@@ -501,6 +552,7 @@ The frozen Phase 1 implementation set is:
 - derived risk and human-complete plan-quality reports covering deadline risk, dependency fragility, worker or automation bottlenecks, stale affect, affect-margin, destructive pressure, and post-plan depletion warnings;
 - minimal Compartment guardrails for `local_only`, `no_cloud_llm`, `no_external_export`, allowed integration/device references, low-security labeling, and logged boundary decisions;
 - Automation Worker identity, scoped capability grants, explicit assignment/status display, and mutation or projection request submission without direct canonical writes;
+- Delegation Substrate-compatible Task formalization fields where needed for dogfooding, worker assignment, or solo self-reminder clarity, including purpose, executor type, authority, expected output, evidence, review, privacy scope, and escalation notes;
 - clearly marked GitHub projection previews or human-approved writes for UbU-managed labels, comments, or blocks, plus reconciliation reporting;
 - manually structured Release Outreach Pipeline work items and artifact records for release notes, screenshots, scripts, and contributor calls-to-action;
 - manually structured EthConf outreach notes and follow-up artifacts that dogfood Association formation and organizational introspection without requiring full multi-user Association automation.
@@ -519,7 +571,8 @@ Phase 3 explicitly includes:
 - user-to-user Identity-mediated requests, status updates, questions, commitments, and blockers;
 - bounded Message Context Envelopes carrying priority, interrupt recommendation, topic, response expectation, assumptions, ambiguities, provenance, and disclosure policy;
 - legacy-message ingestion and limited upgrade paths where both parties use UbU;
-- user-to-user Identity commitments, capabilities, and limited disclosure sufficient for narrow coordination.
+- user-to-user Identity commitments, capabilities, and limited disclosure sufficient for narrow coordination;
+- early Delegation Substrate use between Identities, if Phase 2/3 authority and privacy boundaries are in place.
 
 Phase 3 still defers:
 
@@ -538,6 +591,7 @@ Phase 1 keeps these abstractions documented for compatibility but does not imple
 - richer relationship-management, personal CRM, and longitudinal affect/growth models;
 - full Release Outreach Pipeline video generation, rendering, and publication workflow;
 - broad email, text-message, file, invoice, note, or personal-data ingestion outside narrow approved dogfooding fixtures;
+- full realtime multimodal capture, always-on assistant behavior, public Skill Barter marketplace operation, payment/settlement flows, reputation markets, dispute resolution, and General Contractor subdelegation workflows;
 - adaptive model-committee weighting, automatic patch application, GitHub mutation, and direct cloud-provider APIs.
 
 Stop rule:
@@ -1707,7 +1761,7 @@ Associations may be formal or informal, temporary or durable, economic or non-ec
 - amateur sports leagues;
 - FOSS projects;
 - contributor crews;
-- contractor networks;
+- skill networks;
 - private or public marketplaces;
 - nonprofits;
 - companies;
@@ -1871,7 +1925,164 @@ Voice descriptors are sensitive. They must be opt-in, policy-governed, clearly s
 
 ---
 
-## 21. Relationships
+
+## 21. Agentic Interaction, MCP, and Delegation Substrate
+
+This section records the post-realtime LLM and agentic-platform design direction. The core rule is that unstructured AI can observe, converse, propose, and act under authority, but UbU remains the canonical state-transition, review, privacy, and planning layer.
+
+### 21.1 Realtime interaction sessions
+
+A realtime interaction session is a bounded period in which UbU receives a continuous or semi-continuous stream from text, voice, video, sensors, tools, or a model provider.
+
+Possible session modes include:
+
+- `off`;
+- `text_only`;
+- `voice_session`;
+- `meeting_logging`;
+- `discovery_mode`;
+- `local_only_realtime`;
+- `cloud_assisted_realtime`.
+
+Realtime sessions may produce candidate updates, but they do not directly mutate canonical state. Candidate update types include observed events, interruption signals, Task progress deltas, affect signals, Plan deviations, external condition changes, clarification questions, WorkItem candidates, LogEntry candidates, and AssociationAttestation candidates.
+
+A realtime model's sense of elapsed time is evidence. Planner-time semantics are determined by UbU's explicit Task, Plan, Calendar, Log, Snapshot, and recalculation rules.
+
+### 21.2 Structured-output admission pipeline
+
+LLM, parser, worker, and agent outputs should follow an admission pipeline:
+
+```text
+output
+  -> schema validation
+  -> semantic validation
+  -> Compartment and policy validation
+  -> provenance and confidence attachment
+  -> conflict detection
+  -> user-review classification
+  -> accepted canonical object or rejected candidate
+```
+
+This applies to structured message extraction, realtime observations, AssociationAttestations, Tasks, Log candidates, Plan repairs, Delegation Substrate packets, and agent outputs.
+
+### 21.3 ContextBundle
+
+A `ContextBundle` is a governed package of context sent to a model, tool, worker, or agent.
+
+Provisional fields:
+
+- `context_bundle_id`;
+- `purpose`;
+- `source_refs`;
+- `compartment_refs`;
+- `identity_refs_exposed`;
+- `association_refs_exposed`;
+- `destination_provider_ref`;
+- `model_or_tool_ref`;
+- `redaction_policy`;
+- `minimization_notes`;
+- `retention_policy`;
+- `user_visible_summary`;
+- `created_at`;
+- `expires_at`;
+- `supports_candidate_refs`.
+
+Context assembly is not a low-level implementation detail. It is a privacy decision that must respect Compartment and Identity boundaries.
+
+### 21.4 MCP-style client and server boundary
+
+UbU as an MCP-style client may call external tools and services. UbU as an MCP-style server may expose narrow tool surfaces to external agents.
+
+Safe tool surfaces should prefer candidate submission and queries over direct mutation. Examples:
+
+- `task_candidate.create`;
+- `log_candidate.submit`;
+- `plan_summary.read`;
+- `plan_repair.submit`;
+- `objective_status.query`;
+- `clarification.request`;
+- `association_attestation_candidate.submit`;
+- `delegation_packet.prepare`;
+- `projection_preview.submit`.
+
+Capability grants should scope these operations by object, Objective subtree, Task set, Compartment, Identity, integration, operation kind, time window, cost budget, and review requirement.
+
+### 21.5 Delegation Substrate
+
+A Delegation Substrate packet prepares a Task for execution by making the work explicit enough to hand off, automate, review, or perform oneself with less ambiguity.
+
+Provisional fields:
+
+- `delegation_packet_id`;
+- `task_ref` or `objective_ref`;
+- `purpose`;
+- `executor_type` (`self`, `local_agent`, `remote_agent`, `tool`, `human_identity`, `association`, `general_contractor`, `external_provider`);
+- `executor_ref` when known;
+- `authority_source`;
+- `authority_scope`;
+- `expected_output`;
+- `required_evidence`;
+- `review_requirement`;
+- `privacy_scope`;
+- `compartment_refs`;
+- `allowed_tools`;
+- `timebox_or_deadline`;
+- `failure_path`;
+- `escalation_path`;
+- `status`.
+
+Status values may include `not_delegated`, `prepared`, `proposed`, `offered`, `accepted`, `in_progress`, `delivered`, `reviewed`, `rejected`, `completed`, and `cancelled`.
+
+When `executor_type` is `self`, the packet acts as a self-reminder and execution aid. It does not imply external handoff.
+
+### 21.6 General Contractor
+
+A General Contractor coordinates multiple subordinate executors to satisfy an Objective or complete a Container of Tasks.
+
+A General Contractor may be a human Identity, agent, or Association. The role may decompose work, assign subtasks, monitor status, request evidence, and submit candidate updates, but only within explicit authority and Compartment bounds.
+
+Open details include subdelegation, authority propagation, budget constraints, evidence requirements, review rights, and failure/escalation semantics.
+
+### 21.7 Skill Barter marketplace direction
+
+The Skill Barter marketplace is a future specialization of Association coordination and Delegation Substrate, not a Phase 1 public marketplace.
+
+It may eventually support privacy-preserving skilled-work exchange, pseudonymous capability claims, reputation without unnecessary doxxing, scoped work agreements, private or selective-disclosure evidence, lawful user-controlled settlement references, and human/agentic executor discovery.
+
+For EthConf and cypherpunk outreach, Skill Barter is useful as a future-direction signal: UbU can preserve cryptocurrency-native values of voluntary coordination, sovereign identity, privacy, FOSS development, and open markets without becoming token-first or speculation-first.
+
+### 21.8 AgentAction and BackgroundProcess
+
+An `AgentAction` is a bounded action by an agent or tool against an external surface. A `BackgroundProcess` is a recurring or conditional process that may run without occupying user Calendar time.
+
+Provisional shared fields:
+
+- `actor_identity_ref`;
+- `agent_or_tool_ref`;
+- `trigger`;
+- `schedule_or_condition`;
+- `authority_scope`;
+- `credential_refs`;
+- `compartment_refs`;
+- `external_surface_refs`;
+- `irreversible_side_effect`;
+- `prompt_injection_exposure`;
+- `compute_or_cost_budget`;
+- `notification_policy`;
+- `rollback_or_mitigation_path`;
+- `completion_evidence`;
+- `failure_escalation_policy`.
+
+These objects are not equivalent to ordinary user Calendar events. They may consume compute, credentials, money, privacy budget, or external authority without consuming the user's direct time.
+
+### 21.9 State-transition cockpit
+
+The long-term UX should present the current state transition and its evidence, constraints, expected effects, authority, privacy scope, and available actions.
+
+Phase 1 proves this through one recommended next Task and an inspectable explanation. Later cockpit surfaces may include message triage, Log review, Plan repair, Delegation Substrate packets, agent approvals, AssociationAttestation review, organizational introspection, and projection publication.
+
+
+## 22. Relationships
 
 A **Relationship** is structured UniverseState data representing the relationship between two Identities.
 
@@ -1890,9 +2101,9 @@ Neglect risk is not stored on Relationship in MVP. It is a risk-report finding d
 
 ---
 
-## 22. Zones, Devices, and Compartments
+## 23. Zones, Devices, and Compartments
 
-### 21.1 Device
+### 23.1 Device
 
 A **Device** is an execution enclave, not necessarily physical hardware.
 
@@ -1905,7 +2116,7 @@ Examples:
 
 One physical machine may host multiple Devices.
 
-### 21.2 Zone
+### 23.2 Zone
 
 A **Zone** is a workspace-like UbU instance context.
 
@@ -1915,7 +2126,7 @@ A Zone may have many Devices.
 
 Zones maintain explicit allowlists/denylists of Compartments, defaulting to deny.
 
-### 21.3 Compartment
+### 23.3 Compartment
 
 A **Compartment** is a first-class data containment object.
 
@@ -1943,7 +2154,7 @@ Phase 1 implements Compartments as explicit classification and routing guardrail
 
 Phase 1 public messaging must describe this as a minimal Compartment guardrail layer. It must not claim complete privacy isolation, complete retention enforcement, secure multi-device Compartments, or protection from a malicious local administrator.
 
-### 21.4 Sensitive content
+### 23.4 Sensitive content
 
 WorkItems must remain structurally usable without dereferencing sensitive content.
 
@@ -1953,7 +2164,7 @@ Un-compartmented content is treated as low-security and may require per-integrat
 
 In Phase 1, un-compartmented content is explicitly labeled `security_level: low`. Low-security content may be used by configured integrations or cloud LLM-backed Automation Workers after a user-visible integration or worker action, but UbU must not market that content as compartment-protected.
 
-### 21.5 Phase 1 local-first and cloud LLM disclosure
+### 23.5 Phase 1 local-first and cloud LLM disclosure
 
 Phase 1 can honestly claim that canonical planning state, Logs, and source-linked project model data live in the local single-user UbU instance by default. It cannot claim Phase 2 local-first sync, conflict handling, partial replication, or secure multi-device Compartment propagation.
 
@@ -1961,9 +2172,9 @@ Phase 1 can honestly claim that cloud LLM usage is optional, explicit, and advis
 
 ---
 
-## 23. Automation Workers and Super Automation
+## 24. Automation Workers and Super Automation
 
-### 22.1 Automation Worker
+### 24.1 Automation Worker
 
 An **Automation Worker** is a worker-mode UbU instance or compatible execution unit that performs delegated work.
 
@@ -1978,7 +2189,7 @@ Automation Workers may:
 
 A worker-mode instance is externally represented as an Identity.
 
-### 22.1.1 Worker identity and capabilities
+### 24.1.1 Worker identity and capabilities
 
 A worker Identity may receive only explicit capability grants. The Identity stores stable external identity metadata and credential references; authority lives in separate capability-grant objects attached to that Identity and issued by a specific parent UbU instance. A grant names allowed actions, scope limits, lifecycle state, issuance time, expiration time when present, and audit/provenance metadata.
 
@@ -2005,7 +2216,7 @@ A model-committee worker is an Automation Worker pattern that reads canonical pr
 
 In v0.1, model-committee is still an external bootstrap tool rather than a fully integrated UbU worker-mode runtime component.
 
-### 22.2 Worker mode
+### 24.2 Worker mode
 
 Worker mode:
 
@@ -2016,7 +2227,7 @@ Worker mode:
 - often runs on GPU-capable hardware;
 - may control cloud compute resources.
 
-### 22.2.1 Worker-mode public UX
+### 24.2.1 Worker-mode public UX
 
 Worker-mode public UX is an administrative console for the worker operator, not the primary planning UI.
 
@@ -2033,7 +2244,7 @@ The worker UI may expose detailed logs and operational controls, but it should d
 
 No worker-mode web admin UI is required for Phase 1. Phase 1 only needs enough visible worker assignment/status information for the GitHub dogfooding demo, which may be shown in the user-mode dogfooding UI, CLI output, or run artifacts.
 
-### 22.3 Super Automation
+### 24.3 Super Automation
 
 **Super Automation** is a product/UX pattern, not the technical name of the device.
 
@@ -2050,7 +2261,7 @@ It may include:
 
 ---
 
-## 24. Organization Mode
+## 25. Organization Mode
 
 Organization mode is an instance-wide option.
 
@@ -2067,7 +2278,7 @@ Organization mode:
 
 For MVP, roles/RBAC may be omitted and all users treated as admin-equivalent.
 
-### 23.1 Organization-mode object rules
+### 25.1 Organization-mode object rules
 
 Organization mode uses the shared core object model unless a field or behavior is intrinsically personal-affect-specific. Objective, Preference, Task, Container, UniverseState, Snapshot, Plan, Calendar, Log, Identity, Relationship, Compartment, Automation Worker, External Event, External Reference, and deferred Association-related objects are available in organization mode to the depth needed by the instance's project-planning workflow.
 
@@ -2081,7 +2292,7 @@ Before RBAC exists, organization-mode users are represented as human operator Id
 
 Future personal `user_mode` instances may provide limited signals to an organization-mode instance only through explicit user-controlled sharing, Identity-mediated authorization, Compartment/export checks, and clear provenance. Phase 1 does not implement cross-instance personal-to-organization sharing. Later designs should prefer structural signals such as availability, commitment status, task completion, or user-approved projection summaries rather than raw affect, private relationship state, or broad personal context.
 
-### 23.2 Organization-mode public UX
+### 25.2 Organization-mode public UX
 
 Organization-mode public UX is a project operations dashboard for human operators of an organization or project instance.
 
@@ -2099,13 +2310,13 @@ No organization-mode web admin UI is required for Phase 1. The Phase 1 public de
 
 ---
 
-## 25. GitHub Dogfooding and Projection
+## 26. GitHub Dogfooding and Projection
 
 GitHub is a projection of UbU state, not the source of truth.
 
 UbU should be able to use GitHub as an interface for FOSS contributors while maintaining canonical state internally.
 
-### 24.1 GitHub object mapping
+### 26.1 GitHub object mapping
 
 Provisional mapping:
 
@@ -2119,7 +2330,7 @@ Provisional mapping:
 
 Contributor interactions may also be associated with a GitHub Identity and relationship-maintenance Objective when the user has explicitly modeled that contributor relationship. These imported events may update relationship-relevant UniverseState or satisfy/reactivate the maintenance Objective, but they do not directly rewrite private Relationship affect fields without user acceptance.
 
-### 24.2 Pipeline state
+### 26.2 Pipeline state
 
 `pipeline_state` is distinct from `Objective.status`.
 
@@ -2135,7 +2346,7 @@ Candidate pipeline states:
 - `awaiting_ci`
 - `complete`
 
-### 24.3 GitHub projection
+### 26.3 GitHub projection
 
 UbU may project data to GitHub through:
 
@@ -2149,7 +2360,7 @@ Recommended MVP rule:
 
 > UbU should only write clearly marked UbU-managed labels, comments, or blocks, and treat all other GitHub edits as external events.
 
-### 24.4 GitHub reconciliation
+### 26.4 GitHub reconciliation
 
 Missed GitHub updates are expected in MVP.
 
@@ -2164,7 +2375,7 @@ Possible comparisons:
 
 ---
 
-## 26. Risk Reporting
+## 27. Risk Reporting
 
 Risk is not a first-class object in MVP.
 
@@ -2196,7 +2407,7 @@ Affect-related risk reports should name plan fragility, not user blame. Phase 1 
 
 ---
 
-## 27. Recalculation Triggers
+## 28. Recalculation Triggers
 
 Candidate MVP recalculation triggers:
 
@@ -2219,7 +2430,7 @@ Final trigger list remains open.
 
 ---
 
-## 28. Current Major Open Questions
+## 29. Current Major Open Questions
 
 The major remaining questions are tracked in `OPEN_QUESTIONS.md`.
 
@@ -2254,11 +2465,11 @@ Key unresolved areas include:
 - Structured message extraction schema, provenance, and model strategy
 - Personalized TTS, voice descriptors, and anti-impersonation controls
 - Cloud LLM provider abstraction and UbUCorp boundary
-- Sovereign Skill Exchange as a future Association specialization
+- Skill Barter marketplace as a future Association specialization
 
 ---
 
-## 29. Design Process
+## 30. Design Process
 
 The GitHub repository is the canonical public design process for UbU.
 

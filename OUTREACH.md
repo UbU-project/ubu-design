@@ -16,7 +16,7 @@ It is designed for people who are tired of tools that merely collect tasks, disp
 
 UbU aims to become a planning kernel for individuals and organizations.
 
-It models Objectives, Tasks, Preferences, Plans, Calendars, Logs, UniverseState, external events, worker automation, privacy compartments, Identities, and human affect.
+It models Objectives, Tasks, Preferences, Plans, Calendars, Logs, UniverseState, external events, worker automation, Delegation Substrate packets, privacy compartments, Identities, realtime/agentic candidate updates, and human affect.
 
 It turns messy real-world inputs into explicit, inspectable, recalculable plans. One major future product direction is turning flat messages into context-rich communication events that can be triaged by a user's plan instead of merely appearing as another notification.
 
@@ -30,7 +30,7 @@ That means using UbU to manage its own GitHub issues, open questions, pull reque
 
 UbU’s first proving ground is its own project.
 
-UbU also treats organizations broadly as **Associations**: formal or informal groups that emerge from shared Objectives, Relationships, commitments, norms, evidence, and bounded disclosure. A FOSS project, contributor crew, friend group, conference cohort, contractor network, nonprofit, company, DAO-like project, or marketplace can all be modeled as an Association without pretending that every group has one objective member list or central authority.
+UbU also treats organizations broadly as **Associations**: formal or informal groups that emerge from shared Objectives, Relationships, commitments, norms, evidence, and bounded disclosure. A FOSS project, contributor crew, friend group, conference cohort, skill network, nonprofit, company, DAO-like project, or marketplace can all be modeled as an Association without pretending that every group has one objective member list or central authority.
 
 ---
 
@@ -283,15 +283,27 @@ This should be presented as a shared discipline, not an accusation. UbU will app
 
 ---
 
-## Sovereign coordination and skill exchange
 
-UbU's Association model also supports a future cypherpunk/privacy-builder direction: **Sovereign Skill Exchange**.
+## Agentic AI, MCP, and Delegation Substrate
 
-This is a future specialization of lawful Association coordination, not an MVP feature and not a token-first product. The root idea is privacy-preserving skill barter and contractor coordination among autonomous Identities: pseudonymous profiles, scoped work agreements, reputation without unnecessary doxxing, explicit commitments, dispute workflows, and user-chosen settlement references where lawful.
+The AI market is moving toward realtime, multimodal, tool-using, memory-bearing agents. UbU's answer is not to become another opaque assistant. UbU should be the user-sovereign layer that turns AI interaction into explicit candidate state transitions, bounded authority, inspectable Plans, Logs, evidence, and review.
 
-This lane may interest privacy engineers, crypto-anarchist builders, cypherpunks, Monero/privacy-coin people, and FOSS contributors who care about private coordination infrastructure.
+That makes the **Delegation Substrate** strategically important. A Task should be formalizable for execution by the user, an Automation Worker, a local agent, a remote agent, a tool, a human Identity, an Association, or a General Contractor. The same formalization helps when the user performs the Task solo, because it records why the Task matters, what output is expected, what authority applies, and what evidence proves completion.
 
-Public language should avoid illicit-market, tax-evasion, sanctions-evasion, or `darknet Upwork` framing. Prefer `lawful private settlement`, `pseudonymous skill barter`, `reputation without doxxing`, and `user-sovereign labor coordination`.
+MCP-style interoperability fits this model. UbU can act as a client to external tools and as a server exposing narrow, capability-scoped, Compartment-aware operations. External agents should submit candidates and evidence, not receive broad ambient authority over a user's life model.
+
+
+## Skill Barter marketplace and skill exchange
+
+UbU's Association model also supports a future cypherpunk/privacy-builder direction: **Skill Barter marketplace**.
+
+This is a future specialization of lawful Association coordination, not an MVP feature and not a token-first product. The root idea is privacy-preserving skill barter and skilled-work coordination among autonomous Identities: pseudonymous profiles, scoped work agreements, reputation without unnecessary doxxing, explicit commitments, dispute workflows, and user-chosen settlement references where lawful.
+
+This lane may interest privacy engineers, crypto-anarchist builders, cypherpunks, Monero/privacy-coin people, Ethereum privacy developers, and FOSS contributors who care about private coordination infrastructure. It also gives younger developers with drive and time a concrete reason to contribute: UbU could become infrastructure for voluntary, privacy-preserving skilled work rather than merely another productivity dashboard.
+
+A mature Skill Barter marketplace would create natural demand for FHE, ZK, secure compute, private reputation, selective disclosure, private escrow-like commitments, and other high-privacy technologies compatible with the future Ethereum ecosystem.
+
+Public language should avoid illicit-market, tax-evasion, sanctions-evasion, or `darknet Upwork` framing. Prefer `lawful private settlement`, `pseudonymous skill barter`, `reputation without doxxing`, `voluntary skilled-work coordination`, `Delegation Substrate`, and `user-sovereign coordination`.
 
 ---
 
@@ -309,7 +321,7 @@ The project is especially interested in speaking with:
 - grants and milestone coordinators;
 - senior autonomous contributors;
 - people responsible for release coordination, reviews, audits, or contributor onboarding;
-- privacy/cypherpunk builders interested in lawful sovereign skill exchange and pseudonymous coordination.
+- privacy/cypherpunk builders interested in lawful Skill Barter, pseudonymous coordination, FHE/ZK-enabled privacy infrastructure, and FOSS contribution pathways.
 
 The question is not merely whether another project-management tool would be useful.
 
@@ -948,7 +960,7 @@ Bad post-ETHConf outcomes include:
 - popularity without contributors;
 - requests for surveillance dashboards;
 - token-first proposals;
-- illicit-market or evasion-first interpretations of Sovereign Skill Exchange;
+- illicit-market or evasion-first interpretations of Skill Barter marketplace;
 - pressure to become a generic PM clone;
 - architecture debates that do not reduce design burden.
 

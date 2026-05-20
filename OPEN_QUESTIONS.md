@@ -1983,7 +1983,7 @@ How should game theory affect UbU's model of strategic interaction, counterparty
 3. How should UbU represent credible commitments, signaling, free-riding, principal-agent problems, bargaining, and trust-but-verify workflows?
 4. How should strategic reasoning interact with Identity, capability grants, Compartments, and external projections?
 5. How should UbU avoid overconfident game-theoretic recommendations when the counterparty model is speculative?
-6. Which strategic-interaction features are useful for FOSS coordination, contractors, grants, issue triage, bug bounties, and future skill-barter systems?
+6. Which strategic-interaction features are useful for FOSS coordination, skilled contributors, grants, issue triage, bug bounties, and future Skill Barter systems?
 
 ### Current direction
 
@@ -2137,7 +2137,7 @@ Should UbU introduce a first-class Association object, and if so what minimum fi
 1. What distinguishes an Association from an Organization Identity, Relationship, or External Reference?
 2. Can an Association exist entirely inside one user's `user_mode` model?
 3. What minimum fields describe perceived members, roles, shared Objectives, commitments, lifecycle, norms, confidence, and disclosure policy?
-4. How should UbU represent informal groups such as friend groups, parties, amateur leagues, FOSS projects, conference cohorts, and contractor networks?
+4. How should UbU represent informal groups such as friend groups, parties, amateur leagues, FOSS projects, conference cohorts, and skill networks?
 5. How does an Association become formal enough to justify `organization_mode`?
 6. How are invitations, exits, revocations, dormancy, and dissolution represented?
 7. Which parts are required for Phase 3, and which remain later research?
@@ -2233,26 +2233,26 @@ Open.
 
 ---
 
-## UBU-Q0065: Sovereign Skill Exchange and lawful private settlement boundary
+## UBU-Q0065: Skill Barter marketplace and lawful private settlement boundary
 
-Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0054, UBU-Q0055, UBU-Q0056, UBU-Q0061, UBU-Q0062 Blocks: Future skill-barter and contractor-marketplace features Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0054, UBU-Q0055, UBU-Q0056, UBU-Q0061, UBU-Q0062 Blocks: Future Skill Barter marketplace and delegated skilled-work features Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
-How should UbU model Sovereign Skill Exchange as a future specialization of Association coordination without becoming token-first, speculation-first, platform-custodial, or illicit-market infrastructure?
+How should UbU model the Skill Barter marketplace as a future specialization of Association coordination and the Delegation Substrate without becoming token-first, speculation-first, platform-custodial, exploitative, or illicit-market infrastructure?
 
 ### Subquestions
 
 1. What primitives are required: pseudonymous Identity, capability claims, reputation attestations, scoped work agreements, bonds, escrow-like commitments, dispute workflows, and settlement references?
 2. Which payment rails can be represented as External References without UbU becoming a custodian or money transmitter?
 3. How should privacy-preserving settlement options be described without implying sanctions evasion, tax evasion, illicit services, or unlawful use?
-4. How should UbU distinguish skill barter, paid contracting, grants, bug bounties, and volunteer passion-project work?
+4. How should UbU distinguish skill barter, paid work, grants, bug bounties, volunteer passion-project work, human executors, agentic executors, and General Contractor coordination?
 5. What public language must outreach avoid?
 6. What lawful-use and safety boundaries are required before implementation?
 
 ### Current direction
 
-Sovereign Skill Exchange is a future cypherpunk/privacy-builder recruiting hook and product direction. It is a specialization of Association modeling, not the root concept and not an MVP commitment.
+The Skill Barter marketplace is a future cypherpunk/privacy-builder recruiting hook and product direction. It is a specialization of Association modeling and the Delegation Substrate, not the root concept and not a Phase 1 marketplace commitment. MVP-relevant work should focus on Delegation Substrate primitives that can later support Skill Barter.
 
 ### Resolution
 
@@ -2603,3 +2603,238 @@ Create these first:
 40. `UBU-Q0073`: Define mobile stewardship metadata and MVP repair rules
 41. `UBU-Q0075`: Bound the optional VoxPopuli EthConf demo
 42. `UBU-Q0076`: Define planning horizon, early-preparation bias, and short-horizon time discounting
+
+---
+
+## UBU-Q0077: Realtime interaction session and candidate update schema
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0025, UBU-Q0031, UBU-Q0068 Blocks: realtime model adapters, discovery mode, meeting capture, interruption handling Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What is the minimum schema for realtime interaction sessions and realtime-derived candidate updates?
+
+### Subquestions
+
+1. Should realtime sessions be represented as Tasks, Events, Logs, sensor streams, `InteractionSession` objects, or a hybrid?
+2. What candidate update types are required: interruption, task progress, affect signal, external condition change, clarification question, Plan deviation, Log candidate, Task candidate, or AssociationAttestation candidate?
+3. How should UbU distinguish elapsed time noticed by a model from planner-valid Task, Calendar, or Log semantics?
+4. What provenance and confidence metadata is mandatory for audio/video/text-derived observations?
+5. Which realtime features are local-only, cloud-optional, or prohibited under sensitive Compartments?
+
+### Current direction
+
+Realtime models are optional interaction backends. They emit candidate updates. The planner, Logs, Compartment policy, and user-review rules decide what becomes canonical.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0078: Interruption, escalation, and discovery-mode consent policy
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0052, UBU-Q0077 Blocks: realtime UX, discovery mode, short-horizon reactive repair Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+When may UbU interrupt, pause, escalate, or ask for clarification based on realtime or inferred conditions?
+
+### Subquestions
+
+1. What user-visible modes are required: off, text-only, voice session, discovery mode, meeting/logging mode, local-only mode, cloud-assisted mode?
+2. What conditions justify interruption: imminent deadline failure, blocked Task, safety issue, unexpected external event, significant affect shift, or user-requested monitoring?
+3. How should interruption policy avoid becoming surveillance, nagging, or emotional paternalism?
+4. How should UbU record user overrides of interruptions and use them for future calibration?
+5. What UI indicators must show active capture, routing, retention, and review status?
+
+### Current direction
+
+Realtime and discovery modes must be explicit and bounded. Interruption should preserve user sovereignty and Plan legitimacy rather than maximizing engagement or compliance.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0079: MCP client/server capability and Compartment policy
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0028, UBU-Q0032, UBU-Q0060 Blocks: MCP-style integrations, external agents, Delegation Substrate APIs Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What is the minimum MCP-style client/server integration boundary that lets UbU use external tools and expose narrow UbU capabilities without giving outside agents broad authority over the user's life model?
+
+### Subquestions
+
+1. Which UbU operations may be exposed as tools in Phase 1 or fixtures?
+2. What capability fields are required: object scope, Objective subtree, Task set, operation kind, Compartment, Identity, time window, rate/cost limits, and review requirement?
+3. How should external agents submit candidate updates rather than canonical writes?
+4. How should tool calls be logged, audited, denied, retried, or rolled back?
+5. What is the minimum developer-facing MCP fixture or adapter needed for dogfooding?
+
+### Current direction
+
+UbU should be both an MCP-style client and server, but every tool surface is bounded by user-owned policy, Compartment rules, capability grants, and review semantics.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0080: Delegation Substrate MVP schema and self-reminder use
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0032, UBU-Q0060, UBU-Q0079 Blocks: Task delegation, Automation Worker assignment, solo Task formalization, future Skill Barter marketplace Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What is the minimum Delegation Substrate schema that prepares Tasks for delegation while also helping the user perform solo Tasks more clearly?
+
+### Subquestions
+
+1. Which fields belong directly on Task versus a separate `DelegationPacket`?
+2. What executor types are needed: self, local agent, remote/cloud agent, tool, human Identity, Association, General Contractor, or external provider?
+3. What authority, evidence, privacy, expected-output, review, deadline, and escalation fields are required?
+4. How should a solo Task use the same structure as a self-reminder without implying actual handoff?
+5. Which subset is required for Phase 1 GitHub dogfooding and Automation Worker assignments?
+
+### Current direction
+
+The MVP should implement Delegation Substrate primitives where they support dogfooding, self-reminder clarity, and worker assignment. The full Skill Barter marketplace is not Phase 1.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0081: General Contractor role and subdelegation semantics
+
+Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0080, UBU-Q0061 Blocks: multi-executor coordination, Skill Barter marketplace, larger Association workflows Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU model a General Contractor who coordinates multiple human, agentic, tool, or Association executors toward an Objective?
+
+### Subquestions
+
+1. What authority can a General Contractor receive and subdelegate?
+2. How are subordinate Tasks, executors, evidence, and status reports linked?
+3. What review rights does the user or originating Association retain?
+4. How are budget, privacy, Compartment, tool, and settlement constraints propagated?
+5. How does UbU prevent a General Contractor from becoming an unbounded agentic authority?
+
+### Current direction
+
+General Contractor is a first-class delegated coordination role. It is not an ordinary executor field. Subdelegation requires explicit authority, provenance, evidence, and review semantics.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0082: Skill Barter marketplace outreach, privacy tech, and MVP boundary
+
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0065, UBU-Q0080, UBU-Q0081 Blocks: EthConf cypherpunk outreach, Skill Barter future roadmap, privacy-tech positioning Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU present the Skill Barter marketplace as an EthConf/cypherpunk outreach hook and future marketplace direction without over-scoping the MVP or implying token-first speculation?
+
+### Subquestions
+
+1. What is the cleanest language for voluntary coordination, sovereign identity, privacy, open markets, FOSS contribution, and pseudonymous capability?
+2. How can Skill Barter attract younger developers with drive and time for FOSS contribution?
+3. How should the marketplace direction connect to FHE, ZK, private reputation, private commitments, secure compute, and Ethereum-compatible privacy infrastructure?
+4. What claims must be avoided in public outreach?
+5. What is the smallest credible demo or diagram that shows the future direction while leaving Phase 1 focused on Delegation Substrate primitives?
+
+### Current direction
+
+Skill Barter is a future marketplace direction and “cool factor” outreach lane. It should not become a Phase 1 public marketplace commitment.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0083: ContextBundle governance and long-context model routing
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0028, UBU-Q0060 Blocks: long-context LLM use, organizational introspection, repository/chat archive review Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU represent and govern context assembly for LLMs and agents, especially when long-context models can ingest large archives or repositories?
+
+### Subquestions
+
+1. What fields should a `ContextBundle` contain?
+2. How should Compartments, Identities, Associations, retention policy, provider destination, and minimization rules be recorded?
+3. When must the user approve a ContextBundle before routing it to a model?
+4. How should UbU summarize context exposure after a run?
+5. How should ContextBundles link to downstream candidate updates and Logs?
+
+### Current direction
+
+Context assembly is a privacy-relevant act. More context is not automatically better context.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0084: Computer-use AgentAction and BackgroundProcess model
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0031, UBU-Q0032, UBU-Q0060, UBU-Q0079 Blocks: background agents, scheduled agents, computer-use automation, prompt-injection controls Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU model computer-use agents and background processes that consume compute, credentials, money, privacy budget, or external authority without necessarily occupying user Calendar time?
+
+### Subquestions
+
+1. What fields belong in `AgentAction` versus `BackgroundProcess`?
+2. How should triggers, recurrence, schedules, cost budgets, notification policy, and escalation be represented?
+3. How should prompt-injection exposure be scored when agents consume webpages, messages, documents, or tool outputs?
+4. What rollback or mitigation metadata is required for irreversible side effects?
+5. Which background processes belong in the Calendar, and which should remain separate from user time blocking?
+
+### Current direction
+
+Computer-use and background agents are high-risk external actors. They require authority scopes, audit trails, rollback or mitigation paths, prompt-injection handling, and candidate-update semantics.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0085: State-transition cockpit UX model
+
+Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0050, UBU-Q0077, UBU-Q0080 Blocks: post-MVP UX, generative UI, review workflows, candidate/canonical distinction Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU evolve from Phase 1 one-next-Task focus into a state-transition cockpit without losing first-person legibility?
+
+### Subquestions
+
+1. What are the core state-transition screens: next Task, message reply, Log review, Plan repair, Delegation Substrate packet, agent action approval, AssociationAttestation review, organizational introspection, and projection publication?
+2. How should candidate state differ visually from canonical state?
+3. Where can generative UI be useful without becoming opaque or inconsistent?
+4. What minimum cockpit elements should appear in Phase 1 explanations?
+5. How should users inspect evidence, constraints, expected effects, authority, and rollback paths?
+
+### Current direction
+
+UbU should become a state-transition cockpit over time. Phase 1 remains the narrow one-next-Task proof.
+
+### Resolution
+
+Open.
+
