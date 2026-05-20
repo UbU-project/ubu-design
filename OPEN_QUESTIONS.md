@@ -2349,7 +2349,7 @@ Open.
 
 ## UBU-Q0070: Skeleton Plan failure diagnostics and user clarification flow
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: UX/Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0014, UBU-Q0015, UBU-Q0016 Blocks: robust planning failure handling Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0014, UBU-Q0015, UBU-Q0016 Blocks: robust planning failure handling Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -2374,7 +2374,7 @@ Open.
 
 ## UBU-Q0071: Legitimization and semi-legitimization cost model
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Algorithm Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016, UBU-Q0053 Blocks: realistic candidate Plan search Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016, UBU-Q0053 Blocks: realistic candidate Plan search Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -2400,7 +2400,7 @@ Open.
 
 ## UBU-Q0072: GPU-aware planner kernels and solver selection
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Implementation Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016 Blocks: practical planner implementation, mobile/desktop/cloud execution profile Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016 Blocks: practical planner implementation, mobile/desktop/cloud execution profile Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -2427,7 +2427,7 @@ Open.
 
 ## UBU-Q0073: Mobile stewardship metadata and MVP repair rules
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: UX/Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016, UBU-Q0058 Blocks: mobile/local planning UX Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016, UBU-Q0058 Blocks: mobile/local planning UX Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -2455,7 +2455,7 @@ Open.
 
 ## UBU-Q0074: Stochastic personality and affect-disruption model
 
-Status: Open Priority: Research Phase: Post-MVP Decision type: Algorithm/Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0053 Blocks: advanced affect-aware planning, personalized legitimization Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: Research Phase: Post-MVP Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0053 Blocks: advanced affect-aware planning, personalized legitimization Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -2482,7 +2482,7 @@ Open.
 
 ## UBU-Q0075: Optional VoxPopuli EthConf demo boundary
 
-Status: Open Priority: MVP important Phase: Phase 1 outreach Decision type: Product/Outreach Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0050, UBU-Q0068 Blocks: optional EthConf public demo Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0050, UBU-Q0068 Blocks: optional EthConf public demo Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -2508,7 +2508,7 @@ Open.
 
 ## UBU-Q0076: Planning horizon, early-preparation bias, and short-horizon time discounting
 
-Status: Open Priority: Research Phase: Phase 1/Post-MVP Decision type: Algorithm Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016, UBU-Q0051 Blocks: detailed planning horizon policy, premium planning horizon design Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: Research Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016, UBU-Q0051 Blocks: detailed planning horizon policy, premium planning horizon design Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
