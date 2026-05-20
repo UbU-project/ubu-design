@@ -1777,7 +1777,7 @@ Partially established by `UBU-D0094`; detailed artifact schema, implementation b
 
 ## UBU-Q0050: Minimum Phase 1 bootstrap interview and next-action focus UX
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 public demo, nontechnical onboarding, mock app prototype, Release Outreach Pipeline demo scripts Resolved by: UBU-D0096 Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 public demo, nontechnical onboarding, mock app prototype, Release Outreach Pipeline demo scripts Resolved by: UBU-D0129 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1804,7 +1804,17 @@ The UI should not imply that UbU already understands all of the user’s emails,
 
 ### Resolution
 
-Partially established by `UBU-D0096`; detailed bootstrap-question content, UI controls, fixture boundaries, implementation boundary, and demo-script treatment remain open.
+Solved by `UBU-D0129`, refining `UBU-D0096` and `UBU-D0102`. The Phase 1 bootstrap interview asks eight narrow questions: what the user is trying to move forward, which project context to use, available work-window time, relevant deadline or external event, work to consider first, current blockers or exclusions, current energy/stress/mood, and the tradeoff UbU should favor today.
+
+Answers map only into existing Phase 1 objects. Project context, availability, deadlines, constraints, fixtures/imports, and blockers become UniverseState facts, External Events, Tasks, External References, or Logs. Affect answers become a user-declared Snapshot or an affect-collection Task when skipped/stale. Initial work answers seed Objectives and Tasks. Tradeoff answers become Preferences only after explicit user acceptance; otherwise they remain Log notes, Objective annotations, or noncanonical review evidence.
+
+The minimum recommendation data is a user/operator Identity, at least one active Objective, at least one active schedulable Task linked to that Objective, a current work window, current or explicitly stale affect state, and known blockers/deadlines/dependencies/source references when available. If this is missing, UbU recommends clarification, import, Calendar preview, Log review, or affect collection rather than pretending to optimize.
+
+The next-action screen shows one Task by default with title, Objective link, estimated duration or work window, status, provenance/source label, why it matters now, and what UbU considered. The explanation includes served Objective, timing reason, dependency/blocker status, affect or stale-affect status, and the most relevant risk or opportunity. Full Plan inspection remains one action away through an inspector showing ordered Tasks, assumptions, source links, and explanation fragments.
+
+Required controls are `start`, `done`, `snooze`, `reject`, `decompose`, `override`, and `explain more`. Completion, failure, snooze, rejection, and override each collect lightweight reason/effect/estimate/affect feedback, write Logs, and trigger recalculation when modeled state changes. Failure, rejection, and override are treated as model evidence, not user blame.
+
+Fixture-backed and mock-app behavior must be labeled at the point of use. Public demos and Release Outreach Pipeline scripts should show bootstrap, one recommended next Task, explanation, feedback, recalculation, and full-Plan inspection while distinguishing implemented planner behavior from fixture or hardcoded behavior. Public materials must avoid claiming broad personal-data ingestion, complete email/text/file understanding, therapeutic care, autonomous life coaching, complete planning automation, complete privacy isolation, Phase 2 sync, or Phase 3 multi-user coordination.
 
 ---
 

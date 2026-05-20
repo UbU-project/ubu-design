@@ -3165,3 +3165,42 @@ This early-preparation bias is not unlimited. Beyond a reasonable detailed horiz
 - Early preparation is a risk-reduction bias, not an authorization to fill all future time with preparatory work.
 - Detailed planning beyond roughly one week remains a higher-cost or premium/research direction rather than a Phase 1 default.
 
+
+---
+
+## UBU-D0129: Phase 1 bootstrap and next-action UX uses explicit object-backed minimum loop
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0050`.
+
+The minimum Phase 1 bootstrap interview asks only enough to recommend one useful dogfooding Task from explicit state. The required questions are:
+
+1. `What are you trying to move forward right now?`
+2. `Which project context should UbU use for this first session?`
+3. `How much usable time do you have for the next work window?`
+4. `Is there a deadline, meeting, release target, or external event that changes what matters today?`
+5. `What work should UbU consider first?`
+6. `What is already blocked, unavailable, or not worth recommending right now?`
+7. `How are your energy, stress, and mood right now?`
+8. `When choosing between useful work, what should UbU favor today?`
+
+The answers map into existing Phase 1 objects. Project context, availability, deadlines, constraints, fixture/import source, and hard blockers become UniverseState facts, External Events, Tasks, External References, and Log entries as appropriate. Affect answers become a user-declared Snapshot; skipped or stale affect data creates or prioritizes an affect-collection Task. Initial work answers seed Objectives and Tasks. Tradeoff answers become Preferences only when UbU presents an explicit Preference statement and the user accepts it; otherwise they remain Log notes, Objective annotations, or noncanonical preview/review evidence.
+
+The minimum data required to recommend one next Task is: a user or operator Identity, at least one active Objective, at least one active schedulable Task linked to that Objective, a current work window or available time, current or explicitly stale affect state, and known blockers, deadlines, dependencies, and source references for the recommended Task when available. If that minimum is missing, UbU should recommend a clarification, import, Calendar preview, Log review, or affect-collection Task rather than pretending to optimize.
+
+The next-action screen shows one recommended Task by default, but full Plan inspection remains one action away. The screen must show the Task title, Objective link, estimated duration or work window, status, provenance/source label, why it matters now, and what UbU considered. The explanation must include the served Objective, timing reason, dependency or blocker status, affect or stale-affect status, and the most relevant risk or opportunity considered. It should expose candidate Tasks, blocked Tasks, constraints, worker/projection state, and fixture/import source links through an inspector rather than hiding them.
+
+The required controls are `start`, `done`, `snooze`, `reject`, `decompose`, `override`, and `explain more`. Completion feedback asks whether the estimate and effect were correct and whether affect changed. Failure feedback asks which assumption failed: dependency, duration, affect, interruption, clarity, priority, or other. Snooze asks for a time or condition and reason. Rejection asks whether the Task is wrong, not valuable now, blocked, too large, already done, duplicate, or moot. Override records the chosen action and asks whether this should update Preferences, availability, estimates, Objective status, or only the current Plan. All outcomes write Logs and trigger recalculation when they change modeled state.
+
+Fixture-backed and mock app behavior must be labeled at the point of use. Public demos and Release Outreach Pipeline scripts should use this loop as the main nontechnical proof: bootstrap, one recommended next Task, explanation, feedback, recalculation, and full-Plan inspection. They must distinguish implemented planner behavior from hardcoded or fixture-backed behavior.
+
+Public materials must avoid claims that Phase 1 already performs broad personal-data ingestion, complete email/text/file understanding, therapeutic care, autonomous life coaching, complete planning automation, complete privacy isolation, Phase 2 sync, or Phase 3 multi-user coordination. The honest Phase 1 claim is that UbU can recommend one meaningful next action and explain it from explicit user-approved state, fixtures, imports, Logs, Snapshots, Objectives, Tasks, and Plans.
+
+**Consequences:**
+
+- `UBU-Q0050` is resolved for Phase 1 product scope and demo treatment.
+- No new canonical object type is required for the bootstrap or next-action UX.
+- Phase 1 implementation can proceed with existing Objectives, Preferences, Snapshots, Tasks, Logs, UniverseState facts, Plans, and External References.
+- Preference calibration, discovery mode, Calendar preview and Log review annotations, VoxPopuli, and broader message or file ingestion remain in their separate questions.
+- The mock app may be fixture-backed only when it visibly labels fixture behavior and does not present it as completed planner implementation.

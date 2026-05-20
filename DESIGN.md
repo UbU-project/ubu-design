@@ -573,48 +573,69 @@ The demo must not require Phase 2 sync, Phase 3 multi-user coordination, full RB
 
 ### 4.1.2 Phase 1 user-facing loop
 
-Phase 1 must include a minimal first-person UX loop for dogfooding:
+Phase 1 must include a minimal first-person UX loop for dogfooding. The loop is intentionally narrow: it collects explicit answers, creates explicit UbU objects, recommends one next Task, records what happened, and recalculates from Logs and current state.
 
 1. **Bootstrap interview**
-   - Ask a small number of questions about the current user/project context.
-   - Capture current or stale affect state.
-   - Identify initial Objectives relevant to UbU-runs-UbU.
-   - Identify immediate constraints, deadlines, available time, and preferred work style.
-   - Use preference-calibration examples when they help the user make accurate Preference statements.
-   - Record the answers as explicit Logs, Snapshots, Preferences, Objectives, Tasks, or source-linked facts.
+   - Ask exactly the minimum questions needed to seed the first dogfooding Plan:
+     1. `What are you trying to move forward right now?`
+     2. `Which project context should UbU use for this first session?`
+     3. `How much usable time do you have for the next work window?`
+     4. `Is there a deadline, meeting, release target, or external event that changes what matters today?`
+     5. `What work should UbU consider first?`
+     6. `What is already blocked, unavailable, or not worth recommending right now?`
+     7. `How are your energy, stress, and mood right now?`
+     8. `When choosing between useful work, what should UbU favor today?`
+   - Record the project/context answer as UniverseState facts and source-linked Logs.
+   - Record available time, static commitments, deadlines, and immediate constraints as UniverseState facts, Tasks, External Events, or Logs.
+   - Record affect answers as a user-declared Snapshot, or create an affect-collection Task when the user skips or the data is stale.
+   - Record favored tradeoffs as Preferences only when the user accepts an explicit Preference statement; otherwise retain them as Log notes or Objective annotations.
+   - Seed a small Objective/Task set from user answers plus approved GitHub fixtures or configured imports.
 
-2. **Plan generation**
-   - Generate a candidate default Plan from the modeled state.
+2. **Minimum data for one recommendation**
+   - A user or operator Identity.
+   - At least one active Objective.
+   - At least one active schedulable Task linked to that Objective with title and duration or work-window estimate.
+   - A current work window or next available time.
+   - Current or explicitly stale affect state.
+   - Known hard blockers, deadlines, dependencies, and source references for the recommended Task when available.
+   - If this minimum is missing, the next recommended Task should be a clarification, import, or affect-collection Task rather than pretending to optimize.
+
+3. **Plan generation**
+   - Generate a candidate default Plan from explicit modeled state.
    - Preserve inspectability of the full Plan.
-   - Explain relevant constraints, dependencies, risk findings, and affect constraints.
+   - Explain relevant Objective value, constraints, dependencies, deadlines, risk findings, worker status, and affect constraints.
+   - Mark any fixture-backed, hardcoded, or mock recommendation path directly in the UI and run artifact.
 
-3. **Calendar preview**
+4. **Calendar preview**
    - Treat Calendar preview as a notable Task that should run regularly.
    - Let the user inspect the candidate Calendar or default Plan before relying on it.
    - Ask whether the Plan feels plausible, motivating, humane, and consistent with the user's current context.
    - Allow the user to correct Preferences, Objectives, Tasks, affect Snapshots, availability, or estimates before execution.
 
-4. **Next-action focus mode**
+5. **Next-action focus mode**
    - Present one recommended next Task as the default UI surface.
-   - Show why the Task matters now.
-   - Show what UbU considered when selecting it.
+   - Show title, Objective link, estimated duration or work window, current status, and source/provenance label.
+   - Show `why this matters now` with at least the served Objective, timing reason, main dependency or blocker status, affect/staleness status, and top risk or opportunity considered.
+   - Show what UbU considered, including visible counts or links for candidate Tasks, blocked Tasks, hard constraints, affect constraints, worker/projection state, and imported or fixture sources.
    - Provide controls for start, done, snooze, reject, decompose, override, and explain more.
-   - Avoid hiding the existence of the full Plan from users who want inspection.
+   - Keep full Plan inspection one action away through a Plan drawer, timeline, or inspector that shows ordered Tasks, assumptions, source links, and explanation fragments.
+   - One-task focus reduces cognitive load; it must not hide the Plan, turn the recommendation into opaque automation, or imply that the user has committed to the default Plan.
 
-5. **Feedback, Log review, and recalculation**
-   - Ask for lightweight feedback after completion, failure, rejection, or override.
-   - Record the outcome in Logs.
-   - Treat Log review as a notable Task that should run regularly.
-   - Use Log review to compare planned behavior against actual behavior, reconcile under-specified time, and improve future modeling.
-   - Update estimates, affect Snapshots, Objective status, or recalculation triggers when appropriate.
+6. **Feedback, Log review, and recalculation**
+   - After `done`, ask whether completion matched the estimate, whether the modeled effect happened, and whether energy or stress changed enough to update the Snapshot.
+   - After failure or blocked execution, ask what assumption failed: missing dependency, wrong duration, stale affect, interruption, unclear Task, changed priority, or other.
+   - After snooze, ask for the next review time or condition and whether the reason is timing, affect, dependency, or user preference.
+   - After rejection, ask whether the Task is wrong, not valuable now, blocked, too large, already done, duplicate, or should become moot.
+   - After override, record the chosen Task or action, the reason if supplied, and whether the override should update Preferences, availability, Task estimates, Objective status, or only this Plan.
+   - Record outcomes as Logs and trigger recalculation when the outcome changes Task status, availability, affect state, dependencies, Objective status, or user Preferences.
    - Treat failure, rejection, override, and deviation as model evidence, not user blame.
 
-6. **Discovery mode when appropriate**
+7. **Discovery mode when appropriate**
    - Allow the user to choose discovery mode at any time.
    - Use discovery mode to collect or preserve evidence about what the user is doing or did, especially from mobile sensors or configured integrations.
    - Defer ambiguous interpretation until later Log review or user-visible reconciliation.
 
-The Phase 1 version may be simple and fixture-backed. It does not require broad email, text-message, file, or personal-data ingestion. It must not claim complete life-modeling. The purpose is to demonstrate the core UbU experience: one meaningful next action, with an explanation, grounded in explicit state.
+The Phase 1 version may be simple and fixture-backed. Fixture behavior must be labeled as fixture behavior, mock recommendations must not be described as implemented planning, and public demos should show the exact boundary between explicit UbU objects, approved fixtures, and implemented planner behavior. The public demonstration pattern is bootstrap, one recommended next Task, explanation, user feedback, recalculation, and full-Plan inspection. It does not require broad email, text-message, file, invoice, note, or personal-data ingestion. It must not claim complete life-modeling, therapeutic authority, autonomous life coaching, complete planning automation, full privacy isolation, Phase 2 sync, or Phase 3 multi-user coordination. The purpose is to demonstrate the core UbU experience: one meaningful next action, with an explanation, grounded in explicit state.
 
 ### 4.1.3 Release Outreach Pipeline dogfooding
 
