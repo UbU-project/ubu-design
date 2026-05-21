@@ -1120,17 +1120,35 @@ A Container is complete when all child Tasks are either:
 
 It is functionally equivalent to completion for planning, but distinct for logs and reporting.
 
-Candidate MVP moot reason codes:
+MVP moot reason codes are schema-controlled enum values:
 
 - `externally_satisfied`
 - `superseded`
 - `delegated`
 - `no_longer_relevant`
-- `invalidated_by_world_change`
+- `invalidated_by_universe_change`
 - `replaced_by_new_plan_structure`
 - `user_declared_moot`
 - `automation_obsolete`
 - `duplicate`
+
+The MVP list is sufficient for Phase 1 and intentionally closed to free-form reason codes. New canonical reason codes require an explicit schema migration or accepted decision. Implementations may store human-readable notes on the `task_moot` Log entry, but the canonical `moot_reason_code` remains one of the enum values.
+
+`duplicate` is included because duplicate work is common in imported GitHub/project queues and should be queryable separately from generic plan supersession.
+
+`delegated` remains separate from `externally_satisfied`. `delegated` means the Task is no longer work for this executor because responsibility moved to another executor, worker, Identity, or delegation path. It does not by itself assert that the underlying Objective or required world state has been satisfied. `externally_satisfied` means the desired state became true through another action or event, regardless of delegation.
+
+Use the narrowest accurate code:
+
+- `externally_satisfied`: the required state is already true because of outside action or observation.
+- `superseded`: this Task is replaced by a newer Task, Objective, decision, or source artifact.
+- `delegated`: responsibility moved out of this Task's executor scope and will be tracked elsewhere.
+- `no_longer_relevant`: the Task is no longer useful, but not because the world invalidated it.
+- `invalidated_by_universe_change`: an external state change made the Task impossible or wrong.
+- `replaced_by_new_plan_structure`: decomposition, regrouping, or planning restructure replaced this Task without changing the underlying intent.
+- `user_declared_moot`: the user explicitly says the Task should be treated as moot and no more specific code is appropriate.
+- `automation_obsolete`: a worker, automation path, or generated work item is obsolete because automation state changed.
+- `duplicate`: the Task duplicates another active, completed, or canonical work item.
 
 ---
 

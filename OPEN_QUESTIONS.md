@@ -983,7 +983,7 @@ Unresolved.
 
 ## UBU-Q0022: Moot Reason-Code Taxonomy
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: UBU-D0147 Last scored: Never Scored from commit: None
 
 `moot` is a terminal Task status and requires a reason code.
 
@@ -994,7 +994,7 @@ externally_satisfied
 superseded
 delegated
 no_longer_relevant
-invalidated_by_world_change
+invalidated_by_universe_change
 replaced_by_new_plan_structure
 user_declared_moot
 automation_obsolete
@@ -1010,7 +1010,29 @@ duplicate
 
 ### Resolution
 
-Unresolved.
+Solved by `UBU-D0147`.
+
+The MVP list is sufficient and remains the canonical Phase 1 enum:
+
+```text
+externally_satisfied
+superseded
+delegated
+no_longer_relevant
+invalidated_by_universe_change
+replaced_by_new_plan_structure
+user_declared_moot
+automation_obsolete
+duplicate
+```
+
+`duplicate` is included because duplicate Tasks are common in GitHub imports, worker outputs, fixtures, decomposition, and plan repair. It should be queryable separately from generic supersession.
+
+`delegated` remains separate from `externally_satisfied`. Delegation means responsibility moved to another executor or tracking path; it does not assert that the underlying desired state is already true. External satisfaction means the required state became true through some other action, observation, import, or external event.
+
+Reason codes are enum-only in MVP. Implementations may store human-readable notes, evidence, External References, provenance, and correction/annotation entries with the `task_moot` Log entry, but canonical `moot_reason_code` values must be one of the accepted enum values. New canonical reason codes require schema migration or an accepted decision.
+
+Use the narrowest accurate reason code. Prefer `replaced_by_new_plan_structure` for decomposition/regrouping that preserves the underlying intent, `superseded` for replacement by a newer Task/Objective/decision/source artifact, and `user_declared_moot` only when the user explicitly declares mootness and no more specific code applies.
 
 ---
 

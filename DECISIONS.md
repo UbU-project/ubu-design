@@ -3762,3 +3762,53 @@ Stale marking is sufficient when the trigger only means cached Plans, Calendars,
 - Worker recalculation requests stay inside the accepted capability and admission boundary.
 - Immediate versus stale-only handling gives Phase 1 a minimal reactive loop without requiring full Compact Calendar coverage semantics to be settled.
 - Phase 2 and post-MVP trigger families are named but deferred.
+
+---
+
+## UBU-D0147: Moot reason codes are a closed MVP enum
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0022`.
+
+`moot` remains a first-class terminal Task status that is functionally equivalent to completion for planning but distinct for logs, reporting, audit, and user review. Every Task transition to `moot` requires a reason code.
+
+The Phase 1 MVP moot reason-code enum is:
+
+- `externally_satisfied`;
+- `superseded`;
+- `delegated`;
+- `no_longer_relevant`;
+- `invalidated_by_universe_change`;
+- `replaced_by_new_plan_structure`;
+- `user_declared_moot`;
+- `automation_obsolete`;
+- `duplicate`.
+
+This list is sufficient for MVP. It covers externally completed work, supersession, delegation, user-directed closure, world-state invalidation, plan-structure replacement, obsolete automation output, and duplicate imported or generated work. Additional nuance belongs in the `task_moot` Log entry's notes, reason text, provenance, External References, or correction/annotation entries rather than in ad hoc canonical codes.
+
+`duplicate` is included because duplicate Tasks are common when importing GitHub Issues, PRs, comments, fixtures, worker outputs, or decomposed work. Duplicate closure must remain queryable and auditable rather than being collapsed into generic supersession.
+
+`delegated` is separate from `externally_satisfied`. `delegated` means this Task is no longer assigned to this executor because responsibility moved to another executor, worker, Identity, Association, or delegation path. It does not assert that the underlying Objective or required world state is already satisfied. `externally_satisfied` means the required state became true through another action, observation, import, or external event.
+
+Reason codes are enum-only in MVP. Implementations may accept human-readable notes and implementation-local diagnostic labels, but canonical `moot_reason_code` values must be one of the accepted enum values. New canonical reason codes require an explicit schema migration or accepted decision.
+
+Selection guidance:
+
+- use `externally_satisfied` when the required state is already true;
+- use `superseded` when a newer Task, Objective, decision, or source artifact replaces this Task;
+- use `delegated` when responsibility moved to another executor and will be tracked elsewhere;
+- use `no_longer_relevant` when the Task is no longer useful but not invalidated by the world;
+- use `invalidated_by_universe_change` when an external state change made the Task wrong or impossible;
+- use `replaced_by_new_plan_structure` when decomposition, regrouping, or restructuring replaced this Task while preserving the underlying intent;
+- use `user_declared_moot` when the user explicitly says the Task is moot and no more specific code applies;
+- use `automation_obsolete` when worker or automation state makes generated work obsolete;
+- use `duplicate` when another active, completed, or canonical work item already represents the same work.
+
+**Consequences:**
+
+- `UBU-Q0022` is resolved for Phase 1 implementation.
+- Task status can remain simple while `task_moot` Log entries preserve explanation, provenance, and audit detail.
+- Imported GitHub/project duplicates can be closed without losing duplicate-specific reporting.
+- Delegation remains visible as a planning and accountability transition rather than being mistaken for completed external satisfaction.
+- MVP schemas can validate `moot_reason_code` as a closed enum and defer extensibility to explicit migrations.
