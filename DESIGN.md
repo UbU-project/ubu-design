@@ -2387,27 +2387,32 @@ Possible comparisons:
 
 Risk is not a first-class object in MVP.
 
-Risk is reportable from Calendar/Plan analysis.
+Risk reports are derived, recalculable analyses over Calendars, Plans, Tasks, Logs, Snapshots, External Events, worker status, External References, and compact Calendar metadata. They do not create canonical Risk objects, and Plan scoring does not include an explicit risk penalty in MVP.
 
-Possible MVP reports:
+The Phase 1 MVP report set is:
 
-- P90 completion time
-- critical path
-- deadline miss probability
-- affect constraint violation probability
-- low compact-calendar coverage warning
-- dependency fragility
-- relationship-maintenance neglect warning
-- destructive-pressure warning
-- dignity / demoralization warning
-- worker failure / automation bottleneck
-- preference uncertainty
-- repeated override or deviation pattern
-- motivation mismatch
-- stale or missing discovery-mode reconciliation
-- Calendar preview or Log review overdue
+- `p90_completion_time`
+- `critical_path`
+- `deadline_miss_probability`
+- `affect_constraint_violation_probability`
+- `low_compact_calendar_coverage_warning`
+- `dependency_fragility`
+- `worker_or_automation_bottleneck`
+- `stale_affect_warning`
+- `destructive_pressure_warning`
+- `post_plan_depletion_warning`
 
-Plan scoring does not include explicit risk penalty in MVP.
+Additional findings may be computed when the inputs already exist, but they are not required for Phase 1: `relationship_maintenance_neglect_warning`, `preference_uncertainty`, `repeated_override_or_deviation_pattern`, `motivation_mismatch`, `stale_or_missing_discovery_mode_reconciliation`, and `calendar_preview_or_log_review_overdue`.
+
+Risk reports are computed on demand from the current Calendar or Plan. Implementations may cache a risk-report artifact with the Calendar, Plan, run artifact, or release package for auditability and UI performance, but the cache is derived state and must be invalidated or marked stale when relevant Logs, Snapshots, Tasks, worker status, External Events, compact Calendar coverage, or recalculation triggers change.
+
+Automation Workers may compute or refresh risk-report artifacts when granted appropriate read capability, but worker output is advisory until admitted by the canonical instance. Workers may submit report artifacts, report-refresh requests, mutation requests, or projection requests according to their grants; they do not create canonical Risk objects or directly mutate Tasks.
+
+A risk report may recommend or request Tasks. It must not silently create canonical Tasks in MVP. Human-approved or policy-approved follow-up Tasks may include clarification, affect collection, dependency repair, worker retry/escalation, Calendar regeneration, Log review, Calendar preview, or GitHub projection/reconciliation work.
+
+Risk reports are part of release ceremonies for UbU-runs-UbU. A release readiness or release outreach package should include, at minimum, deadline risk, critical path, dependency fragility, worker/automation bottleneck, and low coverage warnings when the inputs exist. Public release artifacts should cite only reviewable report summaries and must not expose sensitive Compartment payloads.
+
+The PERT-superiority demonstration should not claim mathematical replacement of every PERT use. UbU supersedes PERT for its own MVP demo by showing that schedule risk is not only a duration network: it also includes explicit dependency/precondition state, affect constraints, worker status, compact Calendar coverage, recalculation from Logs and Snapshots, and actionable next Task or Plan repair recommendations.
 
 Burnout / affect exhaustion is modeled as a constraint violation.
 

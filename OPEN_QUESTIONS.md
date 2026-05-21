@@ -828,7 +828,7 @@ Unresolved.
 
 ## UBU-Q0018: Risk Reporting Primitives
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: UBU-D0145 Last scored: Never Scored from commit: None
 
 Risk is not a first-class object in MVP. Risk is reportable from Calendar/Plan analysis.
 
@@ -853,7 +853,23 @@ Risk is not a first-class object in MVP. Risk is reportable from Calendar/Plan a
 
 ### Resolution
 
-Unresolved.
+Solved by `UBU-D0145`.
+
+Risk reports remain derived analysis rather than first-class Risk objects. They are computed from Calendars, Plans, Tasks, Logs, Snapshots, External Events, worker status, External References, and compact Calendar metadata.
+
+The Phase 1 MVP report set is `p90_completion_time`, `critical_path`, `deadline_miss_probability`, `affect_constraint_violation_probability`, `low_compact_calendar_coverage_warning`, `dependency_fragility`, `worker_or_automation_bottleneck`, `stale_affect_warning`, `destructive_pressure_warning`, and `post_plan_depletion_warning`.
+
+Relationship neglect, preference uncertainty, repeated override/deviation, motivation mismatch, stale discovery-mode reconciliation, and overdue Calendar preview or Log review findings may be computed opportunistically when inputs exist, but they are not required Phase 1 reports.
+
+Risk reports are computed on demand from the current Calendar or Plan. They may be cached as derived artifacts on Calendars, Plans, run artifacts, or release packages, but caches are invalidated or marked stale after relevant Task, Log, Snapshot, External Event, worker-status, coverage, or recalculation-trigger changes.
+
+Automation Workers may compute or refresh risk-report artifacts under explicit read capabilities. Worker results are advisory until admitted by the canonical instance and cannot create canonical Risk objects or directly mutate Tasks.
+
+Risk reports may recommend Tasks or submit task-creation/mutation requests through the normal admission path. In MVP they do not silently create canonical Tasks. Typical follow-ups are clarification, affect collection, dependency repair, worker retry or escalation, Calendar regeneration, Log review, Calendar preview, and GitHub projection or reconciliation work.
+
+Risk reports are part of UbU-runs-UbU release ceremonies. Release readiness and Release Outreach Pipeline packages should include deadline risk, critical path, dependency fragility, worker/automation bottleneck, and low coverage warnings when the relevant inputs exist, while respecting Compartment and public-projection boundaries.
+
+The PERT-superiority demo should show that UbU handles more than duration networks: explicit dependencies and preconditions, affect constraints, worker/automation status, compact Calendar coverage, recalculation from Logs and Snapshots, and actionable Plan repair or next-Task recommendations.
 
 ---
 
@@ -1350,7 +1366,7 @@ Unresolved.
 
 ## UBU-Q0036: Committee Log and Provenance Format
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0032 Blocks: model-committee v0.1 logging Resolved by: UBU-D0064 Last scored: Never Scored from commit: None
+Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0032 Blocks: model-committee v0.1 logging Resolved by: UBU-D0064 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1382,7 +1398,7 @@ Unresolved.
 
 ## UBU-Q0038: Changeset-Based Work Phase
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0032 Blocks: model-committee v0.1 work execution Resolved by: UBU-D0063, UBU-D0069 Last scored: Never Scored from commit: None
+Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0032 Blocks: model-committee v0.1 work execution Resolved by: UBU-D0063, UBU-D0069 Last scored: Never Scored from commit: None
 
 ### Question
 

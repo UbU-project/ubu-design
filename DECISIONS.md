@@ -3649,3 +3649,46 @@ This decision resolves the architecture-level question only. Concrete schemas fo
 - The MVP worker API should approximate future inter-instance envelopes enough to avoid a future schema contradiction.
 - Phase 3 cross-user communication can reuse shared envelope semantics while adding user-to-user disclosure, message, commitment, and Association-specific payloads.
 - Direct canonical writes remain forbidden for workers unless a later accepted decision changes the authority boundary.
+
+---
+
+## UBU-D0145: Phase 1 risk reports are derived artifacts, not canonical risk objects
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0018`.
+
+Risk reports in MVP are derived, recalculable analyses over Calendars, Plans, Tasks, Logs, Snapshots, External Events, worker status, External References, and compact Calendar metadata. Risk remains reportable state, not a first-class canonical object.
+
+The Phase 1 MVP risk-report set is:
+
+- `p90_completion_time`;
+- `critical_path`;
+- `deadline_miss_probability`;
+- `affect_constraint_violation_probability`;
+- `low_compact_calendar_coverage_warning`;
+- `dependency_fragility`;
+- `worker_or_automation_bottleneck`;
+- `stale_affect_warning`;
+- `destructive_pressure_warning`;
+- `post_plan_depletion_warning`.
+
+Additional findings may be computed when source data is already available, but they are not required Phase 1 reports: relationship-maintenance neglect, preference uncertainty, repeated override or deviation patterns, motivation mismatch, stale or missing discovery-mode reconciliation, and overdue Calendar preview or Log review.
+
+Risk reports are computed on demand from the current Calendar or Plan. Implementations may cache a risk-report artifact with a Calendar, Plan, run artifact, release package, or UI view for auditability and performance. Cached reports are derived state and must be invalidated or marked stale when relevant Tasks, Logs, Snapshots, External Events, worker status, compact Calendar coverage, or recalculation triggers change.
+
+Automation Workers may compute or refresh risk-report artifacts only through explicit capability grants. Worker-produced risk reports are advisory until admitted by the canonical instance. Workers may submit report artifacts, refresh requests, mutation requests, or projection requests according to authority; they do not create canonical Risk objects or directly mutate Tasks.
+
+Risk reports may recommend follow-up Tasks or submit Task candidates through the normal request/review path, but they must not silently create canonical Tasks in MVP. Typical follow-ups include clarification, affect collection, dependency repair, worker retry or escalation, Calendar regeneration, Log review, Calendar preview, and GitHub projection or reconciliation.
+
+Risk reporting is part of UbU-runs-UbU release ceremonies. Release readiness and Release Outreach Pipeline packages should include deadline risk, critical path, dependency fragility, worker or automation bottleneck, and low coverage warnings when inputs exist, while respecting Compartment, Identity, export, and public-projection boundaries.
+
+UbU's PERT-superiority demonstration should be precise: Phase 1 should not claim to replace every PERT use. It should show that UbU handles the planning dimensions PERT leaves out: explicit preconditions and UniverseState, affect constraints, worker status, compact Calendar coverage, recalculation from Logs and Snapshots, and actionable Plan repair or next-Task recommendations.
+
+**Consequences:**
+
+- `UBU-Q0018` is resolved for Phase 1 implementation.
+- Risk remains non-canonical derived analysis rather than a new MVP entity.
+- MVP implementation can expose the required report set without settling every future risk category.
+- Risk-report caches and release artifacts are reviewable derived artifacts, not accepted design state or canonical user value.
+- Follow-up Tasks from risk findings use ordinary Task creation, worker mutation request, or user approval paths.
