@@ -1038,7 +1038,7 @@ Use the narrowest accurate reason code. Prefer `replaced_by_new_plan_structure` 
 
 ## UBU-Q0023: Container Mutation Semantics
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 2 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 2 implementation Resolved by: UBU-D0148 Last scored: Never Scored from commit: None
 
 Tasks may mutate into Containers, especially during preemption or decomposition.
 
@@ -1054,7 +1054,15 @@ Tasks may mutate into Containers, especially during preemption or decomposition.
 
 ### Resolution
 
-Unresolved.
+Solved by `UBU-D0148`.
+
+A Task-to-Container mutation creates a new Container handle. The original Task handle remains a historical Task handle, transitions to `moot` when replaced for planning, and remains available for Logs, Plan history, External References, projection history, and audit.
+
+All newly created child Tasks get new Task handles. The Container carries original intent and lineage fields such as Objective refs, title/summary, parent/dependency context, Compartment labels, provenance, and mutation Log refs. Child Tasks carry schedulable action fields such as duration, preconditions, effects, executor/delegation data, worker assignment/status, expected output, evidence, and child-specific deadlines or dependencies.
+
+External IDs are preserved through External References. GitHub Issues or PRs that represent the whole unit of work should link to the Container, while child-level External References are added only when a child Task needs its own projection, evidence, or support link. Historical references on the original Task are not rewritten.
+
+Automation Worker child Tasks are ordinary child Tasks grouped under the Container. Workers may propose decomposition only through authorized mutation requests, and the canonical instance validates authority, prior version, Compartment/export policy, External Reference changes, and idempotency before applying or rejecting the restructure.
 
 ---
 

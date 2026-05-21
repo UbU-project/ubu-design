@@ -3812,3 +3812,37 @@ Selection guidance:
 - Imported GitHub/project duplicates can be closed without losing duplicate-specific reporting.
 - Delegation remains visible as a planning and accountability transition rather than being mistaken for completed external satisfaction.
 - MVP schemas can validate `moot_reason_code` as a closed enum and defer extensibility to explicit migrations.
+
+---
+
+## UBU-D0148: Task-to-Container mutation preserves Task identity as history
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0023`.
+
+A Task does not literally change type into a Container by reusing its handle. Task-to-Container mutation is modeled as a structural replacement: the original Task remains an immutable historical Task record, a new Container is created with a new `container_id`, and the original Task transitions to `moot` when the restructuring replaces it for planning.
+
+The Container records lineage back to the original Task through fields or metadata such as `origin_task_ref`, `mutation_reason`, `mutation_log_ref`, child WorkItem refs, and provenance. The original Task handle remains valid for Logs, External References, Plan history, projection history, and audit. It must not be reused as the Container handle.
+
+All new child Tasks created during decomposition, preemption, retry, or worker expansion receive new Task handles. Existing Tasks may be grouped under the Container by reference when appropriate, but grouping does not rewrite their handles. A continuation child may inherit user-facing title context from the original Task, but it is still a new Task with its own lifecycle.
+
+Intent-level fields stay on the Container or lineage metadata: title or summary, served Objective refs, parent or dependency context, external-reference lineage, Compartment/security labels, authority/provenance, and explanatory notes about why the work was split. Action-level fields belong on child Tasks: duration or duration PDF, preconditions, effects, executor/delegation fields, worker assignment/status, expected output, evidence requirements, child-specific dependencies, and child-specific deadlines.
+
+Child Tasks may inherit or narrow Objective refs, Compartment refs, authority source, relevant External Reference context, and non-sensitive notes when those remain valid for the child. They do not silently inherit stale status, completion evidence, modeled effects, worker status, or projection state from the original Task.
+
+The default original-Task lifecycle transition for decomposition or regrouping is `moot` with reason code `replaced_by_new_plan_structure`. Use narrower accepted moot codes when more accurate: `delegated` when responsibility moves out of the executor scope without decomposition, `superseded` when a newer Task, Objective, decision, or source artifact replaces the Task, and `duplicate` when another canonical work item already represents the same work.
+
+External IDs are preserved through External References, not by reusing WorkItem handles. When an external object such as a GitHub Issue represents the whole unit of work, it should link to the Container. When the same external object supports or evidences a specific child Task, child-level External References may also be created with the appropriate relation type. The original Task's historical External References remain intact; new references express the replacement or child relationship rather than rewriting history.
+
+For GitHub-linked Tasks, decomposition should keep the GitHub Issue or PR traceable to the Container and project only clearly marked child-level status when needed. GitHub projection and reconciliation use External References to decide whether the external object represents the Container, a child Task, or both.
+
+Automation Worker child Tasks are ordinary child Tasks grouped under a Container, with worker/delegation metadata and capability boundaries. Workers may propose Task-to-Container restructuring only through authorized mutation requests. The canonical instance validates authority, expected prior version, Compartment/export policy, External Reference changes, and idempotency, then writes applied or rejected Log entries.
+
+**Consequences:**
+
+- `UBU-Q0023` is resolved for Phase 2 implementation.
+- WorkItem handles remain stable and type-specific, avoiding ambiguity for Logs, Plans, External References, and GitHub projection.
+- Containers preserve original intent and lineage while child Tasks carry schedulable action semantics.
+- Decomposition, preemption, worker expansion, and GitHub-linked work use the same identity and provenance rule.
+- Existing moot reason codes and External Reference semantics are reused rather than introducing another mutation-specific handle model.

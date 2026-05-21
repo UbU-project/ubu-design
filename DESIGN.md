@@ -1114,6 +1114,22 @@ A Container is complete when all child Tasks are either:
 - completed
 - moot
 
+Task-to-Container mutation is a structural replacement, not an in-place type change. The original Task handle remains a historical Task handle and is not reused as the Container handle.
+
+Mutation creates a new Container with a new `container_id`. The Container records `origin_task_ref`, `mutation_reason`, `mutation_log_ref`, child WorkItem refs, and lineage/provenance sufficient to trace the restructuring.
+
+All child Tasks created by decomposition, preemption, retry, or worker expansion receive new Task handles. Existing child or continuation Tasks may be linked into the Container, but the mutation operation does not reassign the original Task handle to a child.
+
+The original Task transitions to `moot` with reason code `replaced_by_new_plan_structure` when decomposition or regrouping preserves the underlying intent. If responsibility moves to another executor without decomposition, `delegated` may be more accurate; if a newer source artifact replaces the Task, `superseded` may be more accurate.
+
+Fields that describe the original intent stay on the Container or its lineage metadata: title or summary, served Objective refs, parent/dependency context, external-reference lineage, Compartment/security labels, authority/provenance, and notes needed to explain why the work was split.
+
+Fields that make a schedulable action executable belong on child Tasks: duration or duration PDF, preconditions, effects, executor/delegation fields, worker assignment/status, expected output, evidence requirements, and any child-specific dependencies or deadlines. Child Tasks may inherit or narrow Objective refs, Compartment refs, authority source, and External Reference context when valid, but they do not silently inherit stale status, completion evidence, or modeled effects that no longer apply.
+
+External References are preserved by linking the external object to the new Container when it represents the larger work and to child Tasks only when the external object supports, evidences, or projects that specific child. The original Task's historical External References are not rewritten; new `supersedes`, `projection_of`, `supports`, or `evidence_for` references may be added according to the accepted External Reference model.
+
+GitHub-linked Task decomposition should keep the GitHub Issue or PR traceable to the Container and add child-level External References only for actionable subwork that needs projection or reconciliation. Automation Worker child Tasks are ordinary child Tasks with worker/delegation metadata; workers may propose this restructuring only through authorized mutation requests, and the canonical instance validates and logs the applied or rejected mutation.
+
 ### 9.5 Moot
 
 `moot` is a first-class terminal Task status.
@@ -2497,7 +2513,6 @@ Key unresolved areas include:
 - Adaptive planning granularity and offline precomputation policy
 - Execution-provider trust, privacy, and backend-agnostic worker boundaries
 - Risk reporting primitives
-- Container mutation semantics
 - Moot reason-code taxonomy
 - Model-committee work phase
 - Model-committee prioritized recursive loop
