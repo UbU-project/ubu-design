@@ -917,12 +917,32 @@ Candidate MVP statuses:
 - `invalid`
 - `superseded`
 
-Rules:
+Mode rules:
 
 - `completed` applies to one-time Objectives.
 - `satisfied` applies to evergreen Objectives.
-- Evergreen Objectives may transition from `satisfied` back to `active`.
-- One-time Objectives do not reactivate after completion.
+- `satisfied` is not a valid one-time Objective status.
+- `completed` is not a valid evergreen Objective status.
+
+One-time Objective transitions:
+
+- `active` may transition to `completed`, `abandoned`, `invalid`, or `superseded`.
+- `completed`, `abandoned`, and `superseded` are terminal for normal planning.
+- `invalid` may be applied from any one-time Objective status when the Objective is discovered to be malformed, impossible, contradictory, or admitted by mistake.
+- `superseded` may be applied from any one-time Objective status except `invalid` when a newer Objective or accepted design/source artifact replaces the Objective.
+- One-time Objectives do not reactivate after `completed`; later renewed intent should use a new Objective or explicit supersession.
+
+Evergreen Objective transitions:
+
+- `active` may transition to `satisfied`, `abandoned`, `invalid`, or `superseded`.
+- `satisfied` may transition to `active`, `abandoned`, `invalid`, or `superseded`.
+- `abandoned` and `superseded` are terminal for normal planning.
+- `invalid` may be applied from any evergreen Objective status when the Objective is discovered to be malformed, impossible, contradictory, or admitted by mistake.
+- `superseded` may be applied from any evergreen Objective status except `invalid` when a newer Objective or accepted design/source artifact replaces the Objective.
+
+Evergreen `satisfied` to `active` reactivation is a canonical transition only when the current accepted state changes through user declaration, authorized observation/import, or elapsed-time recurrence evaluation. Hypothetical Plan simulation may predict future reactivation, but does not by itself mutate canonical Objective status.
+
+Every accepted canonical Objective status transition creates an `objective_transitioned` Log entry. Simulated or predicted status changes inside candidate Plans are not canonical transitions and do not create Objective transition Logs unless accepted as real state.
 
 ### 7.4 Evergreen recurrence
 

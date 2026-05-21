@@ -1068,7 +1068,7 @@ Automation Worker child Tasks are ordinary child Tasks grouped under the Contain
 
 ## UBU-Q0024: Objective Status Transition Table
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: UBU-D0149 Last scored: Never Scored from commit: None
 
 Objective statuses are accepted, but the precise transition table remains open.
 
@@ -1095,7 +1095,53 @@ superseded
 
 ### Resolution
 
-Unresolved.
+Solved by `UBU-D0149`.
+
+Objective status transitions are mode-specific.
+
+For one-time Objectives, `satisfied` is invalid. Legal transitions are:
+
+```text
+active -> completed
+active -> abandoned
+active -> invalid
+active -> superseded
+completed -> invalid
+completed -> superseded
+abandoned -> invalid
+abandoned -> superseded
+superseded -> invalid
+```
+
+`completed`, `abandoned`, and `superseded` are terminal for normal one-time planning. One-time Objectives do not reactivate after completion; renewed intent should use a new Objective or explicit supersession.
+
+For evergreen Objectives, `completed` is invalid. Legal transitions are:
+
+```text
+active -> satisfied
+active -> abandoned
+active -> invalid
+active -> superseded
+satisfied -> active
+satisfied -> abandoned
+satisfied -> invalid
+satisfied -> superseded
+abandoned -> invalid
+abandoned -> superseded
+superseded -> invalid
+```
+
+`abandoned` and `superseded` are terminal for normal evergreen planning. If an abandoned or superseded evergreen concern later becomes relevant again, UbU should usually create or select a new Objective rather than silently reactivating the old one.
+
+`invalid` may occur from any status and is terminal. It means the Objective record is malformed, impossible, contradictory, forbidden by mode rules, or admitted by mistake.
+
+`superseded` may occur from any non-`invalid` status when a newer Objective, decision, import result, or source artifact replaces the Objective for planning and traceability.
+
+`abandoned` does not occur from any state. It is legal only from `active` one-time Objectives and from `active` or `satisfied` evergreen Objectives.
+
+Evergreen `satisfied -> active` is canonical only when accepted current state changes through user declaration, authorized observation/import, or elapsed-time recurrence evaluation. Simulation may predict future reactivation, but simulation alone does not mutate canonical Objective status.
+
+Every accepted canonical Objective status transition creates an `objective_transitioned` Log entry. Simulated status changes inside candidate Plans or reports are predictions, not canonical transitions, and do not create transition Logs unless accepted as actual state.
 
 ---
 
