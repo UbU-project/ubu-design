@@ -875,7 +875,7 @@ The PERT-superiority demo should show that UbU handles more than duration networ
 
 ## UBU-Q0019: Recalculation Trigger Taxonomy
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: UBU-D0146 Last scored: Never Scored from commit: None
 
 The decision layer is a pure function over Plans + current state, so recalculation triggers must be explicit.
 
@@ -908,7 +908,23 @@ worker_request
 
 ### Resolution
 
-Unresolved.
+Solved by `UBU-D0146`.
+
+Phase 1 triggers are `task_completed`, `task_failed`, `task_moot`, `observed_snapshot`, `affect_confidence_decay`, `external_event`, `github_update`, `user_override`, `calendar_preview_due`, `log_review_due`, `discovery_mode_reconciliation_due`, `elapsed_time`, `low_compact_calendar_coverage`, and `worker_request`. Snooze, reject, decompose, and override outcomes should be represented through ordinary Task, Log, or user-override payloads unless implementation proves a separate trigger kind is needed.
+
+Trigger entries are logged as `recalculation_triggered` Log events with a payload containing `trigger_kind`, `scope`, `target_refs`, `source_event_refs`, `requested_action`, `batch_key`, `reason`, and optional `idempotency_key`. The `requested_action` is either `recalculate_now` or `mark_calendar_stale`.
+
+Automation Workers cannot create canonical triggers directly. A worker with `recalculation.request` may submit a recalculation request; the canonical instance validates capability, scope, Compartment/export policy, evidence, and idempotency before logging an accepted trigger or rejected worker request.
+
+Triggers may be batched by Calendar or Plan scope when no trigger in the batch requires user-visible immediate repair before the batch window closes. Batches must preserve individual source references and reasons.
+
+Immediate recalculation is required for triggers that can change the current or next recommended Task, hard feasibility, Task lifecycle state, dependency or precondition truth, Objective status, affect legitimacy, current worker assignment, or compact Calendar coverage below the configured minimum. Default immediate triggers are current/planned/dependency-relevant `task_completed`, `task_failed`, and `task_moot`; `user_override`; planner-relevant `observed_snapshot`, `external_event`, and `github_update`; `low_compact_calendar_coverage`; and urgent accepted `worker_request`.
+
+Stale-only handling is sufficient for `calendar_preview_due`, `log_review_due`, `discovery_mode_reconciliation_due`, `elapsed_time` outside the reactive repair envelope, `affect_confidence_decay` before it crosses a planning threshold or current affect constraint, and low-priority external or GitHub observations that do not affect the current Plan.
+
+Phase 2 adds sync and user-owned personal-worker trigger kinds such as `sync_state_changed`, `device_reconnected`, `remote_worker_status_changed`, and `offline_window_changed`.
+
+Post-MVP trigger families include native cross-user messages, AssociationAttestation review, broad legacy-message ingestion, background AgentAction policy events, external compute budget or provider changes, and other agentic or multi-user coordination events.
 
 ---
 

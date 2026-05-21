@@ -3692,3 +3692,73 @@ UbU's PERT-superiority demonstration should be precise: Phase 1 should not claim
 - MVP implementation can expose the required report set without settling every future risk category.
 - Risk-report caches and release artifacts are reviewable derived artifacts, not accepted design state or canonical user value.
 - Follow-up Tasks from risk findings use ordinary Task creation, worker mutation request, or user approval paths.
+
+---
+
+## UBU-D0146: Phase 1 recalculation triggers use logged trigger records
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0019`.
+
+Recalculation triggers are explicit event-like records that tell UbU when a Calendar, Plan, risk-report cache, explanation cache, or next-action recommendation may no longer reflect the current modeled state. A trigger is not a separate canonical domain mutation by itself; it references the Log entry, Snapshot, External Event, worker request, or clock condition that changed the planner's inputs.
+
+The Phase 1 trigger kinds are:
+
+- `task_completed`;
+- `task_failed`;
+- `task_moot`;
+- `observed_snapshot`;
+- `affect_confidence_decay`;
+- `external_event`;
+- `github_update`;
+- `user_override`;
+- `calendar_preview_due`;
+- `log_review_due`;
+- `discovery_mode_reconciliation_due`;
+- `elapsed_time`;
+- `low_compact_calendar_coverage`;
+- `worker_request`.
+
+Phase 1 user feedback controls such as snooze, reject, decompose, and override should be represented through ordinary Task, Log, or user-override payloads rather than separate trigger kinds unless implementation evidence shows that a distinct trigger kind is required.
+
+Phase 2 trigger kinds are limited to sync and personal-worker conditions that can invalidate a local Calendar: `sync_state_changed`, `device_reconnected`, `remote_worker_status_changed`, and `offline_window_changed`. These belong with multi-device local-first sync and user-owned worker coordination.
+
+Post-MVP trigger families include native cross-user message arrival, AssociationAttestation review, broad legacy-message ingestion, background AgentAction policy events, external compute budget or provider changes, and other high-level agentic or multi-user coordination events.
+
+Accepted Phase 1 triggers are logged using the existing Log event type `recalculation_triggered`. The event payload should include `trigger_kind`, `scope`, `target_refs`, `source_event_refs`, `requested_action`, `batch_key`, `reason`, and optional `idempotency_key`. `requested_action` is either `recalculate_now` or `mark_calendar_stale`.
+
+Automation Workers cannot directly create canonical triggers. A worker with the `recalculation.request` capability may submit a recalculation request. The canonical instance validates capability, target scope, Compartment/export policy, source evidence, and idempotency before recording an accepted `recalculation_triggered` Log entry or a rejected worker request/mutation Log entry.
+
+Triggers may be batched when they share the same Calendar or Plan scope and no trigger in the batch requires user-visible immediate repair before the batch window closes. Batching must preserve each source reference and reason. A short event-loop batch is acceptable for multiple imported GitHub events, worker updates, or stale markers.
+
+Immediate recalculation is required when the trigger can change the current or next recommended Task, hard feasibility, Task lifecycle state, dependency or precondition truth, Objective status, affect legitimacy, worker assignment needed for current work, or compact Calendar coverage below the configured minimum.
+
+Default Phase 1 immediate triggers are:
+
+- `task_completed`, `task_failed`, and `task_moot` for current, planned, dependency-relevant, or Objective-relevant Tasks;
+- `user_override`;
+- planner-relevant `observed_snapshot`;
+- planner-relevant `external_event`;
+- planner-relevant `github_update`;
+- `low_compact_calendar_coverage`;
+- urgent accepted `worker_request`.
+
+Stale marking is sufficient when the trigger only means cached Plans, Calendars, explanations, or reports must be refreshed before later reliance. Default stale-only triggers are:
+
+- `calendar_preview_due`;
+- `log_review_due`;
+- `discovery_mode_reconciliation_due`;
+- `elapsed_time` outside the reactive repair envelope;
+- `affect_confidence_decay` that has not crossed a configured planning threshold or current affect constraint;
+- low-priority `external_event` or `github_update` observations that do not affect the current Plan.
+
+`elapsed_time` is materialized only when crossing a modeled boundary such as Task start or end, Static Task proximity, review due time, stale-affect threshold, reactive horizon expiry, offline precompute boundary, or compact Calendar expiration. It does not create continuous clock-tick Log entries.
+
+**Consequences:**
+
+- `UBU-Q0019` is resolved for Phase 1 implementation.
+- Recalculation integrates with the accepted append-only Log model instead of adding a new canonical event store.
+- Worker recalculation requests stay inside the accepted capability and admission boundary.
+- Immediate versus stale-only handling gives Phase 1 a minimal reactive loop without requiring full Compact Calendar coverage semantics to be settled.
+- Phase 2 and post-MVP trigger families are named but deferred.
