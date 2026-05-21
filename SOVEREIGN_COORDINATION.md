@@ -43,7 +43,8 @@ UbU’s sovereignty framing depends on several accepted design commitments:
 - external agents submit candidate updates and evidence rather than receiving ambient authority;
 - GitHub, calendars, and other systems are projections or inputs, not the full canonical life model;
 - user overrides remain authoritative;
-- provider-neutral LLM execution prevents lock-in to one cognitive backend.
+- provider-neutral LLM execution prevents lock-in to one cognitive backend;
+- model-committee v0.2 dogfooding uses Codex and Claude Code cross-scoring as a concrete example of treating frontier models as reviewable providers rather than trusted authorities.
 
 The purpose is not purity for its own sake. The purpose is practical control over sensitive planning state.
 

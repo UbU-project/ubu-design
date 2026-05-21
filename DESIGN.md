@@ -308,7 +308,7 @@ The goal is to accelerate implementation, not to create unlimited pre-implementa
 
 Model-committee automation must be bounded by a stop rule. It should recommend further design work only when that work has greater expected value than beginning or continuing implementation.
 
-The first implementation of this process is intentionally constrained by the v0.1 restrictions recorded in `DECISIONS.md`.
+The first implementation of this process is intentionally constrained by the v0.1 restrictions recorded in `DECISIONS.md`. The accepted v0.2 direction expands the bootstrap loop with Claude Code CLI, frontier cross-scoring, disagreement flags, schema-native structured output, and operator-run artifact publication while preserving the advisory authority boundary.
 
 ### 3.0 Current dogfooding status
 
@@ -320,7 +320,7 @@ This establishes active pre-MVP dogfooding while preserving the rule that accept
 
 The current strategic emphasis is to use visible dogfooding, contributor recruitment, and prototype-funder discovery to accelerate the trunk of UbU rather than to expand design philosophy indefinitely.
 
-### 3.1 Codex-first provider model
+### 3.1 v0.1 Codex-first provider model
 
 `model-committee` v0.1 uses Codex CLI as the primary model provider.
 
@@ -338,6 +338,30 @@ Every runtime Codex call must pass `--skip-git-repo-check`.
 `model-committee` does not pass deprecated `--disable web_search` flags. If Codex web search must be disabled, that is handled through Codex configuration or profile state outside `model-committee`.
 
 Local Ollama models remain secondary work proposal providers. They provide local diversity, dissent, fallback, and offline review, but Codex is the required scoring provider for automatic patch selection in v0.1.
+
+### 3.1.1 v0.2 Claude Code and cross-scoring provider model
+
+`model-committee v0.2` adds Claude Code CLI as a second frontier provider for both work proposal generation and scoring.
+
+The v0.2 provider model is not raw majority voting. It is cross-scored adversarial review:
+
+- Codex may generate work proposals.
+- Claude Code may generate work proposals.
+- Claude Code scores Codex-authored proposals.
+- Codex scores Claude-authored proposals.
+- A provider's self-score may be preserved as diagnostic metadata, but it does not count as quorum evidence.
+
+Claude Code should use schema-native structured output through `--json-schema`. The v0.2 target environment uses Claude Code CLI `2.1.146`, which supports that flag. Claude output parsing should therefore read the schema-conforming `structured_output` field from the CLI JSON envelope when `--output-format json` and `--json-schema` are used. Prompt-only JSON extraction is a compatibility fallback, not the primary path.
+
+Claude Code is invoked as a subprocess provider. `model-committee` itself still must not call Anthropic APIs directly. The explicit boundary is that approved provider CLIs may perform their own network/API calls according to their configured upstream authentication and billing, while `model-committee` owns orchestration, prompts, schemas, validation, manifests, logs, and review artifacts.
+
+Claude tool authority should be restricted explicitly. The default scripted schema-output call should use no tools, or `--tools Read` only when file inspection is required. `--allowedTools` alone is not a sandbox boundary because it controls permission prompts, not the total available tool set.
+
+v0.2 manifests and reviews should include a score matrix with author provider, scorer provider, proposal ID, score, validity, rationale, risks, and required fixes. Disagreement is signal: a large score gap between Codex and Claude Code should not be hidden inside a single aggregate score.
+
+v0.2 automated selection requires at least one valid work proposal, at least one valid cross-score from a different frontier provider, no hard validation failure on the selected patch, and no critical disagreement flag unless manually overridden outside automatic selection. Default thresholds are a frontier score gap of 25 or more points, selected score below 70, selected patch validation failure, or no valid frontier cross-score. A dedicated human-review-required exit code, provisionally `9`, should distinguish quorum/disagreement review from invalid selected patch failure.
+
+`review.md` should include an operator-run final step for publishing a run directory to the sibling `../model-committee-artifacts` repository. `model-committee v0.2` should generate these commands but must not auto-push or mutate remote GitHub state.
 
 ### 3.2 Changeset-based work phase
 
@@ -434,7 +458,7 @@ After answerability is established, questions are ranked by:
 
 Questions blocked by unresolved dependencies may be selected for decomposition rather than ordinary answering.
 
-### 3.8 v0.1 provider and network boundaries
+### 3.8 v0.1 and v0.2 provider and network boundaries
 
 `model-committee` v0.1 is a narrow local Python CLI.
 
@@ -443,21 +467,21 @@ It may communicate only with:
 - local Ollama `base_url`;
 - Codex CLI subprocesses.
 
-It must not call:
+v0.2 may also invoke Claude Code CLI as an explicitly configured subprocess provider.
+
+`model-committee` itself must not call:
 
 - GitHub;
 - OpenAI APIs directly;
-- Anthropic APIs;
+- Anthropic APIs directly;
 - Gemini APIs;
 - arbitrary HTTP URLs.
 
-`httpx` may be used only for the configured Ollama `base_url`.
+`httpx` may be used only for the configured Ollama `base_url`. Frontier cloud providers are accessed through approved CLI subprocess boundaries rather than direct API calls by `model-committee`.
 
-Codex must be invoked only through subprocess.
+This provider policy preserves the bootstrap architecture and prevents accidental API creep while allowing approved CLI providers to use their own upstream authentication and billing.
 
-This no-network policy preserves the bootstrap architecture and prevents accidental API creep.
-
-### 3.9 v0.1 testing and diagnostics
+### 3.9 v0.1 and v0.2 testing and diagnostics
 
 `model-committee` v0.1 should include fake provider mode for deterministic tests.
 
@@ -469,6 +493,8 @@ Fake provider mode should not call Codex or Ollama. It should load canned fixtur
 - `git` availability;
 - `codex` availability;
 - required `codex exec` flags;
+- Claude Code CLI availability when enabled;
+- Claude Code schema-native structured-output support when enabled;
 - Ollama reachability;
 - configured Ollama model availability;
 - required target repo files;
@@ -476,9 +502,9 @@ Fake provider mode should not call Codex or Ollama. It should load canned fixtur
 
 A `version` command should print the installed `model-committee` version.
 
-### 3.10 v0.1 authority boundary
+### 3.10 v0.1 and v0.2 authority boundary
 
-`model-committee` v0.1 has advisory authority only. It may produce derived analysis and review artifacts, but it must not directly create accepted design state. Accepted design state exists only after an ordinary human-reviewed repo change is committed to the canonical repo.
+`model-committee` has advisory authority only in both v0.1 and v0.2. It may produce derived analysis and review artifacts, but it must not directly create accepted design state. Accepted design state exists only after an ordinary human-reviewed repo change is committed to the canonical repo.
 
 The following actions may be automated in v0.1:
 
@@ -492,7 +518,17 @@ The following actions may be automated in v0.1:
 - select a patch only from mechanically valid proposals using a valid Codex score result;
 - write run logs, review artifacts, selected patches, and commit-message suggestions.
 
-The following actions require human repository review in v0.1:
+v0.2 additionally may automate:
+
+- invoking Claude Code CLI as a schema-native subprocess provider;
+- generating and validating Claude Code work proposals and score results;
+- cross-scoring Codex and Claude Code proposals;
+- constructing score-matrix artifacts;
+- detecting disagreement and quorum failures;
+- writing human-review-required results when quorum, score, or disagreement thresholds fail;
+- adding operator-run artifact-publication commands to `review.md`.
+
+The following actions require human repository review in v0.1 and v0.2:
 
 - accepting a proposed answer as design state;
 - applying, editing, or committing any candidate patch to canonical files;
@@ -501,23 +537,26 @@ The following actions require human repository review in v0.1:
 - converting a proposed open question into canonical `OPEN_QUESTIONS.md` state;
 - changing provider weights, quorum rules, or network/provider boundaries.
 
-The following actions are outside v0.1 authority:
+The following actions are outside automatic authority:
 
-- direct OpenAI, Anthropic, Gemini, GitHub, or arbitrary HTTP API calls;
+- direct OpenAI, Anthropic, Gemini, GitHub, or arbitrary HTTP API calls by `model-committee` itself;
 - auto-merge, auto-push, automatic PR creation, or GitHub mutation;
+- automatic artifact publication;
 - automatic patch application to canonical repo files;
-- allowing Codex CLI or Ollama providers to directly edit canonical repo files;
-- internal manual override of Codex scoring or patch-selection failures;
+- allowing Codex CLI, Claude Code CLI, Ollama, or any model provider to directly edit canonical repo files;
+- internal manual override of failed scoring, quorum, disagreement, or patch-selection checks;
 - readiness-score writes to derived public files such as `README.md`;
 - deriving canonical user value, project directives, or release commitments from model output alone.
 
-Provider outputs are weighted by configured trust weights and observed reliability metadata, not by one-provider-one-vote counting. Static configured weights are sufficient for v0.1; adaptive weighting remains deferred.
+Provider outputs are weighted by configured trust weights, provider role, cross-score status, and observed reliability metadata, not by one-provider-one-vote counting. Static configured weights are sufficient for v0.1 and v0.2; adaptive weighting remains deferred.
 
 Provider failures are logged as run events. A failure should record the provider, model, run phase, failure class, timeout or exit status when available, stderr/response artifact path when available, and whether quorum remained satisfied.
 
 A valid v0.1 committee result requires at least one mechanically valid work proposal and a valid Codex score result. Two or more valid proposals are preferred but not required. Failed secondary providers do not invalidate a run when quorum is met.
 
-Codex CLI authority differs from direct API authority because Codex is invoked only through `codex exec` as a subprocess provider. Codex outputs are proposal and scoring artifacts only. Direct OpenAI API authority is zero in v0.1 because direct OpenAI API calls are forbidden.
+A valid automated v0.2 committee result requires at least one valid work proposal, at least one valid cross-score from a different frontier provider, no hard validation failure on the selected patch, and no critical disagreement flag unless manually overridden outside automatic selection. Human-review-required results should use a distinct exit code, provisionally `9`.
+
+Codex CLI and Claude Code CLI authority differ from direct API authority because they are invoked only as subprocess providers. Their outputs are proposal and scoring artifacts only. Direct OpenAI and Anthropic API authority is zero because direct cloud-provider API calls by `model-committee` are forbidden.
 
 ---
 
@@ -2274,9 +2313,11 @@ A worker may be revoked by disabling or deleting its capability grants, rotating
 
 A single worker-mode instance may serve multiple parent organization-mode or user-mode instances only through separate parent-specific capability grants, credentials, and audit trails. Cross-parent data sharing is forbidden unless each parent explicitly grants a route and all relevant Compartment policies allow it. Workers may operate for user-mode instances, but affect and other personal data require especially narrow read-subset grants and must respect `no_cloud_llm`, `no_external_export`, and low-security disclosure rules.
 
-A model-committee worker is an Automation Worker pattern that reads canonical project state, runs Codex CLI and local Ollama proposal workflows against a selected open question or problem, produces candidate changesets, scores candidate changesets, and writes reviewable artifacts.
+A model-committee worker is an Automation Worker pattern that reads canonical project state, runs configured provider workflows against a selected open question or problem, produces candidate changesets, scores candidate changesets, and writes reviewable artifacts.
 
-In v0.1, model-committee is still an external bootstrap tool rather than a fully integrated UbU worker-mode runtime component.
+In v0.1, this means Codex CLI plus local Ollama proposal workflows. In v0.2, this expands to Codex and Claude Code frontier-provider cross-scoring, with local providers remaining useful for diversity and fallback.
+
+In both versions, model-committee is still an external bootstrap tool rather than a fully integrated UbU worker-mode runtime component.
 
 ### 24.2 Worker mode
 

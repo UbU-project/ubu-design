@@ -1372,7 +1372,7 @@ MVP event types cover Task completion/failure/moot, External Event observation, 
 
 ## UBU-Q0032: Model Committee Process and Authority
 
-Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Model-committee v0.1 correctness Resolved by: UBU-D0057, UBU-D0058, UBU-D0059, UBU-D0060, UBU-D0065, UBU-D0069, UBU-D0070 Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Model-committee correctness Resolved by: UBU-D0057, UBU-D0058, UBU-D0059, UBU-D0060, UBU-D0065, UBU-D0069, UBU-D0070, UBU-D0150 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1391,15 +1391,15 @@ What authority should the model-committee process have when proposing answers, p
 
 ### Current direction
 
-`model-committee` is advisory and repo-driven. It may propose and score changesets, but accepted design state exists only when committed to the canonical repo. v0.1 uses Codex CLI as the primary proposal/scoring provider and Ollama as secondary proposal providers. v0.1 must not call OpenAI APIs directly, mutate GitHub, auto-apply patches, or allow Codex to directly modify canonical repo files.
+`model-committee` is advisory and repo-driven. It may propose and score changesets, but accepted design state exists only when committed to the canonical repo. v0.1 uses Codex CLI as the primary proposal/scoring provider and Ollama as secondary proposal providers. v0.2 adds Claude Code CLI as a second frontier provider, uses schema-native Claude structured output, cross-scores Codex and Claude proposals, surfaces disagreement in review artifacts, and requires frontier cross-score quorum before automated selection. v0.2 still must not mutate GitHub, auto-apply patches, or allow model providers to directly modify canonical repo files.
 
 ### Resolution
 
-Solved for v0.1 by accepted decisions covering advisory authority, v0.1 restrictions, model weighting, question ranking, provisional quorum/provider-failure behavior, Codex CLI provider behavior, and the explicit v0.1 authority boundary.
+Solved for v0.1 and extended for v0.2 by accepted decisions covering advisory authority, v0.1 restrictions, model weighting, question ranking, provisional quorum/provider-failure behavior, Codex CLI provider behavior, the explicit v0.1 authority boundary, and the v0.2 Claude Code cross-scoring boundary.
 
 `model-committee` may automate derived analysis and review artifact generation, including consistency checks, question rankings, readiness estimates, candidate questions, candidate changesets, patch validation, Codex scoring, and selected-patch artifact writing. It may not create accepted design state without a human-reviewed committed repo change.
 
-Direct API calls, GitHub mutation, automatic patch application, auto-merge, auto-push, automatic PR creation, internal manual override of failed selection, readiness-score writes to derived public files, and direct model edits to canonical files remain outside v0.1 authority.
+Direct API calls by `model-committee` itself, GitHub mutation, automatic patch application, auto-merge, auto-push, automatic PR creation, internal manual override of failed selection, readiness-score writes to derived public files, and direct model edits to canonical files remain outside automatic authority. v0.2 refines the cloud-provider boundary by allowing explicitly configured provider CLI subprocesses, including Claude Code, while still forbidding direct Anthropic API calls by `model-committee` itself.
 
 Detailed mechanics remain open in the narrower follow-up questions for log/provenance format, changeset validation/scoring, recursive-loop blocking semantics, and decomposition/design-burden scoring.
 
@@ -1458,7 +1458,7 @@ Unresolved.
 
 ## UBU-Q0036: Committee Log and Provenance Format
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0032 Blocks: model-committee v0.1 logging Resolved by: UBU-D0064 Last scored: Never Scored from commit: None
+Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0032 Blocks: model-committee logging Resolved by: UBU-D0064 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1466,7 +1466,7 @@ What minimum files and fields must a model-committee run log preserve?
 
 ### Current direction
 
-v0.1 should use the provisional filesystem log format defined in `UBU-D0064`. The provisional format includes canonical file snapshots, schema files, Codex prompts, Ollama prompts, Codex JSON outputs, Codex JSONL event logs, provider stderr, parsed proposals, patch files, selected patch, review artifact, and commit message. The final log/provenance format remains open and may be refined after the first working implementation exists.
+v0.1 should use the provisional filesystem log format defined in `UBU-D0064`. The provisional format includes canonical file snapshots, schema files, Codex prompts, Ollama prompts, Codex JSON outputs, Codex JSONL event logs, provider stderr, parsed proposals, patch files, selected patch, review artifact, and commit message. v0.2 should extend that format with Claude Code prompts, raw Claude CLI JSON envelopes, schema-native `structured_output` payloads, provider invocation metadata, score-matrix entries, disagreement flags, quorum results, and operator-run artifact-publication instructions. The final log/provenance format remains open and may be refined after the first working v0.2 implementation exists.
 
 ### Resolution
 
@@ -1490,7 +1490,7 @@ Unresolved.
 
 ## UBU-Q0038: Changeset-Based Work Phase
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0032 Blocks: model-committee v0.1 work execution Resolved by: UBU-D0063, UBU-D0069 Last scored: Never Scored from commit: None
+Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0032 Blocks: model-committee work execution Resolved by: UBU-D0063, UBU-D0069 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1511,17 +1511,17 @@ How should the model-committee work phase represent, score, select, apply, and c
 
 ### Current direction
 
-The work phase should produce explicit patch-style changesets, score those changesets, select the best one, and create reviewable artifacts in v0.1. v0.1 uses Codex CLI as the primary schema-constrained work and scoring provider, with Ollama as secondary proposal providers. Codex produces proposals and scores only; it does not directly edit canonical repo files. v0.1 writes `selected.patch`, `commit_message.txt`, `review.md`, and logs. Remote GitHub mutation, automatic patch application, and automatic PR creation remain out of scope for v0.1.
+The work phase should produce explicit patch-style changesets, score those changesets, select the best one when quorum is satisfied, and create reviewable artifacts. v0.1 uses Codex CLI as the primary schema-constrained work and scoring provider, with Ollama as secondary proposal providers. v0.2 adds Claude Code CLI as a schema-native frontier provider and requires cross-scoring: Codex scores Claude proposals and Claude scores Codex proposals. Self-scores may be diagnostic but do not count as quorum evidence. v0.2 writes or updates `selected.patch`, `commit_message.txt`, `review.md`, score-matrix artifacts, disagreement flags, and logs. Remote GitHub mutation, automatic patch application, automatic artifact push, and automatic PR creation remain out of scope.
 
 ### Resolution
 
-Partially resolved by `UBU-D0063` and `UBU-D0069`; detailed scoring and validation rules may be refined after implementation.
+Partially resolved by `UBU-D0063`, `UBU-D0069`, and `UBU-D0150`; detailed scoring and validation rules may be refined after implementation.
 
 ---
 
 ## UBU-Q0039: Prioritized Recursive Loop Semantics
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0032 Blocks: model-committee v0.1 loop semantics Resolved by: UBU-D0066 Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0032 Blocks: model-committee loop semantics Resolved by: UBU-D0066 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1796,11 +1796,11 @@ What public dogfooding artifacts should `model-committee` expose to make UbU cre
 
 ### Current direction
 
-The project should show the dogfooding loop, not merely describe it. Artifacts should demonstrate that open questions become model-assisted proposals, reviewable patches, decisions, and updated canonical state.
+The project should show the dogfooding loop, not merely describe it. Artifacts should demonstrate that open questions become model-assisted proposals, reviewable patches, decisions, and updated canonical state. v0.2 review artifacts should also show cross-model score matrices, quorum outcomes, disagreement flags, and the operator-run publication command for copying the run to `../model-committee-artifacts`.
 
 ### Resolution
 
-Partially resolved by `UBU-D0077` and `UBU-D0086`; exact artifact publication policy remains open.
+Partially resolved by `UBU-D0077`, `UBU-D0086`, and `UBU-D0150`; exact long-term artifact publication policy remains open, but v0.2 has a concrete operator-run publication path for model-committee run artifacts.
 
 ---
 
@@ -1833,7 +1833,7 @@ The minimum onboarding path is public, bounded, and fixture-first. A serious con
 
 The first command should be a no-private-access local smoke check. For `model-committee`, the expected first command is `uv run model-committee doctor`, followed by a fake-provider or fixture-backed run/test when available. First tasks should touch synthetic or redacted workflow examples, fixtures, parser or validation tests, `model-committee` artifact review, public design review, or narrow implementation-ready issues with explicit acceptance criteria.
 
-Before implementation work, contributors must understand the canonical/derived document boundary, advisory `model-committee` authority, v0.1 provider/network limits, no-auto-apply rule, GitHub-as-projection, LLM advisory boundary, Compartment and low-security-content promises, user sovereignty, mode boundaries, and open-core contributor surface.
+Before implementation work, contributors must understand the canonical/derived document boundary, advisory `model-committee` authority, v0.1/v0.2 provider/network limits, no-auto-apply and no-auto-publish rules, GitHub-as-projection, LLM advisory boundary, Compartment and low-security-content promises, user sovereignty, mode boundaries, and open-core contributor surface.
 
 Contributor progression runs from workflow informant to design reviewer to fixture/test contributor to implementation contributor to bounded module owner. Work that requires private project-owner context is not onboarding-ready; missing context should become a public issue, fixture, design note, or open question with sensitive details redacted or replaced by synthetic examples.
 
@@ -2687,15 +2687,15 @@ Create these first:
 8. `UBU-Q0018`: Define Risk Reporting Primitives
 9. `UBU-Q0019`: Define Recalculation Trigger Taxonomy
 10. `UBU-Q0030`: Define Phase 1 Public Demo Criteria
-11. `UBU-Q0036`: Define Committee Log and Provenance Format
-12. `UBU-Q0038`: Define Changeset-Based Work Phase
+11. `UBU-Q0036`: Define Committee Log and Provenance Format, including v0.2 cross-scoring artifacts
+12. `UBU-Q0038`: Define Changeset-Based Work Phase and cross-scoring selection
 13. `UBU-Q0039`: Define Prioritized Recursive Loop Semantics
 14. `UBU-Q0040`: Define Question Decomposition and Design Burden Scoring
 15. `UBU-Q0041`: Define public recruitment language for a small core cohort
 16. `UBU-Q0042`: Define feedback, dignity, limits, and growth-pressure planning quality
 17. `UBU-Q0043`: Define the first technical essay claim and concrete request
 18. `UBU-Q0045`: Define the smallest prototype-funder workflow
-19. `UBU-Q0046`: Define public dogfooding artifacts for contributor credibility
+19. `UBU-Q0046`: Define public dogfooding artifacts and artifact-publication policy for contributor credibility
 20. `UBU-Q0047`: Define minimum committed-contributor onboarding path
 21. `UBU-Q0048`: Define commercial funding red lines
 22. `UBU-Q0049`: Define the Release Outreach Pipeline artifact model and implementation boundary

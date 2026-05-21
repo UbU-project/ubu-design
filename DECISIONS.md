@@ -3908,3 +3908,95 @@ Every accepted canonical Objective status transition creates an append-only Log 
 - One-time completion and evergreen satisfaction stay semantically distinct.
 - Invalidity, supersession, and abandonment have separate meanings instead of being interchangeable terminal states.
 - Canonical Objective lifecycle changes remain auditable through the accepted append-only Log model.
+
+---
+
+## UBU-D0150: Model-committee v0.2 adopts schema-native Claude Code cross-scoring
+
+**Status:** Accepted
+
+`model-committee v0.2` extends the v0.1 bootstrap loop by adding Claude Code CLI as a second frontier provider for both proposal generation and scoring.
+
+This is a contract-level version change, not a small provider addition. v0.1 remains the narrow baseline, but v0.2 updates the dogfooding architecture to make disagreement between independent frontier providers visible, reviewable, and useful.
+
+v0.2 scope includes:
+
+- Claude Code CLI as a second frontier work and score provider;
+- schema-native Claude Code structured output using `--json-schema`;
+- cross-scoring between frontier providers;
+- a first-class score matrix in run manifests and review artifacts;
+- disagreement flags in `review.md`;
+- a Claude Code config block;
+- updated quorum rules;
+- `doctor` checks for Claude availability and structured-output support;
+- final operator-run artifact-publication instructions targeting `../model-committee-artifacts`.
+
+v0.2 remains out of scope for:
+
+- multi-turn Claude Code sessions;
+- GitHub API integration;
+- adaptive model weights;
+- full Association automation;
+- UbU planning-kernel work;
+- automatic artifact push, merge, PR creation, or canonical design-state mutation.
+
+Claude Code should be invoked as a subprocess provider, not through direct Anthropic API calls made by `model-committee` itself. The provider/network policy distinction is explicit:
+
+- `model-committee` must not directly call Anthropic APIs;
+- `model-committee` may invoke approved external CLI subprocesses when explicitly enabled by configuration;
+- those provider CLIs may perform their own network/API calls according to their upstream authentication, billing, and policy configuration;
+- every provider invocation must be logged with provider ID, model name or alias, argv shape, timeout, exit code, stdout/stderr artifact paths, schema-validation result, and relevant usage/cost metadata when available.
+
+The installed Claude Code CLI version for the v0.2 target environment is confirmed as `2.1.146`, and that version supports `--json-schema`. Therefore Claude Code should use schema-native structured output as the primary path rather than Ollama-style JSON extraction.
+
+The Claude Code provider should parse validated structured output from the CLI JSON envelope. When `--output-format json` and `--json-schema` are used, the schema-conforming payload should be read from `structured_output` rather than from free-form text. Prompt-embedded JSON extraction is only a compatibility fallback if a future environment lacks working schema-native output.
+
+Claude tool authority must be restricted explicitly. For scripted schema-output runs, the default should be no tools or the narrowest necessary tool set. If file inspection is needed, use `--tools Read`. Do not rely on `--allowedTools` alone as a sandbox boundary, because allowing a tool without prompting is not the same as restricting the available tool set.
+
+Cross-scoring rules:
+
+- Codex scores Claude-authored proposals.
+- Claude Code scores Codex-authored proposals.
+- A provider's self-score may be retained as diagnostic metadata, but it does not count as quorum evidence.
+- Local/Ollama providers remain useful for diversity, dissent, fallback, and offline review, but they do not replace the required frontier cross-score unless a later decision expands quorum policy.
+- Score results should be stored as matrix entries with `proposal_id`, `author_provider`, `scorer_provider`, score, validity, rationale, risks, and required fixes.
+
+v0.2 automated selection requires:
+
+- at least one valid work proposal;
+- at least one valid cross-score from a different frontier provider;
+- no hard validation failures on the selected patch;
+- no critical disagreement flag unless an explicit manual override mechanism is used outside automatic selection.
+
+Default disagreement and review thresholds:
+
+- frontier score gap of 25 or more points: human review required;
+- selected score below 70: human review required;
+- any selected patch validation failure: no selection;
+- no valid cross-score from a different frontier provider: no automated selection.
+
+v0.2 should add a distinct human-review-required exit code, provisionally `9`, for quorum or disagreement outcomes that are not the same failure mode as v0.1's invalid selected patch exit code `7`.
+
+The generated `review.md` should include a final operator step to publish the run artifact to the sibling artifact repository:
+
+```bash
+RUN_ID="<run-id>"
+
+mkdir -p ../model-committee-artifacts/runs
+cp -r "$(pwd)/runs/${RUN_ID}" ../model-committee-artifacts/runs/
+
+git -C ../model-committee-artifacts add "runs/${RUN_ID}"
+git -C ../model-committee-artifacts commit -S -m "UMC artifact ${RUN_ID}"
+git -C ../model-committee-artifacts push
+```
+
+These commands are instructions for a human operator or separately authorized release process. `model-committee v0.2` should generate them, not execute them automatically.
+
+**Consequences:**
+
+- `model-committee` becomes a stronger visible dogfooding example because independent frontier-provider agreement and disagreement are preserved as artifacts.
+- The project gains a useful signal when Codex and Claude Code materially disagree on a patch, score, or risk.
+- The v0.1 Codex-first/Ollama-secondary baseline is superseded for v0.2 work selection, but remains useful as the historical baseline and fallback test target.
+- The design preserves inspectability by making the score matrix, quorum result, disagreement flags, and publication step explicit.
+- The no-direct-cloud-API rule is refined into a CLI-subprocess boundary rather than treated as a ban on all provider-mediated cloud model use.
+- Public dogfooding artifact publication now has a concrete default target repo path while remaining operator-run.

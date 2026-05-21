@@ -115,7 +115,7 @@ UbU is currently in **active pre-MVP dogfooding**.
 
 The design has reached the point where additional broad philosophical elaboration has diminishing returns unless it directly supports implementation, recruitment, dogfooding, or market discovery.
 
-The `model-committee` v0.1 baseline is now the first runnable bootstrap artifact for using model-assisted review to process UbU design questions and generate reviewable changesets.
+The `model-committee` v0.1 baseline is the first runnable bootstrap artifact for using model-assisted review to process UbU design questions and generate reviewable changesets. The accepted v0.2 direction adds Claude Code CLI as a second frontier provider, schema-native structured output, cross-scoring, disagreement flags, and operator-run publication of run artifacts.
 
 The Phase 1 MVP scope is frozen around single-user GitHub dogfooding, with Delegation Substrate-compatible fields only where they support dogfooding, worker assignment, or solo Task self-reminder clarity.
 
@@ -444,7 +444,7 @@ Accepted design state exists only when committed to the canonical repo.
 
 ---
 
-## Model-committee v0.1 feature boundary
+## Model-committee v0.1 and v0.2 feature boundaries
 
 `model-committee` v0.1 must implement:
 
@@ -466,7 +466,7 @@ Accepted design state exists only when committed to the canonical repo.
 
 `model-committee` v0.1 must not implement:
 
-- direct OpenAI/Anthropic/Gemini API calls;
+- direct OpenAI/Anthropic/Gemini API calls by `model-committee` itself;
 - GitHub API;
 - auto-merge;
 - auto-push;
@@ -477,11 +477,25 @@ Accepted design state exists only when committed to the canonical repo.
 - automatic patch application;
 - arbitrary network calls outside approved providers.
 
+`model-committee` v0.2 must add:
+
+- Claude Code CLI as a second frontier work and scoring provider;
+- schema-native Claude output using `--json-schema` and `structured_output` parsing;
+- Codex-to-Claude and Claude-to-Codex cross-scoring;
+- score-matrix artifacts;
+- disagreement flags in `review.md`;
+- a Claude Code config block;
+- updated quorum logic;
+- `doctor` checks for Claude CLI availability and structured-output support;
+- operator-run artifact-publication instructions for `../model-committee-artifacts`.
+
+`model-committee` v0.2 must not add multi-turn Claude sessions, GitHub API integration, adaptive model weights, automatic artifact push, automatic patch application, or UbU planning-kernel work.
+
 ---
 
 ## Model-committee execution model
 
-The early `model-committee` loop is **Codex-first and Ollama-secondary**.
+The v0.1 `model-committee` loop is **Codex-first and Ollama-secondary**.
 
 1. Parse `OPEN_QUESTIONS.md`.
 2. Run consistency checks.
@@ -502,9 +516,13 @@ Local Ollama models are secondary proposal providers. If Ollama responses finish
 
 Codex scoring is required for automatic patch selection in v0.1.
 
+In v0.2, the execution model becomes frontier cross-scoring. Codex and Claude Code may both produce work proposals. Codex scores Claude-authored proposals, and Claude Code scores Codex-authored proposals. A provider's self-score may be logged as diagnostic metadata but does not count as quorum evidence.
+
+A valid automated v0.2 selection requires at least one valid work proposal, at least one valid cross-score from a different frontier provider, no hard validation failure on the selected patch, and no critical disagreement flag unless manually overridden outside automatic selection. Default human-review triggers are a frontier score gap of 25 or more points, selected score below 70, no valid frontier cross-score, or any selected patch validation failure.
+
 ---
 
-## Codex provider behavior
+## Codex and Claude Code provider behavior
 
 `model-committee` v0.1 calls `codex exec` with schema-constrained output.
 
@@ -522,9 +540,11 @@ If Codex web search must be disabled, that is handled through Codex configuratio
 
 Codex produces JSON work proposals and score results. Patches are validated and selected by `model-committee`, then written as review artifacts.
 
+Claude Code v0.2 provider calls should use schema-native structured output through `--json-schema`. When `--output-format json` and `--json-schema` are used, the schema-conforming payload should be parsed from `structured_output`. Claude tool authority should be explicitly restricted with no tools by default, or `--tools Read` only when file inspection is required; `--allowedTools` alone is not a sandbox boundary.
+
 ---
 
-## v0.1 provider and network policy
+## Provider and network policy
 
 `model-committee` v0.1 is a narrow local Python CLI.
 
@@ -533,17 +553,19 @@ It may communicate only with:
 - local Ollama `base_url`;
 - Codex CLI subprocesses.
 
-It must not call:
+v0.2 may also invoke the Claude Code CLI as an explicitly configured subprocess provider.
+
+`model-committee` itself must not call:
 
 - GitHub;
 - OpenAI APIs directly;
-- Anthropic APIs;
+- Anthropic APIs directly;
 - Gemini APIs;
 - arbitrary HTTP URLs.
 
-`httpx` may be used only for the configured Ollama `base_url`. Codex must be invoked only through subprocess.
+`httpx` may be used only for the configured Ollama `base_url`. Cloud frontier providers are accessed through approved CLI subprocess boundaries rather than direct API calls by `model-committee`.
 
-This no-network policy preserves the bootstrap architecture and prevents accidental API creep.
+This provider policy preserves the bootstrap architecture and prevents accidental API creep while allowing explicitly configured provider CLIs to use their upstream authentication and billing.
 
 ---
 
@@ -619,11 +641,13 @@ The selected result is written as reviewable artifacts:
 - `selected.patch`
 - `commit_message.txt`
 - `review.md`
+- score-matrix artifacts in v0.2
+- disagreement flags in v0.2
 - run logs
 
 VS Code or another editor may still be used for human review, but it is not part of the canonical committee loop.
 
-`work-select` does not apply patches in v0.1. It writes review artifacts only.
+`work-select` does not apply patches in v0.1 or v0.2. It writes review artifacts only. In v0.2, `review.md` also includes an operator-run final step for copying the run directory to `../model-committee-artifacts`, committing it with a signed commit, and pushing from that sibling artifact repository. The generated command is an instruction, not an automatic action.
 
 ---
 
@@ -677,18 +701,20 @@ The first development milestone should be:
 - validate question metadata;
 - validate question dependency DAGs;
 - validate decision references;
-- generate Codex and Ollama work prompts;
+- generate Codex, Claude Code, and Ollama work prompts where enabled;
 - import structured model responses;
 - mechanically validate patches;
-- generate Codex scoring prompt;
-- import scorer response;
+- generate frontier scoring prompts;
+- import scorer responses;
+- cross-score frontier proposals when v0.2 providers are enabled;
+- record score matrices and disagreement flags;
 - write selected patch and review artifacts.
 
 ---
 
-## Recommended `model-committee` v0.1 stack
+## Recommended `model-committee` v0.1/v0.2 stack
 
-The first implementation should be intentionally boring.
+The first implementation should be intentionally boring, and the v0.2 extension should preserve that discipline.
 
 Recommended stack:
 
@@ -701,9 +727,12 @@ Recommended stack:
 - `ruff`
 - custom Markdown parser for `OPEN_QUESTIONS.md`
 - Codex CLI provider through subprocess
+- Claude Code CLI provider through subprocess in v0.2
 - local Ollama provider through configured `base_url`
+- JSON Schema/Pydantic validation for provider outputs
 - `git apply --check` for patch validation
 - filesystem logs
+- score-matrix and disagreement-flag artifacts in v0.2
 
 ---
 
@@ -721,7 +750,7 @@ Good contributions include:
 - helping convert open questions into implementation-ready issues;
 - reviewing whether Phase 1 scope is sufficiently frozen;
 - providing real workflow examples from FOSS, Ethereum, protocol, research, or other autonomous-team contexts;
-- helping define narrow `model-committee v0.1` implementation tasks.
+- helping define narrow `model-committee v0.1` and v0.2 implementation tasks.
 
 The project prefers explicit patches over hidden discussion.
 
@@ -743,7 +772,7 @@ Useful contributor roles currently include:
 
 4. **Early implementation contributor**
 
-   Help maintain, test, and extend the `model-committee v0.1` bootstrap loop as active dogfooding continues.
+   Help maintain, test, and extend the `model-committee` bootstrap loop, including v0.2 Claude Code cross-scoring, as active dogfooding continues.
 
 5. **Module owner**
 
@@ -761,6 +790,8 @@ Useful early work includes:
 - decision-reference validation;
 - fake provider mode design;
 - Codex prompt-template review;
+- Claude Code prompt/schema integration;
+- cross-scoring and disagreement-threshold tests;
 - Ollama provider timeout and failure behavior;
 - patch-validation tests;
 - review-artifact format design;
@@ -791,7 +822,7 @@ If ETHConf or other outreach produces serious interest, new contributors should 
 - test fixtures;
 - implementation-ready issues;
 - narrow patches;
-- isolated `model-committee v0.1` components.
+- isolated `model-committee` components, including v0.2 provider and cross-scoring tests.
 
 Major architectural changes should be proposed as explicit patches to canonical files, not as informal chat threads or private decisions.
 

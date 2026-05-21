@@ -426,7 +426,7 @@ After a conversation, useful next steps include:
 2. Review the repository and identify one unclear or incorrect design claim.
 3. Describe your team’s current tool stack and where real work state is lost.
 4. Help convert a workflow pain point into a precise open question or implementation-ready issue.
-5. Volunteer for a narrow `model-committee v0.1` implementation area.
+5. Volunteer for a narrow `model-committee` implementation area, including v0.2 provider or cross-scoring work.
 6. Review whether the Phase 1 dogfooding scope is concrete enough.
 7. Identify a FOSS, Ethereum, protocol, or research project that would be a useful design partner.
 8. Suggest a privacy-preserving boundary between private planning state and public coordination state.
@@ -444,7 +444,7 @@ A single workflow example, failing tool-stack pattern, or precise patch is more 
 
 UbU is no longer only a design vision.
 
-The `model-committee` v0.1 baseline provides the first runnable bootstrap path for dogfooding UbU’s own design process.
+The `model-committee` v0.1 baseline provides the first runnable bootstrap path for dogfooding UbU’s own design process, and the accepted v0.2 direction adds cross-scored frontier-provider review.
 
 The outreach goal is therefore changing from “explain the vision” to “convert aligned people into concrete next actions.”
 
@@ -530,26 +530,26 @@ The essay should point to `model-committee` as UbU’s first visible dogfooding 
 
 Before the main UbU MVP is implemented, the project is using a bootstrap automation tool called `model-committee`.
 
-`model-committee v0.1` is the first runnable early dogfooding system. It helps the project use LLMs and local automation to resolve design questions, propose changesets, score candidate patches, and move toward implementation.
+`model-committee v0.1` is the first runnable early dogfooding system, and v0.2 is the next accepted hardening step. It helps the project use LLMs and local automation to resolve design questions, propose changesets, score candidate patches, and move toward implementation.
 
 It is not the canonical decision engine.
 
 Accepted design state exists only when committed to the canonical repository.
 
-The v0.1 loop is deliberately constrained:
+The loop is deliberately constrained:
 
 1. Parse `OPEN_QUESTIONS.md`.
 2. Run consistency checks.
 3. Rank answerable questions.
-4. Generate a Codex work prompt.
-5. Launch the Codex CLI work provider.
-6. Run configured local Ollama proposal models sequentially by priority.
-7. Import and validate candidate work proposals.
-8. Mechanically validate patches.
-9. Generate a Codex scoring prompt.
-10. Launch the Codex CLI scoring provider.
-11. Select a winning patch.
-12. Write `selected.patch`, `commit_message.txt`, `review.md`, and logs.
+4. Generate provider work prompts.
+5. Launch configured work providers.
+6. Import and validate candidate work proposals.
+7. Mechanically validate patches.
+8. Cross-score frontier proposals when v0.2 providers are enabled.
+9. Record score matrices, disagreement flags, and quorum results.
+10. Select a winning patch only when quorum and validation rules pass.
+11. Write `selected.patch`, `commit_message.txt`, `review.md`, score artifacts, and logs.
+12. Present an operator-run artifact-publication step when appropriate.
 
 This keeps the process auditable.
 
@@ -561,50 +561,43 @@ That same loop can later generalize from design-doc patches to code changes, bug
 
 ---
 
-## Codex-first, Ollama-secondary automation
+## Frontier cross-scoring automation
 
 `model-committee v0.1` is Codex-first and Ollama-secondary.
 
-Codex CLI is the primary schema-constrained provider for:
+`model-committee v0.2` adds Claude Code CLI as a second frontier provider and uses cross-scoring instead of relying on a single frontier scorer.
 
-- work proposal generation;
-- work scoring.
+Codex CLI and Claude Code CLI can both generate work proposals. Codex scores Claude-authored proposals, and Claude Code scores Codex-authored proposals. This makes independent agreement and disagreement visible.
 
-Local Ollama models are secondary proposal providers.
+Claude Code should use schema-native structured output through `--json-schema`, with parsed payloads read from `structured_output`. The v0.2 target environment uses Claude Code CLI `2.1.146`, which supports that flag.
 
-They provide local diversity, dissent, fallback, and offline review.
+Local Ollama models remain useful for diversity, dissent, fallback, and offline review, but they do not replace the required frontier cross-score for automatic v0.2 selection.
 
-If Ollama responses finish within timeout and validate, they are included in Codex scoring.
+A valid automated v0.2 selection requires at least one valid work proposal, at least one valid cross-score from a different frontier provider, no hard validation failure on the selected patch, and no critical disagreement flag unless manually overridden outside automatic selection.
 
-If an Ollama provider fails, the failure is logged and the run may continue if Codex produces at least one valid work proposal.
-
-Codex scoring is required for automatic patch selection in v0.1.
-
-Codex is not allowed to directly mutate canonical repo files in v0.1. It produces JSON work proposals and score results. Patches are validated and selected by `model-committee`, then written as review artifacts.
+Codex and Claude Code are not allowed to directly mutate canonical repo files. They produce structured proposals and score results. Patches are validated and selected by `model-committee`, then written as review artifacts.
 
 ---
 
 ## Bounded automation, not runaway agents
 
-`model-committee v0.1` is intentionally narrow.
+`model-committee` remains intentionally bounded.
 
-It must not implement:
+It must not implement in v0.2:
 
-- direct OpenAI, Anthropic, or Gemini API calls;
+- direct OpenAI, Anthropic, or Gemini API calls by `model-committee` itself;
 - GitHub API calls;
 - automatic patch application;
 - auto-merge;
 - auto-push;
 - automatic pull request creation;
 - adaptive model scoring;
-- readiness-score updates to `README.md`;
-- derived `README.md` or `OUTREACH.md` consistency updates;
+- multi-turn Claude Code sessions;
+- full Association automation;
+- UbU planning-kernel work;
 - arbitrary network calls outside approved providers.
 
-The tool may communicate only with:
-
-- local Ollama `base_url`;
-- Codex CLI subprocesses.
+The tool may communicate with local Ollama and approved CLI subprocess providers such as Codex and Claude Code. Provider CLIs may use their own configured upstream authentication and billing, but `model-committee` owns orchestration, logging, schemas, validation, and review artifacts.
 
 This constraint matters.
 
@@ -777,19 +770,22 @@ Derived public-facing files include:
 - `SOVEREIGN_COORDINATION.md` - cypherpunk, privacy, and sovereign-coordination brief
 - `ORG_INTROSPECTION_BRIEF.md` - organizational-introspection brief for mission-driven projects
 
-The current immediate implementation target is `model-committee v0.1`.
+The current immediate implementation target has advanced from the v0.1 baseline toward `model-committee v0.2`.
 
-The first practical development milestone is to build a Python CLI that can:
+The practical development milestone is a Python CLI that can:
 
 - parse canonical design files;
 - validate question metadata;
 - validate question dependency graphs;
 - validate decision references;
-- generate Codex and Ollama prompts;
+- generate Codex, Claude Code, and Ollama prompts where enabled;
 - import structured model responses;
 - mechanically validate patches;
 - run Codex scoring;
-- select a patch;
+- run Claude Code scoring when v0.2 providers are enabled;
+- cross-score frontier proposals;
+- record score matrices and disagreement flags;
+- select a patch only when quorum and validation rules pass;
 - write reviewable artifacts and logs.
 
 ---
@@ -807,6 +803,8 @@ Contributors can help immediately by working on:
 - JSON Schema validation;
 - Pydantic model validation;
 - Codex CLI provider integration;
+- Claude Code CLI provider integration;
+- cross-scoring and score-matrix tests;
 - Ollama integration;
 - fake provider mode;
 - `doctor` command implementation;
@@ -853,7 +851,7 @@ Early contributors should enter through bounded contribution paths:
 
 4. **Implementation contributor**
 
-   Help build isolated `model-committee v0.1` components.
+   Help build isolated `model-committee` components, especially v0.2 provider, cross-scoring, fixture, and review-artifact work.
 
 5. **Module owner**
 
@@ -877,7 +875,7 @@ Useful early tasks include:
 - test decision-reference validation;
 - design fake provider mode for deterministic tests;
 - draft Codex work prompt templates;
-- draft Codex scoring prompt templates;
+- draft Codex and Claude Code scoring prompt templates;
 - define Ollama provider timeout behavior;
 - define provider-failure log formats;
 - test `git apply --check` patch validation;
@@ -911,13 +909,16 @@ Recommended stack:
 - `ruff`
 - custom Markdown parser for `OPEN_QUESTIONS.md`
 - Codex CLI provider through subprocess
+- Claude Code CLI provider through subprocess in v0.2
 - local Ollama provider through configured `base_url`
+- JSON Schema/Pydantic validation for provider outputs
 - `git apply --check` for patch validation
 - filesystem logs
+- score-matrix and disagreement-flag artifacts in v0.2
 
-The v0.1 implementation should not include:
+The v0.1 baseline and v0.2 extension should not include:
 
-- direct OpenAI, Anthropic, or Gemini APIs;
+- direct OpenAI, Anthropic, or Gemini APIs by `model-committee` itself;
 - GitHub API;
 - automatic PR creation;
 - auto-push;
@@ -925,9 +926,10 @@ The v0.1 implementation should not include:
 - adaptive model scoring;
 - derived `README.md` or `OUTREACH.md` consistency updates;
 - readiness score updates to `README.md`;
-- automatic patch application.
+- automatic patch application;
+- automatic artifact publication.
 
-The goal is to get a small, auditable loop working first.
+The goal is to get a small, auditable loop working first, then strengthen it with independent frontier-provider cross-scoring without turning it into an unreviewed autonomous committer.
 
 ---
 
@@ -941,7 +943,7 @@ If ETHConf or other outreach produces serious interest, the project should conve
 - implementation-ready issues;
 - test fixtures;
 - small patches;
-- isolated `model-committee v0.1` tasks.
+- isolated `model-committee` tasks, including v0.2 provider and cross-scoring work.
 
 The project should not convert interest directly into unstructured community growth.
 

@@ -30,7 +30,7 @@ The project has a public design repository with canonical design files:
 - `DECISIONS.md`
 - `OPEN_QUESTIONS.md`
 
-It also has a constrained dogfooding path through model-assisted review and GitHub-centered project coordination. The immediate opportunity is to convert the design into a working Phase 1 prototype while the scope is still narrow enough to stay inspectable.
+It also has a constrained dogfooding path through model-assisted review and GitHub-centered project coordination. The accepted v0.2 dogfooding direction adds independent frontier-provider cross-scoring so proposal agreement and disagreement become reviewable evidence rather than hidden model behavior. The immediate opportunity is to convert the design into a working Phase 1 prototype while the scope is still narrow enough to stay inspectable.
 
 The funding question is therefore practical:
 
@@ -85,7 +85,7 @@ Aligned funding can accelerate:
 - local-first storage and schema work;
 - Task/Objectives/Calendar/Log implementation;
 - bootstrap interview and one-next-Task UX;
-- model-committee automation hardening;
+- model-committee automation hardening, including v0.2 Claude Code cross-scoring and public run-artifact publication discipline;
 - test fixtures and dogfooding workflows;
 - privacy and Compartment guardrails;
 - release outreach artifacts tied to actual implementation;

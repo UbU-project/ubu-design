@@ -137,7 +137,7 @@ This is especially relevant for teams that receive grants, coordinate public goo
 
 Phase 1 does not need to solve full multi-user project management.
 
-The first MVP is single-user GitHub dogfooding: using UbU to coordinate UbU’s own design, development, release, open questions, review artifacts, and contributor outreach.
+The first MVP is single-user GitHub dogfooding: using UbU to coordinate UbU’s own design, development, release, open questions, review artifacts, contributor outreach, and model-committee v0.2 cross-scored automation artifacts.
 
 That still provides useful project-lead validation because it tests the same primitives:
 

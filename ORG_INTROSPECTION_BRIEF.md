@@ -155,7 +155,7 @@ The right framing is reviewable evidence, not automated judgment.
 
 UbU should use organizational introspection on itself.
 
-EthConf notes, outreach follow-ups, project artifacts, design decisions, open questions, release work, and contributor interactions can be reviewed to ask whether UbU actually pursued its stated goals.
+EthConf notes, outreach follow-ups, project artifacts, design decisions, open questions, model-committee cross-scoring artifacts, release work, and contributor interactions can be reviewed to ask whether UbU actually pursued its stated goals.
 
 This dogfooding matters because the project claims to support evidence-backed self-governance. UbU should be able to show its own alignment process before asking other projects to trust the concept.
 
