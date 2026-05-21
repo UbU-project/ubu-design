@@ -3611,3 +3611,41 @@ These files are presentation layers. They must not introduce new design authorit
 - When a derived audience document conflicts with canonical design files, the derived document should normally be patched.
 - The documentation set should remain small; new audience files require a materially distinct audience frame or call to action.
 - EthConf outreach can route different communities to different briefs without fragmenting UbU's source of truth.
+
+---
+
+## UBU-D0144: Inter-instance protocol is a generic envelope family with worker API profiles
+
+**Status:** Accepted
+
+Resolved question: `UBU-Q0011`.
+
+UbU should have one generic inter-instance protocol family for communication between UbU instances, worker-mode instances, and future compatible peers. The protocol is a family of typed envelopes with shared authority, provenance, Compartment, identity, idempotency, versioning, and review semantics, not one undifferentiated endpoint that treats every payload as the same kind of action.
+
+The protocol should eventually support at least these payload families:
+
+- contextual messages and Message Context Envelopes;
+- worker assignments and assignment responses;
+- status updates and check-ins;
+- mutation requests and projection requests;
+- capability grant issuance, acknowledgement, rotation, and revocation;
+- External Event submission;
+- Snapshot or Log candidate submission where authorized;
+- recalculation requests;
+- clarification requests and responses.
+
+Phase 1 worker communication is a separate MVP API surface in implementation terms, but it is intentionally a narrow profile of the future inter-instance protocol. The MVP worker API should not try to implement native user-to-user messaging, peer discovery, Association reconciliation, or generic multi-user transport. It should, however, use compatible envelope concepts wherever cheap: parent instance reference, sender Identity, receiver or parent Identity, capability grant reference, payload kind, target references, expected prior version or idempotency key where relevant, provenance, Compartment/export decision, and required review policy.
+
+Workers still do not receive direct canonical write authority in Phase 1. Worker payloads submit External Events, Snapshots, mutation requests, projection requests, status updates, or recalculation requests to the canonical instance. The canonical instance validates authority and policy, then applies or rejects the candidate update and writes the Log entry.
+
+Phase 3 multi-user Identity coordination should extend the same protocol family rather than invent a second unrelated transport. User-to-user requests, status updates, questions, commitments, blockers, and contextual messages are peer payloads under the same envelope discipline. They may carry different review defaults and disclosure rules from worker payloads, but they still obey Identity, Compartment, capability, provenance, admission, and user-sovereignty boundaries.
+
+This decision resolves the architecture-level question only. Concrete schemas for worker mutation requests, worker assignment, Message Context Envelopes, legacy adapter upgrade paths, capability grant exchange, and Association-related coordination remain in their dedicated open questions.
+
+**Consequences:**
+
+- `UBU-Q0011` is resolved at the architecture level.
+- MVP worker communication remains implementable as a small local or parent-specific API without blocking on the full Phase 3 protocol.
+- The MVP worker API should approximate future inter-instance envelopes enough to avoid a future schema contradiction.
+- Phase 3 cross-user communication can reuse shared envelope semantics while adding user-to-user disclosure, message, commitment, and Association-specific payloads.
+- Direct canonical writes remain forbidden for workers unless a later accepted decision changes the authority boundary.

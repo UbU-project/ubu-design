@@ -490,7 +490,7 @@ Unresolved.
 
 ## UBU-Q0011: Inter-Instance Protocol
 
-Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 3 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: Post-MVP Phase: Phase 3 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 3 implementation Resolved by: UBU-D0144 Last scored: Never Scored from commit: None
 
 Automation Worker communication may overlap with future user-to-user or instance-to-instance communication.
 
@@ -511,7 +511,15 @@ Automation Worker communication may overlap with future user-to-user or instance
 
 ### Resolution
 
-Unresolved.
+Solved by `UBU-D0144`. UbU should have one generic inter-instance protocol family for communication between UbU instances, worker-mode instances, and future compatible peers. The protocol is a family of typed envelopes with shared Identity, capability, Compartment, provenance, idempotency, versioning, and review semantics.
+
+Phase 1 worker communication remains a separate MVP API surface in implementation terms, but it is intentionally a narrow worker profile of the future protocol. It should support assignment, status, mutation-request, projection-request, External Event, Snapshot or Log candidate, and recalculation-request payloads only as needed for Phase 1 dogfooding. It should not implement native user-to-user messaging, peer discovery, Association reconciliation, or generic multi-user transport.
+
+The future protocol should support contextual messages, assignments, status updates, mutation requests, capability grants, External Event submission, authorized Snapshot or Log candidate submission, recalculation requests, and clarification request/response flows. Payload families may have different review defaults, but they share envelope semantics and never bypass canonical admission rules.
+
+Phase 3 multi-user Identity coordination should extend this same protocol family. User-to-user requests, status updates, questions, commitments, blockers, and Message Context Envelopes are peer payloads under the same Identity, Compartment, disclosure, provenance, and user-sovereignty boundaries.
+
+Concrete schemas remain in narrower open questions, including worker assignment, worker mutation requests, Message Context Envelopes, legacy adapter upgrade paths, capability-grant exchange details, and Association-related coordination.
 
 ---
 

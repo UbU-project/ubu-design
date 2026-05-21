@@ -1901,6 +1901,12 @@ Native UbU-to-UbU communication should allow a sender to disclose selected conte
 
 A minimal Phase 3 implementation should support enough metadata for priority and interrupt decisions. Richer subjective Relationship context, detailed Association reconciliation, and multi-party trust semantics may remain post-MVP.
 
+The future inter-instance protocol should be a generic envelope family, not a separate protocol for every feature. Message delivery, worker assignment, status reporting, mutation-request submission, capability-grant exchange, External Event submission, and recalculation requests should share Identity, capability, Compartment, provenance, idempotency, and review semantics.
+
+Phase 1 worker communication is a narrow worker API profile of that direction, not the full Phase 3 protocol. It may use simpler local or parent-specific endpoints, but its request, status, mutation, projection, and Log-submission shapes should intentionally avoid contradicting the future protocol.
+
+Phase 3 multi-user coordination can then extend the same envelope family with Message Context Envelopes and user-to-user Identity commitments while preserving bounded disclosure. Native user messages are one protocol payload type; they do not get permission to bypass worker-style authority, validation, or admission rules.
+
 ### 20.2 Legacy communication adapters
 
 Legacy adapters may ingest or emit messages through systems such as WhatsApp, SMS, email, Discord, IRC, Slack, Matrix, or similar systems when permitted by the user and the service boundary.
@@ -2205,6 +2211,8 @@ Phase 1 capability verbs are:
 - `projection.github.request_update`.
 
 Workers do not directly mutate canonical Task, Objective, UniverseState, `pipeline_state`, or GitHub projection state in Phase 1. They may submit mutation requests or projection update requests, and the canonical instance validates those requests, writes accepted changes, and logs applied or rejected outcomes. Task creation, Objective creation, Task mutation, Objective mutation, `pipeline_state` mutation, and direct external writes are represented through `mutation_request.submit` or a narrower projection request rather than through direct write authority.
+
+Worker endpoints are the Phase 1 worker profile of the future inter-instance protocol. They should carry the same envelope concerns the later protocol will need: parent instance, worker Identity, capability grant reference, payload kind, target refs, expected prior version or idempotency key where relevant, provenance, Compartment/export decision, and review requirement. Phase 1 does not need to expose native user-to-user messaging or generic remote instance discovery through this API.
 
 Capability grants may be scoped by object ID, Objective subtree, Task set, Compartment, external integration, operation kind, and time window. Compartment policy is a hard upper bound on worker authority: a capability grant cannot authorize access, export, or worker handoff that the relevant Compartment forbids.
 
