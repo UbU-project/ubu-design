@@ -10,28 +10,17 @@ This file records accepted design decisions so they do not need to be rediscover
 
 ## UBU-D0001: GitHub repository is canonical for public design
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §30
 
 The public GitHub repository is the canonical public design process for UbU.
 
 Private chats, notes, and external documents may generate proposals, but accepted decisions become official only when reflected in the repository.
 
-**Consequences:**
-
-
-- `DESIGN.md` holds the current canonical design summary.
-- `DECISIONS.md` records accepted decisions.
-- `OPEN_QUESTIONS.md` records unresolved questions.
-- Future chat interactions should generate proposed patches to these files rather than remain hidden sources of truth.
-
 ---
-
 
 ## UBU-D0002: Start public design documentation with four Markdown files
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §30
 
 The initial public design repo should remain simple and LLM-friendly.
 
@@ -42,22 +31,11 @@ Initial files:
 - `DECISIONS.md`
 - `OPEN_QUESTIONS.md`
 
-**Consequences:**
-
-
-- Avoid premature documentation architecture.
-- Avoid splitting the model into many files before public contributors can understand it.
-- Keep the design easy to copy into LLMs for review.
-
-This decision describes the initial repo structure. Later derived public-facing files such as `OUTREACH.md` may exist, but are not canonical design inputs.
-
 ---
-
 
 ## UBU-D0003: UbU is a privacy-first planning and coordination system
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §1
 
 UbU is not merely a task list, calendar, or project-management dashboard.
 
@@ -72,44 +50,22 @@ Inputs may include:
 - user preferences
 - physical state
 - affective state
-- GitHub/project data
-- integration data
-
-**Consequences:**
-
-
-- Planning must be explicit.
-- Value must be explicit.
-- Constraints must be explicit.
-- LLM behavior must not silently replace canonical planning logic.
 
 ---
 
-
 ## UBU-D0004: User sovereignty is foundational
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §2.1
 
 The user is the final authority over what the user wants and what occurred.
 
 UbU may recommend, infer, estimate, warn, and automate, but it must not override user sovereignty.
 
-**Consequences:**
-
-
-- User overrides are authoritative.
-- LLM recommendations are advisory.
-- AI-generated values are non-canonical unless accepted into UbU’s explicit model.
-- User-declared state snapshots have top priority in MVP.
-
 ---
-
 
 ## UBU-D0005: Distinguish logistical consistency from philosophical consistency
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §2.1
 
 UbU distinguishes:
 
@@ -122,20 +78,11 @@ Logistical contradictions must be rejected, repaired, or resolved. Philosophical
 
 A cyclic active preference relation is a logistical contradiction. Ignoring a message despite an Objective to communicate more with someone is a philosophical inconsistency.
 
-**Consequences:**
-
-
-- The user may behave inconsistently.
-- The data model may not remain logistically inconsistent.
-- Reports may later reveal philosophical inconsistency.
-
 ---
-
 
 ## UBU-D0006: LLMs are bounded assistants, not the canonical decision engine
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §2.7
 
 LLMs may assist UbU, but they are not the canonical real-time planner or decision engine.
 
@@ -148,40 +95,21 @@ LLMs may serve as:
 - document interpreters,
 - value-reflection assistants.
 
-**Consequences:**
-
-
-- Canonical Plans are owned by UbU, not the LLM.
-- LLM-generated structures are advisory unless transformed into canonical objects through UbU logic.
-- Short-turnaround decision loops must not depend on live LLM calls.
-
 ---
-
 
 ## UBU-D0007: Value is attached to Objectives
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §7
 
 From a data-model perspective, value is anchored to Objectives.
 
 Tasks may derive value from the Objectives they serve, but Tasks are not the canonical source of value.
 
-**Consequences:**
-
-
-- Every schedulable Task must link to an Objective.
-- Ad hoc Tasks should still have an Objective.
-- Temporary or one-task Objectives may exist if needed.
-- LLM-suggested “valuable Tasks” should be modeled through Objective/Task pairs.
-
 ---
-
 
 ## UBU-D0008: Preference is a first-class relation object
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §8.1
 
 Objective value is derived from Preference objects.
 
@@ -197,42 +125,22 @@ MVP Preference fields:
 `order` may represent:
 
 - Objective A preferred to Objective B
-- Objective A and Objective B are equally preferred / indifferent
-
-**Consequences:**
-
-
-- Preferences may be pairwise or compiled from ordinal ranking input.
-- Indifference is explicit.
-- Disabled Preferences need no richer MVP structure beyond logging.
-- Overridden Preferences are tracked through logs.
 
 ---
 
-
 ## UBU-D0009: Ordinal rankings compile into pairwise Preferences
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §8.2
 
 If the user provides an ordinal ranking, UbU compiles it immediately into pairwise Preference objects.
 
 The original ordinal input may be retained in the log, but the canonical value model uses pairwise Preferences.
 
-**Consequences:**
-
-
-- The canonical Preference graph remains simple.
-- UI may choose pairwise or ordinal questioning.
-- Value derivation algorithms operate on pairwise relations.
-
 ---
-
 
 ## UBU-D0010: Preference cycles are logistical consistency errors
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §8.4
 
 Active cyclic Preferences are not allowed.
 
@@ -244,39 +152,21 @@ Example:
 
 This is a logistical contradiction.
 
-**Consequences:**
-
-
-- UbU must query the user for resolution with high priority.
-- LLMs may assist in identifying the problem but cannot decide the canonical correction.
-- Cycles are not treated as indifference.
-
 ---
-
 
 ## UBU-D0011: Derived utils are transient computational artifacts
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §8.5
 
 Numeric utility values may be derived from Preferences, but they are transient and volatile.
 
 They may be cached on Objectives, but must be recalculated when needed.
 
-**Consequences:**
-
-
-- Derived utils are not canonical user values.
-- Different algorithms may assign different util spacing.
-- Util derivation may be local to the Objective subset under consideration.
-
 ---
-
 
 ## UBU-D0012: Default util spacing uses √2 per preference level
 
-**Status:** Accepted as MVP default, subject to future revision
-
+**Status:** Accepted as MVP default, subject to future revision → DESIGN.md §8.5
 
 The default MVP util derivation assigns:
 
@@ -285,20 +175,11 @@ The default MVP util derivation assigns:
 
 Indifferent Objectives are placed at the same level and receive equal util values.
 
-**Consequences:**
-
-
-- The topology of the Preference DAG determines ordering and equality.
-- The exact spacing is algorithm-dependent and may change later.
-- Plan scores can be sensitive to util-spacing choices.
-
 ---
-
 
 ## UBU-D0013: UbU has three mutually exclusive operating modes
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §5
 
 Each UbU instance runs in exactly one mode:
 
@@ -308,59 +189,31 @@ Each UbU instance runs in exactly one mode:
 
 The mode is chosen at initialization and cannot change afterward.
 
-**Consequences:**
-
-
-- Mode selection is instance-wide.
-- Mode migration, if ever needed, is a separate process.
-- Mode-specific behavior can be reasoned about cleanly.
-
 ---
-
 
 ## UBU-D0014: User mode models intrinsic human affect
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §5.1
 
 `user_mode` is the mode for an autonomous human user.
 
 Only user mode models intrinsic human affect.
 
-**Consequences:**
-
-
-- Affect belongs to the human user, not to Identities, organizations, or machines.
-- User mode may include sensors, affect snapshots, personal Objectives, personal Preferences, and relationship data.
-- Affect-related data requires strong privacy consideration.
-
 ---
-
 
 ## UBU-D0015: Organization mode does not model intrinsic affect
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §5.2
 
 `organization_mode` represents an organization/project planning instance, but an organization is not a human.
 
 Organization mode does not model intrinsic affect.
 
-**Consequences:**
-
-
-- Affect fields are absent or disabled.
-- Organization Preferences represent directives rather than personal emotional value.
-- Organization mode may still model human-related risks or external constraints through reports or imported data.
-- MVP may treat all organization users as admin-equivalent.
-
 ---
-
 
 ## UBU-D0016: Worker mode is a special UbU mode for delegated work
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §5.3
 
 `worker_mode` is a one-device or one-enclave UbU mode used by Automation Workers.
 
@@ -372,98 +225,51 @@ Worker mode may run as:
 - a thin cloud-control server,
 - or another specialized execution environment.
 
-**Consequences:**
-
-
-- Worker mode is distinct from user mode and organization mode.
-- Worker mode receives assigned work from other UbU instances.
-- Worker mode is externally represented as an Identity.
-- Worker mode may perform LLM calls, external API work, document processing, GitHub processing, or other delegated tasks.
-
 ---
-
 
 ## UBU-D0017: Automation Worker is the technical term; Super Automation is a UX/product pattern
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §24.1
 
 An **Automation Worker** is the technical execution entity.
 
 **Super Automation** is a product/UX pattern in which UbU abstracts away difficult external interaction by using local services, Automation Workers, APIs, screenshots, photos, or LLM processing.
 
-**Consequences:**
-
-
-- Super Automation is not limited to screenshot workflows.
-- Automation Workers may support Super Automation but are not synonymous with it.
-- The data model should use Automation Worker / worker mode terminology for technical structure.
-
 ---
-
 
 ## UBU-D0018: GitHub is a projection of UbU, not the source of truth
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §26
 
 For dogfooding, GitHub is treated as a low-dimensional projection of canonical UbU state.
 
 UbU is the source of truth.
 
-**Consequences:**
-
-
-- GitHub Issues, PRs, comments, labels, reviews, CI, and milestones must be interpreted into UbU objects/events.
-- UbU may project selected state back into GitHub.
-- External GitHub edits are external events, not authoritative canonical state by default.
-- Missed GitHub updates require reconciliation.
-
 ---
-
 
 ## UBU-D0019: GitHub projection requires reconciliation
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §26.4
 
 Missed GitHub updates are expected in MVP.
 
 UbU should support a reconciliation report comparing GitHub state to UbU state.
 
-**Consequences:**
-
-
-- Resynchronization is an expected MVP concern.
-- The reconciliation report may compare GitHub Issues, labels, comments, PRs, CI state, and milestones against UbU objects/events.
-- Drift may create reports and/or Tasks for repair.
-
 ---
-
 
 ## UBU-D0020: Objective status and pipeline state are separate
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §26.2
 
 `Objective.status` is the canonical UbU lifecycle status.
 
 `pipeline_state` is a workflow/project-management status, such as a GitHub issue pipeline state.
 
-**Consequences:**
-
-
-- GitHub workflow states do not overload Objective lifecycle status.
-- One Objective may eventually support multiple workflow states for multiple projections.
-- Pipeline state is projection/workflow metadata.
-
 ---
-
 
 ## UBU-D0021: One GitHub object may map to many UbU objects and vice versa
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §26.1
 
 GitHub ↔ UbU association is many-to-many.
 
@@ -473,20 +279,11 @@ Examples:
 - One Objective may map to many GitHub Issues.
 - PRs, comments, reviews, and CI runs may associate with Objectives or Tasks.
 
-**Consequences:**
-
-
-- A simple one-to-one external reference field may be insufficient.
-- A dedicated association model may be needed.
-- Association/reconciliation remains an open design question.
-
 ---
-
 
 ## UBU-D0022: Objective has minimal MVP fields
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §7.2
 
 MVP Objective required fields:
 
@@ -503,23 +300,11 @@ MVP Objective optional fields:
 
 Derived/transient Objective data:
 
-- `derived_util_cache`
-- predicted satisfaction
-- observed satisfaction
-
-Not in MVP:
-
-- linked Techniques
-- explicit satisfaction field
-- required provenance
-
 ---
-
 
 ## UBU-D0023: Objective modes are one-time or evergreen
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §7.1
 
 Objectives have mode:
 
@@ -530,19 +315,11 @@ One-time Objectives complete once and do not reactivate.
 
 Evergreen Objectives can become satisfied and later active again.
 
-**Consequences:**
-
-
-- Relationship maintenance, affect collection, GitHub issue management, and recurring maintenance can be modeled as evergreen Objectives.
-- Evergreen recurrence/reactivation may be modeled through elapsed-time rules and UniverseState changes.
-
 ---
-
 
 ## UBU-D0024: Objective satisfaction is derived in MVP
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §7.3
 
 Objective satisfaction is not stored directly on Objective in MVP.
 
@@ -553,20 +330,11 @@ It is inferred from:
 - user declarations,
 - other modeled state.
 
-**Consequences:**
-
-
-- Objective satisfaction must be recalculated.
-- Observed state can override simulated state.
-- User-declared state has top priority in MVP.
-
 ---
-
 
 ## UBU-D0025: WorkItems include Tasks and Containers
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §9.1
 
 A WorkItem is the abstraction over work-like entities.
 
@@ -576,20 +344,11 @@ A WorkItem may be:
 - Container
 - future subtype
 
-**Consequences:**
-
-
-- Tasks are schedulable.
-- Containers group WorkItems but do not directly appear in Plans.
-- Future WorkItem subtypes remain possible.
-
 ---
-
 
 ## UBU-D0026: Plans contain Tasks, not Containers
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §15.1
 
 Plans contain an ordered array of Tasks.
 
@@ -600,37 +359,19 @@ Plans do not directly contain:
 - Techniques
 - Recipes
 
-**Consequences:**
-
-
-- Containers remain logical/grouping structures.
-- Plans are calendar-view objects.
-- Preempted work can appear as multiple Tasks whose lineage is tracked outside the Plan.
-
 ---
-
 
 ## UBU-D0027: Static Tasks appear in Plans
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §9.2
 
 Static Tasks are included directly in Plans.
 
-**Consequences:**
-
-
-- A Plan is a complete time-ordered view.
-- Fixed meetings/appointments/classes appear alongside Dynamic Tasks.
-- Static Tasks are not merely invisible constraints.
-
 ---
-
 
 ## UBU-D0028: MVP Task schedulability invariant
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §9.3
 
 A Task is schedulable in MVP if it has:
 
@@ -645,16 +386,12 @@ Permitted:
 - dependencies may be empty
 - earliest-start may be absent
 - due may be absent
-- cost may be absent
-- effect may be absent in exceptional cases
 
 ---
 
-
 ## UBU-D0029: Task preconditions are deterministic UniverseState constraints in MVP
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §10.1
 
 Task preconditions are deterministic constraints over UniverseState.
 
@@ -667,19 +404,11 @@ MVP preconditions support:
 
 Numeric comparisons are not in MVP.
 
-**Consequences:**
-
-
-- Unknown or partially modeled preconditions are treated as absent.
-- Failed preconditions should generally make a Task blocked, not invalid.
-
 ---
-
 
 ## UBU-D0030: Task effects mutate UniverseState
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §10.2
 
 A Task effect describes predicted mutation of UniverseState if the Task succeeds.
 
@@ -694,11 +423,9 @@ If a Task fails, UniverseState is unchanged in MVP.
 
 ---
 
-
 ## UBU-D0031: Duration uncertainty and effect success probability are distinct
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §10.3
 
 A Task may have:
 
@@ -707,20 +434,11 @@ A Task may have:
 
 These are separate.
 
-**Consequences:**
-
-
-- Task duration uncertainty affects scheduling.
-- Task success probability affects UniverseState simulation.
-- A Task may complete yet fail to produce its modeled effect in MVP.
-
 ---
-
 
 ## UBU-D0032: UniverseState is first-class
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §11
 
 UniverseState is a first-class data object.
 
@@ -735,22 +453,12 @@ Core fields:
 - `set_memberships`
 - `event_markers`
 - `source_summary`
-- optional `confidence_summary`
-
-**Consequences:**
-
-
-- Plans can simulate UniverseState changes.
-- Objectives can be evaluated against UniverseState.
-- Affect and Relationship data may live in UniverseState.
 
 ---
 
-
 ## UBU-D0033: UniverseState uses lightweight free-form keys in MVP
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §11.2
 
 MVP UniverseState keys are free-form strings.
 
@@ -758,20 +466,11 @@ Default keys should use a lightweight namespace convention, but enforcement is p
 
 Values may be text / JSON-like payloads.
 
-**Consequences:**
-
-
-- MVP remains flexible.
-- A stricter ontology can be added later.
-- Namespacing should be encouraged but not enforced.
-
 ---
-
 
 ## UBU-D0034: UniverseState mutation vocabulary
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §11.3
 
 MVP mutations support:
 
@@ -787,11 +486,9 @@ Exact mutation-item schema remains open.
 
 ---
 
-
 ## UBU-D0035: Snapshots are observed state updates
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §12
 
 A Snapshot is an observed update to UniverseState.
 
@@ -805,19 +502,11 @@ MVP snapshot fields include:
 - values
 - confidence
 
-**Consequences:**
-
-
-- User and sensor observations can share infrastructure.
-- Confidence can be stored even if not deeply used in MVP.
-
 ---
-
 
 ## UBU-D0036: Latest observed snapshot overrides simulation on conflict
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §12.1
 
 MVP precedence rule:
 
@@ -825,38 +514,21 @@ MVP precedence rule:
 - user-declared snapshots are treated as top-priority observations;
 - confidence is stored but does not defeat explicit user declaration.
 
-**Consequences:**
-
-
-- Simulated Plan state cannot override observed reality.
-- User declaration has “word of god” authority in MVP.
-
 ---
-
 
 ## UBU-D0037: Affect belongs to UniverseState in user mode
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §13
 
 Affect is part of UniverseState in `user_mode`.
 
 Affect is not intrinsic to organizations or machines.
 
-**Consequences:**
-
-
-- Affect data is disabled/absent in organization mode and worker mode.
-- Human affect is a core planning constraint.
-- Affect data should be treated as sensitive.
-
 ---
-
 
 ## UBU-D0038: MVP affect dimensions
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §13.1
 
 MVP affect dimensions:
 
@@ -877,29 +549,19 @@ Interested/bored is independent and derived.
 
 ---
 
-
 ## UBU-D0039: Affect confidence decays by age in MVP
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §13.4
 
 In MVP, affect confidence decreases over time due to staleness.
 
 The threshold/frequency is an algorithm configuration setting.
 
-**Consequences:**
-
-
-- Missing/stale affect data may activate an affect-collection Objective.
-- Per-dimension confidence is post-MVP.
-
 ---
-
 
 ## UBU-D0040: Affect collection is modeled through an evergreen Objective
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §13.5
 
 UbU may include an evergreen Objective:
 
@@ -907,20 +569,11 @@ UbU may include an evergreen Objective:
 
 When affect data is missing or stale, the planning algorithm may create UI survey Tasks.
 
-**Consequences:**
-
-
-- Affect feedback is not automatically requested after every Task.
-- Affect collection is itself planned work.
-- UI feedback Tasks can be scheduled and prioritized.
-
 ---
-
 
 ## UBU-D0041: External Events are instantaneous
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §14
 
 An External Event is an instantaneous change in the universe.
 
@@ -928,20 +581,11 @@ External Events have no duration and may overlap Tasks.
 
 They are not part of feasibility evaluation for an individual Plan in MVP.
 
-**Consequences:**
-
-
-- External Events can appear in Plans/Logs.
-- External Events may trigger recalculation, new Tasks, or Objective updates.
-- Other agents’ actions can later be modeled as External Events.
-
 ---
-
 
 ## UBU-D0042: Calendar is a set of possible Plans
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §15.2
 
 A Calendar is a set of possible Plans.
 
@@ -949,58 +593,31 @@ A Calendar has a default Plan.
 
 The default Plan is a current best recommendation, not a user commitment.
 
-**Consequences:**
-
-
-- Plans model modal futures.
-- Logs/history are distinct from unrealized Plans.
-- The user remains final authority over what occurred.
-
 ---
-
 
 ## UBU-D0043: Compact Calendar coverage belongs to compact serialization
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §16.2
 
 Coverage is a property of a compact Calendar representation, not of the abstract Calendar itself.
 
 Coverage represents the probability mass of possible futures covered by the compact representation.
 
-**Consequences:**
-
-
-- Coverage is useful for transport, pruning, and regeneration.
-- The abstract Calendar does not store a single intrinsic coverage value.
-- Compact Calendar grammar remains an open design question.
-
 ---
-
 
 ## UBU-D0044: Compact Calendar should prefer deterministic planner grammar over opaque PRNG seeds
 
-**Status:** Provisional, refined by `UBU-D0108`, `UBU-D0123`, `UBU-D0124`, and `UBU-D0125`
-
+**Status:** Provisional, refined by `UBU-D0108`, `UBU-D0123`, `UBU-D0124`, and `UBU-D0125` → DESIGN.md §16.3
 
 A compact Calendar may not require PRNG seeds. Earlier design notes used deterministic DFS expansion as the candidate example. The current direction is broader: compact Calendar reconstruction should be based on deterministic, inspectable planner grammar and stored planning metadata, including skeleton Plan structure, legitimization state, candidate lineage, coverage, and repair metadata where appropriate.
 
 DFS-like expansion may still be one implementation technique, but it is not the full architecture.
 
-**Consequences:**
-
-
-- Seed-based Plan identity may not be needed.
-- Compact Calendar planner grammar and threshold semantics remain open.
-- Compact Calendar is an important MVP design issue.
-
 ---
-
 
 ## UBU-D0045: Identity is the external-facing interaction surface
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §18
 
 UbU interacts with outside agents through Identities.
 
@@ -1008,20 +625,11 @@ A human may have multiple Identities.
 
 Organizations and worker-mode instances are externally represented as Identities.
 
-**Consequences:**
-
-
-- External communication is Identity-mediated.
-- Pseudonymous and compartmentalized operation are possible.
-- Worker authorization can be expressed through Identity capabilities.
-
 ---
-
 
 ## UBU-D0046: Relationship is structured UniverseState data
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §22
 
 A Relationship is structured UniverseState payload data representing the relationship between two Identities.
 
@@ -1032,20 +640,11 @@ MVP Relationship data includes:
 - user-stated affect state toward the other identity;
 - inferred/speculated affect state of the other identity toward the user.
 
-**Consequences:**
-
-
-- Relationship Objectives attach indirectly through UniverseState.
-- Communication/maintenance metadata is not stored directly on Relationship in MVP.
-- Affect dimensions of Relationships are disabled/absent in organization mode.
-
 ---
-
 
 ## UBU-D0047: Device means execution enclave
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §23.1
 
 A Device is an execution enclave, not physical hardware.
 
@@ -1056,20 +655,11 @@ Examples:
 - VM
 - secure enclave
 
-**Consequences:**
-
-
-- One physical machine may host multiple Devices.
-- A Device belongs to one Zone.
-- This supports compartmentalization and multi-zone use on one machine.
-
 ---
-
 
 ## UBU-D0048: Zone is a workspace-like instance context
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §23.2
 
 A Zone is a workspace-like UbU context.
 
@@ -1081,11 +671,9 @@ Zones maintain explicit allowlists/denylists of Compartments, defaulting to deny
 
 ---
 
-
 ## UBU-D0049: Compartment is first-class
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §23.3
 
 A Compartment is a first-class data containment object.
 
@@ -1098,39 +686,21 @@ Compartments enforce hard invariants, such as:
 - retention constraints
 - audit constraints
 
-**Consequences:**
-
-
-- WorkItems can remain structurally usable while sensitive content stays compartment-contained.
-- UbU cannot casually override Compartment invariants.
-- Un-compartmented content is treated as low-security.
-
 ---
-
 
 ## UBU-D0050: Sensitive content is referenced, not embedded
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §23.4
 
 If content is specific to a Compartment, a WorkItem should refer to it through a Compartment-scoped reference.
 
 WorkItems must remain structurally usable without dereferencing sensitive content.
 
-**Consequences:**
-
-
-- Plans can be structure-only.
-- Sensitive content can remain contained.
-- Planning can proceed even when content is inaccessible.
-
 ---
-
 
 ## UBU-D0051: Risk is reportable, not first-class in MVP
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §27
 
 Risk is not a first-class object in MVP.
 
@@ -1146,20 +716,11 @@ Examples:
 - dependency fragility
 - worker failure / bottleneck
 
-**Consequences:**
-
-
-- Plan scoring does not include explicit risk penalty in MVP.
-- Tasks are not marked as mitigation Tasks in MVP.
-- Burnout/affect exhaustion is modeled as constraint violation.
-
 ---
-
 
 ## UBU-D0052: Moot is first-class terminal Task status
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §9.5
 
 `moot` is a terminal Task status.
 
@@ -1171,11 +732,9 @@ Candidate reason codes remain open.
 
 ---
 
-
 ## UBU-D0053: GitHub managed state should be clearly marked
 
-**Status:** Accepted as MVP direction
-
+**Status:** Accepted as MVP direction → DESIGN.md §26.3
 
 UbU should avoid fighting manual GitHub edits.
 
@@ -1183,59 +742,31 @@ MVP direction:
 
 > UbU writes only clearly marked UbU-managed labels, comments, or blocks, and treats other GitHub edits as external events.
 
-**Consequences:**
-
-
-- GitHub users can still interact normally.
-- UbU-managed projection is visible and bounded.
-- Reconciliation is still required.
-
 ---
-
 
 ## UBU-D0054: The Phase 1 MVP target is dogfooding
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §4.1
 
 The first MVP should help coordinate the UbU project itself.
 
 Phase 1 focuses on single-user GitHub dogfooding before multi-device sync or multi-user coordination.
 
-**Consequences:**
-
-
-- GitHub integration/projection is central.
-- Design questions should be tested against whether they help UbU run UbU.
-- Scope must be frozen aggressively to begin implementation.
-
 ---
-
 
 ## UBU-D0055: Scope freeze is now a priority
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §30
 
 The data-model discussion has reached the point of diminishing private returns.
 
 Further unresolved questions should become public GitHub Issues when possible.
 
-**Consequences:**
-
-
-- Do not wait for the entire model to be complete before coding.
-- Freeze a Phase 1 MVP subset.
-- Move unresolved questions into `OPEN_QUESTIONS.md`.
-- Use public feedback to refine scope.
-
 ---
-
 
 ## UBU-D0056: File authority model for model-committee runs
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §30
 
 The canonical source files for model-committee question-answering are:
 
@@ -1250,43 +781,22 @@ Derived public-facing projections of the canonical design state currently includ
 - `PM_BRIEF.md`
 - `FUNDER_BRIEF.md`
 - `SOVEREIGN_COORDINATION.md`
-- `ORG_INTROSPECTION_BRIEF.md`
-
-**Consequences:**
-
-
-- Question-answering runs must not use derived public-facing files as design authority.
-- Consistency checks should include all Markdown files.
-- If a derived public-facing file conflicts with canonical files, the derived file should normally be patched.
-- If a derived-file inconsistency reveals a genuine source-level design issue, the issue should be added to `OPEN_QUESTIONS.md`.
 
 ---
 
-
 ## UBU-D0057: Model-committee automation is advisory and repo-driven
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §3
 
 The model-committee process may read the canonical design repo, identify unresolved questions, generate proposed answers, run consistency checks, estimate MVP readiness, score open questions, and propose patches.
 
 The model committee does not maintain its own durable question registry. `OPEN_QUESTIONS.md` remains the canonical unresolved-question queue.
 
-**Consequences:**
-
-
-- Committee runs are derived from the current repo state.
-- Accepted changes become official only when committed to `ubu-design`.
-- The model committee may generate patches but must not become the canonical decision engine.
-- Full run logs should live outside `ubu-design`.
-
 ---
-
 
 ## UBU-D0058: Model-committee v0.1 is intentionally constrained
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §3
 
 The first model-committee implementation should be a narrow local Python CLI, not a general model-governance platform.
 
@@ -1300,94 +810,22 @@ v0.1 must implement:
 - run configured Ollama work models sequentially by priority
 - import and validate candidate work proposals
 - mechanically validate patches
-- generate Codex scoring prompt
-- launch Codex CLI scoring provider
-- select winning patch
-- write `selected.patch`, `commit_message.txt`, `review.md`, and logs
-- support fake provider mode for tests
-- include a `doctor` command for environment checks
-- include a `version` command
-
-v0.1 must not implement:
-
-- direct OpenAI/Anthropic/Gemini API calls
-- GitHub API
-- auto-merge
-- auto-push
-- automatic PR creation
-- adaptive model scoring
-- readiness score updates to `README.md`
-- derived `README.md`/`OUTREACH.md` consistency
-- automatic patch application
-- arbitrary network calls outside approved providers
-
-v0.1 tooling and architecture:
-
-- Python 3.12+
-- `uv`
-- `argparse`
-- `pydantic`
-- `httpx`
-- `pytest`
-- `ruff`
-- custom Markdown parser for `OPEN_QUESTIONS.md`
-- `git apply --check` for patch validation
-- filesystem logs
-
-v0.1 provider/network policy:
-
-- `model-committee` itself may communicate only with:
-  - local Ollama `base_url`;
-  - Codex CLI subprocesses.
-- It must not call:
-  - GitHub;
-  - OpenAI APIs directly;
-  - Anthropic APIs;
-  - Gemini APIs;
-  - arbitrary HTTP URLs.
-- `httpx` may be used only for the configured Ollama `base_url`.
-- Codex must be invoked only through subprocess.
-
-**Consequences:**
-
-
-- v0.1 remains narrow enough to implement quickly.
-- Codex CLI is represented as the primary work and scoring provider.
-- Local Ollama execution remains in the earliest implementation as a secondary proposal source.
-- Direct cloud APIs, GitHub integration, derived-file consistency, and adaptive scoring are deferred.
-- v0.1 may create review artifacts but must not mutate remote GitHub state.
-- v0.1 must not allow Codex to directly modify canonical repo files.
-- Fake provider mode allows deterministic tests without calling Codex or Ollama.
-- The `doctor` command improves reproducibility by checking local runtime prerequisites.
-- The no-network rule preserves the intended bootstrap architecture and avoids accidental API creep.
 
 ---
 
-
 ## UBU-D0059: Model committee outputs are weighted by capability and observed reliability
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §3
 
 Model-committee synthesis should not use equal one-model-one-vote aggregation. Models may differ in reasoning quality, context length, instruction-following, access tier, cost, and observed reliability.
 
 Premium or deeper cloud models may receive higher default trust weights than free-tier or smaller local models.
 
-**Consequences:**
-
-
-- Committee synthesis should use weighted support, not raw vote count.
-- Local models remain useful for diversity, dissent, fallback, and offline review.
-- Static configured weights are sufficient for v0.1.
-- Adaptive reliability weighting is deferred.
-
 ---
-
 
 ## UBU-D0060: Open questions are selected by answerability, automation-likelihood, importance, and risk
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §3
 
 After consistency checks, the model-committee process should score every open question for:
 
@@ -1404,62 +842,29 @@ Blocked questions may be selected for decomposition work when decomposition can 
 
 After answerability is established, questions are ranked by automation-likelihood, then importance, then risk ascending.
 
-**Consequences:**
-
-
-- The process should not attempt to answer questions that are logically blocked by unresolved dependencies.
-- Dependency-free or dependency-resolved questions are preferred for ordinary work.
-- Blocked but important questions may still be selected for decomposition.
-- Question scores are derived metadata and may be updated after every consistency phase.
-- The committee must track whether it is reducing or increasing unresolved design burden.
-
 ---
-
 
 ## UBU-D0061: DECISIONS.md is a bounded decision-memory index
 
 **Status:** Accepted
 
-
 `DECISIONS.md` is not an unbounded historical transcript. It is a bounded decision-memory index used to preserve accepted constraints and prevent settled questions from being rediscovered.
 
 Full decision history is preserved by git history and model-committee logs.
 
-**Consequences:**
-
-
-- Stable design details should migrate into `DESIGN.md`.
-- `DECISIONS.md` should retain compact active rules, resolved-question links, and anti-regression notes.
-- Superseded or absorbed decisions should leave compact tombstones.
-- The consistency process should warn when `DECISIONS.md` exceeds the configured prompt budget.
-
-Initial prompt-budget warning threshold: approximately 12,000 estimated tokens.
-Initial hard warning threshold: approximately 20,000 estimated tokens.
-
 ---
-
 
 ## UBU-D0062: Model-committee is a bootstrap UbU dogfooding workload
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §3
 
 The model-committee project should begin as a constrained external bootstrap tool, but should move toward the mainline UbU implementation as soon as the mainline codebase can host it cleanly.
 
-**Consequences:**
-
-
-- The model-committee loop is an early example of UbU coordinating its own design and implementation.
-- Its logs, question rankings, consistency reports, and patch proposals should inform the first real UbU dogfooding workflows.
-- The tool should remain constrained enough to produce useful results before becoming a general UbU runtime component.
-
 ---
-
 
 ## UBU-D0063: Model-committee work is changeset-based
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §3.2
 
 The model-committee process should not rely on a hidden external editor, VS Code agent, or other opaque implementation actor to apply accepted answers.
 
@@ -1467,82 +872,21 @@ After the conceptual answer phase, the committee should run an explicit work pha
 
 The work phase is followed by work scoring, work selection, local patch application in later versions, and review artifact generation before consistency checks run.
 
-**Consequences:**
-
-
-- The implementation step becomes auditable.
-- VS Code may be used for human review, but is not part of the canonical committee loop.
-- Work proposals should be represented as patches or equivalent changesets.
-- Work scoring evaluates whether proposed changesets implement the selected answer cleanly.
-- v0.1 writes `selected.patch`, `commit_message.txt`, `review.md`, and logs.
-- Later versions may create local review-branch commits after work selection.
-- v0.1 must not push, merge, create pull requests, or mutate remote GitHub state.
-- This abstraction allows the same loop to later handle code changes, bug fixes, tests, and implementation tasks.
-
 ---
-
 
 ## UBU-D0064: Model-committee v0.1 uses a provisional filesystem log format
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §3
 
 For v0.1, the model-committee implementation should define a provisional filesystem log format in code.
 
 The final log and provenance format may be refined later by the model-committee process itself.
 
-**Consequences:**
-
-
-- `UBU-Q0036` remains open for final log/provenance design.
-- v0.1 development is not blocked on fully resolving `UBU-Q0036`.
-- The provisional log format should be simple, inspectable, and filesystem-based.
-- Logs should preserve enough information to audit prompts, provider results, selected work proposals, selected changesets, consistency reports, question-ranking reports, generated review artifacts, Codex JSONL event logs, and provider stderr.
-
-Provisional v0.1 log layout:
-
-```text
-runs/
-  <timestamp>-<question-id>/
-    manifest.json
-    snapshot/
-      DESIGN.md
-      DECISIONS.md
-      OPEN_QUESTIONS.md
-    schemas/
-      work_proposal.schema.json
-      score_result.schema.json
-    prompts/
-      codex_work_prompt.md
-      ollama_work_prompt.md
-      codex_score_prompt.md
-    responses/
-      codex_work_response.json
-      codex_work_events.jsonl
-      codex_work_stderr.txt
-      ollama_<safe_model_name>_response.txt
-      codex_score_response.json
-      codex_score_events.jsonl
-      codex_score_stderr.txt
-    parsed/
-      codex_work_proposal.json
-      ollama_<safe_model_name>_proposal.json
-      score_result.json
-    patches/
-      codex.patch
-      ollama_<safe_model_name>.patch
-      selected.patch
-    review.md
-    commit_message.txt
-```
-
 ---
-
 
 ## UBU-D0065: Model-committee v0.1 uses provisional quorum and provider-failure rules
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §3
 
 For v0.1, model-committee runs should use simple provisional quorum and provider-failure rules.
 
@@ -1557,28 +901,12 @@ Provisional quorum rules:
 - If Ollama responses finish within timeout and validate, they are included in Codex scoring.
 - If an Ollama provider fails, the failure is logged and the run may continue if Codex produces at least one valid work proposal.
 - If no valid work proposal exists, the run writes logs and exits nonzero.
-- Provider failures are logged but do not invalidate the run if quorum is met.
-- The Codex scoring response is required for automatic patch selection.
-- If Codex scoring does not produce a valid score result, the run writes logs and exits nonzero.
-- Manual override is not allowed in v0.1.
-- If `selected_proposal_id` refers to a proposal that failed mechanical validation, `work-select` fails with exit code `7`, does not write `selected.patch`, and writes `review.md` explaining the failure if possible.
-
-**Consequences:**
-
-
-- v0.1 does not need a perfect provider scheduler before development begins.
-- Failed, unavailable, invalid-output, timed-out, or interrupted providers are recorded as run events.
-- The committee can continue when enough valid structured results exist.
-- Codex is the required scoring provider in v0.1.
-- More sophisticated quorum, retry, weighting, cooldown, and provider-health rules are deferred.
 
 ---
 
-
 ## UBU-D0066: Model-committee follows a prioritized recursive loop
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §3.3
 
 The model-committee project should be developed as a bootstrap version of UbU’s future self-automation and dogfooding loop.
 
@@ -1594,68 +922,31 @@ Question/problem prioritization runs after consistency checks and selects the ne
 
 Work is lowest priority and should normally run only after the current project state is coherent and the next work item has been selected.
 
-**Consequences:**
-
-
-- `model-committee` is not merely a question-answering tool.
-- Consistency failures should usually become higher-priority work than unrelated future questions.
-- Work should not proceed against a known-inconsistent repo unless the work item is specifically to repair that inconsistency.
-- Early releases should preserve this structure even if the first implementation is simple.
-- This loop should later map naturally into UbU’s own self-governance and Automation Worker model.
-
 ---
-
 
 ## UBU-D0067: Directive decisions may be appended directly
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §30
 
 The UbU project may receive direct project-owner directives that are appended to `DECISIONS.md` as accepted decisions without first passing through the ordinary model-committee question-answering loop.
 
 These directive decisions are treated as canonical once committed to `DECISIONS.md`.
 
-**Consequences:**
-
-
-- The model committee must treat directive decisions as authoritative.
-- Directive decisions may override prior provisional decisions.
-- If a directive decision creates inconsistencies, the next system-wide consistency check must detect them.
-- Directive decisions may create, close, split, or reclassify open questions.
-- Directive decisions should still use normal `UBU-Dxxxx` numbering.
-- Directive decisions should identify affected `UBU-Qxxxx` questions where practical.
-
 ---
-
 
 ## UBU-D0068: Model-committee may decompose hard questions into easier questions
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §3.6
 
 The model-committee process should not treat every increase in open-question count as a failure.
 
 A work proposal may validly split, narrow, or restate a hard question into multiple simpler questions.
 
-**Consequences:**
-
-
-- The committee should track unresolved design burden, not merely question count.
-- A decomposition is valid only if the resulting questions are clearer, narrower, lower-risk, or easier to automatically answer than the original.
-- Replacement questions should not be harder to automatically answer than the question they replace unless the exception is explicitly justified.
-- The original question should be marked as narrowed, partially resolved, superseded, or decomposed.
-- Work scoring should reward useful decomposition and penalize scope-expanding decomposition.
-- Decomposition is especially valuable when it reduces dependency blocking.
-- A blocked question may be decomposed into replacement questions when at least one replacement question has fewer dependencies, simpler dependencies, or no dependencies.
-- Replacement questions should explicitly declare their dependencies so the consistency checker can determine which questions are answerable next.
-
 ---
-
 
 ## UBU-D0069: Model-committee v0.1 uses Codex CLI as the primary model provider
 
-**Status:** Accepted
-
+**Status:** Accepted → DESIGN.md §3.1
 
 `model-committee` v0.1 uses Codex CLI as the primary model provider for work proposal generation and work scoring.
 
@@ -1667,24 +958,11 @@ Every runtime Codex call must pass `--skip-git-repo-check`.
 
 Codex must not directly modify repository files in v0.1. It produces JSON work proposals and score results. Patches are validated and selected by `model-committee`, then written as review artifacts.
 
-**Consequences:**
-
-
-- Browser-mediated ChatGPT copy/paste is removed from v0.1.
-- Codex is the primary proposal and scoring provider.
-- Ollama remains a secondary local proposal provider.
-- v0.1 does not call OpenAI APIs directly.
-- v0.1 does not allow Codex to mutate canonical repo state directly.
-- All Codex outputs must be schema-constrained and logged.
-- Runtime Codex calls use stdin prompt mode.
-- Runtime Codex calls preserve JSONL event output and stderr output.
-- Codex web-search configuration is treated as external Codex profile/config state, not managed by `model-committee` v0.1.
-
 ---
 
 ## UBU-D0070: Model-committee v0.1 authority boundary is explicit
 
-**Status:** Accepted
+**Status:** Accepted → DESIGN.md §3.10
 
 `model-committee` v0.1 has authority to produce derived analysis, candidate answers, candidate questions, readiness estimates, consistency reports, provider scores, candidate changesets, and review artifacts. It has no authority to create accepted design state without an ordinary committed change to the canonical repo.
 
@@ -1724,12 +1002,6 @@ Provider failures are logged as run events. Each failure should preserve the pro
 A valid v0.1 committee result requires at least one mechanically valid work proposal and a valid Codex score result. A Codex work proposal should be attempted before patch selection. Two or more valid work proposals are preferred but not required. Failed secondary providers do not invalidate the run when quorum is met.
 
 Codex CLI has subprocess-provider authority only. It may produce schema-constrained proposal and scoring artifacts through `codex exec`, but those artifacts are non-canonical until validated, selected, reviewed by a human, and committed. Direct OpenAI API authority is zero in v0.1 because direct OpenAI API calls are forbidden.
-
-**Consequences:**
-
-- `UBU-Q0032` is resolved for v0.1 authority.
-- Future refinements to logs, scoring, changeset validation, recursive-loop blocking, and decomposition metrics remain in their dedicated follow-up questions.
-- The committee remains an advisory Automation Worker pattern until a later accepted decision expands its authority.
 
 ---
 
@@ -2111,21 +1383,11 @@ Concrete next actions include:
 - sustained subsystem ownership;
 - credible paths toward full-time development of core features.
 
-**Consequences:**
-
-- Outreach artifacts should contain clear next steps.
-- ETHConf follow-up should classify contacts by likely concrete action, not by enthusiasm alone.
-- Broad interest is welcome if it can be routed into bounded contribution paths.
-- Vague praise without follow-up should not be treated as validation.
-- The project should preserve its north-star self-governance mission when evaluating funding, contributors, and market opportunities.
-
 ---
 
 ## UBU-D0087: Commercial funding must preserve self-governance
 
 **Status:** Accepted
-
-Resolved question: `UBU-Q0048`.
 
 UbU may accept funding, consulting, sponsorship, prepayment, or commercial prototype work only when the work accelerates trunk capabilities needed by the personal self-governance product and preserves user sovereignty, contributor sovereignty, privacy, and the open-core boundary.
 
@@ -2170,8 +1432,6 @@ Paid work should be evaluated with a simple rule: if the funded deliverable woul
 
 **Status:** Accepted
 
-Resolved question: `UBU-Q0047`.
-
 The minimum onboarding path for serious, self-directed contributors is a public, bounded path from context to a small verified contribution. It must not depend on private project-owner chats, unstated roadmap knowledge, private calendars, private GitHub data, or credentials.
 
 A contributor should first read:
@@ -2189,29 +1449,11 @@ Before implementation work, contributors must understand these boundaries: canon
 
 Contributor progression is staged:
 
-1. Workflow informant: provides a concrete workflow, pain point, or fixture candidate.
-2. Design reviewer: reviews a canonical question, decision, or model-committee artifact against public acceptance criteria.
-3. Fixture/test contributor: adds or repairs a public fixture, fake-provider response, parser case, or validation test.
-4. Implementation contributor: takes a narrow implementation-ready issue with tests and no hidden context dependency.
-5. Module owner: earns bounded ownership after repeated reviewed contributions, demonstrated boundary understanding, and willingness to keep public docs, fixtures, tests, and interfaces coherent.
-
-If a task requires private explanation to do correctly, it is not ready for contributor onboarding. The project should convert that missing context into a public issue, fixture, design note, or open question, with sensitive details redacted or replaced by synthetic examples.
-
-**Consequences:**
-
-- `UBU-Q0047` is resolved for Phase 1 onboarding.
-- Contributor recruitment can point to bounded contribution paths without promising a single privileged role.
-- First contributions should prove public reproducibility and boundary understanding before broad implementation authority.
-- Implementation-ready issues should include enough context and acceptance criteria that direct access to the project owner's private context is unnecessary.
-- Contributor progression is based on reviewed public work, not enthusiasm or private alignment claims.
-
 ---
 
 ## UBU-D0089: First prototype-funder workflow is commitment-risk review plus next-day plan
 
-**Status:** Accepted
-
-Resolved question: `UBU-Q0045`.
+**Status:** Accepted → DESIGN.md §4
 
 The smallest fundable workflow for privacy-sensitive independent technical consultants is a local client commitment-risk review plus next-day Plan. It addresses the pain of discovering too late that multi-client commitments, deadlines, dependencies, energy, and unavailable time no longer fit.
 
@@ -2225,21 +1467,11 @@ Paid prototype work remains on the trunk only if the implementation uses reusabl
 
 Prototype-funder discovery should test prepaid design-partner structures, not open-ended bespoke consulting. Plausible offers to test are: a paid discovery/review session, a prepaid prototype sponsorship that funds an implementation slice, or a monthly design-partner retainer. As a working hypothesis, discovery can test roughly USD 250-750 for a focused review, USD 2,000-10,000 for a prototype sponsorship, and USD 1,000-3,000/month for a limited design-partner retainer. These are discovery hypotheses, not permanent pricing policy.
 
-**Consequences:**
-
-- `UBU-Q0045` is resolved for prototype-funder workflow selection.
-- Prototype-funder outreach should ask whether consultants will prepay for commitment-risk clarity, not a generic productivity assistant.
-- Initial implementation should prioritize manual declarations, Compartments, Logs, risk reports, Calendar/Plan generation, affect Snapshot handling, and optional calendar/GitHub structural imports.
-- Full email, notes, invoices, and private document ingestion are deferred until explicit privacy-preserving connector routes are designed.
-- Funding that only produces a customer-private workflow branch should be rejected or renegotiated into trunk capability.
-
 ---
 
 ## UBU-D0090: Long-arc public narrative stays modest and testable
 
 **Status:** Accepted
-
-Resolved question: `UBU-Q0044`.
 
 UbU may say that it grew out of a long personal and technical effort to understand planning, self-governance, privacy, and humane coordination. Public materials should include only enough of that history to explain commitment, design maturity, and why the project has more structure than a fresh prototype.
 
@@ -2251,22 +1483,11 @@ The detailed version belongs in the first technical essay, selected outreach, ta
 
 Avoid language that implies destiny, superiority, inevitability, or guaranteed world-historical impact. Avoid claims such as `will change the world`, `inevitable`, `once-in-a-generation`, `the future of work`, `solves coordination`, `the only real solution`, `decades ahead`, `everyone will need this`, and `LLMs make this inevitable`.
 
-**Consequences:**
-
-- `UBU-Q0044` is resolved for Phase 1 public narrative guidance.
-- Public copy may use the long personal arc, but only as evidence of commitment and depth.
-- LLM-enabled viability should be explained through concrete capability changes and bounded advisory use.
-- Durable significance should be framed as a possibility to test through dogfooding, contributors, and prototype-funder discovery.
-- Derived public-facing files may now be patched against this guidance without adding more canonical narrative questions.
-
 ---
-
 
 ## UBU-D0091: First technical essay makes a precise planning-kernel request
 
 **Status:** Accepted
-
-Resolved question: `UBU-Q0043`.
 
 The first public technical essay should make one central claim: ordinary task managers, calendars, project boards, and opaque AI assistants are useful projections, but they are not enough for real planning because they usually do not model objectives, state transitions, dependencies, constraints, logs, uncertainty, affect, and recalculation as explicit objects.
 
@@ -2284,35 +1505,12 @@ The essay should distinguish UbU from adjacent tools as follows:
 - calendars allocate time;
 - project boards track workflow status;
 - opaque AI assistants can generate plausible suggestions;
-- UbU is intended to be an explicit planning kernel that relates Objectives, Tasks, UniverseState, Plans, Calendars, Logs, constraints, uncertainty, affect, and recalculation.
-
-The essay should explain LLMs as advisory systems. They may interpret messy input, summarize state, propose structures, critique plans, generate fixtures, and assist `model-committee`, but they are not the canonical planner. Accepted planning state must remain inspectable, explicit, and recalculable outside the LLM.
-
-The essay should use `model-committee` as the first visible dogfooding example: UbU is already using a constrained automation loop to read canonical project state, propose reviewable changesets, score them, and preserve human-reviewed canonical authority. The essay must not imply that `model-committee` is the full UbU planner.
-
-The essay should end with one concrete request:
-
-> Send one real or carefully anonymized planning workflow that current tools cannot represent cleanly, including the objective, current state, dependencies, constraints, uncertainty, affect or energy limits, and what decision needs recalculation.
-
-That request may route readers into a public issue, fixture contribution, design review, interview, or prototype-funder conversation, but the requested action remains one concrete workflow example.
-
-Publication plan: draft the essay outside the canonical design files, then publish it with links to the canonical design repo, one visible `model-committee` artifact or summary, and a public path for submitting workflow examples. The essay should be updated only when canonical decisions change enough to alter the claim, avoidances, or request.
-
-**Consequences:**
-
-- `UBU-Q0043` is resolved for Phase 1 public outreach.
-- The first essay has a stable thesis, title direction, outline, avoidances, dogfooding reference, and reader request.
-- Derived outreach copy can summarize this essay without reopening the core claim.
-- Publication work can move to execution rather than another canonical design question.
 
 ---
 
-
 ## UBU-D0092: Plan quality includes fast feedback, dignity, limits, and humane stretch
 
-**Status:** Accepted
-
-Resolved question: `UBU-Q0042`.
+**Status:** Accepted → DESIGN.md §2.5.1
 
 Phase 1 models human-complete plan quality as derived analysis over Plans, Tasks, Logs, Snapshots, affect constraints, and risk reports. It does not add a first-class canonical PlanQuality object in MVP. Any cached assessment is advisory and recalculable.
 
@@ -2328,29 +1526,11 @@ A candidate Plan should be checked for:
 
 Task failure remains an ordinary Log result, but the interpretation of that failure should be plan-centered. UbU should treat failure as evidence about estimates, constraints, dependencies, affect state, interruptions, or Objective fit unless the user explicitly records another interpretation.
 
-Affect-related plan fragility appears in Phase 1 risk reports as derived findings, not first-class Risk objects. Candidate findings include stale affect data, affect constraint violation probability, repeated late-failure pattern, destructive-pressure warning, dignity or demoralization warning, and post-plan depletion warning.
-
-Plan quality should account for the expected state after the Plan, not only nominal completion. A Plan that completes tasks while predictably leaving the user depleted, ashamed, overloaded, or unable to continue should be treated as suspect and should trigger a revised Plan or risk report.
-
-Post-MVP work may add longitudinal baseline learning, richer growth-pressure models, UI-specific coaching language, morale/dignity trend analysis, and more personalized recovery models. Phase 1 requires only derived assessment, reportable signals, recalculation-trigger integration, and humane revision suggestions.
-
-**Consequences:**
-
-- `UBU-Q0042` is resolved for Phase 1 modeling.
-- No new canonical MVP object is required solely for plan quality.
-- Human-complete plan-quality reports remain inspectable and recalculable from existing core objects.
-- Failure handling should repair plans and estimates instead of blaming users.
-- Risk reports gain affect-fragility findings without making Risk first-class in MVP.
-- Rich longitudinal growth modeling remains post-MVP.
-
 ---
-
 
 ## UBU-D0093: Public recruitment invites several serious contributors into bounded paths
 
 **Status:** Accepted
-
-Resolved question: `UBU-Q0041`.
 
 UbU's public recruitment copy should invite a small core cohort of serious, self-directed contributors, not a single co-builder, founding slot, or privileged insider. Seriousness is shown by concrete public follow-up: a workflow example, design review, fixture/test contribution, model-committee artifact review, narrow implementation-ready issue, or repeated reviewed work on a bounded subsystem.
 
@@ -2366,21 +1546,11 @@ Avoid public phrases that imply scarcity or competition for one role, including 
 
 ETHConf and similar follow-up should classify people by their most useful next concrete action: send one workflow example, review a model-committee artifact, comment on a public design question, contribute a fixture/test, take a narrow implementation-ready issue, introduce a serious contributor, or discuss a trunk-compatible prototype sponsorship. Enthusiasm alone is not validation until it becomes one of these follow-ups.
 
-**Consequences:**
-
-- `UBU-Q0041` is resolved for Phase 1 public recruitment language.
-- Derived public-facing files can use the baseline copy without reopening the recruitment question.
-- Contributor recruitment can be selective about commitment while remaining welcoming to multiple serious contributors.
-- ETHConf follow-up should be triaged by concrete next action rather than raw excitement.
-- Public copy should preserve the open-core, privacy-first, and trunk-first boundaries already accepted for onboarding and funding.
-
 ---
 
 ## UBU-D0094: Release Outreach Pipeline makes releases explain themselves
 
 **Status:** Accepted
-
-Direct project directive.
 
 UbU accepts the Release Outreach Pipeline feature bundle, with the tagline:
 
@@ -2401,26 +1571,12 @@ Publication is gated by default. UbU may draft, assemble, render, and prepare ou
 The implementation should be staged:
 
 - Phase 0: manually structured release notes, screenshot lists, scripts, and calls-to-action.
-- Phase 1: script and release-copy generation from repo state, release notes, closed issues, design decisions, and manually approved screenshots.
-- Phase 2: automated screenshot and demo-flow capture from UI tests or approved fixtures.
-- Phase 3: structured release outreach packages containing scripts, narration text, captions, storyboard, assets, render plan, platform metadata, and review checklist.
-- Phase 4: automated rough video rendering for human review.
-- Phase 5: gated publication workflow for YouTube, blogs, release pages, newsletters, and social posts.
-
-**Consequences:**
-
-- Release communication becomes part of the UbU project-management model.
-- UbU-runs-UbU must eventually explain its own releases using the same planning and artifact-provenance principles it applies to other work.
-- Future design should define the release outreach artifact schema, screenshot/demo provenance model, review gates, publication policy, and Compartment export checks.
-- `UBU-Q0049` tracks the remaining implementation and schema questions for the Release Outreach Pipeline.
 
 ---
 
 ## UBU-D0095: Worker authority uses scoped capability grants
 
-**Status:** Accepted
-
-Resolved question: `UBU-Q0007`.
+**Status:** Accepted → DESIGN.md §24
 
 Automation Worker authority is represented through explicit capability grants associated with a worker Identity. The Identity is the external-facing actor and credential subject; the capability grant is the authoritative object that says what the worker may do for a specific parent UbU instance.
 
@@ -2432,20 +1588,11 @@ Workers can be revoked by disabling or deleting grants and invalidating or rotat
 
 A worker may serve multiple organization-mode or user-mode parent instances only through separate parent-specific grants, credentials, and audit trails. Cross-parent data sharing is forbidden unless each parent explicitly grants the route and all relevant Compartment policies allow it. User-mode workers are allowed, but access to affect or other personal data must use narrow read-subset grants and obey Compartment and low-security disclosure rules.
 
-**Consequences:**
-
-- `UBU-Q0007` is resolved for Phase 1 security modeling.
-- Worker authority is least-privilege, revocable, auditable, and parent-specific.
-- Worker mutation and projection behavior remains routed through request/validation/logging flows instead of direct canonical writes.
-- `UBU-Q0008`, `UBU-Q0009`, and `UBU-Q0010` can refine assignment, mutation request, and GitHub token custody without reopening the basic worker capability model.
-
 ---
 
 ## UBU-D0096: Phase 1 requires bootstrap interview and next-action focus UX
 
-**Status:** Accepted
-
-Direct project directive.
+**Status:** Accepted → DESIGN.md §4.1
 
 UbU Phase 1 must include a minimal first-person user-facing loop, not merely an internal planner, GitHub importer, model-committee loop, or project-state analyzer.
 
@@ -2462,30 +1609,12 @@ The Phase 1 next-action screen should include, at minimum:
 - why this Task matters now;
 - what inputs or constraints UbU considered;
 - current affect or stale-affect status when relevant;
-- dependency, deadline, or risk explanation when relevant;
-- user controls to start, complete, reject, snooze, decompose, or request more explanation;
-- a feedback prompt after completion, failure, rejection, or override.
-
-This UX requirement applies first to UbU-runs-UbU dogfooding. The first recommended Tasks may be GitHub, design-document, model-committee, release-management, or Release Outreach Pipeline Tasks.
-
-Phase 1 must not claim full personal-data ingestion, full email/text/file understanding, therapeutic authority, autonomous life coaching, or complete privacy isolation merely because the bootstrap and next-action UX exist. The bootstrap interview may collect explicit user answers and may use approved fixtures or explicitly configured integrations, but broad personal-data ingestion remains future work unless separately implemented and disclosed.
-
-**Consequences:**
-
-- Phase 1 public demos should show the bootstrap interview and next-action focus mode.
-- The Phase 1 implementation path must include a minimal user-facing UI surface, not only CLI or backend artifacts.
-- The next-action UI becomes the primary nontechnical explanation of UbU.
-- The full Plan must remain inspectable so that one-task focus does not become opaque automation.
-- Release Outreach Pipeline scripts should treat this loop as the main public demonstration pattern.
-- `UBU-Q0050` tracks the remaining product and implementation-detail questions for the minimum useful bootstrap interview and next-action focus mode.
 
 ---
 
 ## UBU-D0097: Phase 1 MVP scope is frozen around single-user GitHub dogfooding
 
-**Status:** Accepted
-
-Resolved question: `UBU-Q0001`.
+**Status:** Accepted → DESIGN.md §4.1
 
 Phase 1 is frozen as the minimum single-user `user_mode` implementation that proves UbU can coordinate UbU's own development through explicit state, an inspectable Plan, one recommended next action, feedback, recalculation, and bounded GitHub projection.
 
@@ -2499,71 +1628,12 @@ The exact Phase 1 feature set is:
 - schedulable Static and Dynamic Tasks with Objective links, duration, dependency/precondition/effect fields, lifecycle status, and moot handling;
 - lightweight UniverseState mutation and precondition evaluation sufficient for Task effects, affect, relationship-relevant facts, and GitHub/project facts;
 - append-only per-instance Logs with provenance, correction, annotation, worker-submission, and recalculation-trigger entries;
-- Plan and Calendar generation for the next work window, including a default Plan and inspectable explanation;
-- next-action focus mode with start, done, snooze, reject, decompose, explain-more, and feedback controls;
-- derived risk and human-complete plan-quality reports covering deadline risk, dependency fragility, worker bottlenecks, stale affect, affect-margin, destructive pressure, and post-plan depletion warnings;
-- minimal Compartment guardrails, low-security labeling, cloud-LLM/export blocking for protected content, and logged boundary decisions;
-- Automation Worker Identity, scoped capability grants, explicit assignment/status, and mutation or projection request submission without direct canonical writes;
-- clearly marked GitHub projection previews or human-approved writes for UbU-managed labels, comments, or blocks, plus reconciliation reporting;
-- manually structured Release Outreach Pipeline work items and artifact records for release notes, screenshots, scripts, and contributor calls-to-action.
-
-Phase 2 explicitly defers:
-
-- multi-device local-first sync;
-- partial replication across Devices, Zones, or Compartments;
-- secure cross-device Compartment propagation;
-- sync conflict handling;
-- cross-device worker or enclave coordination beyond the single local instance boundary.
-
-Phase 3 explicitly defers:
-
-- multi-human coordination;
-- shared or partially shared truth between user instances;
-- user-to-user Identity commitments, capabilities, and limited disclosure;
-- multi-party governance, invitation, revocation, or trust protocols.
-
-Abstractions documented but not implemented in Phase 1 include:
-
-- Technique as a first-class planning object;
-- full Compact Calendar planner grammar and high-coverage transport format;
-- complete Zone and Device system beyond the current local execution enclave;
-- organization-mode and worker-mode web admin consoles;
-- richer relationship-management, personal CRM, and longitudinal affect/growth models;
-- full Release Outreach Pipeline video generation, rendering, and publication workflow;
-- broad email, text-message, file, invoice, note, or personal-data ingestion;
-- adaptive model-committee weighting, automatic patch application, GitHub mutation, and direct cloud-provider APIs.
-
-The Phase 1 stop rule is:
-
-> A new abstraction may be added to Phase 1 only when it is required to complete the single-user GitHub dogfooding loop, enforce an accepted hard invariant, or avoid a known irreversible schema contradiction. Otherwise it must be documented as a Phase 2, Phase 3, or post-MVP concern and must not block Phase 1 implementation.
-
-The minimum dogfooding loop that proves UbU's core model is:
-
-1. bootstrap the operator, project context, available work window, constraints, and current or stale affect Snapshot;
-2. import or load a curated UbU GitHub fixture with issues, PR/review/CI signals, milestone context, and source links;
-3. map those inputs into Objectives, Tasks, External Events, Logs, UniverseState facts, and External References;
-4. generate a Calendar with a default Plan for the next work window;
-5. present one recommended next Task with an explanation of Objective value, dependencies, deadlines, affect constraints, worker status, and risk findings;
-6. record completion, failure, snooze, rejection, decomposition, or override as Log evidence and trigger recalculation when appropriate;
-7. preview or perform a human-approved UbU-managed GitHub projection update;
-8. show a reconciliation or risk summary that makes the changed model inspectable.
-
-**Consequences:**
-
-- `UBU-Q0001` is resolved for Phase 1 scope freeze.
-- Phase 1 implementation may begin without resolving every remaining MVP-important schema detail.
-- Future-compatible abstractions may remain in the design, but implementation must stay limited to the dogfooding loop and accepted hard invariants.
-- Detailed follow-up questions for GitHub mapping, mutation schemas, Compact Calendar grammar, risk reports, recalculation triggers, worker requests, Release Outreach artifacts, and bootstrap UX remain valid only as bounded implementation questions.
-- New abstractions require explicit proof that they are necessary for the Phase 1 loop or must be deferred.
-- Public claims must describe Phase 1 as a narrow single-user dogfooding MVP, not as full sync, full multi-user coordination, complete privacy isolation, or broad personal-data automation.
 
 ---
 
 ## UBU-D0098: GitHub external links use first-class External References
 
-**Status:** Accepted
-
-Resolved question: `UBU-Q0003`.
+**Status:** Accepted → DESIGN.md §19
 
 GitHub-to-UbU links are represented by first-class `ExternalReference` objects rather than by embedding all many-to-many source links directly on core objects. Lightweight `external_refs` fields may still appear on Log entries, provenance payloads, or import artifacts as convenience references, but they are not the authoritative external-link model.
 
@@ -2577,20 +1647,11 @@ Duplicate detection uses a normalized uniqueness key over `external_system`, `ex
 
 Automation Workers cannot directly create or mutate canonical External References in Phase 1. They may submit external-reference mutation requests only through authorized `mutation_request.submit` capability grants. The canonical instance validates authority, Compartment/export policy, duplicate keys, expected prior version, and provenance, then logs applied or rejected outcomes.
 
-**Consequences:**
-
-- `UBU-Q0003` is resolved for Phase 1 GitHub dogfooding.
-- `UBU-Q0002`, `UBU-Q0004`, and `UBU-Q0005` can build on a stable External Reference object instead of reopening source-link representation.
-- GitHub import, reconciliation, and projection can preserve traceability without overloading Objective, Task, or External Event schemas.
-- Worker-created external-reference changes stay inside the accepted mutation-request authority boundary.
-
 ---
 
 ## UBU-D0099: Psychological theory inputs are calibration, discovery, preview, and review layers
 
-**Status:** Accepted
-
-Direct project directive.
+**Status:** Accepted → DESIGN.md §2.2.1
 
 UbU should not expose internally computed utility values as user-facing truth. Derived utils remain transient computational artifacts used for scheduling, ranking, and comparison. User-facing value remains grounded in explicit Preferences, user declarations, Logs, Snapshots, review, and later correction.
 
@@ -2610,24 +1671,11 @@ Self-determination theory and theory of planned behavior should primarily inform
 
 Narrative identity is partly addressed through Objectives and Reports. Social identity theory, social choice theory, and game theory are important post-MVP open-question areas and should be tracked explicitly without blocking Phase 1 implementation.
 
-**Consequences:**
-
-- `UBU-D0011` remains authoritative: derived utils are transient artifacts, not canonical user values.
-- Preference calibration is MVP important, but not an MVP blocker.
-- `UBU-Q0050` remains focused on the minimum bootstrap interview and next-action focus UX.
-- Preference calibration, discovery-mode semantics, and Calendar preview / Log review annotations require separate MVP open questions.
-- Social identity theory, social choice theory, and game theory impacts are accepted as post-MVP research/open-question areas.
-- Calendar preview and Log review should be represented as regular user-facing Tasks or recurring review workflows, not hidden background judgments.
-- Discovery mode must preserve user sovereignty: it may collect evidence for later reconciliation, but the user remains the final authority over what occurred and what it meant.
-
-
 ---
 
 ## UBU-D0100: Snapshots are immutable partial observed assertions
 
-**Status:** Accepted
-
-Resolved question: `UBU-Q0025`.
+**Status:** Accepted → DESIGN.md §12
 
 Snapshots are partial observed assertions over specific UniverseState fields. They are not full assertions of all UniverseState and do not imply that omitted fields are absent, unchanged, or unknown. Applying a Snapshot updates only the fields included in that Snapshot.
 
@@ -2639,22 +1687,11 @@ Conflict resolution is field-local. Latest observed Snapshot data overrides simu
 
 A Snapshot can be corrected or revoked, but only through a new Log entry. Correction that replaces the observed state creates a new Snapshot and links it to the corrected Snapshot or Log entry. Revocation without replacement creates a correction/revocation Log entry that excludes the original Snapshot from corrected query views while preserving the historical claim.
 
-**Consequences:**
-
-- `UBU-Q0025` is resolved for Phase 1 Snapshot application semantics.
-- Sparse observations, affect reports, sensor evidence, GitHub-derived facts, and review corrections can share one Snapshot model without requiring full UniverseState replacement.
-- Snapshot query APIs must distinguish raw historical views from corrected/current views that follow correction and revocation links.
-- Snapshot correction aligns with accepted append-only Log semantics and preserves user sovereignty without erasing historical evidence.
-- Detailed source-priority tables for non-user observations may be refined alongside discovery mode, worker mutation requests, and import-specific schemas.
-
 ---
-
 
 ## UBU-D0101: Organization mode uses shared objects without intrinsic affect
 
-**Status:** Accepted
-
-Resolved question: `UBU-Q0012`.
+**Status:** Accepted → DESIGN.md §25
 
 Organization mode uses the shared UbU core object model except where fields or behavior are intrinsically personal-affect-specific. Objective, Preference, Task, Container, UniverseState, Snapshot, Plan, Calendar, Log, Identity, Relationship, Compartment, Automation Worker, External Event, External Reference, and deferred Association-related objects are available in organization mode to the depth required by the organization or project planning workflow.
 
@@ -2668,23 +1705,11 @@ Before RBAC exists, organization-mode human users are represented as operator Id
 
 Organization-mode instances may later receive limited signals from personal user-mode instances only through explicit user-controlled sharing, Identity-mediated authorization, Compartment/export checks, and clear provenance. Phase 1 does not implement personal-to-organization cross-instance sharing. Future designs should prefer structural signals such as availability, commitment status, task completion, or user-approved projection summaries rather than raw affect, private relationship state, or broad personal context.
 
-**Consequences:**
-
-- `UBU-Q0012` is resolved for MVP organization-mode object availability and affect exclusion.
-- Organization mode can reuse the core planning model without inventing a separate organization ontology.
-- Affect-bearing user-mode behavior remains excluded from organization-mode schemas and validators.
-- Organization-mode Relationship payloads are valid without affect dimensions.
-- `authority_source` is required on organization-created Objectives, Preferences, and Tasks, while `UBU-Q0013` remains responsible for the exact vocabulary and other authority-bearing objects.
-- Admin-equivalent MVP operation is represented through operator Identities and Logs rather than premature RBAC.
-- Later personal-to-organization signal sharing must be explicit, structural, consented, and bounded by Compartment/export policy.
-
 ---
 
 ## UBU-D0102: Phase 1 bootstrap and next-action UX stays narrow and inspectable
 
-**Status:** Accepted
-
-Direct project directive refining `UBU-D0096`, `UBU-D0097`, and `UBU-Q0050`.
+**Status:** Accepted → DESIGN.md §4.1
 
 The Phase 1 bootstrap interview and next-action focus UX are the first user-facing proof that UbU is more than an internal planner, GitHub importer, or automation loop. They must stay narrow, inspectable, and honest about implemented capability.
 
@@ -2694,21 +1719,11 @@ The next-action focus mode should present one recommended Task at a time with a 
 
 This decision is compatible with the Compact Calendar planning architecture. The default Plan supplies the inspectable ordered context behind the next-action recommendation, while reactive recalculation keeps the recommendation responsive when reality diverges. The planning layer should support the narrow UX rather than expanding Phase 1 scope beyond the single-user dogfooding loop.
 
-**Consequences:**
-
-- `UBU-D0096` remains authoritative for the Phase 1 bootstrap and next-action requirement.
-- `UBU-D0097` remains authoritative for the Phase 1 single-user GitHub dogfooding scope freeze.
-- `UBU-Q0050` remains open for exact bootstrap questions, next-action screen details, and implementation sequencing.
-- Phase 1 public demos should show the narrow loop: bootstrap, one recommended next Task, explanation, feedback, recalculation, and inspectable Plan context.
-- New planning architecture decisions must not be interpreted as permission to overclaim broad personal-data ingestion, full autonomous life management, complete privacy isolation, multi-device sync, or multi-user coordination in Phase 1.
-
 ---
 
 ## UBU-D0107: Default Plan selection uses Plan probability over deterministic optimized Plans
 
-**Status:** Accepted
-
-Direct project directive.
+**Status:** Accepted → DESIGN.md §15
 
 Plan optimization and default Plan selection are distinct operations.
 
@@ -2720,18 +1735,11 @@ The planning algorithm models probabilistic parameters such as Task duration dis
 
 The default Plan is the deterministic candidate Plan, or one of multiple equal candidate Plans, with the highest Plan probability overall.
 
-**Consequences:**
-
-- UbU should not describe the default Plan as merely the highest expected-value Plan.
-- UbU should not treat Plan probability as an internal mutable property of a represented Plan.
-- The default Plan remains user-facing and explainable: Calendar preview should show the ordered Tasks and the reason each Task appears.
-- Practical algorithms may approximate the ideal through pruning, greedy heuristics, bounded finite Task instances, and adaptive resource limits.
-
 ---
 
 ## UBU-D0108: Skeletonization and legitimization precede default Plan candidate search
 
-**Status:** Accepted as provisional planning architecture
+**Status:** Accepted as provisional planning architecture → DESIGN.md §15
 
 This decision supersedes the narrower framing that a DFS or DFS-like process directly produces the full default Plan as the conceptual foundation of Compact Calendar planning. DFS-like, BFS-like, greedy, local-search, GPU-parallel, or solver-backed methods may still be used as implementation techniques, but the planning architecture now begins with explicit skeletonization and legitimization.
 
@@ -2743,19 +1751,11 @@ The **legitimized skeleton Plan** is the minimum feasible baseline against which
 
 A short-horizon reactive layer, likely BFS-like or policy/repair based, remains necessary for near-term divergence involving duration variation, early completion, late completion, interruptions, external events, affect shifts, user overrides, and recalculation triggers. The provisional reactive branch horizon remains one hour, with a provisional short-horizon coverage target of `0.99` probability mass. These are configurable heuristics, not immutable design law.
 
-**Consequences:**
-
-- The default Plan must be rooted in a skeleton Plan and legitimized skeleton Plan, not treated as a bare DFS artifact.
-- DFS-like candidate construction remains allowed, but it is now one possible implementation technique after skeletonization and legitimization.
-- The greedy mean-duration/value-density algorithm remains useful only as a deliberately unintelligent benchmark for comparing more serious planners.
-- The reactive branch layer should be bounded by horizon, coverage target, resource mode, and device capability, but mobile UX must not depend solely on BFS precomputation.
-- `UBU-Q0016` remains open but should be reframed around the Compact Calendar planner grammar and execution profile rather than only DFS grammar.
-
 ---
 
 ## UBU-D0109: Early completion pulls the next valid Dynamic Task forward
 
-**Status:** Accepted as provisional runtime behavior
+**Status:** Accepted as provisional runtime behavior → DESIGN.md §15
 
 When a Task completes earlier than expected, UbU should normally pull the next valid Dynamic Task forward to the current time, provided that dependencies, preconditions, affect constraints, location constraints, Calendar Logic, and user-visible policy allow it.
 
@@ -2763,17 +1763,11 @@ This supports conservative duration estimates. If the scheduler avoids overly op
 
 Static Tasks keep fixed start times. If the next Static Task is not yet available and all predetermined Dynamic Tasks before it have been completed or blocked, UbU may offer gap-filling suggestions. The exact evergreen Task model remains open.
 
-**Consequences:**
-
-- Early completion is a first-class recalculation event but should often be handled by simple forward-pull behavior.
-- Conservative duration bias can improve user experience by making early completion common and easy to handle.
-- Gap filling before Static Tasks depends on future evergreen Dynamic Task semantics.
-
 ---
 
 ## UBU-D0110: Compact Calendar planning supports adaptive time granularity
 
-**Status:** Accepted as provisional default policy
+**Status:** Accepted as provisional default policy → DESIGN.md §16
 
 Compact Calendar planning should support configurable time deltas. The provisional defaults are:
 
@@ -2786,13 +1780,6 @@ Compact Calendar planning should support configurable time deltas. The provision
 A one-minute delta aligns with common calendar behavior and should be available when resources permit. Mobile-only, low-power, or offline modes may use coarser deltas to preserve battery, reduce computation, and keep local recalculation responsive.
 
 Known offline windows, such as flights or planned disconnection, should trigger preparatory precomputation when connectivity and compute resources are available. Unexpected offline operation should degrade gracefully to cached explicit state, local planning, coarser deltas, and reduced branch depth.
-
-**Consequences:**
-
-- Mobile-only UbU must preserve the core UbU experience, but may use coarser planning granularity, shallower branch coverage, reduced analysis depth, and fewer LLM-assisted features.
-- Coarser mobile or offline planning is a designed execution mode, not a failure mode.
-- Compact Calendars should carry enough repair metadata for mobile devices to preserve legitimacy without performing full replanning. MVP-friendly metadata includes protected/flexible/disposable Task criticality, basic decision envelopes, cached explanations, conflict severity, and last-legitimate-Plan references.
-- Finer granularity and deeper analysis may be made available through user-owned workers, desktops, laptops, dedicated appliances, or cloud/external compute.
 
 ---
 
@@ -2808,21 +1795,11 @@ Execution-provider selection should treat GPU suitability as a first-class crite
 
 External execution must be mediated by explicit APIs, capability grants, Compartment policy, provenance, user-visible routing decisions, and privacy controls. PII stripping, encryption, redaction, compartment-aware payload minimization, and future privacy-preserving compute such as practical FHE-backed or comparable encrypted computation are strategic directions, but not Phase 1 guarantees unless implemented and disclosed. Cloud planning payloads should transmit the structured timing, dependency, value, constraint, criticality, and legitimacy information needed by the algorithm while stripping or compartmentalizing unnecessary personal detail. Compact Calendar results should return small references, IDs, decision envelopes, explanations, and repair metadata rather than raw personal context where possible.
 
-**Consequences:**
-
-- Corporate cloud can be a product offering, but not the philosophical core of UbU.
-- Third-party providers should be able to offer compatible execution services through the same open interfaces.
-- User-owned personal worker devices are Phase 2.
-- Dedicated appliances, managed hosted compute, compute monetization, and FHE/private encrypted compute are future commercial or strategic-research directions.
-- Public FOSS contributors should not need private hosted services to inspect, run, modify, or self-host the open-core planning loop.
-
 ---
 
 ## UBU-D0112: Cloud LLM integration is provider-neutral, local-first, and policy-routed
 
 **Status:** Accepted
-
-Direct project directive.
 
 UbU's premier LLM execution path remains local-first use of a user-controlled local model provider such as `ollama`, but cloud LLMs are accepted as optional execution providers when the user, Compartment policy, cost policy, and task sensitivity allow them.
 
@@ -2832,21 +1809,11 @@ Cloud LLM execution is not semantically equivalent to local execution. It crosse
 
 UbUCorp may offer managed hosted inference, model routing, support, integrations, enterprise controls, and commercial provider relationships. That convenience service must not become a hidden dependency of the FOSS core, the open-core planning loop, or the UbU protocol. A commercial exclusive provider relationship for UbUCorp's hosted service is acceptable only if the core remains local-capable, provider-neutral, BYOK-capable, and self-hostable.
 
-**Consequences:**
-
-- The FOSS core should expose an LLM provider abstraction rather than hard-coding cloud vendors or local-only semantics.
-- `no_cloud_llm` Compartment content must not be sent to cloud LLM routes.
-- BYOK cloud mode and user-owned remote worker mode are philosophically preferred over mandatory UbUCorp inference for technical users.
-- UbUCorp managed inference may be a mass-market convenience layer, not the source of user authority or canonical planning state.
-- Public outreach should describe cloud LLMs as optional, policy-governed execution providers.
-
 ---
 
 ## UBU-D0113: Associations are Identity-scoped perceived coordination structures
 
-**Status:** Accepted
-
-Direct project directive.
+**Status:** Accepted → DESIGN.md §19
 
 UbU adopts **Association** as the canonical term for the earlier social-formation concept. An Association is an Identity-scoped model of an emergent group-like coordination pattern. It may represent a friend group, party, amateur league, FOSS project, contributor crew, skill network, marketplace, nonprofit, company, DAO-like project, or other formal or informal group.
 
@@ -2856,21 +1823,11 @@ UbU should represent Association facts through local perception, AssociationAtte
 
 A future SharedAssociationDescriptor may provide a signed or reviewable shared artifact that multiple Identities can reference, but it is not a God's-eye truth object. It is a coordination artifact that can be accepted, disputed, superseded, or interpreted differently by different Identities.
 
-**Consequences:**
-
-- `External Association` is renamed to `External Reference` everywhere in the design language.
-- Association membership and authority should be treated as claims or attestations, not globally authoritative list fields by default.
-- Legal organizations are special cases with strong External References, not exceptions to perspective-bound social modeling.
-- Social identity, social choice, and game-theory open questions should build on Association, AssociationAttestation, External Reference, and SharedAssociationDescriptor concepts.
-- Phase 1 may use the Association concept for EthConf/outreach dogfooding without implementing full multi-user Association reconciliation.
-
 ---
 
 ## UBU-D0114: Organizational introspection is a first-class UbU feature
 
 **Status:** Accepted
-
-Direct project directive.
 
 UbU should treat organizational introspection as a first-class feature, not merely as a side effect of project management or future Association modeling.
 
@@ -2880,21 +1837,11 @@ The goal is to help an Association inspect whether its real priorities, override
 
 This feature mirrors personal UbU introspection. For a person, UbU asks whether actual behavior matches stated values and Objectives. For an Association, UbU asks whether actual work, decisions, and resource allocation match declared mission and commitments.
 
-**Consequences:**
-
-- Association introspection should generate structured review artifacts, not just free-form insights.
-- Every generated claim needs provenance linking it to source records, prompt/model metadata when applicable, confidence, and review/dispute status.
-- Public or permissioned sources are the proper default boundary. UbU must not become a tool for illicit surveillance, doxxing, adversarial social-graph extraction, or managerial coercion.
-- EthConf outreach should dogfood this feature by treating notes, follow-ups, and UbU project artifacts as evidence for whether UbU is actually pursuing its stated outreach goals.
-- The public hook may ask whether a project has evidence-backed proof that it is committed to achieving its stated goals, but design docs should clarify that this means operational proof through evidence trails, not mathematical certainty.
-
 ---
 
 ## UBU-D0115: EthConf outreach uses one core pitch plus lightweight audience lanes
 
 **Status:** Accepted
-
-Direct project directive.
 
 EthConf outreach should not splinter into many separate campaigns. The project should use one core UbU thesis with lightweight audience variants for FOSS contributors, prototype funders, general EthConf attendees, and a modest cypherpunk/privacy-builder lane.
 
@@ -2902,21 +1849,11 @@ The shared thesis is that UbU is local-first, user-sovereign AI planning and coo
 
 The cypherpunk/privacy lane should frame **Skill Barter marketplace** as a future specialization of Association modeling: lawful, privacy-preserving skill barter and skilled-work coordination through pseudonymous Identities, scoped work agreements, reputation without unnecessary doxxing, commitments, and user-chosen settlement references where lawful. It must not be framed as an illicit marketplace, sanctions-evasion tool, tax-evasion tool, or token-first product.
 
-**Consequences:**
-
-- Outreach should prioritize FOSS contributors while keeping funder, general attendee, and cypherpunk variants prepared.
-- The cypherpunk lane is a recruiting hook for privacy-minded builders, not the center of the project.
-- Skill barter and private settlement remain future/post-MVP specializations, not Phase 1 commitments.
-- Public language should prefer `Skill Barter marketplace`, `voluntary privacy-preserving skilled-work coordination`, `pseudonymous skill barter`, and `lawful private settlement` over anonymity/evasion framing.
-- EthConf follow-up should be classified by concrete next action, not enthusiasm alone.
-
 ---
 
 ## UBU-D0116: EthConf outreach dogfoods Association formation and organizational introspection
 
 **Status:** Accepted
-
-Direct project directive.
 
 UbU's EthConf outreach is itself an Association-forming workflow. The project owner is attempting to form an ad hoc Association around the UbU project through conversations with contributors, reviewers, funders, workflow informants, privacy/cypherpunk builders, and possible design partners.
 
@@ -2924,21 +1861,11 @@ This outreach should be treated as dogfooding, not mere marketing. Notes, follow
 
 The outreach process should later be submitted to LLM-assisted or manually reviewed organizational introspection. UbU should ask whether the actual outreach behavior proves that the project pursued its stated goals: recruiting serious contributors, pressure-testing the design, finding workflow examples, identifying compatible funding, and preserving the privacy-first self-governance mission.
 
-**Consequences:**
-
-- Phase 1 can use EthConf outreach as a manually structured dogfooding fixture without implementing full Association automation.
-- Redacted outreach retrospectives can become public proof that UbU applies its own introspection discipline to itself.
-- The strongest outreach challenge is: `Can your project prove from its records that it is actually committed to achieving its stated goals?`
-- The challenge should be memorable but not accusatory; it should invite shared discipline rather than imply that other maintainers are hypocrites.
-- Follow-up artifacts should convert social interest into explicit Tasks, commitments, contributor paths, and review questions.
-
 ---
 
 ## UBU-D0117: Context-rich cross-user messaging is a premier Phase 3 feature
 
-**Status:** Accepted
-
-Direct project directive.
+**Status:** Accepted → DESIGN.md §20
 
 Phase 3 minimal multi-user coordination should include a limited but meaningful form of cross-user contextual messaging. This should be treated as a premier Phase 3 feature, not merely as an incidental transport detail.
 
@@ -2953,24 +1880,12 @@ A minimal Phase 3 **Message Context Envelope** should include only fields that a
 - topic or associated Objective/Task/Association references when disclosure policy allows them;
 - requested response kind and any explicit deadline;
 - priority and interrupt recommendation;
-- known assumptions and ambiguities;
-- provenance and confidence fields;
-- disclosure and Compartment policy metadata.
-
-Richer relationship reconstruction, subjective social context, long-term Relationship history exchange, Association synchronization, and detailed multi-party trust semantics may remain post-MVP.
-
-**Consequences:**
-
-- Phase 3 is not only about shared objects and commitments; it should include context-aware asynchronous communication.
-- The receiving UbU instance should be able to triage messages against its Calendar and current Plan.
-- Minimal metadata is valuable even before UbU can exchange deep subjective relationship models.
-- Metadata sharing must remain bounded by Identity, Compartment, and disclosure policy.
 
 ---
 
 ## UBU-D0118: Legacy messaging adapters may upgrade flat messages into UbU contextual messages
 
-**Status:** Accepted as product and interoperability direction
+**Status:** Accepted as product and interoperability direction → DESIGN.md §20
 
 UbU should be able to ingest and, where permitted, send through legacy communication systems such as WhatsApp, SMS, email, Discord, IRC, Slack, Matrix, or similar systems.
 
@@ -2980,18 +1895,11 @@ When both sides use UbU, the two instances should be able to translate the legac
 
 This creates a practical bridge from legacy systems into richer UbU-to-UbU communication without requiring the rest of the world to abandon existing messaging platforms first.
 
-**Consequences:**
-
-- UbU should define a stable internal message-envelope schema before binding it to any one legacy transport.
-- Legacy adapters must preserve user consent, platform constraints, and Compartment boundaries.
-- UbU-to-UbU metadata must not silently leak private Relationship, Objective, Task, or Association context.
-- This interoperability can become an adoption path: legacy contacts can experience the benefit of richer coordination and may choose to install UbU.
-
 ---
 
 ## UBU-D0119: Structured message extraction is a bounded LLM-assisted normalization layer
 
-**Status:** Accepted as architectural direction
+**Status:** Accepted as architectural direction → DESIGN.md §20
 
 UbU will ingest large volumes of unstructured direct-message and group-chat text from legacy systems. A dedicated **Message Context Extractor** should normalize those inputs into strict UbU JSON structures.
 
@@ -3000,13 +1908,6 @@ The extractor should take raw message text plus available metadata, such as sour
 The extractor is not the canonical planner and must not silently mutate canonical state. Its outputs are candidate interpretations that pass through schema validation, provenance marking, confidence scoring, repair loops, and user or policy acceptance where required.
 
 Phase 3 and early post-MVP implementations should begin with general LLMs constrained by strict schemas, grammar-constrained output where practical, validation, and repair. Fine-tuned, distilled, or adapter-trained extractor models may become attractive after UbU has stable schemas and enough corrected examples. Training a new foundation model from scratch is not currently justified.
-
-**Consequences:**
-
-- UbU should treat message ingestion as semantic compilation from unstructured communication into planning-relevant candidate state.
-- Every extracted field should distinguish explicit source facts from inferred, guessed, or user-confirmed facts.
-- Custom extractor models are plausible later for privacy, latency, cost, and reliability, but should not block MVP or Phase 3 schema work.
-- Group-channel interpretation should use channel and Association metadata where available, but must remain uncertainty-aware when context is missing.
 
 ---
 
@@ -3020,13 +1921,6 @@ This can be viewed as a communication-compression feature: instead of sending a 
 
 Voice data is sensitive. A voice descriptor or voice profile must be opt-in, revocable where practical, policy-governed, and clearly separated from authentication. UbU should not treat a synthesized voice as proof that a human actually spoke the words. Implementations should consider visible disclosure, watermarking or provenance markers, anti-impersonation controls, and restrictions on cross-context reuse.
 
-**Consequences:**
-
-- Personalized TTS belongs to communication UX and accessibility, not canonical planning correctness.
-- Voice profiles are biometric-like sensitive data and should require strong Compartment controls.
-- Legacy flat text can become richer on the receiving side without forcing the sender to transmit full audio.
-- This feature is post-MVP unless a very narrow accessibility-oriented version becomes necessary earlier.
-
 ---
 
 ## UBU-D0121: Messaging interoperability can support value-led viral outreach without coercive growth loops
@@ -3037,34 +1931,21 @@ Legacy messaging integration can create a natural adoption path. A UbU user inte
 
 This is a plausible viral outreach mechanism: the product becomes more useful when counterparties also use it. However, UbU should not use manipulative dark patterns, spammy invitations, forced signatures, or guilt-based prompts. The adoption message should be value-led: richer coordination, clearer priority, less lost context, and better respect for both users' time.
 
-**Consequences:**
-
-- Public messaging may describe UbU as a way to make legacy communication more actionable.
-- Invitation flows should be optional, user-authored or clearly user-approved, and respectful of the recipient.
-- Viral adoption should follow from real coordination value, not from artificial network pressure.
-- Cross-user features must preserve UbU's privacy and sovereignty commitments.
-
 ---
 
 ## UBU-D0122: Greedy mean-duration planning is a benchmark, not the canonical planner
 
-**Status:** Accepted as baseline algorithm policy
+**Status:** Accepted as baseline algorithm policy → DESIGN.md §15
 
 UbU may define a deliberately unintelligent greedy baseline planner for comparison. The baseline inserts Static Tasks first, places modeled External Events at their expected mean-point start time where applicable, ranks Dynamic Tasks by temporary value-per-minute from the Preference DAG divided by expected mean duration, and fills time from the earliest available slot forward while checking only local viability. It does not backtrack and should be expected to be inefficient, brittle, and strategically myopic.
 
 This baseline is useful because later planners can be evaluated against a simple deterministic reference: total value, missed deadlines, affect burden, dependency failures, fragility under interruption, and explanation quality should improve over the baseline.
 
-**Consequences:**
-
-- The greedy algorithm is allowed as a regression benchmark, smoke-test planner, or fallback demonstration.
-- It should not be presented as the serious Compact Calendar planning architecture.
-- Greedy value-per-minute selection is expected to over-select short Tasks and under-select long strategic Tasks; that pathology is a benchmark feature, not a design target.
-
 ---
 
 ## UBU-D0123: Calendar planning begins from explicit UniverseState assumptions
 
-**Status:** Accepted as provisional planning-model requirement
+**Status:** Accepted as provisional planning-model requirement → DESIGN.md §15
 
 Every Calendar planning run must begin from an initial UniverseState. For MVP, the preferred case is a deterministic initial UniverseState in which planner-relevant starting facts are known, assumed, or explicitly unresolved. A future probabilistic initial UniverseState may assign probabilities to known possible starting states, but that mode is more complex and likely beyond MVP.
 
@@ -3072,18 +1953,11 @@ Skeleton Plan generation must check whether dependencies are already satisfied i
 
 If the planner cannot create a viable skeleton Plan, normal planning should halt and UbU should immediately present a diagnostic explanation. The user should see the failed dependency, conflicting Static Task, impossible timing, cyclic dependency, missing state, or unavailable resource, plus selectable alternatives where possible.
 
-**Consequences:**
-
-- Deterministic initial UniverseState is the MVP-compatible default.
-- Probabilistic initial UniverseState remains a later research mode.
-- Skeleton Plan failure is a critical model-consistency failure, not a minor optimization failure.
-- Diagnostic explanation and user clarification are required when the skeleton Plan cannot be made viable.
-
 ---
 
 ## UBU-D0124: Legitimization makes skeleton Plans human-viable before optional optimization
 
-**Status:** Accepted as provisional planning architecture
+**Status:** Accepted as provisional planning architecture → DESIGN.md §15
 
 **Legitimization** is the planning phase that takes a skeleton Plan and adds the minimum additional constraints and support Tasks required to make the Plan plausibly executable by the user. It converts a dependency-valid but potentially unrealistic skeleton Plan into a minimally human-viable Plan.
 
@@ -3093,29 +1967,17 @@ The legitimized skeleton Plan is the baseline feasible Plan. Optional Dynamic Ta
 
 If full legitimization is cheap, it can be used as a frequent validity oracle while adding and removing optional Tasks. If full legitimization is expensive, UbU needs semi-legitimization heuristics such as affect-budget estimates, slack preservation, dependency-fragility scoring, user-mode compatibility checks, local repair checks, and legitimacy-delta estimates before invoking full legitimization on finalist candidates.
 
-**Consequences:**
-
-- Planning phases are skeletonization, legitimization, candidate expansion, finalist validation, and user-facing explanation.
-- Affect and recovery are not decorative wellness features; they can be required for Plan legitimacy.
-- Semi-legitimization becomes an important algorithmic open question if full legitimization is expensive.
-
 ---
 
 ## UBU-D0125: Compact Calendar search is GPU-aware hybrid planning
 
-**Status:** Accepted as implementation direction
+**Status:** Accepted as implementation direction → DESIGN.md §16
 
 UbU should not assume that the central planning engine is a CPU-heavy exact solver. Solver/library selection should treat GPU suitability as a first-class criterion across mobile devices, laptops/desktops, user-owned workers, and cloud providers.
 
 The preferred architecture is hybrid. CPU or conservative exact logic handles dependency graph traversal, skeleton validity, hard constraints, contradiction diagnosis, final validation, and explanation. GPU-capable methods handle large candidate expansion, stochastic scenario simulation, affect scoring, robustness scoring, learned-model inference, and premium cloud planning.
 
 Existing CPU-oriented solvers such as CP-SAT, SMT/MaxSMT, or local-search systems may remain useful for prototypes, exact finalist validation, contradiction explanation, and desktop/server experiments. They should not become the only planning path if GPU-friendly search, simulation, or scoring better matches available compute.
-
-**Consequences:**
-
-- GPU search may propose candidate Plans, but hard constraints and final validity should be certified by exact or conservative validation.
-- Mobile and cloud planning should favor batch evaluation, scenario simulation, and scoring methods that map to GPU-like hardware.
-- Premium cloud planning can offer wider horizons and more candidate evaluation without becoming the source of user authority.
 
 ---
 
@@ -3129,12 +1991,6 @@ Beyond short-horizon BFS precomputation, compact Calendars should support decisi
 
 The MVP-friendly subset is narrower: Task criticality, last legitimate Plan storage, simple repair rules, conflict severity levels, cached explanations, next-best-action mode, and basic decision envelopes.
 
-**Consequences:**
-
-- Mobile should preserve hard commitments, legitimacy, and user agency even without cloud or desktop help.
-- Mobile should provide credible next actions and explanations quickly, then refine when more compute becomes available.
-- BFS branch caching remains useful but is not the only fast-changing-plan UX mechanism.
-
 ---
 
 ## UBU-D0127: VoxPopuli is an optional EthConf demo, not a Phase 1 replacement
@@ -3147,17 +2003,11 @@ The value of this flow is demonstration and trust-building. It shows that LLMs c
 
 This must not override the Phase 1 narrow bootstrap requirement. VoxPopuli is optional, experimental, and useful for EthConf/public demonstrations only if it does not displace higher-priority dogfooding, contributor, or funder deliverables.
 
-**Consequences:**
-
-- VoxPopuli can be presented as a populist hook for general users and funders.
-- It must remain inspectable: LLM output is candidate state, not canonical truth.
-- It should not imply broad autonomous life modeling, therapeutic authority, or complete personal-data ingestion in Phase 1.
-
 ---
 
 ## UBU-D0128: Planning horizons may exceed visible Calendar windows and should front-load fragile prerequisites
 
-**Status:** Accepted as provisional planning architecture
+**Status:** Accepted as provisional planning architecture → DESIGN.md §15
 
 The user-visible Calendar window and the internal planning horizon do not have to be identical. If the user asks for a one-day Calendar, UbU may need to reason beyond that visible window to avoid cutting dependency chains, Techniques, deadlines, or preparation sequences at the boundary.
 
@@ -3165,21 +2015,11 @@ Within reasonable detailed planning windows, such as one day to roughly one week
 
 This early-preparation bias is not unlimited. Beyond a reasonable detailed horizon, preparation may be too premature or speculative. Long-horizon preference and temporal-discounting questions remain separate from short-horizon operational planning. For short operational windows, UbU may treat time discounting as negligible by default, while still respecting explicit user Preferences and current affect.
 
-**Consequences:**
-
-- Internal look-ahead may exceed the visible Calendar window.
-- Fragile prerequisite chains should be protected from just-in-time scheduling when practical.
-- Early preparation is a risk-reduction bias, not an authorization to fill all future time with preparatory work.
-- Detailed planning beyond roughly one week remains a higher-cost or premium/research direction rather than a Phase 1 default.
-
-
 ---
 
 ## UBU-D0129: Phase 1 bootstrap and next-action UX uses explicit object-backed minimum loop
 
-**Status:** Accepted
-
-Resolved question: `UBU-Q0050`.
+**Status:** Accepted → DESIGN.md §4
 
 The minimum Phase 1 bootstrap interview asks only enough to recommend one useful dogfooding Task from explicit state. The required questions are:
 
@@ -3194,31 +2034,11 @@ The minimum Phase 1 bootstrap interview asks only enough to recommend one useful
 
 The answers map into existing Phase 1 objects. Project context, availability, deadlines, constraints, fixture/import source, and hard blockers become UniverseState facts, External Events, Tasks, External References, and Log entries as appropriate. Affect answers become a user-declared Snapshot; skipped or stale affect data creates or prioritizes an affect-collection Task. Initial work answers seed Objectives and Tasks. Tradeoff answers become Preferences only when UbU presents an explicit Preference statement and the user accepts it; otherwise they remain Log notes, Objective annotations, or noncanonical preview/review evidence.
 
-The minimum data required to recommend one next Task is: a user or operator Identity, at least one active Objective, at least one active schedulable Task linked to that Objective, a current work window or available time, current or explicitly stale affect state, and known blockers, deadlines, dependencies, and source references for the recommended Task when available. If that minimum is missing, UbU should recommend a clarification, import, Calendar preview, Log review, or affect-collection Task rather than pretending to optimize.
-
-The next-action screen shows one recommended Task by default, but full Plan inspection remains one action away. The screen must show the Task title, Objective link, estimated duration or work window, status, provenance/source label, why it matters now, and what UbU considered. The explanation must include the served Objective, timing reason, dependency or blocker status, affect or stale-affect status, and the most relevant risk or opportunity considered. It should expose candidate Tasks, blocked Tasks, constraints, worker/projection state, and fixture/import source links through an inspector rather than hiding them.
-
-The required controls are `start`, `done`, `snooze`, `reject`, `decompose`, `override`, and `explain more`. Completion feedback asks whether the estimate and effect were correct and whether affect changed. Failure feedback asks which assumption failed: dependency, duration, affect, interruption, clarity, priority, or other. Snooze asks for a time or condition and reason. Rejection asks whether the Task is wrong, not valuable now, blocked, too large, already done, duplicate, or moot. Override records the chosen action and asks whether this should update Preferences, availability, estimates, Objective status, or only the current Plan. All outcomes write Logs and trigger recalculation when they change modeled state.
-
-Fixture-backed and mock app behavior must be labeled at the point of use. Public demos and Release Outreach Pipeline scripts should use this loop as the main nontechnical proof: bootstrap, one recommended next Task, explanation, feedback, recalculation, and full-Plan inspection. They must distinguish implemented planner behavior from hardcoded or fixture-backed behavior.
-
-Public materials must avoid claims that Phase 1 already performs broad personal-data ingestion, complete email/text/file understanding, therapeutic care, autonomous life coaching, complete planning automation, complete privacy isolation, Phase 2 sync, or Phase 3 multi-user coordination. The honest Phase 1 claim is that UbU can recommend one meaningful next action and explain it from explicit user-approved state, fixtures, imports, Logs, Snapshots, Objectives, Tasks, and Plans.
-
-**Consequences:**
-
-- `UBU-Q0050` is resolved for Phase 1 product scope and demo treatment.
-- No new canonical object type is required for the bootstrap or next-action UX.
-- Phase 1 implementation can proceed with existing Objectives, Preferences, Snapshots, Tasks, Logs, UniverseState facts, Plans, and External References.
-- Preference calibration, discovery mode, Calendar preview and Log review annotations, VoxPopuli, and broader message or file ingestion remain in their separate questions.
-- The mock app may be fixture-backed only when it visibly labels fixture behavior and does not present it as completed planner implementation.
-
 ---
 
 ## UBU-D0130: UniverseState mutations use dotted targets and envelope-level provenance
 
-**Status:** Accepted
-
-Resolved question: `UBU-Q0014`.
+**Status:** Accepted → DESIGN.md §11.3
 
 MVP UniverseState mutation items use dotted string targets. The first target segment names the UniverseState collection: `facts`, `numeric_values`, `set_memberships`, or `event_markers`. Remaining segments form the lightweight namespaced key within that collection. Examples include `facts.github.issue.14.pipeline_state`, `numeric_values.affect.energy`, `set_memberships.github.issue.14.labels`, and `event_markers.relationship.rel_123.interactions`.
 
@@ -3230,22 +2050,11 @@ Mutation lists are unconditional once the containing Task effect succeeds. Per-i
 
 Mutation targets may include affect UniverseState keys in `user_mode`, subject to Snapshot precedence and user sovereignty rules. Organization-mode and worker-mode validators must reject intrinsic-affect mutations. Mutation targets may include Relationship-relevant UniverseState keys, including relationship interaction markers and maintenance facts, but they must respect Compartment policy, mode rules, provenance/logging envelopes, and user-acceptance requirements for private or inferred relationship claims. Task effects, workers, imports, and LLM-assisted flows must not silently overwrite user-declared private affect or Relationship truths.
 
-**Consequences:**
-
-- `UBU-Q0014` is resolved for Phase 1 implementation.
-- Task effects, worker mutation requests, Snapshots, and Logs can share a compact mutation vocabulary without duplicating provenance on every item.
-- `UBU-Q0015` can use the same dotted target convention for preconditions.
-- `UBU-Q0009` can wrap these mutation items in worker mutation requests that provide authority, expected prior version, evidence, confidence, idempotency, and provenance.
-- Future schema migrations may replace dotted strings with typed paths or JSON Pointer, but MVP implementations should not block on that stricter ontology.
-
-
 ---
 
 ## UBU-D0131: Task preconditions use recursive all_of/any_of predicates
 
-**Status:** Accepted
-
-Resolved question: `UBU-Q0015`.
+**Status:** Accepted → DESIGN.md §10.1
 
 MVP Task preconditions use a recursive boolean object with `all_of` and `any_of` arrays for simple AND/OR composition. A precondition node may be a group node or a leaf predicate. A group node contains `all_of` or `any_of`, each holding one or more precondition nodes. A leaf predicate contains `target`, `predicate`, and optional `expected`.
 
@@ -3257,21 +2066,11 @@ Preconditions may reference `event_markers` for deterministic marker presence or
 
 A failed precondition makes the Task blocked for planning and execution. It does not make the Task invalid. `unschedulable` is a derived planner result when an otherwise valid Task cannot be placed in the current Calendar scope while satisfying preconditions and Calendar Logic. `invalid` is reserved for malformed Tasks, malformed precondition schema, forbidden targets, or canonical-state contradictions. Unknown, unavailable, or partially modeled preconditions are treated as absent in MVP unless the user or importer explicitly records a deterministic predicate.
 
-**Consequences:**
-
-- `UBU-Q0015` is resolved for Phase 1 implementation.
-- Preconditions and mutations share the same dotted target convention, keeping Task effects and Task gating aligned.
-- Phase 1 gets deterministic blocked/not-blocked evaluation without adding numeric comparison logic or a richer ontology.
-- Event markers, affect keys, and Relationship-relevant keys are usable only within existing mode, Compartment, provenance, and user-acceptance boundaries.
-- Planner diagnostics can distinguish blocked, unschedulable, and invalid Tasks without treating ordinary failed preconditions as schema errors.
-
 ---
 
 ## UBU-D0132: Realtime multimodal LLMs are optional interaction backends, not authoritative planners
 
-**Status:** Accepted
-
-Direct project directive.
+**Status:** Accepted → DESIGN.md §21
 
 Realtime multimodal LLMs may power live voice, video, interruption detection, meeting capture, discovery mode, pronunciation or activity feedback, and short-horizon task monitoring. They are interaction backends and perceptual/extraction aids, not the authoritative UbU planner.
 
@@ -3281,20 +2080,11 @@ UbU distinguishes **model-time awareness** from **planner-time semantics**. A re
 
 Realtime operation requires explicit user-visible modes, such as passive/off, text-only, voice session, active discovery mode, meeting/logging mode, high-privacy local-only mode, and cloud-assisted mode. Continuous capture must not become covert surveillance or an implied authorization to mutate canonical state.
 
-**Consequences:**
-
-- Realtime LLMs should be swappable providers behind a policy-routed interaction interface.
-- Realtime-derived observations are candidate evidence until admitted through UbU validation, review policy, and Logs.
-- The planner, Compartment policy, Identity model, and user-review rules remain authoritative.
-- UX should show when realtime/discovery/privacy modes are active and what kind of data may be captured, retained, or routed.
-
 ---
 
 ## UBU-D0133: LLMs are replaceable cognitive backends and structured outputs are candidate updates
 
-**Status:** Accepted
-
-Direct project directive.
+**Status:** Accepted → DESIGN.md §21
 
 UbU should treat LLMs as replaceable cognitive backends. They may interpret, summarize, classify, translate, transcribe, propose structures, critique plans, call tools, generate UI drafts, and assist extraction. They do not own canonical truth, canonical value, canonical memory, or canonical planning state.
 
@@ -3309,26 +2099,12 @@ LLM output
   -> policy and Compartment validation
   -> provenance attachment
   -> conflict detection
-  -> user-review classification
-  -> planner or Log admission
-```
-
-Memory must remain typed, scoped, provenance-bearing, and correctable. UbU should prefer explicit objects such as `Preference`, `Objective`, `Identity`, `Association`, `TaskPattern`, `AffectPattern`, `PlanningConstraint`, `ExternalReference`, `Attestation`, `Snapshot`, `LogEntry`, and `Evidence` over vague assistant personalization.
-
-**Consequences:**
-
-- LLM output is a candidate state update unless accepted through explicit UbU logic.
-- Corrections should preserve an audit trail and mark dependent interpretations stale where appropriate.
-- Generic model memory features do not replace UbU's typed memory model.
-- The FOSS core should avoid vendor-specific assumptions about model identity, memory behavior, or structured-output guarantees.
 
 ---
 
 ## UBU-D0134: Context assembly is a privacy-relevant governed act
 
 **Status:** Accepted
-
-Direct project directive.
 
 As LLM context windows grow, UbU must not assume that sending more context is automatically better. Context assembly is itself a privacy-relevant action that may cross Identity, Compartment, Association, provider, and retention boundaries.
 
@@ -3342,25 +2118,12 @@ ContextBundle
   - Identities exposed
   - Association references exposed
   - provider or model destination
-  - redaction/minimization rules
-  - retention and expiration policy
-  - user-visible summary
-  - downstream candidate updates supported
-```
-
-**Consequences:**
-
-- Long-context models weaken naive RAG assumptions but strengthen the need for context-governance metadata.
-- Context minimization remains a core privacy principle even when a model can technically ingest a huge repository, chat archive, or life-log segment.
-- Compartment policy and disclosure rules apply to context construction, not only to final outputs.
 
 ---
 
 ## UBU-D0135: UbU should be both an MCP-style client and an MCP-style server with capability boundaries
 
-**Status:** Accepted
-
-Direct project directive.
+**Status:** Accepted → DESIGN.md §21
 
 UbU should support MCP-style integration boundaries in both directions.
 
@@ -3375,23 +2138,12 @@ As a server, UbU may expose narrow, scoped, reviewable affordances to outside ag
 - submit a proposed Plan repair;
 - query Objective status;
 - submit a candidate AssociationAttestation;
-- request a Delegation Substrate review packet.
-
-Every exposed tool must be bounded by Identity, Compartment, Objective, capability grant, operation kind, time window, provenance, and review policy. The dangerous pattern is letting an external AI agent access the user's life model as a broad ambient authority. The UbU pattern is exposing narrow capability surfaces under user-owned law.
-
-**Consequences:**
-
-- MCP-style interoperability belongs in the architecture, but it does not override Compartments or user sovereignty.
-- External agents should generally submit candidate updates, not direct canonical writes.
-- Tool exposure is part of the Delegation Substrate and should be auditable.
 
 ---
 
 ## UBU-D0136: Delegated agency is first-class in planning
 
-**Status:** Accepted
-
-Direct project directive.
+**Status:** Accepted → DESIGN.md §21
 
 UbU Tasks may be performed by the user, a local agent, a cloud agent, a tool, another human Identity, an Association, or a delegated coordinator. The executor is part of the planning problem and must not be hidden inside an opaque automation step.
 
@@ -3405,25 +2157,12 @@ A delegated Task should distinguish:
 - granted authority;
 - expected output;
 - completion evidence;
-- privacy/Compartment scope;
-- reversible and irreversible side effects;
-- failure and escalation path.
-
-An agent completing a Task is not semantically identical to the user completing it. Delegation changes trust, responsibility, review, provenance, affect cost, and side-effect risk.
-
-**Consequences:**
-
-- Task assignment should evolve from a simple user/worker field into an executor and authority model.
-- Computer-use agents, remote agents, human helpers, and Associations all require explicit scope and evidence rules.
-- Delegation belongs in the planning model even before a public marketplace exists.
 
 ---
 
 ## UBU-D0137: Delegation Substrate is the near-term model for preparing Task delegation
 
-**Status:** Accepted
-
-Direct project directive.
+**Status:** Accepted → DESIGN.md §21
 
 Use **Delegation Substrate** as the near-term tool/model for preparing Task delegation. It is not the full Skill Barter marketplace. It is the explicit representation that makes a Task ready to be performed, reviewed, or handed off by clarifying purpose, executor, authority, expected output, evidence, constraints, and completion criteria.
 
@@ -3438,38 +2177,16 @@ DelegationPacket
   - purpose / why this matters
   - expected output
   - authority granted or self-authority note
-  - required evidence of completion
-  - review requirement
-  - privacy and Compartment scope
-  - allowed tools or integrations
-  - deadline / timebox
-  - failure and escalation path
-```
-
-**Consequences:**
-
-- Phase 1 may include Delegation Substrate-compatible fields when needed for dogfooding, worker assignments, or self-reminder clarity.
-- The full Skill Barter marketplace remains future scope.
-- Delegation Substrate should integrate naturally with Automation Workers, MCP-style tools, Logs, and capability grants.
 
 ---
 
 ## UBU-D0138: General Contractor is a first-class delegated coordination role
 
-**Status:** Accepted
-
-Direct project directive.
+**Status:** Accepted → DESIGN.md §21
 
 A **General Contractor** is an Identity, Agent, or Association delegated authority to coordinate multiple subordinate executors in order to satisfy an Objective or complete a Container of Tasks, subject to explicit authority, budget, privacy, review, evidence, and escalation constraints.
 
 This role is distinct from an ordinary executor. A General Contractor may decompose work, assign subtasks, supervise human or agent executors, collect evidence, report status, and submit candidate updates. UbU must still model the General Contractor's authority as bounded and reviewable.
-
-**Consequences:**
-
-- General Contractor belongs in the Delegation Substrate as a high-value coordination specialization.
-- General Contractor may be human, agentic, or Association-based.
-- Subdelegation requires explicit authority, provenance, evidence, and review semantics.
-- The role supports larger adaptive work campaigns without flattening humans, agents, and tools into a single undifferentiated actor type.
 
 ---
 
@@ -3477,28 +2194,17 @@ This role is distinct from an ordinary executor. A General Contractor may decomp
 
 **Status:** Accepted
 
-Direct project directive.
-
 The **Skill Barter marketplace** should be presented as a future marketplace direction and EthConf NYC outreach hook, especially for cypherpunk and privacy-oriented audiences. It signals that UbU preserves much of the original cryptocurrency ethos: voluntary coordination, sovereign identity, privacy, open markets, FOSS development, pseudonymous capability, and user-controlled settlement references where lawful.
 
 Skill Barter can attract younger developers with drive, time, and interest in FOSS contribution by showing that UbU is not merely another productivity app. It is a coordination substrate that could eventually support privacy-preserving skilled-work exchange among human and agentic executors.
 
 A mature Skill Barter marketplace would naturally create demand for FHE, ZK, secure compute, private reputation, private escrow-like commitments, selective disclosure, and other high-privacy technologies compatible with the future Ethereum ecosystem. This should remain an architectural and outreach signal, not a token-first or speculation-first positioning.
 
-**Consequences:**
-
-- EthConf outreach may include Skill Barter as a cypherpunk “cool factor” lane.
-- MVP implements Delegation Substrate primitives, not a public marketplace.
-- Public language should avoid illicit-market, tax-evasion, sanctions-evasion, dark-market, worker-classification, or exploitative labor framing.
-- Skill Barter should be framed as voluntary, lawful, privacy-preserving coordination and FOSS contributor discovery.
-
 ---
 
 ## UBU-D0140: Computer-use and background agents require authority, audit, rollback, and prompt-injection handling
 
-**Status:** Accepted
-
-Direct project directive.
+**Status:** Accepted → DESIGN.md §21
 
 Computer-use agents and background agents are high-risk external actors, not ordinary pure functions. They may operate browsers, accounts, files, credentials, APIs, and external systems where prompt injection, irreversible side effects, disclosure, or stale assumptions can cause harm.
 
@@ -3512,28 +2218,12 @@ AgentAction / BackgroundProcess
   - credentials or integrations used
   - Compartment and Identity scope
   - external surface touched
-  - irreversible side-effect flag
-  - prompt-injection exposure level
-  - compute/cost budget
-  - notification policy
-  - rollback or mitigation path
-  - completion evidence
-  - failure and escalation policy
-```
-
-**Consequences:**
-
-- Background tasks are not automatically Calendar events because they may consume compute, credentials, money, privacy budget, or attention without occupying user time.
-- External agents should generally submit candidate updates and evidence rather than silently mutating canonical state.
-- Prompt-injection exposure should be tracked when agents read untrusted webpages, messages, documents, or tool outputs.
 
 ---
 
 ## UBU-D0141: Local/on-device inference is a first-class execution tier
 
 **Status:** Accepted
-
-Direct project directive.
 
 UbU should treat local and on-device inference as a first-class execution tier, not merely a fallback for unavailable cloud models. Local inference supports privacy, offline use, lower marginal cost, responsiveness, and user sovereignty.
 
@@ -3549,19 +2239,11 @@ Tier 4: optional UbUCorp-managed hosted service
 
 Local models may handle first-pass extraction, privacy classification, simple message triage, candidate Task/Log creation, affect journaling summaries, and compartment routing. Cloud or larger models may be reserved for high-complexity planning, deep design review, organizational introspection over large archives, difficult ambiguity resolution, and expensive multimodal reasoning when policy allows.
 
-**Consequences:**
-
-- The FOSS core should remain useful without mandatory hosted inference.
-- Provider routing should consider sensitivity, cost, latency, offline state, task complexity, and available local hardware.
-- Cloud assistance is a capability upgrade, not the philosophical center of UbU.
-
 ---
 
 ## UBU-D0142: UbU UX should evolve into a state-transition cockpit
 
 **Status:** Accepted
-
-Direct project directive.
 
 UbU should not be framed as chat plus calendar. The long-term UX should become a **state-transition cockpit**: a user interface that presents the current WorkItem, relevant state, candidate transitions, constraints, explanations, evidence, and review controls.
 
@@ -3575,21 +2257,12 @@ The Phase 1 one-next-Task UX remains the narrow proof. Later interfaces may adap
 - approve or reject an agent action;
 - review an AssociationAttestation;
 - run organizational introspection;
-- publish a projection.
-
-**Consequences:**
-
-- Generative UI and chat-native app surfaces can be interaction layers, but the user should remain oriented around explicit state transitions.
-- The main interface should preserve one-next-action clarity while allowing deeper inspection.
-- The UX should make candidate versus canonical state visually and operationally distinct.
 
 ---
 
 ## UBU-D0143: Community-specific EthConf briefs are derived presentation layers
 
 **Status:** Accepted
-
-Direct project directive.
 
 UbU should maintain a small set of community-specific derived documents for EthConf and adjacent outreach when the audience has a materially different trust barrier, motivation, or call to action.
 
@@ -3604,21 +2277,11 @@ The durable derived audience documents are:
 
 These files are presentation layers. They must not introduce new design authority. Their source of truth remains `DESIGN.md`, `DECISIONS.md`, and `OPEN_QUESTIONS.md`.
 
-**Consequences:**
-
-- Audience-specific documents may reframe accepted decisions, but should not create new canonical claims.
-- Consistency checks should include all derived audience documents.
-- When a derived audience document conflicts with canonical design files, the derived document should normally be patched.
-- The documentation set should remain small; new audience files require a materially distinct audience frame or call to action.
-- EthConf outreach can route different communities to different briefs without fragmenting UbU's source of truth.
-
 ---
 
 ## UBU-D0144: Inter-instance protocol is a generic envelope family with worker API profiles
 
 **Status:** Accepted
-
-Resolved question: `UBU-Q0011`.
 
 UbU should have one generic inter-instance protocol family for communication between UbU instances, worker-mode instances, and future compatible peers. The protocol is a family of typed envelopes with shared authority, provenance, Compartment, identity, idempotency, versioning, and review semantics, not one undifferentiated endpoint that treats every payload as the same kind of action.
 
@@ -3632,31 +2295,12 @@ The protocol should eventually support at least these payload families:
 - External Event submission;
 - Snapshot or Log candidate submission where authorized;
 - recalculation requests;
-- clarification requests and responses.
-
-Phase 1 worker communication is a separate MVP API surface in implementation terms, but it is intentionally a narrow profile of the future inter-instance protocol. The MVP worker API should not try to implement native user-to-user messaging, peer discovery, Association reconciliation, or generic multi-user transport. It should, however, use compatible envelope concepts wherever cheap: parent instance reference, sender Identity, receiver or parent Identity, capability grant reference, payload kind, target references, expected prior version or idempotency key where relevant, provenance, Compartment/export decision, and required review policy.
-
-Workers still do not receive direct canonical write authority in Phase 1. Worker payloads submit External Events, Snapshots, mutation requests, projection requests, status updates, or recalculation requests to the canonical instance. The canonical instance validates authority and policy, then applies or rejects the candidate update and writes the Log entry.
-
-Phase 3 multi-user Identity coordination should extend the same protocol family rather than invent a second unrelated transport. User-to-user requests, status updates, questions, commitments, blockers, and contextual messages are peer payloads under the same envelope discipline. They may carry different review defaults and disclosure rules from worker payloads, but they still obey Identity, Compartment, capability, provenance, admission, and user-sovereignty boundaries.
-
-This decision resolves the architecture-level question only. Concrete schemas for worker mutation requests, worker assignment, Message Context Envelopes, legacy adapter upgrade paths, capability grant exchange, and Association-related coordination remain in their dedicated open questions.
-
-**Consequences:**
-
-- `UBU-Q0011` is resolved at the architecture level.
-- MVP worker communication remains implementable as a small local or parent-specific API without blocking on the full Phase 3 protocol.
-- The MVP worker API should approximate future inter-instance envelopes enough to avoid a future schema contradiction.
-- Phase 3 cross-user communication can reuse shared envelope semantics while adding user-to-user disclosure, message, commitment, and Association-specific payloads.
-- Direct canonical writes remain forbidden for workers unless a later accepted decision changes the authority boundary.
 
 ---
 
 ## UBU-D0145: Phase 1 risk reports are derived artifacts, not canonical risk objects
 
-**Status:** Accepted
-
-Resolved question: `UBU-Q0018`.
+**Status:** Accepted → DESIGN.md §27
 
 Risk reports in MVP are derived, recalculable analyses over Calendars, Plans, Tasks, Logs, Snapshots, External Events, worker status, External References, and compact Calendar metadata. Risk remains reportable state, not a first-class canonical object.
 
@@ -3685,21 +2329,11 @@ Risk reporting is part of UbU-runs-UbU release ceremonies. Release readiness and
 
 UbU's PERT-superiority demonstration should be precise: Phase 1 should not claim to replace every PERT use. It should show that UbU handles the planning dimensions PERT leaves out: explicit preconditions and UniverseState, affect constraints, worker status, compact Calendar coverage, recalculation from Logs and Snapshots, and actionable Plan repair or next-Task recommendations.
 
-**Consequences:**
-
-- `UBU-Q0018` is resolved for Phase 1 implementation.
-- Risk remains non-canonical derived analysis rather than a new MVP entity.
-- MVP implementation can expose the required report set without settling every future risk category.
-- Risk-report caches and release artifacts are reviewable derived artifacts, not accepted design state or canonical user value.
-- Follow-up Tasks from risk findings use ordinary Task creation, worker mutation request, or user approval paths.
-
 ---
 
 ## UBU-D0146: Phase 1 recalculation triggers use logged trigger records
 
-**Status:** Accepted
-
-Resolved question: `UBU-Q0019`.
+**Status:** Accepted → DESIGN.md §28
 
 Recalculation triggers are explicit event-like records that tell UbU when a Calendar, Plan, risk-report cache, explanation cache, or next-action recommendation may no longer reflect the current modeled state. A trigger is not a separate canonical domain mutation by itself; it references the Log entry, Snapshot, External Event, worker request, or clock condition that changed the planner's inputs.
 
@@ -3755,21 +2389,11 @@ Stale marking is sufficient when the trigger only means cached Plans, Calendars,
 
 `elapsed_time` is materialized only when crossing a modeled boundary such as Task start or end, Static Task proximity, review due time, stale-affect threshold, reactive horizon expiry, offline precompute boundary, or compact Calendar expiration. It does not create continuous clock-tick Log entries.
 
-**Consequences:**
-
-- `UBU-Q0019` is resolved for Phase 1 implementation.
-- Recalculation integrates with the accepted append-only Log model instead of adding a new canonical event store.
-- Worker recalculation requests stay inside the accepted capability and admission boundary.
-- Immediate versus stale-only handling gives Phase 1 a minimal reactive loop without requiring full Compact Calendar coverage semantics to be settled.
-- Phase 2 and post-MVP trigger families are named but deferred.
-
 ---
 
 ## UBU-D0147: Moot reason codes are a closed MVP enum
 
-**Status:** Accepted
-
-Resolved question: `UBU-Q0022`.
+**Status:** Accepted → DESIGN.md §9.5
 
 `moot` remains a first-class terminal Task status that is functionally equivalent to completion for planning but distinct for logs, reporting, audit, and user review. Every Task transition to `moot` requires a reason code.
 
@@ -3805,21 +2429,11 @@ Selection guidance:
 - use `automation_obsolete` when worker or automation state makes generated work obsolete;
 - use `duplicate` when another active, completed, or canonical work item already represents the same work.
 
-**Consequences:**
-
-- `UBU-Q0022` is resolved for Phase 1 implementation.
-- Task status can remain simple while `task_moot` Log entries preserve explanation, provenance, and audit detail.
-- Imported GitHub/project duplicates can be closed without losing duplicate-specific reporting.
-- Delegation remains visible as a planning and accountability transition rather than being mistaken for completed external satisfaction.
-- MVP schemas can validate `moot_reason_code` as a closed enum and defer extensibility to explicit migrations.
-
 ---
 
 ## UBU-D0148: Task-to-Container mutation preserves Task identity as history
 
-**Status:** Accepted
-
-Resolved question: `UBU-Q0023`.
+**Status:** Accepted → DESIGN.md §9.4
 
 A Task does not literally change type into a Container by reusing its handle. Task-to-Container mutation is modeled as a structural replacement: the original Task remains an immutable historical Task record, a new Container is created with a new `container_id`, and the original Task transitions to `moot` when the restructuring replaces it for planning.
 
@@ -3839,21 +2453,11 @@ For GitHub-linked Tasks, decomposition should keep the GitHub Issue or PR tracea
 
 Automation Worker child Tasks are ordinary child Tasks grouped under a Container, with worker/delegation metadata and capability boundaries. Workers may propose Task-to-Container restructuring only through authorized mutation requests. The canonical instance validates authority, expected prior version, Compartment/export policy, External Reference changes, and idempotency, then writes applied or rejected Log entries.
 
-**Consequences:**
-
-- `UBU-Q0023` is resolved for Phase 2 implementation.
-- WorkItem handles remain stable and type-specific, avoiding ambiguity for Logs, Plans, External References, and GitHub projection.
-- Containers preserve original intent and lineage while child Tasks carry schedulable action semantics.
-- Decomposition, preemption, worker expansion, and GitHub-linked work use the same identity and provenance rule.
-- Existing moot reason codes and External Reference semantics are reused rather than introducing another mutation-specific handle model.
-
 ---
 
 ## UBU-D0149: Objective status transitions are mode-specific and logged
 
-**Status:** Accepted
-
-Resolved question: `UBU-Q0024`.
+**Status:** Accepted → DESIGN.md §7.3
 
 Objective status transitions are constrained by Objective mode. One-time Objectives and evergreen Objectives share the same status enum, but not every status is valid for every mode.
 
@@ -3901,19 +2505,11 @@ Evergreen `satisfied -> active` reactivation is a canonical transition only when
 
 Every accepted canonical Objective status transition creates an append-only Log entry with event type `objective_transitioned`, including old status, new status, actor or authority source, reason, effective time, and provenance when available. Simulated status changes inside candidate Plans or risk reports are predictions, not canonical transitions, and do not create `objective_transitioned` Logs unless accepted as actual state.
 
-**Consequences:**
-
-- `UBU-Q0024` is resolved for Phase 1 implementation.
-- MVP schemas can validate mode-specific Objective statuses and transition tables.
-- One-time completion and evergreen satisfaction stay semantically distinct.
-- Invalidity, supersession, and abandonment have separate meanings instead of being interchangeable terminal states.
-- Canonical Objective lifecycle changes remain auditable through the accepted append-only Log model.
-
 ---
 
 ## UBU-D0150: Model-committee v0.2 adopts schema-native Claude Code cross-scoring
 
-**Status:** Accepted
+**Status:** Accepted → DESIGN.md §3
 
 `model-committee v0.2` extends the v0.1 bootstrap loop by adding Claude Code CLI as a second frontier provider for both proposal generation and scoring.
 
@@ -3991,12 +2587,3 @@ git -C ../model-committee-artifacts push
 ```
 
 These commands are instructions for a human operator or separately authorized release process. `model-committee v0.2` should generate them, not execute them automatically.
-
-**Consequences:**
-
-- `model-committee` becomes a stronger visible dogfooding example because independent frontier-provider agreement and disagreement are preserved as artifacts.
-- The project gains a useful signal when Codex and Claude Code materially disagree on a patch, score, or risk.
-- The v0.1 Codex-first/Ollama-secondary baseline is superseded for v0.2 work selection, but remains useful as the historical baseline and fallback test target.
-- The design preserves inspectability by making the score matrix, quorum result, disagreement flags, and publication step explicit.
-- The no-direct-cloud-API rule is refined into a CLI-subprocess boundary rather than treated as a ban on all provider-mediated cloud model use.
-- Public dogfooding artifact publication now has a concrete default target repo path while remaining operator-run.

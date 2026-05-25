@@ -2558,40 +2558,7 @@ Stale marking is sufficient when the trigger only means cached Plans, Calendars,
 
 ## 29. Current Major Open Questions
 
-The major remaining questions are tracked in `OPEN_QUESTIONS.md`.
-
-Key unresolved areas include:
-
-- Phase 1 MVP scope is frozen, but bounded implementation details remain open
-- Worker identity/capability model
-- Worker mutation request schema
-- GitHub projection/reconciliation rules
-- GitHub event triage
-- UniverseState mutation schema
-- Precondition schema
-- Compact Calendar planner grammar, including skeleton Plan, legitimization, planning horizon/look-ahead, candidate search, GPU-aware execution, and mobile stewardship
-- Evergreen Dynamic Task and gap-filling semantics
-- Adaptive planning granularity and offline precomputation policy
-- Execution-provider trust, privacy, and backend-agnostic worker boundaries
-- Risk reporting primitives
-- Moot reason-code taxonomy
-- Model-committee work phase
-- Model-committee prioritized recursive loop
-- Model-committee question decomposition and answerability semantics
-- Model-committee Codex provider behavior
-- Contributor recruitment language
-- Independent knowledge-worker prototype-funder workflow
-- Public dogfooding artifact publication policy
-- Association object model, subjective attestation, and reconciliation
-- Organizational introspection and AssociationAttestation extraction
-- Context-rich cross-user messaging and Message Context Envelope schema
-- Legacy communication adapter boundaries and UbU-to-UbU upgrade paths
-- Structured message extraction schema, provenance, and model strategy
-- Personalized TTS, voice descriptors, and anti-impersonation controls
-- Cloud LLM provider abstraction and UbUCorp boundary
-- Skill Barter marketplace as a future Association specialization
-
----
+Unresolved questions are tracked in [`OPEN_QUESTIONS.md`](OPEN_QUESTIONS.md).
 
 ## 30. Design Process
 
