@@ -2587,3 +2587,76 @@ git -C ../model-committee-artifacts push
 ```
 
 These commands are instructions for a human operator or separately authorized release process. `model-committee v0.2` should generate them, not execute them automatically.
+
+---
+
+## UBU-D0151: Compact Calendar MVP grammar uses skeleton, legitimization, bounded candidates, and repair metadata
+
+**Status:** Accepted → DESIGN.md §§15.2.2, 16
+
+Resolved question: `UBU-Q0016`.
+
+Compact Calendar planning for Phase 1 uses a staged explicit grammar rather than a bare DFS grammar.
+
+The minimum skeleton Plan representation includes:
+
+- Static Task placements with fixed start and end times;
+- dependency DAG frontier for the current planning scope;
+- prerequisite roots whose required state is not already true in the initial UniverseState;
+- ordered prerequisite chains with dependency and precondition references;
+- initial UniverseState assumptions, including known true, known false, assumed, and unresolved planner-relevant facts;
+- unsatisfied dependency diagnostics with failing Task, missing state, causal chain, and clarification alternatives where available.
+
+Skeleton generation must check the initial UniverseState before inserting a prerequisite Task. A dependency requires a state, not necessarily a new Task. If skeletonization cannot produce a viable baseline, ordinary planning stops and UbU reports a concrete diagnostic instead of continuing into optimization.
+
+Legitimization adds the minimum human-viability constraints and support work required to make the skeleton plausible for execution:
+
+- affect constraints in `user_mode`;
+- recovery, break, meal, sleep, and rest requirements when applicable;
+- transition buffers;
+- setup and teardown time;
+- context-switch limits;
+- slack and dependency-fragility thresholds.
+
+The legitimized skeleton baseline is the minimum feasible Plan. Support work inserted by legitimization is represented as ordinary Tasks or buffers with explanation lineage, not as hidden planner magic.
+
+The minimum candidate Plan representation after legitimization includes:
+
+- materialized Task placements;
+- decision envelopes for movable Tasks;
+- Plan probability metadata;
+- value score;
+- legitimacy threshold result or score;
+- hard-validation status;
+- explanation lineage back to Objectives, dependencies, preconditions, affect constraints, worker status, risk findings, and probability inputs.
+
+Execution profiles are allowed as follows:
+
+- `baseline`: greedy mean-duration planning is required as a benchmark and fallback reference.
+- `mobile_local`: deterministic skeletonization, conservative legitimization, exact hard-constraint checks, local repair recipes, basic decision envelopes, cached explanations, and short-horizon BFS-like branch or repair reconstruction are required.
+- `desktop_or_worker`: DFS-like candidate construction, local search, larger branch horizons, cached subplans, and solver-backed finalist validation are allowed.
+- `solver_validation`: CP-SAT, SMT/MaxSMT, local-search, or comparable exact/conservative solvers may validate finalists, diagnose contradictions, or certify hard constraints.
+- `gpu_or_hosted`: GPU-friendly scoring, stochastic simulation, affect scoring, robustness scoring, and learned-model inference may propose or rank candidates, but exact or conservative validation must certify selected Plans.
+
+Search methods are implementation techniques, not semantic authority. DFS-like, BFS-like, greedy, solver-backed, GPU-friendly, and local repair methods may be combined as long as hard constraints, explanations, and selected-Plan validity remain inspectable.
+
+Plan probability is represented as probability metadata with:
+
+- a scalar display probability;
+- a log probability for stable computation;
+- an optional probability interval;
+- a provenance expression over modeled probabilistic inputs;
+- correlation-group, scenario, joint-distribution, or shared-random-variable references when inputs are not independent.
+
+Implementations must not multiply probabilistic inputs unless independence is explicitly declared by the model. Correlated or unknown relationships must use joint scenarios, shared random variables, correlation groups, or conservative intervals rather than pretending independence. MVP may be conservative and mark correlation unknown instead of producing false precision.
+
+Compact Calendar encoding should include, when present in the planning scope:
+
+- skeleton Plan metadata;
+- legitimized skeleton baseline;
+- ordering constraints;
+- duration PDFs;
+- Task success probabilities;
+- external-event and interruption distributions;
+- affect constraints;
+- decision envelopes;

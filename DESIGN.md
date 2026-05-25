@@ -1552,6 +1552,19 @@ After skeletonization, UbU performs **legitimization**. Legitimization adds the 
 
 The legitimized skeleton Plan is the baseline feasible Plan. Optional Dynamic Tasks, gap-filling work, and richer candidate Plans are compared against it by value, risk, fragility, and user-fit. If full legitimization is cheap, it may be used directly while testing candidate Plans. If it is expensive, UbU should use semi-legitimization heuristics before invoking full legitimization on finalists.
 
+Minimum skeleton Plan representation records:
+
+- Static Task placements with fixed start and end times;
+- the dependency DAG frontier used for the current planning scope;
+- prerequisite roots whose required state is not already true in the initial UniverseState;
+- ordered prerequisite chains and the dependency or precondition refs that justify them;
+- initial UniverseState assumptions, including known true, known false, assumed, and unresolved planner-relevant facts;
+- unsatisfied dependency diagnostics with the failing Task, missing state, causal chain, and clarification alternatives when available.
+
+Legitimization records the constraints it enforced and any support Tasks or buffers it inserted. The minimum legitimization output includes affect limits in `user_mode`, recovery, breaks, meals, sleep, rest, transition buffers, setup and teardown time, context-switch limits, slack thresholds, dependency-fragility thresholds, and a threshold result of `passed`, `failed`, or `needs_clarification`.
+
+After legitimization, the minimum candidate Plan representation includes materialized Task placements, decision envelopes for movable Tasks, Plan probability metadata, value score, legitimacy threshold result or score, hard-validation status, and explanation lineage back to Objectives, dependencies, preconditions, affect constraints, worker status, risk findings, and probability inputs.
+
 ### 15.2.3 Planning horizon and early preparation
 
 The internal planning horizon may exceed the user-visible Calendar window. A one-day visible Calendar may require look-ahead beyond the day to avoid cutting off dependency chains, Techniques, deadlines, or future preparation sequences.
@@ -1592,20 +1605,28 @@ Compact Calendar support is considered important for MVP because it enables recu
 
 A compact Calendar may include:
 
-- Task set
-- Static Tasks
-- Dynamic Tasks
-- duration distributions
-- Task success probabilities
-- external-event trigger distributions
-- modeled interruption distributions
-- affect-state uncertainty and constraints
-- deterministic expansion grammar
-- expansion threshold(s)
-- coverage value
-- default Plan reference or materialized default Plan
-- short-horizon branch cache
-- execution-mode metadata such as time delta, branch horizon, and resource limits
+- Task set;
+- Static Tasks;
+- Dynamic Tasks;
+- skeleton Plan metadata;
+- legitimized skeleton baseline;
+- ordering constraints;
+- duration distributions;
+- Task success probabilities;
+- external-event trigger distributions;
+- modeled interruption distributions;
+- affect-state uncertainty and constraints;
+- deterministic expansion grammar;
+- probability provenance expressions and correlation-group references;
+- expansion threshold(s);
+- coverage value;
+- default Plan reference or materialized default Plan;
+- stored user-previewed, risk-report, or debug Plans when policy requires them;
+- short-horizon branch cache;
+- decision envelopes;
+- protected, flexible, and disposable Task metadata;
+- cached explanations and repair recipes;
+- execution-mode metadata such as time delta, branch horizon, CPU/GPU resource limits, and privacy-routing limits.
 
 ### 16.2 Coverage
 
@@ -1614,6 +1635,10 @@ Coverage belongs to the compact serialization, not the abstract Calendar.
 Coverage represents the probability mass of possible futures covered by the compact representation.
 
 The provisional short-horizon branch coverage target is `0.99` probability mass. This should be treated as a configurable heuristic, not as a mathematical guarantee for every device, scope, or resource mode.
+
+After time advances, coverage is recalculated by conditioning the compact Calendar on elapsed time and accepted Logs, Snapshots, External Events, and user actions, then discarding expired branch mass and re-estimating the remaining covered mass.
+
+If recalculated coverage falls below the configured threshold, UbU records a `low_compact_calendar_coverage` recalculation trigger or marks the Calendar stale according to trigger policy. Exact coverage proof is not an MVP requirement.
 
 ### 16.3 Planner grammar direction
 
@@ -1628,6 +1653,10 @@ Compact Calendar planning is no longer framed as a bare DFS process that directl
 7. Package compact repair metadata for runtime use.
 
 DFS-like search may still be useful for candidate construction. BFS-like search may still be useful for near-term divergence. Greedy selection may still be useful as a deliberately unintelligent baseline. None of those algorithms is the complete planning architecture by itself.
+
+Execution profiles are additive rather than mutually exclusive. The greedy mean-duration planner is the required MVP benchmark. Local and mobile profiles must support deterministic skeletonization, conservative legitimization, exact hard-constraint checks, local repair recipes, and a short-horizon branch cache. Desktop, worker, and hosted profiles may add DFS-like candidate construction, local search, solver-backed finalist validation, and GPU-friendly scoring or simulation. GPU or learned search may propose and score candidates, but exact or conservative validation certifies the selected Plan.
+
+Plan probability is represented internally as probability metadata rather than only as a display scalar. The minimum record contains a display scalar, a log probability for stable computation, an optional probability interval, provenance over the modeled probabilistic inputs, and correlation-group or scenario references when inputs are not independent. Implementations may multiply probabilities only for inputs declared independent. Correlated or unknown relationships must use joint scenarios, shared random variables, correlation groups, or conservative intervals rather than pretending independence.
 
 ### 16.4 Reactive short-horizon branch layer
 
@@ -1693,6 +1722,14 @@ Possible execution backends include:
 - future privacy-preserving compute services such as practical FHE-backed or comparable encrypted computation.
 
 The FOSS planner and Compact Calendar representation should be backend-agnostic. Execution providers are interchangeable through explicit APIs, capability grants, Compartment policy, provenance, and user-visible routing decisions. GPU search may propose candidate Plans, but hard constraints and final Plan validity must be certified by exact or conservative validation. Cloud planning payloads should minimize PII and transmit only the structured timing, dependency, value, constraint, criticality, and legitimacy information needed for the selected provider.
+
+### 16.9 MVP Compact Calendar implementation
+
+The minimum Phase 1 Compact Calendar implementation stores the legitimized skeleton baseline, the default Plan, the active execution profile, coverage estimate, decision envelopes, Task criticality, cached explanation fragments, probability provenance, and last-legitimate-Plan reference. It stores user-previewed, risk-report, and debug/reproducibility Plans only when those artifacts are actually generated or needed for audit.
+
+High-probability near-term alternatives within the reactive horizon may be stored as materialized branches or as deterministic reconstruction instructions. Non-selected candidate Plans, expensive global repairs, and low-probability branches are reconstructed on demand from the compact grammar, current UniverseState, Logs, Snapshots, External Events, repair recipes, and cached provenance.
+
+MVP planning does not require exhaustive optimal search, cloud compute, GPU execution, exact coverage proof, learned policy models, or a complete transport grammar for every post-MVP uncertainty source. The required implementation is a deterministic skeletonizer, minimum legitimizer, greedy baseline, bounded candidate expansion, hard-constraint validator, Plan probability/provenance record, compact default-Plan package, short-horizon repair cache or reconstruction path, and low-coverage recalculation trigger.
 
 ---
 

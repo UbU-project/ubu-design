@@ -337,7 +337,7 @@ Resolved. See UBU-D0131.
 
 ## UBU-Q0016: Compact Calendar planner grammar and execution profile
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0014, UBU-Q0015 Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0014, UBU-Q0015 Blocks: Phase 1 implementation Resolved by: UBU-D0151 Last scored: Never Scored from commit: None
 
 Compact Calendar support is important for recursive self-analysis, future sync/transport, and fast recalculation. The current direction is no longer a bare DFS grammar. The planner architecture begins with skeleton Plan generation, then legitimization, then candidate Plan expansion and validation, with reactive mobile stewardship around the selected Plan.
 
@@ -410,7 +410,7 @@ The ideal search may be NP-hard or otherwise combinatorially expensive, but fini
 
 ### Resolution
 
-Unresolved. Must be refined into an MVP planner grammar and execution profile before Phase 1 implementation can be considered stable.
+Resolved. See UBU-D0151.
 
 ---
 
