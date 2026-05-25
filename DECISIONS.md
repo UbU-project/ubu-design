@@ -2660,3 +2660,100 @@ Compact Calendar encoding should include, when present in the planning scope:
 - external-event and interruption distributions;
 - affect constraints;
 - decision envelopes;
+
+---
+
+## UBU-D0152: Extrospection is first-class Relationship review
+
+**Status:** Accepted → DESIGN.md §§2.10.1, 22
+
+Extrospection is a first-class Relationship review feature. It applies the evidence-backed attestation pattern used by introspection and AssociationAttestation to the user's Relationship model.
+
+Relationships have **epistemic asymmetry**: the user has first-person access to the user's own declarations and experiences, while UbU can only maintain evidence-backed hypotheses about another party's perspective. Extrospection must therefore target the user's counterparty-perspective hypotheses, Relationship scopes, trust assumptions, reciprocity assumptions, affective impact, and functionality assumptions. It must not claim authoritative access to another person's inner state.
+
+Extrospection should present evidence in tension rather than deliver an oracle verdict. It may surface confirming evidence, disconfirming evidence, ambiguity, insufficient evidence, clarification prompts, possible model updates, and introspection handoffs. The goal is evidence-backed confrontation and self-governance, not counterparty prosecution.
+
+---
+
+## UBU-D0153: Relationship perspectives, extrospection findings, and evidence policy are structured and reviewable
+
+**Status:** Accepted → DESIGN.md §§22.1, 22.2
+
+The richer Relationship model should lazily decompose the user's side into:
+
+- `ownDeclaredPerspectiveHistory`;
+- `ownObservedBehaviorRefs`;
+- `ownAffectHistoryRefs`;
+- `ownReflections`.
+
+User declarations about a Relationship are versioned over time, not overwritten as a single timeless field.
+
+Counterparty perspective should be represented as domain- and scope-tagged `counterpartyPerspectiveHypotheses`, not as a monolithic `speculatedPerspective`. UbU may detect internal tension among those hypotheses as a finding about the user's model consistency, not as a claim about the counterparty.
+
+Extrospection assessments should be separated into `ScopeAssessment`, `BoundaryAssessment`, `ReciprocityAssessment`, `TrustCalibrationAssessment`, `AffectiveAssessment`, and `FunctionalityAssessment`. `ScopeAssessment` logically precedes the others. Negative affect is not equivalent to dysfunction, and reviewed value-aligned discomfort may be recorded as `userAcceptedDiscomfort`.
+
+Extrospection findings use the lifecycle `candidate`, `deferred`, `resurfaced`, `reviewed_accepted`, `reviewed_rejected`, `superseded`, and `archived`. Unreviewed findings must not silently update durable Relationship state. Rejected findings should be retained enough to suppress repeated bad framings.
+
+Durable evidence should prefer Compartment-aware `EvidenceRef`s, selectors, summaries, typed retention policy, typed redaction policy, and EvidenceUsePolicy over copied private excerpts. Cross-Relationship inference is prohibited by default. Evidence should decay in salience unless reactivated by new evidence, user review, or a current Objective.
+
+---
+
+## UBU-D0154: RelationshipScopeTransition is an Objective target, not a separate planning system
+
+**Status:** Accepted → DESIGN.md §§7.5, 22.3
+
+Users may explicitly create Objectives to change their own participation in a Relationship, invite or test a mutual scope change, or clarify whether another party is willing to enter a different scope.
+
+`RelationshipScopeTransition` is a semantic target/reference for such Objectives. It is implemented through ordinary Objectives, Techniques, Steps, Tasks, Logs, extrospection reviews, introspection reviews, and UniverseState mutations. UbU should not create a parallel relationship-planning system.
+
+The Relationship object remains primarily descriptive, but it keeps reverse references to active, completed, abandoned, declined, or superseded RelationshipScopeTransitions that affected it. This prevents declaration history from appearing to change spontaneously when a scope change resulted from a deliberate Objective.
+
+Valid RelationshipScopeTransition work targets user-controlled behavior: disclosures, invitations, boundary-setting, availability changes, communication changes, and clarification attempts. Counterparty feelings, decisions, and Identity remain autonomous and uncertain.
+
+---
+
+## UBU-D0155: RelationshipScopeTransition separates process success from outcome and blocks optimized persuasion semantics
+
+**Status:** Accepted → DESIGN.md §§7.5, 22.3
+
+Consent-dependent and mutual RelationshipScopeTransitions must separate `process_success_criteria` from `outcome_observations`. A transition attempt can be process-successful even when the counterparty declines. Counterparty response is evidence, not the user's success or failure.
+
+The `transition_type` enum is provisionally:
+
+- `unilateral`;
+- `exploratory`;
+- `mutual`;
+- `retroactive_scope_clarification`.
+
+All actionable Steps and Tasks must be anchored to user-controlled behavior. A Step is malformed if its completion criterion requires a counterparty mental state, feeling, or decision.
+
+RelationshipScopeTransition Techniques should satisfy epistemic transparency: the counterparty should receive accurate information sufficient for autonomous decision-making. Exploratory transitions follow a single-iteration rule: one disclosure or proposal, one clarification if ambiguous, and termination of the current Objective on authentic refusal. Future reopening requires materially new evidence, a new Objective, and stronger review.
+
+The prohibited-strategy taxonomy is typed and includes artificial urgency, false scarcity, vulnerability exploitation, incremental boundary erosion, strategic information withholding, emotional state manipulation, leveraging privileged affect knowledge, manufactured dependency, social pressure through third parties, retaliation or threat, coercive leverage, deceptive self-presentation, and repeated pursuit after refusal.
+
+The affect-knowledge firewall is canonical: extrospection-derived affect knowledge may be used for harm avoidance, not persuasion optimization. Romantic, professional, dependency-heavy, and power-asymmetric transitions may carry stronger default advisory safeguards, including power/vulnerability checks, pacing constraints, and graceful nonachievement paths.
+
+---
+
+## UBU-D0156: Relationship safeguards are default-on advisory unless structural boundaries apply
+
+**Status:** Accepted → DESIGN.md §§2.10.2, 22.4, 23.3
+
+Relationship-transition ethical reasoning, extrospection checks, introspection checks, manipulation-risk review, TrustCalibrationAssessment, power/vulnerability checks, pacing checks, and graceful nonachievement planning are wise default-on safeguards. Users should generally use them. However, UbU's prime directive is to respect the user's autonomy and decisions, so these behavioral-risk safeguards must not be unconditional hard gates by default.
+
+Hard boundaries should be limited to structurally enforceable product invariants and explicit policies, including:
+
+- Compartment boundaries;
+- privacy policy;
+- data-access authorization;
+- EvidenceUsePolicy restrictions;
+- export prohibitions;
+- identity/Compartment isolation;
+- provenance integrity;
+- audit-record integrity;
+- integration authorization;
+- unavoidable provider/platform/legal constraints.
+
+Behavioral-risk checks such as manipulation, coercion, harassment, stalking, deception, romantic/professional power asymmetry, rumination, and relationship-transition ethics depend on fallible classification. Treating them as hard gates risks false positives that block legitimate actions, false negatives that create misplaced trust, and a false impression that UbU can reliably prevent misuse or illegal behavior.
+
+Behavioral safeguards should generally be default-on, user-aware, uncertainty-transparent, user-overrideable advisory checks with introspection consequences when bypassed. A user may configure some advisory checks as self-imposed required gates. Bypassing or disabling recommended safeguards is itself introspection-relevant evidence about revealed priorities and possible conflicts with declared values.

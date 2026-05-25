@@ -60,27 +60,31 @@ UbU is based on several design principles:
 
    UbU should help Associations inspect whether their real work, decisions, overrides, and undocumented structure align with their declared mission and commitments.
 
-10. **Provider-neutral LLM execution**
+10. **Extrospection and Relationship self-governance**
+
+   UbU should help users review whether their Relationship models, scope assumptions, trust calibration, reciprocity expectations, and boundary assumptions are supported by permitted evidence, while never claiming authoritative access to another person's inner state.
+
+11. **Provider-neutral LLM execution**
 
    Local LLM execution remains the privacy-preserving baseline, but optional cloud LLMs, BYOK providers, UbUCorp managed inference, and user-owned workers should be routed through explicit policy rather than hidden dependency.
 
-11. **Context-rich communication**
+12. **Context-rich communication**
 
    Phase 3 should include minimal UbU-to-UbU contextual messaging so messages can carry priority, topic, response expectation, assumptions, ambiguities, provenance, and disclosure policy instead of forcing the receiver to infer everything from flat text.
 
-12. **Realtime and agentic AI boundary**
+13. **Realtime and agentic AI boundary**
 
    Realtime, multimodal, tool-using, and memory-bearing models are useful interaction backends, but they emit candidate updates. UbU's planner, Logs, Compartments, Identities, and review rules remain authoritative.
 
-13. **Delegation Substrate**
+14. **Delegation Substrate**
 
    UbU should prepare Tasks for delegation by formalizing purpose, executor, authority, expected output, evidence, privacy scope, review, and escalation. The same structure is useful for solo Tasks as a self-reminder of how and why the Task should be performed.
 
-14. **MCP-style interoperability**
+15. **MCP-style interoperability**
 
    UbU should eventually operate as both an MCP-style client and server, exposing only narrow, capability-scoped, Compartment-aware tool surfaces.
 
-15. **Skill Barter future direction**
+16. **Skill Barter future direction**
 
    Skill Barter is a future privacy-preserving skilled-work marketplace direction and EthConf outreach hook. The MVP should implement Delegation Substrate primitives, not a public marketplace.
 
@@ -347,6 +351,8 @@ The UbU model currently includes:
 - Voice Profile Descriptor
 - Identity
 - Relationship
+- RelationshipScopeTransition
+- ExtrospectionFinding
 - Zone
 - Compartment
 - Automation Worker
@@ -417,6 +423,18 @@ Associations are evidence-backed and perspective-bound by default. UbU should re
 Organizational introspection is the Association-level version of personal Log review. UbU can analyze permitted records - design docs, GitHub issues, meeting notes, chat logs, outreach notes, roadmaps, and public governance discussions - to generate reviewable AssociationAttestations and feedback questions about whether actual behavior matches declared mission and commitments.
 
 For UbU itself, EthConf outreach is the first concrete dogfooding case: the project will try to turn conversations into explicit follow-up Tasks, contributor paths, funding signals, and a redacted retrospective about whether the outreach actually served UbU's stated goals.
+
+---
+
+## Relationships and extrospection
+
+A **Relationship** is UbU's perspective-bound model of interaction between Identities. Relationships have **epistemic asymmetry**: the user can report their own declarations, experiences, and reflections, but UbU can only maintain evidence-backed hypotheses about another party's perspective.
+
+**Extrospection** is the Relationship-level review pattern. It compares the user's counterparty-perspective hypotheses, scope declarations, trust assumptions, reciprocity assumptions, affective experience, and boundary expectations against permitted evidence. It should surface evidence in tension rather than claim to know what another person thinks.
+
+Users may also create Objectives to change Relationship scope. A `RelationshipScopeTransition` is an Objective target for user-controlled actions such as disclosures, invitations, boundary-setting, availability changes, or clarification attempts. Counterparty response remains autonomous evidence, not user success or failure.
+
+Relationship safeguards are default-on advisory checks, not paternalistic hard gates. Structurally enforceable privacy, Compartment, authorization, EvidenceUsePolicy, provenance, audit, and integration boundaries remain hard. Behavioral-risk checks such as manipulation-risk, power-asymmetry risk, or rumination risk are fallible and should generally be overrideable, uncertainty-aware, and introspection-relevant when bypassed.
 
 ---
 

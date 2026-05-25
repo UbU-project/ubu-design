@@ -47,10 +47,11 @@ UbU is building a system that models:
 - Plans and Calendars;
 - Logs and Snapshots of what actually happened;
 - external events and recalculation triggers;
-- Identities, Relationships, Associations, and bounded disclosure;
+- Identities, Relationships, RelationshipScopeTransitions, Associations, and bounded disclosure;
 - Compartments and privacy policy;
 - Automation Workers and agentic candidate updates;
 - Delegation Substrate packets for self, human, tool, or agent execution;
+- extrospection as a future Relationship review pattern with autonomy-first safeguards;
 - projections into external systems such as GitHub.
 
 The first version does not need every abstraction fully implemented. Phase 1 should prove that the core loop is useful, understandable, and extensible.

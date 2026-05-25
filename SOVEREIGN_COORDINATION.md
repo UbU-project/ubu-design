@@ -28,6 +28,8 @@ A system that knows a user’s goals, calendar, messages, emotional state, work 
 
 UbU’s answer is not to trust one assistant harder. UbU’s answer is to make planning state explicit, compartmentalized, inspectable, correctable, and user-governed.
 
+That same sovereignty rule applies to relationships. UbU may help a user review Relationship scope, trust calibration, reciprocity, boundaries, and proposed scope transitions, but behavioral-risk safeguards are advisory by default. Hard boundaries are structural: privacy, Compartments, authorization, EvidenceUsePolicy, provenance, audit integrity, and unavoidable external constraints.
+
 LLMs, realtime models, local agents, cloud models, and external tools may help extract candidates or propose actions. They do not become the authority over canonical state.
 
 ---

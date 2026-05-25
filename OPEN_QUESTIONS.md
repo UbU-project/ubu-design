@@ -1860,3 +1860,418 @@ UbU should become a state-transition cockpit over time. Phase 1 remains the narr
 
 Open.
 
+---
+
+## UBU-Q0086: Counterparty-perspective hypothesis model for extrospection
+
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0026, UBU-Q0067 Blocks: extrospection, Relationship review, relationship-scope transitions Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU represent domain- and scope-tagged counterparty-perspective hypotheses without converting them into facts about the counterparty?
+
+### Subquestions
+
+1. What minimum fields belong on `counterpartyPerspectiveHypotheses`?
+2. Which domains should be first-class: technical collaboration, emotional availability, professional boundary, money/value, authority, reciprocity, trust, intimacy, conflict style, or others?
+3. How should hypothesis confidence, evidence refs, counterevidence refs, review status, and last-reviewed time be represented?
+4. How should UbU detect internal tension in the user's hypothesis set without making claims about the counterparty's inner state?
+5. When should a hypothesis be archived, superseded, or suppressed after rejection?
+
+### Current direction
+
+Use domain- and scope-tagged hypotheses. The attestation target is the user's hypothesis, not the counterparty's actual perspective.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0087: Relationship declaration versioning and scope drift
+
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0026 Blocks: Relationship model, extrospection, RelationshipScopeTransition Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should user-declared Relationship scope and perspective be versioned over time, and how should declaration drift relate to observed scope drift?
+
+### Subquestions
+
+1. What fields belong in `ownDeclaredPerspectiveHistory`?
+2. When does a new user declaration supersede an older declaration versus coexist with it?
+3. How should scope drift be detected when user declarations, observed behavior, and affect history disagree?
+4. How should a deliberate RelationshipScopeTransition be linked to declaration history?
+5. How should UbU distinguish legitimate scope evolution from unnoticed scope creep?
+
+### Current direction
+
+Relationship declarations should be historical. A changed declaration is evidence and should not silently erase the prior model.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0088: Extrospection finding lifecycle and durable rejection semantics
+
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0062 Blocks: extrospection review, candidate/canonical distinction, state-transition cockpit Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should candidate, deferred, resurfaced, accepted, rejected, superseded, and archived extrospection findings behave?
+
+### Subquestions
+
+1. What state transitions are valid for an `ExtrospectionFinding`?
+2. What model influence is prohibited before user review?
+3. How should deferred findings resurface when new evidence accumulates?
+4. What data should a rejected finding retain to suppress repeated bad framings?
+5. How should accepted findings mutate Relationship state, if at all?
+
+### Current direction
+
+Unreviewed findings must not silently update durable state. Rejection is a first-class correction path, not merely dismissal.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0089: Extrospection safety thresholds and anti-paranoia design
+
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0086, UBU-Q0088 Blocks: proactive extrospection, scope-drift prompts, rumination detection Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What evidence thresholds justify candidate findings about scope drift, boundary pressure, reciprocity imbalance, trust miscalibration, or rumination without amplifying paranoia?
+
+### Subquestions
+
+1. What corpus size, evidence count, recency, and salience thresholds are required before proactive prompting?
+2. How should UbU search for confirming evidence when surfacing disconfirming evidence?
+3. How should evidence decay in salience without deleting legitimate history?
+4. When should high-frequency review without model update trigger rumination concerns?
+5. How should UbU present uncertainty and false-positive risk in extrospection advisories?
+
+### Current direction
+
+UbU should be humble about interpretation, not timid about evidence. Behavioral-risk findings are advisory by default.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0090: User-accepted discomfort and value-aligned negative affect
+
+Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0050, UBU-Q0089 Blocks: affective assessment, extrospection, relationship review Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU represent reviewed, value-aligned discomfort in a Relationship, and when may new evidence reopen it?
+
+### Subquestions
+
+1. What fields belong in `userAcceptedDiscomfort`?
+2. How should UbU distinguish harmful relationship patterns from uncomfortable but value-aligned growth, caregiving, mentorship, or duty?
+3. What counts as sufficiently new evidence to reopen a previously accepted discomfort finding?
+4. How should accepted discomfort interact with RelationshipScopeTransition Objectives?
+5. How can UbU avoid repeatedly warning about discomfort the user has already reviewed?
+
+### Current direction
+
+Negative affect is not equivalent to dysfunction. UbU should separate AffectiveAssessment from normative and functional assessments.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0091: Relationship, multi-party Relationship, and Association boundary
+
+Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0061, UBU-Q0086 Blocks: multi-party extrospection, Association modeling, group relationship review Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+When should a multi-party interaction be modeled as a Relationship, an Association, or both?
+
+### Subquestions
+
+1. When is the primary object interpersonal interaction with specific Identities?
+2. When is the primary object emergent group behavior, shared mission, institutional action, or collective coordination?
+3. How should dyadic findings coexist with lower-confidence group-level findings?
+4. How should a Relationship and Association over the same people reference each other?
+5. What evidence corpus limits apply when the user is not party to all inter-party dynamics?
+
+### Current direction
+
+Use Relationship for interpersonal interaction with specific Identities, Association for emergent coordination, and allow both to coexist over the same people.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0092: Typed Relationship evidence policies
+
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0028, UBU-Q0083 Blocks: extrospection evidence, Relationship evidence retention, compartment-aware review Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What typed retention, redaction, and evidence-use policy enums are required for Relationship evidence?
+
+### Subquestions
+
+1. Which retention policies are needed: retain indefinitely, retain until Relationship closes, session-only, auto-delete after duration, retain summary only, or user review required?
+2. Which redaction policies are needed: full text permitted, summary only, selector only, reference only, metadata only, or prohibited?
+3. Which EvidenceUsePolicy values govern extrospection, introspection, AssociationAttestation, planning, export, and model training?
+4. How should raw excerpts be displayed without becoming durable copied private text?
+5. How should EvidenceRefs record Compartment, source, timestamp range, selector, generated summary, permission basis, and provenance?
+
+### Current direction
+
+Evidence policies must be typed and enforceable. Durable Relationship evidence should prefer references and summaries over copied private excerpts.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0093: Extrospection-to-introspection handoff
+
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0050, UBU-Q0088 Blocks: introspection UX, extrospection UX, relationship review Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+When should a relational finding be routed into introspection because the evidence primarily concerns the user's own behavior?
+
+### Subquestions
+
+1. How should UbU identify that the user is driving scope drift, boundary violation, reciprocity failure, or trust miscalibration?
+2. Which extrospection findings create candidate introspection findings?
+3. How should evidence be reused without violating Compartment or EvidenceUsePolicy boundaries?
+4. How should UbU avoid turning extrospection into blame-shifting toward the counterparty?
+5. How should the user reject or accept the introspection handoff?
+
+### Current direction
+
+Extrospection should remain self-governance. Findings primarily about user behavior should hand off to introspection.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0094: RelationshipScopeTransition model boundary and reverse references
+
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0026, UBU-Q0087 Blocks: RelationshipScopeTransition, Objective targeting, Relationship history Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should RelationshipScopeTransition remain an Objective target while preserving reverse references from Relationship history?
+
+### Subquestions
+
+1. What fields belong on `RelationshipScopeTransition` versus `Relationship`?
+2. How should active, completed, abandoned, declined, and superseded transitions be referenced from Relationship?
+3. How should a transition update `ownDeclaredPerspectiveHistory`?
+4. How should transition-generated Logs and EvidenceRefs link back to the Objective?
+5. Which parts are MVP hooks versus post-MVP full implementation?
+
+### Current direction
+
+RelationshipScopeTransition is a process target for Objectives. Relationship remains descriptive but keeps reverse references to transitions that affected it.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0095: Process success and outcome observations in RelationshipScopeTransition
+
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0094 Blocks: consent-dependent transitions, Objective status, graceful nonachievement Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU distinguish user-controlled process success from autonomous counterparty outcome observations?
+
+### Subquestions
+
+1. What `process_success_criteria` are valid for unilateral, exploratory, mutual, and retroactive clarification transitions?
+2. What outcome observations should be enumerated: accepted, declined, ambiguous, insufficient evidence, no response, or others?
+3. How should an Objective be terminal and process-successful when the desired mutual outcome is not achieved?
+4. How should Objective status avoid treating refusal as user failure?
+5. How should outcome observations update Relationship evidence and hypotheses?
+
+### Current direction
+
+Counterparty response is evidence, not user success or failure. Consent-dependent transitions can be process-successful even when declined.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0096: RelationshipScopeTransition type taxonomy and review gates
+
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0094 Blocks: transition planning, review checkpoints, RelationshipScopeTransition UX Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What transition types are needed, and what default advisory review gates apply to each?
+
+### Subquestions
+
+1. Are `unilateral`, `exploratory`, `mutual`, and `retroactive_scope_clarification` sufficient?
+2. Which pre-action reviews should be recommended by default for each transition type?
+3. How should romantic, professional, dependency-heavy, or power-asymmetric cases adjust the recommendations?
+4. Which advisory checks may the user configure as self-imposed required gates?
+5. How should bypass decisions be logged and surfaced for introspection?
+
+### Current direction
+
+Transition gates should be default-on advisory safeguards unless structural boundaries, external constraints, or user-configured required gates apply.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0097: RelationshipScopeTransition step validation and counterparty autonomy
+
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0095 Blocks: Technique generation, Step validation, autonomy-preserving relationship planning Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU validate that every Step in a RelationshipScopeTransition is anchored to user-controlled behavior rather than counterparty mental state?
+
+### Subquestions
+
+1. What completion criteria are malformed because they require counterparty feelings, decisions, or identity change?
+2. How should `counterparty_autonomy_acknowledgment` be represented?
+3. What counts as authentic refusal, and when does it terminate an exploratory transition Objective?
+4. How should one clarification after ambiguity differ from a retry strategy?
+5. How should future reopening after refusal require materially new evidence and a new Objective?
+
+### Current direction
+
+All actionable Steps and Tasks must be user-controlled. Counterparty autonomy and valid refusal are explicit model assumptions.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0098: Manipulation-prevention taxonomy and affect-knowledge firewall
+
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0097 Blocks: RelationshipScopeTransition Technique generation, extrospection safety, relationship safeguards Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What typed prohibited-strategy taxonomy, affect-knowledge firewall, epistemic-transparency rule, and single-iteration policy are required for RelationshipScopeTransitions?
+
+### Subquestions
+
+1. Which prohibited strategy types are required for MVP hooks and post-MVP validation?
+2. How should UbU distinguish authentic self-expression support from optimized disclosure or persuasion scripting?
+3. How should extrospection-derived affect knowledge be allowed for harm avoidance but not persuasion timing?
+4. What is the epistemic transparency requirement for Techniques?
+5. How should advisory warnings express uncertainty and classifier fallibility?
+
+### Current direction
+
+Extrospection-derived affect knowledge may be used for harm avoidance, not persuasion optimization. Behavioral-risk checks are advisory by default.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0099: Power, vulnerability, pacing, and graceful nonachievement
+
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0094, UBU-Q0098 Blocks: romantic transitions, professional transitions, dependency-heavy transitions, graceful failure UX Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU model power asymmetry, vulnerability asymmetry, pacing constraints, cooling periods, and graceful nonachievement paths?
+
+### Subquestions
+
+1. What values belong in `power_asymmetry` and `power_asymmetry_basis`?
+2. How should romantic vulnerability, financial dependence, employment authority, housing dependence, caregiving dependence, emotional dependence, social status, age, and platform power be represented?
+3. When should power asymmetry make a transition delayed, require stronger advisory review, or require external review?
+4. What pacing constraints are needed: minimum time between Steps, observation periods, cooling periods, evidence requirements, and maximum prompt frequency?
+5. What belongs in a graceful nonachievement path: terminal state, model update options, introspection handoff, affective support, and delayed review?
+
+### Current direction
+
+The model should include power/vulnerability fields and pacing constraints. Desired mutual outcome nonachievement is not user failure.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0100: Structural hard boundaries versus behavioral-risk safeguards
+
+Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Governance Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0028, UBU-Q0083 Blocks: safeguard policy, relationship safeguards, product integrity, user autonomy Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should UbU distinguish structurally enforceable hard boundaries from fallible behavioral-risk safeguards, so that it preserves user autonomy without falsely claiming to prevent misuse or illegal behavior?
+
+### Subquestions
+
+1. Which boundaries are true product invariants: Compartment, privacy, authorization, EvidenceUsePolicy, export, provenance, audit, identity isolation, and integration authorization?
+2. Which constraints come from external providers, platforms, app stores, or law rather than UbU's own philosophy?
+3. Which behavioral-risk checks are too fallible to act as hard gates by default?
+4. How should user-configured required gates be represented without confusing them with product hard boundaries?
+5. How should documentation avoid implying that UbU reliably prevents behavioral misuse?
+
+### Current direction
+
+Hard boundaries should be structural or externally required. Behavioral-risk checks should generally be advisory by default.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0101: Advisory safeguard uncertainty, override, and introspection consequences
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0100 Blocks: safeguard UX, introspection, relationship-transition UX Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should advisory behavioral safeguards represent uncertainty, false-positive risk, user override, and introspection consequences without becoming paternalistic gates?
+
+### Subquestions
+
+1. How should UbU communicate classifier uncertainty and false-positive/false-negative risk?
+2. What UI should allow review, revision, bypass-once, disablement, or user-configured required gates?
+3. How should bypass decisions become candidate introspection evidence without becoming soft coercion?
+4. How should safeguard disablement interact with declared values around respect, care, autonomy, safety, and trust?
+5. When should repeated bypasses trigger review of the user's values or preferences?
+
+### Current direction
+
+Advisory safeguards should be default-on, user-aware, uncertainty-transparent, overrideable, and introspection-relevant when bypassed.
+
+### Resolution
+
+Open.

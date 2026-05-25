@@ -14,7 +14,7 @@ They fail because the project loses track of why work matters, what state change
 
 UbU is designed for that failure mode.
 
-UbU is a privacy-first planning, coordination, and self-governance system. Its project-management value is derivative of the same core model used for personal self-governance: Objectives, Tasks, Plans, Calendars, Logs, Preferences, Identities, Compartments, Associations, external events, and reviewable state transitions.
+UbU is a privacy-first planning, coordination, and self-governance system. Its project-management value is derivative of the same core model used for personal self-governance: Objectives, Tasks, Plans, Calendars, Logs, Preferences, Identities, Relationships, Compartments, Associations, external events, and reviewable state transitions.
 
 The goal is not to make autonomous contributors easier to surveil. The goal is to make coordination explicit enough that people can act with more autonomy, less ambiguity, and better evidence.
 

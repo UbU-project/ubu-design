@@ -32,6 +32,8 @@ UbU’s first proving ground is its own project.
 
 UbU also treats organizations broadly as **Associations**: formal or informal groups that emerge from shared Objectives, Relationships, commitments, norms, evidence, and bounded disclosure. A FOSS project, contributor crew, friend group, conference cohort, skill network, nonprofit, company, DAO-like project, or marketplace can all be modeled as an Association without pretending that every group has one objective member list or central authority.
 
+UbU's Relationship model also supports **extrospection**: evidence-backed review of the user's hypotheses about another person's relationship perspective, scope, trust, reciprocity, boundaries, and affective impact. Extrospection is not mind-reading or dossier-building. It is a self-governance review pattern that respects epistemic asymmetry and user autonomy.
+
 ---
 
 ## Why UbU matters
@@ -280,6 +282,18 @@ A useful outreach hook is:
 > Can your project prove from its records that it is actually committed to achieving its stated goals?
 
 This should be presented as a shared discipline, not an accusation. UbU will apply the same test to itself: EthConf notes, follow-ups, project artifacts, and public retrospectives can be submitted to LLM-assisted or manual review to ask whether UbU actually pursued its stated outreach goals.
+
+---
+
+## Extrospection and Relationship scope
+
+Extrospection applies the same evidence-backed review pattern to Relationships. The user may know their own perspective directly, but the other person's perspective remains a set of hypotheses supported or weakened by permitted communications, Logs, shared events, and other evidence.
+
+The feature should help users ask whether a Relationship is correctly scoped, whether trust and reciprocity assumptions are evidence-calibrated, whether boundaries are being respected, and whether discomfort is harmful or value-aligned. It should not claim to know another person's inner state.
+
+Users may also create Objectives to change Relationship scope, such as reducing a friendship to a formal acquaintance scope or respectfully exploring whether someone is open to a romantic scope. Such Objectives use ordinary Techniques, Steps, and Tasks, but they must target user-controlled behavior. The other person's response is autonomous evidence, not a success/failure condition under the user's control.
+
+Recommended relationship safeguards should default on, but behavioral-risk checks are advisory by default. UbU's hard boundaries are structural: privacy, Compartment policy, authorization, EvidenceUsePolicy, provenance, audit integrity, and unavoidable external constraints.
 
 ---
 
