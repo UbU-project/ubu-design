@@ -171,7 +171,7 @@ Resolved. See UBU-D0095.
 
 ## UBU-Q0008: Worker Assignment Model
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0007 Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0007 Blocks: Phase 1 implementation Resolved by: UBU-D0158 Last scored: Never Scored from commit: None
 
 Workers need a way to discover or receive work.
 
@@ -193,7 +193,7 @@ Explicit assignment is likely simplest.
 
 ### Resolution
 
-Unresolved.
+Resolved. See UBU-D0158.
 
 ---
 

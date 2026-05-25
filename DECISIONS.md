@@ -2790,3 +2790,35 @@ Any workflow using a cloud or external LLM must disclose, before or at execution
 - LLM routing can proceed without privileging Ollama, UbUCorp, or any single cloud API as the canonical interface.
 - `UBU-Q0079`, `UBU-Q0080`, `UBU-Q0083`, and `UBU-Q0084` may depend on this routing boundary while still refining MCP tools, Delegation Substrate fields, ContextBundle governance, and background-agent policy.
 - Provider-specific SDK details, exact secret-store implementation, and long-context bundle review UX may evolve without changing the minimum boundary.
+
+---
+
+## UBU-D0158: Phase 1 worker work discovery uses explicit assignments
+
+**Status:** Accepted → DESIGN.md §24.1.2
+
+Resolved question: `UBU-Q0008`.
+
+Phase 1 worker work discovery uses explicit assignment by the parent UbU instance. Workers may poll a parent-specific assignment inbox or receive pushed notifications, but the inbox contains only work already offered or assigned to that worker Identity. Worker check-ins may advertise health, availability, local resource state, and capability metadata so the parent can select an eligible worker; they are not an open task-claim, work-stealing, bidding, or marketplace mechanism.
+
+A worker assignment is a scoped execution lease binding one Task or Delegation Substrate packet to one worker Identity for one active executor slot. The minimum assignment record includes `assignment_id`, parent instance ref, `task_ref`, worker Identity ref, capability grant ref, assigned-by Identity or authority source, assignment status, lease or heartbeat deadline, expected output summary, review requirement, idempotency key, and provenance. Assignment handoffs that expose protected or low-security content must also reference the relevant Compartment decision or ContextBundle.
+
+The minimum Phase 1 assignment statuses are `offered`, `accepted`, `in_progress`, `clarification_requested`, `delivered`, `completed`, `rejected_by_worker`, `cancelled`, `expired`, and `failed`. Assignment status does not replace Task status. A delivered assignment is awaiting parent review; a completed assignment means the canonical instance accepted the outcome or determined that no more worker action is required.
+
+Multiple workers may observe the same Task only through explicit read grants, observer roles, or separate review assignments. Observation does not confer execution authority. Only one worker may hold the active execution lease for a given executor slot on a Task in Phase 1. If parallel work is needed, UbU should model separate child Tasks or separate named assignment roles rather than allowing multiple workers to compete for the same Task. Competitive worker claiming and marketplace-style bidding are deferred.
+
+Every assignment lifecycle transition is logged. This decision extends the Phase 1 Log event-type set with `worker_assignment_updated`. Its payload records the assignment id, old and new status when applicable, worker Identity, Task ref, capability grant ref, lease deadline, reason, evidence refs, idempotency key, and whether recalculation was requested. Assignment events that affect the current or next recommended Task, worker bottleneck risk, or Plan feasibility create or batch a `recalculation_triggered` Log entry using the existing trigger taxonomy.
+
+Workers may reject assignments by returning `rejected_by_worker` with a reason and evidence when relevant. Rejection does not mutate the Task directly. The canonical instance decides whether to reassign, ask the user, mark the Task blocked, revise the Delegation Substrate packet, or leave the Task available for manual work.
+
+If a worker disappears mid-Task, the parent marks the assignment `expired` after the heartbeat or lease deadline, logs the transition, and treats the Task as unresolved unless separate accepted evidence proves completion or mootness. Late worker submissions after expiration are stale by default and must pass expected-prior-version, idempotency, authority, and review checks before they can affect canonical state. The parent may then reassign the Task, create a retry or repair Task, request clarification, or surface the worker bottleneck in risk reporting. Detailed retry construction remains open in `UBU-Q0020`.
+
+Workers may request clarification through assignment status or an authorized mutation/request payload. The canonical instance may convert the request into a clarification Task, user prompt, revised assignment packet, or rejection of the request. Workers may propose child Tasks or Task-to-Container restructuring only through authorized mutation requests; approved restructuring follows the accepted Task-to-Container and child Task semantics. Workers do not directly create canonical child Tasks in Phase 1.
+
+**Consequences:**
+
+- `UBU-Q0008` is resolved for Phase 1 implementation.
+- Assignment is parent-directed and audit-oriented; worker polling is only a delivery mechanism for explicit assignments.
+- Phase 1 avoids competitive worker claiming while preserving future compatibility with richer delegation, General Contractor, and Skill Barter workflows.
+- Worker disappearance, rejection, clarification, and child-Task proposals are handled through logged assignment transitions and mutation/request review rather than direct canonical writes.
+- `UBU-Q0020`, `UBU-Q0021`, `UBU-Q0009`, and `UBU-Q0080` remain open for retry construction, automation parent/child shape, mutation request schema, and Delegation Substrate details.

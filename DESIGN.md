@@ -1861,6 +1861,7 @@ MVP event types are:
 - `plan_realized`
 - `decision_recorded`
 - `recalculation_triggered`
+- `worker_assignment_updated`
 - `worker_mutation_submitted`
 - `worker_mutation_applied`
 - `worker_mutation_rejected`
@@ -2519,6 +2520,26 @@ Capability grants may be scoped by object ID, Objective subtree, Task set, Compa
 A worker may be revoked by disabling or deleting its capability grants, rotating or invalidating credentials, and rejecting later submissions from that grant. Revocation does not rewrite prior Logs. Credential rotation creates a new credential version linked to the same worker Identity and capability grants unless the grant is also changed.
 
 A single worker-mode instance may serve multiple parent organization-mode or user-mode instances only through separate parent-specific capability grants, credentials, and audit trails. Cross-parent data sharing is forbidden unless each parent explicitly grants a route and all relevant Compartment policies allow it. Workers may operate for user-mode instances, but affect and other personal data require especially narrow read-subset grants and must respect `no_cloud_llm`, `no_external_export`, and low-security disclosure rules.
+
+### 24.1.2 Worker assignment lifecycle
+
+Phase 1 worker work discovery is explicit assignment by the parent UbU instance. A worker may poll a parent-specific assignment inbox or receive pushed notifications, but the inbox returns only work that the parent has already assigned or offered to that worker Identity. Worker check-ins may advertise health, availability, local resource state, and granted capability metadata so the parent can choose an eligible worker; they are not an open task-claim or marketplace mechanism.
+
+A worker assignment is a scoped execution lease that binds one Task or Delegation Substrate packet to one worker Identity for one active executor slot. The minimum assignment record includes `assignment_id`, parent instance ref, `task_ref`, worker Identity ref, capability grant ref, assigned-by Identity or authority source, assignment status, lease or heartbeat deadline, expected output summary, review requirement, idempotency key, and provenance. The assignment may reference Compartment decisions or ContextBundles when the work handoff exposes protected or low-security content.
+
+The minimum Phase 1 assignment statuses are `offered`, `accepted`, `in_progress`, `clarification_requested`, `delivered`, `completed`, `rejected_by_worker`, `cancelled`, `expired`, and `failed`. `delivered` means the worker has submitted output or evidence for parent review; `completed` means the canonical instance accepted the assignment outcome or otherwise determined that no further worker action is required. Task status remains canonical on the Task itself and is not replaced by assignment status.
+
+Multiple workers may observe the same Task only through explicit read grants, observer roles, or separate review assignments. Observation does not confer execution authority. In Phase 1, only one worker may hold the active execution lease for a given executor slot on a Task. If apparently parallel work is needed, UbU should model separate child Tasks or separate named assignment roles rather than allowing anonymous workers to compete for the same Task. Competitive worker claiming, work stealing, and marketplace-style bidding are deferred.
+
+Every assignment lifecycle transition is logged. Phase 1 extends the Log event-type set with `worker_assignment_updated`; its payload records the assignment id, old and new status when applicable, worker Identity, Task ref, capability grant ref, lease deadline, reason, evidence refs, idempotency key, and whether recalculation was requested. Assignment events that affect the current or next recommended Task, worker bottleneck risk, or Plan feasibility create or batch a `recalculation_triggered` Log entry using the existing trigger taxonomy.
+
+Workers may reject assignments by returning `rejected_by_worker` with a reason and evidence when relevant. Rejection does not mutate the Task directly. The canonical instance decides whether to reassign, ask the user, mark the Task blocked, revise the Delegation Substrate packet, or leave the Task available for manual work.
+
+If a worker disappears mid-Task, the parent marks the assignment `expired` after the heartbeat or lease deadline, logs the transition, and treats the Task as still unresolved unless separate accepted evidence proves completion or mootness. Late worker submissions after expiration are stale by default and must pass expected-prior-version, idempotency, authority, and review checks before they can affect canonical state. The parent may then reassign the Task, create a retry or repair Task, request clarification, or surface the worker bottleneck in risk reporting. Detailed retry construction remains governed by `UBU-Q0020`.
+
+Workers may request clarification by submitting `clarification_requested` status or an authorized mutation/request payload. The canonical instance may convert that into a clarification Task, user prompt, revised assignment packet, or rejection of the request. Workers may propose child Tasks or Task-to-Container restructuring only through authorized mutation requests; approved restructuring follows the accepted Task-to-Container and child Task semantics. Workers do not directly create canonical child Tasks in Phase 1.
+
+### 24.1.3 Model-committee worker pattern
 
 A model-committee worker is an Automation Worker pattern that reads canonical project state, runs configured provider workflows against a selected open question or problem, produces candidate changesets, scores candidate changesets, and writes reviewable artifacts.
 
