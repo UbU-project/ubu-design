@@ -1169,7 +1169,7 @@ Open.
 
 ## UBU-Q0060: External/cloud LLM provider abstraction and routing policy
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0028 Blocks: LLM provider routing, cloud LLM disclosure, UbUCorp inference boundary, BYOK configuration Resolved by: None Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0028 Blocks: LLM provider routing, cloud LLM disclosure, UbUCorp inference boundary, BYOK configuration Resolved by: UBU-D0157 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1191,7 +1191,7 @@ Cloud LLMs are optional execution providers, not the canonical planner. The FOSS
 
 ### Resolution
 
-Open.
+Resolved. See UBU-D0157.
 
 ---
 

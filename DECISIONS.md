@@ -2757,3 +2757,36 @@ Hard boundaries should be limited to structurally enforceable product invariants
 Behavioral-risk checks such as manipulation, coercion, harassment, stalking, deception, romantic/professional power asymmetry, rumination, and relationship-transition ethics depend on fallible classification. Treating them as hard gates risks false positives that block legitimate actions, false negatives that create misplaced trust, and a false impression that UbU can reliably prevent misuse or illegal behavior.
 
 Behavioral safeguards should generally be default-on, user-aware, uncertainty-transparent, user-overrideable advisory checks with introspection consequences when bypassed. A user may configure some advisory checks as self-imposed required gates. Bypassing or disabling recommended safeguards is itself introspection-relevant evidence about revealed priorities and possible conflicts with declared values.
+
+---
+
+## UBU-D0157: LLM provider routing uses provider descriptors and policy-gated route decisions
+
+**Status:** Accepted → DESIGN.md §2.11
+
+Resolved question: `UBU-Q0060`.
+
+UbU resolves external/cloud LLM routing through a provider-neutral descriptor plus a policy-gated route decision. Local Ollama-style providers, user-configured BYOK cloud APIs, user-owned remote workers, optional UbUCorp managed inference, and future compatible providers are all represented as LLM providers, but their trust boundaries remain explicit.
+
+The minimum `LLMProviderDescriptor` records `provider_id`, `provider_class`, `endpoint_or_worker_ref`, execution location, operator, region or jurisdiction when known, supported models, modalities, context window, structured-output and tool-use capability, safety behavior, retention/training/disclosure profile, cost and rate-limit metadata, credential reference kind, default-enabled state, and user-visible name. The Phase 1 provider classes are `local_process`, `byok_cloud_api`, `user_owned_worker`, `ubucorp_managed_gateway`, and `third_party_compatible`.
+
+Every provider adapter exposes the same narrow interface: list available models and capabilities, estimate cost and context fit, prepare a minimized request, invoke or stream completion, cancel when supported, and return usage, provider, model, and provenance metadata. The adapter interface normalizes execution mechanics only. It must not hide whether a request stays local, goes to a user-owned worker, or crosses a cloud/provider boundary.
+
+An `LLMRouteRequest` records purpose, actor Identity, related Task/Objective/workflow refs, required capabilities, candidate provider policy, cost and latency limits, ContextBundle or source refs, required output schema when any, review requirement, and requested advisory use. An `LLMRouteDecision` records selected provider and model, boundary classification, Compartment policy result, minimization and redaction summary, estimated cost, disclosure text, approval state, and Log refs for allowed or denied routing.
+
+Compartment policy is a hard upper bound on routing. `no_cloud_llm` content cannot be sent to cloud provider classes, including BYOK cloud APIs, UbUCorp managed gateways, or third-party compatible cloud providers. `no_external_export` content cannot be sent to external providers, remote workers, managed gateways, or third-party services except as redacted structural references that expose no protected payload. `local_only` content is limited to eligible local Devices and local providers. A capability grant, provider preference, workflow setting, or user click cannot override these denials.
+
+Cloud routing requires context minimization before invocation. The route should use a `ContextBundle` or equivalent envelope that records purpose, source refs, Compartment refs, Identity and Association refs exposed, destination provider, model ref, data categories exposed, redaction policy, minimization notes, retention policy, user-visible summary, creation time, expiry when applicable, and downstream candidate refs. Raw payload should be replaced by references, summaries, hashes, or redacted structural fields whenever the task can still be performed.
+
+BYOK credentials are credential references, not provider metadata payload. Secrets must not appear in provider descriptors, prompts, ContextBundles, Logs, or exported artifacts. Credential references may be scoped by provider, account, model family, Identity, Compartment, workflow, cost budget, and Device or worker. The default storage target is the local instance or OS/device secret store; a user-owned worker may hold a credential only when explicitly configured. Rotation and revocation preserve audit continuity through credential version refs without exposing the secret.
+
+UbUCorp managed inference is represented as a provider class, not as a mandatory dependency or privileged protocol path. It uses the same descriptor, route request, route decision, Compartment gates, disclosure, provenance, cost controls, and output admission pipeline as any other cloud provider. The FOSS core must remain local-capable, BYOK-capable, self-hostable, and useful when UbUCorp managed inference is unavailable.
+
+Any workflow using a cloud or external LLM must disclose, before or at execution time, the provider, model or model class, operator, local-vs-cloud status, destination region when known, whether BYOK or UbUCorp-managed credentials are used, data categories and Compartments exposed, retention/training profile, estimated cost when available, and that output is advisory until admitted through UbU validation and review. Approval may be per-run, per-session, per-workflow, or policy-based only when Compartment policy allows it.
+
+**Consequences:**
+
+- `UBU-Q0060` is resolved for Phase 1 architecture.
+- LLM routing can proceed without privileging Ollama, UbUCorp, or any single cloud API as the canonical interface.
+- `UBU-Q0079`, `UBU-Q0080`, `UBU-Q0083`, and `UBU-Q0084` may depend on this routing boundary while still refining MCP tools, Delegation Substrate fields, ContextBundle governance, and background-agent policy.
+- Provider-specific SDK details, exact secret-store implementation, and long-context bundle review UX may evolve without changing the minimum boundary.
