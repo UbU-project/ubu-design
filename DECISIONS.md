@@ -3075,7 +3075,7 @@ Stale overwrite prevention is mandatory. The canonical instance compares `expect
 - Worker authority remains request-based and bounded by capability grants, Compartment policy, expected versions, idempotency, assignment leases, and review policy.
 - Valid worker outputs can support automation without granting direct canonical write authority.
 - Invalid and stale worker submissions remain auditable without polluting canonical state.
-- `UBU-Q0013`, `UBU-Q0020`, `UBU-Q0021`, `UBU-Q0049`, and `UBU-Q0084` remain open for authority-source vocabulary, retry construction, automation child structure, release-outreach artifacts, and external AgentAction side-effect modeling.
+- `UBU-Q0013`, `UBU-Q0020`, `UBU-Q0021`, and `UBU-Q0084` remain open for authority-source vocabulary, retry construction, automation child structure, and external AgentAction side-effect modeling.
 
 ---
 
@@ -3508,5 +3508,61 @@ Failed and partially successful runs are publishable when labeled by failure cla
 - Public credibility comes from reviewable run packages and accepted commits, not from dumping every raw provider artifact.
 - `UBU-Q0063` may depend on this policy for organizational-introspection dogfooding artifacts.
 - Future implementation should add an artifact-safety check and a redacted public manifest schema before publishing run packages.
+
+---
+
+## UBU-D0180: Release Outreach Pipeline uses structured packages and gated publication
+
+**Status:** Accepted → DESIGN.md §§2.6, 4.1.3
+
+Resolved question: `UBU-Q0049`.
+
+A release outreach package is a derived release artifact set, not a new Phase 1 canonical entity. It is attached to ordinary Objectives, WorkItems, Logs, release artifacts, External References, Automation Worker outputs, and export/projection gates.
+
+Minimum package artifacts:
+
+- `manifest.json`: package ID, schema version, project/release refs, version or release range, base commit or build refs, generated/updated timestamps, actor Identity, package status, linked Objective/Task/Log refs, source summary, Compartment/export summary, and package hash list.
+- `claim_register.json`: claim ID, text, audience, claim kind, support status, evidence refs, source object refs, allowed public wording, review state, and publication eligibility.
+- `evidence_index.json`: release notes, accepted decisions, closed issues, commits, tests, fixtures, screenshots, recordings, risk reports, or other evidence with hashes, selectors, source refs, and capture/import provenance.
+- Draft artifacts: public release notes, developer release notes, video script, narration text, captions, YouTube title/description/chapters, announcement drafts, known limitations, future-work notes, and contributor calls-to-action when relevant.
+- `media_refs.json`: screenshot, UI-test export, fixture capture, and demo-recording references. Raw media is copied into the package only when export policy allows it and review approves it.
+- `export_review.json`, `approvals.json`, and `publication_plan.json`: privacy/export decisions, approval records, intended audiences, channels, destinations, and required next gates.
+
+Every public claim uses one support status:
+
+- `implemented_behavior`: backed by implemented code, accepted release notes, closed issue, test artifact, screenshot, recording, or other release evidence.
+- `mock_or_fixture_behavior`: backed by synthetic, redacted, fixture, or demo-only data and visibly labeled as such.
+- `future_plan`: backed by an accepted decision, roadmap item, issue, or future-work note, and visibly not implemented.
+- `speculative_goal`: aspirational or exploratory; allowed only when labeled and excluded from implementation claims.
+
+Known limitations are represented as limitations or future-work claims, not as hidden qualifiers on implementation claims. An `implemented_behavior` claim without evidence is invalid for public output.
+
+Media provenance records at least artifact ID, artifact type, source workflow or worker, generator tool, repo commit or build ref, test or demo flow ref, fixture/live/mock mode, input source refs, visible Identity refs, Compartment refs, redaction or minimization applied, hash, capture time, approval state, supported claim refs, retention policy, and export policy.
+
+Approval gates are separate and append-only:
+
+- package assembly may be automatic after source selection and local policy checks;
+- public export requires artifact-safety and Compartment/export review;
+- script, narration, and caption drafts require human review before being treated as approved public copy;
+- video rendering requires explicit approval because it may combine protected media, voice, captions, and public claims into a harder-to-edit artifact;
+- platform upload, public posting, mailing-list send, social posting, or any external channel mutation requires explicit human approval unless a narrow trusted auto-publication rule names the workflow, destination, audience, source scope, claim labels, Compartment/export constraints, and rollback or correction path.
+
+Compartment and Identity policy is a hard upper bound. `no_external_export` content cannot enter public packages except as redacted structural references. `no_cloud_llm` content cannot be sent to cloud drafting or video tools. Low-security un-compartmented content may be used only through a user-visible route. Screenshots and recordings must be reviewed for private data, contributor communications, personal data, credentials, private notes, hidden repository context, and unintended Identity disclosure before public use.
+
+Project configurations may define audience-specific communication Objectives. A minimum configuration maps audience labels to Objective refs, intended channels, allowed source categories, required package sections, tone or reading-level guidance, claim-label policy, destination refs, and approval policy. This is configuration over ordinary Objectives, not a new MVP Objective subtype.
+
+Phase 1 includes manual structured packages, claim/evidence registers, approved media references, manual or worker-assisted drafts, contributor calls-to-action tied to real issues or artifacts, export review, approval records, and publication plans. Phase 1 may generate renderer commands or upload instructions as review artifacts, but it must not auto-render videos, upload to platforms, publish posts, send announcements, or mutate external channels.
+
+Post-MVP work includes automated UI screenshot capture, demo-flow export, script generation from repository state, narration or voice generation, caption generation, thumbnail generation, video rendering automation, upload/publication connectors, analytics feedback, and trusted auto-publication policies.
+
+Local renderers, UI-test capture tools, LLM script drafters, TTS tools, caption generators, and thumbnail generators are Automation Workers when they produce candidate artifacts under capability grants without mutating external public channels. YouTube, social, mailing-list, website, app-store, or other public-channel APIs are external publication systems; calls to them are projection or AgentAction workflows with the approval gates above. A combined render-and-upload tool must be split by boundary or treated as an external publication system for the upload step.
+
+**Consequences:**
+
+- `UBU-Q0049` is resolved for Phase 1 implementation.
+- Release outreach can proceed through manual packages without waiting for automated video generation or publication.
+- Public release artifacts have a stable claim-label and provenance model that prevents mock, future, or speculative behavior from being described as implemented.
+- `UBU-Q0063` can reuse release outreach packages as public organizational-introspection evidence.
+- `UBU-Q0084` may later refine AgentAction details for external publication connectors without reopening the Phase 1 package boundary.
 
 ---

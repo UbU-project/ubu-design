@@ -140,15 +140,17 @@ The Release Outreach Pipeline is an accepted future feature bundle with the tagl
 
 > UbU should make every release explain itself.
 
-Release management should not stop at code, tests, changelogs, and deployment artifacts. For UbU-runs-UbU, every meaningful minor release should also create reviewable explanation artifacts for the audiences affected by the release. These artifacts may include user-facing release notes, developer-facing release notes, screenshots, scripted UI-demo captures, short video scripts, narration text, captions, YouTube descriptions, thumbnail concepts, public posts, known-limitations summaries, and contributor calls-to-action.
+Release management should not stop at code, tests, changelogs, and deployment artifacts. For UbU-runs-UbU, every meaningful minor release should create a reviewable release outreach package when there is enough change to explain.
 
-The pipeline is a communication Objective implemented through ordinary UbU primitives: Objectives, Techniques, WorkItems, Logs, Automation Worker outputs, release artifacts, and export/projection gates. A later implementation may add specialized schemas for release artifacts or communication objectives, but the design requirement does not depend on a new first-class MVP entity.
+A release outreach package is a derived artifact set attached to ordinary WorkItems, Logs, release artifacts, and export/projection gates. Phase 1 does not add a new canonical entity; it requires a structured package manifest, claim register, evidence/provenance index, reviewed text drafts, approved media references, privacy/export review, approval records, and a publication plan.
 
-Release outreach must be evidence-bound. Generated claims should be traceable to implemented features, accepted design decisions, closed issues, release notes, automated UI screenshots, demo recordings, or clearly labeled future plans. The pipeline should not let AI-generated video scripts drift into unsupported hype.
+Release outreach must be evidence-bound. Each public claim should carry a support label such as `implemented_behavior`, `mock_or_fixture_behavior`, `future_plan`, or `speculative_goal`, plus evidence refs when evidence is claimed. Public artifacts must not represent planned, fixture-backed, mock, or speculative behavior as implemented behavior.
 
-Publication is gated by default. UbU may draft, assemble, render, and prepare release communication artifacts automatically, but uploading to YouTube, publishing posts, sending announcements, or mutating external public channels should require explicit human approval unless a project has configured a narrow trusted auto-publication rule.
+Screenshots, UI-test exports, fixture captures, and demo recordings are provenance-bearing evidence. They should record source workflow or worker, repo/build/test refs, fixture or live-data mode, visible Identity and Compartment exposure, redaction, hash, capture time, approval state, and the claims they support.
 
-The Release Outreach Pipeline is not UbU-specific marketing glue. It is intended to generalize to project-management configurations: open-source projects, research groups, internal teams, product teams, community projects, and personal projects may all define communication Objectives that explain progress to their relevant audiences.
+Publication is gated by default. UbU may draft, assemble, render, and prepare communication artifacts automatically, but video rendering, platform upload, public posting, or external channel mutation require explicit human approval unless a project has configured a narrow trusted auto-publication rule.
+
+The Release Outreach Pipeline is not UbU-specific marketing glue. It is intended to generalize to project-management configurations through audience-specific communication Objectives for users, developers, maintainers, funders, internal stakeholders, customers, community members, or other audiences.
 
 ### 2.7 First-person legibility
 
@@ -836,25 +838,23 @@ The Phase 1 version may be simple and fixture-backed. Fixture behavior must be l
 
 The Release Outreach Pipeline should become part of ordinary UbU-runs-UbU release management. A minor release should produce a release outreach package when the current project state contains enough user-visible, developer-visible, or contributor-visible change to justify public explanation.
 
-A release outreach package may include:
+The Phase 1 package is manual but structured. Minimum package artifacts are:
 
-- a public release-note summary;
-- a developer release-note summary;
-- a short user-facing video script;
-- a developer-facing video segment or call-to-action;
-- screenshot and screen-recording references from automated UI runs, fixtures, or explicitly approved mock data;
-- captions or narration text;
-- YouTube title, description, and chapter outline;
-- social or mailing-list announcement drafts;
-- known limitations and future-work notes;
-- a contributor next-action list tied to real issues or artifacts.
+- `manifest.json` with release, source, Identity, Compartment, status, and hash metadata;
+- `claim_register.json` with audience, support status, evidence refs, and review state for each public claim;
+- `evidence_index.json` for source artifacts, hashes, selectors, and provenance;
+- release-note, script, narration/caption, announcement, and publication-metadata drafts when relevant;
+- `media_refs.json` for approved screenshots, UI-test exports, fixture captures, or recordings;
+- `export_review.json`, `approvals.json`, and `publication_plan.json`;
+- known-limitations, future-work, and contributor call-to-action notes tied to real artifacts.
 
-The package should record provenance. Each claim should identify whether it came from an implemented feature, accepted design decision, closed issue, test fixture, UI capture, release note, or future-plan label. Public artifacts should not represent planned or mock behavior as implemented behavior.
+Media provenance records must distinguish approved live captures, approved fixture/synthetic captures, UI-test exports, and mock/demo-only captures. Every claim in scripts, release notes, and public posts links to claim-register evidence and uses the support labels accepted in `UBU-D0180`.
 
-The Phase 1 minimum may be manual but structured: the project operator can write or approve the release notes, screenshots, and script while UbU records the artifact set as a WorkItem sequence. Later phases should automate screenshot capture from UI tests, demo-flow export, script drafting, voice/narration preparation, caption generation, video-render-plan generation, publication metadata, and review gates.
+Phase 1 dogfooding may generate text drafts, collect approved screenshots or recordings, assemble a publication plan, and record human approvals. It may use local renderers or LLM/script workers only as Automation Workers that produce candidate artifacts under capability grants.
 
-The full video-generation pipeline is future work. Phase 1 should preserve the model boundary: generate reviewable communication artifacts before trying to automate external publication.
+Post-MVP work includes automatic UI capture generation, demo-flow export, script drafting from repository state, narration and caption generation, thumbnail generation, video rendering automation, platform upload, social posting, mailing-list publication, analytics feedback, and trusted auto-publication policies.
 
+The full video-generation and publication pipeline remains future work. Phase 1 should generate reviewable communication artifacts before trying to automate external publication.
 
 ### 4.1.4 EthConf outreach as Association-introspection dogfooding
 
