@@ -2789,6 +2789,47 @@ Drift creates a reconciliation report first. It may recommend repair Tasks, muta
 
 Planner-relevant GitHub reconciliation findings create or batch `recalculation_triggered` Log entries with trigger kind `github_update`. Low-priority drift that does not affect the current Plan may mark projection or report caches stale instead of recalculating immediately.
 
+### 26.5 GitHub event triage
+
+GitHub event triage converts authorized GitHub observations into External Events, Logs, candidate Objectives, candidate Tasks, recalculation triggers, worker assignments, and projection requests. A GitHub observation is not canonical domain state merely because GitHub emitted it. The importer first normalizes and deduplicates the observation, then records accepted unique observations through the normal admission path.
+
+Log-only cases in Phase 1 are narrow:
+
+- duplicate webhook deliveries, fixture events, worker submissions, or reconciliation observations whose idempotency key already exists;
+- reconciliation checks that verify an external object or managed projection is unchanged;
+- events outside the configured repository, object, milestone, or fixture import scope;
+- projection write acknowledgements that are already represented by an accepted projection Log entry and do not reveal new GitHub state.
+
+Every other unique in-scope GitHub observation creates an External Event and an `external_event_observed` Log entry with source External References where available. This includes issue, PR, comment, label, review, CI, and milestone changes, even when the only immediate planning effect is to mark a report cache stale.
+
+Phase 1 event-class defaults are:
+
+- `issue_opened`: Creates an External Event, creates or links an issue-backed Objective when the issue represents durable work, and creates an issue-triage or clarification Task when the issue is under-specified.
+- `issue_commented`: Creates an External Event; creates a response, clarification, review, or follow-up Task only when the comment asks for action, supplies blocker information, changes acceptance evidence, or affects contributor follow-up.
+- `issue_labeled`: Creates an External Event; non-`ubu:` labels are evidence only, while UbU-managed labels are checked for projection drift and may create projection repair recommendations.
+- `issue_closed`: Creates an External Event; may transition linked Tasks to completed or moot only after admission validates that the modeled effect is satisfied, otherwise it creates a reconciliation or clarification Task.
+- `pr_opened`: Creates an External Event, links the PR to existing work when possible, and usually creates a review or PR-triage Task.
+- `pr_updated`: Creates an External Event; creates a re-review, CI-wait, or projection-update Task only when the changed commits, body, title, base branch, or mergeability affect active work.
+- `review_requested`: Creates an External Event and a review Task for the requested reviewer or eligible worker path.
+- `review_submitted`: Creates an External Event; approvals may unblock work, while change requests or blocking comments create follow-up Tasks.
+- `ci_failed`: Creates an External Event and a failure-analysis or fix Task, and may request Automation Worker assignment when an eligible worker has an explicit assignment path.
+- `ci_passed`: Creates an External Event; usually logs or unblocks existing Tasks and may trigger projection update, but creates a new Task only when a next action such as merge review is required.
+- `milestone_changed`: Creates an External Event; may create or update a release Objective, deadline fact, Calendar constraint, or release-planning Task.
+
+GitHub events create or update Objectives only when they introduce durable desired state, release scope, or accepted project work that is not already represented by an Objective. Routine comments, labels, CI transitions, and PR updates should attach as evidence to existing Objectives or Tasks rather than creating analysis Objectives by default.
+
+GitHub events create Tasks when they imply a concrete next action: triage, clarification, review, fix, projection repair, reconciliation, release-planning, or contributor follow-up. Imported Tasks use normal Task admission, External References, provenance, Compartment/export checks, and duplicate detection.
+
+A GitHub event triggers recalculation with trigger kind `github_update` when it can affect the current or next recommended Task, a dependency or precondition, Task lifecycle state, Objective status, deadline or milestone constraints, worker assignment need, projection state, or risk-report validity. Low-priority observations that do not affect the current Plan may mark Calendar, projection, explanation, or report caches stale.
+
+Automation Worker assignment is never caused by raw GitHub data alone. The GitHub event must first create or update an admitted Task or Delegation Substrate packet, and the parent UbU instance must explicitly assign eligible worker work under the accepted worker-assignment model.
+
+GitHub projection updates are triggered by accepted canonical UbU state changes or reconciliation drift, not by treating GitHub as source of truth. A GitHub event may recommend a projection update request or preview; live writes still follow the managed-surface and approval rules.
+
+Duplicate detection uses the strongest available normalized key: GitHub delivery ID when present; otherwise repository identity, event class, action, external object type and ID, actor, source timestamp, object version such as commit SHA or CI run attempt, and the affected UbU target. External Reference uniqueness and Log `idempotency_key` checks prevent duplicate External Events, Tasks, Objectives, and projection requests.
+
+Missed events are reconstructed during reconciliation by comparing live GitHub objects, timelines, comments, reviews, CI runs, milestones, and managed projection surfaces against External References, imported External Events, Logs, and projection records. Reconstructed events receive GitHub-derived effective timestamps, reconciliation provenance, confidence metadata when needed, and synthetic idempotency keys. If GitHub exposes only final state, UbU records the observed state transition or drift finding rather than fabricating a precise sequence of unseen events.
+
 ---
 
 ## 27. Risk Reporting

@@ -2985,3 +2985,62 @@ ContextBundles are immutable after use. Corrections, narrower reruns, broader re
 - Organizational introspection and repository/chat archive review can use large models without treating large context windows as permission to send everything.
 - `UBU-Q0092` can refine typed Relationship evidence policies while relying on the ContextBundle boundary for model routing.
 - `UBU-Q0100` can distinguish ContextBundle Compartment/export denials as hard structural boundaries rather than advisory safeguards.
+
+---
+
+## UBU-D0163: GitHub event triage is normalized, idempotent, and task-oriented
+
+**Status:** Accepted → DESIGN.md §26.5
+
+Resolved question: `UBU-Q0005`.
+
+GitHub event triage converts authorized GitHub observations into External Events, Logs, candidate Objectives, candidate Tasks, recalculation triggers, worker assignments, and projection requests. GitHub remains a projection and integration source, not canonical UbU state. A GitHub event therefore enters UbU through normalization, duplicate detection, External Reference matching, authority and Compartment checks, and append-only Logs before it affects planning.
+
+Phase 1 has four log-only cases:
+
+- duplicate webhook deliveries, fixture events, worker submissions, or reconciliation observations whose idempotency key already exists;
+- reconciliation checks that verify no meaningful change to a GitHub object or managed projection surface;
+- events outside the configured repository, object, milestone, or fixture import scope;
+- projection write acknowledgements already represented by an accepted projection Log entry when the acknowledgement reveals no new GitHub state.
+
+All other unique in-scope GitHub changes create a GitHub External Event and an `external_event_observed` Log entry, even if no Objective, Task, worker assignment, or projection update follows immediately. Source External References should link the GitHub object, delivery, timeline item, CI run, review, comment, or milestone record to the External Event and Log when the identifier is available.
+
+Phase 1 triage rules for the candidate event classes are:
+
+- `issue_opened`: create an External Event; create or link an issue-backed Objective when the issue represents durable work; create a triage or clarification Task when the issue lacks enough structure for planning.
+- `issue_commented`: create an External Event; create a response, clarification, review, contributor-follow-up, or evidence-review Task only when the comment asks for action, supplies blocker or acceptance evidence, or changes a relationship-maintenance or project-follow-up need.
+- `issue_labeled`: create an External Event; treat non-`ubu:` labels as evidence only; check UbU-managed labels for projection drift and recommend projection repair when they differ from accepted projection state.
+- `issue_closed`: create an External Event; only transition linked Tasks or Objectives after admission validates that the modeled effect or Objective state is satisfied; otherwise create a reconciliation or clarification Task when closure conflicts with UbU state.
+- `pr_opened`: create an External Event; link the PR to existing work when possible; usually create a PR-triage or review Task.
+- `pr_updated`: create an External Event; create a re-review, CI-wait, or projection-update Task only when commits, body, title, base branch, mergeability, or linked issue state affects active work.
+- `review_requested`: create an External Event and a review Task for the requested reviewer, user, or eligible worker path.
+- `review_submitted`: create an External Event; approvals may unblock existing Tasks; change requests, blocking comments, or failed review requirements create follow-up Tasks.
+- `ci_failed`: create an External Event plus a failure-analysis or fix Task; request Automation Worker assignment only when an admitted Task or Delegation Substrate packet has an eligible worker and explicit parent assignment path.
+- `ci_passed`: create an External Event; usually unblock or complete waiting Tasks and may request projection update; create a new Task only when a next action such as merge review, release step, or projection repair is required.
+- `milestone_changed`: create an External Event; create or update a release Objective, deadline fact, Calendar constraint, or release-planning Task when the change affects planned work.
+
+GitHub events create Objectives only when they introduce durable desired state, release scope, or accepted project work that is not already represented by an Objective. Routine comments, labels, CI transitions, PR updates, and reviews attach as evidence to existing Objectives or Tasks rather than creating analysis Objectives by default. The remaining noise-control details stay in `UBU-Q0006`.
+
+GitHub events create Tasks when they imply concrete next action: triage, clarification, review, fix, projection repair, reconciliation, release planning, merge readiness, or contributor follow-up. Imported Tasks use normal Task admission, External References, provenance, Compartment/export checks, and duplicate detection.
+
+Recalculation uses existing trigger kind `github_update`. Immediate recalculation is required when the event can affect the current or next recommended Task, hard feasibility, dependency or precondition truth, Task lifecycle state, Objective status, milestone or deadline constraints, worker assignment needed for current work, projection state that affects current work, or risk-report validity. Low-priority events may mark Calendar, projection, explanation, or report caches stale instead of recalculating immediately.
+
+Automation Worker assignment is Task-driven, not GitHub-event-driven. A raw GitHub event may lead to a Task, Delegation Substrate packet, projection request, or reconciliation request; the parent UbU instance then explicitly assigns eligible worker work under the accepted worker-assignment model. Workers may observe, poll, or report GitHub events only under capability grants and do not create canonical state directly.
+
+GitHub projection update requests are projection-driven. They arise when canonical UbU state changes or reconciliation detects drift in managed labels, managed body blocks, managed comments, milestone previews, or assignee previews. A GitHub event may recommend a projection preview or update request, but live writes still follow managed-surface and human-approval rules.
+
+Duplicate detection uses two layers:
+
+- Delivery-level deduplication uses the strongest normalized key available: GitHub delivery ID; otherwise repository identity, event class, action, external object type and ID, actor, source timestamp, object version such as commit SHA or CI run attempt, and affected UbU target.
+- State-link deduplication uses the accepted External Reference uniqueness key plus Log `idempotency_key` checks so repeated observation updates verification metadata or records an idempotent no-op instead of duplicating External Events, Objectives, Tasks, projection requests, or reconciliation findings.
+
+Missed events are reconstructed during reconciliation by comparing live GitHub issues, PRs, timelines, comments, reviews, CI runs, milestones, and managed projection surfaces against External References, imported External Events, Logs, and projection records. Reconstructed events receive GitHub-derived `effective_at` timestamps when available, reconciliation provenance, confidence metadata when needed, and synthetic idempotency keys. If only final state is available, UbU records the observed state transition or drift finding rather than inventing a precise unseen sequence.
+
+**Consequences:**
+
+- `UBU-Q0005` is resolved for Phase 1 implementation.
+- The candidate MVP event classes have deterministic default triage without requiring GitHub to become canonical state.
+- `UBU-Q0006` remains open for stricter Objective and Task explosion control, especially around analysis Objectives.
+- `UBU-Q0004` remains open for the exact `pipeline_state` storage model, but label and projection events can already be triaged as evidence or drift.
+- `UBU-Q0010` remains open for token custody; this decision does not require any specific actor to hold GitHub write credentials.
+- GitHub event handling now aligns with append-only Logs, External References, worker assignment, recalculation triggers, and managed projection reconciliation.

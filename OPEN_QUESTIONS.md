@@ -100,7 +100,7 @@ Unresolved.
 
 ## UBU-Q0005: GitHub Event Triage Rules
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0002 Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0002 Blocks: Phase 1 implementation Resolved by: UBU-D0163 Last scored: Never Scored from commit: None
 
 GitHub events must be interpreted into UbU events, Tasks, Objectives, or recalculation triggers.
 
@@ -134,7 +134,7 @@ milestone_changed
 
 ### Resolution
 
-Unresolved.
+Resolved. See UBU-D0163.
 
 ---
 
