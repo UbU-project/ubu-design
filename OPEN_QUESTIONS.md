@@ -689,7 +689,7 @@ Unresolved.
 
 ## UBU-Q0038: Changeset-Based Work Phase
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0032 Blocks: model-committee work execution Resolved by: UBU-D0063, UBU-D0069 Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0032 Blocks: model-committee work execution Resolved by: UBU-D0063, UBU-D0069, UBU-D0150, UBU-D0161 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -714,7 +714,7 @@ The work phase should produce explicit patch-style changesets, score those chang
 
 ### Resolution
 
-Partially resolved by `UBU-D0063`, `UBU-D0069`, and `UBU-D0150`; detailed scoring and validation rules may be refined after implementation.
+Resolved. See `UBU-D0063`, `UBU-D0069`, `UBU-D0150`, and `UBU-D0161`.
 
 ---
 
