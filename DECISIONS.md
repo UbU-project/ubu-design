@@ -2870,7 +2870,7 @@ Planner-relevant reconciliation findings create or batch `recalculation_triggere
 - `UBU-Q0002` is resolved for Phase 1 implementation.
 - Phase 1 GitHub dogfooding can implement projection previews and live writes without deciding the full `pipeline_state` storage model in `UBU-Q0004`.
 - `UBU-Q0005` can define GitHub event triage against the boundary that every GitHub edit is an External Event unless admitted through UbU.
-- `UBU-Q0010` remains open for token custody; this decision does not require the canonical instance to hold GitHub write credentials.
+- GitHub token custody is governed by `UBU-D0184`; this projection decision does not require the canonical instance to hold worker GitHub tokens.
 - Workers retain request/report authority only; canonical state admission and human-approved live writes remain with the parent UbU instance.
 
 ---
@@ -3041,7 +3041,7 @@ Missed events are reconstructed during reconciliation by comparing live GitHub i
 - `UBU-Q0005` is resolved for Phase 1 implementation.
 - The candidate MVP event classes have deterministic default triage without requiring GitHub to become canonical state.
 - `UBU-Q0004` is resolved by `UBU-D0182`; label and projection events can already be triaged as evidence or drift.
-- `UBU-Q0010` remains open for token custody; this decision does not require any specific actor to hold GitHub write credentials.
+- GitHub token custody is governed by `UBU-D0184`; event triage does not require any specific actor to hold GitHub write credentials.
 - GitHub event handling now aligns with append-only Logs, External References, worker assignment, recalculation triggers, and managed projection reconciliation.
 
 ---
@@ -3706,5 +3706,33 @@ Noise budget defaults:
 - GitHub event handling remains task-oriented and does not turn every comment, label, CI transition, or PR update into management work.
 - Analysis work can still be modeled when it is bounded, parent-scoped, deduplicated, and automatically closed.
 - Implementations can enforce Objective and Task admission before worker assignment, recalculation, or GitHub projection requests.
+
+---
+
+## UBU-D0184: GitHub tokens are actor-held scoped credentials
+
+**Status:** Accepted → DESIGN.md §26.3.1
+
+Resolved question: `UBU-Q0010`.
+
+Phase 1 GitHub credentials are scoped credential references plus secret material held by the execution actor that performs a GitHub API call. The default MVP path is worker-held credentials: a worker stores its token in its own OS/device secret store, while the canonical UbU instance stores only credential refs, scope metadata, capability grants, projection requests, External References, write results, verification metadata, and Logs.
+
+The canonical instance may hold a local GitHub credential only when it performs a human-approved local projection itself. It does not need to see worker-held tokens and must not store raw GitHub secrets in canonical objects, ContextBundles, Logs, run artifacts, projection payloads, or External References.
+
+Phase 1 GitHub write credentials should use a dedicated GitHub App installation, fine-grained bot/service token, or equivalent service identity for UbU-managed projection writes. A maintainer-owned token is allowed for single-user dogfooding when explicitly configured and logged as that operator's credential. Individual contributor tokens are not shared with the parent instance or other workers; they may be used only by that contributor's own authorized instance or worker.
+
+Credentials must be repository-scoped where GitHub supports it. Task-level authority is enforced inside UbU by capability grants, assignment leases, projection payload allowlists, idempotency keys, and review policy. Short-lived or narrower per-Task GitHub tokens may be used when available, but Phase 1 does not depend on provider-native per-Task tokens.
+
+Every live GitHub write must be verified by re-reading the managed surface and reconciling the observed version or timestamp against the expected projection. API success alone is not confirmation. Unverified or drifted writes remain reconciliation findings until admitted through the normal projection and Log path.
+
+MVP security assumes cooperative operator-administered local and worker enclaves, least-privilege credentials, explicit capability grants, human approval for live writes, append-only audit, and credential revocation/rotation. Phase 1 does not claim to protect a token from a malicious local administrator or a compromised worker that legitimately holds it.
+
+**Consequences:**
+
+- `UBU-Q0010` is resolved for Phase 1.
+- The canonical instance may coordinate GitHub projection without custody of worker-held secrets.
+- Worker GitHub authority remains bounded by both GitHub credential scope and UbU capability/assignment scope.
+- Repository scope is required when available; Task scope is an UbU authorization boundary unless provider-native short-lived tokens are available.
+- Reconciliation and read-after-write verification remain part of the write path.
 
 ---

@@ -194,33 +194,9 @@ Resolved. See UBU-D0164.
 
 ## UBU-Q0010: GitHub Token Custody
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0007 Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: 2026-05-26 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0007 Blocks: Phase 1 implementation Resolved by: UBU-D0184 Last scored: 2026-05-26 Scored from commit: None
 
-Automation Workers may interact with GitHub using access tokens.
-
-### Question
-
-1. Are GitHub tokens stored:
-   - on the central UbU instance,
-   - only on worker-mode instances,
-   - or both?
-2. Are tokens tied to:
-   - bot accounts,
-   - maintainer accounts,
-   - individual contributor accounts?
-3. Can tokens be scoped per repository?
-4. Can tokens be scoped per Task?
-5. Does the central UbU instance ever see the token?
-6. Does UbU verify GitHub writes by re-reading GitHub?
-7. What is the MVP security assumption?
-
-### Current leaning
-
-For MVP, workers may own their GitHub tokens. The canonical UbU instance stores external refs/results, not necessarily the token.
-
-### Resolution
-
-Unresolved.
+Resolved. See UBU-D0184.
 
 ---
 

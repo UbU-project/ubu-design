@@ -2975,6 +2975,20 @@ GitHub edits do not directly override canonical UbU state. A human GitHub edit, 
 
 Automation Workers may submit `projection.github.request_update` requests or reconciliation artifacts when granted authority, but they do not directly mutate canonical UbU state or bypass human approval rules for live GitHub writes.
 
+#### 26.3.1 GitHub token custody
+
+Phase 1 GitHub credentials are secret material held by the execution actor that performs a GitHub API call. The default MVP path is worker-held credentials: an assigned worker stores its GitHub token in its OS/device secret store, and the canonical UbU instance stores only credential refs, scope metadata, capability grants, projection requests, External References, results, and Logs.
+
+The canonical instance may hold a local GitHub credential only when it is itself the writer for a human-approved local projection. It does not need to see worker-held tokens and must not store raw GitHub secrets in Objectives, Tasks, ContextBundles, Logs, run artifacts, projection payloads, or External References.
+
+Phase 1 prefers a dedicated GitHub App installation, fine-grained bot token, or equivalent service identity for UbU-managed projection writes. A maintainer-owned token is acceptable for single-user dogfooding when explicitly configured and logged as that operator's credential. Individual contributor tokens are not shared with a parent instance or other workers; they may be used only by that contributor's own authorized instance or worker.
+
+GitHub credentials must be repository-scoped where GitHub supports it. Task-level authority is enforced by UbU capability grants, assignment leases, projection payload allowlists, idempotency keys, and review policy rather than by assuming GitHub can mint a unique token for each Task. Short-lived or narrower per-Task tokens may be used when available, but MVP security does not depend on them.
+
+Live GitHub writes are not treated as confirmed solely from the write response. The writer or canonical instance re-reads the managed GitHub surface, records the observed version or timestamp, and reconciles it against the expected projection. Until verification succeeds, the projection is not marked verified and remains eligible for reconciliation reporting.
+
+The MVP security assumption is cooperative, operator-administered local and worker enclaves with least-privilege GitHub credentials, explicit capability grants, human approval for live writes, append-only audit, and revocation/rotation. Phase 1 does not protect a token from a malicious local administrator or compromised worker that legitimately holds that token.
+
 ### 26.4 GitHub reconciliation
 
 Missed GitHub updates are expected in MVP. Reconciliation is therefore part of the normal GitHub dogfooding loop, not an exceptional recovery path.
