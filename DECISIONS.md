@@ -2953,3 +2953,35 @@ If a scorer selects a proposal that is later discovered to be mechanically inval
 - `UBU-D0063`, `UBU-D0069`, `UBU-D0070`, `UBU-D0150`, and `UBU-D0160` remain compatible; this decision fills in the proposal, validation, scoring, invalid-selection, and commit-boundary details.
 - The work phase generalizes from design-document patches to code changes and bug fixes through work-item-specific file allowlists, validators, tests, and review artifacts rather than through a different provider authority model.
 - Any future automatic patch application or local commit feature requires a separate accepted decision.
+
+---
+
+## UBU-D0162: ContextBundles govern long-context exposure
+
+**Status:** Accepted → DESIGN.md §21.3
+
+Resolved question: `UBU-Q0083`.
+
+A `ContextBundle` is the governed package of context assembled for a model, tool, worker, agent, or long-context review. It is not a transient prompt string or implementation detail. It is the auditable boundary between UbU's explicit state and an execution backend.
+
+The minimum `ContextBundle` records `context_bundle_id`, `schema_version`, purpose, requested operation, actor Identity, related Task/Objective/workflow refs, route request and decision refs when used for LLM routing, destination provider/tool/worker/model refs, provider class and boundary classification, source refs, source selectors or ranges, source snapshot refs or hashes, Compartment refs, Compartment policy results, Identity refs exposed, Association refs exposed, Relationship refs exposed when applicable, data categories exposed, sensitivity summary, token or size estimate, redaction policy, minimization rules applied, excluded-source summary, prompt-injection exposure summary when untrusted external text is included, retention policy, training or secondary-use policy, user-visible summary, approval state, approval Log ref when applicable, creation and expiry times, invocation refs, downstream candidate refs, exposure summary ref, and Log refs.
+
+Raw payload is allowed only when required by the task and allowed by policy. The preferred representation is references, selectors, summaries, hashes, redacted excerpts, and structural fields. Repository-scale, chat-archive-scale, or organizational-introspection bundles must record the selected paths, objects, time ranges, messages, or evidence selectors and also summarize excluded material. A broad archive name without selectors is not enough provenance for review.
+
+Compartment policy is checked before context assembly and again before invocation. If any source is denied for the destination, UbU must either exclude that source and record the exclusion or deny the bundle. Mixed-Compartment bundles inherit the most restrictive applicable route. User approval, provider settings, workflow rules, and capability grants cannot override `no_cloud_llm`, `no_external_export`, `local_only`, or other hard Compartment denials.
+
+User approval is required before routing a ContextBundle when protected payload, low-security un-compartmented content beyond structural references, Relationship evidence, Association evidence, private messages, broad repository or archive content, or other long-context bulk material leaves the local boundary, crosses to a cloud provider, external provider, remote worker, managed gateway, third-party tool, or crosses a materially different Identity or Association disclosure boundary. Approval is also required when provider, model, operator, region, retention/training profile, data category, minimization policy, source scope, or destination changes materially from an already approved workflow template.
+
+Policy-based approval is allowed only for prior user-approved rules that name the workflow, destination class, allowed Compartments or data categories, maximum source scope, minimization rule, retention profile, cost limits when relevant, expiry, and review requirement. Such rules must fail closed on hard Compartment denials or materially broader context than the rule allowed. Local-only deterministic processing or local model use may proceed without per-run approval when local policy permits it and no new disclosure boundary is crossed.
+
+After invocation, UbU records a context exposure summary as a review artifact. The summary includes actual provider/model/tool, invocation refs, source counts and categories, Compartments, Identities, Associations, and Relationships exposed, raw-versus-summary/reference volume, redactions and exclusions, retention/training profile, prompt-injection exposure notes, approval and routing Log refs, downstream candidate refs, and denied or omitted context that may affect output quality. Exposure summaries must not contain secrets or unnecessary raw payload.
+
+ContextBundles are immutable after use. Corrections, narrower reruns, broader reruns, or provider changes create a new bundle or superseding revision linked by Logs. Candidate updates, AssociationAttestations, Log candidates, Plan repairs, Delegation Substrate packets, worker mutation requests, and other downstream outputs must carry originating ContextBundle refs or equivalent provenance. Approval, denial, invocation, output admission, and output rejection Logs link back to the relevant ContextBundle.
+
+**Consequences:**
+
+- `UBU-Q0083` is resolved for Phase 1 governance.
+- Long-context model use can proceed only through explicit minimization, approval, routing, exposure-summary, and provenance records.
+- Organizational introspection and repository/chat archive review can use large models without treating large context windows as permission to send everything.
+- `UBU-Q0092` can refine typed Relationship evidence policies while relying on the ContextBundle boundary for model routing.
+- `UBU-Q0100` can distinguish ContextBundle Compartment/export denials as hard structural boundaries rather than advisory safeguards.

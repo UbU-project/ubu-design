@@ -1786,7 +1786,7 @@ Open.
 
 ## UBU-Q0083: ContextBundle governance and long-context model routing
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0028, UBU-Q0060 Blocks: long-context LLM use, organizational introspection, repository/chat archive review Resolved by: None Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0028, UBU-Q0060 Blocks: long-context LLM use, organizational introspection, repository/chat archive review Resolved by: UBU-D0162 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1806,7 +1806,7 @@ Context assembly is a privacy-relevant act. More context is not automatically be
 
 ### Resolution
 
-Open.
+Resolved. See UBU-D0162.
 
 ---
 
