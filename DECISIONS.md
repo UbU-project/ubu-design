@@ -3108,3 +3108,109 @@ This decision does not remove future safety work. It fixes the authority boundar
 - Relationship and RelationshipScopeTransition safeguards use the same taxonomy as the rest of UbU rather than a separate paternalistic gate model.
 - Product and public documentation must avoid claiming that UbU reliably prevents behavioral misuse or illegal behavior.
 - Implementation schemas may add a safeguard-category enum or policy-gate records later, but the Phase 1 design boundary is now settled.
+
+## UBU-D0166: GPU planning kernel stochastic model
+
+**Status:** Accepted → DESIGN.md §16.10
+
+Task durations use the shifted log-normal distribution, parameterized from a three-point user estimate (min, mode, max) converted to log-normal μ and σ. Log-normal is mandated because it is right-skewed and positive-definite, matching the empirical shape of real task durations, and because it supports the core early-completion repair semantic: when a Task finishes early, the next eligible Dynamic Task is pulled forward without global replan; when a Task runs late, no special action is required. For lay audiences, this distribution is well described as a stop-light model — a sequence of independent delay sources where slowdowns stack asymmetrically and early arrivals are absorbed cheaply.
+
+The precise semantics of the three-point estimate are not yet specified and are required before implementation. Specifically: whether `min` is a hard lower bound, a subjective optimistic estimate, or a shift parameter; whether `max` is a P90, P95, P99, or a hard upper cap; and how invalid triples (e.g. min ≥ mode, mode ≥ max) are detected and handled. See `UBU-Q0106`.
+
+Correlation groups use named groups with explicit strength. Each Task carries `correlation_groups: [{group: str, strength: float}]`. Tasks may belong to multiple groups. Joint sampling in the Monte Carlo rollout stage uses a Gaussian copula approach. The correlation-group field is first-class in `TaskSpec`.
+
+The rules for constructing a unique, well-formed correlation matrix from declared group memberships and strengths are not yet specified and are required before implementation. Open questions include: the permitted range of `strength`; whether negative correlations are allowed; how strengths combine when tasks share multiple groups; how overlapping group memberships are normalized; and what the CPU kernel does when the derived matrix is not positive semi-definite. A construction rule must be deterministic before PSD validation is meaningful. See `UBU-Q0104`.
+
+Latent factor loadings are explicitly deferred to post-MVP assessment.
+
+**Consequences:**
+
+- The log-normal parameterization directly motivates and formalizes the forward-pull early-completion behavior described in `DESIGN.md §16.6`.
+- The correlation-group schema is committed; the matrix construction rule and PSD handling policy are open and tracked in `UBU-Q0106` and `UBU-Q0104` respectively.
+
+---
+
+## UBU-D0167: GPU planning kernel affect constraint architecture
+
+**Status:** Accepted → DESIGN.md §§13.7, 16.10
+
+Affect constraints in the GPU planning kernel use sigmoid-family functional form, parameterized per dimension as location and scale. Piecewise-linear form is rejected for this use.
+
+Sigmoid is mandated over piecewise-linear because:
+
+- UbU intends to eventually infer AffectProfile parameters from execution history; sigmoid parameters are directly fittable with standard logistic regression or MLE whereas piecewise-linear fitting is a non-standard constrained optimization;
+- sigmoid naturally models gradual saturation at extremes, preventing the hard-clipping planning artifacts that piecewise-linear produces near constraint boundaries;
+- recovery curves typically follow an S-shape that sigmoid captures with two parameters and piecewise-linear approximates poorly with fewer than four hand-placed breakpoints.
+
+For Phase 1 MVP, AffectProfile parameters are user-specified. A system-default AffectProfile may be introduced in a later phase to reduce onboarding friction, but no default profile is committed for Phase 1.
+
+The three MVP affect dimensions — energy, stress, and mood intensity — each carry an independent sigmoid parameterization in the planning kernel. Composite or cross-dimension affect interactions are post-MVP.
+
+The per-dimension sigmoid schema requires additional specification before implementation. Location and scale alone are insufficient: each dimension also needs a `direction` (e.g. higher-is-better vs. lower-is-better), a feasibility `threshold` or cutoff, and a defined output semantics (feasibility probability, penalty multiplier, utility adjustment, or hard rejection score). These are not trivially shared across dimensions — higher energy may be beneficial, higher stress harmful, and mood intensity ambiguous unless the dimension is clarified as arousal rather than valence. See `UBU-Q0105`.
+
+The GPU pipeline stage that applies sigmoid affect constraints is named `affect_legitimacy_filter`. Full legitimization in UbU design refers to the broader process of making a skeleton Plan human-viable by adding or respecting affect, recovery, transition, rest, sustainability, and support constraints. The `affect_legitimacy_filter` GPU stage implements only the sigmoid affect-constraint portion of that broader process; it does not replace or subsume full legitimization.
+
+**Consequences:**
+
+- `DESIGN.md §13` gains a subsection on the sigmoid constraint form and the inference rationale.
+- Manual AffectProfile configuration requires a user-facing parameterization UX; LLM-assisted explanation of sigmoid parameters is the intended path for non-technical users.
+- The `affect_legitimacy_filter` stage schema must encode per-dimension sigmoid parameters; the full per-dimension schema is tracked in `UBU-Q0105`.
+
+---
+
+## UBU-D0168: GPU engine internal architecture
+
+**Status:** Accepted → DESIGN.md §16.10
+
+The GPU planning engine is a pure function. Its inputs are: task graph, UniverseState snapshot, AffectProfile, time window bounds, and RNG seed. Its output is a ranked list of PlanCandidates. The engine has no side effects, no mutable state, and performs no I/O. The CPU kernel owns all state mutation; the GPU engine is advisory only.
+
+The engine is invoked as a typed Python function call, not a subprocess or service.
+
+All tensor batches use padded fixed-size shape `(N_CANDIDATES, MAX_PLANNING_TASKS, ...)` with an explicit boolean validity mask tensor marking valid task slots. Ragged tensors are not used in Phase 1. The framework is PyTorch.
+
+`MAX_PLANNING_TASKS = 256` is the Phase 1 planning window ceiling. This constant is defined at a single site. Premium execution tiers are defined as scalar multiples of this constant — `premium_multiplier × 256` — with no other architectural changes required. This enables linear scaling without dynamic tensor sizing throughout the codebase.
+
+The four pipeline stages are first-class design artifacts. Stage-boundary schemas are required future work before implementation can begin; they are not yet specified. See `UBU-Q0103`.
+
+1. **Skeleton sampling** — parallel log-normal duration sampling across N_CANDIDATES with vectorized topological-order constraint propagation;
+2. **`affect_legitimacy_filter`** — batch sigmoid affect constraint evaluation; eliminates candidates that fail feasibility thresholds. Note: this stage implements only the sigmoid affect-constraint portion of legitimization. Full legitimization in UbU design is the broader process of making a skeleton Plan human-viable by respecting affect, recovery, transition, rest, sustainability, and support constraints; the `affect_legitimacy_filter` GPU stage does not replace or subsume it;
+3. **Value scoring** — parallel utility, robustness, and affect-margin scoring across surviving candidates;
+4. **Monte Carlo rollout** — joint scenario simulation using correlation-group Gaussian copula for the top-K finalists.
+
+The Phase 1 performance target is a local desktop/laptop GPU backend. A small CPU reference path or fixture-backed deterministic path remains required for tests, CI, and contributors without GPU access. Mobile and cloud planner backends are deferred beyond Phase 1.
+
+GPU search proposes candidates. Hard constraint certification and final Plan validity are performed by the CPU kernel using exact or conservative validation, not by the GPU engine.
+
+**Consequences:**
+
+- Pure function architecture means the GPU engine can be fully tested by input/output comparison in isolation from all other UbU state.
+- The CPU reference path is a Phase 1 requirement, not optional.
+- The single `MAX_PLANNING_TASKS` definition site makes premium tier implementation a configuration change, not an architectural change.
+- Stage-boundary schemas are required before `model-committee` can generate stage implementations; this is tracked in `UBU-Q0103`.
+
+---
+
+## UBU-D0169: CPU/GPU interface contract
+
+**Status:** Accepted → DESIGN.md §16.10
+
+The CPU/GPU boundary is defined by two typed objects — `PlanningRequest` and `PlanningResponse`. A dedicated minimal schema document specifying these objects is required future work in `ubu-design` before implementation can begin; it does not yet exist. See `UBU-Q0102`. This contract is a design artifact. Internal GPU stage schemas are implementation artifacts belonging to `model-committee`.
+
+`PlanningRequest` carries at minimum: task graph, UniverseState snapshot, AffectProfile (required, user-specified for Phase 1), time window bounds, and RNG seed (required). The full field set — including schema version, planner version, effective time, planning delta, reactive horizon, branch coverage target, compute budget, K override, scoring policy, constraint strictness level, Compartment/redaction metadata, external event assumptions, existing Plan context for repair mode, and explanation requirements — is not yet specified. Some of these fields may be deferred, but the contract document must acknowledge and explicitly defer or include each. See `UBU-Q0102`.
+
+`PlanningResponse` returns `K=3` PlanCandidates by default:
+
+- highest-utility candidate;
+- most-robust candidate (best worst-case outcome under Monte Carlo simulation);
+- most-schedule-diverse candidate (maximally different from the first, for user-facing alternatives).
+
+K is user-configurable to allow power users to tune computational resource use. The default of 3 is the Phase 1 baseline.
+
+The Phase 1 performance target is a local desktop/laptop GPU backend. A small CPU reference path or fixture-backed deterministic path remains required for tests, CI, and contributors without GPU access. Mobile and cloud planner backends are deferred beyond Phase 1.
+
+**Consequences:**
+
+- The `PlanningRequest`/`PlanningResponse` schema document must be authored in `ubu-design` before `model-committee` can generate the interface layer; this is a prerequisite for implementation.
+- Q0072 subquestion 4 (desktop/laptop GPU path) is resolved by this decision. Subquestions 1 (solver library evaluation), 3 (mobile GPU targets), and 5 (cloud GPU path) remain open and are deferred.
+- The CPU reference path is a Phase 1 requirement enabling testing without GPU hardware.
+- The deferred mobile and cloud backends may reuse the same contract when implemented; the contract is designed to be backend-agnostic.

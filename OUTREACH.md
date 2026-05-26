@@ -109,7 +109,11 @@ The planner direction is explicit rather than agentic magic:
 - internal look-ahead may exceed the visible Calendar window so fragile prerequisites are not scheduled just in time;
 - a short-horizon reactive layer handles likely near-term divergence;
 - mobile devices use stewardship metadata, cached explanations, and simple repair rules when full replanning is too expensive;
-- GPU-capable search, simulation, and scoring should handle expensive candidate evaluation where available, while exact or conservative validation certifies hard constraints.
+- the GPU planning engine generates tens of thousands of candidate Plans in parallel using PyTorch, samples task durations from log-normal distributions, runs batch sigmoid affect-constraint filters, scores candidates, and runs Monte Carlo robustness simulation for finalists; exact or conservative CPU validation certifies hard constraints before any candidate is selected.
+
+Task durations use the shifted log-normal distribution: a right-skewed model that matches real task duration behavior. The accessible framing is a stop-light model — a sequence of independent delay sources where slowdowns stack asymmetrically and early arrivals are absorbed cheaply by pulling the next Task forward rather than triggering a full replan.
+
+The Phase 1 performance target is a local desktop or laptop GPU, configured by the user. A CPU reference path is also required for tests, CI, and contributors without GPU hardware.
 
 This matters because UbU should remain useful on a mobile device, on battery, and offline. LLMs may help interpret, summarize, propose, or critique, but the real-time planning loop must remain explicit, inspectable, and locally runnable.
 
@@ -118,6 +122,8 @@ This matters because UbU should remain useful on a mobile device, on battery, an
 ## Compute choice is part of user sovereignty
 
 UbU should not force one execution provider. A user may run locally on mobile, use a laptop or desktop as a personal worker, later use a dedicated worker appliance, or opt into a hosted service. A third-party provider should be able to offer compatible execution without becoming the canonical owner of the UbU model.
+
+Phase 1 embodies this concretely: the GPU planning engine is a pure function — no external calls, no ambient authority, no hidden cloud dependency. The user's own machine produces the candidate Plans. Mobile and cloud backends are deferred beyond Phase 1.
 
 The FOSS core should stay backend-agnostic. Cloud or external compute may provide better granularity, deeper analysis, heavier branch search, more full legitimization passes, and wider planning horizons, but it must not become a hidden mandatory dependency for the open-core planning loop.
 

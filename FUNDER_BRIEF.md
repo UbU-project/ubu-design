@@ -81,7 +81,7 @@ This is intentionally narrower than a general productivity app.
 
 Aligned funding can accelerate:
 
-- implementation of the Phase 1 planning loop;
+- implementation of the Phase 1 planning loop, targeting a local GPU desktop backend with a CPU reference path required for tests, CI, and contributors without GPU hardware;
 - GitHub ingestion and projection;
 - local-first storage and schema work;
 - Task/Objectives/Calendar/Log implementation;

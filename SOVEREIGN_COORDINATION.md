@@ -46,6 +46,7 @@ UbU’s sovereignty framing depends on several accepted design commitments:
 - GitHub, calendars, and other systems are projections or inputs, not the full canonical life model;
 - user overrides remain authoritative;
 - provider-neutral LLM execution prevents lock-in to one cognitive backend;
+- the Phase 1 GPU planning kernel runs on hardware the user owns and configures; the planning engine is a pure function with no external calls, no ambient authority, and no hidden cloud dependency — the user's machine produces the candidate Plans;
 - model-committee v0.2 dogfooding uses Codex and Claude Code cross-scoring as a concrete example of treating frontier models as reviewable providers rather than trusted authorities.
 
 The purpose is not purity for its own sake. The purpose is practical control over sensitive planning state.
