@@ -804,10 +804,13 @@ Phase 1 must include a minimal first-person UX loop for dogfooding. The loop is 
    - Mark any fixture-backed, hardcoded, or mock recommendation path directly in the UI and run artifact.
 
 4. **Calendar preview**
-   - Treat Calendar preview as a notable Task that should run regularly.
+   - Treat Calendar preview as a notable recurring Task.
+   - Default cadence is before the first recommended Task in a user-declared work window and after a material Calendar regeneration when UbU is about to rely on the new default Plan.
    - Let the user inspect the candidate Calendar or default Plan before relying on it.
    - Ask whether the Plan feels plausible, motivating, humane, and consistent with the user's current context.
+   - Ask only lightweight model-repair questions about expected execution, perceived control, social pressure, and missing context; store raw psychological comments as review notes unless the user accepts a concrete canonical update.
    - Allow the user to correct Preferences, Objectives, Tasks, affect Snapshots, availability, or estimates before execution.
+   - Let the user snooze, skip, or adjust Calendar-preview cadence through ordinary Task recurrence settings.
 
 5. **Next-action focus mode**
    - Present one recommended next Task as the default UI surface.
@@ -824,6 +827,8 @@ Phase 1 must include a minimal first-person UX loop for dogfooding. The loop is 
    - After snooze, ask for the next review time or condition and whether the reason is timing, affect, dependency, or user preference.
    - After rejection, ask whether the Task is wrong, not valuable now, blocked, too large, already done, duplicate, or should become moot.
    - After override, record the chosen Task or action, the reason if supplied, and whether the override should update Preferences, availability, Task estimates, Objective status, or only this Plan.
+   - Treat Log review as a notable recurring Task. Default cadence is at the end of a work window or at the next startup when there are unreconciled deviations, with a weekly catch-up if routine review is skipped.
+   - Store reviewed outcomes as canonical updates only when they change Logs, Snapshots, Preferences, Objectives, Tasks, or recalculation triggers; otherwise keep autonomy, competence, relatedness, attitude, subjective-norm, perceived-control, and expected-execution comments as noncanonical review notes or derived report inputs.
    - Record outcomes as Logs and trigger recalculation when the outcome changes Task status, availability, affect state, dependencies, Objective status, or user Preferences.
    - Treat failure, rejection, override, and deviation as model evidence, not user blame.
 
@@ -2083,7 +2088,7 @@ The comparison of Logs against Plans is essential for:
 
 ### 17.8 Regular Log review
 
-Log review is a notable Task that should run regularly. Its purpose is to keep UbU's model aligned with the user's actual behavior, later reflection, and corrections.
+Log review is a notable recurring Task. Its purpose is to keep UbU's model aligned with the user's actual behavior, later reflection, and corrections. Default cadence is at the end of a work window or at the next startup when unreconciled plan/reality differences exist, with a weekly catch-up if routine review is skipped. The user may adjust cadence through ordinary Task recurrence, snooze, or skip controls.
 
 A Log review Task may:
 
@@ -2091,9 +2096,10 @@ A Log review Task may:
 - ask whether a user override reflected a better local judgment, bad timing, missing preconditions, wrong duration estimate, stale affect data, social pressure, or changed Preference;
 - compare planned Tasks against completed, failed, moot, snoozed, rejected, or unobserved Tasks;
 - convert user-approved observations into corrected Logs, Snapshots, Preferences, Objective annotations, Task estimate updates, or recalculation triggers;
+- keep raw autonomy, competence, relatedness, social pressure, attitude, subjective norms, perceived control, and expected-execution comments as review notes unless the user accepts a concrete canonical update;
 - mark proposed habit patterns as user-endorsed, tolerated, unwanted, or unresolved.
 
-Log review should not become a blame ritual. It is a model-maintenance Task for self-governance. Open details are tracked in `UBU-Q0053`.
+Log review should not become a blame ritual. It is a model-maintenance Task for self-governance. The minimum Phase 1 annotation boundary is resolved by `UBU-D0181`.
 
 ---
 

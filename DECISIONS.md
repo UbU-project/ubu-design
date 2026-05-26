@@ -3566,3 +3566,54 @@ Local renderers, UI-test capture tools, LLM script drafters, TTS tools, caption 
 - `UBU-Q0084` may later refine AgentAction details for external publication connectors without reopening the Phase 1 package boundary.
 
 ---
+
+## UBU-D0181: Calendar preview and Log review use lightweight review annotations
+
+**Status:** Accepted → DESIGN.md §§4.1.2, 17.8
+
+Resolved question: `UBU-Q0053`.
+
+Calendar preview and Log review are recurring model-maintenance Tasks, not new psychological ontology.
+
+Minimum Calendar preview Task:
+
+- Runs before the first recommended Task in a user-declared work window and after a material Calendar regeneration when UbU is about to rely on the new default Plan.
+- Shows the ordered default Plan, assumptions, affect/staleness status, availability, blockers, worker/projection state, and top risk/opportunity.
+- Asks whether the Plan is plausible, humane, motivating enough, context-consistent, and executable; user actions are accept, correct model, replan, snooze, skip, or change cadence.
+
+Minimum Log review Task:
+
+- Runs at the end of a work window or at next startup when unreconciled plan/reality differences exist, with a weekly catch-up if routine review is skipped.
+- Reviews completed, failed, moot, snoozed, rejected, overridden, and unobserved Tasks plus under-specified time periods.
+- Asks what model assumption should be repaired: duration or effect estimate, dependency or precondition, stale affect, interruption, social pressure, unclear Task, changed priority, changed Preference, or Objective fit.
+
+Cadence is stored as ordinary Task recurrence or snooze policy. Phase 1 defaults are per work window or daily for active use, weekly catch-up for skipped reviews, and on-demand review. The user may snooze, skip, disable automatic prompting, or choose per-session, daily, weekly, or manual cadence. Overdue review is a derived report or stale marker, not user blame.
+
+Canonical admission rules:
+
+- Logs: accepted preview/review answers that annotate a Plan, Task, Log entry, or decision use existing `log_annotation_added`, `log_correction_added`, `decision_recorded`, or outcome event payloads.
+- Preferences: only explicit accepted pairwise Preference statements become canonical Preferences.
+- Snapshots: only current user-declared affect, availability, capacity, or similar observed state becomes a Snapshot.
+- Objectives: only user-approved Objective status, importance, scope, or fit changes become Objective updates or annotations.
+- Tasks: only accepted lifecycle, estimate, dependency, precondition, decomposition, delegation, recurrence, or cadence changes mutate Tasks.
+- Reports: repeated deviation, motivation mismatch, social-pressure pattern, stale affect, overdue review, and expected-execution concerns are derived findings.
+
+Phase 1 does not add canonical fields for autonomy, competence, relatedness, attitude, subjective norms, perceived control, or expected execution. These constructs may appear as prompt labels, structured review-note categories, and derived report tags. They become canonical only through a concrete user-approved update to an existing object type.
+
+Noncanonical review notes include raw free text, unaccepted hypotheses, calibration examples, tentative motivation explanations, subjective norms, social pressure comments, and reactions such as `feels plausible`, `motivating`, or `humane` that the user has not admitted into canonical state. Noncanonical notes may be retained for local review and report generation, but they are not Preferences, diagnoses, Objectives, or durable psychological facts about the user.
+
+Question wording must use model-repair framing:
+
+- ask `What assumption should UbU repair?` rather than `Why did you fail?`;
+- ask whether the Plan fits today's context rather than whether the user is committed enough;
+- present social-pressure and motivation prompts as optional explanations, not accusations;
+- avoid therapy, diagnosis, moral judgment, compliance scoring, or paternalistic language.
+
+**Consequences:**
+
+- `UBU-Q0053` is resolved for Phase 1.
+- Self-determination theory and theory of planned behavior remain interface and reporting influences, not Phase 1 ontology.
+- Review Tasks can be implemented with existing Task, Log, Snapshot, Preference, Objective, Report, and recalculation-trigger mechanisms.
+- Detailed preference-calibration examples remain in `UBU-Q0051`; discovery-mode inference remains in `UBU-Q0052`; deeper affect/personality modeling remains post-MVP in `UBU-Q0074`.
+
+---

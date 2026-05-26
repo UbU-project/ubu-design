@@ -880,29 +880,9 @@ Open.
 
 ## UBU-Q0053: Calendar preview and Log review psychological annotations
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0050 Blocks: Regular review Tasks, preview UX, Log review UX, psychological annotation boundary Resolved by: None Last scored: 2026-05-26 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0050 Blocks: Regular review Tasks, preview UX, Log review UX, psychological annotation boundary Resolved by: UBU-D0181 Last scored: 2026-05-26 Scored from commit: None
 
-### Question
-
-What psychological annotations should Phase 1 Calendar preview and Log review collect, store, or report?
-
-### Subquestions
-
-1. What is the minimum recurring Calendar preview Task?
-2. What is the minimum recurring Log review Task?
-3. How often should these Tasks run by default, and how should the user adjust cadence?
-4. Which annotations belong in canonical Logs, Preferences, Snapshots, Objectives, Tasks, or Reports?
-5. Which annotations should remain noncanonical review notes?
-6. Should autonomy, competence, relatedness, social pressure, attitude, subjective norms, perceived control, and expected execution be modeled directly or only through preview/review comments?
-7. How should UbU ask useful consistency questions without becoming therapeutic, accusatory, or paternalistic?
-
-### Current direction
-
-Calendar preview and Log review are notable Tasks that should run regularly to ensure that UbU is correctly modeling the user's intended behavior, actual behavior, affective constraints, and Preference judgments. Self-determination theory and theory of planned behavior mostly inform these interface and reporting layers rather than Phase 1 core ontology.
-
-### Resolution
-
-Open.
+Resolved. See UBU-D0181.
 
 ---
 
@@ -1172,7 +1152,7 @@ Open.
 
 ## UBU-Q0063: Organizational introspection MVP/dogfooding workflow
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0046, UBU-Q0049, UBU-Q0050 Blocks: ETHConf follow-up, public dogfooding artifacts, organizational introspection demo Resolved by: None Last scored: 2026-05-26 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0046, UBU-Q0049, UBU-Q0050 Blocks: ETHConf follow-up, public dogfooding artifacts, organizational introspection demo Resolved by: None Last scored: 2026-05-26 Scored from commit: None
 
 ### Question
 
@@ -1531,7 +1511,7 @@ Open.
 
 ## UBU-Q0076: Planning horizon, early-preparation bias, and short-horizon time discounting
 
-Status: Open Priority: Research Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0016, UBU-Q0051 Blocks: detailed planning horizon policy, premium planning horizon design Resolved by: None Last scored: 2026-05-26 Scored from commit: None
+Status: Open Priority: Research Phase: Phase 2 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0016, UBU-Q0051 Blocks: detailed planning horizon policy, premium planning horizon design Resolved by: None Last scored: 2026-05-26 Scored from commit: None
 
 ### Question
 
