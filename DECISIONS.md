@@ -3617,3 +3617,54 @@ Question wording must use model-repair framing:
 - Detailed preference-calibration examples remain in `UBU-Q0051`; discovery-mode inference remains in `UBU-Q0052`; deeper affect/personality modeling remains post-MVP in `UBU-Q0074`.
 
 ---
+
+## UBU-D0182: Pipeline state is projection-scoped workflow metadata
+
+**Status:** Accepted → DESIGN.md §§17.2, 26.2
+
+Resolved question: `UBU-Q0004`.
+
+`pipeline_state` is generic projection-scoped workflow/project-management metadata, not GitHub-specific. Phase 1 uses it first for GitHub issue/PR dogfooding and managed labels.
+
+`pipeline_state` is not stored directly on `Objective` in Phase 1. It is stored in projection metadata keyed by `pipeline_projection_id` and target Objective. One Objective may have multiple current pipeline states across different projections. A projection has at most one current state per Objective; historical changes are represented by Logs.
+
+Minimum record fields:
+
+- `pipeline_state_id`
+- `pipeline_projection_id`
+- `target_ref` (`Objective` only in Phase 1)
+- `pipeline_state`
+- `authority_source`
+- `source_refs`
+- `external_reference_refs`
+- `updated_at`
+- `version`
+- `provenance`
+
+The Phase 1 enum is:
+
+- `unlabeled`
+- `invalid`
+- `under_specified`
+- `valid_unprioritized`
+- `unassigned`
+- `in_process_awaiting_pr`
+- `awaiting_review`
+- `awaiting_ci`
+- `complete`
+
+`complete` is workflow completion for the projection and does not by itself prove `Objective.status = completed` or `satisfied`.
+
+Automation Workers do not directly mutate `pipeline_state`. A worker may submit a `pipeline_state` projection-state mutation request through `mutation_request.submit`; the canonical instance validates authority, expected prior version, Compartment/export policy, External References, idempotency, and review policy before applying or rejecting it.
+
+Every accepted `pipeline_state` transition creates a `pipeline_state_transitioned` Log entry with old state, new state, projection id, target Objective ref, actor or authority source, reason, effective time, provenance, source refs, external refs, and any requested projection update. Rejected, stale, or unauthorized worker requests are logged through worker mutation rejection events.
+
+**Consequences:**
+
+- `UBU-Q0004` is resolved for Phase 1.
+- Objective lifecycle remains on `Objective.status`; workflow state stays projection-scoped.
+- GitHub managed labels project accepted `pipeline_state` values but do not become canonical state.
+- Multiple projections can coexist without changing the Objective schema.
+- Worker authority remains request-only for pipeline changes.
+
+---

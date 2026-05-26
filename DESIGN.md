@@ -2036,6 +2036,7 @@ MVP event types are:
 - `external_event_observed`
 - `snapshot_observed`
 - `objective_transitioned`
+- `pipeline_state_transitioned`
 - `plan_realized`
 - `decision_recorded`
 - `recalculation_triggered`
@@ -2905,9 +2906,26 @@ Contributor interactions may also be associated with a GitHub Identity and relat
 
 ### 26.2 Pipeline state
 
-`pipeline_state` is distinct from `Objective.status`.
+`pipeline_state` is generic projection-scoped workflow/project-management state. It is not GitHub-specific, although Phase 1 uses it first for GitHub dogfooding and managed-label projection.
 
-Candidate pipeline states:
+`pipeline_state` is not stored directly on `Objective` in Phase 1. It is stored as projection metadata keyed by one projection plus one target Objective. One Objective may therefore have multiple current pipeline states for multiple projections, such as GitHub issue labels, a future organization board, or a local release workflow.
+
+MVP projection-state record:
+
+- `pipeline_state_id`
+- `pipeline_projection_id`
+- `target_ref` (`Objective` only in Phase 1)
+- `pipeline_state`
+- `authority_source`
+- `source_refs`
+- `external_reference_refs`
+- `updated_at`
+- `version`
+- `provenance`
+
+A projection has at most one current `pipeline_state` for a given Objective. History is reconstructed from Logs, not by storing multiple historical states on the Objective.
+
+Phase 1 `pipeline_state` enum:
 
 - `unlabeled`
 - `invalid`
@@ -2918,6 +2936,22 @@ Candidate pipeline states:
 - `awaiting_review`
 - `awaiting_ci`
 - `complete`
+
+Enum semantics:
+
+- `unlabeled`: no accepted projection label/state has been assigned.
+- `invalid`: the projected work item is malformed, duplicate-invalid, impossible, or not admissible as planned work.
+- `under_specified`: more triage or clarification is required before prioritization.
+- `valid_unprioritized`: valid work exists but has not been ranked or selected for execution.
+- `unassigned`: valid prioritized work has no executor or active assignment.
+- `in_process_awaiting_pr`: work is assigned or in progress and the next expected external projection is a PR or comparable artifact.
+- `awaiting_review`: implementation or artifact exists and needs human, maintainer, or worker review.
+- `awaiting_ci`: review or merge path is waiting on CI or comparable automated verification.
+- `complete`: the projection workflow is complete; this does not by itself prove `Objective.status = completed` or `satisfied`.
+
+Automation Workers do not directly mutate `pipeline_state`. A worker may submit a `pipeline_state` projection-state mutation request when its capability grant permits `mutation_request.submit` for the target projection and Objective. The canonical instance validates authority, expected prior version, Compartment/export policy, External References, idempotency, and review policy before applying or rejecting the request.
+
+Every accepted `pipeline_state` transition creates a `pipeline_state_transitioned` Log entry with old state, new state, projection id, target Objective ref, actor or authority source, reason, effective time, provenance, source refs, external refs, and any requested projection update. Rejected, stale, or unauthorized worker requests are logged through worker mutation rejection events.
 
 ### 26.3 GitHub projection
 

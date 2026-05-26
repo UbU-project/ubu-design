@@ -65,36 +65,9 @@ Resolved. See UBU-D0098.
 
 ## UBU-Q0004: Pipeline State
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0003 Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: 2026-05-26 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0003 Blocks: Phase 1 implementation Resolved by: UBU-D0182 Last scored: 2026-05-26 Scored from commit: None
 
-`Objective.status` is the canonical UbU lifecycle status. `pipeline_state` is workflow/project-management state.
-
-### Question
-
-1. Is `pipeline_state` generic or GitHub-specific?
-2. Can one Objective have multiple pipeline states for multiple projections?
-3. Is `pipeline_state` stored on Objective directly or in projection metadata?
-4. What is the MVP pipeline enum?
-5. Can Automation Workers mutate `pipeline_state`?
-6. Does every pipeline state transition create an event/log entry?
-
-### Candidate MVP enum
-
-```text
-unlabeled
-invalid
-under_specified
-valid_unprioritized
-unassigned
-in_process_awaiting_pr
-awaiting_review
-awaiting_ci
-complete
-```
-
-### Resolution
-
-Unresolved.
+Resolved. See UBU-D0182.
 
 ---
 
@@ -1369,7 +1342,7 @@ Open.
 
 ## UBU-Q0071: Legitimization and semi-legitimization cost model
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0016, UBU-Q0053 Blocks: realistic candidate Plan search Resolved by: None Last scored: 2026-05-26 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016, UBU-Q0053 Blocks: realistic candidate Plan search Resolved by: None Last scored: 2026-05-26 Scored from commit: None
 
 ### Question
 
