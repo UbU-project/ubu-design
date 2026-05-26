@@ -620,24 +620,9 @@ Unresolved.
 
 ## UBU-Q0034: Design Automation Stop Rule
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0001 Blocks: Phase 1 scope freeze Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0001 Blocks: Phase 1 scope freeze Resolved by: UBU-D0175 Last scored: Never Scored from commit: None
 
-### Question
-
-When should UbU stop answering additional pre-MVP design questions and begin coding the MVP?
-
-### Subquestions
-
-1. What categories of questions may block Phase 1?
-2. What categories must be deferred even if unresolved?
-3. What MVP readiness score is sufficient to begin implementation?
-4. What maximum rate of new MVP-blocker creation is acceptable?
-5. How should the value of answering another question be compared against coding?
-6. Can the model committee recommend that no further pre-MVP design work is justified?
-
-### Resolution
-
-Unresolved.
+Broad pre-MVP design automation stops after the Phase 1 planning-kernel blockers are resolved. Future design questions may block Phase 1 only when they are required for a concrete implementation slice, an accepted hard invariant, a needed contract, or avoidance of an irreversible schema contradiction. New MVP blockers require a blocker certificate showing the blocked implementation object, failed acceptance criterion, unsafe fallback, minimum answer needed, and persistence impact.
 
 ---
 

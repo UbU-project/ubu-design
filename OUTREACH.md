@@ -548,9 +548,9 @@ The essay should point to `model-committee` as UbU’s first visible dogfooding 
 
 ## Model-committee: the bootstrap automation project
 
-Before the main UbU MVP is implemented, the project is using a bootstrap automation tool called `model-committee`.
+Before the main UbU MVP is implemented, the project is using a bootstrap automation tool called `model-committee`. After `UBU-D0175`, this tool should support implementation slices and review artifacts rather than open-ended design expansion.
 
-`model-committee v0.1` is the first runnable early dogfooding system, and v0.2 is the next accepted hardening step. It helps the project use LLMs and local automation to resolve design questions, propose changesets, score candidate patches, and move toward implementation.
+`model-committee v0.1` is the first runnable early dogfooding system, and v0.2 is the next accepted hardening step. It helps the project use LLMs and local automation to support implementation-local questions, propose changesets, score candidate patches, and produce reviewable artifacts without treating broad design expansion as a Phase 1 prerequisite.
 
 It is not the canonical decision engine.
 
@@ -790,7 +790,7 @@ Derived public-facing files include:
 - `SOVEREIGN_COORDINATION.md` - cypherpunk, privacy, and sovereign-coordination brief
 - `ORG_INTROSPECTION_BRIEF.md` - organizational-introspection brief for mission-driven projects
 
-The current immediate implementation target has advanced from the v0.1 baseline toward `model-committee v0.2`.
+The current immediate implementation target has advanced from the v0.1 baseline toward `model-committee v0.2`, with `UBU-D0175` closing broad pre-MVP design automation and shifting the project toward implementation-first Phase 1 work.
 
 The practical development milestone is a Python CLI that can:
 
@@ -832,7 +832,7 @@ Contributors can help immediately by working on:
 - filesystem log layout;
 - test fixtures;
 - review workflow;
-- Phase 1 MVP scope freeze.
+- Phase 1 implementation slices, contract tests, and blocker-certificate review for any proposed new MVP blocker.
 
 Later contributors will be needed for:
 

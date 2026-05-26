@@ -1,6 +1,6 @@
 # UbU
 
-**Status:** Active pre-MVP dogfooding / contributor and prototype-funder discovery  
+**Status:** Active pre-MVP dogfooding / implementation-first Phase 1  
 **Repository:** `ubu-design`  
 **Primary purpose:** Canonical public design state for the UbU project
 
@@ -116,7 +116,7 @@ When derived files conflict with canonical files, the canonical files win.
 
 ## Current project status
 
-UbU is currently in **active pre-MVP dogfooding**.
+UbU is currently in **active pre-MVP dogfooding** with broad design automation stopped by `UBU-D0175`; remaining design work should support concrete Phase 1 implementation slices.
 
 The design has reached the point where additional broad philosophical elaboration has diminishing returns unless it directly supports implementation, recruitment, dogfooding, or market discovery.
 
@@ -457,7 +457,7 @@ Missed GitHub updates are expected in MVP, so reconciliation is a first-class co
 
 ## Model-committee bootstrap project
 
-`model-committee` is the first runnable bootstrap automation project for active pre-MVP UbU dogfooding.
+`model-committee` is the first runnable bootstrap automation project for active pre-MVP UbU dogfooding. After `UBU-D0175`, it should focus on implementation-support dogfooding rather than open-ended design expansion.
 
 The project is an early example of UbU dogfooding: UbU uses an automation loop to help coordinate its own design and development through reviewable run artifacts and changesets.
 
@@ -716,7 +716,7 @@ The relevant metric is unresolved design burden, not merely raw open-question co
 
 ## Development readiness
 
-The current design baseline supports continuing `model-committee` dogfooding and preparing the Phase 1 implementation path.
+The current design baseline supports beginning implementation-first Phase 1 work while continuing `model-committee` dogfooding as an implementation-support and review-artifact workflow. Broad pre-MVP design automation is closed; remaining design questions should not block a slice unless they satisfy the `UBU-D0175` blocker-certificate standard.
 
 The first development milestone should be:
 

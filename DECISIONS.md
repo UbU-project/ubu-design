@@ -3328,3 +3328,35 @@ The explicit `p95_seconds` field name replaces the ambiguous `max` field name us
 - Seconds-unit consistency eliminates unit-conversion bugs at stage boundaries.
 
 ---
+
+## UBU-D0175: Phase 1 design automation stop rule
+
+**Status:** Accepted
+
+Broad pre-MVP design automation stops after resolution of the Phase 1 planning-kernel blockers `UBU-Q0102` through `UBU-Q0106`.
+
+Future design work may block Phase 1 only when it is required to implement the single-user GitHub dogfooding loop, enforce an accepted hard invariant, specify a contract needed by currently planned code, or avoid a known irreversible schema contradiction.
+
+All other open questions must be deferred, converted into implementation tickets, answered as post-MVP design work, or represented by conservative defaults, TODOs, feature flags, or versioned placeholder fields.
+
+`model-committee` may still analyze design questions and propose patches, but it must no longer create new MVP blockers unless the blocker is discovered during implementation of a concrete Phase 1 slice and includes a blocker certificate:
+
+- the exact implementation object, file, or acceptance test blocked;
+- the failed acceptance criterion;
+- why a conservative default, TODO, feature flag, or placeholder is unsafe;
+- the minimum answer needed to unblock implementation;
+- whether the answer is expected to mutate persistent schema or only local code behavior.
+
+A new MVP blocker should normally replace or narrow an existing blocker, not expand Phase 1 scope. If a proposed blocker is philosophical, outreach-oriented, Phase 2/3-oriented, or merely improves completeness, it must not block Phase 1.
+
+Implementation should now proceed slice-by-slice. A slice may begin when no unresolved question blocks that slice. Phase 1 readiness is therefore evaluated by implementation-slice readiness, not by global philosophical completion of the design model.
+
+**Consequences:**
+
+- `UBU-Q0034` is solved.
+- Broad design expansion no longer blocks Phase 1 implementation.
+- Implementation-local design clarification remains allowed when backed by a blocker certificate.
+- `model-committee` transitions from pre-MVP design-freeze assistance toward implementation-support dogfooding.
+- Future open questions may remain in `OPEN_QUESTIONS.md` without preventing Phase 1 implementation unless they meet the D0175 blocker standard.
+
+---

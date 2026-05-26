@@ -342,7 +342,7 @@ Model-committee automation has three expected lifecycle modes:
 
 The goal is to accelerate implementation, not to create unlimited pre-implementation design work.
 
-Model-committee automation must be bounded by a stop rule. It should recommend further design work only when that work has greater expected value than beginning or continuing implementation.
+Model-committee automation is bounded by the Phase 1 design automation stop rule in `UBU-D0175`. Broad pre-MVP design expansion no longer blocks Phase 1; further design work may block implementation only when it is required for a concrete implementation slice, an accepted hard invariant, a needed contract, or avoidance of an irreversible schema contradiction.
 
 The first implementation of this process is intentionally constrained by the v0.1 restrictions recorded in `DECISIONS.md`. The accepted v0.2 direction expands the bootstrap loop with Claude Code CLI, frontier cross-scoring, disagreement flags, schema-native structured output, and operator-run artifact publication while preserving the advisory authority boundary.
 
@@ -354,7 +354,7 @@ It is not the full UbU planner, but it exercises the recursive project-governanc
 
 This establishes active pre-MVP dogfooding while preserving the rule that accepted design state exists only when committed to the canonical design repository.
 
-The current strategic emphasis is to use visible dogfooding, contributor recruitment, and prototype-funder discovery to accelerate the trunk of UbU rather than to expand design philosophy indefinitely.
+The current strategic emphasis is implementation-first Phase 1 dogfooding: use visible dogfooding, contributor recruitment, and prototype-funder discovery to accelerate the trunk of UbU rather than to expand design philosophy indefinitely.
 
 ### 3.1 v0.1 Codex-first provider model
 
@@ -702,6 +702,8 @@ Phase 1 keeps these abstractions documented for compatibility but does not imple
 Stop rule:
 
 > A new abstraction may be added to Phase 1 only when it is required to complete the single-user GitHub dogfooding loop, enforce an accepted hard invariant, or avoid a known irreversible schema contradiction. Otherwise it must be documented as a Phase 2, Phase 3, or post-MVP concern and must not block Phase 1 implementation.
+
+After `UBU-D0175`, new MVP blockers are allowed only when discovered during implementation of a concrete Phase 1 slice and accompanied by a blocker certificate naming the blocked object or file, failed acceptance criterion, unsafe fallback, minimum answer needed, and persistence impact. Phase 1 readiness is judged slice-by-slice rather than by global philosophical completion of the model.
 
 The minimum dogfooding loop that proves UbU’s core model is:
 
