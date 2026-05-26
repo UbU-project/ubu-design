@@ -3044,3 +3044,35 @@ Missed events are reconstructed during reconciliation by comparing live GitHub i
 - `UBU-Q0004` remains open for the exact `pipeline_state` storage model, but label and projection events can already be triaged as evidence or drift.
 - `UBU-Q0010` remains open for token custody; this decision does not require any specific actor to hold GitHub write credentials.
 - GitHub event handling now aligns with append-only Logs, External References, worker assignment, recalculation triggers, and managed projection reconciliation.
+
+---
+
+## UBU-D0164: Worker mutation requests are candidate envelopes with versioned admission
+
+**Status:** Accepted → DESIGN.md §§17.5, 24.1.3
+
+Resolved question: `UBU-Q0009`.
+
+Phase 1 Automation Workers submit bounded candidate payloads, not direct canonical writes. The three supported payload families are event or observation submissions, mutation requests, and proposed patch artifacts. Event or observation submissions cover authorized External Event, Snapshot, Log-candidate, status, clarification, and recalculation requests. Mutation requests are the normal worker path for changing canonical UbU objects. Proposed patches are reviewable evidence or explicit patch-style mutation requests for supported textual or external artifacts; they are never direct edits to canonical state.
+
+A worker mutation request is a state-transition envelope. The minimum fields are `mutation_request_id`, `schema_version`, `parent_instance_ref`, `worker_identity_ref`, `capability_grant_ref`, `authority_source`, `submitted_at`, `target_ref`, `operation`, `operation_payload` or `new_value`, `reason`, `evidence_refs`, `provenance`, `idempotency_key`, and either `expected_prior_version` or an explicit no-prior-version reason for create-only requests. Optional fields include `assignment_ref`, `effective_at`, `old_value_observed`, `originating_context_bundle_refs`, `compartment_refs`, `compartment_policy_result`, `confidence`, `review_requirement`, `batch_id`, `batch_atomicity`, and `supersedes_request_ref`.
+
+Phase 1 mutation operations are a closed typed set: UniverseState mutation-list requests; Task lifecycle transition requests, including completion, failure, moot, and estimate or delegation-field updates; Objective transition requests; External Reference create, verify, supersede, or duplicate-link requests; `pipeline_state` projection-state requests; Task or Objective candidate creation requests; Task-to-Container restructuring requests; and Log correction or annotation requests. New operation kinds require a schema migration or accepted decision. Projection writes, GitHub API actions, and external side effects remain separate projection or AgentAction requests.
+
+A valid request is applied immediately only when schema validation, semantic validation, capability scope, Compartment/export policy, idempotency, expected-prior-version checks, assignment lease status, and operation review policy all pass and the request's `review_requirement` allows automatic application. Otherwise a valid request remains a submitted candidate awaiting human or policy review. Invalid, unauthorized, stale, duplicate-conflicting, or policy-denied requests are logged as `worker_mutation_rejected` with a sanitized reason and evidence references when safe. Every received mutation request creates a `worker_mutation_submitted` Log entry or operation-specific submission record; applied requests create `worker_mutation_applied` entries.
+
+Batches are allowed when the request envelope declares a `batch_id` and `batch_atomicity`. `all_or_nothing` batches validate the whole batch before application and either apply every item in declared order or reject the batch without partial canonical mutation. `independent_items` batches may apply valid items and reject invalid items separately, but this is not atomic. MVP implementations may restrict atomic batches to one parent instance and one validation transaction.
+
+Workers may request creation of new Objectives, Tasks, External References, child Tasks, or Containers only as mutation requests or candidates. They do not receive direct create authority in Phase 1. Objective creation should require review by default unless a later accepted policy grants a very narrow auto-create path. Task creation may be auto-applied only when the grant, assignment, operation kind, target scope, and review policy explicitly allow it.
+
+Worker mutations are reversible only through append-only repair. UbU does not rewrite or delete the original request or applied Log entry. Reversal uses a compensating mutation, Log correction, superseding object, Task moot transition, or projection repair. Requests should include enough observed old value, evidence, and expected-prior-version metadata to make compensation possible when the operation is logically reversible. Irreversible external side effects require projection or AgentAction mitigation metadata rather than ordinary mutation reversal.
+
+Stale overwrite prevention is mandatory. The canonical instance compares `expected_prior_version` or equivalent target version metadata with current canonical state before applying mutation requests. A mismatch rejects the request or converts it into a conflict candidate for review; it must not silently overwrite newer state. Idempotency keys prevent duplicate application, assignment leases prevent expired worker work from being accepted accidentally, and capability-grant versions prevent revoked or changed authority from authorizing late submissions.
+
+**Consequences:**
+
+- `UBU-Q0009` is resolved for Phase 1 implementation.
+- Worker authority remains request-based and bounded by capability grants, Compartment policy, expected versions, idempotency, assignment leases, and review policy.
+- Valid worker outputs can support automation without granting direct canonical write authority.
+- Invalid and stale worker submissions remain auditable without polluting canonical state.
+- `UBU-Q0013`, `UBU-Q0020`, `UBU-Q0021`, `UBU-Q0049`, and `UBU-Q0084` remain open for authority-source vocabulary, retry construction, automation child structure, release-outreach artifacts, and external AgentAction side-effect modeling.

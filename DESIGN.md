@@ -1916,7 +1916,7 @@ MVP query/search is index-backed over `recorded_at`, `effective_at`, `event_type
 
 ### 17.5 Automation Worker contributions
 
-Automation Workers contribute to Logs through their worker Identity. A worker may submit events or mutation requests, but the canonical instance validates authority and writes the canonical Log entry. Accepted worker mutations create applied entries; invalid or unauthorized attempts create rejected entries.
+Automation Workers contribute to Logs through their worker Identity. A worker may submit events or mutation requests, but the canonical instance validates authority and writes the canonical Log entry. A worker submission first creates a `worker_mutation_submitted` or operation-specific submission record when it enters the canonical instance. Accepted worker mutations create applied entries; invalid, unauthorized, stale, or policy-denied attempts create rejected entries. Requests that require human or policy review remain candidates until an authorized actor accepts or rejects them.
 
 Worker-supplied `idempotency_key`, provenance, evidence references, and confidence metadata are retained when available so duplicate submissions and stale worker results can be detected.
 
@@ -2598,7 +2598,29 @@ If a worker disappears mid-Task, the parent marks the assignment `expired` after
 
 Workers may request clarification by submitting `clarification_requested` status or an authorized mutation/request payload. The canonical instance may convert that into a clarification Task, user prompt, revised assignment packet, or rejection of the request. Workers may propose child Tasks or Task-to-Container restructuring only through authorized mutation requests; approved restructuring follows the accepted Task-to-Container and child Task semantics. Workers do not directly create canonical child Tasks in Phase 1.
 
-### 24.1.3 Model-committee worker pattern
+### 24.1.3 Worker mutation request schema
+
+Phase 1 worker submissions use three bounded payload families:
+
+- event or observation submissions, such as authorized External Event, Snapshot, Log-candidate, status, clarification, or recalculation requests;
+- mutation requests, which are the normal worker path for changing canonical UbU objects;
+- proposed patch artifacts, which are reviewable evidence or an explicit patch-style mutation request for supported textual or external artifacts, never direct canonical edits.
+
+A worker mutation request is a candidate state-transition envelope. It is not a canonical write until the parent instance validates it, applies it when policy allows, and writes the corresponding Log entries. The minimum request fields are `mutation_request_id`, `schema_version`, `parent_instance_ref`, `worker_identity_ref`, `capability_grant_ref`, `authority_source`, `submitted_at`, `target_ref`, `operation`, `operation_payload` or `new_value`, `reason`, `evidence_refs`, `provenance`, `idempotency_key`, and either `expected_prior_version` or an explicit no-prior-version reason for create-only requests. Optional fields include `assignment_ref`, `effective_at`, `old_value_observed`, `originating_context_bundle_refs`, `compartment_refs`, `compartment_policy_result`, `confidence`, `review_requirement`, `batch_id`, `batch_atomicity`, and `supersedes_request_ref`.
+
+Phase 1 mutation operations are closed and typed. They include UniverseState mutation-list requests using the accepted mutation vocabulary; Task lifecycle transition requests, including completion, failure, moot, and estimate or delegation-field updates; Objective transition requests; External Reference create, verify, supersede, or duplicate-link requests; `pipeline_state` projection-state requests; Task or Objective candidate creation requests; Task-to-Container restructuring requests; and Log correction or annotation requests. New operation kinds require a schema migration or accepted decision. Projection writes, GitHub API actions, and external side effects remain separate projection or AgentAction requests and do not become direct canonical mutations.
+
+Valid requests are not always applied immediately. A request may be applied immediately only when schema validation, semantic validation, capability scope, Compartment/export policy, idempotency, expected-prior-version checks, assignment lease status, and operation review policy all pass and the request's `review_requirement` allows automatic application. Otherwise a valid request remains a submitted candidate awaiting human or policy review. Invalid, unauthorized, stale, duplicate-conflicting, or policy-denied requests are logged as `worker_mutation_rejected` with a sanitized reason and evidence references when safe.
+
+Batches are allowed when the envelope declares a `batch_id` and `batch_atomicity`. `all_or_nothing` batches validate the whole batch before application and either apply every item in declared order or reject the batch without partial canonical mutation. `independent_items` batches may apply valid items and reject invalid items separately, but this is not atomic. MVP implementations may restrict atomic batches to one parent instance and one validation transaction.
+
+Workers may request creation of new Objectives, Tasks, External References, child Tasks, or Containers only as mutation requests or candidates. They do not receive direct create authority in Phase 1. Objective creation should require review by default unless a later policy grants a very narrow auto-create path. Task creation may be auto-applied only when the grant, assignment, operation kind, target scope, and review policy explicitly allow it.
+
+Worker mutations are reversible only through append-only repair. UbU does not rewrite or delete the original request or applied Log entry. Reversal uses a compensating mutation, Log correction, superseding object, Task moot transition, or projection repair. Requests should include enough observed old value, evidence, and expected-prior-version metadata to make compensation possible when the operation is logically reversible. Irreversible external side effects require projection or AgentAction mitigation metadata rather than ordinary mutation reversal.
+
+Stale overwrite prevention is mandatory. The canonical instance compares `expected_prior_version` or equivalent target version metadata with current canonical state before applying mutation requests. A mismatch rejects the request or converts it into a conflict candidate for review; it must not silently overwrite newer state. Idempotency keys prevent duplicate application, assignment leases prevent expired worker work from being accepted accidentally, and capability-grant versions prevent revoked or changed authority from authorizing late submissions.
+
+### 24.1.4 Model-committee worker pattern
 
 A model-committee worker is an Automation Worker pattern that reads canonical project state, runs configured provider workflows against a selected open question or problem, produces candidate changesets, scores candidate changesets, and writes reviewable artifacts.
 

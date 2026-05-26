@@ -199,7 +199,7 @@ Resolved. See UBU-D0158.
 
 ## UBU-Q0009: Worker Mutation Request Schema
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0007 Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0007 Blocks: Phase 1 implementation Resolved by: UBU-D0164 Last scored: Never Scored from commit: None
 
 Automation Workers need a bounded way to submit changes back to canonical UbU state.
 
@@ -230,7 +230,7 @@ Automation Workers need a bounded way to submit changes back to canonical UbU st
 
 ### Resolution
 
-Unresolved.
+Resolved. See UBU-D0164.
 
 ---
 
