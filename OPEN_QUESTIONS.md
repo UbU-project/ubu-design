@@ -113,24 +113,9 @@ Resolved. See UBU-D0163.
 
 ## UBU-Q0006: Objective and Task Explosion Control
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0005 Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: 2026-05-26 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0005 Blocks: Phase 1 implementation Resolved by: UBU-D0183 Last scored: 2026-05-26 Scored from commit: None
 
-GitHub events may create analysis Objectives or Tasks. This could generate excessive noise.
-
-### Question
-
-1. When does a GitHub event deserve a new Objective?
-2. When is it appended to an existing Objective?
-3. When is it merely logged?
-4. When does it create a Task?
-5. How are duplicate analysis Objectives detected?
-6. Do analysis Objectives inherit value from parent Objectives?
-7. Do analysis Objectives automatically become moot or completed after resolution?
-8. How does UbU prevent its own management process from becoming too noisy?
-
-### Resolution
-
-Unresolved.
+Resolved. See UBU-D0183.
 
 ---
 
@@ -2117,7 +2102,7 @@ Resolved. See UBU-D0165.
 
 ## UBU-Q0101: Advisory safeguard uncertainty, override, and introspection consequences
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0100 Blocks: safeguard UX, introspection, relationship-transition UX Resolved by: None Last scored: 2026-05-26 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0100 Blocks: safeguard UX, introspection, relationship-transition UX Resolved by: None Last scored: 2026-05-26 Scored from commit: None
 
 ### Question
 

@@ -3033,9 +3033,26 @@ Phase 1 event-class defaults are:
 - `ci_passed`: Creates an External Event; usually logs or unblocks existing Tasks and may trigger projection update, but creates a new Task only when a next action such as merge review is required.
 - `milestone_changed`: Creates an External Event; may create or update a release Objective, deadline fact, Calendar constraint, or release-planning Task.
 
-GitHub events create or update Objectives only when they introduce durable desired state, release scope, or accepted project work that is not already represented by an Objective. Routine comments, labels, CI transitions, and PR updates should attach as evidence to existing Objectives or Tasks rather than creating analysis Objectives by default.
+GitHub Objective and Task creation is capped by admission rules:
 
-GitHub events create Tasks when they imply a concrete next action: triage, clarification, review, fix, projection repair, reconciliation, release-planning, or contributor follow-up. Imported Tasks use normal Task admission, External References, provenance, Compartment/export checks, and duplicate detection.
+- A GitHub event creates a new Objective only when it introduces durable desired state, release scope, accepted project work, or an investigation that cannot be represented as a Task under an existing Objective.
+- An analysis Objective is a one-time Objective tagged `analysis`, linked to at least one parent Objective or source External Reference, and must include a crisp question, termination condition, owner or review path, source refs, and duplicate key.
+- An event is appended to an existing Objective when the source object is already represented, shares the same durable desired state, or supplies evidence, blocker, status, acceptance, scope, deadline, or contributor-follow-up information for that Objective.
+- A unique in-scope event is merely logged only in the sense that it creates the External Event and Log required by this section but no Objective or Task. This is the default for evidence-only labels, routine comments, status churn, CI transitions that confirm known state, and low-priority observations that only mark caches stale.
+- A Task is created only for a concrete next action with an executor path or review owner and an actionable completion criterion: triage, clarification, review, fix, projection repair, reconciliation, release planning, merge readiness, contributor follow-up, or bounded analysis. If an active equivalent Task already exists, the event is appended as evidence instead.
+
+Analysis Objective duplicate detection uses a normalized key over parent Objective refs, analysis kind or failure class, normalized source refs, affected artifact or GitHub object, unresolved question text, and active or terminal status. If a matching active Objective exists, the new event is appended. If a matching terminal Objective exists and the new evidence materially reopens the question, UbU creates a superseding analysis Objective linked by `supersedes`; otherwise it logs duplicate or idempotent evidence.
+
+Analysis Objectives do not receive independent user value in Phase 1. They derive instrumental scheduling value from parent Objective refs and accepted Preferences, capped by the parent scope. An analysis Objective without a valid parent or durable source link is under-specified and should create a clarification or review Task rather than compete as high-value work.
+
+Analysis Objectives close automatically when their termination condition is satisfied by accepted evidence. They transition to `completed` when the analysis question is answered or the required artifact is accepted; they transition to `abandoned`, `invalid`, or `superseded`, or cause related Tasks to become `moot` with accepted reason codes, when the source work disappears, duplicates another work item, becomes obsolete, or is replaced by a newer plan structure. All closures are logged.
+
+Noise-control defaults:
+
+- one GitHub delivery may create at most one new Objective and one immediate Task unless a human-approved decomposition or worker mutation request creates a Container and child Tasks;
+- low-priority evidence is batched into reconciliation, Calendar preview, Log review, or risk-report refresh instead of creating prompt-facing Tasks;
+- generated analysis work needs a review window, owner or worker assignment path, and stale-after policy;
+- repeated equivalent events update External References, Logs, verification metadata, or cache staleness rather than creating more Objectives or Tasks.
 
 A GitHub event triggers recalculation with trigger kind `github_update` when it can affect the current or next recommended Task, a dependency or precondition, Task lifecycle state, Objective status, deadline or milestone constraints, worker assignment need, projection state, or risk-report validity. Low-priority observations that do not affect the current Plan may mark Calendar, projection, explanation, or report caches stale.
 

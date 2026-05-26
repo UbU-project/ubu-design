@@ -3019,7 +3019,7 @@ Phase 1 triage rules for the candidate event classes are:
 - `ci_passed`: create an External Event; usually unblock or complete waiting Tasks and may request projection update; create a new Task only when a next action such as merge review, release step, or projection repair is required.
 - `milestone_changed`: create an External Event; create or update a release Objective, deadline fact, Calendar constraint, or release-planning Task when the change affects planned work.
 
-GitHub events create Objectives only when they introduce durable desired state, release scope, or accepted project work that is not already represented by an Objective. Routine comments, labels, CI transitions, PR updates, and reviews attach as evidence to existing Objectives or Tasks rather than creating analysis Objectives by default. The remaining noise-control details stay in `UBU-Q0006`.
+GitHub events create Objectives only when they introduce durable desired state, release scope, or accepted project work that is not already represented by an Objective. Routine comments, labels, CI transitions, PR updates, and reviews attach as evidence to existing Objectives or Tasks rather than creating analysis Objectives by default.
 
 GitHub events create Tasks when they imply concrete next action: triage, clarification, review, fix, projection repair, reconciliation, release planning, merge readiness, or contributor follow-up. Imported Tasks use normal Task admission, External References, provenance, Compartment/export checks, and duplicate detection.
 
@@ -3040,8 +3040,7 @@ Missed events are reconstructed during reconciliation by comparing live GitHub i
 
 - `UBU-Q0005` is resolved for Phase 1 implementation.
 - The candidate MVP event classes have deterministic default triage without requiring GitHub to become canonical state.
-- `UBU-Q0006` remains open for stricter Objective and Task explosion control, especially around analysis Objectives.
-- `UBU-Q0004` remains open for the exact `pipeline_state` storage model, but label and projection events can already be triaged as evidence or drift.
+- `UBU-Q0004` is resolved by `UBU-D0182`; label and projection events can already be triaged as evidence or drift.
 - `UBU-Q0010` remains open for token custody; this decision does not require any specific actor to hold GitHub write credentials.
 - GitHub event handling now aligns with append-only Logs, External References, worker assignment, recalculation triggers, and managed projection reconciliation.
 
@@ -3666,5 +3665,46 @@ Every accepted `pipeline_state` transition creates a `pipeline_state_transitione
 - GitHub managed labels project accepted `pipeline_state` values but do not become canonical state.
 - Multiple projections can coexist without changing the Objective schema.
 - Worker authority remains request-only for pipeline changes.
+
+---
+
+## UBU-D0183: GitHub analysis work uses parent scope and noise budgets
+
+**Status:** Accepted → DESIGN.md §26.5
+
+Resolved question: `UBU-Q0006`.
+
+GitHub-derived Objectives and Tasks are admitted only when they reduce uncertainty or create executable work. Every unique in-scope GitHub observation still creates the External Event and Log required by `UBU-D0163`; most observations do not create new Objectives or Tasks.
+
+New Objective admission:
+
+- create a durable Objective only for durable desired state, release scope, or accepted project work not already represented;
+- create an analysis Objective only when the investigation cannot be represented as a Task under an existing Objective and has a parent Objective or durable source link, a crisp question, termination condition, owner or review path, source refs, and duplicate key;
+- otherwise append the event as evidence to an existing Objective or Task.
+
+Task admission:
+
+- create a Task only for a concrete next action with an actionable completion criterion, such as triage, clarification, review, fix, projection repair, reconciliation, release planning, merge readiness, contributor follow-up, or bounded analysis;
+- append evidence to an active equivalent Task instead of creating a duplicate;
+- batch low-priority evidence into reconciliation, Calendar preview, Log review, or risk-report refresh when no immediate action is needed.
+
+Analysis Objective duplicate detection uses a normalized key over parent Objective refs, analysis kind or failure class, source refs, affected artifact or GitHub object, unresolved question text, and active or terminal status. A matching active Objective receives appended evidence. A matching terminal Objective is reopened only by a superseding analysis Objective when new evidence materially reopens the question; otherwise the event is logged as duplicate or idempotent evidence.
+
+Analysis Objectives are instrumental. They do not receive independent Preferences in Phase 1. Scheduling value derives from parent Objective refs and is capped by the parent scope. A candidate analysis Objective without a parent or durable source link is under-specified.
+
+Analysis Objectives close through normal Objective transitions. They complete when accepted evidence answers the question or accepts the artifact. They become terminal or make related Tasks moot with accepted reason codes when duplicated, superseded, externally satisfied, obsolete, invalid, or no longer relevant. Closures are logged.
+
+Noise budget defaults:
+
+- one GitHub delivery creates at most one new Objective and one immediate Task unless a human-approved decomposition or worker mutation request creates a Container and child Tasks;
+- generated analysis work has a review window, owner or worker assignment path, and stale-after policy;
+- repeated equivalent events update External References, Logs, verification metadata, or cache staleness rather than creating more work.
+
+**Consequences:**
+
+- `UBU-Q0006` is resolved for Phase 1.
+- GitHub event handling remains task-oriented and does not turn every comment, label, CI transition, or PR update into management work.
+- Analysis work can still be modeled when it is bounded, parent-scoped, deduplicated, and automatically closed.
+- Implementations can enforce Objective and Task admission before worker assignment, recalculation, or GitHub projection requests.
 
 ---
