@@ -3470,3 +3470,43 @@ Future integrated UbU Automation Worker behavior should map this loop to ordinar
 - Provider and model updates invalidate reusable derived scores without rewriting accepted canonical state or historical run logs.
 
 ---
+
+## UBU-D0179: Public dogfooding artifacts publish sanitized review packages
+
+**Status:** Accepted → DESIGN.md §3.1.3
+
+Resolved question: `UBU-Q0046`.
+
+`model-committee` public dogfooding should publish sanitized review packages, not complete private run logs by default. The public package must show enough evidence for a contributor to verify the loop: selected question or problem, base commit, canonical input hashes, provider proposals, mechanical validation, score matrix or scoring summary, quorum or disagreement outcome, selected patch, suggested commit message, human-review status, and eventual canonical commit, Issue, or PR link when available.
+
+Default public artifacts:
+
+- `review.md`;
+- `selected.patch` when a selected or reviewable candidate exists;
+- `commit_message.txt` when available;
+- `manifest.public.json` or an equivalent redacted manifest;
+- score-matrix and validation summaries;
+- links to the source question, related Issue or PR, accepted decision, and final commit when available.
+
+Not public by default:
+
+- raw provider logs, prompts, stderr, JSONL traces, and full manifests;
+- private chain-of-thought or hidden reasoning;
+- unsafe or policy-violating provider outputs;
+- API keys, bearer tokens, credential paths, private environment dumps, or secrets;
+- unredacted sensitive context or Compartment-protected payloads.
+
+Raw artifacts may be published only after explicit redaction and artifact-safety review. Hashes and summarized diagnostics should be preferred when the raw material is not needed for public review.
+
+Failed and partially successful runs are publishable when labeled by failure class and next review action. Acceptable public failure classes include parse failure, schema failure, invalid patch, no valid proposal, no quorum, selected score below threshold, critical disagreement, provider timeout, and artifact-safety block. A failed run should demonstrate bounded authority and preserved evidence; it must not imply accepted design state.
+
+`model-committee` may generate publication commands and GitHub/PR link placeholders, but it must not auto-publish artifacts, open PRs, push branches, mutate GitHub, apply patches, or mark canonical questions solved. Human review remains required to publish artifacts, accept patches, and connect a run to a final repository commit.
+
+**Consequences:**
+
+- `UBU-Q0046` is resolved.
+- Public credibility comes from reviewable run packages and accepted commits, not from dumping every raw provider artifact.
+- `UBU-Q0063` may depend on this policy for organizational-introspection dogfooding artifacts.
+- Future implementation should add an artifact-safety check and a redacted public manifest schema before publishing run packages.
+
+---

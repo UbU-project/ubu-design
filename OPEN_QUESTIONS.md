@@ -713,7 +713,7 @@ Resolved. See UBU-D0178.
 
 ## UBU-Q0040: Question Decomposition and Design Burden Scoring
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 50 Depends on: UBU-Q0039 Blocks: model-committee prioritization accuracy Resolved by: UBU-D0068 Last scored: 2026-05-26 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0039 Blocks: model-committee prioritization accuracy Resolved by: UBU-D0068 Last scored: 2026-05-26 Scored from commit: None
 
 ### Question
 
@@ -788,30 +788,8 @@ Resolved. See UBU-D0079, UBU-D0089.
 ---
 
 ## UBU-Q0046: Public dogfooding artifacts for contributor credibility
-
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0036, UBU-Q0038 Blocks: Contributor recruitment Resolved by: UBU-D0077, UBU-D0086 Last scored: 2026-05-26 Scored from commit: None
-
-### Question
-
-What public dogfooding artifacts should `model-committee` expose to make UbU credible and actionable to potential contributors?
-
-### Subquestions
-
-1. Which run artifacts should be committed, linked, summarized, or ignored?
-2. How should selected patches, review notes, and commit messages be presented?
-3. How should public artifacts avoid leaking private reasoning or unsafe provider outputs?
-4. What would convince a developer that the loop is real and reviewable?
-5. How should artifacts connect to GitHub Issues or PRs?
-6. How should failed or partially successful runs be shown without damaging credibility?
-
-### Current direction
-
-The project should show the dogfooding loop, not merely describe it. Artifacts should demonstrate that open questions become model-assisted proposals, reviewable patches, decisions, and updated canonical state. v0.2 review artifacts should also show cross-model score matrices, quorum outcomes, disagreement flags, and the operator-run publication command for copying the run to `../model-committee-artifacts`.
-
-### Resolution
-
-Partially resolved by `UBU-D0077`, `UBU-D0086`, and `UBU-D0150`; exact long-term artifact publication policy remains open, but v0.2 has a concrete operator-run publication path for model-committee run artifacts.
-
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0036, UBU-Q0038 Blocks: Contributor recruitment Resolved by: UBU-D0179 Last scored: 2026-05-26 Scored from commit: None
+Resolved. See UBU-D0179.
 ---
 
 ## UBU-Q0047: Minimum committed-contributor onboarding path
