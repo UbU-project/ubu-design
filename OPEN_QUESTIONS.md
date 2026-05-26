@@ -1495,7 +1495,7 @@ Open.
 
 ## UBU-Q0072: GPU-aware planner kernels and solver selection
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016 Blocks: practical planner implementation, mobile/desktop/cloud execution profile Resolved by: UBU-D0166, UBU-D0167, UBU-D0168, UBU-D0169 Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016 Blocks: practical planner implementation, mobile/desktop/cloud execution profile Resolved by: UBU-D0166, UBU-D0167, UBU-D0168, UBU-D0169, UBU-D0170, UBU-D0171, UBU-D0172, UBU-D0173, UBU-D0174 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -1512,19 +1512,19 @@ Which parts of UbU planning should use CPU-exact logic, and which parts should u
 
 ### Current direction
 
-Subquestions 2, 4, and 6 are substantially resolved by `UBU-D0168` and `UBU-D0169`.
+Subquestions 2, 4, and 6 are substantially resolved for Phase 1.
 
-**Subquestion 2 (GPU-batchable operations):** The four GPU pipeline stages are: skeleton sampling (parallel log-normal sampling with vectorized topological-order propagation), legitimization filter (batch sigmoid affect constraint evaluation), value scoring (parallel utility/robustness/affect-margin scoring), and Monte Carlo rollout (joint Gaussian copula simulation for finalists). All four are embarrassingly parallel across candidates and are handled in PyTorch on the GPU.
+**Subquestion 2 (GPU-batchable operations):** The four Phase 1 GPU pipeline stages are `skeleton_sampling`, `affect_legitimacy_filter`, `value_scoring`, and `monte_carlo_rollout`. Their semantic stage boundaries are specified in `PLANNING_KERNEL_CONTRACT.md`. The `affect_legitimacy_filter` stage implements only sigmoid affect-constraint evaluation, not full UbU legitimization.
 
-**Subquestion 4 (desktop/laptop GPU path):** Resolved. The Phase 1 GPU desktop instance is a dedicated recent GPU on a user-configured laptop. PyTorch is the framework. The GPU engine is a pure function invoked as a typed Python call. `MAX_PLANNING_TASKS = 256` with padded fixed-size tensors and a validity mask. K=3 PlanCandidates returned by default, configurable. This is the only required planning kernel execution backend for Phase 1 release.
+**Subquestion 4 (desktop/laptop GPU path):** Resolved for Phase 1. The performance target is a local desktop/laptop GPU backend using PyTorch and a typed pure-function call boundary. `MAX_PLANNING_TASKS = 256` is the Phase 1 planning window ceiling. A CPU reference path or fixture-backed deterministic path is also required for tests, CI, and contributors without GPU hardware. Future premium or wide-horizon tiers may raise the task ceiling by scalar configuration subject to memory, scenario-count, correlation-matrix, validation-cost, and backend performance limits; linear scaling is not assumed.
 
-**Subquestion 6 (CPU certifies, GPU proposes):** Resolved. The GPU engine is purely advisory. Hard constraint certification and final Plan validity are the CPU kernel's responsibility, using exact or conservative validation. The GPU engine writes no canonical state.
+**Subquestion 6 (CPU certifies, GPU proposes):** Resolved. The GPU engine is advisory and writes no canonical state. Hard constraint certification, provenance validation, final Plan validity, and canonical Plan commit are CPU kernel responsibilities.
 
 Subquestions 1 (solver library evaluation), 3 (mobile GPU targets), and 5 (cloud GPU path) remain open and are deferred beyond Phase 1.
 
 ### Resolution
 
-Partially resolved. See `UBU-D0168`, `UBU-D0169`. Subquestions 1, 3, and 5 remain open.
+Partially resolved. See `UBU-D0166`, `UBU-D0167`, `UBU-D0168`, `UBU-D0169`, `UBU-D0170`, `UBU-D0171`, `UBU-D0172`, `UBU-D0173`, `UBU-D0174`, and `PLANNING_KERNEL_CONTRACT.md`. Subquestions 1, 3, and 5 remain open.
 
 ---
 
@@ -2288,135 +2288,38 @@ Open.
 
 ## UBU-Q0102: PlanningRequest and PlanningResponse schema specification
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016, UBU-Q0072 Blocks: GPU planning kernel implementation, model-committee interface layer generation Resolved by: None Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016, UBU-Q0072 Blocks: GPU planning kernel implementation, model-committee interface layer generation Resolved by: UBU-D0170 Last scored: Never Scored from commit: None
 
-### Question
-
-What is the complete field specification for `PlanningRequest` and `PlanningResponse`?
-
-### Subquestions
-
-1. Which fields are required versus optional versus deferred for Phase 1?
-2. How is schema version and planner version carried for forward-compatibility?
-3. How is effective time / current time represented, and does it differ from wall-clock time?
-4. Which planning execution parameters belong in the request: planning delta, reactive horizon, branch coverage target, compute budget, K override, scoring policy, constraint strictness level?
-5. How is Compartment/redaction metadata or payload-safety proof carried?
-6. How are external event assumptions injected for simulation?
-7. How is existing Plan/Calendar context passed when the request is a repair rather than a fresh generation?
-8. How are explanation requirements expressed?
-9. What does `PlanningResponse` carry beyond the ranked PlanCandidates: provenance, coverage estimate, diagnostics, warnings?
-
-### Current direction
-
-`UBU-D0169` commits the two-object boundary and the K=3 default. The full field set is open and must be specified in a dedicated schema document in `ubu-design` before implementation can begin.
-
-### Resolution
-
-Open.
+Resolved for Phase 1. See `UBU-D0170` and `PLANNING_KERNEL_CONTRACT.md §§1-4`.
 
 ---
 
 ## UBU-Q0103: GPU pipeline stage-boundary schema specification
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0102 Blocks: GPU planning kernel implementation, model-committee stage generation Resolved by: None Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0102 Blocks: GPU planning kernel implementation, model-committee stage generation Resolved by: UBU-D0171 Last scored: Never Scored from commit: None
 
-### Question
-
-What are the typed input and output schemas for each of the four GPU pipeline stage boundaries?
-
-### Subquestions
-
-1. What does the skeleton sampling stage consume and produce? What tensor shapes and field semantics are required?
-2. What does the `affect_legitimacy_filter` stage consume and produce? How are sigmoid parameters, feasibility scores, and eliminated-candidate masks represented?
-3. What does the value scoring stage consume and produce? What scoring dimensions and aggregation policy are required?
-4. What does the Monte Carlo rollout stage consume and produce? How are correlation groups, simulation results, and probability estimates represented?
-5. Which schema fields belong in `ubu-design` as design artifacts versus in `model-committee` as implementation artifacts?
-
-### Current direction
-
-`UBU-D0168` commits the four stage names and their high-level semantics. Stage-boundary schemas are required future work in `ubu-design` before model-committee can generate stage implementations.
-
-### Resolution
-
-Open.
+Resolved for Phase 1. See `UBU-D0171` and `PLANNING_KERNEL_CONTRACT.md §5`.
 
 ---
 
 ## UBU-Q0104: Correlation group matrix construction rules and PSD handling
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0102 Blocks: Monte Carlo rollout implementation Resolved by: None Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0102 Blocks: Monte Carlo rollout implementation Resolved by: UBU-D0172 Last scored: Never Scored from commit: None
 
-### Question
-
-How is a unique, well-formed correlation matrix derived from declared correlation group memberships and strengths, and what happens when the result is not positive semi-definite?
-
-### Subquestions
-
-1. What is the permitted range of `strength`: [0, 1], [-1, 1], or something else?
-2. Are negative correlations permitted? If so, what do they mean in the planning context?
-3. When two tasks share multiple groups, how are their per-group strengths combined: summed, multiplied, maxed, averaged, or by another rule?
-4. How are overlapping group memberships normalized so that the construction rule is deterministic?
-5. What is the CPU kernel's policy when the derived matrix is not positive semi-definite: reject the request, repair the matrix (e.g. nearest PSD projection), add jitter, or degrade to independence?
-6. Is the construction rule required to be symmetric and reflexive by schema validation, or enforced at construction time?
-
-### Current direction
-
-`UBU-D0166` commits the correlation-group field schema. The matrix construction rule must be deterministic before PSD validation is meaningful. All subquestions above are open.
-
-### Resolution
-
-Open.
+Resolved for Phase 1. See `UBU-D0172` and `PLANNING_KERNEL_CONTRACT.md §7`.
 
 ---
 
 ## UBU-Q0105: Sigmoid affect constraint direction, feasibility threshold, and UX semantics
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0103 Blocks: affect_legitimacy_filter implementation, AffectProfile UX Resolved by: None Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0103 Blocks: affect_legitimacy_filter implementation, AffectProfile UX Resolved by: UBU-D0173 Last scored: Never Scored from commit: None
 
-### Question
-
-What is the complete per-dimension schema for sigmoid affect constraints, and what do they produce?
-
-### Subquestions
-
-1. What fields does each dimension carry beyond location and scale: `direction` (higher-is-better vs. lower-is-better), `threshold`, others?
-2. What does the sigmoid output represent: a feasibility probability, a penalty multiplier, a utility adjustment, or a hard rejection score?
-3. How is the feasibility threshold defined: a fixed scalar, a percentile, a user-configured value?
-4. How is `direction` specified for each MVP dimension? Higher energy is typically beneficial; higher stress is typically harmful; mood intensity is ambiguous unless clarified as arousal versus valence.
-5. How are these parameters displayed and explained to users who must configure them manually for Phase 1?
-6. What is the fallback behavior when an AffectProfile dimension is missing or stale?
-
-### Current direction
-
-`UBU-D0167` mandates sigmoid form and notes these semantics are open. `UBU-D0168` names the stage `affect_legitimacy_filter`. The per-dimension schema must be specified before stage-boundary schemas can be completed.
-
-### Resolution
-
-Open.
+Resolved for Phase 1. See `UBU-D0173` and `PLANNING_KERNEL_CONTRACT.md §6`.
 
 ---
 
 ## UBU-Q0106: Log-normal duration parameter semantics and invalid triple handling
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0103 Blocks: skeleton sampling implementation, task duration schema Resolved by: None Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0103 Blocks: skeleton sampling implementation, task duration schema Resolved by: UBU-D0174 Last scored: Never Scored from commit: None
 
-### Question
-
-What do the three user-facing duration estimate parameters mean precisely, and how are invalid triples handled?
-
-### Subquestions
-
-1. Is `min` a hard lower bound (duration cannot be less), a subjective optimistic estimate (the user's best-case), or the shift parameter of the shifted log-normal (the mathematical minimum of the support)?
-2. Is `max` a hard upper cap, a P90, a P95, or a P99 of the implied distribution?
-3. How are invalid triples handled: min ≥ mode, mode ≥ max, min = max, or zero-range estimates?
-4. Are degenerate cases (e.g. a Task with a fixed known duration) represented as a delta distribution, a very tight log-normal, or a separate schema field?
-5. How is the three-point estimate converted to log-normal μ and σ? Which conversion formula is canonical?
-6. What validation occurs at TaskSpec construction time versus at planning request time?
-
-### Current direction
-
-`UBU-D0166` mandates shifted log-normal and the three-point parameterization. The precise semantics of min and max and the conversion formula are open and required before the skeleton sampling stage can be implemented.
-
-### Resolution
-
-Open.
+Resolved for Phase 1. See `UBU-D0174` and `PLANNING_KERNEL_CONTRACT.md §3`.

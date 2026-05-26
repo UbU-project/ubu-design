@@ -109,9 +109,9 @@ The planner direction is explicit rather than agentic magic:
 - internal look-ahead may exceed the visible Calendar window so fragile prerequisites are not scheduled just in time;
 - a short-horizon reactive layer handles likely near-term divergence;
 - mobile devices use stewardship metadata, cached explanations, and simple repair rules when full replanning is too expensive;
-- the GPU planning engine generates tens of thousands of candidate Plans in parallel using PyTorch, samples task durations from log-normal distributions, runs batch sigmoid affect-constraint filters, scores candidates, and runs Monte Carlo robustness simulation for finalists; exact or conservative CPU validation certifies hard constraints before any candidate is selected.
+- the GPU planning engine generates many candidate Plans in parallel using PyTorch, samples uncertain task durations from shifted log-normal distributions, preserves fixed-duration Tasks as fixed, runs batch sigmoid affect-constraint filters, scores candidates, and runs Monte Carlo robustness simulation for finalists; exact or conservative CPU validation certifies hard constraints before any candidate is selected.
 
-Task durations use the shifted log-normal distribution: a right-skewed model that matches real task duration behavior. The accessible framing is a stop-light model — a sequence of independent delay sources where slowdowns stack asymmetrically and early arrivals are absorbed cheaply by pulling the next Task forward rather than triggering a full replan.
+Task durations use either fixed durations or the shifted log-normal distribution: a right-skewed model that matches uncertain real task duration behavior. The accessible framing is a stop-light model — a sequence of independent delay sources where slowdowns stack asymmetrically and early arrivals are absorbed cheaply by pulling the next Task forward rather than triggering a full replan.
 
 The Phase 1 performance target is a local desktop or laptop GPU, configured by the user. A CPU reference path is also required for tests, CI, and contributors without GPU hardware.
 

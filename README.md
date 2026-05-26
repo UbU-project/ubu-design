@@ -97,6 +97,7 @@ The canonical public design state is maintained in:
 - [`DESIGN.md`](DESIGN.md)
 - [`DECISIONS.md`](DECISIONS.md)
 - [`OPEN_QUESTIONS.md`](OPEN_QUESTIONS.md)
+- [`PLANNING_KERNEL_CONTRACT.md`](PLANNING_KERNEL_CONTRACT.md) - Phase 1 planning-kernel request/response and GPU pipeline contract
 
 Derived public-facing projection files should summarize the canonical design state but are not themselves design authority.
 
@@ -199,9 +200,9 @@ Provisional Compact Calendar defaults are:
 
 For MVP, the mobile-friendly planning subset is Task criticality, last legitimate Plan storage, simple repair rules, conflict severity levels, cached explanations, next-best-action mode, and basic decision envelopes. Rich BFS branch packaging, learned local policies, and extensive stochastic repair are post-MVP by default.
 
-The Phase 1 performance target is a local desktop or laptop GPU configured by the power user. The GPU planning engine is a pure function — inputs are task graph, UniverseState snapshot, AffectProfile, time window bounds, and RNG seed; output is a ranked list of PlanCandidates — with no external calls, no I/O, and no mutable state. It runs four pipeline stages in PyTorch: skeleton sampling (parallel log-normal duration sampling with vectorized topological-order constraint propagation), `affect_legitimacy_filter` (batch sigmoid affect-constraint evaluation), value scoring, and Monte Carlo rollout (Gaussian copula joint simulation for finalists). `MAX_PLANNING_TASKS = 256` is the Phase 1 planning window ceiling; premium tiers multiply this constant without other architectural changes. A CPU reference path is required alongside the GPU backend for tests, CI, and contributors without GPU hardware. Mobile and cloud planner backends are deferred beyond Phase 1.
+The Phase 1 performance target is a local desktop or laptop GPU configured by the power user. The GPU planning engine is a pure function over a typed `PlanningRequest` and `PlanningResponse`, with no external calls, no I/O, and no mutable state. It runs four pipeline stages in PyTorch: `skeleton_sampling`, `affect_legitimacy_filter`, `value_scoring`, and `monte_carlo_rollout`. `MAX_PLANNING_TASKS = 256` is the Phase 1 planning window ceiling. Future premium or wide-horizon tiers may raise this ceiling by scalar configuration, subject to memory, scenario-count, correlation-matrix, validation-cost, and backend performance limits. A CPU reference path is required alongside the GPU backend for tests, CI, and contributors without GPU hardware. Mobile and cloud planner backends are deferred beyond Phase 1. The Phase 1 schema and stage-boundary details are specified in `PLANNING_KERNEL_CONTRACT.md`.
 
-Task durations use the shifted log-normal distribution. The accessible framing: a stop-light model where delay sources stack asymmetrically and early completion is absorbed cheaply by pulling the next eligible Task forward rather than triggering a global replan.
+Task durations use either fixed duration or a shifted log-normal distribution parameterized by optimistic lower support, most-likely duration, and P95 high estimate. The accessible framing: a stop-light model where delay sources stack asymmetrically and early completion is absorbed cheaply by pulling the next eligible Task forward rather than triggering a global replan.
 
 CPU or conservative exact logic certifies skeleton validity, hard constraints, contradiction diagnostics, and explanations. GPU search proposes; CPU validates.
 
@@ -860,6 +861,7 @@ Those files are not required yet.
 - `DESIGN.md` - canonical design summary
 - `DECISIONS.md` - accepted design decisions and anti-regression memory
 - `OPEN_QUESTIONS.md` - unresolved questions, prioritization metadata, and automation queue
+- `PLANNING_KERNEL_CONTRACT.md` - Phase 1 planning-kernel request/response contract, GPU stage boundaries, duration semantics, affect constraints, and correlation matrix rules
 - `OUTREACH.md` - derived outreach document for FOSS maintainers and software engineers
 - `PM_BRIEF.md` - derived brief for project leads and technical PMs
 - `FUNDER_BRIEF.md` - derived brief for grantmakers, sponsors, and prototype funders

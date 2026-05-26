@@ -1541,21 +1541,29 @@ Burnout / affect exhaustion is modeled as a constraint violation rather than a f
 
 ### 13.7 Affect constraint functional form
 
-Affect constraints in the planning kernel use sigmoid-family functional form, parameterized per dimension as location and scale.
+Affect constraints in the planning kernel use sigmoid-family functional form, parameterized per dimension. Piecewise-linear form is not used for the Phase 1 planning kernel.
 
-Piecewise-linear form is not used. Sigmoid is mandated because:
+Sigmoid is mandated because:
 
 - UbU intends to eventually infer AffectProfile parameters from execution history; sigmoid parameters are directly fittable using standard logistic regression or MLE, whereas piecewise-linear fitting requires non-standard constrained optimization;
 - sigmoid models gradual saturation at extremes, preventing hard-clipping planning artifacts near constraint boundaries that piecewise-linear produces;
 - recovery curves follow an S-shape that sigmoid captures with two parameters and piecewise-linear approximates poorly with fewer than four hand-placed breakpoints.
 
-For Phase 1 MVP, AffectProfile parameters are user-specified. LLM-assisted explanation of sigmoid parameters is the intended path for non-technical users. A system-default AffectProfile may be introduced in a later phase but is not committed for Phase 1.
+For Phase 1 MVP, the sigmoid output is a constraint-satisfaction score in `[0, 1]`. It is not a literal success probability, not durable user preference, and not canonical utility. The full per-dimension schema — including `direction`, `location`, `scale`, `threshold`, freshness metadata, and bootstrap defaults — is specified in `PLANNING_KERNEL_CONTRACT.md §6`.
 
-The three MVP affect dimensions — energy, stress, and mood intensity — each carry an independent sigmoid parameterization. Composite or cross-dimension affect interactions are post-MVP.
+Phase 1 dimension directions are:
 
-The per-dimension schema requires specification beyond location and scale before implementation. Each dimension needs at minimum: `direction` (higher-is-better vs. lower-is-better), a feasibility `threshold` or cutoff value, and defined output semantics — whether the sigmoid produces a feasibility probability, a penalty multiplier, a utility adjustment, or a hard rejection score. These are not uniformly shared: higher energy is typically beneficial; higher stress is typically harmful; mood intensity is ambiguous unless the dimension is clarified as arousal rather than valence. See `UBU-Q0105`.
+- `energy`: `higher_is_better`;
+- `stress`: `lower_is_better`;
+- `mood_intensity`: `lower_is_better`, where intensity means affective arousal or volatility rather than mood valence. Positive excitement and negative agitation can both consume planning capacity.
 
-See also: `UBU-D0167`.
+The Phase 1 `mood_intensity` direction is a simplification, not the long-term affect model. The fuller design treats mood intensity as task-dependent arousal/activation: routine tasks may favor low arousal, while creative, social, or physical tasks may require a higher optimal range. Phase 2 should add `bounded_optimum`, `optimal_low`, `optimal_high`, and task/category affect overrides.
+
+Phase 1 must not require ordinary users to edit raw sigmoid parameters. The UX should ask qualitative calibration questions and map those answers into the internal schema. Conservative bootstrap defaults are allowed as temporary planning priors and must be marked for review. Advanced users may inspect and edit raw parameters.
+
+Composite or cross-dimension affect interactions are post-MVP.
+
+See also: `UBU-D0167`, `UBU-D0173`, `PLANNING_KERNEL_CONTRACT.md §6`.
 
 ---
 
@@ -1857,55 +1865,73 @@ MVP planning does not require exhaustive optimal search, cloud compute, GPU exec
 
 The Phase 1 performance target is a local desktop/laptop GPU backend. A small CPU reference path or fixture-backed deterministic path remains required for tests, CI, and contributors without GPU access. Mobile and cloud planner backends are deferred beyond Phase 1.
 
+The implementation-facing contract for this section is `PLANNING_KERNEL_CONTRACT.md`. `DESIGN.md` defines the architectural intent; the contract file defines the Phase 1 schema and boundary details.
+
 #### 16.10.1 Pure function contract
 
-The GPU planning engine is a pure function. Its inputs are: task graph, UniverseState snapshot, AffectProfile, time window bounds, and RNG seed. Its output is a ranked list of PlanCandidates. The engine has no side effects, performs no I/O, and holds no mutable state. The CPU kernel owns all canonical state mutation. The GPU engine is advisory only: it proposes; the CPU kernel validates and commits.
+The GPU planning engine is a pure function. Its input is a `PlanningRequest`. Its output is a `PlanningResponse` containing ranked PlanCandidates, diagnostics, warnings, and probability-quality metadata. The engine has no side effects, performs no I/O, and holds no mutable state. The CPU kernel owns all canonical state mutation. The GPU engine is advisory only: it proposes; the CPU kernel validates and commits.
 
 The engine is invoked as a typed Python function call, not a subprocess or service. The framework is PyTorch.
 
 #### 16.10.2 CPU/GPU handoff contract
 
-The CPU/GPU boundary is defined by two typed objects: `PlanningRequest` and `PlanningResponse`. A dedicated schema document specifying these objects is required future work within `ubu-design`; it does not yet exist and must be completed before implementation can begin. See `UBU-Q0102`. This contract is a design artifact. Internal GPU stage schemas are implementation artifacts belonging to `model-committee`.
+The CPU/GPU boundary is defined by two typed objects: `PlanningRequest` and `PlanningResponse`, specified in `PLANNING_KERNEL_CONTRACT.md`.
 
-`PlanningRequest` carries at minimum: task graph, UniverseState snapshot, AffectProfile (required, user-specified for Phase 1), time window bounds, and RNG seed (required for reproducibility). Additional fields — including schema version, planner version, effective time, planning delta, reactive horizon, branch coverage target, compute budget, K override, scoring policy, constraint strictness, Compartment metadata, external event assumptions, existing Plan context for repair mode, and explanation requirements — must be explicitly included or deferred in the schema document. See `UBU-Q0102`.
+`PlanningRequest` includes schema version, planner version, request ID, effective time, generated-at time, mode, RNG seed, time-window policy, horizon policy, compute budget, task graph with CPU-provided `topological_order`, UniverseState snapshot, AffectProfile, scoring policy, constraint policy, payload policy summary, and privacy/provenance payload-safety proof. Optional fields include external event assumptions, repair context, explanation request, and debug flags.
 
-`PlanningResponse` returns `K=3` PlanCandidates by default:
+`PlanningResponse` returns ranked PlanCandidates plus diagnostics, rejection counts, warnings, probability-quality metadata, optional coverage estimate, optional compute telemetry, and stage funnel counts. `K=3` PlanCandidates is the Phase 1 default:
 
 - highest-utility candidate;
-- most-robust candidate (best worst-case outcome under Monte Carlo simulation);
-- most-schedule-diverse candidate (maximally different from the first, for user-facing alternatives).
+- most-robust candidate;
+- most-schedule-diverse candidate.
 
-K is user-configurable to allow power users to tune computational resource use.
+K is user-configurable to allow power users to tune computational resource use. The Phase 1 default rollout budget is `n_rollouts = 1000` per finalist unless overridden by the CPU kernel's compute budget.
 
 #### 16.10.3 Tensor layout
 
 All tensor batches use padded fixed-size shape `(N_CANDIDATES, MAX_PLANNING_TASKS, ...)` with an explicit boolean validity mask tensor marking valid task slots. Ragged tensors are not used in Phase 1.
 
-`MAX_PLANNING_TASKS = 256` is the Phase 1 planning window ceiling, defined at a single site. Premium execution tiers are defined as scalar multiples of this constant — `premium_multiplier × 256` — with no other architectural changes required. This enables linear scaling without dynamic tensor sizing.
+`MAX_PLANNING_TASKS = 256` is the Phase 1 planning window ceiling, defined at a single site. Future premium or wide-horizon tiers may increase this ceiling by scalar configuration, subject to memory, scenario-count, correlation-matrix, validation-cost, and backend performance limits. Linear scaling is not assumed as a mathematical guarantee.
 
 #### 16.10.4 Pipeline stages
 
-The GPU engine has four first-class pipeline stages. Stage-boundary schemas are required future work within `ubu-design` before implementation can begin; they do not yet exist. See `UBU-Q0103`.
+The GPU engine has four first-class pipeline stages, with semantic boundaries specified in `PLANNING_KERNEL_CONTRACT.md §5`.
 
-1. **Skeleton sampling** — parallel log-normal duration sampling across N_CANDIDATES with vectorized topological-order constraint propagation. Duration distributions are parameterized from a three-point (min, mode, max) estimate. The precise semantics of min and max and handling of invalid triples are open; see `UBU-Q0106` and §16.10.5.
+1. **Skeleton sampling** — parallel shifted-log-normal or fixed duration sampling across candidates with vectorized propagation over the CPU-provided topological order.
 
-2. **`affect_legitimacy_filter`** — batch sigmoid affect constraint evaluation across surviving candidates. Each of the three MVP affect dimensions (energy, stress, mood intensity) carries an independent sigmoid parameterization drawn from the user-specified AffectProfile. Candidates that fail feasibility thresholds are eliminated. The full per-dimension schema — including direction, threshold, and output semantics — is open; see `UBU-Q0105` and §13.7. Note: this stage implements only the sigmoid affect-constraint portion of legitimization. Full legitimization in UbU design is the broader process of making a skeleton Plan human-viable by respecting affect, recovery, transition, rest, sustainability, and support constraints; the `affect_legitimacy_filter` GPU stage does not replace or subsume it.
+2. **`affect_legitimacy_filter`** — batch sigmoid affect-constraint evaluation across surviving candidates. This stage implements only the sigmoid affect-constraint portion of legitimization. Full legitimization in UbU design is broader: it makes a skeleton Plan human-viable by respecting affect, recovery, transition, rest, sustainability, and support constraints. The `affect_legitimacy_filter` GPU stage does not replace or subsume full legitimization.
 
-3. **Value scoring** — parallel utility, robustness, and affect-margin scoring across surviving candidates.
+3. **Value scoring** — parallel utility, approximate robustness, affect-margin, and schedule-diversity scoring across surviving candidates.
 
-4. **Monte Carlo rollout** — joint scenario simulation for the top-K finalists using correlation-group Gaussian copula sampling. Each Task carries `correlation_groups: [{group: str, strength: float}]`; tasks may belong to multiple groups. The matrix construction rules and PSD handling policy are open; see `UBU-Q0104`.
+4. **Monte Carlo rollout** — joint scenario simulation for finalists using correlation-group Gaussian copula sampling with deterministic rollout seed derivation.
 
 GPU search proposes candidates. Hard constraint certification and final Plan validity are performed by the CPU kernel using exact or conservative validation.
 
-#### 16.10.5 Stochastic model
+#### 16.10.5 Stochastic duration model
 
-Task durations use the shifted log-normal distribution, parameterized from a three-point user estimate (min, mode, max). For lay audiences this is well described as a stop-light model: a sequence of independent delay sources where slowdowns stack asymmetrically and early arrivals are absorbed cheaply by forward-pulling the next eligible Dynamic Task.
+Task durations use either a fixed duration model or a shifted log-normal distribution. The stochastic model is parameterized by `(min_seconds, mode_seconds, p95_seconds)`.
 
-The precise semantics of the three-point estimate are open and must be specified before implementation: whether `min` is a hard lower bound, a subjective optimistic estimate, or a shift parameter; whether `max` is a P90, P95, P99, or a hard upper cap; and how invalid triples (e.g. min ≥ mode, mode ≥ max, or zero-range estimates) are detected and handled. See `UBU-Q0106`.
+- `min_seconds` is the optimistic lower support shift used by the planner distribution; it is a subjective best-case modeling prior, not a claim about physical impossibility.
+- `mode_seconds` is the most likely duration.
+- `p95_seconds` is the high-but-plausible 95th percentile, not a hard upper cap.
+
+The shifted distribution is `D = min_seconds + LogNormal(mu, sigma)`, with the canonical conversion formula specified in `PLANNING_KERNEL_CONTRACT.md §3`. The planner may sample durations greater than `p95_seconds`; that is intentional.
+
+Fixed known durations use a separate fixed-duration model and are represented as a delta distribution. Invalid stochastic triples are rejected by schema validation rather than silently repaired.
+
+For lay audiences this is well described as a stop-light model: a sequence of independent delay sources where slowdowns stack asymmetrically and early arrivals are absorbed cheaply by forward-pulling the next eligible Dynamic Task.
+
+#### 16.10.6 Correlation groups and rollout matrix
+
+Each stochastic-duration Task may carry `correlation_groups: [{group: str, strength: float}]`. In Phase 1, `strength` is a positive latent-factor loading in `[0, 1]`; negative correlations are deferred.
+
+The CPU kernel constructs a deterministic positive semi-definite correlation matrix by normalizing per-Task positive factor loadings and computing `C = L * L^T + diag(1 - row_norm(L)^2)`. Multiple shared groups combine through the dot product of normalized loading vectors. Numeric jitter may be applied for floating-point error with explicit degraded diagnostics. Silent nearest-PSD projection is not a Phase 1 semantic repair.
+
+Negative correlations are not rejected philosophically. They are deferred because signed pairwise-correlation declarations can create non-PSD matrices and confusing validation failures. Phase 2 should support anti-correlations through signed latent factors, explicit Cholesky-style parameterization, or a signed partial-correlation model.
 
 The RNG seed is an explicit required input, ensuring plan generation is reproducible for peer debugging.
 
-See also: `UBU-D0166`, `UBU-D0167`, `UBU-D0168`, `UBU-D0169`.
+See also: `UBU-D0166`, `UBU-D0167`, `UBU-D0168`, `UBU-D0169`, `UBU-D0170`, `UBU-D0171`, `UBU-D0172`, `UBU-D0173`, `UBU-D0174`, and `PLANNING_KERNEL_CONTRACT.md`.
 
 ---
 
