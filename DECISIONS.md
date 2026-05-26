@@ -3360,3 +3360,20 @@ Implementation should now proceed slice-by-slice. A slice may begin when no unre
 - Future open questions may remain in `OPEN_QUESTIONS.md` without preventing Phase 1 implementation unless they meet the D0175 blocker standard.
 
 ---
+
+## UBU-D0176: PLANNING_KERNEL_CONTRACT.md is a canonical source file for model-committee runs
+
+**Status:** Accepted
+
+Supersedes the file list in UBU-D0056.
+
+The canonical source files for model-committee question-answering and work-proposal generation are:
+
+- `DESIGN.md`
+- `DECISIONS.md`
+- `OPEN_QUESTIONS.md`
+- `PLANNING_KERNEL_CONTRACT.md`
+
+`PLANNING_KERNEL_CONTRACT.md` is a Phase 1 design artifact referenced by UBU-D0169 through UBU-D0174. It defines the CPU/GPU planning-kernel boundary contract including `PlanningRequest`, `PlanningResponse`, `TaskSpec` duration semantics, GPU pipeline stage boundaries, sigmoid affect constraint schema, and correlation matrix construction. Model-committee runs must read it as context and may propose patches to it subject to the same patch-validation rules as the other canonical source files.
+
+---
