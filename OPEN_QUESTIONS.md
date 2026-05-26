@@ -705,30 +705,9 @@ Resolved. See `UBU-D0063`, `UBU-D0069`, `UBU-D0150`, and `UBU-D0161`.
 
 ## UBU-Q0039: Prioritized Recursive Loop Semantics
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0032 Blocks: model-committee loop semantics Resolved by: UBU-D0066 Last scored: 2026-05-26 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0032 Blocks: model-committee loop semantics Resolved by: UBU-D0066 Last scored: 2026-05-26 Scored from commit: None
 
-### Question
-
-How should model-committee represent and enforce the prioritized recursive loop of consistency, prioritization, and work?
-
-### Subquestions
-
-1. What exact events trigger a system-wide consistency check?
-2. What consistency failures should block ordinary work?
-3. How are consistency failures converted into questions or work items?
-4. When may prioritization run if consistency has warnings but no hard failures?
-5. When may work proceed against a known inconsistency?
-6. How should this loop map into future UbU Automation Worker behavior?
-7. How should LLM model updates trigger re-checks or re-scoring?
-8. How should Codex CLI provider updates trigger re-checks or re-scoring?
-
-### Current direction
-
-System-wide consistency has highest priority, question/problem prioritization has second priority, and work has third priority. Work should not proceed against a known-inconsistent state unless the selected work item repairs that inconsistency.
-
-### Resolution
-
-Partially resolved by `UBU-D0066`; detailed trigger and blocking semantics remain open.
+Resolved. See UBU-D0178.
 
 ---
 

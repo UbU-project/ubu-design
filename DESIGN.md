@@ -448,19 +448,36 @@ Work scoring considers at least correctness against the selected question or pro
 
 ### 3.3 Prioritized recursive loop
 
-Model-committee automation is expected to evolve into a prioritized recursive loop:
+Model-committee runs use a prioritized recursive loop:
 
 1. **System-wide consistency check** verifies that the current project state is coherent.
 2. **Question/problem prioritization selection** chooses the next work item only after consistency is known.
 3. **Work** produces and scores concrete changesets.
 
-Consistency has the highest priority because an inconsistent project state invalidates future planning.
+Each run should record loop state in its manifest or review artifact: base commit, canonical input hashes, consistency status, blocking failure IDs, warning IDs, selected loop mode, selected work item, provider/version baseline, and whether any derived scores were reused or invalidated.
 
-Prioritization is second because it selects the next intended state transition.
+System-wide consistency checks run before prioritization and before ordinary work. They are triggered by:
 
-Work is third because it should implement only a selected and justified transition.
+- a new base commit, merge, rebase, checkout, or human-applied patch that changes canonical files;
+- a directive decision or other direct edit to `DECISIONS.md`;
+- any edit to `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, or `PLANNING_KERNEL_CONTRACT.md`;
+- prompt, schema, validator, quorum, provider-weight, provider-config, or model-committee tool-version changes;
+- enabled LLM model, model-alias, or provider capability changes;
+- Codex CLI, Claude Code CLI, Ollama, or other approved provider CLI version or behavior changes;
+- explicit operator request, scheduled audit, doctor run, or prior run ending with consistency, quorum, or validation failure;
+- derived-document changes when derived-document consistency checks are enabled.
 
-This structure is intended to make `model-committee` an early dogfooding example of UbU coordinating its own development.
+Hard consistency failures block ordinary prioritization and ordinary work. Hard failures include missing or unparseable canonical files, duplicate question or decision IDs, malformed question metadata, dependency references to missing questions, dependency cycles, invalid `Resolved by` references, solved/decomposed/deferred/superseded status contradictions, selected-work dependency violations, patch-base mismatch, forbidden-path proposals, and canonical input changes after the recorded consistency snapshot.
+
+Warnings do not block prioritization when they cannot invalidate the selected work item. Warnings include stale derived documents, unscored or `TBD` ranking fields, optional provider failures when quorum remains satisfiable, nonblocking provider version drift, stale historical scores, and derived artifact publication gaps. Prioritization may run with warnings only when the warning list is recorded and stale scores are excluded from automatic selection.
+
+When hard failures exist, the next selectable work is consistency repair, decomposition, or diagnostic work for those failures. A consistency failure should be converted into a problem record with stable failure key, severity, affected files or object IDs, evidence, suggested repair, and whether a human decision is required. If the repair is mechanical and inside the current allowed file set, model-committee may solicit repair patches. If the repair exposes an unresolved design choice, it may create or update an open question; new MVP blockers must satisfy the `UBU-D0175` blocker-certificate rule.
+
+Ordinary work may proceed against a known inconsistency only when the selected work item repairs or narrows that inconsistency, declares the relevant failure IDs, avoids relying on invalid derived ranking, and reruns consistency after the candidate patch. It must not mix unrelated design answering with consistency repair unless both are necessary for the same failure.
+
+LLM model updates and provider CLI updates do not retroactively change committed canonical design state or historical run logs. They do invalidate reusable derived rankings, readiness estimates, and score evidence that depend on the old provider baseline. Before automatic selection reuses any such artifact, model-committee must rerun consistency and, when the selected proposal depends on old scores, rescore or require human review.
+
+Future integrated UbU Automation Worker behavior should map this loop to ordinary worker semantics: consistency checks are high-priority assigned work; repair outputs are mutation or patch candidates; canonical state changes only after parent validation and human repository review where required.
 
 ### 3.4 Consistency requirements
 
