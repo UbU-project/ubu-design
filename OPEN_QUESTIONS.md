@@ -657,7 +657,7 @@ Unresolved.
 
 ## UBU-Q0036: Committee Log and Provenance Format
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0032 Blocks: model-committee logging Resolved by: UBU-D0064 Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0032 Blocks: model-committee logging Resolved by: UBU-D0064, UBU-D0160 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -665,11 +665,11 @@ What minimum files and fields must a model-committee run log preserve?
 
 ### Current direction
 
-v0.1 should use the provisional filesystem log format defined in `UBU-D0064`. The provisional format includes canonical file snapshots, schema files, Codex prompts, Ollama prompts, Codex JSON outputs, Codex JSONL event logs, provider stderr, parsed proposals, patch files, selected patch, review artifact, and commit message. v0.2 should extend that format with Claude Code prompts, raw Claude CLI JSON envelopes, schema-native `structured_output` payloads, provider invocation metadata, score-matrix entries, disagreement flags, quorum results, and operator-run artifact-publication instructions. The final log/provenance format remains open and may be refined after the first working v0.2 implementation exists.
+v0.1 uses the provisional filesystem log format defined in `UBU-D0064`. `UBU-D0160` accepts the v0.2 minimum: a manifest-indexed run directory preserving canonical input snapshots, schemas, prompts, raw provider artifacts, parsed structured outputs, candidate patches, validation results, score matrices, disagreement and quorum results, selected artifacts, review notes, commit-message suggestions, and operator-run artifact-publication instructions. The long-term format may evolve through schema migrations and later decisions, but the Phase 1 logging blocker is resolved.
 
 ### Resolution
 
-Partially resolved by `UBU-D0064`; final log/provenance requirements remain open.
+Resolved. See `UBU-D0064` and `UBU-D0160`.
 
 ---
 

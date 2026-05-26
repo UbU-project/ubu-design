@@ -2872,3 +2872,53 @@ Planner-relevant reconciliation findings create or batch `recalculation_triggere
 - `UBU-Q0005` can define GitHub event triage against the boundary that every GitHub edit is an External Event unless admitted through UbU.
 - `UBU-Q0010` remains open for token custody; this decision does not require the canonical instance to hold GitHub write credentials.
 - Workers retain request/report authority only; canonical state admission and human-approved live writes remain with the parent UbU instance.
+
+---
+
+## UBU-D0160: Model-committee run logs preserve reproducible provenance
+
+**Status:** Accepted → DESIGN.md §3
+
+Resolved question: `UBU-Q0036`.
+
+The minimum `model-committee` run log for v0.1 and v0.2 is a filesystem run directory anchored by `manifest.json`. The manifest is the index of every input, schema, prompt, raw provider output, parsed provider output, candidate patch, validation result, score result, selected artifact, and review artifact produced by the run.
+
+Required top-level artifacts are:
+
+- `manifest.json`;
+- `selected.patch` when selection succeeds or a human-review-required selected candidate exists;
+- `commit_message.txt` when a commit message is produced;
+- `review.md`;
+- `inputs/`;
+- `schemas/`;
+- `prompts/`;
+- `raw/`;
+- `parsed/`;
+- `patches/`;
+- `scores/`.
+
+The manifest required fields are `run_id`, `run_schema_version`, `tool_version`, `base_commit`, `working_tree_state`, `started_at`, `finished_at`, `question_id`, selected question title and metadata, canonical input snapshot paths and hashes, schema artifact paths and hashes, provider configuration summary, provider invocation records, proposal records, patch validation records, score matrix path, disagreement flags, quorum result, selection result, selected proposal ID, selected patch path, review artifact paths, exit code, and artifact-publication status or instructions path. `working_tree_state` includes at least a clean/dirty flag and a path list for uncommitted changes visible to the run.
+
+`inputs/` preserves snapshots of the canonical design files used by the run: `DESIGN.md`, `DECISIONS.md`, and `OPEN_QUESTIONS.md`. If derived files or other repository files are used by a consistency check or work item, those inputs are also preserved as snapshots or hash-addressed references.
+
+`schemas/` preserves the exact schemas or schema hashes used for work proposals, score results, the run manifest, provider invocation metadata, score-matrix entries, and review artifacts. A later schema migration may add fields, but a reviewer must be able to identify which schema version validated each artifact.
+
+`prompts/`, `raw/`, and `parsed/` preserve provider provenance. Each provider invocation receives an `invocation_id`. Its record includes provider ID, provider class, model name or alias, phase, command/argv shape with secrets redacted, timeout, start and end timestamps, exit status, stdout path, stderr path, raw output path, parsed output path, schema path or hash, validation result, and failure class when applicable.
+
+Provider-specific raw artifacts include Codex prompt files, Codex JSON outputs, Codex JSONL event logs, Codex stderr, Ollama prompts and raw responses, Claude Code prompts, raw Claude CLI JSON envelopes, and Claude schema-native `structured_output` payloads as extracted parsed artifacts. Provider failures are preserved with provider ID, model name when known, run phase, failure class, timeout or exit status, stderr or raw-response artifact path when available, and whether quorum remained satisfied.
+
+`patches/` preserves one candidate patch per proposal, mechanical patch-validation results, selected patch identity, and selected patch validation diagnostics. `scores/` preserves score-matrix entries with author provider, scorer provider, proposal ID, score, validity, rationale, risks, and required fixes; retained self-scores are diagnostic and marked as non-quorum evidence.
+
+Quorum and disagreement outcomes are first-class run artifacts. v0.2 logs preserve the score matrix, frontier cross-score provenance, disagreement flags, selected score, selected-score threshold result, selected patch validation result, quorum decision, human-review-required reason when applicable, and final exit code.
+
+`review.md` must include the selected patch summary, relevant validation status, score matrix summary, disagreement and quorum status, human-review-required reason when applicable, and the operator-run commands for publishing the run directory to `../model-committee-artifacts`. Those commands are instructions only; `model-committee` must not execute artifact publication, remote push, PR creation, or canonical-file mutation automatically.
+
+Run logs must not contain API keys, bearer tokens, credential files, private environment dumps, or unredacted secrets. They may record redacted argv shapes, credential reference kinds, provider IDs, configured model aliases, and artifact hashes needed for audit.
+
+**Consequences:**
+
+- `UBU-Q0036` is resolved for the v0.1/v0.2 minimum run-log and provenance format.
+- `UBU-D0064` remains the v0.1 provisional-format starting point; this decision adds the accepted v0.2 minimum and makes the manifest explicit.
+- The final long-term artifact format may evolve through schema migrations and later decisions, but the Phase 1 logging blocker is closed.
+- `UBU-Q0046` can focus on which artifacts are published publicly and how they are summarized, not on what the local run log must preserve.
+- Implementations may add artifacts or fields, but omitting the minimum artifacts requires a later accepted decision.
