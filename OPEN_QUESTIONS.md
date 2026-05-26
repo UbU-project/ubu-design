@@ -1675,27 +1675,9 @@ Open.
 
 ## UBU-Q0079: MCP client/server capability and Compartment policy
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0028, UBU-Q0032, UBU-Q0060 Blocks: MCP-style integrations, external agents, Delegation Substrate APIs Resolved by: None Last scored: 2026-05-26 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0028, UBU-Q0032, UBU-Q0060 Blocks: MCP-style integrations, external agents, Delegation Substrate APIs Resolved by: UBU-D0177 Last scored: 2026-05-26 Scored from commit: None
 
-### Question
-
-What is the minimum MCP-style client/server integration boundary that lets UbU use external tools and expose narrow UbU capabilities without giving outside agents broad authority over the user's life model?
-
-### Subquestions
-
-1. Which UbU operations may be exposed as tools in Phase 1 or fixtures?
-2. What capability fields are required: object scope, Objective subtree, Task set, operation kind, Compartment, Identity, time window, rate/cost limits, and review requirement?
-3. How should external agents submit candidate updates rather than canonical writes?
-4. How should tool calls be logged, audited, denied, retried, or rolled back?
-5. What is the minimum developer-facing MCP fixture or adapter needed for dogfooding?
-
-### Current direction
-
-UbU should be both an MCP-style client and server, but every tool surface is bounded by user-owned policy, Compartment rules, capability grants, and review semantics.
-
-### Resolution
-
-Open.
+Resolved. See UBU-D0177.
 
 ---
 

@@ -2363,19 +2363,27 @@ ContextBundles are immutable after use. Corrections, narrower reruns, broader re
 
 UbU as an MCP-style client may call external tools and services. UbU as an MCP-style server may expose narrow tool surfaces to external agents.
 
-Safe tool surfaces should prefer candidate submission and queries over direct mutation. Examples:
+Phase 1 server tools are query or candidate-submission tools only:
 
+- `plan_summary.read`;
+- `objective_status.query`;
 - `task_candidate.create`;
 - `log_candidate.submit`;
-- `plan_summary.read`;
 - `plan_repair.submit`;
-- `objective_status.query`;
 - `clarification.request`;
-- `association_attestation_candidate.submit`;
 - `delegation_packet.prepare`;
-- `projection_preview.submit`.
+- `projection_preview.submit`;
+- `association_attestation_candidate.submit` for fixtures or manually reviewed Association-introspection dogfooding.
 
-Capability grants should scope these operations by object, Objective subtree, Task set, Compartment, Identity, integration, operation kind, time window, cost budget, and review requirement.
+Phase 1 server tools do not directly create, update, or delete canonical Objectives, Tasks, Logs, UniverseState, External References, Plans, Calendars, projection state, credentials, or external systems. Any write-like request becomes a candidate, worker-style mutation request, projection request, clarification request, or review artifact admitted by the canonical instance.
+
+A minimum `MCPToolCapabilityGrant` includes grant ID, issuing parent instance, actor Identity, integration or agent identity, allowed tool names, operation kinds, payload schema refs, object refs or object-type scopes, Objective subtree refs, Task set or Container refs, Compartment constraints, Identity/Association disclosure constraints when applicable, integration or destination refs, time window or expiration, rate and cost limits, review requirement, idempotency/version requirement, audit policy, lifecycle status, and revocation refs. Compartment policy is a hard upper bound; a tool grant cannot override `local_only`, `no_cloud_llm`, `no_external_export`, allowed-integration, allowed-device, identity-isolation, or EvidenceUsePolicy denials.
+
+Every external-agent write-like tool call uses a candidate envelope with tool call ID, capability grant ref, actor Identity, target refs, operation, payload, expected prior version when applicable, idempotency key, provenance, evidence refs, originating ContextBundle refs when any, Compartment policy result, confidence when relevant, and review requirement. The canonical instance validates schema, semantics, authority, Compartment policy, idempotency, expected version, assignment or workflow status, and review policy before applying, rejecting, or leaving the candidate pending.
+
+Tool invocations that reach UbU are logged as append-only audit records with redacted argument summary or hash, policy decision, source and destination Identity, Compartment result, cost and rate counters when relevant, result refs, denial or failure reason when safe, and downstream candidate refs. Denied calls fail closed. Retries require the same idempotency key or an explicit superseding request. Rollback is append-only repair through compensating mutation, Log correction, supersession, Task moot transition, projection repair, or AgentAction mitigation metadata; prior invocation and candidate records are not rewritten.
+
+The minimum dogfooding fixture is a local loopback MCP adapter over synthetic or redacted UbU project data. It exposes the Phase 1 server tools, exercises capability grants and Compartment denials, writes only candidate/review artifacts and audit Logs, and supports a dry-run client path for calling external tools without live external mutation.
 
 ### 21.5 Delegation Substrate
 

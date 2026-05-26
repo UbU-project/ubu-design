@@ -3377,3 +3377,39 @@ The canonical source files for model-committee question-answering and work-propo
 `PLANNING_KERNEL_CONTRACT.md` is a Phase 1 design artifact referenced by UBU-D0169 through UBU-D0174. It defines the CPU/GPU planning-kernel boundary contract including `PlanningRequest`, `PlanningResponse`, `TaskSpec` duration semantics, GPU pipeline stage boundaries, sigmoid affect constraint schema, and correlation matrix construction. Model-committee runs must read it as context and may propose patches to it subject to the same patch-validation rules as the other canonical source files.
 
 ---
+
+## UBU-D0177: Phase 1 MCP tools are capability-scoped candidate surfaces
+
+**Status:** Accepted → DESIGN.md §21.4
+
+Resolved question: `UBU-Q0079`.
+
+UbU may act as both MCP-style client and server in Phase 1, but the server-side tool surface is limited to query and candidate-submission operations. The Phase 1 exposed tool set is:
+
+- `plan_summary.read`;
+- `objective_status.query`;
+- `task_candidate.create`;
+- `log_candidate.submit`;
+- `plan_repair.submit`;
+- `clarification.request`;
+- `delegation_packet.prepare`;
+- `projection_preview.submit`;
+- `association_attestation_candidate.submit` for fixtures or manually reviewed Association-introspection dogfooding.
+
+These tools do not directly mutate canonical Objectives, Tasks, Logs, UniverseState, External References, Plans, Calendars, projection state, credentials, or external systems. Write-like calls produce candidate envelopes, worker-style mutation requests, projection requests, clarification requests, or review artifacts. The canonical UbU instance validates schema, semantics, authority, Compartment policy, idempotency, expected prior version, workflow or assignment status, and review policy before applying, rejecting, or leaving a candidate pending.
+
+A minimum MCP capability grant records grant ID, issuing parent instance, actor Identity, integration or agent identity, allowed tool names, operation kinds, payload schema refs, object scope, Objective subtree scope, Task set or Container scope, Compartment constraints, Identity or Association disclosure constraints when applicable, integration or destination refs, time window or expiration, rate and cost limits, review requirement, idempotency/version requirement, audit policy, lifecycle status, and revocation refs. Compartment policy is a hard upper bound; a grant cannot override `local_only`, `no_cloud_llm`, `no_external_export`, allowed-integration, allowed-device, identity-isolation, or EvidenceUsePolicy denials.
+
+Every tool call that reaches UbU creates an append-only audit record with redacted argument summary or hash, policy decision, source and destination Identity, Compartment result, cost and rate counters when relevant, result refs, denial or failure reason when safe, and downstream candidate refs. Denied calls fail closed. Retries require the same idempotency key or an explicit superseding request. Rollback uses append-only repair through compensating mutation, Log correction, supersession, Task moot transition, projection repair, or AgentAction mitigation metadata; prior invocation and candidate records are not rewritten.
+
+The minimum dogfooding fixture is a local loopback MCP adapter over synthetic or redacted UbU project data. It exposes the Phase 1 tools, exercises capability grants and Compartment denials, writes only candidate/review artifacts and audit Logs, and supports a dry-run client path for calling external tools without live external mutation.
+
+**Consequences:**
+
+- `UBU-Q0079` is resolved for Phase 1.
+- Phase 1 external agents can integrate with UbU without broad authority over the user's life model.
+- MCP tool access reuses the worker mutation, ContextBundle, Compartment, Log, and review boundaries rather than creating a parallel authorization model.
+- Direct canonical writes, credential mutation, and live external side effects remain outside MCP server authority unless a later accepted decision adds a narrower tool with explicit hard-boundary checks.
+- `UBU-Q0080` can define Delegation Substrate fields on top of this candidate and capability boundary.
+
+---
