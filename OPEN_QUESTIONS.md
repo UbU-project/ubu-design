@@ -2228,7 +2228,7 @@ Open.
 
 ## UBU-Q0100: Structural hard boundaries versus behavioral-risk safeguards
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Governance Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0028, UBU-Q0083 Blocks: safeguard policy, relationship safeguards, product integrity, user autonomy Resolved by: None Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Governance Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0028, UBU-Q0083 Blocks: safeguard policy, relationship safeguards, product integrity, user autonomy Resolved by: UBU-D0165 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -2248,7 +2248,7 @@ Hard boundaries should be structural or externally required. Behavioral-risk che
 
 ### Resolution
 
-Open.
+Resolved. See UBU-D0165.
 
 ---
 

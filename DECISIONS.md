@@ -3076,3 +3076,35 @@ Stale overwrite prevention is mandatory. The canonical instance compares `expect
 - Valid worker outputs can support automation without granting direct canonical write authority.
 - Invalid and stale worker submissions remain auditable without polluting canonical state.
 - `UBU-Q0013`, `UBU-Q0020`, `UBU-Q0021`, `UBU-Q0049`, and `UBU-Q0084` remain open for authority-source vocabulary, retry construction, automation child structure, release-outreach artifacts, and external AgentAction side-effect modeling.
+
+---
+
+## UBU-D0165: Safeguards distinguish hard boundaries from advisory behavioral risk
+
+**Status:** Accepted → DESIGN.md §§2.10.2, 22.4
+
+Resolved question: `UBU-Q0100`.
+
+UbU classifies safeguards into four governance categories.
+
+**Product hard boundaries** are structural invariants UbU can enforce through the data model, routing layer, authorization checks, validation, storage layout, provenance, or append-only audit mechanics. The accepted hard-boundary set includes Compartment denials, privacy/export policy, data-access authorization, EvidenceUsePolicy restrictions, identity and Compartment isolation, integration authorization, provenance integrity, audit-record integrity, and immutable Log/correction rules. A user preference, workflow setting, provider preference, or ordinary approval click cannot override these denials.
+
+**External hard constraints** are provider, platform, app-store, integration, or legal constraints that UbU must obey for a specific jurisdiction, distribution channel, account, or external surface. They are source-labeled constraints rather than independent expressions of UbU philosophy. When practical, UbU should record their source, scope, affected integration or workflow, enforcement mechanism, review path, and last verification time. If the constraint is explicit and mechanically detectable, UbU may refuse the action. If the constraint depends on uncertain interpretation, UbU should disclose uncertainty and avoid claiming full legal or platform-policy enforcement.
+
+**User-configured required gates** are self-imposed user, Identity, Association, or project policy gates. They may block a workflow while enabled, but they are not product invariants and must not be documented as proof that the underlying behavioral judgment is mechanically certain. A required gate should record the configuring authority, scope, trigger, required review, bypass or disablement authority, expiration or review cadence when any, and Log refs for configuration, bypass, disablement, or denial.
+
+**Advisory behavioral safeguards** are fallible risk assessments. Examples include manipulation, coercion, harassment, stalking, deception, romantic or professional power-asymmetry risk, vulnerability exploitation, rumination risk, relationship-transition ethics, and similar behavioral misuse checks. These depend on classifiers, heuristics, evidence quality, cultural context, and user interpretation. They should generally be default-on, uncertainty-aware, transparent about false-positive and false-negative risk, user-overrideable, and introspection-relevant when bypassed.
+
+Behavioral-risk checks should not be unconditional hard gates by default. Treating them as hard gates would risk blocking legitimate autonomous action, over-trusting false negatives, and falsely advertising that UbU can reliably prevent misuse, illegal behavior, or harm. UbU may still refuse a workflow when the requested action violates a product hard boundary, an external hard constraint, or a currently enabled user-configured required gate.
+
+Documentation and UI copy must distinguish these categories. Strong claims such as enforce, prevent, disallow, cannot, or must not should be used only for named hard boundaries with an actual enforcement path. Behavioral-safeguard copy should use advisory language such as recommends, warns, asks for review, flags uncertainty, records bypass, or blocks only because the user configured this gate. Public documentation must not imply that UbU polices all harmful, illegal, coercive, stalking, harassing, deceptive, or manipulative behavior.
+
+This decision does not remove future safety work. It fixes the authority boundary: structural enforcement protects product integrity and privacy, external constraints are obeyed as external constraints, user-required gates express chosen self-governance, and behavioral-risk safeguards remain advisory unless another accepted hard boundary applies.
+
+**Consequences:**
+
+- `UBU-Q0100` is resolved for Phase 1 governance.
+- `UBU-Q0101` remains open for the detailed UX of uncertainty display, bypass controls, disablement, and introspection consequences.
+- Relationship and RelationshipScopeTransition safeguards use the same taxonomy as the rest of UbU rather than a separate paternalistic gate model.
+- Product and public documentation must avoid claiming that UbU reliably prevents behavioral misuse or illegal behavior.
+- Implementation schemas may add a safeguard-category enum or policy-gate records later, but the Phase 1 design boundary is now settled.
