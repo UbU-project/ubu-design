@@ -1,20 +1,18 @@
 # UbU Funder Brief
 
 **Status:** Derived audience-facing brief  
-**Source of truth:** `DESIGN.md`, `DECISIONS.md`, and `OPEN_QUESTIONS.md`  
+**Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, and `PLANNING_KERNEL_CONTRACT.md`  
 **Audience:** grantmakers, ecosystem sponsors, angels, hackathon judges, aligned funders, and prototype sponsors
 
 ---
 
 ## Summary
 
-UbU is a privacy-first planning, coordination, and self-governance system.
+UbU is a privacy-first planning, coordination, and self-governance system. It is not merely a calendar app, task manager, project board, or chat assistant.
 
-It is not merely a calendar app, task manager, project board, or chat assistant. UbU is intended to become a planning kernel that converts messy real-world inputs into explicit, inspectable, recalculable Plans.
+UbU is intended to become a planning kernel that converts messy real-world inputs into explicit, inspectable, recalculable Plans. The first MVP is deliberately narrow: use UbU to coordinate the development of UbU itself.
 
-The first MVP is deliberately narrow: use UbU to coordinate the development of UbU itself.
-
-Funding is useful when it accelerates reusable open-core trunk capabilities: planning, local-first data, GitHub dogfooding, Logs, Calendars, Tasks, Objectives, privacy Compartments, bounded automation, and reviewable projections.
+Funding is useful when it accelerates reusable open-core trunk capabilities: planning, local-first data, GitHub dogfooding, Logs, Calendars, Tasks, Objectives, privacy Compartments, bounded automation, reviewable projections, and planning-kernel contract implementation.
 
 Funding is harmful when it pulls UbU into a bespoke private workflow, surveillance product, token-first marketplace, or funder-controlled roadmap.
 
@@ -22,37 +20,22 @@ Funding is harmful when it pulls UbU into a bespoke private workflow, surveillan
 
 ## Why now
 
-UbU has moved beyond pure concept work into active pre-MVP dogfooding.
-
-The project has a public design repository with canonical design files:
+UbU has moved beyond pure concept work into active pre-MVP dogfooding. The design repository has four canonical design files:
 
 - `DESIGN.md`
 - `DECISIONS.md`
 - `OPEN_QUESTIONS.md`
+- `PLANNING_KERNEL_CONTRACT.md`
 
-It also has a constrained dogfooding path through model-assisted review and GitHub-centered project coordination. The accepted v0.2 dogfooding direction adds independent frontier-provider cross-scoring so proposal agreement and disagreement become reviewable evidence rather than hidden model behavior. The immediate opportunity is to convert the design into a working Phase 1 prototype while the scope is still narrow enough to stay inspectable.
+The accepted dogfooding path now runs through `model-committee v0.3`: a bounded advisory automation loop that uses approved model providers to generate and cross-score changesets, validates patches, snapshots canonical files, includes the planning-kernel contract in prompts, and writes reviewable artifacts.
 
-The funding question is therefore practical:
-
-> Can a modest amount of funding accelerate a reusable open-core prototype without corrupting the self-governance mission?
+The immediate opportunity is to convert the design into a working Phase 1 prototype while the scope is still narrow enough to stay inspectable.
 
 ---
 
 ## What UbU is building
 
-UbU is building a system that models:
-
-- Objectives and Preferences;
-- Tasks, dependencies, preconditions, and effects;
-- Plans and Calendars;
-- Logs and Snapshots of what actually happened;
-- external events and recalculation triggers;
-- Identities, Relationships, RelationshipScopeTransitions, Associations, and bounded disclosure;
-- Compartments and privacy policy;
-- Automation Workers and agentic candidate updates;
-- Delegation Substrate packets for self, human, tool, or agent execution;
-- extrospection as a future Relationship review pattern with autonomy-first safeguards;
-- projections into external systems such as GitHub.
+UbU is building a system that models Objectives and Preferences; Tasks, dependencies, preconditions, and effects; Plans and Calendars; Logs and Snapshots; external events and recalculation triggers; Identities, Relationships, RelationshipScopeTransitions, Associations, and bounded disclosure; Compartments and privacy policy; Automation Workers and agentic candidate updates; Delegation Substrate packets; extrospection as a future Relationship review pattern; user introspection as a personal Log/Plan review loop; organizational introspection as Association-level mission-alignment review; and projections into external systems such as GitHub.
 
 The first version does not need every abstraction fully implemented. Phase 1 should prove that the core loop is useful, understandable, and extensible.
 
@@ -69,9 +52,10 @@ A successful prototype should help one user coordinate the UbU project itself by
 - recommending one next Task with an explanation;
 - supporting regular Calendar preview and Log review;
 - maintaining canonical-vs-derived document discipline;
+- using `PLANNING_KERNEL_CONTRACT.md` as the explicit planning-kernel boundary;
 - projecting selected low-dimensional state back into GitHub;
 - producing reviewable release/outreach artifacts;
-- preserving privacy, compartment, and authority boundaries.
+- preserving privacy, compartment, provenance, and authority boundaries.
 
 This is intentionally narrower than a general productivity app.
 
@@ -81,13 +65,14 @@ This is intentionally narrower than a general productivity app.
 
 Aligned funding can accelerate:
 
-- implementation of the Phase 1 planning loop, targeting a local GPU desktop backend with a CPU reference path required for tests, CI, and contributors without GPU hardware;
+- implementation of the Phase 1 planning loop, targeting a local GPU desktop backend with a CPU reference path;
+- planning-kernel request/response validation and fixtures;
 - GitHub ingestion and projection;
 - local-first storage and schema work;
 - Task/Objectives/Calendar/Log implementation;
 - bootstrap interview and one-next-Task UX;
-- model-committee automation hardening, including v0.2 Claude Code cross-scoring and public run-artifact publication discipline;
-- test fixtures and dogfooding workflows;
+- Calendar preview, Log review, and user introspection workflows;
+- `model-committee v0.3` hardening and run-artifact discipline;
 - privacy and Compartment guardrails;
 - release outreach artifacts tied to actual implementation;
 - contributor onboarding materials and implementation-ready issues.
@@ -98,15 +83,7 @@ The strongest funding target is work that becomes ordinary open-core trunk capab
 
 ## Acceptable funding shapes
 
-Compatible funding may include:
-
-- grants;
-- hackathon prizes;
-- sponsorship for a concrete Phase 1 implementation slice;
-- prepaid prototype sponsorship;
-- narrow design-partner retainers;
-- paid discovery sessions that produce reusable trunk requirements;
-- infrastructure support that does not create hidden proprietary dependency.
+Compatible funding may include grants, hackathon prizes, sponsorship for a concrete Phase 1 implementation slice, prepaid prototype sponsorship, narrow design-partner retainers, paid discovery sessions that produce reusable trunk requirements, or infrastructure support that does not create hidden proprietary dependency.
 
 Customer-specific configuration, hosting, packaging, support, or compliance work can be commercial when it stays outside the open-core boundary and does not become required for public dogfooding.
 
@@ -134,16 +111,7 @@ If yes, it may be worth considering. If no, it likely compromises the project.
 
 ## Why Ethereum/FOSS funders may care
 
-UbU is relevant to Ethereum and FOSS ecosystems because those communities contain:
-
-- autonomous contributors;
-- complex dependency graphs;
-- informal governance;
-- grant and milestone commitments;
-- privacy-sensitive coordination;
-- open-source sustainability problems;
-- AI-tooling pressure;
-- strong norms against centralized surveillance.
+UbU is relevant to Ethereum and FOSS ecosystems because those communities contain autonomous contributors, complex dependency graphs, informal governance, grant and milestone commitments, privacy-sensitive coordination, open-source sustainability problems, AI-tooling pressure, and strong norms against centralized surveillance.
 
 UbU is not primarily a crypto product, but Ethereum and adjacent FOSS ecosystems are good early validation environments for sovereign coordination infrastructure.
 
@@ -155,6 +123,7 @@ The following directions are important but should not be confused with Phase 1 c
 
 - multi-user UbU-to-UbU coordination;
 - Association-level organizational introspection;
+- Relationship-level extrospection;
 - Delegation Substrate marketplace flows;
 - Skill Barter marketplace;
 - high-privacy compute using FHE, ZK, secure hardware, or other privacy-preserving techniques;

@@ -1,7 +1,7 @@
 # UbU Organizational Introspection Brief
 
 **Status:** Derived audience-facing brief  
-**Source of truth:** `DESIGN.md`, `DECISIONS.md`, and `OPEN_QUESTIONS.md`  
+**Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, and `PLANNING_KERNEL_CONTRACT.md`  
 **Audience:** FOSS maintainers, DAOs, nonprofits, mission-driven software teams, grant-funded projects, foundations, research groups, protocol teams, and organizations that want evidence of mission alignment
 
 ---
@@ -12,56 +12,39 @@
 
 This question should be provocative, but not accusatory.
 
-UbU’s organizational introspection feature is about evidence-backed self-governance. It should help a project inspect whether its actual work, decisions, overrides, resource allocation, and informal structure match its declared mission and commitments.
+UbU's organizational introspection feature is about evidence-backed self-governance for Associations. It should help a project inspect whether its actual work, decisions, overrides, resource allocation, and informal structure match its declared mission and commitments.
 
 UbU should apply the same test to itself.
 
 ---
 
+## Distinction from personal introspection
+
+Organizational introspection is not the whole introspection story in UbU.
+
+**Personal or user introspection** asks whether an individual user's actual behavior, Logs, affect, overrides, and outcomes match that user's own Objectives, Preferences, constraints, and values. It belongs to personal self-governance, Calendar preview, Log review, and model correction.
+
+**Organizational introspection** asks whether an Association's records support its declared mission, commitments, governance, and operating model. It belongs to Association review and uses AssociationAttestations.
+
+The two patterns share evidence-backed review, but they must remain separate so that personal affect, private behavior, and relationship context do not become organizational telemetry by default.
+
+---
+
 ## Why this matters
 
-Many projects have a mission statement, roadmap, or grant proposal.
+Many projects have a mission statement, roadmap, grant proposal, or public values statement. Fewer projects can show that their day-to-day behavior actually follows it.
 
-Fewer projects can show that their day-to-day behavior actually follows it.
+The real project may be distributed across GitHub issues and pull requests, design documents, meeting notes, release notes, public chat logs, private or permissioned group chats, governance forums, calendars, funding reports, contributor onboarding discussions, and informal decisions made by high-context maintainers.
 
-The real project may be distributed across:
-
-- GitHub issues and pull requests;
-- design documents;
-- meeting notes;
-- release notes;
-- public chat logs;
-- private or permissioned group chats;
-- governance forums;
-- calendars;
-- funding reports;
-- contributor onboarding discussions;
-- informal decisions made by high-context maintainers.
-
-Humans can sometimes reconstruct this from memory. New contributors, funders, users, and even existing maintainers often cannot.
-
-UbU’s purpose is to make the evidence reviewable.
+Humans can sometimes reconstruct this from memory. New contributors, funders, users, and even existing maintainers often cannot. UbU's purpose is to make the evidence reviewable.
 
 ---
 
 ## Associations
 
-UbU models organizations broadly as **Associations**.
+UbU models organizations broadly as Associations. An Association is not assumed to be a single objective legal object with authoritative membership. It is an Identity-scoped, perception-bound model of group-like coordination.
 
-An Association is not assumed to be a single objective legal object with authoritative membership. It is an Identity-scoped, perception-bound model of group-like coordination.
-
-Associations may describe:
-
-- FOSS projects;
-- protocol teams;
-- informal contributor groups;
-- grant-funded working groups;
-- nonprofits;
-- companies;
-- conference cohorts;
-- DAOs or DAO-like projects;
-- skill networks;
-- friend groups or volunteer groups.
+Associations may describe FOSS projects, protocol teams, informal contributor groups, grant-funded working groups, nonprofits, companies, conference cohorts, DAOs or DAO-like projects, skill networks, friend groups, or volunteer groups.
 
 Legal entities, governance documents, GitHub organizations, fiscal sponsors, Discord servers, and public websites are evidence or External References. They are not the whole Association.
 
@@ -69,19 +52,17 @@ Legal entities, governance documents, GitHub organizations, fiscal sponsors, Dis
 
 ## AssociationAttestations
 
-The core introspection mechanism is the **AssociationAttestation**.
-
-An AssociationAttestation is a reviewable claim about an Association, backed by evidence and provenance.
+The core organizational-introspection mechanism is the AssociationAttestation: a reviewable claim about an Association, backed by evidence and provenance.
 
 Examples:
 
-- “The project repeatedly prioritizes release stability over feature velocity.”
-- “Most review authority currently flows through two maintainers.”
-- “The stated onboarding priority is not reflected in issue labeling or maintainer response patterns.”
-- “The grant milestone appears to drive more actual work than the public roadmap.”
-- “Security review is treated as a release blocker despite not being stated as a top-level value.”
+- The project repeatedly prioritizes release stability over feature velocity.
+- Most review authority currently flows through two maintainers.
+- The stated onboarding priority is not reflected in issue labeling or maintainer response patterns.
+- The grant milestone appears to drive more actual work than the public roadmap.
+- Security review is treated as a release blocker despite not being stated as a top-level value.
 
-These claims should not be silently treated as truth. They should have source references, confidence, status, and review history.
+These claims should not be silently treated as truth. They should have source references, confidence, status, review history, and a path for acceptance, rejection, editing, dispute, or supersession.
 
 ---
 
@@ -89,14 +70,15 @@ These claims should not be silently treated as truth. They should have source re
 
 Organizational introspection can use public or permissioned records, including:
 
-- `README.md`, governance docs, design docs, and roadmaps;
+- `README.md`, governance docs, design docs, roadmaps, and planning-kernel contracts;
 - GitHub issues, pull requests, reviews, labels, and milestones;
 - meeting notes and board notes;
 - release notes and changelogs;
 - public Discord, Matrix, IRC, Slack export, or forum records where allowed;
 - grant proposals, milestone reports, or ecosystem updates;
 - calendars and event notes;
-- outreach notes and follow-up logs.
+- outreach notes and follow-up logs;
+- `model-committee` review artifacts and score matrices.
 
 Access policy matters. UbU should not collapse public, private, permissioned, personal, and compartmented records into one undifferentiated corpus.
 
@@ -137,15 +119,7 @@ This is useful for maintainers, funders, contributors, and users, but the output
 
 ## What this is not
 
-Organizational introspection should not become:
-
-- automated blame assignment;
-- social scoring;
-- contributor surveillance;
-- funder-controlled monitoring;
-- LLM-declared truth about group motives;
-- a replacement for governance;
-- a tool for exposing private conflict without consent.
+Organizational introspection should not become automated blame assignment, social scoring, contributor surveillance, funder-controlled monitoring, LLM-declared truth about group motives, a replacement for governance, or a tool for exposing private conflict without consent.
 
 The right framing is reviewable evidence, not automated judgment.
 
@@ -155,7 +129,7 @@ The right framing is reviewable evidence, not automated judgment.
 
 UbU should use organizational introspection on itself.
 
-EthConf notes, outreach follow-ups, project artifacts, design decisions, open questions, model-committee cross-scoring artifacts, release work, and contributor interactions can be reviewed to ask whether UbU actually pursued its stated goals.
+EthConf notes, outreach follow-ups, project artifacts, design decisions, open questions, `model-committee v0.3` cross-scoring artifacts, planning-kernel contract work, release work, and contributor interactions can be reviewed to ask whether UbU actually pursued its stated goals.
 
 This dogfooding matters because the project claims to support evidence-backed self-governance. UbU should be able to show its own alignment process before asking other projects to trust the concept.
 
@@ -163,11 +137,9 @@ This dogfooding matters because the project claims to support evidence-backed se
 
 ## Relationship to other UbU documents
 
-This brief is narrower than `OUTREACH.md`.
+This brief is narrower than `OUTREACH.md`. `OUTREACH.md` explains why FOSS maintainers and software engineers may want to join or help UbU. This brief explains why a project might want UbU even before it adopts the full personal planning system: it can help the project inspect whether its real behavior matches its stated mission.
 
-`OUTREACH.md` explains why FOSS maintainers and software engineers may want to join or help UbU.
-
-This brief explains why a project might want UbU even before it adopts the full personal planning system: it can help the project inspect whether its real behavior matches its stated mission.
+For the personal introspection case, technical contributors should read `README.md` and the canonical files.
 
 ---
 

@@ -1,7 +1,7 @@
 # UbU for Sovereign Coordination
 
 **Status:** Derived audience-facing brief  
-**Source of truth:** `DESIGN.md`, `DECISIONS.md`, and `OPEN_QUESTIONS.md`  
+**Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, and `PLANNING_KERNEL_CONTRACT.md`  
 **Audience:** cypherpunks, privacy engineers, Ethereum privacy builders, FHE/ZK/secure-compute researchers, privacy-coin-adjacent developers, FOSS contributors, and people interested in voluntary private coordination
 
 ---
@@ -10,9 +10,7 @@
 
 UbU is not just productivity software.
 
-UbU is intended to become a sovereignty-preserving coordination layer for human and AI labor.
-
-It starts with personal self-governance: the user models Objectives, Tasks, Plans, Calendars, Logs, Identities, Compartments, external events, and Preferences so they can decide what should happen next without handing their life model to an opaque centralized service.
+UbU is intended to become a sovereignty-preserving coordination layer for human and AI labor. It starts with personal self-governance: the user models Objectives, Tasks, Plans, Calendars, Logs, Identities, Compartments, external events, affect, and Preferences so they can decide what should happen next without handing their life model to an opaque centralized service.
 
 From that foundation, UbU can support broader coordination: FOSS projects, informal crews, privacy-preserving work agreements, delegated Tasks, user-owned agents, Association-level planning, and eventually lawful private skill exchange.
 
@@ -20,15 +18,9 @@ From that foundation, UbU can support broader coordination: FOSS projects, infor
 
 ## Why this matters
 
-The AI market is moving toward assistants that want broad context, persistent memory, tool authority, realtime interaction, and background agency.
+The AI market is moving toward assistants that want broad context, persistent memory, tool authority, realtime interaction, and background agency. That creates a sovereignty problem.
 
-That creates a sovereignty problem.
-
-A system that knows a user’s goals, calendar, messages, emotional state, work commitments, relationships, and private constraints can become useful enough to matter and dangerous enough to govern.
-
-UbU’s answer is not to trust one assistant harder. UbU’s answer is to make planning state explicit, compartmentalized, inspectable, correctable, and user-governed.
-
-That same sovereignty rule applies to relationships. UbU may help a user review Relationship scope, trust calibration, reciprocity, boundaries, and proposed scope transitions, but behavioral-risk safeguards are advisory by default. Hard boundaries are structural: privacy, Compartments, authorization, EvidenceUsePolicy, provenance, audit integrity, and unavoidable external constraints.
+A system that knows a user's goals, calendar, messages, emotional state, work commitments, relationships, and private constraints can become useful enough to matter and dangerous enough to govern. UbU's answer is not to trust one assistant harder. UbU's answer is to make planning state explicit, compartmentalized, inspectable, correctable, and user-governed.
 
 LLMs, realtime models, local agents, cloud models, and external tools may help extract candidates or propose actions. They do not become the authority over canonical state.
 
@@ -36,7 +28,7 @@ LLMs, realtime models, local agents, cloud models, and external tools may help e
 
 ## Sovereignty principles
 
-UbU’s sovereignty framing depends on several accepted design commitments:
+UbU's sovereignty framing depends on several accepted design commitments:
 
 - local-first operation should remain a real execution tier;
 - cloud inference is optional and governed by policy, not hidden dependency;
@@ -45,55 +37,33 @@ UbU’s sovereignty framing depends on several accepted design commitments:
 - external agents submit candidate updates and evidence rather than receiving ambient authority;
 - GitHub, calendars, and other systems are projections or inputs, not the full canonical life model;
 - user overrides remain authoritative;
+- user introspection remains personal and privacy-sensitive by default;
+- organizational introspection is Association-level evidence review, not contributor surveillance;
 - provider-neutral LLM execution prevents lock-in to one cognitive backend;
-- the Phase 1 GPU planning kernel runs on hardware the user owns and configures; the planning engine is a pure function with no external calls, no ambient authority, and no hidden cloud dependency — the user's machine produces the candidate Plans;
-- model-committee v0.2 dogfooding uses Codex and Claude Code cross-scoring as a concrete example of treating frontier models as reviewable providers rather than trusted authorities.
+- the Phase 1 planning kernel is specified by `PLANNING_KERNEL_CONTRACT.md` as a typed pure-function boundary;
+- `model-committee v0.3` treats frontier models as reviewable providers rather than trusted authorities.
 
-The purpose is not purity for its own sake. The purpose is practical control over sensitive planning state.
+The purpose is practical control over sensitive planning state.
 
 ---
 
 ## Identity, Compartments, and bounded disclosure
 
-UbU assumes that people operate through multiple Identities.
+UbU assumes that people operate through multiple Identities. A person may need a personal Identity, professional Identity, family Identity, pseudonymous Identity, project Identity, or compartment-specific Identity. These Identities should not be collapsed by default.
 
-A person may need a personal Identity, professional Identity, family Identity, pseudonymous Identity, project Identity, or compartment-specific Identity. These Identities should not be collapsed by default.
+A Compartment can carry hard policy about storage backend, allowed devices, identity disclosure, export restrictions, integration bans, retention rules, audit expectations, and provider eligibility.
 
-UbU also treats data access as a first-class design problem. A Compartment can carry hard policy about:
-
-- storage backend;
-- allowed devices;
-- identity disclosure;
-- export restrictions;
-- integration bans;
-- retention rules;
-- audit expectations;
-- provider eligibility.
-
-This matters for sovereign coordination because useful collaboration often requires sharing selected facts without exposing the whole person.
-
-A team may need to know that a commitment is blocked. It does not need raw affect history, private messages, unrelated objectives, or another client’s confidential payload.
+This matters for sovereign coordination because useful collaboration often requires sharing selected facts without exposing the whole person. A team may need to know that a commitment is blocked. It does not need raw affect history, private messages, unrelated Objectives, or another client's confidential payload.
 
 ---
 
 ## Delegation Substrate
 
-UbU’s near-term marketplace-relevant primitive is the **Delegation Substrate**.
+UbU's near-term marketplace-relevant primitive is the Delegation Substrate.
 
-A Task should be formalizable for execution by:
+A Task should be formalizable for execution by the user, a local agent, a remote/cloud agent, a tool, an Automation Worker, a human Identity, an Association, or a General Contractor role.
 
-- the user;
-- a local agent;
-- a remote/cloud agent;
-- a tool;
-- an Automation Worker;
-- a human Identity;
-- an Association;
-- a General Contractor role.
-
-A Delegation Substrate packet should make purpose, executor, authority, expected output, evidence, privacy scope, review, and escalation explicit.
-
-This is useful even when the user performs the Task solo. It records why the work matters, what result is expected, and how completion will be recognized.
+A Delegation Substrate packet should make purpose, executor, authority, expected output, evidence, privacy scope, review, and escalation explicit. This is useful even when the user performs the Task solo. It records why the work matters, what result is expected, and how completion will be recognized.
 
 For sovereign coordination, it also creates a future path to private work agreements and bounded labor exchange without starting from a surveillance marketplace.
 
@@ -101,20 +71,9 @@ For sovereign coordination, it also creates a future path to private work agreem
 
 ## Skill Barter future direction
 
-The **Skill Barter marketplace** is a future direction, not a Phase 1 marketplace commitment.
+The Skill Barter marketplace is a future direction, not a Phase 1 marketplace commitment.
 
-The root idea is voluntary, privacy-preserving skilled-work coordination among autonomous Identities.
-
-A mature version could include:
-
-- pseudonymous skill profiles;
-- scoped work agreements;
-- reputation without unnecessary doxxing;
-- explicit commitments and deliverables;
-- privacy-preserving evidence of completion;
-- dispute workflows;
-- lawful settlement references;
-- agentic and human executors operating through the same delegation model.
+The root idea is voluntary, privacy-preserving skilled-work coordination among autonomous Identities. A mature version could include pseudonymous skill profiles, scoped work agreements, reputation without unnecessary doxxing, explicit commitments and deliverables, privacy-preserving evidence of completion, dispute workflows, lawful settlement references, and agentic and human executors operating through the same delegation model.
 
 This is not token-first speculation and not a public Phase 1 product. Phase 1 should focus on the Delegation Substrate primitives that make such coordination credible later.
 
@@ -124,17 +83,7 @@ This is not token-first speculation and not a public Phase 1 product. Phase 1 sh
 
 UbU creates natural demand for privacy-preserving infrastructure once the planning model works.
 
-Future versions could benefit from:
-
-- FHE and other privacy-preserving computation;
-- ZK proofs for selective claims;
-- private reputation and selective disclosure;
-- secure enclaves where appropriate;
-- encrypted local-first sync;
-- user-owned worker devices;
-- compartment-aware model routing;
-- private coordination protocols;
-- auditable agent authority and rollback.
+Future versions could benefit from FHE and other privacy-preserving computation, ZK proofs for selective claims, private reputation and selective disclosure, secure enclaves where appropriate, encrypted local-first sync, user-owned worker devices, compartment-aware model routing, private coordination protocols, and auditable agent authority and rollback.
 
 The important ordering is: first build the planning and delegation semantics; then apply advanced cryptography where it protects real coordination value.
 
@@ -142,24 +91,9 @@ The important ordering is: first build the planning and delegation semantics; th
 
 ## What UbU is not
 
-UbU should not be framed as:
+UbU should not be framed as a darknet labor market, a tax-evasion or sanctions-evasion system, a token launch, a reputation casino, a generic AI agent marketplace, or a centralized assistant that asks users to upload their life into a black box.
 
-- a darknet labor market;
-- a tax-evasion or sanctions-evasion system;
-- a token launch;
-- a reputation casino;
-- a generic AI agent marketplace;
-- a centralized assistant that asks users to upload their life into a black box.
-
-Preferred framing:
-
-- lawful private settlement;
-- pseudonymous skill barter;
-- reputation without doxxing;
-- voluntary skilled-work coordination;
-- Delegation Substrate;
-- compartment-aware planning;
-- user-sovereign coordination.
+Preferred framing includes lawful private settlement, pseudonymous skill barter, reputation without doxxing, voluntary skilled-work coordination, Delegation Substrate, compartment-aware planning, and user-sovereign coordination.
 
 ---
 
@@ -171,7 +105,7 @@ The useful question for cypherpunk and privacy builders is:
 
 Concrete subquestions:
 
-- What planning state should never leave the user’s device?
+- What planning state should never leave the user's device?
 - What can be safely projected to a team or marketplace?
 - What claims could be proven without exposing raw private data?
 - Which parts of reputation require cryptography versus social review?
