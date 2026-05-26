@@ -2822,3 +2822,53 @@ Workers may request clarification through assignment status or an authorized mut
 - Phase 1 avoids competitive worker claiming while preserving future compatibility with richer delegation, General Contractor, and Skill Barter workflows.
 - Worker disappearance, rejection, clarification, and child-Task proposals are handled through logged assignment transitions and mutation/request review rather than direct canonical writes.
 - `UBU-Q0020`, `UBU-Q0021`, `UBU-Q0009`, and `UBU-Q0080` remain open for retry construction, automation parent/child shape, mutation request schema, and Delegation Substrate details.
+
+---
+
+## UBU-D0159: GitHub projection writes only managed surfaces and reconciles drift
+
+**Status:** Accepted → DESIGN.md §26
+
+Resolved question: `UBU-Q0002`.
+
+GitHub remains a projection of UbU state, not the source of truth. Phase 1 uses GitHub as a contributor-facing interface while keeping canonical Objective, Task, External Event, External Reference, Log, Plan, and projection state inside UbU.
+
+Phase 1 may read any authorized GitHub object needed for import, planning, or reconciliation. Live GitHub writes are limited to explicitly managed projection surfaces:
+
+- `ubu:`-prefixed labels or another explicitly configured UbU-owned label prefix;
+- issue or PR body blocks delimited by UbU-managed HTML comments;
+- UbU-authored comments that include stable projection identity and managed-marker text.
+
+Milestones and assignees are preview-only by default in Phase 1. A live milestone or assignee write requires explicit human approval for that operation or a later accepted decision that narrows the automation rule.
+
+PR statuses, CI checks, branch protection, repository settings, issue titles, and unmarked issue or PR body text are read/import-only in Phase 1. UbU does not set PR status checks or mutate arbitrary repository metadata as part of MVP projection.
+
+All non-UbU GitHub edits are External Events. This includes edits outside UbU-managed surfaces and manual edits to UbU-managed labels, blocks, or comments. Such edits may create drift, mutation candidates, repair requests, Task candidates, or recalculation triggers, but they are not canonical state transitions by themselves.
+
+A GitHub edit cannot directly override canonical UbU state. Canonical changes occur only through UbU's normal admission path, validation, authority checks, Compartment/export policy, and append-only Logs.
+
+Missed updates are detected through manual sync, polling, webhook intake, fixture replay, or worker-submitted observations. The canonical UbU instance owns reconciliation admission. Automation Workers may poll GitHub, receive webhooks, compute candidate reconciliation reports, or submit projection requests when granted authority, but the canonical instance validates and logs accepted or rejected outcomes.
+
+The reconciliation report compares at least:
+
+- GitHub issues and PRs against External References that link them to UbU Objectives, Tasks, External Events, or Logs;
+- managed labels against the expected projection of `pipeline_state` or other accepted projection metadata;
+- managed blocks and comments against projection records and source UbU object refs;
+- GitHub comments, reviews, PR changes, CI runs, and milestone changes against External Events and Logs;
+- expected projection payloads against live GitHub state.
+
+Report items should include external object identity, matched UbU object refs, External Reference refs, observed GitHub version or timestamp, expected projection version when any, drift classification, severity, provenance, and recommended handling.
+
+MVP drift classes are `missing_external_reference`, `missing_external_event_log`, `stale_managed_projection`, `manual_edit_to_managed_surface`, `unexpected_ubu_label_or_block`, `foreign_edit_outside_ubu_surface`, `projection_request_failed`, and `github_object_missing_or_inaccessible`.
+
+Drift produces a report before repair. It may recommend repair Tasks, mutation requests, projection update requests, External Reference verification, or recalculation. It must not silently create canonical repair Tasks or perform live GitHub writes in Phase 1; those require human approval or a later explicitly accepted policy.
+
+Planner-relevant reconciliation findings create or batch `recalculation_triggered` Log entries with trigger kind `github_update`. Low-priority drift that does not affect the current Plan may mark projection or report caches stale instead of recalculating immediately.
+
+**Consequences:**
+
+- `UBU-Q0002` is resolved for Phase 1 implementation.
+- Phase 1 GitHub dogfooding can implement projection previews and live writes without deciding the full `pipeline_state` storage model in `UBU-Q0004`.
+- `UBU-Q0005` can define GitHub event triage against the boundary that every GitHub edit is an External Event unless admitted through UbU.
+- `UBU-Q0010` remains open for token custody; this decision does not require the canonical instance to hold GitHub write credentials.
+- Workers retain request/report authority only; canonical state admission and human-approved live writes remain with the parent UbU instance.

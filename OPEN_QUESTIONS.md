@@ -18,7 +18,7 @@ Resolved. See UBU-D0097.
 
 ## UBU-Q0002: GitHub Projection and Reconciliation
 
-Status: Open Priority: MVP blocker Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0003 Blocks: Phase 1 GitHub dogfooding Resolved by: Unresolved Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0003 Blocks: Phase 1 GitHub dogfooding Resolved by: UBU-D0159 Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -51,7 +51,7 @@ UbU should write only clearly marked UbU-managed labels, comments, or blocks, an
 
 ### Resolution
 
-Unresolved.
+Resolved. See UBU-D0159.
 
 ---
 

@@ -2679,30 +2679,56 @@ Candidate pipeline states:
 
 ### 26.3 GitHub projection
 
-UbU may project data to GitHub through:
+GitHub projection is a deliberately low-dimensional projection of canonical UbU state. Phase 1 may read any authorized GitHub object needed for import or reconciliation, but it writes only the following managed surfaces:
 
-- labels
-- issue body blocks
-- comments
-- milestones
-- assignees
+- `ubu:`-prefixed labels or another explicitly configured UbU-owned label prefix;
+- issue or PR body blocks delimited by UbU-managed HTML comments;
+- UbU-authored comments that include a stable projection identifier and managed-marker text.
 
-Recommended MVP rule:
+Milestones and assignees are preview-only by default in Phase 1. UbU may include them in a projection payload, but a live milestone or assignee write requires explicit human approval for that operation or a later accepted decision that narrows the automation rule.
 
-> UbU should only write clearly marked UbU-managed labels, comments, or blocks, and treat all other GitHub edits as external events.
+PR statuses, CI checks, branch protection, repository settings, issue titles, and unmarked issue or PR body text are read/import-only in Phase 1. UbU does not set PR status checks or mutate arbitrary repository metadata as part of MVP projection.
+
+Managed labels should encode only projection-owned facts, such as the projected `pipeline_state` once that projection state is accepted. UbU must not remove, rewrite, or reinterpret non-`ubu:` labels as canonical UbU state.
+
+Managed body blocks and comments must carry enough metadata to reconcile them later: projection id, source UbU object refs or External Reference refs, generated-at time, projection schema version, and a short human-readable statement that the block or comment is managed by UbU.
+
+A human-approved live write and a dry-run preview use the same projection payload shape. Public demos may use dry-run projection when live GitHub mutation is unsafe, but the preview must show the exact labels, blocks, comments, milestones, or assignee changes that would be requested after approval.
+
+GitHub edits do not directly override canonical UbU state. A human GitHub edit, including an edit to a UbU-managed label, block, or comment, is imported as a GitHub External Event and may create drift, a mutation candidate, a projection repair request, a Task candidate, or a recalculation trigger after validation. Canonical UbU state changes only through UbU's normal admission path and Logs.
+
+Automation Workers may submit `projection.github.request_update` requests or reconciliation artifacts when granted authority, but they do not directly mutate canonical UbU state or bypass human approval rules for live GitHub writes.
 
 ### 26.4 GitHub reconciliation
 
-Missed GitHub updates are expected in MVP.
+Missed GitHub updates are expected in MVP. Reconciliation is therefore part of the normal GitHub dogfooding loop, not an exceptional recovery path.
 
-A reconciliation report should compare GitHub state against UbU state.
+The canonical UbU instance owns reconciliation admission. It may perform manual sync, polling, fixture replay, or webhook intake itself. Automation Workers may poll GitHub, receive webhooks, compute candidate reconciliation reports, or submit worker requests, but the canonical instance validates authority, Compartment/export policy, idempotency, and expected prior version before applying canonical changes or logging accepted events.
 
-Possible comparisons:
+The reconciliation report compares at least:
 
-- GitHub issues vs UbU Objectives
-- GitHub labels vs `pipeline_state`
-- GitHub comments vs event log
-- PRs / CI vs external events
+- GitHub issues and PRs against External References that link them to UbU Objectives, Tasks, External Events, or Logs;
+- UbU-managed labels against the expected projection of `pipeline_state` or other accepted projection metadata;
+- UbU-managed body blocks and comments against projection records and source UbU object refs;
+- GitHub comments, reviews, PR changes, CI runs, and milestone changes against imported External Events and append-only Log entries;
+- expected projection payloads against live GitHub state, including missing, stale, duplicate, manually edited, or foreign-owned fields.
+
+Each report item should include external object identity, matched UbU object refs, External Reference refs, observed GitHub version or timestamp, expected projection version when any, drift classification, severity, provenance, and recommended handling.
+
+MVP drift classes are:
+
+- `missing_external_reference`;
+- `missing_external_event_log`;
+- `stale_managed_projection`;
+- `manual_edit_to_managed_surface`;
+- `unexpected_ubu_label_or_block`;
+- `foreign_edit_outside_ubu_surface`;
+- `projection_request_failed`;
+- `github_object_missing_or_inaccessible`.
+
+Drift creates a reconciliation report first. It may recommend repair Tasks, mutation requests, projection update requests, External Reference verification, or recalculation. It must not silently create canonical repair Tasks or perform live GitHub writes in Phase 1; those require human approval or a later explicitly accepted policy.
+
+Planner-relevant GitHub reconciliation findings create or batch `recalculation_triggered` Log entries with trigger kind `github_update`. Low-priority drift that does not affect the current Plan may mark projection or report caches stale instead of recalculating immediately.
 
 ---
 
