@@ -560,6 +560,16 @@ After answerability is established, questions are ranked by:
 
 Questions blocked by unresolved dependencies may be selected for decomposition rather than ordinary answering.
 
+### 3.7.1 Automation coverage taxonomy
+
+`Auto-choice eligibility` is a governance gate separate from answerability and automation-likelihood. The accepted values are:
+
+- `Auto eligible`: automation may propose, score, and select a review candidate when dependencies, validators, and quorum pass. This does not bypass human repository review.
+- `Human approval required`: automation may draft, decompose, score, and prepare review artifacts, but the selected result must be marked human-review-required before it can resolve the question.
+- `Human only`: automation may summarize context, detect consistency issues, or list options, but it must not auto-select an answer.
+
+Use the stricter category when classification is uncertain. A proposal may not lower a question's human-involvement category without human review.
+
 ### 3.8 v0.1 and v0.2 provider and network boundaries
 
 `model-committee` v0.1 is a narrow local Python CLI.

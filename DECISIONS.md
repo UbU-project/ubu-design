@@ -3954,3 +3954,34 @@ A readiness report must name blockers, failing gates, stale inputs, manual assum
 - Human review remains required before public readiness claims, release decisions, or scope-freeze claims.
 
 ---
+
+## UBU-D0190: Automation eligibility uses three governance classes
+
+**Status:** Accepted → DESIGN.md §3.7.1
+
+Resolved question: `UBU-Q0035`.
+
+`Auto-choice eligibility` classifies how much authority model-committee automation has over an open-question answer. It is separate from answerability, automation-likelihood, importance, and risk. Automatic selection remains advisory; canonical acceptance still requires ordinary human repository review and commit.
+
+Allowed values:
+
+- `Auto eligible`: automation may rank, propose, validate, score, and select a review candidate when dependencies, consistency, validators, quorum, and patch checks pass. Use only for bounded, mechanically reviewable work under accepted constraints.
+- `Human approval required`: automation may draft, decompose, score, and prepare review artifacts, but the run must mark the result human-review-required. Use for durable schema/API/data-model decisions; security, privacy, Compartment, Identity, authority, worker, projection, relationship, affect, public-claim, release-outreach, or MVP-blocker decisions.
+- `Human only`: automation may summarize, detect inconsistencies, ask clarifying questions, or prepare option memos, but it must not auto-select an answer. Use for project-owner directives, scope freeze, release/go-no-go, licensing or IP changes, funding acceptance, roadmap or mission pivots, legal commitments, public commitments, and overrides of failed consistency, quorum, disagreement, or validation gates.
+
+Classification rules:
+
+- Answerability remains the first gate. A blocked question is ineligible for ordinary answering regardless of automation class unless its dependencies are solved in the same work item.
+- Automation-likelihood ranks questions only after answerability and automation eligibility are known.
+- Unknown or mixed cases use the stricter class.
+- A model-generated patch may not lower an existing question's human-involvement class without human review.
+- A new `UBU-D0175` blocker certificate is `Human approval required` unless it also creates a `Human only` commitment.
+
+**Consequences:**
+
+- `UBU-Q0035` is resolved.
+- Future question ranking can distinguish answerability, automation likelihood, and governance eligibility instead of treating them as one score.
+- New or updated open questions should carry the strictest applicable `Auto-choice eligibility` value.
+- Human-only and human-approval-required work may still benefit from automation, but only as bounded review support.
+
+---

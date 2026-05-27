@@ -465,15 +465,9 @@ Broad pre-MVP design automation stops after the Phase 1 planning-kernel blockers
 
 ## UBU-Q0035: Automation Coverage Taxonomy
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0032 Blocks: Question-ranking accuracy Resolved by: Unresolved Last scored: 2026-05-26 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0032 Blocks: Question-ranking accuracy Resolved by: UBU-D0190 Last scored: 2026-05-27 Scored from commit: None
 
-### Question
-
-How should remaining design work be classified by automation eligibility?
-
-### Resolution
-
-Unresolved.
+Resolved. See UBU-D0190.
 
 ---
 
@@ -550,7 +544,7 @@ Resolved. See UBU-D0178.
 
 ## UBU-Q0040: Question Decomposition and Design Burden Scoring
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0039 Blocks: model-committee prioritization accuracy Resolved by: UBU-D0068 Last scored: 2026-05-26 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0039 Blocks: model-committee prioritization accuracy Resolved by: UBU-D0068 Last scored: 2026-05-27 Scored from commit: None
 
 ### Question
 
@@ -662,7 +656,7 @@ Resolved. See UBU-D0129.
 
 ## UBU-Q0051: Minimum preference-calibration examples for Phase 1 onboarding and review
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0050 Blocks: Phase 1 onboarding quality, Preference calibration, Calendar preview, Log review Resolved by: None Last scored: 2026-05-26 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0050 Blocks: Phase 1 onboarding quality, Preference calibration, Calendar preview, Log review Resolved by: None Last scored: 2026-05-27 Scored from commit: None
 
 ### Question
 
@@ -689,7 +683,7 @@ Open.
 
 ## UBU-Q0052: Discovery-mode action inference and override semantics
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0050 Blocks: Discovery mode, mobile sensor workflow, behavior reconciliation, habit-pattern inference Resolved by: None Last scored: 2026-05-26 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0050 Blocks: Discovery mode, mobile sensor workflow, behavior reconciliation, habit-pattern inference Resolved by: None Last scored: 2026-05-27 Scored from commit: None
 
 ### Question
 
@@ -805,7 +799,7 @@ Open.
 
 ## UBU-Q0057: Evergreen Dynamic Task and gap-filling semantics
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016 Blocks: Gap filling before Static Tasks, mobile next-action UX, Calendar preview quality Resolved by: None Last scored: 2026-05-26 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016 Blocks: Gap filling before Static Tasks, mobile next-action UX, Calendar preview quality Resolved by: None Last scored: 2026-05-27 Scored from commit: None
 
 ### Question
 
@@ -842,7 +836,7 @@ Open.
 
 ## UBU-Q0058: Adaptive planning granularity and offline precomputation policy
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016 Blocks: Mobile-only planning, offline mode, low-power mode, Compact Calendar runtime policy Resolved by: None Last scored: 2026-05-26 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016 Blocks: Mobile-only planning, offline mode, low-power mode, Compact Calendar runtime policy Resolved by: None Last scored: 2026-05-27 Scored from commit: None
 
 ### Question
 
@@ -989,7 +983,7 @@ Open.
 
 ## UBU-Q0063: Organizational introspection MVP/dogfooding workflow
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0046, UBU-Q0049, UBU-Q0050 Blocks: ETHConf follow-up, public dogfooding artifacts, organizational introspection demo Resolved by: None Last scored: 2026-05-26 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0046, UBU-Q0049, UBU-Q0050 Blocks: ETHConf follow-up, public dogfooding artifacts, organizational introspection demo Resolved by: None Last scored: 2026-05-27 Scored from commit: None
 
 ### Question
 
@@ -1181,7 +1175,7 @@ Open.
 
 ## UBU-Q0070: Skeleton Plan failure diagnostics and user clarification flow
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0014, UBU-Q0015, UBU-Q0016 Blocks: robust planning failure handling Resolved by: None Last scored: 2026-05-26 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0014, UBU-Q0015, UBU-Q0016 Blocks: robust planning failure handling Resolved by: None Last scored: 2026-05-27 Scored from commit: None
 
 ### Question
 
@@ -1206,7 +1200,7 @@ Open.
 
 ## UBU-Q0071: Legitimization and semi-legitimization cost model
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016, UBU-Q0053 Blocks: realistic candidate Plan search Resolved by: None Last scored: 2026-05-26 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016, UBU-Q0053 Blocks: realistic candidate Plan search Resolved by: None Last scored: 2026-05-27 Scored from commit: None
 
 ### Question
 
@@ -1232,7 +1226,7 @@ Open.
 
 ## UBU-Q0072: GPU-aware planner kernels and solver selection
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016 Blocks: practical planner implementation, mobile/desktop/cloud execution profile Resolved by: UBU-D0166, UBU-D0167, UBU-D0168, UBU-D0169, UBU-D0170, UBU-D0171, UBU-D0172, UBU-D0173, UBU-D0174 Last scored: 2026-05-26 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016 Blocks: practical planner implementation, mobile/desktop/cloud execution profile Resolved by: UBU-D0166, UBU-D0167, UBU-D0168, UBU-D0169, UBU-D0170, UBU-D0171, UBU-D0172, UBU-D0173, UBU-D0174 Last scored: 2026-05-27 Scored from commit: None
 
 ### Question
 
@@ -1322,7 +1316,7 @@ Open.
 
 ## UBU-Q0075: Optional VoxPopuli EthConf demo boundary
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0050, UBU-Q0068 Blocks: optional EthConf public demo Resolved by: None Last scored: 2026-05-26 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0050 Blocks: optional EthConf public demo Resolved by: None Last scored: 2026-05-27 Scored from commit: None
 
 ### Question
 
