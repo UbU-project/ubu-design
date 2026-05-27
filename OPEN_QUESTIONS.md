@@ -218,38 +218,9 @@ Resolved. See UBU-D0101.
 
 ## UBU-Q0013: Authority Source Vocabulary
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0012 Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: 2026-05-26 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0012 Blocks: Phase 1 implementation Resolved by: UBU-D0185 Last scored: 2026-05-26 Scored from commit: None
 
-Organizational directives and worker updates need authority/source metadata.
-
-### Question
-
-1. Which objects carry `authority_source`?
-   - Preference
-   - Objective
-   - Task
-   - pipeline state
-   - worker assignment
-   - external projection
-   - mutation request
-2. Is `authority_source` required only in organization mode?
-3. What are MVP authority-source values?
-
-### Candidate values
-
-```text
-human_admin
-automation_worker
-github_event
-project_policy
-imported_config
-llm_advisory
-user_override
-```
-
-### Resolution
-
-Unresolved.
+Resolved. See UBU-D0185.
 
 ---
 

@@ -1699,7 +1699,7 @@ Organization mode does not model intrinsic affect. In mode-specific schemas, int
 
 Relationship objects may exist in organization mode without affect dimensions. Organization-mode Relationships represent structured UniverseState between Identities such as contributors, maintainers, workers, projects, vendors, integrations, or external organizations. Non-affect relationship-relevant project information belongs in ordinary UniverseState facts, External Events, Logs, External References, candidate AssociationAttestations, Objectives, Tasks, or risk reports. Organization mode must not claim that the organization has a private emotional state toward another Identity.
 
-Organization-created Objectives, Preferences, and Tasks require `authority_source` metadata. In MVP this metadata may be coarse, but it must identify the authority path for the object, such as an admin-equivalent operator Identity, imported project policy, imported external event, Automation Worker submission, or human-approved import/projection action. The detailed vocabulary remains open in `UBU-Q0013`.
+Organization-created Objectives, Preferences, and Tasks require `authority_source` metadata as defined in `UBU-D0185`.
 
 Before RBAC exists, organization-mode human users are represented as operator Identities with admin-equivalent authority over the instance. This is an MVP simplification only. Their actions must still be logged with actor Identity and provenance so future RBAC can be introduced without rewriting history.
 
@@ -3074,7 +3074,7 @@ Stale overwrite prevention is mandatory. The canonical instance compares `expect
 - Worker authority remains request-based and bounded by capability grants, Compartment policy, expected versions, idempotency, assignment leases, and review policy.
 - Valid worker outputs can support automation without granting direct canonical write authority.
 - Invalid and stale worker submissions remain auditable without polluting canonical state.
-- `UBU-Q0013`, `UBU-Q0020`, `UBU-Q0021`, and `UBU-Q0084` remain open for authority-source vocabulary, retry construction, automation child structure, and external AgentAction side-effect modeling.
+- `UBU-Q0020`, `UBU-Q0021`, and `UBU-Q0084` remain open for retry construction, automation child structure, and external AgentAction side-effect modeling.
 
 ---
 
@@ -3734,5 +3734,46 @@ MVP security assumes cooperative operator-administered local and worker enclaves
 - Worker GitHub authority remains bounded by both GitHub credential scope and UbU capability/assignment scope.
 - Repository scope is required when available; Task scope is an UbU authorization boundary unless provider-native short-lived tokens are available.
 - Reconciliation and read-after-write verification remain part of the write path.
+
+---
+
+## UBU-D0185: Authority source is a closed MVP source-path enum
+
+**Status:** Accepted → DESIGN.md §§17.9, 25.1
+
+Resolved question: `UBU-Q0013`.
+
+`authority_source` is a coarse enum that records the authority/source path for an accepted object, projection state, or candidate mutation. It is not sufficient authorization by itself and does not replace actor Identity, capability grants, External References, expected-prior-version checks, review policy, or Log provenance.
+
+Phase 1 required carriers:
+
+- organization-mode accepted `Objective`, `Preference`, and `Task` records;
+- `pipeline_state` projection-state records;
+- worker assignment records;
+- worker mutation requests;
+- external projection requests, previews, and applied projection records;
+- Delegation Substrate packets when present.
+
+Ordinary user-mode `Objective`, `Preference`, and `Task` records created directly by the user do not require `authority_source`. Worker, projection, pipeline-state, and mutation-request records require it in any mode that uses those envelopes.
+
+MVP enum values:
+
+- `human_admin`: admin-equivalent human operator or human-approved import/projection action;
+- `automation_worker`: Automation Worker submission under a capability grant;
+- `github_event`: normalized GitHub event, webhook, fixture, or reconciliation observation;
+- `project_policy`: accepted project or organization policy/directive;
+- `imported_config`: bootstrap, fixture, or configured import source;
+- `llm_advisory`: model-generated candidate/advice; never sufficient authority without admission provenance;
+- `user_override`: user-mode explicit override of the current recommendation, Plan, Task choice, or modeled state.
+
+Values are schema-controlled for MVP. Specific Identity, source object, and evidence path belong in surrounding fields such as `actor_identity_ref`, `created_by_identity_ref`, `capability_grant_ref`, `source_refs`, `external_reference_refs`, `provenance`, and the append-only Log entry.
+
+**Consequences:**
+
+- `UBU-Q0013` is resolved for Phase 1.
+- Organization-mode value/work objects now have a closed coarse authority-source vocabulary without introducing RBAC.
+- Worker, projection, and mutation envelopes use the same vocabulary across modes.
+- `llm_advisory` remains advisory and cannot create canonical state without an admitting actor, review policy, and provenance.
+- Future RBAC or richer governance may add role and decision-procedure metadata without rewriting the MVP enum.
 
 ---

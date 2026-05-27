@@ -2102,6 +2102,33 @@ A Log review Task may:
 
 Log review should not become a blame ritual. It is a model-maintenance Task for self-governance. The minimum Phase 1 annotation boundary is resolved by `UBU-D0181`.
 
+### 17.9 Authority source metadata
+
+`authority_source` is a coarse enum describing the authority/source path for an accepted object, projection state, or candidate mutation. It does not replace actor Identity, capability grants, External References, expected-prior-version checks, review policy, or Log provenance.
+
+Required in Phase 1:
+
+- organization-mode accepted `Objective`, `Preference`, and `Task` records;
+- `pipeline_state` projection-state records;
+- worker assignment records;
+- worker mutation requests;
+- external projection requests, previews, and applied projection records;
+- Delegation Substrate packets when present.
+
+It is not required on ordinary user-mode `Objective`, `Preference`, or `Task` records created directly by the user. It is still required in user mode for worker, projection, pipeline-state, and mutation-request records that use those envelopes.
+
+MVP values are:
+
+- `human_admin`: admin-equivalent human operator or human-approved import/projection action;
+- `automation_worker`: Automation Worker submission under a capability grant;
+- `github_event`: normalized GitHub event, webhook, fixture, or reconciliation observation;
+- `project_policy`: accepted project or organization policy/directive;
+- `imported_config`: bootstrap, fixture, or configured import source;
+- `llm_advisory`: model-generated candidate/advice; never sufficient authority without admission provenance;
+- `user_override`: user-mode explicit override of the current recommendation, Plan, Task choice, or modeled state.
+
+`authority_source` values are schema-controlled in MVP. Specific Identity, source object, and evidence path belong in surrounding fields such as `actor_identity_ref`, `created_by_identity_ref`, `capability_grant_ref`, `source_refs`, `external_reference_refs`, `provenance`, and the append-only Log entry.
+
 ---
 
 ## 18. Identities
@@ -2860,7 +2887,7 @@ Intrinsic affect fields are structurally absent from organization-mode objects w
 
 Relationship objects may exist in organization mode without affect dimensions. An organization-mode Relationship represents structured UniverseState between Identities, such as contributor, maintainer, worker, project, vendor, or integration relationships. It may carry non-affect project metadata through ordinary UniverseState facts, External Events, Logs, External References, candidate AssociationAttestations, Objectives, or Tasks, but it must not claim the organization has a private emotional state toward another Identity.
 
-Organization-created Objectives, Preferences, and Tasks require `authority_source` metadata. For MVP, `authority_source` may be coarse and may identify an admin-equivalent operator Identity, imported project policy, imported external event, Automation Worker submission, or human-approved projection/import action. The detailed authority-source vocabulary remains tracked by `UBU-Q0013`.
+Organization-created Objectives, Preferences, and Tasks require `authority_source` metadata as defined in `DESIGN.md` section 17.9.
 
 Before RBAC exists, organization-mode users are represented as human operator Identities with admin-equivalent authority over the organization-mode instance. This is an MVP authority simplification, not a claim that all future organization users have the same role. Actions still write Logs with actor Identity and provenance so later RBAC can be introduced without erasing earlier history.
 
@@ -2969,7 +2996,7 @@ Managed labels should encode only projection-owned facts, such as the projected 
 
 Managed body blocks and comments must carry enough metadata to reconcile them later: projection id, source UbU object refs or External Reference refs, generated-at time, projection schema version, and a short human-readable statement that the block or comment is managed by UbU.
 
-A human-approved live write and a dry-run preview use the same projection payload shape. Public demos may use dry-run projection when live GitHub mutation is unsafe, but the preview must show the exact labels, blocks, comments, milestones, or assignee changes that would be requested after approval.
+A human-approved live write and a dry-run preview use the same projection payload shape. Public demos may use dry-run projection when live GitHub mutation is unsafe, but the preview must show the exact labels, blocks, comments, milestones, or assignee changes that would be requested after approval. Projection requests, dry-run previews, and applied projection records carry `authority_source` plus actor/provenance fields so their source path is visible during reconciliation.
 
 GitHub edits do not directly override canonical UbU state. A human GitHub edit, including an edit to a UbU-managed label, block, or comment, is imported as a GitHub External Event and may create drift, a mutation candidate, a projection repair request, a Task candidate, or a recalculation trigger after validation. Canonical UbU state changes only through UbU's normal admission path and Logs.
 
