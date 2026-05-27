@@ -45,7 +45,7 @@ All request and response objects must carry explicit versions so that planner ar
   - `planning_delta_seconds`: positive integer. Phase 1 default is `60`.
 - `horizon_policy`:
   - `reactive_horizon_seconds`: positive integer. Phase 1 default is `3600`.
-  - `branch_coverage_target`: float in `(0, 1]`. Phase 1 default is `0.99`.
+  - `branch_coverage_target`: float in `(0, 1]`. The CPU supplies the effective value after Calendar, execution-profile, Device, and global policy resolution. Phase 1 default is `0.99`.
 - `compute_budget`:
   - `max_planning_tasks`: positive integer. Phase 1 default is `256`.
   - `n_candidates`: positive integer chosen by the CPU kernel.
@@ -193,7 +193,11 @@ Phase 1 rules:
   - `rejection_counts_by_reason`
   - `warnings`
   - `probability_quality`: enum, one of `full`, `degraded_numeric_jitter`, `degraded_independence`, `not_estimated`.
+  - `coverage_scope`: optional enum, one of `reactive_horizon`, `full_window`, `repair_scope`.
   - `coverage_estimate`: optional numeric branch-coverage estimate.
+  - `uncovered_mass_estimate`: optional numeric estimate, normally `max(0, 1 - coverage_estimate)` for the same scope.
+  - `coverage_threshold_used`: optional numeric threshold used for regeneration decisions.
+  - `coverage_below_threshold`: optional boolean.
   - `compute_telemetry`: optional backend timing and resource summary, including `duration_ms` when available.
 
 ### `PlanCandidate`

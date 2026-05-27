@@ -3777,3 +3777,42 @@ Values are schema-controlled for MVP. Specific Identity, source object, and evid
 - Future RBAC or richer governance may add role and decision-procedure metadata without rewriting the MVP enum.
 
 ---
+
+## UBU-D0186: Compact Calendar coverage is estimated regeneration metadata
+
+**Status:** Accepted → DESIGN.md §§16.2, 16.9; PLANNING_KERNEL_CONTRACT.md §§2, 4
+
+Resolved question: `UBU-Q0017`.
+
+Phase 1 compact Calendar coverage is an estimate, not an exact proof. It represents covered modeled probability mass within the recorded coverage scope, usually the reactive horizon. Exact coverage proof and complete post-MVP uncertainty coverage are not MVP requirements.
+
+MVP coverage includes only uncertainties represented in the compact grammar or PlanningRequest for that scope:
+
+- duration distributions and correlation groups;
+- Task success/failure probabilities when they affect branch reconstruction;
+- modeled external-event and interruption assumptions.
+
+Objective recurrence uncertainty is not included in MVP coverage. Evergreen recurrence is evaluated deterministically before generation or repair; probabilistic recurrence may become a later stochastic input.
+
+A compact Calendar stores:
+
+- `coverage_estimate`;
+- `uncovered_mass_estimate`;
+- `coverage_scope`;
+- `coverage_threshold_used`;
+- `coverage_inputs_summary`;
+- `probability_quality`;
+- warning or diagnostic refs when inputs are unmodeled, stale, or degraded.
+
+The default Phase 1 regeneration threshold is `0.99` for short-horizon branch coverage. Policy resolution is: Calendar-specific override, then execution profile or Device policy, then global default. The effective threshold is stored with the compact Calendar so later regeneration decisions are replayable.
+
+When recalculated coverage falls below the effective threshold, UbU records or batches a `low_compact_calendar_coverage` recalculation trigger and includes the finding in risk reporting. The requested action is `recalculate_now` when low coverage can affect the current or next recommended Task, hard feasibility, affect legitimacy, or default Plan; otherwise `mark_calendar_stale` is sufficient. Low coverage does not directly create a canonical Task or worker assignment. Follow-up Tasks or worker work may be recommended only through normal Task admission, worker assignment, and review policy.
+
+**Consequences:**
+
+- `UBU-Q0017` is resolved for Phase 1.
+- Coverage is auditable enough for regeneration without pretending mathematical completeness.
+- The same default `0.99` value remains the short-horizon branch target and regeneration threshold unless overridden by recorded policy.
+- Objective recurrence uncertainty can be added later as a typed stochastic input without changing the MVP coverage boundary.
+
+---

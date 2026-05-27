@@ -321,34 +321,9 @@ Resolved. See UBU-D0151.
 
 ## UBU-Q0017: Compact Calendar Coverage and Regeneration
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016 Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: 2026-05-26 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016 Blocks: Phase 1 implementation Resolved by: UBU-D0186 Last scored: 2026-05-26 Scored from commit: None
 
-Coverage belongs to compact Calendar serialization.
-
-### Question
-
-1. Is coverage exact or estimated in MVP?
-2. Does coverage include:
-   - duration uncertainty
-   - Task success/failure uncertainty
-   - external-event uncertainty
-   - Objective recurrence uncertainty
-3. Does a compact Calendar store coverage value only, or also uncovered mass?
-4. What is the default regeneration threshold?
-5. Is the threshold global, device-specific, Calendar-specific, or all three?
-6. Does low coverage create:
-   - report only,
-   - recalculation trigger,
-   - Task,
-   - worker assignment?
-
-### Current direction
-
-The provisional short-horizon branch coverage target is `0.99` probability mass. Coverage and regeneration thresholds may be device-specific, Calendar-specific, or execution-mode-specific. This is not final.
-
-### Resolution
-
-Unresolved.
+Resolved. See UBU-D0186.
 
 ---
 
