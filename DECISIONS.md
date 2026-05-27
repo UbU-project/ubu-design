@@ -2811,7 +2811,7 @@ Every assignment lifecycle transition is logged. This decision extends the Phase
 
 Workers may reject assignments by returning `rejected_by_worker` with a reason and evidence when relevant. Rejection does not mutate the Task directly. The canonical instance decides whether to reassign, ask the user, mark the Task blocked, revise the Delegation Substrate packet, or leave the Task available for manual work.
 
-If a worker disappears mid-Task, the parent marks the assignment `expired` after the heartbeat or lease deadline, logs the transition, and treats the Task as unresolved unless separate accepted evidence proves completion or mootness. Late worker submissions after expiration are stale by default and must pass expected-prior-version, idempotency, authority, and review checks before they can affect canonical state. The parent may then reassign the Task, create a retry or repair Task, request clarification, or surface the worker bottleneck in risk reporting. Detailed retry construction remains open in `UBU-Q0020`.
+If a worker disappears mid-Task, the parent marks the assignment `expired` after the heartbeat or lease deadline, logs the transition, and treats the Task as unresolved unless separate accepted evidence proves completion or mootness. Late worker submissions after expiration are stale by default and must pass expected-prior-version, idempotency, authority, and review checks before they can affect canonical state. The parent may then reassign the Task, create a retry or repair Task, request clarification, or surface the worker bottleneck in risk reporting. Retry construction is defined by `UBU-D0187`.
 
 Workers may request clarification through assignment status or an authorized mutation/request payload. The canonical instance may convert the request into a clarification Task, user prompt, revised assignment packet, or rejection of the request. Workers may propose child Tasks or Task-to-Container restructuring only through authorized mutation requests; approved restructuring follows the accepted Task-to-Container and child Task semantics. Workers do not directly create canonical child Tasks in Phase 1.
 
@@ -2821,7 +2821,7 @@ Workers may request clarification through assignment status or an authorized mut
 - Assignment is parent-directed and audit-oriented; worker polling is only a delivery mechanism for explicit assignments.
 - Phase 1 avoids competitive worker claiming while preserving future compatibility with richer delegation, General Contractor, and Skill Barter workflows.
 - Worker disappearance, rejection, clarification, and child-Task proposals are handled through logged assignment transitions and mutation/request review rather than direct canonical writes.
-- `UBU-Q0020`, `UBU-Q0021`, `UBU-Q0009`, and `UBU-Q0080` remain open for retry construction, automation parent/child shape, mutation request schema, and Delegation Substrate details.
+- `UBU-Q0021` and `UBU-Q0080` remain open for automation parent/child shape and Delegation Substrate details.
 
 ---
 
@@ -3074,7 +3074,7 @@ Stale overwrite prevention is mandatory. The canonical instance compares `expect
 - Worker authority remains request-based and bounded by capability grants, Compartment policy, expected versions, idempotency, assignment leases, and review policy.
 - Valid worker outputs can support automation without granting direct canonical write authority.
 - Invalid and stale worker submissions remain auditable without polluting canonical state.
-- `UBU-Q0020`, `UBU-Q0021`, and `UBU-Q0084` remain open for retry construction, automation child structure, and external AgentAction side-effect modeling.
+- `UBU-Q0021` and `UBU-Q0084` remain open for automation child structure and external AgentAction side-effect modeling.
 
 ---
 
@@ -3814,5 +3814,47 @@ When recalculated coverage falls below the effective threshold, UbU records or b
 - Coverage is auditable enough for regeneration without pretending mathematical completeness.
 - The same default `0.99` value remains the short-horizon branch target and regeneration threshold unless overridden by recorded policy.
 - Objective recurrence uncertainty can be added later as a typed stochastic input without changing the MVP coverage boundary.
+
+---
+
+## UBU-D0187: Worker retries use failed attempts and retry siblings
+
+**Status:** Accepted → DESIGN.md §§24.1.2, 27
+
+Resolved question: `UBU-Q0020`.
+
+Phase 1 does not mutate failed worker-created child Tasks back to `active`. A failed attempt remains a failed Task with its own assignment, evidence, and Logs. When retry is warranted, the parent creates a new retry sibling Task with a new `task_id` under the same parent Container or lineage when one exists. The retry sibling carries `retry_of_task_ref`, `retry_root_task_ref`, `attempt_number`, `retry_policy_summary`, `source_failure_log_refs`, and evidence refs.
+
+Worker assignment failure on an existing Task may leave the underlying Task unresolved when no attempt Task was created. In that case retry or repair work is represented by a new assignment or retry/repair Task; accepted completion evidence or mootness is required before the underlying work stops being planned.
+
+The effective retry policy resolves in this order:
+
+- Task or Delegation Substrate packet;
+- parent Container or Objective;
+- worker or integration default;
+- global Phase 1 default.
+
+Worker and integration defaults cannot exceed capability grants, Compartment/export policy, assignment leases, idempotency, expected-prior-version, or review policy. Policy denials, authorization failures, Compartment/export denials, invalid mutation requests, required human review, and stale expected-prior-version conflicts are not automatically retryable.
+
+The global Phase 1 default is at most three total attempts per retry root, including the initial attempt. A policy may set a lower cap or require human review after any failure. Each retry attempt receives its own assignment and idempotency key. Retrying repeats precondition, capability, Compartment, expected-version, and review checks against current state.
+
+Logging uses existing event surfaces:
+
+- failed attempt Task: `task_failed`;
+- assignment status change: `worker_assignment_updated`;
+- worker request admission or denial: `worker_mutation_submitted`, `worker_mutation_applied`, or `worker_mutation_rejected`;
+- retry decision or retry sibling admission: normal Task creation or mutation-request admission path with retry metadata;
+- planner impact: `recalculation_triggered` when the failure affects current or next Task, feasibility, worker bottleneck risk, or report validity.
+
+Infinite retry loops are blocked by retry-root attempt caps, idempotency keys, expected-prior-version checks, assignment lease checks, failure-class nonretryability, and human review after cap exhaustion. Exhaustion stops automatic retry creation and routes parent work to human review, clarification, reassignment, repair, or an ordinary Task lifecycle decision such as leaving the latest attempt failed or marking work moot with an accepted reason code.
+
+Worker failure affects derived risk reports. Failed, expired, rejected, repeated, or exhausted worker attempts feed `worker_or_automation_bottleneck` and may affect dependency fragility, deadline risk, release readiness, and recalculation urgency. They do not create canonical Risk objects or silently create follow-up Tasks.
+
+**Consequences:**
+
+- `UBU-Q0020` is resolved for Phase 1.
+- Attempt history remains auditable because failed attempts are preserved instead of overwritten.
+- `UBU-Q0021` remains open for automation parent/child structure, but retry lineage no longer depends on that answer.
+- Implementations can use a conservative retry default without schema-level infinite loops.
 
 ---

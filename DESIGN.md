@@ -2785,9 +2785,25 @@ Every assignment lifecycle transition is logged. Phase 1 extends the Log event-t
 
 Workers may reject assignments by returning `rejected_by_worker` with a reason and evidence when relevant. Rejection does not mutate the Task directly. The canonical instance decides whether to reassign, ask the user, mark the Task blocked, revise the Delegation Substrate packet, or leave the Task available for manual work.
 
-If a worker disappears mid-Task, the parent marks the assignment `expired` after the heartbeat or lease deadline, logs the transition, and treats the Task as still unresolved unless separate accepted evidence proves completion or mootness. Late worker submissions after expiration are stale by default and must pass expected-prior-version, idempotency, authority, and review checks before they can affect canonical state. The parent may then reassign the Task, create a retry or repair Task, request clarification, or surface the worker bottleneck in risk reporting. Detailed retry construction remains governed by `UBU-Q0020`.
+If a worker disappears mid-Task, the parent marks the assignment `expired` after the heartbeat or lease deadline, logs the transition, and treats the Task as still unresolved unless separate accepted evidence proves completion or mootness. Late worker submissions after expiration are stale by default and must pass expected-prior-version, idempotency, authority, and review checks before they can affect canonical state. The parent may then reassign the Task, create a retry or repair Task, request clarification, or surface the worker bottleneck in risk reporting. Retry construction follows the worker retry semantics below.
 
 Workers may request clarification by submitting `clarification_requested` status or an authorized mutation/request payload. The canonical instance may convert that into a clarification Task, user prompt, revised assignment packet, or rejection of the request. Workers may propose child Tasks or Task-to-Container restructuring only through authorized mutation requests; approved restructuring follows the accepted Task-to-Container and child Task semantics. Workers do not directly create canonical child Tasks in Phase 1.
+
+#### Worker retry semantics
+
+A failed worker-created child Task is not mutated back to `active`. The failed attempt remains a failed Task with its own assignment, evidence, and Logs. When retry is warranted, UbU creates a new retry sibling Task with a new `task_id` under the same parent Container or lineage when one exists, linked by `retry_of_task_ref`, `retry_root_task_ref`, `attempt_number`, `retry_policy_summary`, and failure or evidence refs.
+
+Worker assignment failure on an existing Task may leave the underlying Task unresolved when no attempt Task was created. In that case retry or repair work is represented by a new assignment or retry/repair Task; accepted completion evidence or mootness is required before the underlying work stops being planned.
+
+The effective retry policy resolves from Task or Delegation Substrate packet, then parent Container or Objective, then worker or integration default, then global Phase 1 default. Worker and integration defaults cannot exceed capability grants, Compartment/export policy, assignment leases, idempotency, expected-prior-version, or review policy.
+
+The Phase 1 global default is at most three total attempts per retry root, including the initial attempt. No automatic retry is created for policy denials, authorization failures, Compartment/export denials, invalid mutation requests, missing required human review, or stale expected-prior-version conflicts.
+
+Each retry attempt has its own assignment, idempotency key, status transitions, and Task outcome Logs. Failure is logged with `task_failed`, assignment changes with `worker_assignment_updated`, worker request failures with `worker_mutation_rejected` when applicable, and retry-sibling admission through the normal Task creation or mutation-request admission path. Retry metadata must keep the attempt chain queryable without rewriting prior attempts.
+
+When attempts are exhausted, UbU stops automatic retry creation, leaves the latest attempt failed unless another accepted lifecycle transition applies, and routes the parent work to human review, clarification, reassignment, repair, or a moot/supersession decision through ordinary admission rules.
+
+Worker failure affects derived reports and recalculation. Failed, expired, rejected, repeated, or exhausted worker attempts feed `worker_or_automation_bottleneck`, may increase dependency fragility or deadline risk, and create or batch recalculation triggers when they can affect the current or next recommended Task, Plan feasibility, or risk-report validity.
 
 ### 24.1.3 Worker mutation request schema
 
@@ -3135,6 +3151,8 @@ Risk reports are computed on demand from the current Calendar or Plan. Implement
 Automation Workers may compute or refresh risk-report artifacts when granted appropriate read capability, but worker output is advisory until admitted by the canonical instance. Workers may submit report artifacts, report-refresh requests, mutation requests, or projection requests according to their grants; they do not create canonical Risk objects or directly mutate Tasks.
 
 A risk report may recommend or request Tasks. It must not silently create canonical Tasks in MVP. Human-approved or policy-approved follow-up Tasks may include clarification, affect collection, dependency repair, worker retry/escalation, Calendar regeneration, Log review, Calendar preview, or GitHub projection/reconciliation work.
+
+Worker retry state is an input to `worker_or_automation_bottleneck`: active retry chains, repeated failure classes, retry exhaustion, expired leases, and stale late submissions should be surfaced when they threaten current work or release readiness.
 
 Risk reports are part of release ceremonies for UbU-runs-UbU. A release readiness or release outreach package should include, at minimum, deadline risk, critical path, dependency fragility, worker/automation bottleneck, and low coverage warnings when the inputs exist. Public release artifacts should cite only reviewable report summaries and must not expose sensitive Compartment payloads.
 

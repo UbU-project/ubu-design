@@ -345,33 +345,9 @@ Resolved. See UBU-D0146.
 
 ## UBU-Q0020: Automation Worker Retry Semantics
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0008 Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: 2026-05-26 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0008 Blocks: Phase 1 implementation Resolved by: UBU-D0187 Last scored: 2026-05-26 Scored from commit: None
 
-Automation Workers may fail or produce failed child Tasks.
-
-### Question
-
-1. If a worker-created child Task fails, does UbU:
-   - mutate the same Task,
-   - create retry sibling,
-   - mark failed then create replacement,
-   - mark moot?
-2. Is retry policy defined by:
-   - Task
-   - Objective
-   - Worker
-   - integration type
-3. How are retry attempts logged?
-4. How are repeated failures prevented from creating infinite loops?
-5. Does a worker failure affect risk reports?
-
-### Current leaning
-
-Failed attempt + retry sibling is likely best for auditability.
-
-### Resolution
-
-Unresolved.
+Resolved. See UBU-D0187.
 
 ---
 
