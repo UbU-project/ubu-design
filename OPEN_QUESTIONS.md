@@ -2036,3 +2036,298 @@ Resolved for Phase 1. See `UBU-D0173` and `PLANNING_KERNEL_CONTRACT.md §6`.
 Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0103 Blocks: skeleton sampling implementation, task duration schema Resolved by: UBU-D0174 Last scored: Never Scored from commit: None
 
 Resolved for Phase 1. See `UBU-D0174` and `PLANNING_KERNEL_CONTRACT.md §3`.
+
+---
+
+## UBU-Q0107: Counterfactual logging and decision completeness
+
+Status: Open Priority: MVP important Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: preference inference, override review, introspection completeness Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+The Log records what happened. It does not currently record what the user considered and rejected — overridden plan candidates, dismissed Task suggestions, declined worker proposals, ignored alerts, or bypassed safeguard advisories. Without these, the introspection review and future preference inference systems have only half the picture. What is the minimum counterfactual log entry schema for MVP?
+
+### Subquestions
+
+1. Which user-facing decision types must be logged: plan candidate rejection, task dismissal, safeguard bypass, suggestion decline, override of a worker proposal, others?
+2. What fields does a counterfactual log entry carry beyond the decision itself: the presented candidate, the stated or inferred reason, the system state at decision time, the identity context?
+3. How is user-stated reason captured without becoming a friction-creating mandatory field?
+4. How do counterfactual entries interact with the existing Log immutability model?
+5. What is the minimum set of counterfactual entry types required before preference inference is meaningful?
+
+### Current direction
+
+The absence of counterfactual logging is a design flaw identified during design review. All decision-bearing interactions between the system and the user must produce a reviewable log entry, including rejected candidates, dismissed suggestions, and bypassed advisories. The schema must be specified before the introspection review system is implemented.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0108: Attention as a distinct AffectProfile dimension
+
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0105 Blocks: richer affect-aware planning Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Attention is meaningfully distinct from energy: a user can be high-energy but scattered, or low-energy but deeply focused. Cognitive tasks requiring sustained attention compete differently for planning slots than tasks requiring physical energy or emotional presence. Should `attention` be added as a fourth MVP affect dimension in AffectProfile, and if so what is its direction model and interaction with the existing three dimensions?
+
+### Subquestions
+
+1. Is attention `higher_is_better`, `lower_is_better`, or `bounded_optimum` in the sigmoid model?
+2. How is attention affected by task switching versus sustained single-task work?
+3. Should TaskSpec carry an `attention_requirement` field analogous to the existing affect dimension fields?
+4. How does attention interact with energy — can they be treated as independent sigmoid dimensions or are they coupled?
+5. What is the minimum user-facing vocabulary for configuring attention constraints?
+
+### Current direction
+
+Attention as a distinct AffectProfile dimension is confirmed as a post-MVP feature. The `bounded_optimum` direction model introduced for `mood_intensity` in Phase 2 may be the right form for attention as well. To be specified during Phase 2 planning.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0109: Exit model and data portability
+
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: sovereignty completeness Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+User sovereignty requires that leaving UbU cleanly be a first-class supported operation. What does a complete exit model look like: full model export in a non-proprietary format, Log and history preservation, credential revocation, worker termination, Compartment cleanup, and integration disconnection?
+
+### Subquestions
+
+1. What is the canonical export format for the full UbU model (Objectives, Tasks, Plans, Logs, Preferences, Relationships, Compartments)?
+2. What credential and token revocation steps are required when exiting?
+3. How are active workers and automation processes terminated safely on exit?
+4. What is the minimum export that preserves Log history for personal records outside UbU?
+5. How is a partial exit (leaving one Compartment or Identity while retaining others) handled?
+6. Should export be a continuous background capability or an on-demand operation?
+
+### Current direction
+
+Exit model is confirmed as a post-MVP sovereignty feature. A system that makes leaving difficult or lossy violates the sovereignty first principle regardless of its behavior while the user is active. Export format should be non-proprietary and human-readable. To be specified during post-MVP planning.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0110: Async standup artifact as a Log derivative
+
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Association coordination reporting Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+The Log and Plan contain everything needed to generate a structured daily or weekly standup artifact — what was done, what is next, what is blocked — suitable for sharing with an Association under compartment policy. What is the schema for a StandupArtifact derived from Log and Plan data, and how does it interact with the existing compartment and disclosure model?
+
+### Subquestions
+
+1. What fields does a StandupArtifact carry: completed tasks, planned next tasks, blockers, estimated completion changes, affect signals if consented?
+2. How is the generation period specified: daily, weekly, sprint-bounded, or custom?
+3. How does compartment policy govern which Log entries and Plan items are included or redacted?
+4. What is the disclosure model: push to Association, pull by Association members, or user-approved per-instance sharing?
+5. How does a StandupArtifact interact with the existing AssociationAttestation model?
+6. Can a StandupArtifact be generated for an external audience (funder, client) with a different redaction level than for internal Association members?
+
+### Current direction
+
+Async standup artifact as a Log derivative is confirmed as a post-MVP feature consistent with UbU's reporting and disclosure philosophy. All information is already present in the Log and Plan; the gap is the derived artifact schema and the disclosure pipeline. To be designed during post-MVP planning.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0111: Streak tracking for recurring commitments
+
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Architecture Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: introspection report completeness Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Completion streaks for recurring Tasks are a pure read-only computation over existing Log data. Should streak counts be a first-class derived field surfaced during the Log review report, and what is the minimum streak schema?
+
+### Subquestions
+
+1. How is a streak defined: consecutive calendar-day completions, completions within the recurrence window, or completions without gap exceeding a threshold?
+2. Should streaks be surfaced per Task, per Objective, or per recurring Task group?
+3. What is the introspection trigger for a broken streak: immediate notification, Log review surfacing, or silent record only?
+4. Are streaks motivational signals only, or do they feed into the planning model (e.g., high-streak tasks get scheduling preference)?
+5. Should streak counts be user-visible as a persistent field or only computed on demand during review?
+
+### Current direction
+
+Streak tracking is confirmed as a post-MVP feature surfaced during the Log review report. It requires no new data model primitives — all required data exists in the Log for recurring Task completions. To be added as a Log review report feature during post-MVP planning.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0112: Waiting-for as an explicit task state
+
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: delegation tracking, planning horizon accuracy Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+A Task where the user is personally waiting on a human response — "waiting for Sarah's reply before I can continue" — has no distinct Task state. Currently it is either left open with low priority or tracked informally. A `WAITING_FOR` state with an optional counterparty reference and expected-by date would improve planning horizon accuracy and delegation visibility. What is the complete `WAITING_FOR` state model?
+
+### Subquestions
+
+1. What fields does a `WAITING_FOR` task state carry: counterparty Identity ref, expected-by date, reminder policy, escalation trigger?
+2. How does `WAITING_FOR` interact with the Task precondition model — is it a precondition state or a Task status?
+3. How does `WAITING_FOR` differ from a Task assigned to an automation worker that is polling for completion?
+4. How is a `WAITING_FOR` task surfaced in the planning horizon — as blocked, as a risk, or as a scheduled review trigger?
+5. What Log entries are generated when a `WAITING_FOR` task transitions out of the waiting state?
+6. Should `WAITING_FOR` tasks appear in the Calendar preview as blocked slots or be suppressed?
+
+### Current direction
+
+`WAITING_FOR` as an explicit task state is a Phase 2 required feature. It should be modeled as a Task status rather than a separate Task type. The counterparty reference should be an optional Identity ref consistent with the existing Relationship and Identity models.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0113: Friction annotation on Log entries
+
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0107 Blocks: duration model improvement, introspection quality Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+A lightweight optional friction annotation on Log entries — "took longer because the API was down," "interrupted three times," "underestimated complexity" — would feed the duration model review and the introspection cycle without requiring a separate system. What is the minimum friction annotation schema on Log entries, and how does it interact with the Bayesian duration learning system?
+
+### Subquestions
+
+1. Is friction annotation a free-text field, a structured enum, or both?
+2. Which Log entry types support friction annotation: Task completion, Task failure, plan deviation, others?
+3. How do friction annotations feed the Bayesian duration model — are they a correction signal, a distribution adjustment trigger, or a manual override?
+4. How are friction annotations surfaced during the Log review introspection cycle?
+5. Should friction annotation be prompted by the system when actual duration significantly exceeds planned duration?
+6. How does friction annotation interact with the counterfactual log (Q0107) when the friction was a user decision rather than an external factor?
+
+### Current direction
+
+Friction annotation on Log entries is a Phase 2 required feature. It should be an optional structured field on Task completion Log entries, prompted by the system when actual duration deviates significantly from planned duration. Free-text is acceptable for Phase 2 MVP; structured taxonomy is post-MVP.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0114: Resource object model and Technique association
+
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: rich task precondition modeling, inventory management, financial management Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Resources are physical objects or data items (a whiteboard, specific files on a hard drive, podcast episodes queued for playback) that a Task requires to begin. A Technique can be the link between a Resource and a Task: it describes how a Resource is used to accomplish the work. Resources become UniverseState preconditions — a Task requiring a Resource cannot be scheduled unless that Resource is in the appropriate state in UniverseState. The Resource model naturally extends into a user inventory, which blurs into financial management as a future feature. What is the Resource and Technique object model?
+
+### Subquestions
+
+1. What fields does a Resource carry: identifier, type (physical vs digital), location or access path, availability state, owner Identity, Compartment?
+2. What does a Technique carry: the Resource it references, the Task it links to, the usage mode (consumed, borrowed, referenced), any transformation of Resource state on Task completion?
+3. How does Resource availability map to UniverseState: is it a boolean predicate, a quantity, or a richer state?
+4. How does the inventory model work: does UbU maintain a full inventory of declared Resources, or only Resources referenced by active Tasks?
+5. Where does the Resource model end and financial management begin: is ownership cost, depreciation, or purchase history in scope?
+6. How do digital Resources (files, queued media, API credentials, software licenses) differ from physical Resources in the model?
+7. How does the Resource model interact with Compartments: can a Resource be compartment-scoped such that only certain Tasks in certain Compartments can reference it?
+
+### Current direction
+
+The Resource and Technique model is a post-MVP feature that is substantially richer than GTD-style context tags. It extends the Task precondition model into physical and digital inventory. Financial management is a downstream feature that emerges naturally from the Resource model but is explicitly deferred. The model should be designed to be compatible with the existing UniverseState precondition system. To be specified during post-MVP planning.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0115: TaskFactory template expansion model
+
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0114 Blocks: recurring project setup friction Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+A TaskFactory is a template object that expands into a set of Tasks, dependency edges, and an Objective structure when instantiated. What is the TaskFactory model, and how does it interact with the existing Task, Objective, and Precondition systems?
+
+### Subquestions
+
+1. What does a TaskFactory carry: template Task definitions, dependency edges, Objective structure, parameterization hooks (e.g. client name, due date), Resource requirements?
+2. How is a TaskFactory instantiated: manually by the user, triggered by an External Event, or triggered by a Recalculation?
+3. How does instantiation interact with the existing Objective and UniverseState model — does instantiation create a new Objective, or expand into an existing one?
+4. How are TaskFactory templates versioned and updated without breaking existing instantiations?
+5. How do Resource requirements in a TaskFactory interact with the Resource model (Q0114)?
+6. Should TaskFactory be a user-authored object or a model-committee-generated artifact?
+
+### Current direction
+
+TaskFactory is confirmed as a post-MVP feature handling recurring project scaffolding. It should be compatible with the existing Task, Objective, Precondition, and Resource models. To be designed during post-MVP planning, after the Resource model (Q0114) is specified.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0116: Bayesian duration learning from Log history
+
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0113 Blocks: self-improving planning accuracy Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+All planning uses the user-declared (min_seconds, mode_seconds, p95_seconds) three-point duration estimate. Over time, the Log accumulates actual durations for completed Tasks. A Bayesian update of the prior duration distribution using logged actuals would produce progressively more accurate planning predictions. This is a post-MVP premier feature. What is the Bayesian duration learning model?
+
+### Subquestions
+
+1. What is the update rule: full Bayesian posterior update of log-normal parameters, or a simpler exponential moving average of actual vs planned?
+2. How is task-type grouping handled: does learning generalize across similar Tasks, or is it per-Task-identity only?
+3. How are friction annotations (Q0113) incorporated: as outlier signals that should be down-weighted, or as explanatory covariates?
+4. How is the learned distribution surfaced to the user: as updated suggested (min, mode, p95) values for review, or as a silent override?
+5. User sovereignty requires that learned distributions not silently replace user-declared values. How is the update proposed and accepted?
+6. How does learning interact with the deferred_intent model (Q0117): tasks that are rarely attempted should not update the distribution from a small biased sample.
+7. What minimum Log history depth is required before Bayesian updates are meaningful?
+
+### Current direction
+
+Bayesian duration learning is confirmed as a core planning principle and a post-MVP premier feature. All planning comparisons between predictions and logged results are Bayesian in character. The update model must respect user sovereignty: learned distributions are proposed for user review rather than silently applied. Friction annotations (Q0113) are a key input to the learning model. To be specified during post-MVP planning.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0117: deferred_intent task status and dismissal review
+
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: planning horizon clarity, introspection completeness Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+UbU needs a named Task status for ideas that are not yet commitments and not cancelled — things the user has explicitly decided not to plan but wants to remember. A `DEFERRED_INTENT` status distinct from open and cancelled would prevent such items from cluttering the planning horizon. The Log review introspection cycle should periodically surface deferred-intent Tasks for review, including prompting the user to dismiss Tasks that are no longer attainable or desirable. What is the complete deferred_intent model?
+
+### Subquestions
+
+1. What fields distinguish a `DEFERRED_INTENT` task from an open low-priority task: explicit user deferral action, optional defer-until date, optional reason?
+2. How does `DEFERRED_INTENT` interact with the planner: are these tasks invisible to the skeleton sampler, or available as optional fill tasks with very low priority?
+3. What Log entry is created when a Task is moved to `DEFERRED_INTENT`?
+4. What is the review cadence for surfacing deferred-intent Tasks: weekly, monthly, on Log review, or triggered by related Objective changes?
+5. What dismissal options does the review prompt offer: promote to active, keep deferred, cancel permanently, or escalate to an Objective review?
+
+### Current direction
+
+`DEFERRED_INTENT` is a Phase 2 required status addition to the Task model. It is distinct from low-priority and distinct from cancelled. The periodic Log review report should surface deferred-intent Tasks with a structured dismissal prompt. The preference declaration requirement — that a Task must eventually have an explicit Preference commitment or be dismissed — should be enforced through this review cycle rather than at creation time.
+
+### Resolution
+
+Open.

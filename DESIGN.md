@@ -1384,6 +1384,12 @@ Use the narrowest accurate code:
 - `automation_obsolete`: a worker, automation path, or generated work item is obsolete because automation state changed.
 - `duplicate`: the Task duplicates another active, completed, or canonical work item.
 
+**Phase 2 status additions (not in Phase 1):**
+
+`DEFERRED_INTENT` — the user has decided not to plan this Task now but wants to retain it for future consideration. Distinct from low-priority (which remains eligible for planning) and from cancelled (which is terminal). Tasks in `DEFERRED_INTENT` are invisible to the skeleton sampler. The Log review introspection cycle periodically surfaces them for review and structured dismissal. See `UBU-Q0117`.
+
+`WAITING_FOR` — the user is personally waiting on a human response or external action before this Task can proceed. Carries an optional counterparty Identity reference and expected-by date. Distinct from a worker-delegated Task. Surfaces in the planning horizon as a blocked risk rather than a schedulable slot. See `UBU-Q0112`.
+
 ---
 
 ## 10. Task Preconditions and Effects
@@ -1432,6 +1438,16 @@ A Task may have:
 - scalar success probability on the effect object
 
 Task duration PDFs likely use seconds as the canonical time unit in MVP.
+
+### 10.4 Resource preconditions (post-MVP)
+
+A Resource is a physical object or data item that a Task requires in order to begin — a whiteboard, specific files on a hard drive, podcast episodes queued for playback, a physical tool, a software license. Resources become UniverseState preconditions: a Task requiring a Resource cannot be scheduled unless that Resource is in the required availability state in UniverseState.
+
+A Technique can act as an association between a Resource and a Task: it describes how the Resource is used (consumed, borrowed, referenced) and any transformation of Resource state on Task completion.
+
+The Resource model naturally extends into a user inventory and eventually into financial management. These are post-MVP features. The Resource precondition model is substantially richer than GTD-style context tags and is the correct long-term abstraction for task availability filtering.
+
+See `UBU-Q0114`, `UBU-Q0115`.
 
 ---
 
@@ -2010,6 +2026,14 @@ A Log consists of timestamped entries recording:
 
 Logs are immutable once written, but may be annotated or corrected through new entries.
 
+### 17.0 Counterfactual logging requirement
+
+The Log must record not only what happened but what the user was offered and rejected. All decision-bearing interactions between the system and the user produce a reviewable Log entry. This includes: rejected Plan candidates, dismissed Task suggestions, declined worker proposals, overridden system recommendations, and bypassed safeguard advisories.
+
+Without counterfactual entries, the introspection review and future preference inference systems have only half the picture: they know what the user accepted but not what the user chose against. Omitting counterfactual entries is a design flaw.
+
+The minimum counterfactual log entry schema — what was presented, what the user chose, the stated or inferred reason, and the system state at decision time — must be specified before the introspection review system is implemented. See `UBU-Q0107`.
+
 ### 17.1 MVP Log entry fields
 
 MVP Log entries use a shared event envelope. Required fields:
@@ -2119,6 +2143,13 @@ A Log review Task may:
 - mark proposed habit patterns as user-endorsed, tolerated, unwanted, or unresolved.
 
 Log review should not become a blame ritual. It is a model-maintenance Task for self-governance. The minimum Phase 1 annotation boundary is resolved by `UBU-D0181`.
+
+**Phase 2 and post-MVP additions to the Log review report:**
+
+- Friction annotations: when actual Task duration significantly exceeds planned duration, the review should prompt the user for an optional friction note explaining the cause. Friction notes feed the Bayesian duration learning system. See `UBU-Q0113`, `UBU-Q0116`.
+- Streak surfacing: recurring Task completion chains are surfaced as motivational signals. See `UBU-Q0111`.
+- Deferred-intent review: Tasks in `DEFERRED_INTENT` status are periodically surfaced with a structured dismissal prompt. Tasks that are no longer attainable or desirable should be dismissed rather than accumulating indefinitely. See `UBU-Q0117`.
+- Circadian affect pattern report: after sufficient Log history, time-of-day patterns in affect state may be surfaced as a standard report to inform planning priors.
 
 ### 17.9 Authority source metadata
 
