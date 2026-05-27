@@ -2821,7 +2821,7 @@ Workers may request clarification through assignment status or an authorized mut
 - Assignment is parent-directed and audit-oriented; worker polling is only a delivery mechanism for explicit assignments.
 - Phase 1 avoids competitive worker claiming while preserving future compatibility with richer delegation, General Contractor, and Skill Barter workflows.
 - Worker disappearance, rejection, clarification, and child-Task proposals are handled through logged assignment transitions and mutation/request review rather than direct canonical writes.
-- `UBU-Q0021` and `UBU-Q0080` remain open for automation parent/child shape and Delegation Substrate details.
+- Delegation Substrate details remain open in `UBU-Q0080`.
 
 ---
 
@@ -3074,7 +3074,7 @@ Stale overwrite prevention is mandatory. The canonical instance compares `expect
 - Worker authority remains request-based and bounded by capability grants, Compartment policy, expected versions, idempotency, assignment leases, and review policy.
 - Valid worker outputs can support automation without granting direct canonical write authority.
 - Invalid and stale worker submissions remain auditable without polluting canonical state.
-- `UBU-Q0021` and `UBU-Q0084` remain open for automation child structure and external AgentAction side-effect modeling.
+- `UBU-Q0084` remains open for external AgentAction side-effect modeling.
 
 ---
 
@@ -3854,7 +3854,37 @@ Worker failure affects derived risk reports. Failed, expired, rejected, repeated
 
 - `UBU-Q0020` is resolved for Phase 1.
 - Attempt history remains auditable because failed attempts are preserved instead of overwritten.
-- `UBU-Q0021` remains open for automation parent/child structure, but retry lineage no longer depends on that answer.
+- Retry lineage is independent of whether the retry root began as a direct assignment or as an automation child Task.
 - Implementations can use a conservative retry default without schema-level infinite loops.
+
+---
+
+## UBU-D0188: Automation expansion uses Containers with ordinary child Tasks
+
+**Status:** Accepted → DESIGN.md §§9.4, 24.1.2
+
+Resolved question: `UBU-Q0021`.
+
+Phase 1 Automation/Super Automation expansion uses Task-to-Container restructuring. The outer automation Task is not also the Container. When an accepted worker or parent workflow decomposes automation into canonical children, the parent creates a separate Container with a new `container_id`, records `origin_task_ref` and mutation provenance, and usually moves the original Task to `moot` with `replaced_by_new_plan_structure`.
+
+Child Tasks are ordinary Tasks, normally Dynamic Tasks. Phase 1 does not add an `automation_step` subtype. A child may be Static only when it independently has fixed start and end times under ordinary Static Task rules.
+
+Automation-specific metadata stays in existing envelopes:
+
+- Container lineage/provenance for workflow-level intent, source Task, mutation request, and grouping;
+- Task delegation/executor fields or Delegation Substrate packets for child-specific execution intent, expected output, evidence, privacy scope, review, and escalation;
+- worker assignment records for lease, status, heartbeat, delivery, and review;
+- capability grants, mutation request refs, ContextBundle refs, External References, and Logs for authority, provenance, evidence, and audit.
+
+Workers may propose child Tasks or the restructuring Container only through authorized mutation requests. The canonical parent validates scope, expected prior version, Compartment/export policy, idempotency, review policy, and External Reference changes before admitting canonical children.
+
+Retries use `UBU-D0187`: a failed child remains failed, and retry work is a new sibling Task under the same Container or lineage with retry metadata.
+
+**Consequences:**
+
+- `UBU-Q0021` is resolved for Phase 1 implementation.
+- Automation workflows do not require a new WorkItem subtype.
+- Plans continue to contain Tasks only; Containers group automation structure and derive completion from child state.
+- Worker-created means worker-proposed and parent-admitted, not direct worker canonical write authority.
 
 ---

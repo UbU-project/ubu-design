@@ -353,22 +353,9 @@ Resolved. See UBU-D0187.
 
 ## UBU-Q0021: Automation Worker Parent / Child Structure
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0008 Blocks: Phase 1 implementation Resolved by: Unresolved Last scored: 2026-05-26 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0008 Blocks: Phase 1 implementation Resolved by: UBU-D0188 Last scored: 2026-05-26 Scored from commit: None
 
-Automation Workers may create canonical child Tasks.
-
-### Question
-
-1. Is the outer Automation/Super Automation Task also the Container?
-2. Or is a separate Container created under it?
-3. Are child Tasks ordinary Dynamic Tasks?
-4. Or are child Tasks a dedicated automation-step subtype?
-5. If child Tasks are ordinary Dynamic Tasks, how is automation-specific metadata stored?
-6. How are retries connected to the original child Task?
-
-### Resolution
-
-Unresolved.
+Resolved. See UBU-D0188.
 
 ---
 

@@ -1330,7 +1330,9 @@ Fields that make a schedulable action executable belong on child Tasks: duration
 
 External References are preserved by linking the external object to the new Container when it represents the larger work and to child Tasks only when the external object supports, evidences, or projects that specific child. The original Task's historical External References are not rewritten; new `supersedes`, `projection_of`, `supports`, or `evidence_for` references may be added according to the accepted External Reference model.
 
-GitHub-linked Task decomposition should keep the GitHub Issue or PR traceable to the Container and add child-level External References only for actionable subwork that needs projection or reconciliation. Automation Worker child Tasks are ordinary child Tasks with worker/delegation metadata; workers may propose this restructuring only through authorized mutation requests, and the canonical instance validates and logs the applied or rejected mutation.
+GitHub-linked Task decomposition should keep the GitHub Issue or PR traceable to the Container and add child-level External References only for actionable subwork that needs projection or reconciliation.
+
+Automation/Super Automation expansion uses the same structural-replacement rule; worker-specific child Task details are in §24.1.2.
 
 ### 9.5 Moot
 
@@ -2787,7 +2789,19 @@ Workers may reject assignments by returning `rejected_by_worker` with a reason a
 
 If a worker disappears mid-Task, the parent marks the assignment `expired` after the heartbeat or lease deadline, logs the transition, and treats the Task as still unresolved unless separate accepted evidence proves completion or mootness. Late worker submissions after expiration are stale by default and must pass expected-prior-version, idempotency, authority, and review checks before they can affect canonical state. The parent may then reassign the Task, create a retry or repair Task, request clarification, or surface the worker bottleneck in risk reporting. Retry construction follows the worker retry semantics below.
 
-Workers may request clarification by submitting `clarification_requested` status or an authorized mutation/request payload. The canonical instance may convert that into a clarification Task, user prompt, revised assignment packet, or rejection of the request. Workers may propose child Tasks or Task-to-Container restructuring only through authorized mutation requests; approved restructuring follows the accepted Task-to-Container and child Task semantics. Workers do not directly create canonical child Tasks in Phase 1.
+Workers may request clarification by submitting `clarification_requested` status or an authorized mutation/request payload. The canonical instance may convert that into a clarification Task, user prompt, revised assignment packet, or rejection of the request.
+
+#### Automation child Task structure
+
+An Automation/Super Automation Task that expands into multiple canonical children is structurally replaced by a separate Container. The Task itself is not reused as the Container handle. The original Task usually becomes `moot` with reason code `replaced_by_new_plan_structure`.
+
+Automation child Tasks are ordinary Tasks, normally Dynamic Tasks. Phase 1 does not define an automation-step subtype. A child may be Static only when it independently has fixed start and end times under ordinary Static Task rules.
+
+Workflow-level automation metadata belongs on Container lineage and provenance. Child-specific automation metadata belongs on ordinary Task delegation fields, Delegation Substrate packets when present, worker assignments, capability-grant refs, worker mutation request refs, originating ContextBundle refs, External References, and Logs.
+
+Workers may propose child Tasks or the restructuring Container only through authorized mutation requests. The canonical instance validates scope, expected prior version, Compartment/export policy, idempotency, review policy, and External Reference changes before admitting canonical children.
+
+Retries use the worker retry semantics below: a failed child stays failed, and retry work is a new sibling Task under the same Container or lineage with retry metadata.
 
 #### Worker retry semantics
 
