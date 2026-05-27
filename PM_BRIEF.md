@@ -12,7 +12,7 @@ High-agency technical teams do not fail only because nobody wrote a ticket. They
 
 UbU is designed for that failure mode.
 
-UbU is a privacy-first planning, coordination, and self-governance system. Its project-management value is derivative of the same core model used for personal self-governance: Objectives, Tasks, Plans, Calendars, Logs, Preferences, Identities, Relationships, Compartments, Associations, external events, and reviewable state transitions.
+UbU is a privacy-first planning, coordination, and self-governance system for implementing life logistics. Its project-management value is derivative of the same core model used for personal self-governance: Objectives, Tasks, Plans, Calendars, Logs, Preferences, Resources, Skills, Techniques, Identities, Relationships, Compartments, Associations, external events, and reviewable state transitions.
 
 The goal is not to make autonomous contributors easier to surveil. The goal is to make coordination explicit enough that people can act with more autonomy, less ambiguity, and better evidence.
 
@@ -43,6 +43,14 @@ UbU is intended to become a planning kernel for individuals and organizations.
 For technical teams, that means UbU can eventually help convert messy project inputs into explicit planning state: GitHub issues, PRs, reviews, CI failures, milestones, contributor commitments, availability disclosures, design decisions, open questions, release tasks, meeting notes, project risks, dependency chains, and bounded projections back into GitHub or other team systems.
 
 GitHub is not the whole project model. It is one external surface where selected coordination state can be projected.
+
+---
+
+## Resource and Skill readiness for project work
+
+Although UbU's root product is individual life logistics, the same primitives matter to project work. A Task can be blocked because a contributor lacks a credential, file, hardware device, test fixture, API key, review authority, budget, or necessary Skill. Resource and Skill readiness make those blockers explicit instead of leaving them hidden in chat history or a maintainer's head.
+
+For technical teams, this later supports better onboarding, clearer delegation packets, realistic DIY-versus-external-vendor decisions, and evidence-backed skill development without turning the system into employee surveillance.
 
 ---
 

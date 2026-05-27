@@ -8,11 +8,11 @@ Purpose: Canonical public design document for the UbU project
 
 ## 1. Overview
 
-**UbU** is a privacy-first planning, coordination, and self-governance system.
+**UbU** is a privacy-first planning, coordination, and self-governance system for implementing life logistics.
 
-UbU takes messy real-world inputs—tasks, calendar events, messages, external events, user preferences, physical/emotional state, integration data, realtime interaction streams, and agent or worker outputs—and turns them into explicit, inspectable, recalculable Plans.
+UbU takes messy real-world inputs—tasks, calendar events, messages, external events, user preferences, physical/emotional state, Resource availability, Skill capability, integration data, realtime interaction streams, and agent or worker outputs—and turns them into explicit, inspectable, recalculable Plans.
 
-UbU is not merely a task list or calendar application. It is intended to become a personal and organizational planning kernel: a system that models desired outcomes, constraints, risks, dependencies, available time, and human limitations, then helps determine what should happen next.
+UbU is not merely a task list or calendar application. Its core motivation is to help an individual human being plan and implement the logistics of an actual life: what matters, what must happen, what the world must contain, what the user is capable of doing, what can be learned, what should be bought or delegated, and what should happen next. Organizational coordination is an important emergent property of the same model, not the root purpose.
 
 The first MVP is designed around **dogfooding**: using UbU to coordinate the design, development, release, and maintenance of UbU itself.
 
@@ -79,6 +79,18 @@ UbU should model:
 - decision/recalculation triggers
 
 LLMs may assist, but the canonical planning and decision logic must remain explicit and recalculable outside the LLM.
+
+#### 2.3.1 Life logistics, Resources, and Skills
+
+Real-life planning failures are often not time-allocation failures. They are readiness failures: the user lacks a document, tool, ingredient, credential, location, payment method, transportation option, quiet space, or embodied capability required to perform the Task.
+
+UbU therefore treats external prerequisites and embodied capabilities as planning-relevant predicates:
+
+- a **Resource** is something the user or another Identity must have access to or in the correct state;
+- a **Skill** is a rust-prone capability held by an Identity;
+- a **Technique** is a reusable procedure that can transform Resources, Skills, time, and attention into an Objective-serving result.
+
+Resource and Skill modeling is delayed from Phase 1 only because of the bootstrapping process. It is not conceptually peripheral. A minimal Resource/Skill-aware task-readiness layer is a Phase 3 candidate because it directly serves the core personal life-logistics product.
 
 ### 2.4 Privacy-first architecture
 
@@ -716,8 +728,16 @@ Phase 2 explicitly defers:
 - sync conflict handling;
 - cross-device worker or enclave coordination beyond the single local instance boundary.
 
+Phase 3 is the bridge from the bootstrap MVP toward the full personal life-logistics product. It may be subdivided during implementation planning:
+
+- **Phase 3A** should prioritize minimal Resource/Skill-aware task readiness, private skill-tree foundations, and narrow Identity coordination that directly improves single-user life logistics.
+- **Phase 3B** begins the full version 1.0 release track. It should expand Resource and Skill usability, Technique-database integration, DIY-versus-purchase/hire planning, and the user-facing capability graph without requiring the public Skill Barter marketplace.
+- **Phase 4+** continues the full version 1.0+ track with mature inventory, financial-management extensions, public or federated Skill Barter, reputation/evidence, dispute workflows, and other multi-party marketplace features.
+
 Phase 3 explicitly includes:
 
+- minimal Resource objects and Task resource requirements sufficient to answer whether a Task is realistically ready to start or complete;
+- minimal Skill objects and Task skill requirements sufficient to answer whether the user can perform a Task, needs a refresher, should learn a prerequisite, or should consider purchase/delegation;
 - minimal cross-user contextual messaging between UbU instances;
 - user-to-user Identity-mediated requests, status updates, questions, commitments, and blockers;
 - bounded Message Context Envelopes carrying priority, interrupt recommendation, topic, response expectation, assumptions, ambiguities, provenance, and disclosure policy;
@@ -727,6 +747,8 @@ Phase 3 explicitly includes:
 
 Phase 3 still defers:
 
+- full inventory management, full financial management, bank syncing, investment tracking, receipt OCR, tax categorization, and Quicken-like accounting workflows;
+- public Skill Barter marketplace operation, payment/settlement flows, reputation markets, dispute resolution, and marketplace governance;
 - shared global project truth between users;
 - rich subjective Relationship-model exchange;
 - full Association synchronization;
@@ -736,6 +758,7 @@ Phase 3 still defers:
 Phase 1 keeps these abstractions documented for compatibility but does not implement them:
 
 - Technique as a first-class planning object;
+- Resource and Skill as first-class planning objects beyond lightweight compatibility placeholders;
 - full Compact Calendar planner grammar and high-coverage transport format;
 - complete Zone and Device system beyond the current local execution enclave;
 - organization-mode and worker-mode web admin consoles;
@@ -1439,15 +1462,90 @@ A Task may have:
 
 Task duration PDFs likely use seconds as the canonical time unit in MVP.
 
-### 10.4 Resource preconditions (post-MVP)
+### 10.4 Resource preconditions and task readiness
 
-A Resource is a physical object or data item that a Task requires in order to begin — a whiteboard, specific files on a hard drive, podcast episodes queued for playback, a physical tool, a software license. Resources become UniverseState preconditions: a Task requiring a Resource cannot be scheduled unless that Resource is in the required availability state in UniverseState.
+A **Resource** is any physical, digital, legal, financial, informational, location, access-controlled, or tool-like thing whose state affects whether a Task can begin, continue, or complete. Examples include a whiteboard, a specific file, a queued podcast episode, a ladder, bread flour, a car, a passport, a software license, an API key, a warranty document, a payment method, or a quiet room.
 
-A Technique can act as an association between a Resource and a Task: it describes how the Resource is used (consumed, borrowed, referenced) and any transformation of Resource state on Task completion.
+Resource modeling is core to UbU's life-logistics purpose. It is delayed from Phase 1 because Phase 1 bootstraps the planning kernel through GitHub dogfooding, not because Resource is optional to the real product.
 
-The Resource model naturally extends into a user inventory and eventually into financial management. These are post-MVP features. The Resource precondition model is substantially richer than GTD-style context tags and is the correct long-term abstraction for task availability filtering.
+The Phase 3 Resource boundary should be a thin task-readiness layer, not a full inventory or financial-management product. The first user-facing question is:
 
-See `UBU-Q0114`, `UBU-Q0115`.
+> What must be true about the world before this Task is realistically executable?
+
+A minimal Phase 3 Resource object may carry:
+
+- `resource_id`;
+- `name`;
+- `kind` (`physical`, `digital`, `financial`, `access`, `location`, `information`, `tool`, `consumable`, `other`);
+- `availability_state` (`available`, `missing`, `unavailable`, `unknown`, `needs_acquisition`, `needs_preparation`);
+- `location_or_access_hint`;
+- `owner_identity_ref` when relevant;
+- `compartment_ref`;
+- `notes`.
+
+A Task may carry `resource_requirements[]` with:
+
+- `resource_ref` or free-text placeholder;
+- `requirement_type` (`required`, `helpful`, `blocks_start`, `blocks_completion`);
+- `status` (`satisfied`, `unsatisfied`, `unknown`).
+
+If a required Resource is missing, UbU may suggest or create prerequisite Tasks such as buying a part, finding a document, charging a battery, downloading a form, renewing a license, preparing a workspace, or checking whether a store or service is available. A Task requiring a Resource cannot be scheduled as ready unless the required Resource is in the required availability state in UniverseState.
+
+A mature Resource model naturally extends into inventory control, subscriptions, household logistics, procurement, cost history, depreciation, budgeting, and Quicken-like financial management. These are Phase 3B/Phase 4+ full-version-1.0 features, not Phase 3A requirements. The distinctive UbU finance path is not to clone a ledger application first; it is to connect spending, ownership, maintenance, and acquisition to Objectives, Tasks, Techniques, Compartments, and capability growth.
+
+### 10.5 Skill preconditions and capability readiness
+
+A **Skill** is an Identity-owned capability that can satisfy a Task dependency. Skills are not static tags. They can be learned, tested, evidenced, improved through practice, and allowed to rust over time.
+
+A minimal Skill object may carry:
+
+- `skill_id`;
+- `name`;
+- `domain`;
+- `description`;
+- `owner_identity_ref`;
+- `proficiency_level`;
+- `confidence`;
+- `verified_status`;
+- `last_used_at`;
+- `last_tested_at`;
+- `rust_model`;
+- `prerequisite_skill_refs[]`;
+- `unlocks_technique_refs[]`;
+- `evidence_refs[]`;
+- `compartment_ref`.
+
+A Task may carry `skill_requirements[]` with:
+
+- `skill_ref`;
+- `required_level`;
+- `requirement_type` (`blocks_start`, `blocks_completion`, `improves_quality`, `reduces_risk`, `reduces_cost`);
+- `acceptable_substitutes[]`.
+
+Skill evidence may include self-declaration, completed Tasks, passed quizzes, supervised completions, credentials, portfolio artifacts, peer review, marketplace ratings, or External References. Self-declared evidence may be enough for private planning; public or barter-visible claims need stronger evidence, especially for high-risk or regulated domains.
+
+Skill rust is part of the model. UbU should not assume that a Skill remains permanently available at the same level because it was once learned. Last use, last test, confidence, consequence of failure, and refresher requirements should influence whether a Task is ready, risky, or should be preceded by learning/practice.
+
+### 10.6 Techniques, capability graphs, and DIY-versus-purchase planning
+
+A **Technique** is a reusable procedure that can transform Resources, Skills, time, attention, and other prerequisites into an Objective-serving result. A Technique can describe how Resources are used (`consumed`, `borrowed`, `referenced`, `transformed`, or `produced`) and which Skills are required, reinforced, tested, or produced.
+
+A large UbU-run or UbU-compatible Technique database can become a practical real-life capability graph. It can represent procedures such as replacing a faucet cartridge, filing an LLC annual report, cooking a basic meal, setting up encrypted backups, learning Rust ownership, preparing a ZK circuit review, or cleaning an apartment before guests arrive.
+
+Technique requirements can create skill-tree behavior:
+
+- prerequisites unlock new Techniques;
+- learning Tasks can be scheduled to acquire missing Skills;
+- completed DIY Tasks reinforce or test Skills;
+- missing Skills can trigger a decision between learning, DIY, hiring, buying, bartering, or deferring.
+
+This creates a natural DIY-versus-purchase/hire tradeoff. UbU can compare time cost, money cost, affect cost, Resource availability, Skill rust, risk, failure consequence, learning value, future task unlocks, and possible Skill Barter value.
+
+The marketing hook is legitimate if kept grounded:
+
+> UbU gamifies real life not by adding fake points, but by turning real Objectives, Resources, Skills, Techniques, constraints, and evidence into a capability tree the user can actually live inside.
+
+See `UBU-Q0114`, `UBU-Q0115`, `UBU-Q0118`, `UBU-Q0119`, `UBU-Q0120`, and `UBU-Q0121`.
 
 ---
 
@@ -2540,11 +2638,15 @@ Open details include subdelegation, authority propagation, budget constraints, e
 
 ### 21.7 Skill Barter marketplace direction
 
-The Skill Barter marketplace is a future specialization of Association coordination and Delegation Substrate, not a Phase 1 public marketplace.
+The Skill Barter marketplace is a future specialization of Association coordination, Delegation Substrate, Resource/Skill readiness, and Technique evidence. It is not a Phase 1 public marketplace.
 
-It may eventually support privacy-preserving skilled-work exchange, pseudonymous capability claims, reputation without unnecessary doxxing, scoped work agreements, private or selective-disclosure evidence, lawful user-controlled settlement references, and human/agentic executor discovery.
+The private Skill model should come first. A user must be able to model, learn, test, refresh, and use Skills for their own life logistics before UbU exposes those Skills to other Identities. Once private skill evidence and Delegation Substrate packets are useful, Skill Barter can become a voluntary exchange layer rather than a generic labor marketplace.
 
-For EthConf and cypherpunk outreach, Skill Barter is useful as a future-direction signal: UbU can preserve cryptocurrency-native values of voluntary coordination, sovereign identity, privacy, FOSS development, and open markets without becoming token-first or speculation-first.
+A mature Skill Barter system may support privacy-preserving skilled-work exchange, pseudonymous capability claims, reputation without unnecessary doxxing, scoped work agreements, private or selective-disclosure evidence, lawful user-controlled settlement references, dispute workflows, and human/agentic executor discovery.
+
+For EthConf and cypherpunk outreach, Skill Barter is useful as a future-direction signal: UbU can preserve cryptocurrency-native values of voluntary coordination, sovereign identity, privacy, FOSS development, open markets, economic self-sufficiency, and lifelong skill acquisition without becoming token-first or speculation-first.
+
+The preferred framing is an open, user-sovereign skill economy or a self-reinforcing ecosystem for skill acquisition, task execution, and voluntary exchange. Avoid calling it a closed ecosystem, because that implies platform captivity rather than user sovereignty.
 
 ### 21.8 AgentAction and BackgroundProcess
 

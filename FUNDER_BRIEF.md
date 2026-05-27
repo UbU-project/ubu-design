@@ -8,7 +8,7 @@
 
 ## Summary
 
-UbU is a privacy-first planning, coordination, and self-governance system. It is not merely a calendar app, task manager, project board, or chat assistant.
+UbU is a privacy-first planning, coordination, and self-governance system for implementing life logistics. It is not merely a calendar app, task manager, project board, or chat assistant.
 
 UbU is intended to become a planning kernel that converts messy real-world inputs into explicit, inspectable, recalculable Plans. The first MVP is deliberately narrow: use UbU to coordinate the development of UbU itself.
 
@@ -117,6 +117,16 @@ UbU is not primarily a crypto product, but Ethereum and adjacent FOSS ecosystems
 
 ---
 
+## Full-product expansion: Resource and Skill readiness
+
+The full version 1.0 track is not just a smarter calendar. It should add Resource and Skill readiness: whether the user has the documents, tools, credentials, locations, money, access, and embodied capability needed to perform the work.
+
+This creates a concrete consumer and prosumer feature path: household logistics, maintenance planning, digital-asset readiness, subscription/resource tracking, DIY-versus-hire tradeoffs, capability acquisition, and eventually a Skill Barter marketplace. Quicken-like financial management is a downstream extension only after Resources connect spending and ownership to Objectives, Tasks, Techniques, and Skills.
+
+This strengthens UbU's market story because it moves the product from productivity software into life logistics and economic self-sufficiency.
+
+---
+
 ## Strategic future directions
 
 The following directions are important but should not be confused with Phase 1 commitments:
@@ -125,6 +135,9 @@ The following directions are important but should not be confused with Phase 1 c
 - Association-level organizational introspection;
 - Relationship-level extrospection;
 - Delegation Substrate marketplace flows;
+- Resource and Skill readiness;
+- DIY-versus-purchase/hire planning;
+- Technique database and real-life skill tree;
 - Skill Barter marketplace;
 - high-privacy compute using FHE, ZK, secure hardware, or other privacy-preserving techniques;
 - user-owned worker devices and compute markets;

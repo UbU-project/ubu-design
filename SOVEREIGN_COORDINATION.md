@@ -10,7 +10,7 @@
 
 UbU is not just productivity software.
 
-UbU is intended to become a sovereignty-preserving coordination layer for human and AI labor. It starts with personal self-governance: the user models Objectives, Tasks, Plans, Calendars, Logs, Identities, Compartments, external events, affect, and Preferences so they can decide what should happen next without handing their life model to an opaque centralized service.
+UbU is intended to become a sovereignty-preserving life-logistics and coordination layer for human and AI labor. It starts with personal self-governance: the user models Objectives, Tasks, Plans, Calendars, Logs, Identities, Compartments, external events, affect, Preferences, Resources, Skills, and Techniques so they can decide what should happen next without handing their life model to an opaque centralized service.
 
 From that foundation, UbU can support broader coordination: FOSS projects, informal crews, privacy-preserving work agreements, delegated Tasks, user-owned agents, Association-level planning, and eventually lawful private skill exchange.
 
@@ -69,13 +69,15 @@ For sovereign coordination, it also creates a future path to private work agreem
 
 ---
 
-## Skill Barter future direction
+## Resource, Skill, and Skill Barter future direction
 
-The Skill Barter marketplace is a future direction, not a Phase 1 marketplace commitment.
+Skill Barter is a future direction, not a Phase 1 marketplace commitment. The private Resource and Skill model should come first.
 
-The root idea is voluntary, privacy-preserving skilled-work coordination among autonomous Identities. A mature version could include pseudonymous skill profiles, scoped work agreements, reputation without unnecessary doxxing, explicit commitments and deliverables, privacy-preserving evidence of completion, dispute workflows, lawful settlement references, and agentic and human executors operating through the same delegation model.
+A Resource is something a Task needs access to. A Skill is an Identity-owned capability that can be learned, practiced, tested, evidenced, and allowed to rust. A Technique can describe how Resources and Skills produce useful work. This lets UbU support a user-sovereign skill tree for real life: learn useful abilities, unlock DIY Tasks, reduce dependence on paid services where appropriate, and eventually trade proven capability through voluntary markets.
 
-This is not token-first speculation and not a public Phase 1 product. Phase 1 should focus on the Delegation Substrate primitives that make such coordination credible later.
+The root marketplace idea is voluntary, privacy-preserving skilled-work coordination among autonomous Identities. A mature version could include pseudonymous skill profiles, scoped work agreements, reputation without unnecessary doxxing, explicit commitments and deliverables, privacy-preserving evidence of completion, dispute workflows, lawful settlement references, and agentic and human executors operating through the same delegation model.
+
+This is not token-first speculation, a public Phase 1 product, or a closed ecosystem. Preferred framing is an open, user-sovereign skill economy: users should become more capable inside and outside UbU.
 
 ---
 
@@ -107,6 +109,7 @@ Concrete subquestions:
 
 - What planning state should never leave the user's device?
 - What can be safely projected to a team or marketplace?
+- What Skill evidence can be shared without exposing raw life-planning data?
 - What claims could be proven without exposing raw private data?
 - Which parts of reputation require cryptography versus social review?
 - What authority should a local or cloud agent never receive?

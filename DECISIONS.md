@@ -3985,3 +3985,125 @@ Classification rules:
 - Human-only and human-approval-required work may still benefit from automation, but only as bounded review support.
 
 ---
+
+## UBU-D0191: UbU's root product is individual life logistics
+
+**Status:** Accepted → DESIGN.md §§1, 2.3.1, 4
+
+UbU's core motivation is to help individual human beings plan and implement life logistics. Organizational coordination, project management, Association introspection, and marketplace behavior are important emergent properties of the same model, but they are not the root purpose.
+
+The first Phase 1 MVP remains GitHub dogfooding because that is the bootstrapping path available to the project, not because UbU is primarily a developer project-management tool. Public and contributor-facing language should avoid implying that organizational introspection replaces user introspection or that organizational coordination is the center of the product.
+
+**Consequences:**
+
+- Resource and Skill modeling are central product directions even if delayed by bootstrapping.
+- Derived outreach documents should keep the personal life-logistics purpose visible.
+- Organization-mode and Association features should be framed as downstream or emergent from the user-sovereign planning model.
+
+---
+
+## UBU-D0192: Resource is a core life-logistics abstraction with a thin Phase 3 boundary
+
+**Status:** Accepted → DESIGN.md §§4, 10.4
+
+Resource is a first-class long-term abstraction for task readiness. It represents physical, digital, legal, financial, informational, access-controlled, location, tool, and consumable prerequisites whose state affects whether a Task can begin, continue, or complete.
+
+Resource development is delayed from Phase 1 because of the bootstrapping development process, not because Resource is peripheral. UbU should try to include a thin Resource-aware task-readiness layer in Phase 3, provided it does not expand into full inventory or financial management before release.
+
+Phase 3 Resource scope should answer: what must be true about the world for this Task to be realistically executable? Minimal fields may include identifier, name, kind, availability state, location or access hint, owner Identity, Compartment, and notes. Task resource requirements may mark a Resource as required, helpful, blocking start, or blocking completion.
+
+Full inventory control, procurement automation, subscription management, bank syncing, investment tracking, receipt OCR, depreciation, tax categorization, double-entry accounting, and Quicken-like financial workflows are Phase 3B/Phase 4+ full-version-1.0 features or later, not Phase 3A requirements.
+
+**Consequences:**
+
+- `UBU-Q0114` should no longer describe Resource as merely post-MVP.
+- Phase 1 schemas should avoid blocking later Resource predicates.
+- The MVP-facing Resource feature is task readiness, not asset management.
+
+---
+
+## UBU-D0193: Skill is an Identity-owned rust-prone capability predicate
+
+**Status:** Accepted → DESIGN.md §§10.5, 21.7
+
+Skill should be a first-class object. A Skill is an Identity-owned capability that can satisfy Task dependencies, unlock Techniques, reduce risk, reduce cost, improve quality, or make a DIY path available.
+
+Skills can be learned, tested, evidenced, improved through practice, and allowed to rust over time. A Skill claim should carry provenance or evidence appropriate to its use. Self-declared evidence may be sufficient for private planning, while public, delegated, or marketplace-visible claims need stronger evidence and confidence semantics.
+
+Skills should support fields such as owner Identity, proficiency level, confidence, verification status, last used time, last tested time, rust model, prerequisite Skills, unlocked Techniques, evidence references, and Compartment.
+
+**Consequences:**
+
+- Task readiness must eventually consider both external Resources and embodied Skills.
+- `Skill` should not be collapsed into a free-text tag or marketplace profile.
+- The private Skill model should precede public Skill Barter.
+
+---
+
+## UBU-D0194: Techniques can form a real-life capability graph and skill tree
+
+**Status:** Accepted → DESIGN.md §§10.6, 21.7
+
+A Technique is a reusable procedure that transforms Resources, Skills, time, attention, and other preconditions into an Objective-serving result. A Technique can require Skills, consume or transform Resources, test or reinforce Skills, produce new Resources, and unlock later Techniques.
+
+A large UbU-run or UbU-compatible Technique database should be treated as a premier future feature. It can allow the user to select or automatically schedule Skill-learning Tasks that unlock DIY work, maintenance, professional labor skills, and future Skill Barter opportunities.
+
+The skill-tree analogy is useful when grounded in real evidence and real capability rather than fake points. UbU can gamify real life by making capability acquisition visible, schedulable, inspectable, and economically meaningful.
+
+**Consequences:**
+
+- Technique database design should connect Resource requirements, Skill requirements, learning paths, verification criteria, risk, cost, and failure consequences.
+- TaskFactories should remain compatible with Resource and Skill requirements.
+- Outreach may use “gamifying real life” when it explains that the game mechanics correspond to real-world capability and evidence.
+
+---
+
+## UBU-D0195: DIY-versus-purchase/hire/barter tradeoff is a core planning comparison
+
+**Status:** Accepted → DESIGN.md §10.6
+
+Resource and Skill modeling create a natural comparison between buying a replacement, hiring a professional, doing the work oneself, learning first and then doing the work, bartering Skill, or deferring.
+
+UbU should eventually compare these alternatives using time cost, money cost, affect cost, risk, consequence of failure, Resource availability, Skill level, Skill rust, learning value, future unlocks, and marketplace or barter value.
+
+This tradeoff supports economic self-sufficiency without forcing the user toward DIY. Hiring, buying, or deferring may be the correct decision when risk, affect, time, legal constraints, or quality requirements justify it.
+
+**Consequences:**
+
+- Financial management should connect to Objectives, Tasks, Techniques, Resources, and Skills rather than start as a standalone ledger clone.
+- User-facing recommendations should not moralize DIY; they should explain tradeoffs.
+- Regulated or dangerous domains need careful evidence, risk, and external-provider boundaries.
+
+---
+
+## UBU-D0196: Skill Barter should be an open user-sovereign skill economy direction
+
+**Status:** Accepted → DESIGN.md §21.7
+
+Skill Barter should build on the private Skill model, Resource/Skill readiness, Delegation Substrate, Identity, Association, evidence, and Compartment boundaries. It should not be presented as a Phase 1 marketplace, a token-first product, an illicit market, or a platform-captive closed ecosystem.
+
+Preferred framing is an open, user-sovereign skill economy or a self-reinforcing ecosystem for skill acquisition, task execution, and voluntary exchange. Users should become more capable inside and outside UbU, not locked into UbU.
+
+**Consequences:**
+
+- Skill Barter outreach should emphasize voluntary coordination, economic self-sufficiency, lifelong skill acquisition, privacy, pseudonymous capability, and lawful exchange.
+- Reputation and evidence questions remain open for later phases.
+- Marketplace operation should not delay private Resource/Skill usefulness.
+
+---
+
+## UBU-D0197: Phase 3B and Phase 4+ are the full version 1.0 release track
+
+**Status:** Accepted → DESIGN.md §4
+
+Phase 3 should be treated as the bridge from MVP/bootstrap work into the full product. Phase 3A may contain minimal Resource/Skill-aware task readiness and narrow Identity coordination that are still close to MVP expansion. Phase 3B and Phase 4+ represent the full version 1.0 release track.
+
+Phase 3B should expand user-facing Resource, Skill, Technique, DIY-versus-purchase/hire, and capability-graph features enough that UbU begins to feel like the intended life-logistics product. Phase 4+ may add mature inventory, Quicken-like financial extensions, public or federated Skill Barter, reputation/evidence, dispute workflows, and broader marketplace features.
+
+**Consequences:**
+
+- Phase 1 remains implementation-first and must not absorb Resource/Skill scope.
+- Phase 3 planning should explicitly separate thin readiness features from full inventory, finance, and marketplace systems.
+- Full version 1.0 messaging can emphasize life logistics, real-world capability acquisition, and Skill Barter direction without promising those features in Phase 1.
+
+---

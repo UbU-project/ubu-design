@@ -2227,25 +2227,30 @@ Open.
 
 ## UBU-Q0114: Resource object model and Technique association
 
-Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: rich task precondition modeling, inventory management, financial management Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 3 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 3 Resource-aware task readiness, rich task precondition modeling, inventory management, financial management Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
-Resources are physical objects or data items (a whiteboard, specific files on a hard drive, podcast episodes queued for playback) that a Task requires to begin. A Technique can be the link between a Resource and a Task: it describes how a Resource is used to accomplish the work. Resources become UniverseState preconditions — a Task requiring a Resource cannot be scheduled unless that Resource is in the appropriate state in UniverseState. The Resource model naturally extends into a user inventory, which blurs into financial management as a future feature. What is the Resource and Technique object model?
+Resource is now accepted as a core life-logistics abstraction rather than a merely post-MVP convenience. Resources are physical, digital, legal, financial, informational, location, access-controlled, tool-like, or consumable things whose state affects whether a Task can begin, continue, or complete. A Technique can describe how a Resource is used to accomplish work and how Resource state changes when the work succeeds. What is the Resource and Technique object model, and where is the Phase 3A thin task-readiness boundary relative to Phase 3B/Phase 4+ inventory and financial management?
 
 ### Subquestions
 
-1. What fields does a Resource carry: identifier, type (physical vs digital), location or access path, availability state, owner Identity, Compartment?
-2. What does a Technique carry: the Resource it references, the Task it links to, the usage mode (consumed, borrowed, referenced), any transformation of Resource state on Task completion?
-3. How does Resource availability map to UniverseState: is it a boolean predicate, a quantity, or a richer state?
-4. How does the inventory model work: does UbU maintain a full inventory of declared Resources, or only Resources referenced by active Tasks?
-5. Where does the Resource model end and financial management begin: is ownership cost, depreciation, or purchase history in scope?
-6. How do digital Resources (files, queued media, API credentials, software licenses) differ from physical Resources in the model?
-7. How does the Resource model interact with Compartments: can a Resource be compartment-scoped such that only certain Tasks in certain Compartments can reference it?
+1. What fields does a minimal Phase 3 Resource carry: identifier, name, kind, location or access path, availability state, owner Identity, Compartment, notes?
+2. What are the allowed Resource kinds: physical, digital, financial, access, location, information, tool, consumable, legal, other?
+3. What are the allowed availability states: available, missing, unavailable, unknown, needs_acquisition, needs_preparation, expired, damaged, depleted, borrowed, reserved?
+4. What does a Task resource requirement carry: resource_ref or placeholder, requirement_type, status, acceptable substitute, acquisition/preparation hint?
+5. What does a Technique carry: referenced Resource, linked Task or Task template, usage mode, consumption/borrowing/reference/transformation/production semantics, and predicted Resource state after completion?
+6. How does Resource availability map to UniverseState: boolean predicate, quantity, location-indexed state, time-windowed reservation, or richer state object?
+7. How does UbU generate prerequisite Tasks when a Resource is missing: buy, find, download, charge, renew, prepare, borrow, reserve, or ask?
+8. How does the inventory model work: does UbU maintain a full declared inventory, only Resources referenced by active Tasks, or a hybrid of task-relevant inventory plus user-declared persistent Resources?
+9. Where does the Resource model end and financial management begin: ownership cost, purchase history, depreciation, warranty, subscription renewal, cash-flow planning, bank import, and Quicken-like accounting?
+10. How do digital Resources such as files, queued media, API credentials, software licenses, and cloud access differ from physical Resources?
+11. How does the Resource model interact with Compartments: can a Resource be compartment-scoped such that only certain Tasks in certain Compartments can reference it?
+12. What safety/risk rules are needed for dangerous, regulated, or legally constrained Resources?
 
 ### Current direction
 
-The Resource and Technique model is a post-MVP feature that is substantially richer than GTD-style context tags. It extends the Task precondition model into physical and digital inventory. Financial management is a downstream feature that emerges naturally from the Resource model but is explicitly deferred. The model should be designed to be compatible with the existing UniverseState precondition system. To be specified during post-MVP planning.
+`UBU-D0192` changes the roadmap: Resource should be treated as a core life-logistics abstraction and a thin Phase 3 task-readiness candidate, not merely post-MVP. The Phase 3A feature answers whether a Task is realistically ready to start or complete and may create prerequisite preparation/acquisition Tasks. Full inventory control, procurement automation, subscription management, bank syncing, investment tracking, receipt OCR, tax categorization, and Quicken-like financial management remain Phase 3B/Phase 4+ full-version-1.0 features or later. The Resource model should remain compatible with UniverseState preconditions and Technique state-transform semantics.
 
 ### Resolution
 
@@ -2255,7 +2260,7 @@ Open.
 
 ## UBU-Q0115: TaskFactory template expansion model
 
-Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0114 Blocks: recurring project setup friction Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0114, UBU-Q0118 Blocks: recurring project setup friction, Technique database templates Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -2263,16 +2268,16 @@ A TaskFactory is a template object that expands into a set of Tasks, dependency 
 
 ### Subquestions
 
-1. What does a TaskFactory carry: template Task definitions, dependency edges, Objective structure, parameterization hooks (e.g. client name, due date), Resource requirements?
+1. What does a TaskFactory carry: template Task definitions, dependency edges, Objective structure, parameterization hooks (e.g. client name, due date), Resource requirements, Skill requirements?
 2. How is a TaskFactory instantiated: manually by the user, triggered by an External Event, or triggered by a Recalculation?
 3. How does instantiation interact with the existing Objective and UniverseState model — does instantiation create a new Objective, or expand into an existing one?
 4. How are TaskFactory templates versioned and updated without breaking existing instantiations?
-5. How do Resource requirements in a TaskFactory interact with the Resource model (Q0114)?
+5. How do Resource and Skill requirements in a TaskFactory interact with the Resource model (Q0114) and Skill model (Q0118)?
 6. Should TaskFactory be a user-authored object or a model-committee-generated artifact?
 
 ### Current direction
 
-TaskFactory is confirmed as a post-MVP feature handling recurring project scaffolding. It should be compatible with the existing Task, Objective, Precondition, and Resource models. To be designed during post-MVP planning, after the Resource model (Q0114) is specified.
+TaskFactory is confirmed as a post-MVP feature handling recurring project scaffolding. It should be compatible with the existing Task, Objective, Precondition, Resource, Skill, and Technique models. To be designed during post-MVP planning, after the Resource model (Q0114) and Skill model (Q0118) are specified.
 
 ### Resolution
 
@@ -2327,6 +2332,126 @@ UbU needs a named Task status for ideas that are not yet commitments and not can
 ### Current direction
 
 `DEFERRED_INTENT` is a Phase 2 required status addition to the Task model. It is distinct from low-priority and distinct from cancelled. The periodic Log review report should surface deferred-intent Tasks with a structured dismissal prompt. The preference declaration requirement — that a Task must eventually have an explicit Preference commitment or be dismissed — should be enforced through this review cycle rather than at creation time.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0118: Skill object model, rust, and evidence
+
+Status: Open Priority: MVP important Phase: Phase 3 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Skill-aware task readiness, Technique skill tree, DIY-versus-hire planning, future Skill Barter marketplace Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Skill is accepted as an Identity-owned, rust-prone capability predicate that can satisfy Task dependencies and unlock Techniques. What is the Skill object model, how are proficiency and rust represented, and what evidence is required for private planning versus delegated, public, or marketplace-visible Skill claims?
+
+### Subquestions
+
+1. What fields does a Skill carry: identifier, name, domain, description, owner Identity, proficiency level, confidence, verification status, last used, last tested, rust model, prerequisite Skills, unlocked Techniques, evidence refs, Compartment?
+2. What proficiency scale should UbU use: ordinal levels, task-specific thresholds, domain-specific rubrics, calibrated probabilities, or a hybrid?
+3. How does Skill rust work: time decay, practice-frequency model, confidence decay, test-expiration date, or task-risk-specific refresher requirement?
+4. How does UbU distinguish self-declared Skill, inferred Skill, tested Skill, credentialed Skill, peer-reviewed Skill, and marketplace-rated Skill?
+5. What evidence types are allowed: self declaration, completed Task, failed Task, quiz, supervised completion, credential, portfolio artifact, peer review, marketplace rating, External Reference?
+6. How should a Skill requirement attach to a Task: blocks_start, blocks_completion, improves_quality, reduces_risk, reduces_cost, or produces_learning_value?
+7. How should UbU represent acceptable Skill substitutes or alternative Techniques when the user lacks the default Skill?
+8. How should Skills be compartmented, especially professional, pseudonymous, sensitive, or marketplace-visible Skills?
+9. How should high-risk, dangerous, legally regulated, medical, electrical, structural, financial, legal, or security-sensitive Skills be modeled without overclaiming safety?
+10. What user-review flow accepts, rejects, corrects, or archives model-suggested Skill updates after completed Tasks?
+
+### Current direction
+
+`UBU-D0193` accepts Skill as a first-class object. Private Skill modeling should precede public Skill Barter. Self-declared Skills may be adequate for private planning, but public or delegated claims require stronger evidence and confidence semantics. Skills must be allowed to rust over time and should influence task readiness, risk, cost, learning paths, and DIY-versus-hire choices.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0119: Global Technique database and real-life skill tree
+
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0114, UBU-Q0118 Blocks: Technique database, skill-tree UX, real-life capability acquisition, Skill Barter pipeline Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+A large UbU-run or UbU-compatible Technique database could let users select, learn, schedule, and verify Skills that unlock DIY Tasks, maintenance, professional labor skills, and Skill Barter opportunities. What is the Technique database model and how should UbU present the real-life skill tree without turning it into fake gamification?
+
+### Subquestions
+
+1. What fields does a Technique database entry carry: title, Objective class, required Skills, required Resources, expected duration, cost range, risk level, failure consequences, evidence requirements, produced Resources, produced Skills, verification criteria, prerequisites, variants, and citations/External References?
+2. How are Techniques curated, versioned, localized, rated, deprecated, or forked?
+3. Which Techniques are user-authored, UbU-authored, community-authored, Association-authored, or imported from external sources?
+4. How does UbU map a missing Skill to learning Tasks, practice Tasks, prerequisite Techniques, and verification Tasks?
+5. How does the planner choose between alternative Techniques for the same Objective when they require different Resources, Skills, costs, risk, or learning value?
+6. How should the skill-tree UX show unlocks, rust, confidence, evidence, and practical next learning steps?
+7. How does the Technique database avoid dangerous instructions, low-quality procedures, liability traps, hallucinated steps, and stale external references?
+8. How can Technique entries remain useful offline or locally while still benefiting from global/community improvements?
+9. How should UbU distinguish a fun marketing metaphor from a canonical scoring system so “gamifying real life” remains grounded in real capability?
+
+### Current direction
+
+`UBU-D0194` accepts the Technique database and real-life skill tree as premier future features. The metaphor is valuable only when grounded in real Skills, Resources, evidence, risks, and Objective-serving work. Phase 3B should explore private capability graph usefulness before public marketplace dependence.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0120: DIY-versus-purchase/hire/barter planning tradeoff
+
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Planning Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0114, UBU-Q0118, UBU-Q0119 Blocks: economic self-sufficiency planning, Resource/Skill value reports, financial-management extensions Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Resource and Skill modeling let UbU compare buying, hiring, DIY, learning-then-DIY, bartering, or deferring. What planning model should compare these alternatives without moralizing DIY or overclaiming the safety of user-performed work?
+
+### Subquestions
+
+1. What factors enter the comparison: time cost, money cost, affect cost, Resource availability, Skill level, Skill rust, risk, consequence of failure, learning value, future unlocks, relationship value, and Skill Barter value?
+2. How should UbU model the financial value of DIY without becoming a premature accounting package?
+3. How should UbU compare a professional service against a DIY Technique when the professional has stronger Skills, credentials, tools, insurance, or warranty coverage?
+4. How should UbU account for opportunity cost and affect depletion when DIY saves money but consumes scarce energy or attention?
+5. How should completed DIY Tasks update Skill evidence, Resource state, cost history, and future recommendations?
+6. How should UbU handle safety-critical, legally regulated, warranty-voiding, or high-failure-cost DIY work?
+7. What user-facing explanation should show why UbU recommends buying, hiring, learning, bartering, or deferring?
+8. How does this tradeoff interact with Preferences, Objectives, budget constraints, and financial management extensions?
+
+### Current direction
+
+`UBU-D0195` accepts DIY-versus-purchase/hire/barter as a core planning comparison. UbU should promote economic self-sufficiency through transparent tradeoffs, not by pressuring the user toward DIY. The financial-management path should connect spending and ownership to Objectives, Tasks, Techniques, Resources, and Skills.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0121: Skill Barter evidence, reputation, and sovereignty boundary
+
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0065, UBU-Q0082, UBU-Q0118, UBU-Q0119, UBU-Q0120 Blocks: public Skill Barter marketplace, pseudonymous capability claims, private reputation, dispute workflows Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Skill Barter should become an open, user-sovereign skill economy direction built on private Skill modeling, Delegation Substrate, Identity, Resource/Skill readiness, Technique evidence, and Compartments. What evidence, reputation, privacy, dispute, and settlement boundaries are required before any public or federated Skill Barter marketplace can operate responsibly?
+
+### Subquestions
+
+1. Which Skill claims can be self-declared, which require evidence, and which should be disallowed or externally constrained?
+2. What is the minimum marketplace-visible Skill profile: Identity, pseudonym, Skill refs, evidence summaries, confidence, availability, price/barter terms, Compartment policy, jurisdictional constraints?
+3. How does reputation avoid unnecessary doxxing while resisting fraud, Sybil attacks, collusion, and low-quality work?
+4. What evidence can be selectively disclosed without exposing raw private planning data, client data, affect data, or unrelated Identity context?
+5. What dispute workflow is needed for failed work, ambiguous completion, unsafe conduct, nonpayment, or broken commitments?
+6. What lawful settlement references are allowed, and how does UbU avoid token-first, speculation-first, tax-evasion, sanctions-evasion, or illicit-market framing?
+7. How do human executors, agentic executors, Associations, and General Contractor roles appear in the same marketplace without collapsing their different risk profiles?
+8. How portable should Skill evidence and reputation be outside UbU so the ecosystem remains user-sovereign rather than closed?
+9. Which advanced privacy technologies become useful: ZK claims, selective disclosure, FHE, secure enclaves, private reputation, commitments, or verifiable credentials?
+
+### Current direction
+
+`UBU-D0196` accepts Skill Barter as a future open, user-sovereign skill economy direction, not a Phase 1 marketplace or closed ecosystem. Private Skill and Technique usefulness should come first. Marketplace operation belongs to Phase 4+ unless a narrower prototype can be proven lawful, safe, privacy-preserving, and non-distracting from the personal life-logistics product.
 
 ### Resolution
 

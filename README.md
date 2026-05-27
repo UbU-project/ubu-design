@@ -9,11 +9,11 @@
 
 ## What is UbU?
 
-UbU is a privacy-first planning, coordination, and self-governance system.
+UbU is a privacy-first planning, coordination, and self-governance system for implementing life logistics.
 
 It is intended to convert messy real-world inputs - tasks, calendar events, messages, external events, user preferences, physical and affective state, GitHub/project data, realtime interaction streams, agent or worker outputs, and integration data - into explicit, inspectable, recalculable plans.
 
-UbU is not merely a task list, calendar application, chat assistant, or project-management dashboard. It aims to become a planning kernel for individuals and organizations: a system that models desired outcomes, constraints, risks, dependencies, available time, and human limitations, then helps determine what should happen next.
+UbU is not merely a task list, calendar application, chat assistant, or project-management dashboard. Its root product is the individual human life-logistics engine: a system that models desired outcomes, constraints, risks, dependencies, available time, human limitations, Resource readiness, and Skill capability, then helps determine what should happen next. Organizational coordination is an important emergent property of the same model.
 
 The first MVP is deliberately narrow: use UbU to coordinate the design, development, release, and maintenance of UbU itself.
 
@@ -46,6 +46,14 @@ In `user_mode`, human affect is part of the planning problem. Energy, stress, ti
 ### First-person legibility
 
 Phase 1 must remain understandable as a simple first-person loop: answer a few bootstrapping questions, preview a candidate Calendar, receive one recommended next Task, inspect why it matters now, act or override, and let UbU learn from what actually happened.
+
+### Resource and Skill readiness
+
+Many life-planning failures happen because the user lacks something needed to do the work. UbU's long-term model treats **Resources** as external prerequisites and **Skills** as Identity-owned capabilities.
+
+Resources include documents, tools, ingredients, credentials, software licenses, API keys, locations, payment methods, quiet spaces, and other stateful things a Task may need. Skills include capabilities the user can learn, test, forget, refresh, and evidence.
+
+This is not Phase 1 scope, but it is central to the full product. Phase 3 should try to add a thin Resource/Skill-aware task-readiness layer. Phase 3B and Phase 4+ form the full version 1.0 release track, including richer Resource, Skill, Technique, DIY-versus-purchase/hire, inventory, financial-management, and Skill Barter features.
 
 ### Dogfooding
 
@@ -126,6 +134,7 @@ The design baseline supports beginning implementation-first Phase 1 work while c
 - [x] Broad pre-MVP design automation is closed by `UBU-D0175`.
 - [x] The canonical design file set includes `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, and `PLANNING_KERNEL_CONTRACT.md`.
 - [x] Phase 1 is scoped around single-user GitHub dogfooding rather than a general productivity suite.
+- [x] Resource and Skill are recognized as core full-product abstractions while remaining out of Phase 1 implementation scope.
 - [x] The planning-kernel boundary is specified as a typed request/response contract with a local GPU path and CPU reference path.
 - [x] `model-committee` has advanced to the narrow v0.3 contract, including `PLANNING_KERNEL_CONTRACT.md` as a fourth canonical source file.
 - [x] `model-committee` remains advisory: it writes review artifacts, not accepted design state.

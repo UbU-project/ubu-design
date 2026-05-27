@@ -18,6 +18,14 @@ UbU should apply the same test to itself.
 
 ---
 
+## Relationship to personal life logistics
+
+Organizational introspection is an emergent use of UbU's personal self-governance model. The root product remains the individual life-logistics system: Objectives, Tasks, Plans, Logs, Resources, Skills, Techniques, Preferences, affect, Compartments, and user authority.
+
+The organizational case becomes stronger when the same model can ask whether a project actually has the Resources and Skills required for its declared commitments, not only whether it has meetings or issues on a board.
+
+---
+
 ## Distinction from personal introspection
 
 Organizational introspection is not the whole introspection story in UbU.

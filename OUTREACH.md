@@ -8,7 +8,7 @@
 
 ## Build software that helps humans govern their own time
 
-UbU is a privacy-first planning, coordination, and self-governance system.
+UbU is a privacy-first planning, coordination, and self-governance system for implementing life logistics.
 
 It is designed for people who are tired of tools that merely collect tasks, display calendars, summarize messages, or report status without understanding the deeper question:
 
@@ -116,6 +116,20 @@ The goal is not emotional surveillance. The goal is self-governance.
 
 ---
 
+## Resource and Skill readiness: gamifying real life
+
+UbU's long-term product is not only about arranging time. It should help a user become more capable in the real world.
+
+A Resource is something the user needs access to: a document, tool, ingredient, credential, file, software license, payment method, workspace, or other stateful prerequisite. A Skill is something an Identity can do: a capability that can be learned, tested, practiced, refreshed, evidenced, and allowed to rust.
+
+Together with a Technique database, these objects let UbU build a real-life capability graph. The user can see which Skills unlock which DIY tasks, maintenance work, professional capabilities, and future barter/labor opportunities. UbU can compare buying, hiring, doing it yourself, learning first, bartering, or deferring.
+
+The outreach hook is strong when kept honest:
+
+> UbU gamifies real life not by adding fake points, but by turning real Objectives, Resources, Skills, Techniques, constraints, and evidence into a capability tree the user can actually live inside.
+
+---
+
 ## Dogfooding: UbU runs UbU
 
 The Phase 1 MVP is focused on single-user GitHub dogfooding. UbU should help coordinate the UbU project itself by observing and modeling GitHub issues, pull requests, review requests, CI events, comments, labels, milestones, design questions, release-readiness checks, contributor interactions, planning-kernel work, and automation-worker outputs.
@@ -198,7 +212,7 @@ Small, correct, reviewable work is more valuable than sweeping architectural ent
 
 UbU should not become manager-first surveillance software, adversarial social-graph extraction, hidden organizational surveillance, employee productivity scoring, a generic task-board clone, a centralized data trap, an opaque agent that mutates canonical state without review, or a popularity-driven project that loses its self-governance core.
 
-Professional and FOSS use cases are valuable when they help build the same primitives required by the personal self-governance product: Objectives, Preferences, WorkItems, Plans, Logs, UniverseState, Identities, Compartments, bounded disclosure, and recalculable planning.
+Professional and FOSS use cases are valuable when they help build the same primitives required by the personal self-governance product: Objectives, Preferences, WorkItems, Plans, Logs, UniverseState, Resources, Skills, Techniques, Identities, Compartments, bounded disclosure, and recalculable planning.
 
 ---
 
