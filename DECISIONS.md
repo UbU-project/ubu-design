@@ -3888,3 +3888,69 @@ Retries use `UBU-D0187`: a failed child remains failed, and retry work is a new 
 - Worker-created means worker-proposed and parent-admitted, not direct worker canonical write authority.
 
 ---
+
+## UBU-D0189: Phase 1 readiness scoring uses gated derived evidence
+
+**Status:** Accepted → DESIGN.md §4.1
+
+Resolved question: `UBU-Q0033`.
+
+Phase 1 readiness is a derived planning signal, not canonical release authority. It may inform README or public status text only after human review; it must not by itself mark scope freeze, release readiness, or go/no-go decisions.
+
+Readiness reporting has two top-level scores:
+
+- `scope_freeze_readiness`: how stable Phase 1 design scope is after `UBU-D0097` and `UBU-D0175`.
+- `mvp_readiness`: how close the implementation is to a public Phase 1 MVP demo.
+
+Both scores are `0-100` and include evidence refs, last input commit, scorer version, blocking gates, and stale-warning state. The report must also show per-slice status instead of only a single aggregate number.
+
+Required Phase 1 slices:
+
+- bootstrap and seed model;
+- GitHub import and External References;
+- Objective/Task/UniverseState/Log admission;
+- Plan/Calendar generation and explanation;
+- next-action focus plus feedback/recalculation;
+- risk and human-complete plan-quality reports;
+- Compartment, worker, and projection authority boundaries;
+- GitHub projection preview or approved write plus reconciliation;
+- release outreach and public dogfooding artifact package when relevant.
+
+Default `mvp_readiness` weights:
+
+- 15 scope and blocker discipline;
+- 25 implementation slice coverage;
+- 15 user-facing loop evidence;
+- 15 integration/projection/worker/privacy boundaries;
+- 15 verification, fixtures, and deterministic tests;
+- 10 dogfooding/artifact/public-claim evidence;
+- 5 operational polish and contributor-run diagnostics.
+
+Score caps:
+
+- no solved Phase 1 scope-freeze decision: maximum 39;
+- any hard consistency failure in canonical files: maximum 49;
+- any unresolved `UBU-D0175`-certified blocker for the reported slice: maximum 69;
+- no runnable end-to-end dogfooding loop: maximum 59;
+- missing or failing Compartment/export, worker-authority, or GitHub-projection hard-boundary checks: maximum 74;
+- public demo or outreach claims without evidence labels: maximum 79;
+- no human-reviewed readiness report: maximum 89.
+
+Readiness bands:
+
+- `0-39`: design or consistency not stable enough for implementation signal.
+- `40-59`: implementation skeleton exists, but no reliable end-to-end loop.
+- `60-74`: private dogfooding candidate with known blockers or boundary gaps.
+- `75-89`: public-demo candidate requiring human review and polish.
+- `90-100`: MVP readiness candidate; release and scope-freeze claims still require human approval.
+
+A readiness report must name blockers, failing gates, stale inputs, manual assumptions, fixture/mock/live-data boundaries, and the next implementation slice most likely to raise the score. Model-committee may compute the report and propose README readiness text, but it must not update derived public readiness signals automatically.
+
+**Consequences:**
+
+- `UBU-Q0033` is resolved.
+- README readiness signals derive from an evidence-backed report, not from raw open-question count or model confidence.
+- Readiness is judged slice-by-slice after `UBU-D0175`; unresolved post-MVP or nonblocking questions do not reduce Phase 1 readiness unless they carry a valid blocker certificate.
+- Human review remains required before public readiness claims, release decisions, or scope-freeze claims.
+
+---

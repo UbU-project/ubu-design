@@ -449,15 +449,9 @@ Resolved. See UBU-D0057, UBU-D0058, UBU-D0059, UBU-D0060, UBU-D0065, UBU-D0069, 
 
 ## UBU-Q0033: Phase 1 MVP Readiness Scoring Rubric
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0001 Blocks: README readiness signal Resolved by: Unresolved Last scored: 2026-05-26 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0001 Blocks: README readiness signal Resolved by: UBU-D0189 Last scored: 2026-05-26 Scored from commit: None
 
-### Question
-
-How should UbU estimate how close the project is to Phase 1 scope freeze and MVP readiness?
-
-### Resolution
-
-Unresolved.
+Resolved. See UBU-D0189.
 
 ---
 
