@@ -4409,3 +4409,38 @@ UbU can compare: borrow free from a neighbor or library; use a tool library; ren
 - Ethereum fits naturally as the settlement and trust layer beneath a task-driven Resource and Skill exchange.
 
 ---
+
+## UBU-D0210: Skeleton Plan failures use bounded diagnostics and blocking clarification
+
+**Status:** Accepted → DESIGN.md §15.2.2; PLANNING_KERNEL_CONTRACT.md §4
+
+Resolved question: `UBU-Q0070`.
+
+Skeleton generation must not continue into ordinary optimization when no valid skeleton baseline exists for the current Calendar scope. It returns a bounded `SkeletonFailureDiagnostic` and asks for clarification or a user choice.
+
+MVP `failure_class` values:
+
+- `missing_starting_state`;
+- `impossible_dependency`;
+- `cyclic_dependency`;
+- `static_task_collision`;
+- `insufficient_calendar_window`;
+- `unavailable_resource`;
+- `blocked_external_event`;
+- `unknown_precondition`.
+
+The diagnostic payload records diagnostic ID, severity, failure class, affected Task refs, missing or conflicting state, relevant time-window or Static Task refs, initial UniverseState ref, source or External Event refs, a compact causal chain, safe alternatives, prompt policy, and a short non-blaming user-facing summary.
+
+Default explanation budget is the failed Task or state, the immediate cause, and at most three causal-chain steps. Full dependency/precondition detail stays one inspector action away.
+
+Safe alternatives are limited to providing or correcting starting state, marking the state already satisfied, adding a prerequisite Task, relaxing a deadline or Static constraint, extending the planning horizon, removing or mooting the blocked Task, choosing an already-modeled alternate Technique or Task path, waiting for or recording an External Event, or manual decision. UbU must not invent canonical Resources, Skills, Techniques, Preferences, or external facts just to repair skeletonization.
+
+Use `immediate_blocking_prompt` when the failure prevents a valid baseline for the current Calendar, current or next recommendation, Static Task placement, hard dependency/precondition, deadline feasibility, required Resource, or required External Event. Use `planning_warning` only when a valid skeleton still exists and the failed chain is outside the current recommendation path or future horizon; then record the diagnostic and mark the relevant Calendar, explanation, or risk report stale.
+
+**Consequences:**
+
+- Skeleton failure is model repair, not low-quality optimization.
+- User clarification can produce explicit state updates, Task changes, Plan repair, or manual decisions through normal admission and Log paths.
+- Implementations can validate failure handling through the `SkeletonFailureDiagnostic` payload in `PLANNING_KERNEL_CONTRACT.md`.
+
+---

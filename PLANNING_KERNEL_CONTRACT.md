@@ -192,6 +192,7 @@ Phase 1 rules:
   - `n_finalists_rollout`
   - `rejection_counts_by_reason`
   - `warnings`
+  - `skeleton_failure_diagnostics`: list of `SkeletonFailureDiagnostic` objects. Empty when skeletonization and prerequisite validation do not fail; required when `status = rejected` because no skeleton baseline exists.
   - `probability_quality`: enum, one of `full`, `degraded_numeric_jitter`, `degraded_independence`, `not_estimated`.
   - `coverage_scope`: optional enum, one of `reactive_horizon`, `full_window`, `repair_scope`.
   - `coverage_estimate`: optional numeric branch-coverage estimate.
@@ -199,6 +200,28 @@ Phase 1 rules:
   - `coverage_threshold_used`: optional numeric threshold used for regeneration decisions.
   - `coverage_below_threshold`: optional boolean.
   - `compute_telemetry`: optional backend timing and resource summary, including `duration_ms` when available.
+
+### `SkeletonFailureDiagnostic`
+
+A skeleton failure diagnostic is the bounded payload for halted or degraded skeleton generation. Minimum fields:
+
+- `diagnostic_id`
+- `severity`: enum, one of `blocking`, `warning`.
+- `failure_class`: enum, one of `missing_starting_state`, `impossible_dependency`, `cyclic_dependency`, `static_task_collision`, `insufficient_calendar_window`, `unavailable_resource`, `blocked_external_event`, `unknown_precondition`.
+- `primary_task_ref`: optional when the failure is Calendar-wide.
+- `affected_task_refs`: list of Task refs.
+- `missing_or_conflicting_state`: object with `target`, `predicate`, optional `expected`, optional `observed`, and `state_status` enum, one of `missing`, `known_false`, `conflicting`, `unresolved`, `denied_by_policy`.
+- `causal_chain`: ordered list of compact fragments with Task ref, dependency or precondition ref, required state, optional producer Task ref, and status.
+- `time_window_refs`: list of relevant Calendar or deadline refs.
+- `static_task_conflict_refs`: list of Static Task refs for fixed-time conflicts.
+- `initial_universe_state_ref`: optional UniverseState or Snapshot ref.
+- `source_refs`: list of provenance or External Reference refs.
+- `external_event_refs`: list of relevant External Event refs.
+- `safe_alternatives`: list of alternatives, each with `action`, `label`, `requires_user_input`, `resulting_change_summary`, and optional candidate mutation or repair ref.
+- `prompt_policy`: enum, one of `immediate_blocking_prompt`, `planning_warning`.
+- `user_facing_summary`: short non-blaming explanation text.
+
+Allowed `safe_alternatives.action` values are `provide_starting_state`, `mark_state_already_satisfied`, `add_prerequisite_task`, `relax_deadline`, `extend_planning_horizon`, `remove_or_moot_task`, `choose_alternate_technique_or_task_path`, `wait_for_external_event`, and `manual_decision`.
 
 ### `PlanCandidate`
 
