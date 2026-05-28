@@ -733,38 +733,9 @@ Open.
 
 ## UBU-Q0057: Evergreen Dynamic Task and gap-filling semantics
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016 Blocks: Gap filling before Static Tasks, mobile next-action UX, Calendar preview quality Resolved by: None Last scored: 2026-05-27 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016 Blocks: Gap filling before Static Tasks, mobile next-action UX, Calendar preview quality Resolved by: UBU-D0202 Last scored: 2026-05-27 Scored from commit: None
 
-### Question
-
-How should UbU represent evergreen Dynamic Tasks or evergreen Objective-maintenance Tasks that can fill spare time when all predetermined Tasks before the next Static Task are complete, blocked, moot, or unsuitable?
-
-### Subquestions
-
-1. Are evergreen gap-fillers a Task subtype, a Task property, an Objective-maintenance pattern, a Technique-instantiation rule, or planner behavior?
-2. What fields are required?
-   - flexible start time
-   - flexible duration
-   - minimum useful duration
-   - maximum useful duration
-   - location invariance or broad location category
-   - required materials or device state
-   - affect suitability
-   - cooldown/frequency limit
-   - Objective link
-   - recurrence/reactivation rule
-3. How should UbU choose among evergreen candidates such as meditation, Calendar preview, Log review, lightweight cleanup, reflection, review queues, or relationship-maintenance prompts?
-4. How should evergreen Tasks avoid becoming filler that crowds out recovery, transition time, or user autonomy?
-5. How should the reactive branch layer consider evergreen Tasks when early completion creates a gap before the next Static Task?
-6. Which evergreen semantics are necessary for Phase 1 and which can wait?
-
-### Current direction
-
-The planner should not leave the user with unexplained idle gaps merely because all predetermined Dynamic Tasks before a Static Task are complete. UbU should be able to suggest or schedule useful evergreen Dynamic Tasks when constraints allow, but the exact representation remains open.
-
-### Resolution
-
-Open.
+Resolved. See UBU-D0202.
 
 ---
 

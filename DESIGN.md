@@ -1378,6 +1378,30 @@ Permitted:
 
 Tasks with no known modeled effect may be reportable as low-utility or “meaningless” for plan scoring.
 
+### 9.3.1 Evergreen gap-fillers
+
+Phase 1 does not add an evergreen Task subtype. An evergreen gap-filler is an ordinary active Dynamic Task, usually serving an evergreen Objective, with a `gap_fill_policy` that lets the planner consider it when an otherwise discretionary gap exists.
+
+Required `gap_fill_policy` fields:
+
+- `eligible`: `true`;
+- `minimum_useful_duration_seconds`;
+- `maximum_useful_duration_seconds`;
+- `cooldown_policy`, including an explicit `none_declared` value when no cooldown applies;
+- `autonomy_mode`, which is `suggest_only` in Phase 1.
+
+Optional `gap_fill_policy` fields:
+
+- `preferred_duration_seconds` when different from the Task duration model;
+- `location_scope`, such as `anywhere`, `current_location`, or a broad user-defined category;
+- `required_context_refs`, such as required material, device, app, or integration state;
+- `affect_suitability`, when the Task has narrower affect fit than normal Task affect constraints;
+- `rank_hint`, for local tie-breaking among otherwise similar candidates.
+
+Existing Task fields carry Objective link, title, status, duration, dependencies, preconditions, effects, recurrence, and provenance. Readiness should use ordinary preconditions when possible.
+
+Recovery, meals, sleep, transition buffers, setup/teardown, and other legitimization support work are not gap-fillers by default. They protect human viability before optional gap work is considered.
+
 ### 9.4 Container
 
 A **Container** groups WorkItems.
@@ -1953,9 +1977,25 @@ Calendar Logic includes constraints such as:
 
 Plans may contain gaps.
 
-Gap time is discretionary.
+Gap time is discretionary. UbU may explain a gap as protected recovery, transition/setup time, user-declared free time, or a place where optional work could fit.
 
-For MVP, gap suggestions are UI suggestions outside the Plan. Future versions may instantiate Gap Tasks.
+For Phase 1, evergreen gap-fillers are UI suggestions outside the default Plan. A suggestion may be shown only after Static Tasks, predetermined Dynamic Tasks, dependencies, preconditions, legitimization support, recovery, and transition buffers have already been respected.
+
+The planner ranks eligible gap-fillers by:
+
+- hard fit to the available gap;
+- Objective-derived value and due cadence;
+- readiness from preconditions, location, material, device, and integration state;
+- affect suitability and expected affect delta;
+- cooldown or frequency policy;
+- setup and teardown cost;
+- user recency, rejection, snooze, and override evidence.
+
+Calendar preview, Log review, affect collection, review queues, light cleanup, reflection, meditation, and relationship-maintenance prompts can all be represented by ordinary Dynamic Tasks with `gap_fill_policy` when they satisfy the same rules.
+
+A gap-filler must not displace recovery, meals, sleep, transition buffers, setup/teardown, Static Tasks, deadline-fragile prerequisites, or a user-declared desire to leave the gap open. Phase 1 `autonomy_mode` is `suggest_only`: accepting or starting a suggestion records ordinary Task execution evidence and may trigger recalculation, but the suggestion is not a prior user commitment.
+
+Future versions may instantiate Gap Tasks, trusted auto-insertion policies, Technique-generated maintenance Tasks, richer Resource/Skill readiness, and stochastic Objective recurrence.
 
 ---
 
@@ -2030,7 +2070,9 @@ Plan probability is represented internally as probability metadata rather than o
 
 The default Plan is not enough for real-time use because reality can diverge from the modeled branch. UbU therefore also needs a lightweight reactive layer, likely BFS-like, policy-based, or repair-recipe-based, that starts at the current instant and maintains a short-horizon cache or reconstruction path for high-probability near-term alternatives.
 
-The reactive layer should cover near-term alternatives involving planned Tasks, duration variation, early completion, late completion, interruptions, relevant external events, affect shifts, user overrides, and immediate recalculation triggers. The provisional default horizon is one hour. Mobile-only, low-power, or offline operation may shorten this horizon.
+The reactive layer should cover near-term alternatives involving planned Tasks, duration variation, early completion, late completion, interruptions, relevant external events, affect shifts, user overrides, eligible evergreen gap-fill suggestions, and immediate recalculation triggers. The provisional default horizon is one hour. Mobile-only, low-power, or offline operation may shorten this horizon.
+
+When early completion creates a gap before the next Static Task and no predetermined Dynamic Task can be pulled forward, the reactive layer may compute a small ranked suggestion set from eligible gap-fillers. It should preserve the protected baseline and ask before starting or materializing the suggested Task in Phase 1.
 
 This layer exists to let the user's current Calendar and Log update quickly when something actually happens. It should not attempt to enumerate every possible future to the end of the Calendar scope.
 
@@ -2055,7 +2097,7 @@ When a Task completes earlier than expected, the default behavior should be to p
 
 This supports a conservative duration bias: when uncertain, the scheduler may prefer duration estimates that are not overly optimistic. Early completion then becomes easy to absorb by starting the next valid Dynamic Task immediately rather than leaving useless gaps or requiring disruptive global replanning.
 
-Static Tasks retain fixed start times. If no predetermined Dynamic Task can validly fill time before the next Static Task, the planner should consider gap-filling suggestions. The design of evergreen Dynamic Tasks or evergreen Objective-maintenance Tasks is still open and tracked separately.
+Static Tasks retain fixed start times. If no predetermined Dynamic Task can validly fill time before the next Static Task, the planner considers evergreen gap-fill suggestions under section 15.4 and `gap_fill_policy` rather than treating the gap as unexplained failure.
 
 This forward-pull semantic is the natural counterpart to the log-normal duration model. Log-normal duration distributions are right-skewed: delays stack asymmetrically and early completions are relatively rare. The forward-pull repair handles early completion cheaply — no global replan, just pull the next eligible Dynamic Task forward — while late completion requires no special action since the distribution already biases toward longer-than-mean durations. For lay audiences, this is well described as a stop-light model: a sequence of independent delay sources where slowdowns accumulate and early green lights simply mean you move a little sooner. See also: `UBU-D0166`.
 

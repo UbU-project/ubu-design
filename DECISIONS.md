@@ -4281,3 +4281,44 @@ Before treating repeated behavior as a habit pattern, UbU asks a clarification p
 - Habit-pattern inference requires user clarification before it affects planning as a stable pattern.
 
 ---
+
+## UBU-D0202: Evergreen gap-fillers are ordinary Dynamic Task suggestions
+
+**Status:** Accepted → DESIGN.md §§9.3.1, 15.4, 16.4, 16.6
+
+Resolved question: `UBU-Q0057`.
+
+Phase 1 does not add an evergreen Task subtype or `GapTask`. An evergreen gap-filler is an ordinary active Dynamic Task, usually linked to an evergreen Objective, with a `gap_fill_policy`. The planner considers it only after Static Tasks, predetermined Dynamic Tasks, dependencies, preconditions, legitimization support, recovery, and transition buffers are respected.
+
+Minimum Phase 1 `gap_fill_policy` fields:
+
+- `eligible`;
+- `minimum_useful_duration_seconds`;
+- `maximum_useful_duration_seconds`;
+- `cooldown_policy`, including explicit `none_declared` when no cooldown applies;
+- `autonomy_mode`, fixed to `suggest_only` in Phase 1.
+
+Optional fields:
+
+- `preferred_duration_seconds`;
+- `location_scope`;
+- `required_context_refs` for material, device, app, integration, or broad location state;
+- `affect_suitability`;
+- `rank_hint`.
+
+Existing Task fields provide Objective link, duration, title, active status, recurrence or reactivation linkage, dependencies, preconditions, effects, and provenance. Location, material, device, and integration requirements should use ordinary preconditions when they affect readiness.
+
+Gap-fill selection ranks candidates by fit to the gap, Objective-derived value, due cadence, readiness, affect suitability, expected affect delta, cooldown, setup/teardown cost, and recent user snooze/reject/override evidence. Calendar preview, Log review, affect collection, lightweight cleanup, reflection, review queues, meditation, and relationship-maintenance prompts can all use the same representation.
+
+Phase 1 gap-fillers are suggestions outside the default Plan. Accepting or starting one records ordinary Task execution or decision evidence and may trigger recalculation. A gap-filler must not crowd out recovery, meals, sleep, transition buffers, setup/teardown, deadline-fragile prerequisites, Static Tasks, or a user-declared desire to keep the gap open.
+
+The reactive branch layer may compute a small ranked suggestion set when early completion leaves a gap before the next Static Task and no predetermined Dynamic Task can be pulled forward. Future versions may add Gap Tasks, trusted auto-insertion policies, Technique-generated maintenance Tasks, richer Resource/Skill readiness, and stochastic Objective recurrence.
+
+**Consequences:**
+
+- `UBU-Q0057` is resolved for Phase 1.
+- Phase 1 implementation can support useful spare-time suggestions without adding a WorkItem subtype or making idle time a planning failure.
+- Calendar preview and mobile next-action UX can explain why a gap is protected, discretionary, or has an optional suggestion.
+- Later richer maintenance automation remains compatible with ordinary Task, Objective recurrence, and planner behavior.
+
+---
