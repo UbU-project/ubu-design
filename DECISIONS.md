@@ -4148,4 +4148,45 @@ Preference inference may consume only uncorrected counterfactual entries and mus
 - Optional reason prompts can stay lightweight without losing the fact of the decision.
 - No new Log event type is required beyond `decision_recorded`.
 
+
+## UBU-D0199: Question decomposition reduces design burden, not question count
+
+**Status:** Accepted → DESIGN.md §§3.6, 3.7
+
+Resolved question: `UBU-Q0040`.
+
+Model-committee evaluates decomposition by unresolved design burden, not raw open-question count. A burden estimate combines:
+
+- dependency burden: unresolved dependency count, dependency depth, and blocker status;
+- ambiguity burden: mixed decision types, vague scope, missing acceptance criteria, or unclear authority class;
+- automation burden: automation-likelihood, validator availability, patchability, risk, and human-involvement class;
+- implementation burden: whether the question blocks a concrete Phase 1 slice, hard invariant, needed contract, or persistent schema choice.
+
+Answerability is a hard gate for ordinary answering:
+
+- no dependencies, solved dependencies, or dependencies answered in the same work item: eligible;
+- unresolved dependencies outside the work item: not eligible for ordinary answering;
+- blocked questions may be selected only for decomposition or consistency repair.
+
+A decomposition is valid when replacement questions:
+
+- preserve the parent's intent without expanding scope;
+- are narrower and have clear decision type, phase, priority, dependencies, automation class, blockers, and resolution conditions;
+- include lineage metadata, using `Decomposes: UBU-Qxxxx` or equivalent metadata once parser support exists;
+- reduce total burden, dependency depth, ambiguity, risk, or automation difficulty;
+- produce at least one answerable replacement now, or clearly shorten the path to answerability.
+
+A parent question may be marked decomposed only when accepted replacement questions are canonical and the parent no longer needs ordinary answering as one unit. It may be marked solved only when an accepted decision answers the parent. Until parser support for decomposed status and lineage metadata exists, leave the parent open unless an accepted decision resolves it.
+
+Work scoring rewards valid decomposition when it lowers burden or unlocks immediate work, even if open-question count rises. It penalizes proliferation that creates vaguer, harder, more coupled, dependency-heavier, or lineage-free questions.
+
+The `UBU-D0175` stop rule applies to replacement questions. A replacement question is not an MVP blocker unless it includes a valid blocker certificate. Dependency-reducing decomposition is preferred over waiting when it can create answerable work without violating accepted dependencies, hard invariants, or file/schema consistency.
+
+**Consequences:**
+
+- `UBU-Q0040` is resolved for model-committee prioritization.
+- Raw open-question count is not used as the stop rule or decomposition score.
+- Blocked questions can be selected for decomposition, but not ordinary answering.
+- Future parser work may add first-class decomposed-status and lineage fields without changing the scoring rule.
+
 ---

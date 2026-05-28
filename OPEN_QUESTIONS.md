@@ -544,36 +544,9 @@ Resolved. See UBU-D0178.
 
 ## UBU-Q0040: Question Decomposition and Design Burden Scoring
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0039 Blocks: model-committee prioritization accuracy Resolved by: UBU-D0068 Last scored: 2026-05-27 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0039 Blocks: model-committee prioritization accuracy Resolved by: UBU-D0199 Last scored: 2026-05-27 Scored from commit: None
 
-### Question
-
-How should model-committee distinguish harmful question proliferation from valuable decomposition of hard questions into simpler, more automatable questions?
-
-### Subquestions
-
-1. How is unresolved design burden measured?
-2. How is automation difficulty compared between an original question and its replacements?
-3. When may a question be marked decomposed rather than solved?
-4. What metadata should link replacement questions to the original question?
-5. How should work scoring reward valid decomposition?
-6. How should the stop rule account for decomposition that increases question count but lowers total difficulty?
-7. When is dependency-reducing decomposition preferable to waiting for all dependencies to be answered?
-8. How should the system score decompositions that produce at least one immediately answerable replacement question?
-9. How should dependency simplification affect question ranking?
-10. How should answerability be computed from dependency metadata?
-11. When should a blocked question be selected for decomposition rather than skipped?
-12. Should answerability be a hard gate or a weighted score?
-
-### Current direction
-
-Increasing the number of open questions is acceptable when a hard or blocked question is split into simpler, clearer, lower-risk, or more automatable questions. This is especially valuable when at least one replacement question has fewer dependencies, simpler dependencies, or no dependencies, allowing the system to make progress without waiting for the full original dependency chain.
-
-Question selection should use answerability as the first gate. Ordinary work should only run on questions whose dependencies are resolved, absent, or handled in the same work item. Blocked questions may still be selected for decomposition if the decomposition is expected to produce replacement questions with fewer, simpler, or no dependencies.
-
-### Resolution
-
-Partially resolved by `UBU-D0068`; detailed scoring mechanics remain open.
+Resolved. See UBU-D0199.
 
 ---
 

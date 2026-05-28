@@ -550,9 +550,15 @@ This is especially valuable when a blocked question can be decomposed into repla
 
 The relevant metric is unresolved design burden, not merely raw open-question count.
 
-A decomposition is bad when it creates more, harder, vaguer, or more coupled questions.
+For derived ranking, unresolved design burden combines dependency burden, ambiguity burden, automation burden, and implementation burden. Dependency burden includes unresolved dependency count, dependency depth, and whether a dependency blocks Phase 1 work. Ambiguity burden includes mixed decision types, vague scope, and missing acceptance criteria. Automation burden includes automation-likelihood, validator availability, risk, and human-involvement class. Implementation burden includes whether the question blocks a concrete Phase 1 slice, hard invariant, needed contract, or persistent schema choice.
+
+A decomposition is valid when replacement questions preserve the parent intent, are individually narrower, include dependency and lineage metadata, and reduce total estimated burden. The strongest decomposition creates at least one immediately answerable replacement question.
+
+A decomposition is bad when it creates more, harder, vaguer, more coupled, or lineage-free questions.
 
 A decomposition is good when it exposes smaller answerable units and improves future automation.
+
+Replacement questions should link to the original with `Decomposes: UBU-Qxxxx` or equivalent metadata once parser support exists. Until decomposed-status metadata is parser-supported, parent questions should remain open unless an accepted decision also resolves the parent; resolved parent questions are tombstoned normally.
 
 ### 3.7 Answerability-first prioritization
 
@@ -563,6 +569,8 @@ A question is eligible for ordinary work only if:
 - it has no dependencies;
 - all dependencies are solved;
 - or all dependencies are being answered in the same work item.
+
+Answerability is a hard gate for ordinary answering, not for decomposition work. For ordinary work, unresolved dependencies make the question ineligible unless included in the same work item. For decomposition selection, unresolved dependencies contribute to burden and can raise priority when replacement questions are expected to have fewer, simpler, or no dependencies. Dependency simplification improves ranking only through the decomposition path; it does not make the blocked parent ordinarily answerable.
 
 After answerability is established, questions are ranked by:
 
