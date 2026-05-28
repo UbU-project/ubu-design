@@ -4444,3 +4444,39 @@ Use `immediate_blocking_prompt` when the failure prevents a valid baseline for t
 - Implementations can validate failure handling through the `SkeletonFailureDiagnostic` payload in `PLANNING_KERNEL_CONTRACT.md`.
 
 ---
+
+## UBU-D0211: Semi-legitimization prunes candidates before full legitimacy validation
+
+**Status:** Accepted → DESIGN.md §15.2.2; PLANNING_KERNEL_CONTRACT.md §4
+
+Resolved question: `UBU-Q0071`.
+
+Phase 1 treats full legitimization as a finalist oracle. Full legitimization must run for the legitimized skeleton baseline and for any Plan that can become the default Plan. It does not run inside every high-fan-out candidate-construction step unless implementation measurements show it is cheap enough.
+
+Full legitimization includes exact or conservative validation of Calendar Logic, dependencies, preconditions, affect limits in `user_mode`, required recovery, breaks, meals, sleep, rest, transition buffers, setup and teardown time, context-switch limits, slack thresholds, dependency-fragility thresholds, support Task or buffer insertion, and user-facing diagnostics.
+
+Semi-legitimization is the cheap prevalidation layer. The MVP heuristic set is sufficient:
+
+- affect budget;
+- slack preservation;
+- dependency fragility;
+- user-mode compatibility;
+- local repair viability;
+- legitimacy-delta estimate against the legitimized skeleton baseline.
+
+Semi-legitimization returns `passes_cheap_checks`, `reject_obvious`, or `needs_full_legitimization`. It may prune obvious failures and rank candidates, but it cannot certify a default Plan. Any uncertain or selected candidate requires full legitimization before default selection.
+
+Legitimacy is both binary and graded. Binary legitimacy is the validity gate: `passed`, `failed`, or `needs_clarification`. Graded legitimacy fields such as `legitimacy_score`, `legitimacy_margin`, and `legitimacy_delta_from_baseline` are advisory ranking and explanation signals only.
+
+A high-value brittle Plan may beat a lower-value humane Plan only after full legitimization passes and minimum slack, local repair envelope, affect margin, destructive-pressure, and post-plan-state checks pass. Objective value cannot buy down hard legitimacy failure. If no richer candidate clears that bar, the default remains the lower-value humane finalist or the legitimized skeleton baseline.
+
+Recuperative work required for legitimacy is not optional gap-filling. Meals, sleep, rest, breaks, recovery, setup/teardown, transition buffers, affect collection, and checkpoint work inserted or protected by legitimization are ordinary Tasks or buffers with explanation lineage, protected criticality, and support refs. Optional `gap_fill_policy` suggestions are considered only after that support work is protected.
+
+**Consequences:**
+
+- Candidate search can use cheap pruning without making semi-legitimization a hidden validity oracle.
+- Full legitimacy remains CPU-certified before default Plan selection.
+- Planner scoring can compare humane and brittle Plans without treating hard human-viability constraints as ordinary utility penalties.
+- Recuperative Tasks are represented through ordinary Plan support work, not as evergreen gap-fillers.
+
+---

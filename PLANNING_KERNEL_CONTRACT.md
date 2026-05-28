@@ -242,6 +242,14 @@ Each `PlanCandidate` must carry:
   - `affect_feasible`: boolean.
   - `minimum_affect_score`.
   - `violated_affect_dimensions`.
+- `semi_legitimization_summary`: optional cheap prevalidation summary:
+  - `result`: enum, one of `passes_cheap_checks`, `reject_obvious`, `needs_full_legitimization`.
+  - `affect_budget_ok`: optional boolean.
+  - `slack_preserved`: optional boolean.
+  - `dependency_fragility_ok`: optional boolean.
+  - `user_mode_compatible`: optional boolean.
+  - `local_repair_viable`: optional boolean.
+  - `legitimacy_delta_estimate`: optional numeric estimate relative to the legitimized skeleton baseline.
 - `probability_summary`:
   - `display_probability`: optional scalar.
   - `log_probability`: optional numeric value for stable computation.

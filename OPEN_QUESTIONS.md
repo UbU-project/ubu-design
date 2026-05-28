@@ -1042,27 +1042,9 @@ Resolved. See UBU-D0210.
 
 ## UBU-Q0071: Legitimization and semi-legitimization cost model
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016, UBU-Q0053 Blocks: realistic candidate Plan search Resolved by: None Last scored: 2026-05-28 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016, UBU-Q0053 Blocks: realistic candidate Plan search Resolved by: UBU-D0211 Last scored: 2026-05-28 Scored from commit: None
 
-### Question
-
-How expensive is full legitimization, and what semi-legitimization heuristics are needed before full candidate validation?
-
-### Subquestions
-
-1. Which constraints belong to full legitimization versus cheap semi-legitimization?
-2. Are affect budget, slack preservation, dependency fragility, user-mode compatibility, local repair, and legitimacy-delta estimates sufficient for MVP?
-3. Is legitimacy binary, graded, or both?
-4. How does the planner compare a high-value but brittle Plan against a lower-value but more humane Plan?
-5. How are recuperative Tasks represented when they are required for Plan legitimacy rather than optional gap-filling?
-
-### Current direction
-
-The legitimized skeleton Plan is the baseline feasible Plan. If full legitimization is cheap, it can be used as a frequent validity oracle. If expensive, UbU needs approximate semi-legitimization before full validation of finalists.
-
-### Resolution
-
-Open.
+Resolved. See UBU-D0211.
 
 ---
 
@@ -1158,7 +1140,7 @@ Open.
 
 ## UBU-Q0075: Optional VoxPopuli EthConf demo boundary
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0050 Blocks: optional EthConf public demo Resolved by: None Last scored: 2026-05-28 Scored from commit: None
+Status: Deferred Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0050 Blocks: optional EthConf public demo Resolved by: None Last scored: 2026-05-28 Scored from commit: None
 
 ### Question
 
@@ -1178,7 +1160,7 @@ VoxPopuli is an optional EthConf/public demonstration and populist hook. It is n
 
 ### Resolution
 
-Open.
+Deferred due to lack to preparation time.
 
 ---
 
