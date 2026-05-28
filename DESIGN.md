@@ -14,6 +14,14 @@ UbU takes messy real-world inputs—tasks, calendar events, messages, external e
 
 UbU is not merely a task list or calendar application. Its core motivation is to help an individual human being plan and implement the logistics of an actual life: what matters, what must happen, what the world must contain, what the user is capable of doing, what can be learned, what should be bought or delegated, and what should happen next. Organizational coordination is an important emergent property of the same model, not the root purpose.
 
+The canonical UbU use-case formula is:
+
+> **Objective + Current State + Constraints + Resources + Skills + Techniques + Preferences + External Options → Legitimate Plan**
+
+The canonical use-case statement: UbU helps an individual user solve everyday life problems by transforming a desired outcome into a legitimate, executable plan. It does this by modeling the current state of the user's life, the desired state, required Tasks, available and missing Resources, available and missing Skills, reusable Techniques, affect and energy constraints, financial tradeoffs, public or marketplace options, expert-guided alternatives, and evidence from execution. UbU's purpose is not merely to schedule time, but to help the user determine what path can realistically move life from the current state toward the desired state.
+
+The deeper purpose is to help people build the capabilities, resources, routines, and relationships needed to actually live the life they choose — not just to schedule it.
+
 The first MVP is designed around **dogfooding**: using UbU to coordinate the design, development, release, and maintenance of UbU itself.
 
 Recent LLM and agentic-AI changes reinforce UbU's core boundary: realtime, multimodal, tool-using, memory-bearing models are valuable interaction and extraction backends, but UbU remains the user-sovereign state-transition, planning, logging, privacy, and review layer.
@@ -91,6 +99,14 @@ UbU therefore treats external prerequisites and embodied capabilities as plannin
 - a **Technique** is a reusable procedure that can transform Resources, Skills, time, and attention into an Objective-serving result.
 
 Resource and Skill modeling is delayed from Phase 1 only because of the bootstrapping process. It is not conceptually peripheral. A minimal Resource/Skill-aware task-readiness layer is a Phase 3 candidate because it directly serves the core personal life-logistics product.
+
+**Government and public-resource symmetry.** Any institution that can constrain a user's plan may also provide Resources, permissions, remedies, or procedures that improve the user's plan. UbU must model both sides. UbU should not only surface regulations, permits, and constraints — it should also identify grants, subsidies, benefit programs, weatherization assistance, workforce training, legal aid, public infrastructure, hardship waivers, appeals, and other government- or community-supported Resources that may make a plan possible or cheaper.
+
+Many public Resources are conditionally unlockable: they become available only after the user completes prerequisite actions such as applying for a benefit, collecting required documents, filing a form, requesting an accommodation, or waiting for an enrollment window. UbU should model these as conditional Resource availability states and generate the prerequisite Tasks automatically.
+
+**Library and Community Resource Mode.** Libraries, tool libraries, makerspaces, public workshops, repair cafés, and community resource centers should be treated as Resource providers. A user can state a goal such as "fix small things around my apartment" and UbU can plan around library tool loans, local workshops, Skill acquisition Tasks, DIY projects using borrowed Resources, return deadlines, and future Skills unlocked. This supports the public-good, frugality, sustainability, and self-sufficiency narratives and democratizes access to Resources that were previously available only to those with money or social capital.
+
+**Expert-Guided DIY and Technique Commissioning.** UbU should not imply that users must personally master every Skill. For problems where the user lacks a Skill, there is a middle tier between generic guides and full-service labor: expert-guided DIY. The user submits evidence about their specific situation — photos, measurements, model numbers, symptoms, skill level, available Resources, risk tolerance. A skilled expert reviews the situation and returns a custom Technique Package: diagnosis, parts list, tool list, step-by-step instructions, safety warnings, and the conditions under which to stop and hire a professional. This is AI-orchestrated expert delegation that produces a custom executable Technique for the user's actual situation — not generic advice.
 
 ### 2.4 Privacy-first architecture
 

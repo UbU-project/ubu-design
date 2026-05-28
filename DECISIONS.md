@@ -4292,3 +4292,120 @@ Accepted constraints:
 - EthConf follow-up becomes a dogfooding case with auditable mission-alignment evidence instead of a marketing-only activity.
 
 ---
+
+## UBU-D0205: Canonical use-case statement and capability framing
+
+**Status:** Accepted → DESIGN.md §1, README.md
+
+The canonical UbU use-case statement is:
+
+> UbU helps an individual user solve everyday life problems by transforming a desired outcome into a legitimate, executable plan. It does this by modeling the current state of the user's life, the desired state, required Tasks, available and missing Resources, available and missing Skills, reusable Techniques, affect and energy constraints, financial tradeoffs, public or marketplace options, expert-guided alternatives, and evidence from execution.
+
+The canonical use-case formula is:
+
+> **Objective + Current State + Constraints + Resources + Skills + Techniques + Preferences + External Options → Legitimate Plan**
+
+The deeper philosophical framing is:
+
+> UbU helps people build the capabilities, resources, routines, and relationships needed to actually live the life they choose.
+
+This makes UbU a **capability engine for real life**, not merely a scheduler or task manager.
+
+**Consequences:**
+
+- Public-facing files should use the canonical statement and formula when introducing UbU to new audiences.
+- The capability framing strengthens the product identity and distinguishes UbU from adjacent tools.
+
+---
+
+## UBU-D0206: Government and public-resource symmetry is a design invariant
+
+**Status:** Accepted → DESIGN.md §2.3.1
+
+Any institution that can constrain a user's plan may also provide Resources, permissions, remedies, or procedures that improve the user's plan. UbU must model both sides.
+
+UbU should not only surface regulations, permits, and legal constraints. It should also identify and plan around grants, subsidies, benefit programs, weatherization assistance, workforce training, legal aid, public infrastructure, hardship waivers, appeals, enrollment windows, and other government- or community-supported Resources.
+
+Many public Resources are conditionally unlockable: they become available only after the user completes prerequisite actions such as applying for a benefit, collecting documents, filing a form, or requesting an accommodation. UbU should represent these as conditional Resource availability states and generate the prerequisite Tasks automatically.
+
+**Consequences:**
+
+- UbU avoids being one-sided: it is not only a constraint-modeling system but also a resource-discovery and entitlement-navigation system.
+- The benefits navigation and public-program access use cases become natural extensions of the Resource model.
+- This is particularly important for users in economic precarity, life transition, or unfamiliar institutional environments.
+
+---
+
+## UBU-D0207: Library and Community Resource Mode is a named feature direction
+
+**Status:** Accepted → DESIGN.md §2.3.1, OUTREACH.md
+
+Libraries, tool libraries, makerspaces, public workshops, repair cafés, seed libraries, and community resource centers should be treated as Resource providers in UbU's planning model.
+
+Strong marketing lines for this feature direction:
+
+> **UbU turns your library card into a real-life skill tree.**
+
+> **Borrow the tool. Learn the skill. Do the project. Keep the capability.**
+
+> **Own less. Do more. Learn more. Waste less.**
+
+This feature supports the public-good, frugality, sustainability, self-sufficiency, and life-upgrade narratives and democratizes access to Resources previously available only to those with money or social capital.
+
+**Consequences:**
+
+- Community Resources become first-class planning inputs alongside owned, rented, and purchased Resources.
+- The Library and Community Resource Mode is a Phase 3B product hook that requires no new ontology — it is an application of the existing Resource model to a new category of providers.
+
+---
+
+## UBU-D0208: Expert-Guided DIY and Technique Commissioning are first-class product concepts
+
+**Status:** Accepted → DESIGN.md §2.3.1, OPEN_QUESTIONS.md
+
+UbU should support a middle tier between generic guides (Tier 1) and hiring a professional to do the whole job (Tier 3):
+
+> **Tier 2: Expert diagnosis + custom Technique Package — paid, specific to the user's actual situation.**
+
+A **Technique Request** is submitted by the user with evidence about their specific problem: photos, measurements, model numbers, symptoms, skill level, available tools and Resources, budget, time window, and risk tolerance.
+
+A **Technique Package** is returned by a skilled expert: diagnosis, parts list, tool list, step-by-step instructions calibrated to the user's skill level, safety warnings, verification criteria, and the conditions under which to stop and hire a professional.
+
+This is not generic AI advice. It is AI-orchestrated expert delegation that produces a custom executable Technique for the user's actual situation. A skilled person can sell diagnosis and instructions as a distinct economic product, separate from labor.
+
+**Consequences:**
+
+- A new marketplace primitive emerges that does not exist in current platforms: situated expert knowledge packaged as an executable artifact.
+- Retired tradespeople, experienced professionals, and domain experts can monetize knowledge without physical labor.
+- Users gain access to expert guidance at a fraction of a full service call.
+- New open questions should be added for the Technique Request and Technique Package schema.
+
+---
+
+## UBU-D0209: Task-driven Resource Exchange is a named strategic direction
+
+**Status:** Accepted → DESIGN.md §2.3.1, SOVEREIGN_COORDINATION.md, FUNDER_BRIEF.md
+
+The Resource abstraction should extend to all access modes: owned, borrowed, rented, bought, sold, leased, bartered, or reserved Resources. This creates a planning primitive distinct from existing search-driven marketplaces:
+
+> **"I need access to Resource X, near place Y, during time window Z, below price P, because it unlocks Task T."**
+
+The key distinction is:
+
+> **Task-driven markets, not search-driven markets.**
+
+Existing marketplaces start from search. UbU's Resource Exchange starts from the user's plan. The access method is generated from the plan's needs, not from a keyword query.
+
+UbU can compare: borrow free from a neighbor or library; use a tool library; rent locally; buy used; buy new; hire someone who already owns it; barter; learn the Skill and use a shared Resource; delay the Task; or cancel the Task.
+
+**Staging:**
+- Early: UbU recommends external options (library, Craigslist, rental shop, Home Depot).
+- Middle: UbU helps create listings and bids ("Need tile saw Saturday 10am–4pm").
+- Later: UbU-native task-aware marketplace with bids, reservations, escrow, condition records, and reputation.
+
+**Consequences:**
+
+- The Resource Exchange becomes a named Phase 3B/4+ direction distinct from the Skill Barter marketplace.
+- Ethereum fits naturally as the settlement and trust layer beneath a task-driven Resource and Skill exchange.
+
+---

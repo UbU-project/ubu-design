@@ -81,6 +81,26 @@ This is not token-first speculation, a public Phase 1 product, or a closed ecosy
 
 ---
 
+## Ethereum as a practical settlement and trust layer
+
+The strongest Ethereum use case for UbU is not a token. It is the lower settlement and trust layer beneath a task-driven Resource and Skill exchange.
+
+UbU is the planning layer: it knows what Resource the user needs, when they need it, why, and at what cost. Ethereum provides the settlement layer: escrow, deposits, payments, rental bonds, programmable agreements, reputation attestations, proof of return, selective disclosure, pseudonymous capability claims, and dispute evidence.
+
+The pitch is not "UbU is a crypto app." The pitch is:
+
+> **UbU provides the missing user-facing interface that makes decentralized Resource and Skill markets useful in everyday life. Ethereum provides the trust and settlement layer underneath.**
+
+This is a practical Ethereum adoption story. Most Ethereum infrastructure solves a trust problem that has no user-facing planning context. UbU provides that context: a user has a specific Task, a specific Resource need, a specific time window, and a specific budget. Ethereum settles the exchange. Neither is useful without the other.
+
+For ETHConf audiences, the hallway hook is:
+
+> **Task-driven markets, not search-driven markets.**
+
+Existing marketplaces ask users to search for what they need. UbU's model asks: what does this user's plan require, and what is the most sensible way to access it? The exchange is generated from the plan, not from a keyword query.
+
+---
+
 ## Why privacy tech builders may care
 
 UbU creates natural demand for privacy-preserving infrastructure once the planning model works.

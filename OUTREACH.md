@@ -130,6 +130,58 @@ The outreach hook is strong when kept honest:
 
 ---
 
+## Library and Community Resource Mode
+
+Many communities offer tool libraries, makerspaces, seed libraries, community workshops, sewing machines, kitchen equipment, and other Resources that most planning tools ignore entirely.
+
+UbU should treat these as first-class Resource providers. A user can say "I want to fix small things around my apartment" and UbU can generate a plan that includes library tool loans, local workshop scheduling, Skill acquisition Tasks, and DIY projects using borrowed Resources — complete with return deadlines and future Skills unlocked.
+
+Strong marketing lines for this feature:
+
+> **UbU turns your library card into a real-life skill tree.**
+
+> **Borrow the tool. Learn the skill. Do the project. Keep the capability.**
+
+> **Own less. Do more. Learn more. Waste less.**
+
+---
+
+## Government and public-resource symmetry
+
+Most planning tools model institutions only as sources of constraints: permits you need, regulations you must follow, taxes you owe. UbU models them from both sides.
+
+Any institution that can constrain a user's plan may also provide Resources, permissions, remedies, or procedures that improve that plan. Grants, subsidies, weatherization programs, workforce training, legal aid, public small-business resources, hardship waivers, appeal processes, and benefit programs are all Resources that can be conditionally unlocked through the right prerequisite Tasks.
+
+UbU can generate those Tasks automatically: apply for this benefit, collect these documents, file by this deadline, request this waiver. This turns complex institutional navigation into a scheduled, executable plan rather than an overwhelming wall of bureaucracy.
+
+---
+
+## Expert-Guided DIY and Technique Commissioning
+
+When a user lacks the Skill to solve a problem themselves, UbU should not only offer "hire a professional." There is a middle tier that currently barely exists:
+
+- **Tier 1:** Generic guides — free, generic, no diagnosis
+- **Tier 2 (new):** Expert diagnosis + custom Technique Package — paid, specific to your situation
+- **Tier 3:** Hire someone to do the whole job — expensive
+
+A Technique Request lets the user submit evidence about their specific problem: photos, measurements, model numbers, symptoms, skill level, available tools. A skilled expert — a retired tradesperson, an experienced professional — reviews the situation and returns a Technique Package: diagnosis, parts list, tool list, step-by-step instructions, safety warnings, and the conditions under which to stop and call a professional.
+
+This is not generic AI advice. It is expert delegation that produces a custom, executable artifact. The user gets situated expertise at a fraction of a service call; the expert generates income without physical labor.
+
+UbU's Delegation Substrate, evidence model, and Technique objects make this a natural first-class primitive.
+
+---
+
+## Concrete use case: managing life with a young child
+
+Parenthood is one of the most logistically complex, resource-intensive, emotionally loaded situations a person can be in — and it is almost entirely unsupported by existing tools.
+
+UbU handles it. It knows what childcare subsidies the user might qualify for and generates the application steps. It tracks the car seat that expires in eight months and prompts a replacement plan before it is needed. It models the co-parenting relationship as a real coordination structure, surfacing when shared commitments are drifting out of alignment. It knows when a pediatric well-visit is due and finds a slot that fits around school pickup. And it knows that at 9pm on a Thursday after a hard week, the right next task is not "organize the school paperwork" — it is rest, so the user can actually function the next day.
+
+This is the product in action, applied to one of the hardest and most universal situations people face.
+
+---
+
 ## Dogfooding: UbU runs UbU
 
 The Phase 1 MVP is focused on single-user GitHub dogfooding. UbU should help coordinate the UbU project itself by observing and modeling GitHub issues, pull requests, review requests, CI events, comments, labels, milestones, design questions, release-readiness checks, contributor interactions, planning-kernel work, and automation-worker outputs.

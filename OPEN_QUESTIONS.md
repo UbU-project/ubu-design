@@ -2298,3 +2298,90 @@ Skill Barter should become an open, user-sovereign skill economy direction built
 ### Resolution
 
 Open.
+
+---
+
+## UBU-Q0122: Expert-Guided DIY and Technique Request / Technique Package schema
+
+Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0114, UBU-Q0118, UBU-Q0119 Blocks: Expert-Guided DIY marketplace, Technique commissioning, situated expert knowledge products Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+UbU-D0208 accepts Expert-Guided DIY and Technique Commissioning as a first-class product concept. A user submits evidence about a specific problem; a skilled expert returns a custom executable Technique Package. What are the schemas for a Technique Request and a Technique Package, and how do they interact with the existing Technique, Skill, Resource, and Delegation Substrate models?
+
+### Subquestions
+
+1. What fields does a Technique Request carry: problem description, photos or video evidence, measurements, model or brand information, user Skill level, available Resources and tools, budget, time window, risk tolerance, desired mode (DIY, assisted DIY, or full service), and safety constraints?
+2. What fields does a Technique Package carry: expert diagnosis, required Skills, required Resources, parts list with sources and costs, tool list with rental/borrow options, step-by-step instructions, verification criteria, safety warnings, expected time and cost, fallback conditions, and "stop and call a professional" triggers?
+3. How should Technique Packages relate to the existing Technique object: are they a subtype, a specialization, or a separate marketplace artifact?
+4. What evidence and provenance attach to a Technique Package: expert Identity, credential or Skill evidence refs, response time, revision policy, and liability boundary?
+5. How should UbU distinguish a generic community-authored Technique from a commissioned Technique Package built for a specific user situation?
+6. What quality and safety review is required before a Technique Package becomes executable in UbU, especially for regulated, dangerous, or high-consequence domains?
+7. How should pricing, commissioning, and expert discovery work: open marketplace, curated expert network, community reputation, or hybrid?
+8. How should dispute workflows handle a Technique Package that caused harm, gave wrong instructions, or failed to diagnose correctly?
+9. How should the expert's pseudonymous or verified Identity interact with Compartments, Skill Barter reputation, and selective disclosure?
+
+### Current direction
+
+`UBU-D0208` establishes the middle tier: expert diagnosis plus custom Technique Package, distinct from generic guides (Tier 1) and full-service labor (Tier 3). The economic primitive is situated expert knowledge packaged as an executable artifact. Technique Request and Technique Package are marketplace objects distinct from "hire someone to do the job." This should be designed as a Phase 3B/4+ feature built on top of the existing Technique, Skill, Resource, Delegation Substrate, and Identity models.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0123: Government and public-resource navigation model
+
+Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0114 Blocks: Benefits navigation, public program access, conditional public Resources, economic mobility planning Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+`UBU-D0206` accepts government and public-resource symmetry as a design invariant. How should UbU model government and institutional Resources as planning inputs, including conditionally unlockable Resources that require prerequisite actions such as applying for benefits, collecting documents, or filing appeals?
+
+### Subquestions
+
+1. How should public and government Resources be represented in the Resource model: as a Resource kind, a provider category, a special availability state, or a hybrid?
+2. What fields describe a conditional public Resource: program name, administering institution, eligibility criteria, required documents, application deadline, enrollment window, benefit type, and appeal path?
+3. How should UbU generate prerequisite Tasks for unlocking a conditional public Resource: apply for benefit, collect income documentation, file hardship appeal, request accommodation, wait for enrollment window, or submit required evidence?
+4. How should UbU model the benefit cliff problem where earning slightly more income causes loss of multiple benefits — making net outcomes temporarily worse — so a user can see the full impact of a plan on their benefit stack?
+5. How should program data be maintained and kept current: user-declared, curated database, partner API, or combination?
+6. What privacy and Compartment rules govern benefit eligibility data: income, household composition, disability status, immigration status, and other sensitive eligibility inputs?
+7. How should UbU distinguish conditionally available public Resources from permanently unavailable Resources?
+8. What scope boundaries prevent UbU from becoming an unverified legal or benefits advisor rather than a planning and navigation tool?
+
+### Current direction
+
+`UBU-D0206` establishes the principle. The first implementation should focus on generating prerequisite Tasks when a potentially eligible program is identified, and on modeling conditional Resource availability states. Full program databases, API integrations, and eligibility engines are Phase 3B/4+ concerns. The Phase 3A version should answer: "Is there a lawful permit, benefit, appeal, waiver, public service, or government-supported Resource that can make this plan possible or cheaper?"
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0124: Task-driven Resource Exchange staging and marketplace model
+
+Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0114, UBU-Q0065 Blocks: Resource Exchange marketplace, local resource rental, peer-to-peer Resource sharing, Ethereum settlement Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+`UBU-D0209` accepts task-driven Resource Exchange as a named strategic direction. How should UbU model the progression from recommending external Resource access options to supporting a UbU-native task-aware marketplace, and what are the escrow, deposit, insurance, dispute, and settlement workflows required for full marketplace operation?
+
+### Subquestions
+
+1. What is the minimum early-stage implementation: UbU recommends external options (library, rental shop, marketplace) without running a marketplace itself?
+2. What does the middle-stage listing and bid model look like: "Need tile saw Saturday 10am–4pm near zip code X at price no higher than Y"?
+3. What is the full late-stage native marketplace model: bids, offers, reservations, condition records, escrow, deposits, insurance hooks, reputation, dispute evidence, and return verification?
+4. How should UbU identify idle Resources the user owns that nearby users may need: "You own this tool, have no planned use for it for 90 days, and nearby users may need it — offer rental?"
+5. How should Ethereum or other settlement layers interact with escrow, deposits, rental bonds, programmable agreements, and dispute evidence?
+6. What liability, insurance, and dispute boundaries prevent UbU from becoming a marketplace operator with legal obligations beyond its intended scope?
+7. How should the task-driven marketplace distinguish itself operationally from search-driven marketplaces in user flows and data models?
+
+### Current direction
+
+`UBU-D0209` establishes task-driven markets as distinct from search-driven markets. The progression is: early (external recommendations), middle (listing/bid support), late (native marketplace). Full marketplace operation with escrow, deposits, and dispute workflows belongs to Phase 4+. The Ethereum settlement layer is a natural fit for the late-stage native marketplace.
+
+### Resolution
+
+Open.

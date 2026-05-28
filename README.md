@@ -9,11 +9,17 @@
 
 ## What is UbU?
 
-UbU is a privacy-first planning, coordination, and self-governance system for implementing life logistics.
+UbU is a privacy-first life-logistics engine: a system that helps an individual human being turn a desired outcome or real-world problem into a legitimate, executable plan by coordinating time, Tasks, Resources, Skills, Techniques, money, affect, external constraints, expert help, and available markets.
 
-It is intended to convert messy real-world inputs - tasks, calendar events, messages, external events, user preferences, physical and affective state, GitHub/project data, realtime interaction streams, agent or worker outputs, and integration data - into explicit, inspectable, recalculable plans.
+It is intended to convert messy real-world inputs — tasks, calendar events, messages, external events, user preferences, physical and affective state, GitHub/project data, realtime interaction streams, agent or worker outputs, and integration data — into explicit, inspectable, recalculable plans.
 
 UbU is not merely a task list, calendar application, chat assistant, or project-management dashboard. Its root product is the individual human life-logistics engine: a system that models desired outcomes, constraints, risks, dependencies, available time, human limitations, Resource readiness, and Skill capability, then helps determine what should happen next. Organizational coordination is an important emergent property of the same model.
+
+The canonical UbU use-case formula is:
+
+> **Objective + Current State + Constraints + Resources + Skills + Techniques + Preferences + External Options → Legitimate Plan**
+
+The deeper purpose is to help people build the capabilities, resources, routines, and relationships needed to actually live the life they choose — not just to schedule it.
 
 The first MVP is deliberately narrow: use UbU to coordinate the design, development, release, and maintenance of UbU itself.
 
@@ -54,6 +60,14 @@ Many life-planning failures happen because the user lacks something needed to do
 Resources include documents, tools, ingredients, credentials, software licenses, API keys, locations, payment methods, quiet spaces, and other stateful things a Task may need. Skills include capabilities the user can learn, test, forget, refresh, and evidence.
 
 This is not Phase 1 scope, but it is central to the full product. Phase 3 should try to add a thin Resource/Skill-aware task-readiness layer. Phase 3B and Phase 4+ form the full version 1.0 release track, including richer Resource, Skill, Technique, DIY-versus-purchase/hire, inventory, financial-management, and Skill Barter features.
+
+Resources also include community and public Resources: library tool loans, makerspace equipment, public workshops, community gardens, seed libraries, and repair cafés. UbU should eventually support a Library and Community Resource Mode that turns publicly accessible Resources into first-class planning inputs.
+
+### Government and public-resource symmetry
+
+Any institution that can constrain a user's plan may also provide Resources, permissions, remedies, or procedures that improve the user's plan. UbU must model both sides.
+
+This means UbU should not only surface regulations, permits, and legal constraints — it should also surface grants, subsidies, benefit programs, weatherization assistance, workforce training, legal aid, public infrastructure, and other government- or community-supported Resources. Many of these are conditionally unlockable: a user may need to apply for a benefit, collect documentation, or file an appeal before the Resource becomes available. UbU can generate those prerequisite Tasks automatically.
 
 ### Dogfooding
 

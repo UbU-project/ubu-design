@@ -117,6 +117,42 @@ UbU is not primarily a crypto product, but Ethereum and adjacent FOSS ecosystems
 
 ---
 
+## The long-term investor thesis
+
+UbU starts as a focused wedge into personal life logistics, but the long-term upside is becoming the **control layer for human goals, Resources, Skills, money, Tasks, and delegation**.
+
+The market opportunity the full product touches:
+
+- productivity and personal planning
+- personal finance and inventory
+- learning and skill acquisition
+- home maintenance and DIY
+- local services and freelance labor
+- subscription and asset management
+- library and community resource access
+- resource rental and peer-to-peer markets
+- resale and secondary markets
+- government program navigation and benefits
+- Web3 settlement and portable reputation
+
+The key investor insight is that UbU creates demand from inside the user's actual life plan — not from a search interface. That is structurally different from generic marketplaces, which wait for a user to know what to look for. UbU knows what the user needs before they search for it.
+
+---
+
+## New market opportunities the full product unlocks
+
+**Benefits and public resource navigation.** Billions of dollars in unclaimed benefits, grants, tax credits, weatherization programs, and public services go unused annually because navigation is cognitively overwhelming. UbU's government/public-resource symmetry model turns program eligibility into prerequisite Tasks with evidence requirements and deadlines — the difference between knowing a program exists and having a plan to get it.
+
+**Remote diagnosis and expert knowledge packaging.** A Technique Request lets a user submit evidence about a specific problem; a skilled expert returns a custom Technique Package: diagnosis, parts list, step-by-step instructions, safety notes. This is a new market tier between generic guides and full-service labor. Retired tradespeople, experienced professionals, and domain experts can monetize situated knowledge without performing physical work.
+
+**Household life operations.** When Resource tracking, Technique database, Expert-Guided DIY, public program navigation, and affect-aware planning combine, UbU becomes the operational layer for a household — not just a reminder app.
+
+**Economic mobility and life transition support.** Career change, relocation, recovery, new child, aging parents — these are situations where Resource, Skill, financial, and institutional pictures change simultaneously. UbU's planning model is designed for exactly this kind of multi-variable constraint navigation.
+
+**Community and cooperative resource networks.** Library tool loans, makerspaces, repair cafés, seed libraries, and community workshops are Resources most planning tools ignore. UbU's Library and Community Resource Mode makes these first-class inputs.
+
+---
+
 ## Full-product expansion: Resource and Skill readiness
 
 The full version 1.0 track is not just a smarter calendar. It should add Resource and Skill readiness: whether the user has the documents, tools, credentials, locations, money, access, and embodied capability needed to perform the work.
