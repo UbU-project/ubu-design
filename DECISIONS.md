@@ -4356,3 +4356,27 @@ The minimum mobile-only guarantee is the core UbU loop on one local device: expl
 - The default `0.99` coverage target remains normal/full-detail policy; low-power and offline profiles use explicit profile overrides.
 
 ---
+
+## UBU-D0204: Phase 1 organizational introspection uses manual outreach retrospectives
+
+**Status:** Accepted → DESIGN.md §4.1.4
+
+Resolved question: `UBU-Q0063`.
+
+Phase 1 organizational introspection uses the EthConf/outreach workflow in `DESIGN.md §4.1.4`: an evidence-backed retrospective and follow-up plan over existing UbU project records, not full Association automation.
+
+Accepted constraints:
+
+- Use existing Phase 1 objects and artifact packages: Objectives, Tasks, Logs, External Events, External References, public dogfooding review packages, Release Outreach packages, export review, and candidate AssociationAttestations.
+- Manual and fixture-backed work is acceptable when live outreach notes, contact details, or private communications are unsafe to publish.
+- Candidate attestations remain reviewable candidates until human approval, whether hand-authored or produced by a local or policy-allowed LLM.
+- Public artifacts expose only redacted summaries, evidence selectors, hashes, public links, reviewed claims, approved follow-up Tasks, and recorded evidence gaps.
+- Private notes, raw contact details, unapproved conversation content, private funding terms, private relationship hypotheses, and Compartment-protected payloads are not public artifacts.
+
+**Consequences:**
+
+- `UBU-Q0063` is resolved for Phase 1.
+- Organizational introspection can be demonstrated without first implementing Association objects, dispute semantics, multi-user sync, or automatic archive analysis.
+- EthConf follow-up becomes a dogfooding case with auditable mission-alignment evidence instead of a marketing-only activity.
+
+---

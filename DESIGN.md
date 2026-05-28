@@ -912,11 +912,28 @@ The full video-generation and publication pipeline remains future work. Phase 1 
 
 EthConf outreach is a Phase 1 dogfooding workflow for Association formation and organizational introspection.
 
-The UbU project should treat outreach as an attempt to form an ad hoc Association around the project: contributors, reviewers, funders, workflow informants, privacy/cypherpunk contacts, and possible design partners. Conversation notes, follow-up commitments, public artifacts, private/redacted observations, and missed follow-ups can become evidence for whether the project actually pursued its stated goals.
+Phase 1 represents the workflow with ordinary Objectives, Tasks, Logs, External Events, External References, Release Outreach package artifacts, public dogfooding review packages, and manually reviewed candidate AssociationAttestations. It does not require full Association automation, multi-user Association sync, automatic contact analysis, or broad message/archive ingestion.
 
-For Phase 1, this does not require full multi-user Association implementation. It can be represented through structured outreach Objectives, Tasks, Logs, External Events, External References, and reviewable candidate AssociationAttestations generated manually or by local/allowed LLM review.
+Minimum evidence set:
 
-The dogfooding question is: can UbU produce an evidence-backed retrospective showing whether UbU actually formed useful coordination around its own project?
+- canonical design files and accepted decisions;
+- public dogfooding artifacts such as model-committee review packages, selected patches, issue fixtures, release outreach packages, and public retrospectives;
+- structured EthConf outreach notes with private details separated from redacted public summaries;
+- follow-up Tasks, missed follow-ups, public replies, contributor/funder/design-partner next actions, and outcome Logs.
+
+Minimum outputs:
+
+- candidate AssociationAttestations about declared project mission, outreach commitments, observed follow-through, and evidence gaps;
+- mission-alignment questions, especially whether outreach behavior supports the privacy-first self-governance, contributor-recruitment, workflow-discovery, and compatible-funding goals;
+- priority-drift observations and commitment-mismatch notes;
+- follow-up Tasks with owners, review dates, evidence refs, and public/private disclosure labels;
+- redacted retrospective notes suitable for public dogfooding artifacts.
+
+The core review prompt is: `Does UbU's actual outreach behavior prove, from reviewable evidence, that the project pursued its stated goals?` The answer may be yes, no, mixed, or insufficient evidence, and must cite evidence or gaps rather than model confidence alone.
+
+Public artifacts expose only redacted summaries, evidence selectors, hashes, public links, reviewed claims, and approved follow-up Tasks. They must not expose private notes, raw contact details, unapproved conversation content, private funding terms, private relationship hypotheses, or Compartment-protected payloads.
+
+Acceptance criteria: the workflow produces one evidence-backed retrospective, at least one candidate AssociationAttestation or explicit no-evidence finding, at least one mission-alignment question, any needed follow-up Tasks, an export review, and a public-safe redacted artifact that labels fixture/manual/LLM-assisted content. A human reviewer must be able to trace each public claim to evidence or to a recorded evidence gap.
 
 ### 4.1.5 Optional VoxPopuli EthConf demo
 

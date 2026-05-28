@@ -862,28 +862,9 @@ Open.
 
 ## UBU-Q0063: Organizational introspection MVP/dogfooding workflow
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0046, UBU-Q0049, UBU-Q0050 Blocks: ETHConf follow-up, public dogfooding artifacts, organizational introspection demo Resolved by: None Last scored: 2026-05-27 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0046, UBU-Q0049, UBU-Q0050 Blocks: ETHConf follow-up, public dogfooding artifacts, organizational introspection demo Resolved by: UBU-D0204 Last scored: 2026-05-27 Scored from commit: None
 
-### Question
-
-What is the minimum useful Phase 1 workflow for dogfooding organizational introspection on the UbU project itself without implementing full Association automation?
-
-### Subquestions
-
-1. Which UbU artifacts should be used as evidence: design files, open questions, decisions, issue fixtures, outreach notes, follow-up Tasks, and public retrospectives?
-2. What structured output should be generated: candidate AssociationAttestations, mission-alignment questions, priority-drift observations, follow-up Tasks, and redacted retrospective notes?
-3. How should UbU ask whether its actual outreach behavior proves commitment to its stated goals?
-4. Which parts can be manual or fixture-backed in Phase 1?
-5. How should public artifacts avoid exposing private notes or contact details?
-6. What acceptance criteria show that UbU successfully applied organizational introspection to itself?
-
-### Current direction
-
-Phase 1 should use EthConf outreach and UbU project records as a manually structured dogfooding case. The result should be an evidence-backed retrospective and follow-up plan, not an automated surveillance system.
-
-### Resolution
-
-Open.
+Resolved. See UBU-D0204.
 
 ---
 
