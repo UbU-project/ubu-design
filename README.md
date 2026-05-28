@@ -147,6 +147,91 @@ The design baseline supports beginning implementation-first Phase 1 work while c
 
 ---
 
+## Phase 1 readiness report
+
+**Report type:** Human-reviewed MVP readiness signal (required by `UBU-D0189`)  
+**Evidence commit:** `c3b61b0`  
+**Report date:** 2026-05-27  
+**Scorer:** Human review
+
+---
+
+### Scores
+
+| Signal | Score | Band |
+|---|---|---|
+| `scope_freeze_readiness` | **85 / 100** | Scope stable; open Phase 1 questions are implementation-guidance gaps, not scope questions |
+| `mvp_readiness` | **22 / 100** | Design complete; no runnable end-to-end prototype exists yet |
+
+Score weights follow `UBU-D0189`. Active caps: *no runnable end-to-end dogfooding loop (cap 59)* — score is already below this ceiling and reflects honest implementation absence, not a cap artifact.
+
+---
+
+### `scope_freeze_readiness`: 85
+
+Phase 1 scope is formally frozen by `UBU-D0097` and `UBU-D0175`. The design model is internally consistent with no known hard failures in canonical files. The planning-kernel boundary contract (`PLANNING_KERNEL_CONTRACT.md`) is accepted and stable.
+
+Three Phase 1 questions remain technically open:
+
+- `UBU-Q0070` (skeleton Plan failure diagnostics) — answerability 90; implementation detail, not a scope question.
+- `UBU-Q0071` (legitimization cost model) — answerability 90; implementation detail requiring empirical measurement once a planner exists.
+- `UBU-Q0072` (GPU-aware planner kernels) — partially resolved; subquestions 1 (solver library selection), 3 (mobile GPU targets), and 5 (cloud GPU path) remain open and are deferred beyond Phase 1.
+
+None of these carry a `UBU-D0175` blocker certificate. None reduce `scope_freeze_readiness` under the current rubric.
+
+---
+
+### `mvp_readiness`: 22
+
+| Criterion (weight) | Evidence | Score |
+|---|---|---|
+| Scope and blocker discipline (15) | Scope frozen; no certified blockers; design model consistent | 12 / 15 |
+| Implementation slice coverage (25) | No runnable app; all Phase 1 slices are design-complete, not implemented | 3 / 25 |
+| User-facing loop evidence (15) | No bootstrap interview, Calendar preview, or next-Task loop implemented | 0 / 15 |
+| Integration / projection / worker / privacy boundaries (15) | Compartment, worker-authority, and GitHub-projection checks are designed but not implemented | 0 / 15 |
+| Verification, fixtures, and deterministic tests (15) | `model-committee` has partial fixture support; no planning-kernel test suite exists | 2 / 15 |
+| Dogfooding / artifact / public-claim evidence (10) | `model-committee` v0.3 produces reviewable dogfooding artifacts; no main-app dogfooding | 4 / 10 |
+| Operational polish and contributor-run diagnostics (5) | `model-committee` is contributor-runnable; no main-app diagnostics | 1 / 5 |
+
+**Total: 22 / 100**
+
+---
+
+### Per-slice status
+
+| Phase 1 slice | Status |
+|---|---|
+| Bootstrap and seed model | Not started |
+| GitHub import and External References | Not started |
+| Objective / Task / UniverseState / Log admission | Not started |
+| Plan / Calendar generation and explanation | Not started |
+| Next-action focus plus feedback / recalculation | Not started |
+| Risk and human-complete plan-quality reports | Not started |
+| Compartment, worker, and projection authority boundaries | Not started |
+| GitHub projection preview or approved write plus reconciliation | Not started |
+| Release outreach and public dogfooding artifact package | Not started |
+
+---
+
+### Failing gates and stale inputs
+
+- **No runnable end-to-end dogfooding loop.** This is the primary gate. Until a prototype exists that can import GitHub state, generate a Calendar, and recommend one Task, no higher `mvp_readiness` score is warranted.
+- **No fixture-backed planning-kernel test suite.** `PLANNING_KERNEL_CONTRACT.md` specifies the typed request/response boundary, but no deterministic CPU reference path or test harness exists yet.
+- **No Compartment / GitHub-projection hard-boundary checks.** These are required before `mvp_readiness` can exceed 74 even with a working loop.
+
+### Manual assumptions and boundaries
+
+- Scores are based on file state at `c3b61b0`; no live GitHub or CI signal was ingested.
+- Implementation evidence is inferred from the Development readiness checklist above and from open/solved question counts; no fixture or test output was verified.
+
+---
+
+### Next slice most likely to raise the score
+
+**Bootstrap and seed model.** This slice unblocks every other implementation slice. A working bootstrap interview with explicit Objective/Task seed creation is the minimum evidence needed to move `mvp_readiness` from the 0–39 band into the 40–59 band. Completing it alongside even a stub GitHub import and a single-step Calendar preview would move `mvp_readiness` to approximately 35–45 depending on test coverage.
+
+---
+
 ## Planning kernel direction
 
 UbU's Calendar model distinguishes layered planning responsibilities.
