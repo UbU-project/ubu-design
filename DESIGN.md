@@ -1257,18 +1257,54 @@ A **PreferenceCalibrationExample** is a user-facing prompt or scenario used to h
 
 Preference calibration examples are MVP-important onboarding and review aids. They are not canonical value objects unless the user accepts or edits the resulting judgment into a Preference or other canonical entry.
 
+The minimum Phase 1 calibration library has six example frames:
+
+- `urgent_vs_important`: urgent external commitment versus important but nonurgent Objective;
+- `emotional_cost_vs_visible_progress`: emotionally costly repair, clarification, or maintenance work versus easier visible progress;
+- `social_pressure_vs_planned_objective`: socially pressured request versus planned user-chosen Objective;
+- `recovery_vs_more_work`: recovery or rest versus another useful Task;
+- `short_term_relief_vs_long_term_importance`: short-term relief or cleanup versus long-term capability, relationship, or project importance;
+- `ambiguity_vs_decomposition`: decomposition of ambiguous work versus starting a larger unclear Task.
+
+Each example identifies one or more calibration dimensions: `urgent_value`, `emotional_cost`, `social_pressure`, `recovery_value`, `long_term_importance`, and `ambiguity_value`.
+
+Default presentation budget:
+
+- Bootstrap interview: at most two examples after the user has named real Objectives or candidate Tasks.
+- Calendar preview: at most one relevant example when the default Plan appears value-misaligned, socially pressured, recovery-fragile, or unusually urgent.
+- Log review: at most one relevant example for an unreconciled rejection, override, failure, or repeated deviation unless the user asks for more.
+
+Answers become canonical only through normal admission:
+
+- explicit accepted pairwise Objective comparisons become Preferences;
+- current affect, availability, capacity, or recovery reports become Snapshots or UniverseState facts when they describe observed current state;
+- preview/review answers that explain outcomes, rejections, overrides, or calibration interactions become Logs, Log annotations, or Log corrections;
+- comments about Objective importance or fit that do not declare pairwise order become Objective annotations or review notes;
+- raw feelings, social-pressure comments, skipped examples, and unaccepted hypotheses remain noncanonical review notes.
+
+Calibration wording must avoid leading the user:
+
+- use the user's actual Objectives or Tasks when possible;
+- present plausible costs and rewards for both sides;
+- avoid preselected answers, hidden scoring, therapy, diagnosis, moral judgment, and "should" language;
+- offer `neither`, `indifferent`, `not applicable`, edit, and free-text paths;
+- disclose that examples are prompts for self-reporting, not UbU's values.
+
 Candidate fields for a calibration example include:
 
 - `example_id`
+- `version`
 - `situation_summary`
+- `calibration_dimensions`
 - `common_emotional_costs`
 - `common_emotional_rewards`
 - `possible_tradeoffs`
 - `calibration_question`
 - `resulting_object_refs`
 - `source`
+- `revision_status`
 
-Open details are tracked in `UBU-Q0051`.
+Example definitions are versioned derived content. UbU may revise or retire examples when user corrections, skips, edits, repeated non-use, or review feedback show that an example is confusing or leading. Historical Logs are not rewritten.
 
 ---
 

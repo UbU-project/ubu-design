@@ -629,28 +629,9 @@ Resolved. See UBU-D0129.
 
 ## UBU-Q0051: Minimum preference-calibration examples for Phase 1 onboarding and review
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0050 Blocks: Phase 1 onboarding quality, Preference calibration, Calendar preview, Log review Resolved by: None Last scored: 2026-05-27 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0050 Blocks: Phase 1 onboarding quality, Preference calibration, Calendar preview, Log review Resolved by: UBU-D0200 Last scored: 2026-05-27 Scored from commit: None
 
-### Question
-
-What is the minimum useful set of preference-calibration examples for Phase 1 onboarding, Calendar preview, and Log review?
-
-### Subquestions
-
-1. Which common situations should UbU use to emotionally ground early Preference judgments?
-2. How many examples are enough for Phase 1 without making onboarding burdensome?
-3. Which answers become Preferences, Snapshots, Logs, Objective annotations, or noncanonical review notes?
-4. How should examples avoid leading the user toward an assumed value model?
-5. How should calibration examples distinguish urgent value, emotional cost, social pressure, recovery value, and long-term importance?
-6. How should UbU revise or retire examples that repeatedly fail to help the user make accurate judgments?
-
-### Current direction
-
-Preference calibration is MVP important but not an MVP blocker. UbU should use examples of common emotional costs, rewards, and tradeoffs to help users make better Preference statements. Examples are grounding aids, not canonical Preferences, unless the user accepts or edits them into canonical entries.
-
-### Resolution
-
-Open.
+Resolved. See UBU-D0200.
 
 ---
 

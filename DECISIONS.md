@@ -4190,3 +4190,54 @@ The `UBU-D0175` stop rule applies to replacement questions. A replacement questi
 - Future parser work may add first-class decomposed-status and lineage fields without changing the scoring rule.
 
 ---
+
+## UBU-D0200: Phase 1 preference calibration uses six neutral example frames
+
+**Status:** Accepted → DESIGN.md §§2.2.1, 4.1.2, 8.6
+
+Resolved question: `UBU-Q0051`.
+
+Phase 1 preference calibration is a small prompt library, not a new canonical value object or hidden utility model. The minimum library has six neutral example frames:
+
+- urgent external commitment versus important but nonurgent Objective;
+- emotionally costly repair, clarification, or maintenance work versus easier visible progress;
+- socially pressured request versus planned user-chosen Objective;
+- recovery or rest versus another useful Task;
+- short-term relief or cleanup versus long-term capability, relationship, or project importance;
+- decomposition of ambiguous work versus starting a larger unclear Task.
+
+Presentation budget:
+
+- Bootstrap shows at most two examples by default, after the user has named real Objectives or candidate Tasks.
+- Calendar preview shows at most one relevant example for the Plan being previewed.
+- Log review shows at most one relevant example for an unreconciled rejection, override, failure, or repeated deviation unless the user asks for more.
+- Skipping calibration is allowed; UbU records only the ordinary note or decision evidence needed for review.
+
+Each example is tagged with one or more Phase 1 calibration dimensions: `urgent_value`, `emotional_cost`, `social_pressure`, `recovery_value`, `long_term_importance`, and `ambiguity_value`. These tags explain the tradeoff being surfaced; they are not utility components.
+
+Admission rules:
+
+- accepted explicit pairwise Objective comparisons become Preferences;
+- current affect, availability, capacity, or recovery reports become Snapshots or UniverseState facts when they describe observed current state;
+- preview/review explanations for outcomes, rejections, overrides, or calibration interactions become Logs, Log annotations, or Log corrections;
+- Objective-importance comments without pairwise order become Objective annotations or noncanonical review notes;
+- raw feelings, social-pressure comments, skipped examples, and unaccepted hypotheses remain noncanonical review notes.
+
+Neutrality rules:
+
+- use actual user Objectives or Tasks when possible;
+- present plausible costs and rewards for both sides;
+- provide `neither`, `indifferent`, `not applicable`, edit, and free-text paths;
+- avoid preselected answers, hidden scoring, therapy, diagnosis, moral judgment, and "should" language;
+- disclose that examples are prompts for self-reporting, not UbU's values.
+
+Examples are versioned derived content. UbU may revise or retire an example when corrections, skips, edits, repeated non-use, or review feedback show that it is confusing, leading, or unhelpful. Historical Logs stay append-only; only future example presentation changes.
+
+**Consequences:**
+
+- `UBU-Q0051` is resolved for Phase 1.
+- Preference calibration can improve onboarding, Calendar preview, and Log review without adding a psychology ontology or canonical value objects.
+- Phase 1 onboarding remains lightweight because calibration has a strict presentation budget and can be skipped.
+- Future richer examples may be added as versioned prompt content without schema migration unless they change admission rules or canonical fields.
+
+---
