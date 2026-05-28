@@ -2041,27 +2041,9 @@ Resolved for Phase 1. See `UBU-D0174` and `PLANNING_KERNEL_CONTRACT.md §3`.
 
 ## UBU-Q0107: Counterfactual logging and decision completeness
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: preference inference, override review, introspection completeness Resolved by: None Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: preference inference, override review, introspection completeness Resolved by: UBU-D0198 Last scored: 2026-05-27 Scored from commit: None
 
-### Question
-
-The Log records what happened. It does not currently record what the user considered and rejected — overridden plan candidates, dismissed Task suggestions, declined worker proposals, ignored alerts, or bypassed safeguard advisories. Without these, the introspection review and future preference inference systems have only half the picture. What is the minimum counterfactual log entry schema for MVP?
-
-### Subquestions
-
-1. Which user-facing decision types must be logged: plan candidate rejection, task dismissal, safeguard bypass, suggestion decline, override of a worker proposal, others?
-2. What fields does a counterfactual log entry carry beyond the decision itself: the presented candidate, the stated or inferred reason, the system state at decision time, the identity context?
-3. How is user-stated reason captured without becoming a friction-creating mandatory field?
-4. How do counterfactual entries interact with the existing Log immutability model?
-5. What is the minimum set of counterfactual entry types required before preference inference is meaningful?
-
-### Current direction
-
-The absence of counterfactual logging is a design flaw identified during design review. All decision-bearing interactions between the system and the user must produce a reviewable log entry, including rejected candidates, dismissed suggestions, and bypassed advisories. The schema must be specified before the introspection review system is implemented.
-
-### Resolution
-
-Open.
+Resolved. See UBU-D0198.
 
 ---
 
@@ -2402,7 +2384,7 @@ Open.
 
 ## UBU-Q0120: DIY-versus-purchase/hire/barter planning tradeoff
 
-Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Planning Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0114, UBU-Q0118, UBU-Q0119 Blocks: economic self-sufficiency planning, Resource/Skill value reports, financial-management extensions Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0114, UBU-Q0118, UBU-Q0119 Blocks: economic self-sufficiency planning, Resource/Skill value reports, financial-management extensions Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 

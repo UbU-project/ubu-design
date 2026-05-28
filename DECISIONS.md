@@ -4107,3 +4107,45 @@ Phase 3B should expand user-facing Resource, Skill, Technique, DIY-versus-purcha
 - Full version 1.0 messaging can emphasize life logistics, real-world capability acquisition, and Skill Barter direction without promising those features in Phase 1.
 
 ---
+
+## UBU-D0198: Counterfactual decisions use decision_recorded payloads
+
+**Status:** Accepted → DESIGN.md §17.0
+
+Resolved question: `UBU-Q0107`.
+
+MVP counterfactual logging uses the existing `decision_recorded` Log event type. It does not add separate event types for every rejected candidate. A `decision_recorded` entry is required whenever UbU presents a meaningful user-facing option, warning, proposal, alert, or recommendation and the user rejects, dismisses, overrides, bypasses, or ignores it.
+
+Required `decision_kind` values:
+
+- `plan_candidate_rejected`;
+- `task_suggestion_dismissed`;
+- `suggestion_declined`;
+- `system_recommendation_overridden`;
+- `worker_proposal_declined`;
+- `safeguard_advisory_bypassed`;
+- `alert_dismissed_or_ignored`.
+
+Minimum `event_payload` records:
+
+- `presented_ref` or compact redacted `presented_candidate_summary`;
+- available actions and the observed `user_action`;
+- chosen and rejected refs when applicable;
+- optional `reason_capture`;
+- system-state refs in `decision_context`;
+- whether the entry is eligible for future preference inference.
+
+User-stated reasons are never mandatory. `reason_capture.reason_source` is one of `user_stated`, `user_selected_code`, `system_inferred`, or `none_given`; inferred reasons are review notes, not canonical Preferences.
+
+Counterfactual decision entries are append-only. Later Preferences, Task changes, Objective changes, safeguard policy changes, worker reassignments, annotations, or corrections may cite the decision Log ref, but they do not rewrite the original decision entry.
+
+Preference inference may consume only uncorrected counterfactual entries and must distinguish stated, selected-code, inferred, and missing reasons. Absence of a counterfactual entry is not evidence of user acceptance.
+
+**Consequences:**
+
+- `UBU-Q0107` is resolved for Phase 1.
+- Introspection and preference inference have reviewable evidence for rejected options, not only accepted outcomes.
+- Optional reason prompts can stay lightweight without losing the fact of the decision.
+- No new Log event type is required beyond `decision_recorded`.
+
+---
