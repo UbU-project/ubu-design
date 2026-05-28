@@ -4322,3 +4322,37 @@ The reactive branch layer may compute a small ranked suggestion set when early c
 - Later richer maintenance automation remains compatible with ordinary Task, Objective recurrence, and planner behavior.
 
 ---
+
+## UBU-D0203: Adaptive planning granularity uses explicit execution profiles
+
+**Status:** Accepted → DESIGN.md §16.7
+
+Resolved question: `UBU-Q0058`.
+
+Compact Calendar runtime chooses from configurable execution profiles. Phase 1 default presets are:
+
+- `full_detail`: 60-second delta, 3600-second reactive horizon, `0.99` branch coverage target;
+- `mobile_moderate`: 300-second delta, 3600-second reactive horizon, `0.99` branch coverage target;
+- `mobile_low_power`: 900-second delta, 1800-second reactive horizon, `0.95` branch coverage target;
+- `offline_steward`: 900-second delta, 1800-second reactive horizon, `0.95` branch coverage target, with precomputed branches and local repair metadata.
+
+The one-, five-, and fifteen-minute deltas are presets, not schema constants. Calendar policy, Device policy, user settings, and runtime conditions may override delta, horizon, coverage target, and compute budget. The effective values are stored with the compact Calendar or PlanningRequest for replay and explanation.
+
+Coarser switching is allowed for `low_battery`, `low_power_mode`, `thermal_pressure`, `offline`, `expected_offline_window`, `heavy_workload`, `user_setting`, `external_worker_unavailable`, and `compute_budget_exceeded`. Finer switching is allowed when power, temperature, connectivity, worker availability, idle time, or user settings permit it. A switch records its reason in runtime or compact Calendar metadata. If it can affect the current or next recommendation, hard feasibility, affect legitimacy, or coverage threshold result, UbU records or batches a recalculation trigger using an existing trigger kind. No new Phase 1 trigger kind is required.
+
+A coarser-profile explanation must show the active profile, switch reason, effective delta, reactive horizon, coverage target or estimate, expected loss of precision, guarantees still in force, and how the user can request more detailed planning or wait for a finer-capability backend.
+
+Known offline windows trigger precomputation when connectivity and compute are available. The precompute package should cover the declared offline window plus the current reactive horizon when feasible. It stores the default Plan, last legitimate Plan, decision envelopes, Task criticality, cached explanations, simple repair recipes, and high-probability branch materialization or reconstruction instructions up to the effective coverage target. Precomputation is bounded by battery, thermal, user, Compartment, and compute-budget policy.
+
+Cached branches expire when accepted Logs, Snapshots, External Events, elapsed time, or user actions leave their decision envelopes; when dependencies, preconditions, Static Task constraints, affect assumptions, or coverage become invalid; or when the branch passes its recorded expiry. Expiration falls back to the last legitimate Plan, local repair, clarification, or stale marking.
+
+The minimum mobile-only guarantee is the core UbU loop on one local device: explicit state, one next Task or clarification Task, explanation, conservative hard-constraint checks, affect/staleness and coverage-degradation disclosure, feedback Logs, and local repair for the current or next Task. Mobile may reduce granularity, coverage, analysis depth, and LLM-assisted features; it may not hide a mandatory external compute dependency.
+
+**Consequences:**
+
+- `UBU-Q0058` is resolved for Phase 1 runtime policy.
+- `UBU-Q0073` can define exact mobile stewardship schemas and repair recipes on top of this profile policy.
+- Low-power or offline degradation is user-visible and auditable rather than a silent quality change.
+- The default `0.99` coverage target remains normal/full-detail policy; low-power and offline profiles use explicit profile overrides.
+
+---

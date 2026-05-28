@@ -741,35 +741,9 @@ Resolved. See UBU-D0202.
 
 ## UBU-Q0058: Adaptive planning granularity and offline precomputation policy
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016 Blocks: Mobile-only planning, offline mode, low-power mode, Compact Calendar runtime policy Resolved by: None Last scored: 2026-05-27 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016 Blocks: Mobile-only planning, offline mode, low-power mode, Compact Calendar runtime policy Resolved by: UBU-D0203 Last scored: 2026-05-27 Scored from commit: None
 
-### Question
-
-How should UbU choose, switch, and explain Compact Calendar time delta, branch horizon, and branch coverage settings across full-detail, mobile, low-power, and offline execution modes?
-
-### Subquestions
-
-1. Should default deltas be exactly one minute, five minutes, and fifteen minutes, or configurable presets?
-2. What user-visible explanation is required when UbU switches to a coarser delta?
-3. Which triggers cause dynamic execution-mode switching?
-   - low battery
-   - thermal throttling
-   - offline state
-   - expected offline window
-   - heavy workload
-   - user setting
-   - missing external worker
-4. How much precomputation should UbU run before a known offline window?
-5. How should cached plans expire after the user's actual behavior diverges from the precomputed branch?
-6. What is the minimum mobile-only guarantee for preserving the core UbU experience?
-
-### Current direction
-
-Provisional defaults are one-minute full-detail delta, five-minute moderate mobile delta, fifteen-minute low-power/offline delta, one-hour reactive horizon, and `0.99` short-horizon branch coverage target. Mobile-only UbU must preserve the core experience, but may use coarser granularity, shallower branch coverage, reduced analysis depth, and fewer LLM-assisted features.
-
-### Resolution
-
-Open.
+Resolved. See UBU-D0203.
 
 ---
 
