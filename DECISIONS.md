@@ -3613,7 +3613,7 @@ Question wording must use model-repair framing:
 - `UBU-Q0053` is resolved for Phase 1.
 - Self-determination theory and theory of planned behavior remain interface and reporting influences, not Phase 1 ontology.
 - Review Tasks can be implemented with existing Task, Log, Snapshot, Preference, Objective, Report, and recalculation-trigger mechanisms.
-- Detailed preference-calibration examples remain in `UBU-Q0051`; discovery-mode inference remains in `UBU-Q0052`; deeper affect/personality modeling remains post-MVP in `UBU-Q0074`.
+- Preference-calibration examples are resolved by `UBU-D0200`; discovery-mode inference is resolved by `UBU-D0201`; deeper affect/personality modeling remains post-MVP in `UBU-Q0074`.
 
 ---
 
@@ -4239,5 +4239,45 @@ Examples are versioned derived content. UbU may revise or retire an example when
 - Preference calibration can improve onboarding, Calendar preview, and Log review without adding a psychology ontology or canonical value objects.
 - Phase 1 onboarding remains lightweight because calibration has a strict presentation budget and can be skipped.
 - Future richer examples may be added as versioned prompt content without schema migration unless they change admission rules or canonical fields.
+
+---
+
+## UBU-D0201: Discovery mode uses reviewable evidence and explicit override admission
+
+**Status:** Accepted → DESIGN.md §§4.1.2, 12.2, 17.8
+
+Resolved question: `UBU-Q0052`.
+
+Discovery mode is a user-selectable workflow state, not an instance mode and not always-on surveillance. It is off by default. The user may start, pause, resume, exit, inspect, reject, delete where retention policy permits, correct, defer, or accept collected evidence. UI must show active capture state, enabled sources, routing status, retention limits, and pending-review count.
+
+Phase 1 session states are `inactive`, `active`, `paused`, `ended`, and `pending_review`. Discovery observations are stored as reviewable candidate artifacts, not final truth. A minimal evidence item records session ref, effective time or interval, source kind, signal kind, payload ref or redacted summary, confidence, Compartment or low-security label, provenance, and review status.
+
+Allowed Phase 1 inputs are narrow:
+
+- explicit quick notes, user-selected current action, intentional voice/text notes, and manual start/stop markers;
+- UbU app state, Task controls, Calendar or default Plan context, timers, focus state, and explicitly enabled foreground app category or app identifier;
+- configured integration events already allowed by existing External Event and External Reference policy;
+- coarse motion state, coarse user-defined location category or geofence event, and basic device state such as screen or network state.
+
+Excluded by default: covert continuous microphone, camera, screen recording, keystroke logging, raw message bodies, raw file contents, raw GPS trails, and cross-Identity sharing. Later use of any excluded source requires a separate explicit mode, Compartment review, routing disclosure, and user approval.
+
+Admission rules:
+
+- accepted actual actions that reconcile planned intervals use `plan_realized`; accepted Task outcomes also write `task_completed`, `task_failed`, or `task_moot`;
+- overrides of a recommendation write `decision_recorded` with `decision_kind = system_recommendation_overridden`, `authority_source = user_override`, chosen action or Task when known, optional reason, and a planner-relevant `user_override` recalculation trigger;
+- user-declared observed state becomes a Snapshot only when it asserts current state such as affect, availability, capacity, or location category;
+- Preferences change only through explicit accepted pairwise Preference statements; repeated behavior and inferred reasons are not Preferences;
+- Task estimates, dependencies, status, Objective annotations, or Objective status change only through user acceptance or normal validated admission; otherwise the evidence remains an unresolved review item.
+
+Undetailed time periods must preserve uncertainty. Review may mark a period as `unknown`, `private`, `rest`, `interruption`, `planned_task`, `different_task`, `quick_note`, or `other`. UbU must not infer Preference changes, Objective failure, habit patterns, or moral meaning from unknown or private time.
+
+Before treating repeated behavior as a habit pattern, UbU asks a clarification prompt: `I have seen this pattern more than once: [behavior] during [context]. Should UbU plan around it, help you change it, treat it as not a pattern, or leave it unresolved?` Valid answers are `endorse_and_plan_around`, `tolerate_but_review`, `unwanted_help_change`, `not_a_pattern`, and `leave_unresolved`.
+
+**Consequences:**
+
+- `UBU-Q0052` is resolved for Phase 1.
+- Discovery mode can support mobile evidence gathering without converting sensor inference into canonical truth.
+- Overrides are authoritative user evidence, but durable model changes still pass through explicit Log, Snapshot, Preference, Task, Objective, and recalculation admission rules.
+- Habit-pattern inference requires user clarification before it affects planning as a stable pattern.
 
 ---

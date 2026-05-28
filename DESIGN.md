@@ -879,8 +879,10 @@ Phase 1 must include a minimal first-person UX loop for dogfooding. The loop is 
 
 7. **Discovery mode when appropriate**
    - Allow the user to choose discovery mode at any time.
-   - Use discovery mode to collect or preserve evidence about what the user is doing or did, especially from mobile sensors or configured integrations.
-   - Defer ambiguous interpretation until later Log review or user-visible reconciliation.
+   - Show active, paused, ended, and pending-review state, enabled sources, routing or retention limits, and evidence count.
+   - Provide pause, resume, exit, inspect, reject, delete, and review controls.
+   - Collect only enabled Phase 1 evidence such as quick notes, user-selected current action, Calendar context, configured integration events, coarse motion or location category, focus state, and app-state category.
+   - Treat inferred observations as reviewable evidence, not final truth; defer ambiguous interpretation until Log review or user-visible reconciliation.
 
 The Phase 1 version may be simple and fixture-backed. Fixture behavior must be labeled as fixture behavior, mock recommendations must not be described as implemented planning, and public demos should show the exact boundary between explicit UbU objects, approved fixtures, and implemented planner behavior. The public demonstration pattern is bootstrap, one recommended next Task, explanation, user feedback, recalculation, and full-Plan inspection. It does not require broad email, text-message, file, invoice, note, or personal-data ingestion. It must not claim complete life-modeling, therapeutic authority, autonomous life coaching, complete planning automation, full privacy isolation, Phase 2 sync, or Phase 3 multi-user coordination. The purpose is to demonstrate the core UbU experience: one meaningful next action, with an explanation, grounded in explicit state.
 
@@ -1682,13 +1684,34 @@ Snapshot records are immutable once accepted into the append-only Log. A Snapsho
 
 ### 12.2 Discovery mode
 
-**Discovery mode** is a user-selectable workflow state, not a fourth instance operating mode. A user may choose discovery mode at any time to let UbU gather or preserve evidence about actual behavior for later reconciliation.
+**Discovery mode** is a user-selectable workflow state, not a fourth instance operating mode. It is off by default and may be started, paused, resumed, exited, or inspected by the user at any time. The UI must show active capture state, enabled sources, local/cloud routing status, retention limits, and pending-review evidence count.
 
-Discovery mode is especially important for a mobile app because embedded sensors, location categories, motion state, app activity, calendar context, and explicit quick notes may help reconstruct what happened during undetailed or under-specified time periods.
+Phase 1 session states are `inactive`, `active`, `paused`, `ended`, and `pending_review`. A minimal `DiscoveryEvidenceItem` is a reviewable candidate artifact with session ref, effective time or interval, source kind, signal kind, payload ref or redacted summary, confidence, Compartment or low-security label, provenance, and review status. Raw evidence is not final truth.
 
-Discovery mode must preserve user sovereignty. Sensor-derived, integration-derived, or inferred observations are evidence, not final truth. Ambiguous periods should be reconciled through later Log review, user clarification, or correction before UbU treats them as stable habit patterns, Preference changes, or Objective evidence.
+Allowed Phase 1 discovery inputs are intentionally narrow:
 
-Open details are tracked in `UBU-Q0052`.
+- explicit quick notes, user-selected current action, voice or text notes intentionally captured by the user, and manual start/stop markers;
+- UbU app state, Task controls, Calendar or default Plan context, timers, focus state, and foreground app category or app identifier when explicitly enabled;
+- configured integration events already allowed by Compartment, External Event, and External Reference policy;
+- coarse motion category such as stationary, walking, transit, or driving;
+- coarse user-defined location category or geofence event, not continuous raw location by default;
+- device state needed for interpretation, such as screen on/off or network/offline state.
+
+Phase 1 discovery excludes covert or broad capture by default: continuous microphone, camera, screen recording, keystroke logging, raw message bodies, raw file contents, raw GPS trails, and cross-Identity sharing are outside the default discovery input set. Any later use of those sources requires a separate explicit mode, Compartment review, routing disclosure, and user approval.
+
+Admission rules:
+
+- A user-confirmed actual action that reconciles a planned interval is recorded with `plan_realized`; if it completes, fails, or moots a Task, the corresponding Task lifecycle Log is also written.
+- A user override of the current recommendation records `decision_recorded` with `decision_kind = system_recommendation_overridden`, `authority_source = user_override`, chosen action or Task when known, optional reason, and a `user_override` recalculation trigger when planner-relevant.
+- A user-declared current state becomes a Snapshot only when it asserts observed state such as affect, availability, location category, or capacity.
+- Preferences change only through explicit accepted pairwise Preference statements. Repeated behavior and inferred reasons are not Preferences.
+- Task estimates, dependencies, status, Objective annotations, or Objective status change only after user acceptance or normal validated admission. Otherwise the item remains an unresolved review item.
+
+Undetailed periods should be represented with uncertainty rather than filled in by inference. The review UI should allow `unknown`, `private`, `rest`, `interruption`, `planned Task`, `different Task`, `quick note`, `other`, and free-text correction. UbU must not infer Preference changes, Objective failure, habit patterns, or moral meaning from unknown or private time.
+
+Before treating repeated behavior as a habit pattern, UbU must ask a clarification prompt such as: `I have seen this pattern more than once: [behavior] during [context]. Should UbU plan around it, help you change it, treat it as not a pattern, or leave it unresolved?` Valid answers are `endorse_and_plan_around`, `tolerate_but_review`, `unwanted_help_change`, `not_a_pattern`, and `leave_unresolved`.
+
+Discovery mode preserves sovereignty by remaining visible, opt-in, source-scoped, pausable, inspectable, and correctable. Users may reject, delete where retention policy permits, mark private/unknown, correct, defer, or accept evidence before it becomes canonical state. Compartment policy, `no_cloud_llm`, `no_external_export`, allowed-device, and allowed-integration denials remain hard boundaries.
 
 ---
 
@@ -2307,7 +2330,7 @@ Log review is a notable recurring Task. Its purpose is to keep UbU's model align
 
 A Log review Task may:
 
-- reconcile undetailed or under-specified time periods;
+- reconcile DiscoveryEvidenceItems and undetailed or under-specified time periods by accepting, correcting, rejecting, deleting, marking private/unknown, or deferring them;
 - ask whether a user override reflected a better local judgment, bad timing, missing preconditions, wrong duration estimate, stale affect data, social pressure, or changed Preference;
 - compare planned Tasks against completed, failed, moot, snoozed, rejected, or unobserved Tasks;
 - convert user-approved observations into corrected Logs, Snapshots, Preferences, Objective annotations, Task estimate updates, or recalculation triggers;

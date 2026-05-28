@@ -637,29 +637,9 @@ Resolved. See UBU-D0200.
 
 ## UBU-Q0052: Discovery-mode action inference and override semantics
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0050 Blocks: Discovery mode, mobile sensor workflow, behavior reconciliation, habit-pattern inference Resolved by: None Last scored: 2026-05-27 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0050 Blocks: Discovery mode, mobile sensor workflow, behavior reconciliation, habit-pattern inference Resolved by: UBU-D0201 Last scored: 2026-05-27 Scored from commit: None
 
-### Question
-
-What is the minimum Phase 1 model for discovery mode, actual-action inference, and user override semantics?
-
-### Subquestions
-
-1. How does the user select discovery mode, pause it, exit it, and inspect what it collected?
-2. Which mobile sensor, integration, quick-note, or app-state signals are acceptable Phase 1 discovery inputs?
-3. How should UbU represent actual user action when it differs from the Calendar?
-4. When does an override become a Log entry, Snapshot, Preference update, Task status change, Objective reconsideration, or unresolved review item?
-5. What clarification prompt is required before treating repeated behavior as a habit pattern?
-6. How should UbU reconcile undetailed or under-specified time periods without overclaiming certainty?
-7. How should Discovery mode preserve user sovereignty and avoid covert surveillance semantics?
-
-### Current direction
-
-Discovery mode is a user-selectable workflow state available at any time, especially from the mobile app. It may gather evidence useful for later Log review and UbU-directed reconciliation, but inferred observations are not final truth until accepted, corrected, or otherwise handled according to user-visible rules.
-
-### Resolution
-
-Open.
+Resolved. See UBU-D0201.
 
 ---
 
