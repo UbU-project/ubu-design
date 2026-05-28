@@ -788,9 +788,7 @@ Derived public-facing projections of the canonical design state currently includ
 
 **Status:** Accepted → DESIGN.md §3
 
-The model-committee process may read the canonical design repo, identify unresolved questions, generate proposed answers, run consistency checks, estimate MVP readiness, score open questions, and propose patches.
-
-The model committee does not maintain its own durable question registry. `OPEN_QUESTIONS.md` remains the canonical unresolved-question queue.
+Superseded by `UBU-D0150`. See `UBU-D0150` for the accepted model-committee architecture and constraints.
 
 ---
 
@@ -798,18 +796,7 @@ The model committee does not maintain its own durable question registry. `OPEN_Q
 
 **Status:** Accepted → DESIGN.md §3
 
-The first model-committee implementation should be a narrow local Python CLI, not a general model-governance platform.
-
-v0.1 must implement:
-
-- parse `OPEN_QUESTIONS.md`
-- run consistency checks
-- rank answerable questions
-- generate Codex work prompt
-- launch Codex CLI work provider
-- run configured Ollama work models sequentially by priority
-- import and validate candidate work proposals
-- mechanically validate patches
+Superseded by `UBU-D0150`. See `UBU-D0150` for the accepted model-committee architecture and constraints.
 
 ---
 
@@ -817,9 +804,7 @@ v0.1 must implement:
 
 **Status:** Accepted → DESIGN.md §3
 
-Model-committee synthesis should not use equal one-model-one-vote aggregation. Models may differ in reasoning quality, context length, instruction-following, access tier, cost, and observed reliability.
-
-Premium or deeper cloud models may receive higher default trust weights than free-tier or smaller local models.
+Superseded by `UBU-D0150`. See `UBU-D0150` for the accepted model-committee architecture and constraints.
 
 ---
 
@@ -827,20 +812,7 @@ Premium or deeper cloud models may receive higher default trust weights than fre
 
 **Status:** Accepted → DESIGN.md §3
 
-After consistency checks, the model-committee process should score every open question for:
-
-- answerability,
-- automation-likelihood,
-- importance,
-- risk.
-
-Question selection uses answerability as the first gate.
-
-A question should not be selected for ordinary answer/work execution if it has unresolved dependencies, unless those dependencies are answered in the same work item.
-
-Blocked questions may be selected for decomposition work when decomposition can produce replacement questions with fewer, simpler, or no dependencies.
-
-After answerability is established, questions are ranked by automation-likelihood, then importance, then risk ascending.
+Superseded by `UBU-D0150`. See `UBU-D0150` for the accepted model-committee architecture and constraints.
 
 ---
 
@@ -848,9 +820,7 @@ After answerability is established, questions are ranked by automation-likelihoo
 
 **Status:** Accepted
 
-`DECISIONS.md` is not an unbounded historical transcript. It is a bounded decision-memory index used to preserve accepted constraints and prevent settled questions from being rediscovered.
-
-Full decision history is preserved by git history and model-committee logs.
+Superseded by `UBU-D0150`. See `UBU-D0150` for the accepted model-committee architecture and constraints.
 
 ---
 
@@ -858,7 +828,7 @@ Full decision history is preserved by git history and model-committee logs.
 
 **Status:** Accepted → DESIGN.md §3
 
-The model-committee project should begin as a constrained external bootstrap tool, but should move toward the mainline UbU implementation as soon as the mainline codebase can host it cleanly.
+Superseded by `UBU-D0150`. See `UBU-D0150` for the accepted model-committee architecture and constraints.
 
 ---
 
@@ -866,11 +836,7 @@ The model-committee project should begin as a constrained external bootstrap too
 
 **Status:** Accepted → DESIGN.md §3.2
 
-The model-committee process should not rely on a hidden external editor, VS Code agent, or other opaque implementation actor to apply accepted answers.
-
-After the conceptual answer phase, the committee should run an explicit work phase in which models produce concrete changesets.
-
-The work phase is followed by work scoring, work selection, local patch application in later versions, and review artifact generation before consistency checks run.
+Superseded by `UBU-D0150`. See `UBU-D0150` for the accepted model-committee architecture and constraints.
 
 ---
 
@@ -878,9 +844,7 @@ The work phase is followed by work scoring, work selection, local patch applicat
 
 **Status:** Accepted → DESIGN.md §3
 
-For v0.1, the model-committee implementation should define a provisional filesystem log format in code.
-
-The final log and provenance format may be refined later by the model-committee process itself.
+Superseded by `UBU-D0150`. See `UBU-D0150` for the accepted model-committee architecture and constraints.
 
 ---
 
@@ -888,19 +852,7 @@ The final log and provenance format may be refined later by the model-committee 
 
 **Status:** Accepted → DESIGN.md §3
 
-For v0.1, model-committee runs should use simple provisional quorum and provider-failure rules.
-
-These rules are sufficient to begin implementation and may be refined later.
-
-Provisional quorum rules:
-
-- Minimum valid work proposals: 1.
-- Preferred valid work proposals: 2 or more.
-- A Codex work proposal should be attempted before selecting a patch.
-- Ollama work proposals should be attempted sequentially by configured priority.
-- If Ollama responses finish within timeout and validate, they are included in Codex scoring.
-- If an Ollama provider fails, the failure is logged and the run may continue if Codex produces at least one valid work proposal.
-- If no valid work proposal exists, the run writes logs and exits nonzero.
+Superseded by `UBU-D0150`. See `UBU-D0150` for the accepted model-committee architecture and constraints.
 
 ---
 
@@ -1024,7 +976,6 @@ Automation Workers contribute to Logs through worker Identities by submitting ev
 
 **Consequences:**
 
-- `UBU-Q0031` is resolved for Phase 1 MVP.
 - Logs can support audit, reconciliation, worker accountability, plan-vs-reality feedback, and correction without losing historical claims.
 - Detailed event-specific payload schemas may be refined alongside Task, Snapshot, Objective transition, worker mutation, and recalculation-trigger schemas.
 - Large-history search can rely on rebuildable indexes over the append-only Log rather than treating indexes as canonical state.
@@ -1046,7 +997,6 @@ Live GitHub mutation is not required in a public recording. A dry-run projection
 
 **Consequences:**
 
-- `UBU-Q0030` is resolved for Phase 1 release criteria.
 - The demo bar is end-to-end behavior, not complete implementation of every unresolved Phase 1 design question.
 - Remaining GitHub projection, worker authority, risk-reporting, affect, and Compact Calendar details may still be refined in their dedicated open questions.
 - Public messaging should describe any fixture, dry-run, or human-approval boundary explicitly.
@@ -1072,7 +1022,6 @@ Implementation repositories should use OSI-approved licenses. The default licens
 
 **Consequences:**
 
-- `UBU-Q0029` is resolved for Phase 1 governance.
 - The commercial boundary is service, operations, premium capacity, enterprise layers, proprietary closed-system connectors, and private experiments, not a hidden replacement for the planning kernel.
 - Public contributor messaging should avoid claims that require private components.
 - Future implementation repos need license files and package labels consistent with this boundary.
@@ -1098,7 +1047,6 @@ Phase 1 may claim local-first operation only in the limited sense that canonical
 
 **Consequences:**
 
-- `UBU-Q0028` is resolved for Phase 1 MVP messaging and minimum implementation promises.
 - Public messaging must distinguish privacy-first architecture from the narrower implemented Phase 1 privacy baseline.
 - Full Compartment enforcement across sync, retention, device eligibility, and cryptographic isolation remains future work unless separately accepted and implemented.
 - Implementations must label un-compartmented content as low-security rather than implying default protection.
@@ -1151,7 +1099,6 @@ For Phase 1, relationship maintenance is supported only through existing Objecti
 
 **Consequences:**
 
-- `UBU-Q0026` is resolved for Phase 1 modeling.
 - Relationship payload stays small and privacy-sensitive.
 - Communication cadence remains schedulable and recalculable through Objective recurrence.
 - GitHub dogfooding can model contributor follow-up without adding a new relationship subsystem to MVP.
@@ -1419,7 +1366,6 @@ Paid work should be evaluated with a simple rule: if the funded deliverable woul
 
 **Consequences:**
 
-- `UBU-Q0048` is resolved for Phase 1 commercial red-line policy.
 - Prototype-funder discovery can proceed with a clear accept/reject screen.
 - Commercial discovery should prioritize independent knowledge-worker workflows that fund core planning, privacy, affect, worker, and projection capabilities.
 - Enterprise opportunities are acceptable only when they preserve contributor sovereignty and remain subordinate to the planning-kernel trunk.
@@ -2786,7 +2732,6 @@ Any workflow using a cloud or external LLM must disclose, before or at execution
 
 **Consequences:**
 
-- `UBU-Q0060` is resolved for Phase 1 architecture.
 - LLM routing can proceed without privileging Ollama, UbUCorp, or any single cloud API as the canonical interface.
 - `UBU-Q0079`, `UBU-Q0080`, `UBU-Q0083`, and `UBU-Q0084` may depend on this routing boundary while still refining MCP tools, Delegation Substrate fields, ContextBundle governance, and background-agent policy.
 - Provider-specific SDK details, exact secret-store implementation, and long-context bundle review UX may evolve without changing the minimum boundary.
@@ -2817,7 +2762,6 @@ Workers may request clarification through assignment status or an authorized mut
 
 **Consequences:**
 
-- `UBU-Q0008` is resolved for Phase 1 implementation.
 - Assignment is parent-directed and audit-oriented; worker polling is only a delivery mechanism for explicit assignments.
 - Phase 1 avoids competitive worker claiming while preserving future compatibility with richer delegation, General Contractor, and Skill Barter workflows.
 - Worker disappearance, rejection, clarification, and child-Task proposals are handled through logged assignment transitions and mutation/request review rather than direct canonical writes.
@@ -2867,7 +2811,6 @@ Planner-relevant reconciliation findings create or batch `recalculation_triggere
 
 **Consequences:**
 
-- `UBU-Q0002` is resolved for Phase 1 implementation.
 - Phase 1 GitHub dogfooding can implement projection previews and live writes without deciding the full `pipeline_state` storage model in `UBU-Q0004`.
 - `UBU-Q0005` can define GitHub event triage against the boundary that every GitHub edit is an External Event unless admitted through UbU.
 - GitHub token custody is governed by `UBU-D0184`; this projection decision does not require the canonical instance to hold worker GitHub tokens.
@@ -2980,7 +2923,6 @@ ContextBundles are immutable after use. Corrections, narrower reruns, broader re
 
 **Consequences:**
 
-- `UBU-Q0083` is resolved for Phase 1 governance.
 - Long-context model use can proceed only through explicit minimization, approval, routing, exposure-summary, and provenance records.
 - Organizational introspection and repository/chat archive review can use large models without treating large context windows as permission to send everything.
 - `UBU-Q0092` can refine typed Relationship evidence policies while relying on the ContextBundle boundary for model routing.
@@ -3038,7 +2980,6 @@ Missed events are reconstructed during reconciliation by comparing live GitHub i
 
 **Consequences:**
 
-- `UBU-Q0005` is resolved for Phase 1 implementation.
 - The candidate MVP event classes have deterministic default triage without requiring GitHub to become canonical state.
 - `UBU-Q0004` is resolved by `UBU-D0182`; label and projection events can already be triaged as evidence or drift.
 - GitHub token custody is governed by `UBU-D0184`; event triage does not require any specific actor to hold GitHub write credentials.
@@ -3070,7 +3011,6 @@ Stale overwrite prevention is mandatory. The canonical instance compares `expect
 
 **Consequences:**
 
-- `UBU-Q0009` is resolved for Phase 1 implementation.
 - Worker authority remains request-based and bounded by capability grants, Compartment policy, expected versions, idempotency, assignment leases, and review policy.
 - Valid worker outputs can support automation without granting direct canonical write authority.
 - Invalid and stale worker submissions remain auditable without polluting canonical state.
@@ -3102,7 +3042,6 @@ This decision does not remove future safety work. It fixes the authority boundar
 
 **Consequences:**
 
-- `UBU-Q0100` is resolved for Phase 1 governance.
 - `UBU-Q0101` remains open for the detailed UX of uncertainty display, bypass controls, disablement, and introspection consequences.
 - Relationship and RelationshipScopeTransition safeguards use the same taxonomy as the rest of UbU rather than a separate paternalistic gate model.
 - Product and public documentation must avoid claiming that UbU reliably prevents behavioral misuse or illegal behavior.
@@ -3217,7 +3156,6 @@ The Phase 1 performance target is a local desktop/laptop GPU backend. A CPU refe
 
 **Consequences:**
 
-- `UBU-Q0102` is solved for Phase 1.
 - Implementation work can begin against this schema without waiting for mobile, cloud, realtime, or multi-user payload fields.
 - Future schema changes must preserve replayability through explicit versioning.
 - Privacy compliance remains represented by both a compact policy summary and a CPU-generated payload-safety proof, not by a single human-readable flag.
@@ -3239,7 +3177,6 @@ Stage 1 consumes a CPU-provided `topological_order`; the GPU engine does not dis
 
 **Consequences:**
 
-- `UBU-Q0103` is solved for Phase 1.
 - The stage names, semantic boundaries, CPU-provided topological order requirement, and deterministic seed-stream convention are canonical.
 - Implementation details may vary as long as they preserve the contract and replayable output semantics.
 
@@ -3260,7 +3197,6 @@ CPU validation checks finite values, duplicate group declarations, range constra
 
 **Consequences:**
 
-- `UBU-Q0104` is solved for Phase 1.
 - The MVP planner supports positive shared-delay correlation while avoiding arbitrary matrix repair.
 - Degraded independent rollout is allowed only as an explicit diagnostic fallback, not as silent certainty.
 - Negative-correlation support remains a recorded roadmap item rather than an indefinite deferral.
@@ -3284,7 +3220,6 @@ Phase 1 UX must not require ordinary users to edit raw sigmoid parameters. The U
 
 **Consequences:**
 
-- `UBU-Q0105` is solved for Phase 1.
 - Raw sigmoid configuration is no longer a normal-user prerequisite for Phase 1 onboarding.
 - The planning kernel can implement `affect_legitimacy_filter` without resolving richer affect inference or cross-dimension models.
 - The bounded-optimum arousal model with task/category overrides is explicitly roadmapped for Phase 2, not abandoned.
@@ -3321,7 +3256,6 @@ The explicit `p95_seconds` field name replaces the ambiguous `max` field name us
 
 **Consequences:**
 
-- `UBU-Q0106` is solved for Phase 1.
 - Duration semantics are deterministic and replayable.
 - `p95_seconds` naming removes prior ambiguity about whether `max` was P90, P95, P99, or a hard cap.
 - Seconds-unit consistency eliminates unit-conversion bugs at stage boundaries.
@@ -3352,7 +3286,6 @@ Implementation should now proceed slice-by-slice. A slice may begin when no unre
 
 **Consequences:**
 
-- `UBU-Q0034` is solved.
 - Broad design expansion no longer blocks Phase 1 implementation.
 - Implementation-local design clarification remains allowed when backed by a blocker certificate.
 - `model-committee` transitions from pre-MVP design-freeze assistance toward implementation-support dogfooding.
@@ -3405,7 +3338,6 @@ The minimum dogfooding fixture is a local loopback MCP adapter over synthetic or
 
 **Consequences:**
 
-- `UBU-Q0079` is resolved for Phase 1.
 - Phase 1 external agents can integrate with UbU without broad authority over the user's life model.
 - MCP tool access reuses the worker mutation, ContextBundle, Compartment, Log, and review boundaries rather than creating a parallel authorization model.
 - Direct canonical writes, credential mutation, and live external side effects remain outside MCP server authority unless a later accepted decision adds a narrower tool with explicit hard-boundary checks.
@@ -3463,7 +3395,6 @@ Future integrated UbU Automation Worker behavior should map this loop to ordinar
 
 **Consequences:**
 
-- `UBU-Q0039` is resolved.
 - Consistency repair is the only work mode allowed while hard failures are present.
 - Prioritization may run with warnings only when warning provenance is recorded and stale score evidence is excluded.
 - Provider and model updates invalidate reusable derived scores without rewriting accepted canonical state or historical run logs.
@@ -3503,7 +3434,6 @@ Failed and partially successful runs are publishable when labeled by failure cla
 
 **Consequences:**
 
-- `UBU-Q0046` is resolved.
 - Public credibility comes from reviewable run packages and accepted commits, not from dumping every raw provider artifact.
 - `UBU-Q0063` may depend on this policy for organizational-introspection dogfooding artifacts.
 - Future implementation should add an artifact-safety check and a redacted public manifest schema before publishing run packages.
@@ -3558,7 +3488,6 @@ Local renderers, UI-test capture tools, LLM script drafters, TTS tools, caption 
 
 **Consequences:**
 
-- `UBU-Q0049` is resolved for Phase 1 implementation.
 - Release outreach can proceed through manual packages without waiting for automated video generation or publication.
 - Public release artifacts have a stable claim-label and provenance model that prevents mock, future, or speculative behavior from being described as implemented.
 - `UBU-Q0063` can reuse release outreach packages as public organizational-introspection evidence.
@@ -3610,7 +3539,6 @@ Question wording must use model-repair framing:
 
 **Consequences:**
 
-- `UBU-Q0053` is resolved for Phase 1.
 - Self-determination theory and theory of planned behavior remain interface and reporting influences, not Phase 1 ontology.
 - Review Tasks can be implemented with existing Task, Log, Snapshot, Preference, Objective, Report, and recalculation-trigger mechanisms.
 - Preference-calibration examples are resolved by `UBU-D0200`; discovery-mode inference is resolved by `UBU-D0201`; deeper affect/personality modeling remains post-MVP in `UBU-Q0074`.
@@ -3660,7 +3588,6 @@ Every accepted `pipeline_state` transition creates a `pipeline_state_transitione
 
 **Consequences:**
 
-- `UBU-Q0004` is resolved for Phase 1.
 - Objective lifecycle remains on `Objective.status`; workflow state stays projection-scoped.
 - GitHub managed labels project accepted `pipeline_state` values but do not become canonical state.
 - Multiple projections can coexist without changing the Objective schema.
@@ -3702,7 +3629,6 @@ Noise budget defaults:
 
 **Consequences:**
 
-- `UBU-Q0006` is resolved for Phase 1.
 - GitHub event handling remains task-oriented and does not turn every comment, label, CI transition, or PR update into management work.
 - Analysis work can still be modeled when it is bounded, parent-scoped, deduplicated, and automatically closed.
 - Implementations can enforce Objective and Task admission before worker assignment, recalculation, or GitHub projection requests.
@@ -3729,7 +3655,6 @@ MVP security assumes cooperative operator-administered local and worker enclaves
 
 **Consequences:**
 
-- `UBU-Q0010` is resolved for Phase 1.
 - The canonical instance may coordinate GitHub projection without custody of worker-held secrets.
 - Worker GitHub authority remains bounded by both GitHub credential scope and UbU capability/assignment scope.
 - Repository scope is required when available; Task scope is an UbU authorization boundary unless provider-native short-lived tokens are available.
@@ -3770,7 +3695,6 @@ Values are schema-controlled for MVP. Specific Identity, source object, and evid
 
 **Consequences:**
 
-- `UBU-Q0013` is resolved for Phase 1.
 - Organization-mode value/work objects now have a closed coarse authority-source vocabulary without introducing RBAC.
 - Worker, projection, and mutation envelopes use the same vocabulary across modes.
 - `llm_advisory` remains advisory and cannot create canonical state without an admitting actor, review policy, and provenance.
@@ -3810,7 +3734,6 @@ When recalculated coverage falls below the effective threshold, UbU records or b
 
 **Consequences:**
 
-- `UBU-Q0017` is resolved for Phase 1.
 - Coverage is auditable enough for regeneration without pretending mathematical completeness.
 - The same default `0.99` value remains the short-horizon branch target and regeneration threshold unless overridden by recorded policy.
 - Objective recurrence uncertainty can be added later as a typed stochastic input without changing the MVP coverage boundary.
@@ -3852,7 +3775,6 @@ Worker failure affects derived risk reports. Failed, expired, rejected, repeated
 
 **Consequences:**
 
-- `UBU-Q0020` is resolved for Phase 1.
 - Attempt history remains auditable because failed attempts are preserved instead of overwritten.
 - Retry lineage is independent of whether the retry root began as a direct assignment or as an automation child Task.
 - Implementations can use a conservative retry default without schema-level infinite loops.
@@ -3882,7 +3804,6 @@ Retries use `UBU-D0187`: a failed child remains failed, and retry work is a new 
 
 **Consequences:**
 
-- `UBU-Q0021` is resolved for Phase 1 implementation.
 - Automation workflows do not require a new WorkItem subtype.
 - Plans continue to contain Tasks only; Containers group automation structure and derive completion from child state.
 - Worker-created means worker-proposed and parent-admitted, not direct worker canonical write authority.
@@ -3948,7 +3869,6 @@ A readiness report must name blockers, failing gates, stale inputs, manual assum
 
 **Consequences:**
 
-- `UBU-Q0033` is resolved.
 - README readiness signals derive from an evidence-backed report, not from raw open-question count or model confidence.
 - Readiness is judged slice-by-slice after `UBU-D0175`; unresolved post-MVP or nonblocking questions do not reduce Phase 1 readiness unless they carry a valid blocker certificate.
 - Human review remains required before public readiness claims, release decisions, or scope-freeze claims.
@@ -3979,7 +3899,6 @@ Classification rules:
 
 **Consequences:**
 
-- `UBU-Q0035` is resolved.
 - Future question ranking can distinguish answerability, automation likelihood, and governance eligibility instead of treating them as one score.
 - New or updated open questions should carry the strictest applicable `Auto-choice eligibility` value.
 - Human-only and human-approval-required work may still benefit from automation, but only as bounded review support.
@@ -4143,7 +4062,6 @@ Preference inference may consume only uncorrected counterfactual entries and mus
 
 **Consequences:**
 
-- `UBU-Q0107` is resolved for Phase 1.
 - Introspection and preference inference have reviewable evidence for rejected options, not only accepted outcomes.
 - Optional reason prompts can stay lightweight without losing the fact of the decision.
 - No new Log event type is required beyond `decision_recorded`.
@@ -4184,7 +4102,6 @@ The `UBU-D0175` stop rule applies to replacement questions. A replacement questi
 
 **Consequences:**
 
-- `UBU-Q0040` is resolved for model-committee prioritization.
 - Raw open-question count is not used as the stop rule or decomposition score.
 - Blocked questions can be selected for decomposition, but not ordinary answering.
 - Future parser work may add first-class decomposed-status and lineage fields without changing the scoring rule.
@@ -4235,7 +4152,6 @@ Examples are versioned derived content. UbU may revise or retire an example when
 
 **Consequences:**
 
-- `UBU-Q0051` is resolved for Phase 1.
 - Preference calibration can improve onboarding, Calendar preview, and Log review without adding a psychology ontology or canonical value objects.
 - Phase 1 onboarding remains lightweight because calibration has a strict presentation budget and can be skipped.
 - Future richer examples may be added as versioned prompt content without schema migration unless they change admission rules or canonical fields.
@@ -4275,7 +4191,6 @@ Before treating repeated behavior as a habit pattern, UbU asks a clarification p
 
 **Consequences:**
 
-- `UBU-Q0052` is resolved for Phase 1.
 - Discovery mode can support mobile evidence gathering without converting sensor inference into canonical truth.
 - Overrides are authoritative user evidence, but durable model changes still pass through explicit Log, Snapshot, Preference, Task, Objective, and recalculation admission rules.
 - Habit-pattern inference requires user clarification before it affects planning as a stable pattern.
@@ -4316,7 +4231,6 @@ The reactive branch layer may compute a small ranked suggestion set when early c
 
 **Consequences:**
 
-- `UBU-Q0057` is resolved for Phase 1.
 - Phase 1 implementation can support useful spare-time suggestions without adding a WorkItem subtype or making idle time a planning failure.
 - Calendar preview and mobile next-action UX can explain why a gap is protected, discretionary, or has an optional suggestion.
 - Later richer maintenance automation remains compatible with ordinary Task, Objective recurrence, and planner behavior.
@@ -4350,7 +4264,6 @@ The minimum mobile-only guarantee is the core UbU loop on one local device: expl
 
 **Consequences:**
 
-- `UBU-Q0058` is resolved for Phase 1 runtime policy.
 - `UBU-Q0073` can define exact mobile stewardship schemas and repair recipes on top of this profile policy.
 - Low-power or offline degradation is user-visible and auditable rather than a silent quality change.
 - The default `0.99` coverage target remains normal/full-detail policy; low-power and offline profiles use explicit profile overrides.
@@ -4375,7 +4288,6 @@ Accepted constraints:
 
 **Consequences:**
 
-- `UBU-Q0063` is resolved for Phase 1.
 - Organizational introspection can be demonstrated without first implementing Association objects, dispute semantics, multi-user sync, or automatic archive analysis.
 - EthConf follow-up becomes a dogfooding case with auditable mission-alignment evidence instead of a marketing-only activity.
 
