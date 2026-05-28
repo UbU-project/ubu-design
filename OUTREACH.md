@@ -1,6 +1,6 @@
 # UbU Outreach
 
-**Status:** Derived public-facing outreach document  
+**Status:** Derived public-facing outreach document — updated for Phase 0 / ETHConf NYC 2026  
 **Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, and `PLANNING_KERNEL_CONTRACT.md`  
 **Audience:** FOSS developers, project maintainers, Ethereum project leads, privacy engineers, automation builders, planning-tool researchers, independent technical consultants, prototype funders, and technically curious contributors
 
@@ -184,6 +184,18 @@ This is the product in action, applied to one of the hardest and most universal 
 
 ## Dogfooding: UbU runs UbU
 
+### Phase 0: ETHConf NYC demo
+
+The first runnable UbU demo is being built as Phase 0, targeting **ETHConf NYC, June 8–10, 2026**.
+
+The Phase 0 demo creates a new user, runs the bootstrap onboarding interview, connects to a dummy GitHub environment (a pre-configured clone of the `ubu-design` repository), asks affect calibration questions, ingests dummy GitHub Issues as Tasks, generates a Plan with affect-legitimized breaks and recovery constraints, and displays that Plan in a Calendar preview and next-issue UI.
+
+`model-committee` runs occur during public demonstration ceremonies. The primary demonstration is **association introspection in action**: UbU coordinating the UbU project using its own planning model, live and inspectable.
+
+Phase 0 is a standalone demo milestone. Phase 1 implementation begins after ETHConf, accelerated by experience and patterns from Phase 0 development.
+
+### Phase 1: GitHub dogfooding (post-ETHConf)
+
 The Phase 1 MVP is focused on single-user GitHub dogfooding. UbU should help coordinate the UbU project itself by observing and modeling GitHub issues, pull requests, review requests, CI events, comments, labels, milestones, design questions, release-readiness checks, contributor interactions, planning-kernel work, and automation-worker outputs.
 
 GitHub is treated as a projection of UbU state, not the source of truth. This allows FOSS contributors to keep using normal GitHub workflows while UbU maintains a richer canonical model internally.
@@ -236,6 +248,8 @@ That is directly useful to maintainers, and it is a strong first use case becaus
 
 Ethereum and FOSS teams are useful early feedback sources because many are remote, async-heavy, autonomy-heavy, GitHub-heavy, contributor-driven, cross-organizational, dependent on informal commitments, sensitive to surveillance and centralization, and forced to coordinate across chats, governance forums, code review, audits, releases, and calendars.
 
+At ETHConf NYC (June 8–10, 2026), UbU will demonstrate Phase 0: a live, running UbU instance that creates a user, onboards GitHub access, ingests Issues as Tasks, generates an affect-legitimized Plan, and shows Calendar preview — all applied to the UbU project itself. This is not a slide deck describing future features. It is a working demo of the core loop.
+
 The goal is not to convert UbU into a conventional project-management product. The goal is to learn whether self-governance primitives can improve the work lives of autonomous contributors while also making project coordination more truthful.
 
 ---
@@ -270,6 +284,6 @@ Professional and FOSS use cases are valuable when they help build the same primi
 
 ## Why join now?
 
-UbU is at the transition point where the design is coherent enough to begin implementation, but early enough that contributors can meaningfully shape the architecture.
+UbU is at a concrete inflection point. Phase 1 design is frozen. Phase 0 — a live, runnable demo — is in active development for ETHConf NYC, June 8–10, 2026. Phase 1 implementation begins immediately after.
 
-This is a good project for developers interested in privacy-first software, local-first systems, planning algorithms, AI-assisted development, LLM orchestration, FOSS governance, project-management theory, self-hosted automation, human-centered computing, and tools that help users govern themselves rather than manipulate them.
+This is the moment when early contributors can watch a working end-to-end demo, meet the project in person, and shape Phase 1 implementation while the architecture is still malleable. The design is coherent enough to act on; the code is early enough that concrete contributions matter.

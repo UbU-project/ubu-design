@@ -1,6 +1,6 @@
 # UbU for Project Leads and Technical PMs
 
-**Status:** Derived audience-facing brief  
+**Status:** Derived audience-facing brief — updated for Phase 0 / ETHConf NYC 2026  
 **Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, and `PLANNING_KERNEL_CONTRACT.md`  
 **Audience:** Ethereum project leads, protocol leads, FOSS maintainers with coordination duties, engineering managers, release coordinators, grants/milestone coordinators, and technical PMs who coordinate autonomous contributors
 
@@ -96,9 +96,21 @@ This is especially relevant for teams that receive grants, coordinate public goo
 
 ---
 
-## Phase 1 relevance
+## Phase 0 and Phase 1 relevance
 
-Phase 1 does not need to solve full multi-user project management. The first MVP is single-user GitHub dogfooding: using UbU to coordinate UbU's own design, development, release, open questions, review artifacts, planning-kernel contract, contributor outreach, and `model-committee` v0.3 automation artifacts.
+### Phase 0: the ETHConf NYC demo
+
+Phase 0 is a live, runnable UbU demo being developed for **ETHConf NYC, June 8–10, 2026**. It is the canonical pre-Phase-1 milestone.
+
+The demo creates a new user, completes the bootstrap interview, connects to a pre-configured dummy GitHub environment (a clone of `ubu-design`), runs affect calibration questions, ingests dummy GitHub Issues as Tasks, generates an affect-legitimized Plan with breaks and recovery constraints, and displays the result in Calendar preview and next-issue UI. `model-committee` runs occur during public demonstration ceremonies.
+
+The primary value demonstrated is **association introspection**: UbU using its own planning model to coordinate the UbU project, live and inspectable by conference attendees.
+
+Phase 0 is a standalone demo. Phase 1 implementation begins after ETHConf, informed and accelerated by Phase 0 patterns and experience.
+
+### Phase 1: post-ETHConf GitHub dogfooding
+
+Phase 1 design is now frozen as of commit `cc8b339`. Phase 1 does not need to solve full multi-user project management. The first MVP is single-user GitHub dogfooding: using UbU to coordinate UbU's own design, development, release, open questions, review artifacts, planning-kernel contract, contributor outreach, and `model-committee` v0.3 automation artifacts.
 
 That still tests the primitives project leads care about:
 
@@ -117,7 +129,9 @@ A technical PM or project lead does not need to believe in the full future syste
 
 ## Useful EthConf conversations
 
-UbU is seeking concrete examples, not generic praise.
+At ETHConf NYC (June 8–10, 2026), UbU will be demonstrating Phase 0: a live running instance that onboards a user, ingests GitHub Issues as Tasks, generates an affect-legitimized Plan, and shows Calendar preview — all applied to the UbU project itself.
+
+UbU is seeking concrete examples and feedback, not generic praise.
 
 Good project-lead conversations include:
 

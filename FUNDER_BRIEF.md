@@ -1,6 +1,6 @@
 # UbU Funder Brief
 
-**Status:** Derived audience-facing brief  
+**Status:** Derived audience-facing brief — updated for Phase 0 / ETHConf NYC 2026  
 **Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, and `PLANNING_KERNEL_CONTRACT.md`  
 **Audience:** grantmakers, ecosystem sponsors, angels, hackathon judges, aligned funders, and prototype sponsors
 
@@ -20,16 +20,15 @@ Funding is harmful when it pulls UbU into a bespoke private workflow, surveillan
 
 ## Why now
 
-UbU has moved beyond pure concept work into active pre-MVP dogfooding. The design repository has four canonical design files:
+UbU has moved through pure concept work, active design dogfooding, and is now entering its first runnable milestone.
 
-- `DESIGN.md`
-- `DECISIONS.md`
-- `OPEN_QUESTIONS.md`
-- `PLANNING_KERNEL_CONTRACT.md`
+**Phase 1 design is frozen** as of commit `cc8b339`. The design repository has four canonical files, a fully specified planning-kernel contract, a complete accepted-decisions log, and a ranked open-questions queue. No further broad design changes are warranted.
 
-The accepted dogfooding path now runs through `model-committee v0.3`: a bounded advisory automation loop that uses approved model providers to generate and cross-score changesets, validates patches, snapshots canonical files, includes the planning-kernel contract in prompts, and writes reviewable artifacts.
+**Phase 0** — the canonical pre-Phase-1 milestone — is a live, runnable demo being built for **ETHConf NYC, June 8–10, 2026**. The demo creates a new user, onboards dummy GitHub access, asks affect calibration questions, converts GitHub Issues to Tasks, generates an affect-legitimized Plan with breaks and recovery constraints, and displays the result in Calendar preview and next-issue UI. `model-committee` runs during public demonstration ceremonies.
 
-The immediate opportunity is to convert the design into a working Phase 1 prototype while the scope is still narrow enough to stay inspectable.
+Phase 0 is the first time the core UbU loop will run end-to-end in public, demonstrated live on the UbU project itself.
+
+**Phase 1 implementation begins immediately after ETHConf.** The immediate opportunity is to convert a frozen, internally consistent design into a working Phase 1 prototype while the scope is still narrow enough to stay inspectable. The patterns and experience from Phase 0 development directly accelerate that work.
 
 ---
 
@@ -41,7 +40,22 @@ The first version does not need every abstraction fully implemented. Phase 1 sho
 
 ---
 
-## Phase 1 prototype focus
+## Phase 0 demo and Phase 1 prototype focus
+
+### Phase 0: ETHConf NYC demo
+
+The Phase 0 demo shows the core UbU loop end-to-end in a self-contained dummy environment:
+
+- user onboarding and bootstrap interview;
+- dummy GitHub ingestion (pre-configured clone of `ubu-design`);
+- affect calibration questions;
+- GitHub Issues → Tasks conversion;
+- Plan generation with affect-legitimized breaks and recovery constraints;
+- Calendar preview and next-issue UI.
+
+Phase 0 is a standalone demo. It demonstrates that the loop is real and inspectable, not that every Phase 1 capability is production-ready. Code reuse from Phase 0 into Phase 1 is not assumed; the value is demonstrated patterns, gained experience, and public evidence that UbU can coordinate itself.
+
+### Phase 1 prototype focus
 
 The Phase 1 MVP is single-user GitHub dogfooding.
 

@@ -1,6 +1,6 @@
 # UbU
 
-**Status:** Active pre-MVP dogfooding / implementation-first Phase 1  
+**Status:** Phase 0 demo in active development / Phase 1 design frozen  
 **Repository:** `ubu-design`  
 **Primary purpose:** Canonical public design state for the UbU project  
 **Derived file:** This README is a technical contributor entry point. The canonical design authority is `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, and `PLANNING_KERNEL_CONTRACT.md`.
@@ -131,9 +131,29 @@ When a derived file conflicts with a canonical file, the canonical file wins.
 
 ## Current project status
 
-UbU is in active pre-MVP dogfooding. Broad pre-MVP design automation is closed by `UBU-D0175`; remaining design work should support concrete Phase 1 implementation slices, recruitment, dogfooding, market discovery, or blocker-certificate review.
+### Phase 0: ETHConf NYC demo (active)
 
-The current operational target is:
+Phase 0 is the canonical pre-Phase-1 milestone. It is a live, runnable UbU demo being developed for the **ETHConf NYC conference, June 8–10, 2026**.
+
+The Phase 0 demo covers the core UbU loop end-to-end using a self-contained dummy environment:
+
+1. Create a new user and complete the onboarding bootstrap interview.
+2. Onboard GitHub access using a hard-coded dummy GitHub user and pre-configured access token.
+3. Select a repository (a dummy clone of `UbU-project/ubu-design`).
+4. Answer affect calibration questions.
+5. Ingest dummy GitHub Issues and convert them into Tasks.
+6. Generate a Plan for those Tasks including affect-legitimized breaks and recovery constraints.
+7. Display the Plan in Calendar preview and/or next-issue UI.
+
+`model-committee` runs are performed during public demonstration ceremonies only, due to real AI provider costs.
+
+Phase 0 is a standalone demo milestone. Code reuse into Phase 1 is not assumed, but the skills, experience, and demonstrated patterns acquired during Phase 0 will accelerate Phase 1 development directly. The primary demonstration value is **association introspection**: UbU using its own planning and self-governance model to coordinate the UbU project in public.
+
+### Phase 1 design freeze
+
+Phase 1 design is now frozen as of commit `cc8b339`. No further broad pre-MVP design automation is warranted. Remaining design activity should be limited to implementation-guidance gaps, open blocker certificates, or Phase 0 feedback that reveals genuine Phase 1 scope issues.
+
+Phase 1 implementation will begin after ETHConf NYC. The operational target remains:
 
 > Use UbU's explicit model, `model-committee`, GitHub dogfooding inputs, the Phase 1 planning-kernel contract, regular Calendar preview, regular Log review, and bounded projection artifacts to help UbU coordinate the development of UbU itself.
 
@@ -143,7 +163,23 @@ The project is seeking a small core cohort of serious, self-directed builders. I
 
 ## Development readiness
 
-The design baseline supports beginning implementation-first Phase 1 work while continuing `model-committee` dogfooding as an implementation-support and review-artifact workflow.
+### Phase 0 readiness
+
+Phase 0 is in active development targeting ETHConf NYC, June 8–10, 2026.
+
+- [x] Phase 1 design is frozen at commit `cc8b339`.
+- [x] Phase 0 demo scope is defined: new-user onboarding, dummy GitHub ingestion, affect calibration, Task generation, affect-legitimized planning, Calendar preview and/or next-issue UI.
+- [x] Dummy GitHub environment (hard-coded user, token, and `ubu-design` clone) is specified.
+- [ ] Phase 0 demo app is runnable end-to-end.
+- [ ] Dummy GitHub Issues ingest and convert to Tasks in the demo app.
+- [ ] Affect calibration questions are implemented in the Phase 0 onboarding flow.
+- [ ] Plan generation with affect-legitimized breaks runs in the Phase 0 app.
+- [ ] Calendar preview and/or next-issue UI is implemented in the Phase 0 app.
+- [ ] `model-committee` ceremony run is validated against Phase 2 open questions.
+
+### Phase 1 readiness (post-ETHConf)
+
+The Phase 1 design baseline is frozen and supports beginning implementation-first Phase 1 work after ETHConf NYC. `model-committee` dogfooding continues as an implementation-support and review-artifact workflow.
 
 - [x] Broad pre-MVP design automation is closed by `UBU-D0175`.
 - [x] The canonical design file set includes `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, and `PLANNING_KERNEL_CONTRACT.md`.
@@ -164,9 +200,10 @@ The design baseline supports beginning implementation-first Phase 1 work while c
 ## Phase 1 readiness report
 
 **Report type:** Human-reviewed MVP readiness signal (required by `UBU-D0189`)  
-**Evidence commit:** `c3b61b0`  
-**Report date:** 2026-05-27  
-**Scorer:** Human review
+**Evidence commit:** `cc8b339` — Phase 1 design freeze commit  
+**Report date:** 2026-05-28  
+**Scorer:** Human review  
+**Note:** Phase 1 design is now frozen. Phase 0 (ETHConf NYC demo, June 8–10 2026) is the current active milestone. Phase 1 implementation begins after ETHConf. Readiness scores below reflect the Phase 1 implementation state as of the design freeze; they are not expected to improve until Phase 1 implementation begins.
 
 ---
 
