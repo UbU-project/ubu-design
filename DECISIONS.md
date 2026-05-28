@@ -4480,3 +4480,44 @@ Recuperative work required for legitimacy is not optional gap-filling. Meals, sl
 - Recuperative Tasks are represented through ordinary Plan support work, not as evergreen gap-fillers.
 
 ---
+
+## UBU-D0212: Phase 1 planner solver selection uses CPU certification
+
+**Status:** Accepted → DESIGN.md §16.10; PLANNING_KERNEL_CONTRACT.md §2
+
+Resolved question: `UBU-Q0072`.
+
+Phase 1 planner backend selection uses a mandatory CPU certification layer and optional advisory accelerators.
+
+Mandatory CPU responsibilities:
+
+- dependency DAG and topological-order validation;
+- deterministic precondition and UniverseState effect evaluation;
+- skeleton validity and bounded contradiction diagnostics;
+- full legitimization and semi-legitimization admission;
+- hard Calendar Logic validation, provenance validation, payload-safety validation, and final Plan commit.
+
+Advisory acceleration responsibilities:
+
+- PyTorch GPU execution for `skeleton_sampling`, `affect_legitimacy_filter`, `value_scoring`, and `monte_carlo_rollout`;
+- PyTorch or CPU local-search experiments for candidate optimization and ranking;
+- learned-model inference only as advisory candidate ranking or parameter estimation until the CPU layer admits the output.
+
+Solver/library candidates are evaluation targets, not Phase 1 dependencies:
+
+- built-in CPU graph/precondition validator: required reference path and certification source;
+- OR-Tools CP-SAT: optional finalist schedule-feasibility and contradiction-minimization experiment;
+- Z3 or comparable SMT/MaxSMT: optional logical contradiction-diagnosis experiment;
+- additional local-search libraries: optional candidate-optimization experiments only.
+
+Phase 1 has no mobile GPU target and no cloud GPU provider target. The required mobile fallback is CPU stewardship for current/next Task hard checks, cached last-legitimate Plan repair, decision envelopes, and simple repair recipes, with exact mobile metadata deferred to `UBU-Q0073`. Premium or cloud GPU planning is deferred to `UBU-Q0059` and later provider work; any future backend must preserve the same request/response contract, Compartment/export gating, and CPU certification on return.
+
+No solver, GPU backend, or learned model may write canonical state or certify final validity. If optional solver output and the CPU validator disagree, the CPU validator blocks commit and records diagnostics.
+
+**Consequences:**
+
+- `UBU-Q0072` is resolved for Phase 1.
+- Solver benchmarking becomes implementation work rather than an open design blocker.
+- Mobile GPU, cloud GPU, and premium wide-horizon provider details remain deferred without blocking the local desktop/laptop Phase 1 backend.
+
+---

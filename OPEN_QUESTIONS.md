@@ -1050,36 +1050,9 @@ Resolved. See UBU-D0211.
 
 ## UBU-Q0072: GPU-aware planner kernels and solver selection
 
-Status: Open Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016 Blocks: practical planner implementation, mobile/desktop/cloud execution profile Resolved by: UBU-D0166, UBU-D0167, UBU-D0168, UBU-D0169, UBU-D0170, UBU-D0171, UBU-D0172, UBU-D0173, UBU-D0174 Last scored: 2026-05-28 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016 Blocks: practical planner implementation, mobile/desktop/cloud execution profile Resolved by: UBU-D0212 Last scored: 2026-05-28 Scored from commit: None
 
-### Question
-
-Which parts of UbU planning should use CPU-exact logic, and which parts should use GPU-friendly search, simulation, scoring, or learned-model inference?
-
-### Subquestions
-
-1. Which solver/library candidates should be evaluated for skeleton validation, finalist validation, contradiction diagnosis, and candidate optimization?
-2. Which candidate expansion, stochastic simulation, affect scoring, and robustness scoring operations can be batched for GPU execution?
-3. What are the mobile GPU targets for Android and iOS, and what CPU fallback is required?
-4. What desktop/laptop GPU path is appropriate for power users?
-5. What cloud GPU path is appropriate for premium wide-horizon planning?
-6. How does UbU enforce the rule that GPU search may propose but exact/conservative validation must certify?
-
-### Current direction
-
-Subquestions 2, 4, and 6 are substantially resolved for Phase 1.
-
-**Subquestion 2 (GPU-batchable operations):** The four Phase 1 GPU pipeline stages are `skeleton_sampling`, `affect_legitimacy_filter`, `value_scoring`, and `monte_carlo_rollout`. Their semantic stage boundaries are specified in `PLANNING_KERNEL_CONTRACT.md`. The `affect_legitimacy_filter` stage implements only sigmoid affect-constraint evaluation, not full UbU legitimization.
-
-**Subquestion 4 (desktop/laptop GPU path):** Resolved for Phase 1. The performance target is a local desktop/laptop GPU backend using PyTorch and a typed pure-function call boundary. `MAX_PLANNING_TASKS = 256` is the Phase 1 planning window ceiling. A CPU reference path or fixture-backed deterministic path is also required for tests, CI, and contributors without GPU hardware. Future premium or wide-horizon tiers may raise the task ceiling by scalar configuration subject to memory, scenario-count, correlation-matrix, validation-cost, and backend performance limits; linear scaling is not assumed.
-
-**Subquestion 6 (CPU certifies, GPU proposes):** Resolved. The GPU engine is advisory and writes no canonical state. Hard constraint certification, provenance validation, final Plan validity, and canonical Plan commit are CPU kernel responsibilities.
-
-Subquestions 1 (solver library evaluation), 3 (mobile GPU targets), and 5 (cloud GPU path) remain open and are deferred beyond Phase 1.
-
-### Resolution
-
-Partially resolved. See `UBU-D0166`, `UBU-D0167`, `UBU-D0168`, `UBU-D0169`, `UBU-D0170`, `UBU-D0171`, `UBU-D0172`, `UBU-D0173`, `UBU-D0174`, and `PLANNING_KERNEL_CONTRACT.md`. Subquestions 1, 3, and 5 remain open.
+Resolved. See UBU-D0212.
 
 ---
 

@@ -2271,7 +2271,23 @@ Negative correlations are not rejected philosophically. They are deferred becaus
 
 The RNG seed is an explicit required input, ensuring plan generation is reproducible for peer debugging.
 
-See also: `UBU-D0166`, `UBU-D0167`, `UBU-D0168`, `UBU-D0169`, `UBU-D0170`, `UBU-D0171`, `UBU-D0172`, `UBU-D0173`, `UBU-D0174`, and `PLANNING_KERNEL_CONTRACT.md`.
+#### 16.10.7 Solver selection and deferred backend targets
+
+Phase 1 does not require OR-Tools, Z3, CP-SAT, SMT, MaxSMT, or another external exact solver as a runtime dependency. The mandatory certification path is the built-in CPU kernel: dependency DAG validation, deterministic precondition and effect evaluation, skeleton validity, bounded contradiction diagnostics, full legitimization, hard Calendar Logic checks, provenance validation, payload-safety validation, and final Plan commit.
+
+Solver and library candidates are evaluation targets:
+
+- built-in CPU graph and precondition validator: required reference path and certification source;
+- OR-Tools CP-SAT: optional finalist schedule-feasibility and contradiction-minimization experiment;
+- Z3 or comparable SMT/MaxSMT: optional logical contradiction-diagnosis experiment;
+- PyTorch or CPU local-search libraries: optional advisory candidate-optimization experiments;
+- learned models: post-MVP advisory ranking or parameter estimation unless CPU admission certifies the output.
+
+Phase 1 has no mobile GPU target. The required mobile fallback is CPU stewardship for current or next Task hard checks, cached last-legitimate Plan repair, decision envelopes, and simple repair recipes; exact mobile metadata remains in `UBU-Q0073`.
+
+Premium or cloud GPU planning is deferred to `UBU-Q0059` and later provider work. Any future cloud backend must preserve the same typed `PlanningRequest`/`PlanningResponse` boundary, Compartment and export gating, payload minimization, provenance, and CPU certification on return.
+
+See also: `UBU-D0166`, `UBU-D0167`, `UBU-D0168`, `UBU-D0169`, `UBU-D0170`, `UBU-D0171`, `UBU-D0172`, `UBU-D0173`, `UBU-D0174`, `UBU-D0212`, and `PLANNING_KERNEL_CONTRACT.md`.
 
 ---
 
