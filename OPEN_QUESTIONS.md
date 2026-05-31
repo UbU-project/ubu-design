@@ -2039,28 +2039,9 @@ Open.
 
 ## UBU-Q0115: TaskFactory template expansion model
 
-Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0114, UBU-Q0118 Blocks: recurring project setup friction, Technique database templates Resolved by: None Last scored: Never Scored from commit: None
+Status: Solved Priority: Post-MVP Phase: Post-MVP Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0114, UBU-Q0118 Blocks: None Resolved by: UBU-D0215 Last scored: Never Scored from commit: None
 
-### Question
-
-A TaskFactory is a template object that expands into a set of Tasks, dependency edges, and an Objective structure when instantiated. What is the TaskFactory model, and how does it interact with the existing Task, Objective, and Precondition systems?
-
-### Subquestions
-
-1. What does a TaskFactory carry: template Task definitions, dependency edges, Objective structure, parameterization hooks (e.g. client name, due date), Resource requirements, Skill requirements?
-2. How is a TaskFactory instantiated: manually by the user, triggered by an External Event, or triggered by a Recalculation?
-3. How does instantiation interact with the existing Objective and UniverseState model — does instantiation create a new Objective, or expand into an existing one?
-4. How are TaskFactory templates versioned and updated without breaking existing instantiations?
-5. How do Resource and Skill requirements in a TaskFactory interact with the Resource model (Q0114) and Skill model (Q0118)?
-6. Should TaskFactory be a user-authored object or a model-committee-generated artifact?
-
-### Current direction
-
-TaskFactory is confirmed as a post-MVP feature handling recurring project scaffolding. It should be compatible with the existing Task, Objective, Precondition, Resource, Skill, and Technique models. To be designed during post-MVP planning, after the Resource model (Q0114) and Skill model (Q0118) are specified.
-
-### Resolution
-
-Open.
+Resolved by elimination. See UBU-D0215. TaskFactory is removed as an over-design; Technique instantiation into a Container subsumes template expansion, and recurring project scaffolding is served by an evergreen Objective with a calendar-style recurrence schedule (UBU-D0213) driving Technique-based expansion (UBU-D0216).
 
 ---
 
@@ -2318,6 +2299,37 @@ Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Architecture Auto-
 ### Current direction
 
 `UBU-D0209` establishes task-driven markets as distinct from search-driven markets. The progression is: early (external recommendations), middle (listing/bid support), late (native marketplace). Full marketplace operation with escrow, deposits, and dispute workflows belongs to Phase 4+. The Ethereum settlement layer is a natural fit for the late-stage native marketplace.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0125: Objective expansion, technicalizing, and multi-Technique outcome comparison
+
+Status: Open Priority: MVP important Phase: Phase 3 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0074, UBU-Q0114, UBU-Q0118, UBU-Q0119 Blocks: Technique-generated Tasks, recurring maintenance planning, multi-Technique trade-off comparison, Technique-database demand Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+`UBU-D0213` through `UBU-D0218` accept the architecture for expanding Objectives into Tasks (technicalizing), eliminating `Task.recurrence` and `TaskFactory`, moving recurrence-with-exceptions onto the evergreen Objective, and comparing competing Technique-based candidate Plans by predicted outcome. Several mechanics remain open before implementation.
+
+### Subquestions
+
+1. **Recurrence schema.** What exact fields and grammar does the calendar-style recurrence schedule (`UBU-D0213`) use? How closely should it track RFC 5545 RRULE/EXDATE/RDATE, what subset is required for Phase 3, and how are timezones, DST transitions, and override occurrences represented deterministically?
+2. **Expand/skeletonize fixpoint.** When synthesized Tasks have their own prerequisites, is expansion a single pre-skeleton pass or a bounded expand/skeletonize fixpoint? What is the iteration cap, and how are non-terminating or oscillating expansions detected and reported?
+3. **Determinism under alternative exploration.** Should the CPU enumerate a bounded set of Technique instantiations and run/score each deterministically (no schema change), or should the `task_graph` gain mutually-exclusive choice-group nodes so the kernel selects among pre-materialized alternatives deterministically (additive schema change)? What are the trade-offs?
+4. **Scoring sensitivity / many-objective robustness.** Adding outcome axes (money, time, affect, robustness, skill, relationship, health) triggers many-objective dominance resistance (almost everything becomes non-dominated past ~4–5 axes) and ranking instability when candidates fall within stochastic-input noise. How many axes stay active as competing objectives versus demoted to constraints/thresholds? How are within-noise finalists detected and presented as ties? What does `sensitivity_summary` carry on the comparison surface? This is robust multi-objective ranking under uncertainty, not dynamical chaos, but warrants explicit research.
+5. **Revealed-preference accumulation.** How are weak single-choice signals accumulated into state-conditioned trade-off weights without over-claiming a stable global exchange rate (relates to `UBU-Q0074`)? How is the affect/state conditioning represented?
+6. **Confidence→authority automation.** What confidence metric and threshold, plus what user-granted auto-choice authority scope, jointly gate automatic selection (`UBU-D0217`)? What is the revocation and audit model?
+7. **Affect-conditioned introspection wording.** What is the exact prompt grammar for surfacing an observed choice-under-affect correlation and offering a context remedy, routed through habit-pattern reconciliation, without asserting mechanism, blaming, or nudging toward a scored-better option?
+8. **Generic-cost vs. financial model boundary.** What cost outcomes may be shown pre-finance-model (e.g. "this Technique consumes $3.95") and what claims are forbidden (affordability, account impact, overdraft) until the Phase 3B/4+ financial model exists?
+9. **Stochastic evergreen Objectives.** Could a recurrence schedule or Technique outcome legitimately be stochastic rather than deterministic, and if so, how would that interact with the existing rule that evergreen recurrence is evaluated deterministically before Calendar generation? (Parked alongside existing stochastic-recurrence deferral.)
+10. **Default Technique selection and well-formedness.** How is an Objective's default Technique chosen, declared, or learned, and what is the precise well-formedness/consistency report for an Objective with no Technique or a non-instantiable default Technique?
+
+### Current direction
+
+`UBU-D0216` places expansion pre-kernel and keeps technicalizing in candidate generation rather than skeletonization, preserving the kernel contract and the no-invention rule. `UBU-D0218` requires bounded branch-and-bound with semi-legitimization pruning, full-vector dominance, and outcome-not-util surfacing. `UBU-D0217` makes revealed preference a proposal, not a fact, and gates automation on confidence plus user-granted authority. The killer-feature framing is "see and choose across every axis with the full Technique catalog behind it," not "maximize all axes," which have no joint maximum; relationship and health axes remain user-weighed constraints, not maximization scalars, and high-risk Techniques require gated access with safety stops via the Expert-Guided DIY path. This question collects the remaining mechanics; the accepted decisions are not reopened by it.
 
 ### Resolution
 

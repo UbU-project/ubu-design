@@ -4521,3 +4521,131 @@ No solver, GPU backend, or learned model may write canonical state or certify fi
 - Mobile GPU, cloud GPU, and premium wide-horizon provider details remain deferred without blocking the local desktop/laptop Phase 1 backend.
 
 ---
+
+## UBU-D0213: Evergreen recurrence gains a calendar-style schedule with exceptions
+
+**Status:** Accepted → DESIGN.md §7.4.1
+
+Resolved question: `UBU-Q0125` (partial; recurrence representation).
+
+The MVP `maintenance_time_decay` recurrence field cannot express scheduled recurrence with named exceptions, such as "Mondays at 09:00, except holidays, when it moves to the next day at 08:00." Phase 3 extends evergreen Objective recurrence with a calendar-style schedule modeled on the RFC 5545 (iCalendar) base-rule-plus-exception pattern.
+
+The schedule carries an RRULE-shaped base rule, EXDATE-shaped exclusions, RDATE-shaped additions, override entries for occurrences that differ in time or parameters, and an optional enablement window (start and end date/time).
+
+The schedule is deterministic: evaluating it against a timezone and exception set yields a fixed occurrence series. This preserves the existing rule that evergreen recurrence is evaluated deterministically before Calendar generation. Stochastic recurrence remains a separate future extension and is out of scope.
+
+The schedule lives on the evergreen Objective, not on a new object. An evergreen Objective whose recurrence yields no resolvable occurrences, or that lacks a default Technique for expansion, is a philosophical-consistency finding surfaced for user correction during ordinary review, not a hard logistical block, unless it prevents a required baseline.
+
+**Consequences:**
+
+- Cadence references that previously pointed at `Task.recurrence` move to this schedule (see `UBU-D0214`).
+
+---
+
+## UBU-D0214: `Task.recurrence` is eliminated; recurrence lives on the evergreen Objective
+
+**Status:** Accepted → DESIGN.md §7.4.1, §9
+
+Resolved question: `UBU-Q0125` (partial).
+
+`Task.recurrence` is removed from the Task field set as an over-design. Scheduled recurrence is a property of the evergreen Objective (`UBU-D0213`); a recurrence schedule reactivates the Objective, and planning synthesizes fresh Task instances per reactivation (`UBU-D0216`). This gives recurrence a single source of truth.
+
+Cascading edits:
+
+- Calendar-preview and Log-review cadence now adjust through the recurrence rule on their evergreen system Objectives rather than ordinary Task recurrence.
+- Relationship-maintenance cadence already lives on an evergreen Objective's recurrence rule and is unaffected in substance.
+- Streak tracking (`UBU-Q0111`) is simplified: recurring-completion chains are counted per evergreen Objective rather than per recurring Task.
+
+**Consequences:**
+
+- Tasks are pure instances; they do not carry their own recurrence.
+- `UBU-Q0111` subquestion on per-Task versus per-Objective streak attribution resolves toward per-Objective.
+
+---
+
+## UBU-D0215: `TaskFactory` is eliminated; Technique instantiation into a Container subsumes it
+
+**Status:** Accepted → DESIGN.md §15.2.1.1; OPEN_QUESTIONS.md `UBU-Q0115` tombstone
+
+Resolved question: `UBU-Q0115`.
+
+`TaskFactory` is removed as an over-design. Its role — expanding a template into a set of Tasks, dependency edges, and an Objective structure — is already provided by Technique instantiation, which expands a Technique's Steps into a Container of child Tasks with intra-Technique edges. A second object doing the same work is redundant.
+
+Recurring project scaffolding, the use case `UBU-Q0115` reserved for TaskFactory, is served by an evergreen Objective with a calendar-style recurrence schedule (`UBU-D0213`) whose reactivations drive Technique-based expansion (`UBU-D0216`).
+
+**Consequences:**
+
+- `UBU-Q0115` is closed as resolved-by-elimination.
+- No new template object is introduced; expansion reuses Technique, Step, Container, and Objective.
+
+---
+
+## UBU-D0216: Objective-to-Task expansion runs pre-kernel; technicalizing is candidate generation, not skeletonization
+
+**Status:** Accepted → DESIGN.md §15.2.1.1, §16.3.1
+
+Resolved question: `UBU-Q0125` (primary).
+
+Phase 3 specifies how an Objective expands into the work Tasks that satisfy it — the long-acknowledged gap of Technique-generated Tasks. The expansion stage ("technicalizing") selects a Technique for each in-scope Objective and instantiates its Steps into Tasks.
+
+Placement and boundaries:
+
+- Expansion runs **pre-kernel, on the CPU side**, before skeletonization. It does not run inside the planning kernel. In-kernel expansion would break the fixed `task_graph` input, the CPU-owned topological order, the request schema, and the kernel's determinism and no-I/O contract (the last violated the moment Technique selection consults an advisory LLM).
+- Default expansion is deterministic: the Objective's default Technique instantiates the baseline Task set, feeding the deterministic default-Plan path.
+- Technicalizing — selection among alternative Techniques — is a candidate-generation and value-scoring concern, not a skeletonization concern. Skeletonization continues to do only dependency affixing and ordering.
+- Synthesized Static Tasks enter skeletonization; synthesized Dynamic Tasks carry decision envelopes and are placed during candidate generation. No new placement machinery is required.
+- Instantiating an already-modeled Technique's Steps is not "inventing a Technique" and does not violate the no-invention rule. Technicalizing and any advisory LLM select only among already-modeled Techniques. Novel Techniques remain the user-approved Expert-Guided DIY / Technique Commissioning flow (`UBU-D0208`).
+- If synthesized Tasks have prerequisites, the pipeline is a bounded expand/skeletonize fixpoint with an explicit iteration cap, not a single pass. Exact bounds are open (`UBU-Q0125`).
+
+**Consequences:**
+
+- The §15.2.2 no-invention rule is preserved as a guardrail on technicalizing, not weakened.
+- The kernel request/response contract and CPU certification boundary are unchanged.
+
+---
+
+## UBU-D0217: Revealed preference is a proposal, not a fact; automatic selection is confidence- and authority-gated
+
+**Status:** Accepted → DESIGN.md §16.3.1
+
+Resolved question: `UBU-Q0125` (partial); related to `UBU-Q0074`.
+
+When UbU presents competing candidate Plans and the user selects one, that choice is a proposal about the user's trade-offs, not a canonical fact. It may propose a weight or Preference update surfaced for explicit user acceptance; it must never silently rewrite the user's trade-off vector. This is an axiom: UbU does not decide values for the user.
+
+Supporting constraints:
+
+- A single choice is a weak signal (one inequality in weight-space) and must be accumulated conservatively.
+- Trade-offs are affect- and state-conditioned; learned weights are a function of current state, not a fixed global vector.
+- Eventual automatic selection requires two gates in series: a confidence threshold and a user-granted, revocable auto-choice authority. Confidence alone never authorizes automatic selection. The model is `Auto-choice eligibility` as a governance gate separate from automation-likelihood, plus the trusted-auto-publication pattern.
+- Auto-selected choices remain logged, inspectable, and overridable.
+- Affect-conditioned introspection findings may surface an observed correlation and offer a context remedy (change when and how a decision is made), but must not assert a psychological mechanism, blame the user, or nudge toward the option UbU scores higher.
+
+**Consequences:**
+
+- The trade-off-comparison engine cannot become an autonomous value-setting system.
+- Confidence and authority are kept as separate gates.
+
+---
+
+## UBU-D0218: Multi-Technique candidate comparison uses bounded branch-and-bound and surfaces outcomes, not utils
+
+**Status:** Accepted → DESIGN.md §16.3.1
+
+Resolved question: `UBU-Q0125` (partial); demand-side driver for `UBU-Q0119`.
+
+When more than one already-modeled Technique can satisfy an Objective, candidate generation may produce competing Plans that differ by Technique and compare their predicted real-world outcomes for user choice.
+
+Required properties:
+
+- **No cross-product enumeration.** The full `k^N` Technique cross-product contradicts the bounded-search commitment. The required shape is branch-and-bound with semi-legitimization (`reject_obvious` / `passes_cheap_checks`) as the cheap pruner; only a small Pareto-frontier finalist set reaches full legitimization and full scoring. Dominance is a bound during search, not a post-enumeration filter.
+- **Full-vector dominance.** A candidate dominates only if at least as good on every outcome axis, including robustness, affect-margin, dependency fragility, and Plan probability — not only money and time. Cheaper-but-more-fragile candidates are not dominated.
+- **Surface outcomes, not utils.** The user sees concrete predicted terminal UniverseState (money, time, Resources, affect, relaxation, Plan probability), not a util scalar. Money is a generic cost outcome only; account identity, balances, and overdraft analysis require a financial model deferred to Phase 3B/4+.
+- **Cognitive load and cadence.** The comparison reuses the Calendar-preview UX surface and roughly its choice counts; diverging is a user configuration. Within-noise finalists are presented as a tie with a `sensitivity_summary`, not a manufactured ranking.
+- This engine is the demand-side driver for the Technique database (`UBU-Q0119`): more Technique variety widens the achievable outcome frontier.
+
+**Consequences:**
+
+- Adding outcome axes increases scoring sensitivity (many-objective dominance resistance and ranking instability under noise); robust multi-objective ranking under uncertainty is flagged as open research in `UBU-Q0125`.
+- The killer-feature framing is "see and choose across every axis," not "maximize all axes," which have no joint maximum.
+
+---

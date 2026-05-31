@@ -871,7 +871,7 @@ Phase 1 must include a minimal first-person UX loop for dogfooding. The loop is 
    - Ask whether the Plan feels plausible, motivating, humane, and consistent with the user's current context.
    - Ask only lightweight model-repair questions about expected execution, perceived control, social pressure, and missing context; store raw psychological comments as review notes unless the user accepts a concrete canonical update.
    - Allow the user to correct Preferences, Objectives, Tasks, affect Snapshots, availability, or estimates before execution.
-   - Let the user snooze, skip, or adjust Calendar-preview cadence through ordinary Task recurrence settings.
+   - Let the user snooze, skip, or adjust Calendar-preview cadence through the cadence rule on its evergreen system Objective (§7.4.1).
 
 5. **Next-action focus mode**
    - Present one recommended next Task as the default UI surface.
@@ -1184,6 +1184,24 @@ For MVP:
 - recurrence may be represented as a static timespan or simple PDF-like field
 - user declarations or authorized observations may modify satisfaction state
 
+#### 7.4.1 Calendar-style recurrence with exceptions (Phase 3)
+
+The MVP `maintenance_time_decay` field cannot express scheduled recurrence with named exceptions, such as "Mondays at 09:00, except company holidays, when it moves to the next day at 08:00." Phase 3 extends evergreen recurrence with a calendar-style schedule modeled on the RFC 5545 (iCalendar) base-rule-plus-exception pattern that generic calendar event schedules use.
+
+A Phase 3 recurrence schedule carries:
+
+- a base rule (RRULE-shaped): frequency, interval, by-day/by-month-day/by-hour constraints, time-of-day, duration, and a timezone reference;
+- exclusion dates (EXDATE-shaped): occurrences removed from the base rule, e.g. holidays;
+- additional dates (RDATE-shaped): occurrences added outside the base rule;
+- override entries: occurrences whose time, duration, or other parameters differ from the base rule, e.g. "the holiday occurrence moves to the next day at 08:00";
+- an optional enablement window: a start date/time and end date/time outside which the schedule produces no occurrences.
+
+The schedule must be **deterministic**: evaluating it against a given timezone and exception set yields a fixed occurrence series. This preserves the existing rule (§16.2) that evergreen recurrence is evaluated deterministically before Calendar generation. Stochastic recurrence remains a separate future extension and is out of scope for this schema.
+
+This schema lives on the **evergreen Objective**, not on a separate object. It replaces the eliminated `Task.recurrence` field (see `UBU-D0214`): a recurrence schedule reactivates the Objective, and planning then synthesizes the Tasks that satisfy it (see §15.2.1.1). It is the canonical home for cadence that previously lived on Tasks, including Calendar-preview and Log-review cadence (§4.1.2, §17.8) and relationship-maintenance cadence (the evergreen "keep this relationship warm" Objective).
+
+A recurrence schedule with no resolvable occurrences inside its enablement window, or that references an undefined exception set, is a philosophical-consistency finding surfaced during ordinary review, not a hard logistical block, unless it prevents a required baseline (§15.2.2). See `UBU-D0213`.
+
 ### 7.5 RelationshipScopeTransition Objectives
 
 A user may create an Objective to change the user's participation in a Relationship, invite or test a mutual scope change, or clarify whether another party is willing to enter a different scope. This is explicitly permissible self-governance. It is implemented through ordinary Objectives, Techniques, Steps, Tasks, Logs, reviews, and UniverseState mutations, not through a parallel relationship-planning system.
@@ -1431,7 +1449,7 @@ Optional `gap_fill_policy` fields:
 - `affect_suitability`, when the Task has narrower affect fit than normal Task affect constraints;
 - `rank_hint`, for local tie-breaking among otherwise similar candidates.
 
-Existing Task fields carry Objective link, title, status, duration, dependencies, preconditions, effects, recurrence, and provenance. Readiness should use ordinary preconditions when possible.
+Existing Task fields carry Objective link, title, status, duration, dependencies, preconditions, effects, and provenance. Readiness should use ordinary preconditions when possible. Recurrence is not a Task field: scheduled recurrence lives on the evergreen Objective (§7.4.1) and planning synthesizes Task instances per reactivation (`UBU-D0214`).
 
 Recovery, meals, sleep, transition buffers, setup/teardown, and other legitimization support work are not gap-fillers by default. They protect human viability before optional gap work is considered.
 
@@ -1965,6 +1983,23 @@ The default Plan is critical to UbU's user experience. Calendar preview must be 
 
 The ideal search over candidate Plans may be NP-hard or otherwise combinatorially expensive. Practical Compact Calendar implementations should therefore use bounded finite Task instances, time-delta configuration, pruning, greedy baselines, cached subplans, GPU-friendly batch scoring/simulation, device-specific resource limits, and other heuristics. Exact ideality is a north-star property, not a Phase 1 runtime promise.
 
+### 15.2.1.1 Objective expansion and technicalizing (Phase 3)
+
+Phase 1 receives a pre-materialized `task_graph` (see `PLANNING_KERNEL_CONTRACT.md` §2): a list of `TaskSpec`s, dependency edges, and a CPU-provided topological order. The expansion of an Objective into the work Tasks that satisfy it is, in Phase 1, an unspecified pre-kernel responsibility done by the user or by manual Task entry. Phase 3 specifies it. This is the stage that fills the long-acknowledged gap of Technique-generated Tasks (§15.4), and it supersedes the eliminated `TaskFactory` object (`UBU-D0215`), whose template-expansion role is subsumed by Technique instantiation into a Container (§9, §10.6).
+
+**Where it runs.** Objective expansion runs **pre-kernel, on the CPU side**, before skeletonization. It does not run inside the planning kernel. Running it inside the kernel would break four things the kernel guarantees: the fixed `task_graph` input, the CPU-owned topological order, the absence of Objectives and Techniques from the request schema, and — critically — the kernel's determinism and no-I/O contract, which would be violated the moment Technique selection consulted an advisory LLM. Keeping expansion pre-kernel preserves all four (`UBU-D0216`).
+
+**What it does.** For each reactivated evergreen Objective (and each one-time Objective in scope), expansion selects a Technique and instantiates that Technique's Steps into a Container of `TaskSpec`s with their intra-Technique dependency edges, typed as Static or Dynamic. Static synthesized Tasks then enter skeletonization for affixing and ordering; Dynamic synthesized Tasks carry decision envelopes and are placed during candidate generation (§16.4). A synthesized "take out the garbage tonight or tomorrow morning" Task is a Dynamic Task with a placement window, handled by the same machinery as user-created Dynamic Tasks; it does not need new placement logic.
+
+**Default Technique vs. technicalizing.** Expansion has two modes:
+
+- **Default expansion (deterministic).** The Objective's default Technique instantiates into the baseline Task set. This feeds the deterministic default-Plan path (§15.2.1) and preserves determinism. An evergreen Objective is well-formed for automatic expansion only if it has a default Technique; an Objective with no Technique, or a default Technique that cannot instantiate, is a philosophical-consistency finding surfaced for user correction (`UBU-D0213`), not a hard block, unless it prevents a required baseline.
+- **Technicalizing (selection among alternatives).** When alternative Techniques exist for an Objective, expansion may enumerate a **bounded** set of instantiations (default plus alternatives) and hand them to candidate generation as competing candidates. Selection among them is a candidate-generation and value-scoring concern (§16), not a skeletonization concern. Skeletonization continues to do only dependency affixing and ordering; technicalizing does not add a selection layer inside it.
+
+**Honoring the no-invention rule.** Instantiating an already-modeled Technique's Steps into Tasks is not invention and does not violate the §15.2.2 rule against inventing a new canonical Technique to repair skeletonization. Technicalizing selects only among **already-modeled** Techniques, and any advisory LLM may rank only among them. Generating a genuinely novel Technique remains the separate, user-approved Expert-Guided DIY / Technique Commissioning flow (§10.6, `UBU-D0208`), never in-planner synthesis.
+
+**Ordering and termination.** If synthesized Tasks have their own prerequisites, the pipeline is expand → skeletonize → possibly re-expand prerequisites → legitimize, rather than a single pass. For shallow maintenance Objectives (garbage, standup) a single pre-skeleton pass suffices. The schema must not assume shallowness; a bounded expand/skeletonize fixpoint with an explicit iteration cap is the conservative default. Exact fixpoint bounds are an open item (`UBU-Q0125`).
+
 ### 15.2.2 Skeleton Plans and legitimization
 
 The planning pipeline begins with a **skeleton Plan**. A skeleton Plan affixes all Static Tasks and recursively walks backward through dependency DAGs from terminal Static Tasks to dependency roots, then schedules root prerequisites before their dependents. The skeleton Plan is a causal/dependency foundation, not a complete optimized user Plan.
@@ -2046,7 +2081,7 @@ Calendar preview, Log review, affect collection, review queues, light cleanup, r
 
 A gap-filler must not displace recovery, meals, sleep, transition buffers, setup/teardown, Static Tasks, deadline-fragile prerequisites, or a user-declared desire to leave the gap open. Phase 1 `autonomy_mode` is `suggest_only`: accepting or starting a suggestion records ordinary Task execution evidence and may trigger recalculation, but the suggestion is not a prior user commitment.
 
-Future versions may instantiate Gap Tasks, trusted auto-insertion policies, Technique-generated maintenance Tasks, richer Resource/Skill readiness, and stochastic Objective recurrence.
+Technique-generated maintenance Tasks are no longer deferred-and-unspecified: Phase 3 specifies them as pre-kernel Objective expansion (§15.2.1.1). Future versions may still add Gap Tasks, trusted auto-insertion policies, richer Resource/Skill readiness, and stochastic Objective recurrence.
 
 ---
 
@@ -2105,7 +2140,7 @@ Compact Calendar planning is no longer framed as a bare DFS process that directl
 
 1. Build the skeleton Plan from Static Tasks and dependency DAGs.
 2. Legitimize the skeleton Plan into a minimally human-viable baseline.
-3. Generate richer candidate Plans by adding optional Dynamic Tasks and alternative placements.
+3. Generate richer candidate Plans by adding optional Dynamic Tasks, alternative placements, and alternative Techniques for the same Objectives (§16.3.1).
 4. Use semi-legitimization or full legitimization to reject unrealistic candidates.
 5. Validate finalists against hard constraints.
 6. Select the user-facing default Plan by Plan probability among deterministic candidate Plans.
@@ -2116,6 +2151,24 @@ DFS-like search may still be useful for candidate construction. BFS-like search 
 Execution profiles are additive rather than mutually exclusive. The greedy mean-duration planner is the required MVP benchmark. Local and mobile profiles must support deterministic skeletonization, conservative legitimization, exact hard-constraint checks, local repair recipes, and a short-horizon branch cache. Desktop, worker, and hosted profiles may add DFS-like candidate construction, local search, solver-backed finalist validation, and GPU-friendly scoring or simulation. GPU or learned search may propose and score candidates, but exact or conservative validation certifies the selected Plan.
 
 Plan probability is represented internally as probability metadata rather than only as a display scalar. The minimum record contains a display scalar, a log probability for stable computation, an optional probability interval, provenance over the modeled probabilistic inputs, and correlation-group or scenario references when inputs are not independent. Implementations may multiply probabilities only for inputs declared independent. Correlated or unknown relationships must use joint scenarios, shared random variables, correlation groups, or conservative intervals rather than pretending independence.
+
+### 16.3.1 Multi-Technique candidate generation and outcome comparison (Phase 3)
+
+When an Objective can be satisfied by more than one already-modeled Technique (technicalizing, §15.2.1.1), candidate generation may produce competing candidate Plans that differ by which Technique satisfies which Objective. Comparing those candidates by their predicted real-world outcomes, and letting the user choose, is a premier Phase 3 capability and the demand-side driver for the Technique database (`UBU-Q0119`): the engine consumes Technique variety, so every additional Technique with a distinct cost/time/affect/Resource signature widens the achievable outcome frontier and improves personalization.
+
+**Bounded search, not enumeration.** UbU must not enumerate the full cross-product of Techniques across Objectives; that is `k^N` candidates and contradicts the bounded-search commitment (§16.1, MVP planning does not require exhaustive optimal search). The required shape is **branch-and-bound with semi-legitimization as the cheap pruner**: dominated and obviously-infeasible Technique combinations are pruned during construction using `reject_obvious` / `passes_cheap_checks` (§15.2.2), and only a small Pareto-frontier finalist set reaches full legitimization and full scoring. Dominance pruning runs as a bound during search, not as a filter after enumeration.
+
+**Dominance over the full outcome vector.** A candidate dominates another only if it is at least as good on **every** outcome axis, including robustness, affect-margin, dependency fragility, and Plan probability — not only money and time. A candidate that saves money but is more fragile or has lower completion probability is **not** dominated and must not be pruned. Pruning on a partial vector would discard exactly the robust Plans legitimization exists to protect.
+
+**Surface outcomes, not utils.** Utils are transient internal computational artifacts, not canonical user values (§2.2, §8.5). The user-facing comparison must show concrete predicted terminal UniverseState — money expended, time spent, Resources consumed, affect cost, relaxation, and Plan probability — not a util scalar. Money is shown here as a **generic cost outcome only** (e.g. "this Technique consumes $3.95"); analysis of which account is affected, balances, or overdraft thresholds requires a financial model that UbU does not yet specify and is deferred to Phase 3B/4+. UbU must not imply affordability or account impact without that model.
+
+**User choice and revealed preference.** The user's declared or learned trade-off weights parameterize the existing `scoring_policy` weights (`utility_weight`, `robustness_weight`, `affect_margin_weight`, `schedule_diversity_weight`; `PLANNING_KERNEL_CONTRACT.md` §2). Two modes follow: auto-select applies the weights; ask-the-user presents a small, diverse finalist set and lets the user pick. A revealed choice is a **proposal, not a fact** (`UBU-D0217`): it may propose a weight or Preference update surfaced for explicit user acceptance, and must never silently rewrite the trade-off vector. A single choice is a weak signal (one inequality in weight-space) and must be accumulated conservatively. Because trade-offs are affect- and state-conditioned, learned weights are a function of current state, not a fixed global vector.
+
+**Confidence-gated automation.** Eventual automatic selection requires two gates in series: a confidence threshold **and** a user-granted, revocable auto-choice authority, modeled on `Auto-choice eligibility` as a governance gate separate from automation-likelihood (§3.7.1) and on the trusted-auto-publication pattern (§2.6). Confidence alone never authorizes automatic selection. Auto-selected choices remain logged, inspectable, and overridable.
+
+**Cognitive load and cadence.** The finalist comparison uses the same UX surface and roughly the same choice counts as Calendar preview (§4.1.2): present a small curated set along the most salient trade-off axis for the current decision, elicit only when the frontier is genuinely ambiguous or the trade-off estimate is stale, and auto-select via learned/declared weights otherwise. Diverging the comparison choice count or weights from Calendar-preview defaults is a user configuration. Within-noise finalists are presented as a tie with a `sensitivity_summary`, not a manufactured ranking.
+
+**Affect-conditioned introspection.** Repeated choices logged under a recognizable affect or time-pressure context may produce an introspection finding routed through habit-pattern reconciliation (§12.2), e.g. surfacing that the user has repeatedly chosen money over work-time when rushed before leaving, and offering to move the decision earlier (the night before, when less rushed). This finding must surface the observed **correlation** and offer a **context** remedy that changes when and how the decision is made; it must not assert a psychological mechanism, blame the user, or nudge toward the option UbU scores higher. Nudging toward a scored-better option would decide values for the user and violate `UBU-D0217`.
 
 ### 16.4 Reactive short-horizon branch layer
 
@@ -2442,7 +2495,7 @@ The comparison of Logs against Plans is essential for:
 
 ### 17.8 Regular Log review
 
-Log review is a notable recurring Task. Its purpose is to keep UbU's model aligned with the user's actual behavior, later reflection, and corrections. Default cadence is at the end of a work window or at the next startup when unreconciled plan/reality differences exist, with a weekly catch-up if routine review is skipped. The user may adjust cadence through ordinary Task recurrence, snooze, or skip controls.
+Log review is a notable recurring Task. Its purpose is to keep UbU's model aligned with the user's actual behavior, later reflection, and corrections. Default cadence is at the end of a work window or at the next startup when unreconciled plan/reality differences exist, with a weekly catch-up if routine review is skipped. The user may adjust cadence through the recurrence rule on its evergreen system Objective (§7.4.1), snooze, or skip controls.
 
 A Log review Task may:
 
