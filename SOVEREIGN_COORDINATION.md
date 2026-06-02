@@ -1,7 +1,7 @@
 # UbU for Sovereign Coordination
 
 **Status:** Derived audience-facing brief — updated for Phase 0 / ETHConf NYC 2026  
-**Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, and `PLANNING_KERNEL_CONTRACT.md`  
+**Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`  
 **Audience:** cypherpunks, privacy engineers, Ethereum privacy builders, FHE/ZK/secure-compute researchers, privacy-coin-adjacent developers, FOSS contributors, and people interested in voluntary private coordination
 
 ---
@@ -34,6 +34,7 @@ UbU's sovereignty framing depends on several accepted design commitments:
 - cloud inference is optional and governed by policy, not hidden dependency;
 - users may use multiple Identities;
 - Compartments constrain storage, disclosure, export, retention, integrations, and device eligibility;
+- Phase 2 sync semantics are specified by `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`, including arbitrary-device architecture, Zones, partial replicas, SyncStatements, and Compartment-safe replication;
 - external agents submit candidate updates and evidence rather than receiving ambient authority;
 - GitHub, calendars, and other systems are projections or inputs, not the full canonical life model;
 - user overrides remain authoritative;
@@ -121,7 +122,7 @@ Preferred framing includes lawful private settlement, pseudonymous skill barter,
 
 ## EthConf conversation focus
 
-At ETHConf NYC (June 8–10, 2026), UbU will demonstrate **Phase 0**: a live, running UbU instance that creates a user, onboards dummy GitHub access, runs affect calibration, converts Issues to Tasks, generates an affect-legitimized Plan, and displays it in Calendar preview — all applied to the UbU project itself. This is the first public demonstration of UbU coordinating UbU.
+At ETHConf NYC (June 8–10, 2026), UbU will demonstrate **Phase 0**, now up and running for demo usage at `ubu-phase0-demo` commit `9daffa7`: a live, running UbU instance that creates a user, onboards dummy GitHub access, runs affect calibration, converts Issues to Tasks, generates an affect-legitimized Plan, and displays it in Calendar preview — all applied to the UbU project itself. This is the first public demonstration of UbU coordinating UbU.
 
 The useful question for cypherpunk and privacy builders is:
 

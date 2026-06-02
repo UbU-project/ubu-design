@@ -1,7 +1,7 @@
 # UbU Organizational Introspection Brief
 
 **Status:** Derived audience-facing brief — updated for Phase 0 / ETHConf NYC 2026  
-**Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, and `PLANNING_KERNEL_CONTRACT.md`  
+**Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`  
 **Audience:** FOSS maintainers, DAOs, nonprofits, mission-driven software teams, grant-funded projects, foundations, research groups, protocol teams, and organizations that want evidence of mission alignment
 
 ---
@@ -137,7 +137,7 @@ The right framing is reviewable evidence, not automated judgment.
 
 UbU uses organizational introspection on itself — and Phase 0 is the first public demonstration of this in action.
 
-**Phase 0** is a live, runnable demo being built for ETHConf NYC, June 8–10, 2026. It creates a new user, onboards dummy GitHub access (a pre-configured clone of the `ubu-design` repository), runs affect calibration questions, converts GitHub Issues into Tasks, generates an affect-legitimized Plan, and displays that Plan in Calendar preview and next-issue UI. `model-committee` runs occur during public demonstration ceremonies.
+**Phase 0** is a live, runnable demo now up and running for demo usage at `ubu-phase0-demo` commit `9daffa7`, targeting ETHConf NYC, June 8–10, 2026. It creates a new user, onboards dummy GitHub access (a pre-configured clone of the `ubu-design` repository), runs affect calibration questions, converts GitHub Issues into Tasks, generates an affect-legitimized Plan, and displays that Plan in Calendar preview and next-issue UI. `model-committee` runs occur during public demonstration ceremonies.
 
 The primary demonstration value of Phase 0 is exactly what this brief describes: **UbU applying its own planning and self-governance model to the UbU project, live, in public, in front of an audience that can inspect the result**. This is association introspection running on the association that built it.
 

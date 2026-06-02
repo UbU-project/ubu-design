@@ -1,7 +1,7 @@
 # UbU Funder Brief
 
 **Status:** Derived audience-facing brief — updated for Phase 0 / ETHConf NYC 2026  
-**Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, and `PLANNING_KERNEL_CONTRACT.md`  
+**Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`  
 **Audience:** grantmakers, ecosystem sponsors, angels, hackathon judges, aligned funders, and prototype sponsors
 
 ---
@@ -22,13 +22,13 @@ Funding is harmful when it pulls UbU into a bespoke private workflow, surveillan
 
 UbU has moved through pure concept work, active design dogfooding, and is now entering its first runnable milestone.
 
-**Phase 1 design is frozen** as of commit `cc8b339`. The design repository has four canonical files, a fully specified planning-kernel contract, a complete accepted-decisions log, and a ranked open-questions queue. No further broad design changes are warranted.
+**Phase 1 design is frozen** as of commit `cc8b339`. The design repository has a stable canonical design set, a fully specified Phase 1 planning-kernel contract, a canonical Phase 2 device sync and Compartment contract, a complete accepted-decisions log, and a ranked open-questions queue. No further broad design changes are warranted.
 
-**Phase 0** — the canonical pre-Phase-1 milestone — is a live, runnable demo being built for **ETHConf NYC, June 8–10, 2026**. The demo creates a new user, onboards dummy GitHub access, asks affect calibration questions, converts GitHub Issues to Tasks, generates an affect-legitimized Plan with breaks and recovery constraints, and displays the result in Calendar preview and next-issue UI. `model-committee` runs during public demonstration ceremonies.
+**Phase 0** — the canonical pre-Phase-1 milestone — is a live, runnable demo now up and running for demo usage at `ubu-phase0-demo` commit `9daffa7`, targeting **ETHConf NYC, June 8–10, 2026**. The demo creates a new user, onboards dummy GitHub access, asks affect calibration questions, converts GitHub Issues to Tasks, generates an affect-legitimized Plan with breaks and recovery constraints, and displays the result in Calendar preview and next-issue UI. `model-committee` runs during public demonstration ceremonies.
 
-Phase 0 is the first time the core UbU loop will run end-to-end in public, demonstrated live on the UbU project itself.
+Phase 0 is the first runnable public demonstration of the core UbU loop on the UbU project itself.
 
-**Phase 1 implementation begins immediately after ETHConf.** The immediate opportunity is to convert a frozen, internally consistent design into a working Phase 1 prototype while the scope is still narrow enough to stay inspectable. The patterns and experience from Phase 0 development directly accelerate that work.
+**Phase 1 implementation begins immediately after ETHConf.** The immediate opportunity is to convert a frozen, internally consistent design into a working Phase 1 prototype while the scope is still narrow enough to stay inspectable. The patterns and experience from the working Phase 0 demo directly accelerate that work.
 
 ---
 

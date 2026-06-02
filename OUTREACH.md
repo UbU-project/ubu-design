@@ -1,7 +1,7 @@
 # UbU Outreach
 
 **Status:** Derived public-facing outreach document — updated for Phase 0 / ETHConf NYC 2026  
-**Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, and `PLANNING_KERNEL_CONTRACT.md`  
+**Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`  
 **Audience:** FOSS developers, project maintainers, Ethereum project leads, privacy engineers, automation builders, planning-tool researchers, independent technical consultants, prototype funders, and technically curious contributors
 
 ---
@@ -100,7 +100,7 @@ Phase 1 embodies this concretely: the planning engine is a pure function over ty
 
 UbU is not designed around a centralized service owning user data.
 
-The long-term architecture emphasizes local-first operation, user-controlled sync, explicit Zones, execution-enclave Devices, first-class Compartments, compartment-scoped references, multiple Identities, bounded disclosure, provenance, and user sovereignty.
+The long-term architecture emphasizes local-first operation, user-controlled sync, explicit Zones, execution-enclave Devices, first-class Compartments, compartment-scoped references, multiple Identities, bounded disclosure, provenance, and user sovereignty. The Phase 2 sync boundary is now explicit in `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`; this does not expand Phase 1, but it prevents early code from assuming a central canonical server or permanent primary device.
 
 Sensitive content should not leak merely because structural planning metadata is useful. A WorkItem should remain structurally usable even when sensitive compartmented content cannot be dereferenced.
 
@@ -186,13 +186,13 @@ This is the product in action, applied to one of the hardest and most universal 
 
 ### Phase 0: ETHConf NYC demo
 
-The first runnable UbU demo is being built as Phase 0, targeting **ETHConf NYC, June 8–10, 2026**.
+The first runnable UbU demo is up and running for demo usage as Phase 0 at `ubu-phase0-demo` commit `9daffa7`, targeting **ETHConf NYC, June 8–10, 2026**.
 
 The Phase 0 demo creates a new user, runs the bootstrap onboarding interview, connects to a dummy GitHub environment (a pre-configured clone of the `ubu-design` repository), asks affect calibration questions, ingests dummy GitHub Issues as Tasks, generates a Plan with affect-legitimized breaks and recovery constraints, and displays that Plan in a Calendar preview and next-issue UI.
 
 `model-committee` runs occur during public demonstration ceremonies. The primary demonstration is **association introspection in action**: UbU coordinating the UbU project using its own planning model, live and inspectable.
 
-Phase 0 is a standalone demo milestone. Phase 1 implementation begins after ETHConf, accelerated by experience and patterns from Phase 0 development.
+Phase 0 is a standalone demo milestone. Phase 1 implementation begins after ETHConf, accelerated by the experience and patterns from the working Phase 0 demo.
 
 ### Phase 1: GitHub dogfooding (post-ETHConf)
 
@@ -218,7 +218,7 @@ Before the main UbU MVP is implemented, the project is using a bootstrap automat
 
 `model-committee` is not the canonical decision engine. It is an advisory Automation Worker pattern that reads canonical repo state, selects answerable open questions, asks approved model providers to propose concrete changesets, cross-scores those proposals, validates patches, and writes reviewable artifacts. Accepted design state exists only when committed to the canonical repo.
 
-The current target is `model-committee v0.3`. It includes the v0.2 frontier cross-scoring workflow and adds `PLANNING_KERNEL_CONTRACT.md` as a fourth canonical source file. It also adds rank-time answerability writes, prompt-size warnings, `manifest.schema_version = "0.3"`, duplicate-removal and tombstoning instructions for generated work, and a patch allowlist that includes the planning-kernel contract.
+The current target is `model-committee v0.3`. It includes the v0.2 frontier cross-scoring workflow and adds `PLANNING_KERNEL_CONTRACT.md` as a fourth model-committee input file. It also adds rank-time answerability writes, prompt-size warnings, `manifest.schema_version = "0.3"`, duplicate-removal and tombstoning instructions for generated work, and a patch allowlist that includes the planning-kernel contract.
 
 `model-committee` remains intentionally bounded. It must not directly call OpenAI, Anthropic, Gemini, or GitHub APIs; apply patches automatically; publish artifacts automatically; auto-merge; auto-push; create pull requests automatically; use adaptive model weights; run multi-turn Claude Code sessions; perform full Association automation; or implement UbU planning-kernel work.
 
@@ -248,7 +248,7 @@ That is directly useful to maintainers, and it is a strong first use case becaus
 
 Ethereum and FOSS teams are useful early feedback sources because many are remote, async-heavy, autonomy-heavy, GitHub-heavy, contributor-driven, cross-organizational, dependent on informal commitments, sensitive to surveillance and centralization, and forced to coordinate across chats, governance forums, code review, audits, releases, and calendars.
 
-At ETHConf NYC (June 8–10, 2026), UbU will demonstrate Phase 0: a live, running UbU instance that creates a user, onboards GitHub access, ingests Issues as Tasks, generates an affect-legitimized Plan, and shows Calendar preview — all applied to the UbU project itself. This is not a slide deck describing future features. It is a working demo of the core loop.
+At ETHConf NYC (June 8–10, 2026), UbU will demonstrate Phase 0, now up and running for demo usage at `ubu-phase0-demo` commit `9daffa7`: a live, running UbU instance that creates a user, onboards GitHub access, ingests Issues as Tasks, generates an affect-legitimized Plan, and shows Calendar preview — all applied to the UbU project itself. This is not a slide deck describing future features. It is a working demo of the core loop.
 
 The goal is not to convert UbU into a conventional project-management product. The goal is to learn whether self-governance primitives can improve the work lives of autonomous contributors while also making project coordination more truthful.
 
@@ -284,6 +284,6 @@ Professional and FOSS use cases are valuable when they help build the same primi
 
 ## Why join now?
 
-UbU is at a concrete inflection point. Phase 1 design is frozen. Phase 0 — a live, runnable demo — is in active development for ETHConf NYC, June 8–10, 2026. Phase 1 implementation begins immediately after.
+UbU is at a concrete inflection point. Phase 1 design is frozen. Phase 0 — a live, runnable demo — is up and running for demo usage at `ubu-phase0-demo` commit `9daffa7` for ETHConf NYC, June 8–10, 2026. Phase 1 implementation begins immediately after.
 
 This is the moment when early contributors can watch a working end-to-end demo, meet the project in person, and shape Phase 1 implementation while the architecture is still malleable. The design is coherent enough to act on; the code is early enough that concrete contributions matter.

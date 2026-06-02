@@ -1,9 +1,9 @@
 # UbU
 
-**Status:** Phase 0 demo in active development / Phase 1 design frozen  
+**Status:** Phase 0 demo runnable at `ubu-phase0-demo` commit `9daffa7` / Phase 1 design frozen  
 **Repository:** `ubu-design`  
 **Primary purpose:** Canonical public design state for the UbU project  
-**Derived file:** This README is a technical contributor entry point. The canonical design authority is `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, and `PLANNING_KERNEL_CONTRACT.md`.
+**Derived file:** This README is a technical contributor entry point. The canonical design authority is `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`.
 
 ---
 
@@ -115,6 +115,7 @@ Canonical design authority is maintained in:
 - `DECISIONS.md` - accepted design decisions and anti-regression memory
 - `OPEN_QUESTIONS.md` - unresolved questions, prioritization metadata, and automation queue
 - `PLANNING_KERNEL_CONTRACT.md` - Phase 1 planning-kernel request/response contract, GPU stage boundaries, duration semantics, affect constraints, and correlation-matrix rules
+- `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md` - Phase 2 device sync, Zone, Compartment, partial-replica, and sync-statement contract
 
 Derived public-facing projection files summarize the canonical state for different audiences:
 
@@ -124,6 +125,7 @@ Derived public-facing projection files summarize the canonical state for differe
 - `FUNDER_BRIEF.md` - grantmaker, sponsor, and prototype-funder brief
 - `SOVEREIGN_COORDINATION.md` - cypherpunk, privacy, and sovereign-coordination brief
 - `ORG_INTROSPECTION_BRIEF.md` - organizational-introspection brief for mission-driven projects
+- `WHAT_IS_UBU.md` - mass-consumption public explanation of UbU's purpose and user-facing value proposition
 
 When a derived file conflicts with a canonical file, the canonical file wins.
 
@@ -131,9 +133,9 @@ When a derived file conflicts with a canonical file, the canonical file wins.
 
 ## Current project status
 
-### Phase 0: ETHConf NYC demo (active)
+### Phase 0: ETHConf NYC demo (runnable)
 
-Phase 0 is the canonical pre-Phase-1 milestone. It is a live, runnable UbU demo being developed for the **ETHConf NYC conference, June 8–10, 2026**.
+Phase 0 is the canonical pre-Phase-1 milestone. The `ubu-phase0-demo` project is now up and running for demo usage at commit `9daffa7`, targeting the **ETHConf NYC conference, June 8–10, 2026**.
 
 The Phase 0 demo covers the core UbU loop end-to-end using a self-contained dummy environment:
 
@@ -159,34 +161,40 @@ Phase 1 implementation will begin after ETHConf NYC. The operational target rema
 
 The project is seeking a small core cohort of serious, self-directed builders. It does not need popularity for its own sake. It needs concrete patches, test fixtures, design review, workflow examples, prototype funding, and sustained subsystem ownership.
 
+### Phase 2 sync and Compartment contract
+
+`DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md` is now the canonical boundary for pending Phase 2 synchronization work. It specifies the single-user multi-device model: Devices as execution enclaves, Zones as replication/work-context boundaries, Compartment-safe replication, partial replicas, SyncStatements, offline mutation admission, and sync-triggered Plan/Calendar invalidation.
+
+This contract does not expand Phase 1 scope. Phase 1 remains a single-user local dogfooding MVP. The Phase 2 contract exists now to prevent early implementation decisions from assuming a central canonical server, a permanent primary device, or a two-device-only sync model.
+
 ---
 
 ## Development readiness
 
 ### Phase 0 readiness
 
-Phase 0 is in active development targeting ETHConf NYC, June 8–10, 2026.
+Phase 0 is runnable for demo usage at `ubu-phase0-demo` commit `9daffa7`, targeting ETHConf NYC, June 8–10, 2026.
 
 - [x] Phase 1 design is frozen at commit `cc8b339`.
 - [x] Phase 0 demo scope is defined: new-user onboarding, dummy GitHub ingestion, affect calibration, Task generation, affect-legitimized planning, Calendar preview and/or next-issue UI.
 - [x] Dummy GitHub environment (hard-coded user, token, and `ubu-design` clone) is specified.
-- [ ] Phase 0 demo app is runnable end-to-end.
-- [ ] Dummy GitHub Issues ingest and convert to Tasks in the demo app.
-- [ ] Affect calibration questions are implemented in the Phase 0 onboarding flow.
-- [ ] Plan generation with affect-legitimized breaks runs in the Phase 0 app.
-- [ ] Calendar preview and/or next-issue UI is implemented in the Phase 0 app.
-- [ ] `model-committee` ceremony run is validated against Phase 2 open questions.
+- [x] Phase 0 demo app is runnable for demo usage at `ubu-phase0-demo` commit `9daffa7`.
+- [x] Dummy GitHub Issues ingest and convert to Tasks in the demo app.
+- [x] Affect calibration questions are implemented in the Phase 0 onboarding flow.
+- [x] Plan generation with affect-legitimized breaks runs in the Phase 0 app.
+- [x] Calendar preview and/or next-issue UI is implemented in the Phase 0 app.
+- [ ] `model-committee` ceremony run is validated against the Phase 2 sync/Compartment contract and open questions.
 
 ### Phase 1 readiness (post-ETHConf)
 
 The Phase 1 design baseline is frozen and supports beginning implementation-first Phase 1 work after ETHConf NYC. `model-committee` dogfooding continues as an implementation-support and review-artifact workflow.
 
 - [x] Broad pre-MVP design automation is closed by `UBU-D0175`.
-- [x] The canonical design file set includes `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, and `PLANNING_KERNEL_CONTRACT.md`.
+- [x] The canonical design file set includes `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`.
 - [x] Phase 1 is scoped around single-user GitHub dogfooding rather than a general productivity suite.
 - [x] Resource and Skill are recognized as core full-product abstractions while remaining out of Phase 1 implementation scope.
 - [x] The planning-kernel boundary is specified as a typed request/response contract with a local GPU path and CPU reference path.
-- [x] `model-committee` has advanced to the narrow v0.3 contract, including `PLANNING_KERNEL_CONTRACT.md` as a fourth canonical source file.
+- [x] `model-committee` has advanced to the narrow v0.3 contract, including `PLANNING_KERNEL_CONTRACT.md` as a fourth model-committee input file.
 - [x] `model-committee` remains advisory: it writes review artifacts, not accepted design state.
 - [x] `model-committee` v0.3 keeps automatic patch application, auto-merge, auto-push, GitHub API use, direct OpenAI/Anthropic/Gemini API calls, adaptive model weights, and full planning-kernel work out of scope.
 - [ ] The main UbU Phase 1 app exists as an end-to-end runnable prototype.
@@ -203,7 +211,7 @@ The Phase 1 design baseline is frozen and supports beginning implementation-firs
 **Evidence commit:** `cc8b339` — Phase 1 design freeze commit  
 **Report date:** 2026-05-28  
 **Scorer:** Human review  
-**Note:** Phase 1 design is now frozen. Phase 0 (ETHConf NYC demo, June 8–10 2026) is the current active milestone. Phase 1 implementation begins after ETHConf. Readiness scores below reflect the Phase 1 implementation state as of the design freeze; they are not expected to improve until Phase 1 implementation begins.
+**Note:** Phase 1 design is now frozen. Phase 0 (ETHConf NYC demo, June 8–10 2026) is now runnable for demo usage at `ubu-phase0-demo` commit `9daffa7`. Phase 1 implementation begins after ETHConf. Readiness scores below reflect the Phase 1 implementation state as of the design freeze; they are not expected to improve until Phase 1 implementation begins.
 
 ---
 
@@ -344,7 +352,7 @@ Accepted design state exists only when committed to the canonical `ubu-design` r
 
 `model-committee` v0.3 implements the v0.2 frontier cross-scoring workflow and adds these important constraints:
 
-- `PLANNING_KERNEL_CONTRACT.md` is a fourth canonical source file, read by providers, injected into prompts, snapshotted in runs, and allowed in patches.
+- `PLANNING_KERNEL_CONTRACT.md` is the fourth model-committee input file, read by providers, injected into prompts, snapshotted in runs, and allowed in patches.
 - `rank` may write `Answerability score:` and `Last scored:` back to `OPEN_QUESTIONS.md`; it does not update `Scored from commit:`.
 - `work-generate` should prompt models to tombstone solved questions, remove duplicate information across source files, and compress content to the effective minimum.
 - rendered prompt size at or above 90% of the configured warning limit must set `manifest.prompt_size_warning = true` and be surfaced in `review.md`.
@@ -372,7 +380,7 @@ Good contributions include:
 
 - clarifying open questions;
 - identifying contradictions in canonical files;
-- proposing precise patches to `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, or `PLANNING_KERNEL_CONTRACT.md`;
+- proposing precise patches to `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, or `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`;
 - reviewing whether derived files remain consistent with canonical files;
 - creating implementation-ready issues from accepted design state;
 - producing fixtures for `OPEN_QUESTIONS.md` parsing, dependency validation, decision-reference validation, patch validation, provider outputs, and planning-kernel request/response contracts;
@@ -400,8 +408,10 @@ Useful contributor roles currently include:
 - `DECISIONS.md` - accepted design decisions and anti-regression memory
 - `OPEN_QUESTIONS.md` - unresolved questions, prioritization metadata, and automation queue
 - `PLANNING_KERNEL_CONTRACT.md` - Phase 1 planning-kernel request/response contract, GPU stage boundaries, duration semantics, affect constraints, and correlation-matrix rules
+- `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md` - Phase 2 device sync, Zone, Compartment, partial-replica, and sync-statement contract
 - `OUTREACH.md` - derived outreach document for FOSS maintainers and software engineers
 - `PM_BRIEF.md` - derived brief for project leads and technical PMs
 - `FUNDER_BRIEF.md` - derived brief for grantmakers, sponsors, and prototype funders
 - `SOVEREIGN_COORDINATION.md` - derived brief for cypherpunks, privacy builders, and sovereign-coordination audiences
 - `ORG_INTROSPECTION_BRIEF.md` - derived brief for mission-driven projects and organizational introspection
+- `WHAT_IS_UBU.md` - derived mass-consumption public explanation of UbU's purpose and user-facing value proposition
