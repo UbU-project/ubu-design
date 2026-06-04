@@ -32,6 +32,22 @@ Phase 0 is the first runnable public demonstration of the core UbU loop on the U
 
 ---
 
+## Why this matters now: the agent-governance moment
+
+UbU's timing is tied to a shift already underway. As AI assistants gain tools, memory, and the authority to act, an entire layer of agent governance is forming around them — authorization, identity, action auditing, and personalized oversight that checks an agent's proposed plan against user-declared values. Standards bodies and regulators are moving in parallel. The components and the problem are not novel; several active fields and projects already work on pieces of this. What does not yet exist as an open, user-owned whole is the layer *above* all of it: a generative system that holds the individual's real-world values and goals and originates the plan that agents then execute. UbU's contribution is that integration — not the discovery of a new problem.
+
+Beneath the feature story is a public-good stake that is the honest reason the project exists. The next generation of multimodal assistants will be able to consume every sensor a person carries and reproduce much of what UbU does — by pulling the user's whole life into a corporate model on someone else's servers. That is the brute-force path to a capable assistant, and it is likely to become the default because it is the easiest to build. UbU reaches the same destination by the opposite means: user-owned data, inspectable reasoning, the user's own goals. The window in which a user-sovereign alternative can be established — before total ingestion becomes the unquestioned norm — is what this funding is ultimately about.
+
+---
+
+## Theory of impact: what success means
+
+UbU's success should be measured honestly. A solo, open-source, local-first project does not win the mass personal-assistant market against well-capitalized incumbents, and framing success that way would mislead. The realistic and worthwhile goal is narrower and durable: for the user-sovereign pattern to *exist*, be *credible*, and *influence* where the broader trajectory goes — to give people a real, auditable fork rather than a single default. That kind of public good is strengthened, not erased, when commercial assistants arrive, because it becomes the alternative people can point to and choose.
+
+This also widens who UbU can serve. Because the system runs on hardware people already own, with no data-center dependency, it can reach users the commercial systems have no incentive to serve — including where the compute economics of the ingest-everything model simply do not reach. Accessibility here is an architectural property, not an add-on: self-governance built to run on a phone is self-governance that needs no subscription to a remote brain.
+
+---
+
 ## What UbU is building
 
 UbU is building a system that models Objectives and Preferences; Tasks, dependencies, preconditions, and effects; Plans and Calendars; Logs and Snapshots; external events and recalculation triggers; Identities, Relationships, RelationshipScopeTransitions, Associations, and bounded disclosure; Compartments and privacy policy; Automation Workers and agentic candidate updates; Delegation Substrate packets; extrospection as a future Relationship review pattern; user introspection as a personal Log/Plan review loop; organizational introspection as Association-level mission-alignment review; and projections into external systems such as GitHub.
@@ -120,6 +136,12 @@ The simple screen is:
 > Does the funded deliverable make the open personal self-governance trunk better for independent knowledge workers, FOSS contributors, and future public dogfooding?
 
 If yes, it may be worth considering. If no, it likely compromises the project.
+
+---
+
+## What structurally prevents capture
+
+A reasonable funder asks how a privacy-first project avoids becoming the surveillance product it opposes once commercial pressure arrives. UbU's answer is architectural rather than a promise. There is no central server, and no unencrypted data on the wire or at rest; per-user data is siloed by default, with any external flow passing only through an explicit, consented boundary. This forecloses the usual failure mode — a pooled corpus of user data that a future business model becomes financially dependent on monetizing. The user retains the right to export or even sell their own data, because that is their sovereignty to exercise; what the architecture refuses is a default in which the project itself comes to depend on that data flowing outward. Formal commercial-entity governance is deliberately deferred until after the MVP, but the data-model and boundary decisions that make capture cheap-to-prevent rather than expensive-to-retrofit are being made now.
 
 ---
 

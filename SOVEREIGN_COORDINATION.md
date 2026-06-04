@@ -26,6 +26,14 @@ LLMs, realtime models, local agents, cloud models, and external tools may help e
 
 ---
 
+## The layer UbU occupies, and why it must be sovereign
+
+It is worth being precise about which layer UbU is. A governance ecosystem is forming around AI agents — authorization, identity, action auditing, and personalized oversight that checks an agent's plan against declared values before it acts. UbU is not that layer. Those systems are *reactive*: they bound or audit what an agent already decided to do. UbU is *generative*: it originates what is worth doing from the user's own goals, values, affect, and attention, and treats agents as executors of a plan it produced. It also works from *introspected* state — what the user reports and reconciles about themselves — rather than inferred sensor state, because intent and affect are not sensor-readable. The problem is not novel; the open, user-owned, generative integration of it is.
+
+This layer is exactly where sovereignty is won or lost. The next generation of multimodal assistants will be able to ingest every sensor a person carries and reproduce much of what UbU does — by consuming the user wholesale into a corporate model. That is the brute-force route, and it is likely to become the default because it is the easiest to ship. UbU is the elegant route to the same end: the same capability, the opposite means, with data ownership and inspectable reasoning preserved. For this audience the stake is direct — whether a user-sovereign alternative exists at all before total ingestion becomes the norm. The realistic aim is not to out-distribute incumbents but to make the sovereign pattern exist, stay credible, and become influential enough to be a real fork.
+
+---
+
 ## Sovereignty principles
 
 UbU's sovereignty framing depends on several accepted design commitments:
@@ -48,6 +56,14 @@ The purpose is practical control over sensitive planning state.
 
 ---
 
+## No central server, no pooled corpus
+
+The sovereignty claim reduces to a few concrete architectural facts. There is no central server. There is no unencrypted data on the wire or at rest. Per-user data is siloed by default, and any external flow crosses an explicit, consented boundary rather than an ambient one. The consequence that matters most: there is no pooled corpus of user data for a future business model to become dependent on monetizing. That is the structural answer to the oldest question asked of every privacy project — what stops it from becoming the thing it opposes — and it is an answer in architecture, not in policy.
+
+Sovereignty runs in the user's favor, not only the project's. Because the data is genuinely the user's, the user may export or even sell their own information if they choose; the system cannot and should not prevent it. What the architecture refuses is the inverse — a default in which the project itself depends on that data flowing outward. The right to disclose belongs to the user; the temptation to require disclosure is designed out.
+
+---
+
 ## Identity, Compartments, and bounded disclosure
 
 UbU assumes that people operate through multiple Identities. A person may need a personal Identity, professional Identity, family Identity, pseudonymous Identity, project Identity, or compartment-specific Identity. These Identities should not be collapsed by default.
@@ -67,6 +83,12 @@ A Task should be formalizable for execution by the user, a local agent, a remote
 A Delegation Substrate packet should make purpose, executor, authority, expected output, evidence, privacy scope, review, and escalation explicit. This is useful even when the user performs the Task solo. It records why the work matters, what result is expected, and how completion will be recognized.
 
 For sovereign coordination, it also creates a future path to private work agreements and bounded labor exchange without starting from a surveillance marketplace.
+
+---
+
+## Attention sovereignty: owning the interruption chokepoint
+
+A full-product expression of sovereign coordination — outside Phase 1 scope — is attention sovereignty: cross-channel, values-driven, context-aware governance of interruptions. Today the interruption chokepoint is held by the platforms whose incentive is to capture attention, not protect it; a system you cannot trust to want your focus is the one currently governing it. UbU moves that decision under the user's control. Whether a message reaches the user now depends on who it is from and how it ranks — and on what the user is doing and wants to protect, which only a user-held life-model knows — unified across email, chat, SMS, and calls. It merges modeled state with user-declared state, detects divergence through a mobile Discovery mode, and grades permissiveness rather than toggling it. The deeper point for this audience: who controls the chokepoint where interruptions are decided — the attention economy or the person — is itself a sovereignty question, and the only trustworthy owner of it is the user.
 
 ---
 

@@ -55,6 +55,16 @@ That loop is central to the project.
 
 ---
 
+## Where UbU sits: the generative goal-and-values layer
+
+The agentic-AI ecosystem is filling in fast, and it helps to be precise about which layer UbU occupies. Execution agents — local and hosted assistants that run tools, send messages, and act across services — are proliferating. So is the governance tooling beneath them: runtime policy engines, agent identity and authorization, verifiable action logs, and personalized oversight layers that check an agent's proposed plan against user-declared values before it runs. Standards work and regulation are moving in the same direction.
+
+UbU is not competing with any of those. It sits one layer above them. Those systems are largely *reactive* and *constraint-shaped*: they bound, filter, or audit what an agent has already decided to do. UbU is *generative*: it originates what is worth doing in the first place — from the user's own Objectives, commitments, affect, attention, and constraints — and treats agents as downstream executors of a plan it produced. A constraint layer asks "is this agent's plan allowed by your values?" UbU asks "what should happen, given your life?" The two are complementary; the second is the under-occupied slot.
+
+A related distinction matters technically. Most context-aware systems infer the user's state from *sensors*. UbU works from the user's *introspected* state — what the person reports and reconciles about their own goals, energy, and attention — because the parts of the planning problem that matter most (affect, intent, what is worth protecting) are not sensor-readable. The contribution is not a problem nobody has noticed: personalized value alignment, agent authorization, and context-aware interruption are all active fields with existing work. The contribution is the *integration* — a user-sovereign, generative layer that holds the person's real-world values and turns them into plans, not yet assembled as an open, local-first whole.
+
+---
+
 ## User introspection, organizational introspection, and extrospection
 
 UbU has three related evidence-backed review patterns.
@@ -113,6 +123,16 @@ UbU treats human limitations as real constraints. In `user_mode`, affect belongs
 Energy, tiredness, stress, mood, motivation, boredom, emotional load, recovery needs, and related signals are part of the planning problem. Affect collection, Calendar preview, and Log review are themselves planned work. Discovery mode is a user-selectable workflow state, not covert surveillance.
 
 The goal is not emotional surveillance. The goal is self-governance.
+
+---
+
+## Attention sovereignty (full-product direction)
+
+One concrete expression of the generative layer — slated for the full-product track, not Phase 1 — is attention sovereignty: cross-channel, values-driven, context-aware governance of interruptions. Whether a given notification should reach the user *now* depends on two things current tools split apart: who the message is from and how it ranks (which per-channel AI filters already do), and what the user is doing and wants to protect (which only a life-model holds). UbU unifies these across email, chat, SMS, and calls, because users experience interruption as attention spent, not one app at a time.
+
+The hard part is not sensing — phones cannot read mental state — but reconciliation. UbU merges a *modeled* state (what the Plan and UniverseState imply the user is doing) with a *declared* state (what the user reports), and the UX is the user collaborating with the model to keep the two aligned; intentionally mis-modeling one's own state is treated as an anti-pattern. On mobile, an interruption can trigger Discovery mode, which surfaces and records divergence between modeled and actual behavior. When UniverseState is modeled well, interruptions become predictable rather than reactive. Permissiveness is graded, not binary: as a focus window nears its end and a break is due anyway, the value of "take a break soon" and the value of "let this message through" sum, so the gate loosens toward the boundary. This is "smart Focus mode" as a smart home provides switchless lights — predict, prepare, adjust, adapt — rather than a manual toggle that is indistinguishable from airplane mode and never answers the question of why the phone is on at all.
+
+Attention sovereignty has the same status as Resource/Skill readiness: central to the full vision, explicitly outside Phase 1 scope.
 
 ---
 
@@ -251,6 +271,16 @@ Ethereum and FOSS teams are useful early feedback sources because many are remot
 At ETHConf NYC (June 8–10, 2026), UbU will demonstrate Phase 0, now up and running for demo usage at `ubu-phase0-demo` commit `9daffa7`: a live, running UbU instance that creates a user, onboards GitHub access, ingests Issues as Tasks, generates an affect-legitimized Plan, and shows Calendar preview — all applied to the UbU project itself. This is not a slide deck describing future features. It is a working demo of the core loop.
 
 The goal is not to convert UbU into a conventional project-management product. The goal is to learn whether self-governance primitives can improve the work lives of autonomous contributors while also making project coordination more truthful.
+
+---
+
+## Build discipline: bootstrap order and the feature-to-data map
+
+Two internal disciplines are worth stating because they explain how UbU stays buildable without over-scoping.
+
+First, build order is driven by *bootstrap dependency*, not by feature value or dependency-set size. Circular-reference foundations such as UniverseState are implemented first — useful in isolation or not — because everything else references them. The Phase 1 dogfooding MVP exists for the same reason: it is the smallest loop that lets UbU help build the rest of UbU.
+
+Second, the project is introducing an explicit *feature-to-data map*: for each feature, the data components it actually invokes at runtime versus those merely present in the model. As a worked example, the smart-Focus-mode decision invokes UniverseState, introspected affect, declared rules, divergence detection, dependency resolution (indirectly, for predictable disruption), and legitimization — and does *not* invoke extrospection, commitment tracking, or the privacy wire. The map's value is legibility: it lets a contributor or reviewer see exactly which subsystems a feature requires, and it prevents "this needs nearly everything" from silently meaning "build everything." The map is a planned artifact for the full-product track rather than a Phase 1 deliverable.
 
 ---
 

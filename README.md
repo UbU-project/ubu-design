@@ -49,6 +49,10 @@ UbU is designed around local-first operation, compartmentalized data, multiple I
 
 In `user_mode`, human affect is part of the planning problem. Energy, stress, tiredness, mood, attention, boredom, emotional load, recovery, and related constraints matter because a plan that ignores the human executor can become fiction.
 
+### Generative, introspective, and user-sovereign
+
+UbU is a generative layer, not a reactive one. It originates what is worth doing from the user's own Objectives, values, affect, and attention, rather than only constraining or auditing what some agent already decided. It works from the user's *introspected* state — what the user reports and reconciles about themselves — rather than from inferred sensor data, because intent and affect are not sensor-readable. Agents and external models are downstream executors of plans UbU produced, never the authority over the user's life model. The novelty is not the problem but the integration: an open, user-owned, generative goal-and-values layer that does not yet exist as a whole.
+
 ### First-person legibility
 
 Phase 1 must remain understandable as a simple first-person loop: answer a few bootstrapping questions, preview a candidate Calendar, receive one recommended next Task, inspect why it matters now, act or override, and let UbU learn from what actually happened.
@@ -62,6 +66,10 @@ Resources include documents, tools, ingredients, credentials, software licenses,
 This is not Phase 1 scope, but it is central to the full product. Phase 3 should try to add a thin Resource/Skill-aware task-readiness layer. Phase 3B and Phase 4+ form the full version 1.0 release track, including richer Resource, Skill, Technique, DIY-versus-purchase/hire, inventory, financial-management, and Skill Barter features.
 
 Resources also include community and public Resources: library tool loans, makerspace equipment, public workshops, community gardens, seed libraries, and repair cafés. UbU should eventually support a Library and Community Resource Mode that turns publicly accessible Resources into first-class planning inputs.
+
+### Attention sovereignty
+
+A full-product direction (outside Phase 1 scope, like Resource and Skill readiness) is attention sovereignty: cross-channel, values-driven, context-aware governance of interruptions. Because only a user-held life-model knows what the user is doing and wants to protect — information no sensor can read — UbU can decide whether a given notification should arrive now, across email, chat, SMS, and calls. It merges modeled and declared state, surfaces divergence through a mobile Discovery mode, and grades permissiveness as a focus window closes rather than acting as a binary on/off switch. The interruption chokepoint, today held by attention-capturing platforms, moves under the user's control.
 
 ### Government and public-resource symmetry
 

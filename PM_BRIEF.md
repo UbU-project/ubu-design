@@ -54,6 +54,16 @@ For technical teams, this later supports better onboarding, clearer delegation p
 
 ---
 
+## Build sequencing and the feature-to-data map
+
+Two disciplines from UbU's own project management are worth surfacing for this audience, because they are exactly the kind of thing leads spend effort recovering after the fact.
+
+First, build order is driven by *bootstrap dependency*, not by feature value or by which feature is cheapest to ship. Circular-reference foundations such as UniverseState are implemented first — useful in isolation or not — because everything else references them. The Phase 1 dogfooding MVP follows the same logic: it is the smallest loop that lets UbU help coordinate the rest of UbU. This is why a feature-priority menu has limited use in early phases; sequencing is constrained by what must exist before what, not by demand ranking. That changes during the full 1.0 cycle, when lower-dependency, higher-choice features become schedulable.
+
+Second, the project is introducing an explicit *feature-to-data map*: for each feature, the data components it actually invokes at runtime versus those merely present in the model. As a worked example, the smart-Focus-mode decision invokes UniverseState, introspected affect, declared rules, divergence detection, dependency resolution (indirectly), and legitimization — and does not invoke extrospection, commitment tracking, or the privacy wire. For a coordinating lead, the map is a legibility instrument: it makes "this feature needs nearly everything" falsifiable, prevents quiet scope creep, and gives reviewers a precise picture of what a slice depends on. It is a planned full-product artifact rather than a Phase 1 deliverable.
+
+---
+
 ## What UbU is not
 
 UbU should not become a manager-first surveillance dashboard, a generic Jira/Linear/Asana/Trello/Monday replacement, a productivity telemetry system, a capacity-scoring system for squeezing contributors, an opaque autonomous agent that mutates project state without review, or a token-first coordination product.
