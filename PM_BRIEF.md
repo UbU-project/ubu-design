@@ -155,6 +155,16 @@ Good project-lead conversations include:
 
 ---
 
+## Strategic future directions
+
+These directions are reasons the Association and Delegation primitives stay general. They are not Phase 1 commitments.
+
+### Coordination with worker standing
+
+A frequently-imagined direction is shift-based or operational coordination — cleaning, maintenance, queue response, training, exception handling. The important point is that this is not classical job control. Classical workforce-management software treats the worker as an execution node to schedule and optimize. UbU's primitives describe the opposite work-political architecture: each worker is an Identity with standing — Objectives, affect, and preferences that the coordination layer must satisfy, not merely consume. The same introspected-state primitive that protects an individual's focus block becomes the worker's standing in a shared plan, which is exactly what incumbent tools are structurally blind to. This holds only when the worker's say is structural — the eject-not-override principle in `SOVEREIGN_COORDINATION.md` — otherwise it collapses into job control with a consultation veneer. The concurrent dual-layer and super-connector model in `SOVEREIGN_COORDINATION.md` describes how such coordination can span independent local crews and larger networks without forced centralization.
+
+---
+
 ## Where to go next
 
 - Technical contributors should read `README.md`.

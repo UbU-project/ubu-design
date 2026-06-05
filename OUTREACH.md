@@ -317,3 +317,31 @@ Professional and FOSS use cases are valuable when they help build the same primi
 UbU is at a concrete inflection point. Phase 1 design is frozen. Phase 0 — a live, runnable demo — is up and running for demo usage at `ubu-phase0-demo` commit `9daffa7` for ETHConf NYC, June 8–10, 2026. Phase 1 implementation begins immediately after.
 
 This is the moment when early contributors can watch a working end-to-end demo, meet the project in person, and shape Phase 1 implementation while the architecture is still malleable. The design is coherent enough to act on; the code is early enough that concrete contributions matter.
+
+---
+
+## ETHConf NYC hallway pitches (speculative, post-MVP)
+
+> **Status: speculative, post-MVP.** These are *hooks* about what UbU could become, for hallway conversations — not descriptions of current state. Anyone who wants concrete, shipped specifics should read the canonical files. Nothing here is a Phase 1–3 commitment. Canonical source files remain authoritative; where they differ from this section, they win.
+
+**The one-line throughline (works for everyone):** UbU helps you see the coherence between who you say you are and what you actually do — at every scale, from personal (nutrition, assets, time) to community (peer teaching, resource sharing, Associations) to global (marketplace interoperability). It makes Resource, Skill, and Technique explicit, compartmentalizes what flows where, and lets communities govern themselves. Your data stays yours; authority flows outward from you.
+
+Audience cuts below are starting points, not scripts — combine them for people who wear more than one hat (a cypherpunk founder, an academic who maintains FOSS), and watch which framing actually lands.
+
+**Young professionals (primary):** "See what's actually wasting your time and money — gear you own but never use, meals you plan but never cook, skills you say matter but don't practice. Build real capability with visible progression. Teach and learn from people you already know. No algorithm optimizing you."
+
+**Privacy builders & cypherpunks:** "True multi-layer federation — independent networks that interoperate without merging into one graph. No pooled corpus. Compartment policy is a hard product boundary, not advisory. Super-connectors bridge contexts by choice; local authority is preserved at every scale. And we're honest that cloud is leak-*minimization*, not a zero-leak claim."
+
+**Founders & entrepreneurs:** "Marketplaces emerge from genuine peer exchange instead of a forced platform. Settlement is pluggable — Ethereum, fiat, time-banking, barter scrip. No network-capture trap; communities thrive standalone. Revenue from value, not lock-in, because there's no pooled corpus to monetize."
+
+**FOSS contributors:** "The Technique library is crowdsourced and contributor-owned. Your project or tool library coordinates with zero external dependencies. Global coordination is an opt-in bridge, not a forced registry. And UbU runs UbU — you can watch the planning model work on a real project, live."
+
+**Organizational leaders & workplace culture:** "Work-life balance as a data primitive instead of a slogan — coordination that respects modeled capacity and focus, with the worker as a planning participant who has standing, not a node to optimize. Organizational introspection without surveillance: see bottlenecks and unsustainable commitments without monitoring individuals.
+
+**Ethereum & crypto builders:** "Task-driven markets, not search-driven markets — the plan says what's needed before the user searches, and Ethereum settles it underneath. Pseudonymous skill profiles and selective-disclosure reputation without doxxing. A Delegation Substrate maps cleanly to escrow, deposits, and programmable agreements."
+
+**Privacy researchers & security engineers:** "Compartments as a case study in schema-enforced data-boundary control, with inference-resistance as an explicit design goal — policy behavior must not become an inference channel back to raw state. Local-first sync with no canonical server; the sync-sovereignty invariant as a testable property; cryptographic substrate left agnostic."
+
+**Academic & research communities:** "Multi-agent planning that combines individual Objectives, capability, and affect constraints into group Plans without reducing humans to optimization nodes. Capability modeling (skills that rust, unlock, transfer). Revealed preference inferred from what people keep, use, and trade — without pooling raw data."
+
+**Individuals seeking change:** "Your calendar says one thing; your choices say another. UbU makes the gap visible — no judgment, just honest feedback. Own your stuff or let it go. Be part of something without your community being absorbed into a platform. Your data stays yours, always."

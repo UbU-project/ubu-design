@@ -134,6 +134,40 @@ The important ordering is: first build the planning and delegation semantics; th
 
 ---
 
+## Strategic future directions
+
+These directions are reasons the data model stays general. They are not Phase 1 commitments, and they do not justify over-scoping the MVP.
+
+### Concurrent multi-scale coordination
+
+The bottom-up and top-down pictures of coordination are not sequential phases; they coexist. UbU's primitives behave identically at every scale, so the same Compartment and Delegation semantics serve a two-person tool loan and a global exchange without translation. A neighborhood tool library, a small Association, and a regional or global marketplace can all operate at once: the local layer is fully self-contained, and any larger market is an optional integration point rather than a mandatory backbone. Neither requires the other; neither collapses the other.
+
+### Super-connectors
+
+Some Identities hold standing in several contexts simultaneously — a local library, a regional market, a global network. They are the permeable membrane between layers, not gatekeepers over them. A super-connector can project a redacted piece outward — "this Resource is available" — without exposing an Association's inventory, membership, or internal coordination; can be the only externally visible member of an otherwise-private Association; and carries reputation and Skill evidence across contexts under Compartment-safe redaction. Because no layer depends on a central authority, a super-connector can leave a layer without collapsing it. The result is multi-network interoperability without merging everything into one social graph: a local Association trusts only the bridge it chose, never a global market.
+
+### Governance as an emergent subsystem
+
+The hard parts of multi-scale coordination — super-connector load, value drift between layers, incentive design, accountability at bridge boundaries — are well-solved governance problems that communities have handled for centuries. UbU does not solve governance. Its role is narrower and structural: honest data boundaries, Compartment control over what flows where, and a settlement-agnostic Delegation Substrate (gift, barter, time-banking, Ethereum, or otherwise). Communities and marketplaces layer their own governance on top, and because the data model is honest about boundaries, that governance can work instead of being theater.
+
+### Directional authority
+
+Authority and intent originate at the individual and flow outward into coordination, never inward. This is the line between a legitimate social outgrowth of self-governance and self-governance absorbed into a coordination platform. From the schema's point of view those two look almost identical — the same Objectives, Associations, Delegations — and only the direction of authority distinguishes them. Naming it is what keeps the entire multi-scale picture legible as UbU rather than as scope creep wearing UbU's vocabulary.
+
+### Eject-not-override for shared-authority compartments
+
+For any compartment whose policy is not solely user-set, sovereignty is preserved at the device boundary rather than the field level: the user can always destroy or eject the compartment wholesale, but cannot selectively override its external policy while retaining that compartment's data. A voluntarily-accepted, always-destroyable container keeps the sovereignty claim intact. A compartment the user cannot destroy is the line where UbU would become the thing it opposes.
+
+### Protective shared-authority compartments
+
+An inversion of corporate device management: a user's private affect/stress state can constrain a counterparty's behavior — a work scheduler that refuses to book deep-work meetings against high modeled stress — while the counterparty never reads the raw signal. Control flowing in the protective direction extends the sovereignty thesis rather than betraying it. The viable form requires the eject-not-override principle above plus a strict asymmetry: private state is constraint-only, never report-only. Two conditions gate it and are not solved by cryptography. Consent under employment power asymmetry is a structural limit — EU data-protection law already treats employee consent as generally invalid for this reason. And the protective channel is dual-use and can leak by inference, since a policy's observable behavior reveals something about the state it acts on. The asymmetry must therefore be structurally guaranteed and inference-resistant, or the result is device management that should not wear the UbU name. (See `ORG_INTROSPECTION_BRIEF.md` for the work-life-balance application.)
+
+### Premium compute is leak-minimization, not leak-elimination
+
+UbU's cloud story everywhere is leak-minimization, not leak-elimination. Any cloud computation leaks proportional to its duration through access patterns, timing, and resource profile — FHE protects the plaintext, not the side channels. A long-horizon premium planning run is the largest instance of a leak the architecture already accepts when it is bounded and consented. The correct framing names the residual leak as residual and requires it to be ephemeral and compartment-scoped, rather than implying a zero-leak guarantee that "local-first, inspectable" can be misread as making.
+
+---
+
 ## What UbU is not
 
 UbU should not be framed as a darknet labor market, a tax-evasion or sanctions-evasion system, a token launch, a reputation casino, a generic AI agent marketplace, or a centralized assistant that asks users to upload their life into a black box.

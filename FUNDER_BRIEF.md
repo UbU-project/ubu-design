@@ -213,7 +213,15 @@ The following directions are important but should not be confused with Phase 1 c
 - Skill Barter marketplace;
 - high-privacy compute using FHE, ZK, secure hardware, or other privacy-preserving techniques;
 - user-owned worker devices and compute markets;
-- richer realtime multimodal interaction.
+- richer realtime multimodal interaction;
+- a UbU Corp premium long-horizon, high-granularity, high-compute planning tier;
+- food, nutrition, and physiological-health planning;
+- asset economics and true cost-of-ownership analysis;
+- concurrent multi-scale coordination with super-connectors.
+
+Two of these are worth elaborating as commercial directions. A **UbU Corp premium planning tier** would offer long-horizon, high-granularity planning over months or years using substantial compute — plan simulation for individuals or organizations with unusually complex needs. It complements rather than competes with the Ethereum-settlement and Skill Barter paths, and it requires no persistent pooled corpus, which preserves the structural answer to capture. One property travels with it: any extended cloud computation leaks proportional to its duration through access patterns and timing, which even FHE does not remove. The tier is therefore the largest instance of a leak the architecture already bounds and consents elsewhere; it stays ephemeral and compartment-scoped, and is described as leak-minimization rather than a zero-leak guarantee.
+
+**Marketplaces emerge rather than being constructed.** Bottom-up peer exchange and top-down marketplaces run concurrently rather than sequentially, with settlement pluggable per community (see `SOVEREIGN_COORDINATION.md`). Revenue then comes from genuine coordination value rather than lock-in, and because there is no pooled corpus to monetize, the capture-resistance thesis holds as the product scales.
 
 These directions explain why the Phase 1 planning kernel matters. They do not justify over-scoping the MVP.
 

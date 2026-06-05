@@ -147,6 +147,16 @@ This dogfooding matters because the project claims to support evidence-backed se
 
 ---
 
+## Strategic future directions
+
+These are reasons the Compartment model stays general. They are not Phase 1 commitments.
+
+### Protective work-life-balance compartments
+
+"Work-life balance" is hollow today partly because the data that would let an organization act humanely — affect, stress, real capacity — is exactly the data employees rationally hide. An inversion of corporate device management could change that: a worker's private affect/stress state could constrain an employer's scheduling behavior (no deep-work meetings booked against high modeled stress) while the employer never reads the raw signal. Control flowing in the protective direction. This is consistent with the boundaries above in "What this is not" — it is the opposite of surveillance or productivity scoring.
+
+---
+
 ## Relationship to other UbU documents
 
 This brief is narrower than `OUTREACH.md`. `OUTREACH.md` explains why FOSS maintainers and software engineers may want to join or help UbU. This brief explains why a project might want UbU even before it adopts the full personal planning system: it can help the project inspect whether its real behavior matches its stated mission.
