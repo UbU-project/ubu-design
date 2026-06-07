@@ -2334,3 +2334,28 @@ Status: Open Priority: MVP important Phase: Phase 3 Decision type: Architecture 
 ### Resolution
 
 Open.
+
+---
+
+## UBU-Q0126 — SPIFFE trust-domain granularity and Compartment non-correlation
+
+**Status:** Open  
+**Candidate owner:** model-committee  
+**Decision dependency:** `UBU-D0219`
+
+Should UbU represent Compartment-scoped boundary identity with one sovereign trust domain, per-Compartment trust domains, or a hybrid model with one user control-plane trust domain for operator-side services plus pairwise, purpose-scoped, or Compartment-scoped delegated trust domains / federation bundles for boundary exposure?
+
+Open subquestions:
+
+1. Should UbU use one sovereign trust domain — the user's control-plane root — with Identities and Compartments expressed as paths in the SPIFFE ID namespace?
+2. Should UbU instead use a distinct trust domain per Compartment to maximize cryptographic non-correlation?
+3. Should UbU use a hybrid model: one user control-plane trust domain for operator-side services plus pairwise, purpose-scoped, or Compartment-scoped delegated trust domains / federation bundles for boundary exposure?
+4. Under the single-domain model, does a shared cryptographic root correlate Compartments in a way that violates the Compartment promise?
+5. Under the per-Compartment model, how is cross-Compartment attestation performed at all, given no shared root — explicit user-authorized federation, bridging, or no linkage by default?
+6. Under the hybrid model, which claims remain inside the user control plane and which claims cross the delegation, marketplace, worker, hosted-planning, or commercial-wire boundary?
+7. How does the chosen granularity satisfy the FOSS-core / commercial-wire auditability requirement, where the wire may present only SVIDs scoped to granted authority?
+8. How does it interact with the Delegation Substrate and marketplace settlement, where attested workload identity must cross to counterparties and to the Ethereum settlement layer without becoming human authority by itself?
+9. What is the unlinkability guarantee under each model against a colluding counterparty or a passive observer, including linkage through SPIFFE IDs, SVID lifetimes, trust-domain names, federation bundles, issuance logs, and boundary telemetry?
+10. Which model is required for Phase 3, and what minimum is needed earlier if any Compartment-scoped cryptographic identity appears before Phase 3?
+
+Single-domain gives unified attestation but a shared root that risks correlating Compartments. Per-Compartment trust domains give stronger cryptographic non-correlation at the cost of harder cross-Compartment attestation. A hybrid model may preserve a manageable user control-plane root while exposing only pairwise, purpose-scoped, or Compartment-scoped boundary federation to counterparties. The decision must not weaken the Compartment non-correlation promise.

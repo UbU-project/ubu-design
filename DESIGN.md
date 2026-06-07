@@ -3804,3 +3804,41 @@ Directive decisions are canonical once committed.
 They may override provisional decisions, create new questions, close questions, split questions, or require consistency repairs.
 
 The model-committee process must treat directive decisions as authoritative input during the next system-wide consistency check.
+
+---
+
+## 25. External Identity and Access Standards (IAM)
+
+Accepted in `UBU-D0219`. UbU adopts external identity-and-access standards — IAM — by layer, with deliberately asymmetric treatment: a standard adopted for external interoperability is surfaced verbatim at the boundary, while a standard used only as an internal engine stays below the design vocabulary. The organizing reason is that these standards earn their keep precisely where work crosses from the user's own control plane to a counterparty — at the Delegation Substrate, federation, worker, hosted-planning, marketplace, boundary-agent, and commercial-wire boundaries — and add only overhead inside the local single-user core.
+
+**SPIFFE/SPIRE — conformance target (outward-facing).** SPIFFE is adopted at the Delegation Substrate, federation, worker, hosted-planning, marketplace, boundary-agent, and commercial-wire boundary so that workload identity, execution provenance, and authority evidence are cryptographically attestable and externally auditable. Because the point is interoperability and external audit, SPIFFE terms appear unaliased at that boundary: trust domain, SPIFFE ID, SVID, node/workload attestation, federation. SPIFFE represents UbU-controlled workloads, worker instances, Devices when exposed as execution enclaves, Compartment-scoped boundary agents, hosted services, and delegation endpoints. It does **not** replace human Identity or user-sovereign Identity. SPIFFE is not built into the local single-user core, and the SPIRE attestation profile must avoid leaking hardware, cloud, device, or namespace metadata that would undermine privacy-first or Compartment non-correlation.
+
+**OPA — implementation substrate (inward-facing).** OPA may realize the policy checker, but it is an engine, not a vocabulary. Its terms — Rego, PDP, PEP, bundle, and especially "decision" — are realization notes only and never enter core vocabulary. OPA can return structured policy outputs, but conventional allow/deny authorization patterns are the wrong product vocabulary for UbU's graduated model: it must not flatten semi-legitimization, full legitimization, needs-clarification states, or bypass-as-introspection-evidence into a boolean gate. Where OPA backs the checker, affect margin and revealed-preference state live in the data layer and OPA is treated as a pure execution engine.
+
+**SAML/OIDC — boundary-only enterprise compatibility.** External enterprise authentication may be supported at the commercial wire when required, with OIDC/OAuth2 preferred for greenfield federation. External IdPs never become the source of truth for user-sovereign Identity.
+
+### 25.1 UbU-to-SPIFFE mapping
+
+| UbU concept | SPIFFE/SPIRE concept | Notes |
+|---|---|---|
+| user control plane / sovereign root | SPIFFE **trust domain** candidate | Root of cryptographic trust if the single-domain or hybrid model is chosen; alternatives open in `UBU-Q0126` |
+| Identities + Compartments | SPIFFE ID namespace paths, per-Compartment trust domains, or purpose-scoped federation | Granularity open in `UBU-Q0126`; no mapping may weaken Compartment non-correlation |
+| workload / worker / boundary agent identity | SPIFFE **ID** backed by an **SVID** | Authenticates the executor or boundary agent, not the human source of authority |
+| `authority_source` (Task/envelope field) | backed by SVID plus UbU-native provenance and grants | Field name unchanged; authority requires capability grants, `authority_scope`, Compartment policy, Log provenance, and admission checks |
+| SVID (claim type) | **JWT-SVID** / **X.509-SVID** | JWT-SVID for portable / marketplace reference; X.509-SVID for transport |
+| claim register | verifiable-claim store | Stores SVIDs as one claim type; no parallel structure |
+| IdentityAttestation | SPIFFE **node + workload attestation** | "Prove what you are" → workload/boundary-agent credential issuance |
+| Human / UbU Identity | *(not replaced by SPIFFE)* | User-sovereign Identity remains UbU-native; may be bound to workload claims only through approved provenance |
+| AssociationAttestation | *(not SPIFFE)* | Relationship attestation between parties; must not merge with IdentityAttestation |
+| Delegation Substrate cross-party executor identity | SPIFFE **federation** | Attested provenance for delegated Technique execution; pairs with the Ethereum settlement layer |
+| FOSS-core / commercial-wire split | **SVID scoping** plus UbU capability grants | Wire presents only SVIDs scoped to granted authority; cryptographic auditability does not by itself create authorization |
+
+At a delegation, federation, worker, hosted-planning, boundary-agent, or commercial-wire boundary, `authority_source` may be backed by one or more verifiable claims, including an SVID identifying the executing workload or boundary agent. The SVID authenticates the workload; UbU capability grants, Log provenance, Compartment policy, task-specific `authority_scope`, expected-prior-version checks, and review/admission rules establish whether that authenticated actor is authorized for the action. The SVID is stored as a claim type in the claim register rather than as a parallel structure, and the surrounding evidence fields remain authoritative.
+
+When a Delegation Substrate packet crosses to an external executor, the executing workload or boundary agent may present a SPIFFE-attested identity (SVID) under the applicable trust domain. The SVID gives cryptographic provenance for the executor, while `authority_source`, `authority_scope`, capability grants, Compartment policy, and Log provenance establish whether that executor is authorized for the delegated action. This pairs with the marketplace settlement layer without collapsing human authority into workload identity.
+
+Whether Compartments map to a single sovereign SPIFFE trust domain, to per-Compartment trust domains for cryptographic non-correlation, or to a hybrid control-plane root with purpose-scoped / pairwise / Compartment-scoped boundary federation is open in `UBU-Q0126`; whichever is chosen must not weaken the Compartment non-correlation promise.
+
+This section fixes vocabulary and adoption posture only. No SPIFFE, SPIRE, OPA, OIDC, SAML, SVID issuance, enterprise federation, or commercial-wire identity implementation is required for Phase 1 dogfooding.
+
+SPIFFE IDs, SVIDs, trust-domain names, federation bundles, issuance logs, and boundary telemetry are potentially correlating identifiers. Any SPIFFE/SPIRE profile must treat namespace shape, SVID lifetime, bundle exposure, logging, and federation scope as privacy-critical design parameters.

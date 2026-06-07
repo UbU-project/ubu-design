@@ -77,6 +77,18 @@ Any institution that can constrain a user's plan may also provide Resources, per
 
 This means UbU should not only surface regulations, permits, and legal constraints — it should also surface grants, subsidies, benefit programs, weatherization assistance, workforce training, legal aid, public infrastructure, and other government- or community-supported Resources. Many of these are conditionally unlockable: a user may need to apply for a benefit, collect documentation, or file an appeal before the Resource becomes available. UbU can generate those prerequisite Tasks automatically.
 
+### Identity, authority, and external standards
+
+UbU adopts external identity-and-access standards by layer. The local single-user core remains UbU-native. Standards earn their keep when work crosses from the user's control plane to a counterparty, worker, hosted service, marketplace, federation partner, or commercial wire.
+
+- **SPIFFE/SPIRE is outward-facing.** It is a conformance target for workload identity, worker identity, hosted planning workers, boundary agents, delegation endpoints, marketplace execution, and commercial-wire auditability. SPIFFE does not replace human Identity or user-sovereign Identity.
+- **OPA is inward-facing.** OPA may implement the policy checker, but OPA vocabulary does not become UbU vocabulary. UbU speaks in legitimization, adjudication, enforcement gates, capability grants, Compartment policy, and Log provenance.
+- **SAML/OIDC is boundary-only.** External enterprise authentication may be supported at the commercial wire when required, with OIDC/OAuth2 preferred for greenfield federation. External IdPs never become the source of truth for user-sovereign Identity.
+
+A SPIFFE ID / SVID authenticates a workload or boundary agent. It does not by itself prove human authority. Authority requires UbU-native capability grants, `authority_source`, `authority_scope`, Compartment policy, Log provenance, and admission/review rules.
+
+No SPIFFE, SPIRE, OPA, OIDC, SAML, SVID issuance, enterprise federation, or commercial-wire identity implementation is required for Phase 1 dogfooding.
+
 ### Dogfooding
 
 The Phase 1 MVP should help coordinate UbU's own GitHub issues, pull requests, reviews, CI events, release milestones, design questions, planning-kernel contracts, contributor interactions, and release/outreach artifacts.
