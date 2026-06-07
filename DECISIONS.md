@@ -10,7 +10,7 @@ This file records accepted design decisions so they do not need to be rediscover
 
 ## UBU-D0001: GitHub repository is canonical for public design
 
-**Status:** Accepted → DESIGN.md §30
+**Status:** Accepted → DESIGN.md §31
 
 The public GitHub repository is the canonical public design process for UbU.
 
@@ -20,7 +20,7 @@ Private chats, notes, and external documents may generate proposals, but accepte
 
 ## UBU-D0002: Start public design documentation with four Markdown files
 
-**Status:** Accepted → DESIGN.md §30
+**Status:** Accepted → DESIGN.md §31
 
 The initial public design repo should remain simple and LLM-friendly.
 
@@ -229,7 +229,7 @@ Worker mode may run as:
 
 ## UBU-D0017: Automation Worker is the technical term; Super Automation is a UX/product pattern
 
-**Status:** Accepted → DESIGN.md §24.1
+**Status:** Accepted → DESIGN.md §25.1
 
 An **Automation Worker** is the technical execution entity.
 
@@ -239,7 +239,7 @@ An **Automation Worker** is the technical execution entity.
 
 ## UBU-D0018: GitHub is a projection of UbU, not the source of truth
 
-**Status:** Accepted → DESIGN.md §26
+**Status:** Accepted → DESIGN.md §27
 
 For dogfooding, GitHub is treated as a low-dimensional projection of canonical UbU state.
 
@@ -249,7 +249,7 @@ UbU is the source of truth.
 
 ## UBU-D0019: GitHub projection requires reconciliation
 
-**Status:** Accepted → DESIGN.md §26.4
+**Status:** Accepted → DESIGN.md §27.4
 
 Missed GitHub updates are expected in MVP.
 
@@ -259,7 +259,7 @@ UbU should support a reconciliation report comparing GitHub state to UbU state.
 
 ## UBU-D0020: Objective status and pipeline state are separate
 
-**Status:** Accepted → DESIGN.md §26.2
+**Status:** Accepted → DESIGN.md §27.2
 
 `Objective.status` is the canonical UbU lifecycle status.
 
@@ -269,7 +269,7 @@ UbU should support a reconciliation report comparing GitHub state to UbU state.
 
 ## UBU-D0021: One GitHub object may map to many UbU objects and vice versa
 
-**Status:** Accepted → DESIGN.md §26.1
+**Status:** Accepted → DESIGN.md §27.1
 
 GitHub ↔ UbU association is many-to-many.
 
@@ -700,7 +700,7 @@ WorkItems must remain structurally usable without dereferencing sensitive conten
 
 ## UBU-D0051: Risk is reportable, not first-class in MVP
 
-**Status:** Accepted → DESIGN.md §27
+**Status:** Accepted → DESIGN.md §28
 
 Risk is not a first-class object in MVP.
 
@@ -734,7 +734,7 @@ Candidate reason codes remain open.
 
 ## UBU-D0053: GitHub managed state should be clearly marked
 
-**Status:** Accepted as MVP direction → DESIGN.md §26.3
+**Status:** Accepted as MVP direction → DESIGN.md §27.3
 
 UbU should avoid fighting manual GitHub edits.
 
@@ -756,7 +756,7 @@ Phase 1 focuses on single-user GitHub dogfooding before multi-device sync or mul
 
 ## UBU-D0055: Scope freeze is now a priority
 
-**Status:** Accepted → DESIGN.md §30
+**Status:** Accepted → DESIGN.md §31
 
 The data-model discussion has reached the point of diminishing private returns.
 
@@ -766,7 +766,7 @@ Further unresolved questions should become public GitHub Issues when possible.
 
 ## UBU-D0056: File authority model for model-committee runs
 
-**Status:** Accepted → DESIGN.md §30
+**Status:** Accepted → DESIGN.md §31
 
 The canonical source files for model-committee question-answering are:
 
@@ -878,7 +878,7 @@ Work is lowest priority and should normally run only after the current project s
 
 ## UBU-D0067: Directive decisions may be appended directly
 
-**Status:** Accepted → DESIGN.md §30
+**Status:** Accepted → DESIGN.md §31
 
 The UbU project may receive direct project-owner directives that are appended to `DECISIONS.md` as accepted decisions without first passing through the ordinary model-committee question-answering loop.
 
@@ -1522,7 +1522,7 @@ The implementation should be staged:
 
 ## UBU-D0095: Worker authority uses scoped capability grants
 
-**Status:** Accepted → DESIGN.md §24
+**Status:** Accepted → DESIGN.md §25
 
 Automation Worker authority is represented through explicit capability grants associated with a worker Identity. The Identity is the external-facing actor and credential subject; the capability grant is the authoritative object that says what the worker may do for a specific parent UbU instance.
 
@@ -1637,7 +1637,7 @@ A Snapshot can be corrected or revoked, but only through a new Log entry. Correc
 
 ## UBU-D0101: Organization mode uses shared objects without intrinsic affect
 
-**Status:** Accepted → DESIGN.md §25
+**Status:** Accepted → DESIGN.md §26
 
 Organization mode uses the shared UbU core object model except where fields or behavior are intrinsically personal-affect-specific. Objective, Preference, Task, Container, UniverseState, Snapshot, Plan, Calendar, Log, Identity, Relationship, Compartment, Automation Worker, External Event, External Reference, and deferred Association-related objects are available in organization mode to the depth required by the organization or project planning workflow.
 
@@ -2246,7 +2246,7 @@ The protocol should eventually support at least these payload families:
 
 ## UBU-D0145: Phase 1 risk reports are derived artifacts, not canonical risk objects
 
-**Status:** Accepted → DESIGN.md §27
+**Status:** Accepted → DESIGN.md §28
 
 Risk reports in MVP are derived, recalculable analyses over Calendars, Plans, Tasks, Logs, Snapshots, External Events, worker status, External References, and compact Calendar metadata. Risk remains reportable state, not a first-class canonical object.
 
@@ -2279,7 +2279,7 @@ UbU's PERT-superiority demonstration should be precise: Phase 1 should not claim
 
 ## UBU-D0146: Phase 1 recalculation triggers use logged trigger records
 
-**Status:** Accepted → DESIGN.md §28
+**Status:** Accepted → DESIGN.md §29
 
 Recalculation triggers are explicit event-like records that tell UbU when a Calendar, Plan, risk-report cache, explanation cache, or next-action recommendation may no longer reflect the current modeled state. A trigger is not a separate canonical domain mutation by itself; it references the Log entry, Snapshot, External Event, worker request, or clock condition that changed the planner's inputs.
 
@@ -2740,7 +2740,7 @@ Any workflow using a cloud or external LLM must disclose, before or at execution
 
 ## UBU-D0158: Phase 1 worker work discovery uses explicit assignments
 
-**Status:** Accepted → DESIGN.md §24.1.2
+**Status:** Accepted → DESIGN.md §25.1.2
 
 Resolved question: `UBU-Q0008`.
 
@@ -2771,7 +2771,7 @@ Workers may request clarification through assignment status or an authorized mut
 
 ## UBU-D0159: GitHub projection writes only managed surfaces and reconciles drift
 
-**Status:** Accepted → DESIGN.md §26
+**Status:** Accepted → DESIGN.md §27
 
 Resolved question: `UBU-Q0002`.
 
@@ -2932,7 +2932,7 @@ ContextBundles are immutable after use. Corrections, narrower reruns, broader re
 
 ## UBU-D0163: GitHub event triage is normalized, idempotent, and task-oriented
 
-**Status:** Accepted → DESIGN.md §26.5
+**Status:** Accepted → DESIGN.md §27.5
 
 Resolved question: `UBU-Q0005`.
 
@@ -3597,7 +3597,7 @@ Every accepted `pipeline_state` transition creates a `pipeline_state_transitione
 
 ## UBU-D0183: GitHub analysis work uses parent scope and noise budgets
 
-**Status:** Accepted → DESIGN.md §26.5
+**Status:** Accepted → DESIGN.md §27.5
 
 Resolved question: `UBU-Q0006`.
 
@@ -3637,7 +3637,7 @@ Noise budget defaults:
 
 ## UBU-D0184: GitHub tokens are actor-held scoped credentials
 
-**Status:** Accepted → DESIGN.md §26.3.1
+**Status:** Accepted → DESIGN.md §27.3.1
 
 Resolved question: `UBU-Q0010`.
 
@@ -3742,7 +3742,7 @@ When recalculated coverage falls below the effective threshold, UbU records or b
 
 ## UBU-D0187: Worker retries use failed attempts and retry siblings
 
-**Status:** Accepted → DESIGN.md §§24.1.2, 27
+**Status:** Accepted → DESIGN.md §§25.1.2, 27
 
 Resolved question: `UBU-Q0020`.
 
@@ -4667,3 +4667,51 @@ UbU adopts external identity-and-access standards — IAM — by layer, with del
 - SPIFFE IDs, SVIDs, trust-domain names, federation bundles, issuance logs, and boundary telemetry are potentially correlating identifiers. Any SPIFFE/SPIRE profile must treat namespace shape, SVID lifetime, bundle exposure, logging, and federation scope as privacy-critical design parameters.
 - The trust-domain-to-Compartment granularity choice is left open as `UBU-Q0126` and must consider at least three candidates: one sovereign trust domain, per-Compartment trust domains, and a hybrid control-plane root with purpose-scoped / pairwise / Compartment-scoped boundary federation.
 - No SPIFFE, SPIRE, OPA, OIDC, SAML, SVID issuance, enterprise federation, or commercial-wire identity implementation is required for Phase 1 dogfooding.
+
+---
+
+## UBU-D0220 — Directional authority
+
+**Status:** Accepted → DESIGN.md §2.19
+
+Authority and intent originate at the individual and flow outward into coordination, never inward. This is the invariant that distinguishes a legitimate social outgrowth of self-governance from self-governance absorbed into a coordination platform; from the schema alone the two are nearly indistinguishable, and only the direction of authority separates them. The invariant constrains the multi-scale coordination directions (`UBU-D0222`, DESIGN.md §32): Associations, Delegations, super-connectors, and marketplaces are legitimate only while authority continues to originate at the individual.
+
+---
+
+## UBU-D0221 — Eject-not-override for shared-authority compartments
+
+**Status:** Accepted → DESIGN.md §23.6
+
+For any Compartment whose policy is not solely user-set, sovereignty is preserved at the device boundary rather than at the field level. The user can always destroy or eject such a Compartment wholesale, but cannot selectively override its external policy while retaining that Compartment's data. A voluntarily-accepted, always-destroyable container keeps the sovereignty claim intact; a Compartment the user cannot destroy is the line at which UbU would become the thing it opposes. This invariant gates the protective-compartment direction (`UBU-D0222`) and any shared-authority coordination (DESIGN.md §32.5).
+
+---
+
+## UBU-D0222 — Named multi-scale and sovereign-coordination strategic directions (Phase 3+)
+
+**Status:** Accepted → DESIGN.md §32
+
+The following are accepted as named strategic directions, presented as substantive rather than speculative, with implementation deferred to Phase 3+ / the full-product track and explicitly not Phase 1 commitments: concurrent multi-scale coordination, super-connectors, attention sovereignty, coordination with worker standing, and protective shared-authority compartments (DESIGN.md §23.6). They are reasons the data model stays general and must not be used to over-scope the MVP. Governance-as-an-emergent-subsystem is recorded here as the present scope boundary on these directions: UbU does not solve governance; it supplies honest data boundaries, Compartment control, and a settlement-agnostic Delegation Substrate, and communities layer their own governance on top. The protective-compartment direction is additionally gated by `UBU-Q0127` and by eject-not-override (`UBU-D0221`).
+
+---
+
+## UBU-D0223 — Cloud and premium compute is leak-minimization, not leak-elimination
+
+**Status:** Accepted → DESIGN.md §32.6
+
+Any cloud computation leaks proportional to its duration through access patterns, timing, and resource profile; FHE protects the plaintext, not the side channels. A long-horizon premium planning run, including a prospective UbU Corp premium tier, is the largest instance of a leak the architecture already accepts when it is bounded and consented. Documentation must name the residual leak as residual and require it to be ephemeral and Compartment-scoped, rather than implying a zero-leak guarantee that "local-first, inspectable" could be misread as making.
+
+---
+
+## UBU-D0224 — Feature-to-data map as a planned full-product legibility artifact
+
+**Status:** Accepted → DESIGN.md §3.11
+
+Alongside bootstrap-dependency build ordering, the project maintains a feature-to-data map: for each feature, the data components it actually invokes at runtime versus those merely present in the model. It is a legibility instrument that makes "this feature needs nearly everything" falsifiable, prevents quiet scope creep, and gives reviewers a precise dependency picture per slice. It is a planned full-product artifact, not a Phase 1 deliverable.
+
+---
+
+## UBU-D0225 — Competitive positioning against AI calendar and scheduling assistants
+
+**Status:** Accepted → DESIGN.md §31
+
+UbU is differentiated first positively: AI auto-schedulers take the user's to-do list and events as given and optimize their placement (the *when* of an already-decided *what*), whereas UbU is the generative goal-and-values layer that originates *what belongs there at all* from goals, values, affect, and resources, working from introspected rather than inferred sensor state. The defensibility claim is an incentive argument, not a capability one: an incumbent could build local-first but will not, because matching UbU's sovereignty means abandoning the pooled-corpus data asset its model depends on, and a partial "private mode" delivers a promise where UbU delivers a verifiable architecture. Public messaging must avoid the absolute "they cannot," frame it as "structurally disincentivized," tie it to the running demo and open repository, and calibrate by audience: `WHAT_IS_UBU.md` carries only the positive category line with no competitor names or accusations; `SOVEREIGN_COORDINATION.md` and `FUNDER_BRIEF.md` carry the full incentive/verifiability argument.

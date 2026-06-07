@@ -34,6 +34,12 @@ This layer is exactly where sovereignty is won or lost. The next generation of m
 
 ---
 
+## Why an incumbent can't simply absorb this
+
+It is worth separating UbU from the category it is easiest to mistake it for. AI calendar assistants — Motion, Reclaim, Clockwise, and the like — are auto-schedulers: they take the to-do list and events you already have and optimize their placement, the *when* of an already-decided *what*. UbU is the generative layer above that, originating what is worth doing from your goals, values, and affect. That is a category difference, not a feature gap.
+
+The sharper question this audience asks is why a well-capitalized incumbent can't just add a private mode and copy it. The honest answer is not that they technically can't — any of them could ship local-first — but that they won't, because matching UbU's guarantee means giving up the pooled corpus their business model and valuation are built on. That is an innovator's dilemma, not a moat made of code. And even a sincere private mode hits the wall UbU's architecture removes: a company whose core business is ingesting user data asserting "trust us, this part is private" is exactly the promise UbU replaces with verifiability — no server, open source, runs on your device, inspectable. The future extensions point the same way: a resource-and-skill market or a delegation layer bolted onto a surveillance platform is just more harvesting. The differentiation is not that incumbents are forbidden to follow; it is that following costs them the asset they exist to accumulate, and a partial copy can only offer a promise where UbU offers proof.
+
 ## Sovereignty principles
 
 UbU's sovereignty framing depends on several accepted design commitments:
@@ -71,6 +77,20 @@ UbU assumes that people operate through multiple Identities. A person may need a
 A Compartment can carry hard policy about storage backend, allowed devices, identity disclosure, export restrictions, integration bans, retention rules, audit expectations, and provider eligibility.
 
 This matters for sovereign coordination because useful collaboration often requires sharing selected facts without exposing the whole person. A team may need to know that a commitment is blocked. It does not need raw affect history, private messages, unrelated Objectives, or another client's confidential payload.
+
+---
+
+## Identity and access standards: open at the boundary, sovereign at the core
+
+UbU adopts external identity-and-access standards by layer, and the asymmetry matters for this audience. The local single-user core stays UbU-native; open standards are surfaced only where work crosses from the user's control plane to a counterparty, worker, hosted service, marketplace, federation partner, or commercial wire.
+
+SPIFFE/SPIRE is the outward-facing conformance target: it gives cryptographically attestable, externally auditable identity for *workloads* — worker instances, hosted planning workers, Compartment-scoped boundary agents, delegation endpoints, and Devices exposed as execution enclaves. It does not represent the human. A SPIFFE ID or SVID authenticates a workload; it does not by itself prove human authority. Authority still requires UbU-native capability grants, `authority_source`, `authority_scope`, Compartment policy, and Log provenance. Collapsing workload identity into human authority is exactly the failure this separation prevents.
+
+OPA, where used, is an inward-facing engine only; its allow/deny vocabulary never becomes UbU's. UbU speaks in graduated legitimization and enforcement gates rather than boolean authorization, so a bypassed advisory remains introspection evidence rather than a denied request. SAML/OIDC is boundary-only enterprise compatibility, OIDC preferred for greenfield federation; an external IdP never becomes the source of truth for user-sovereign Identity.
+
+The privacy caveat is first-class, not a footnote. SPIFFE IDs, SVIDs, trust-domain names, federation bundles, issuance logs, and boundary telemetry are themselves correlating identifiers, so any SPIFFE/SPIRE profile must treat namespace shape, SVID lifetime, bundle exposure, logging, and federation scope as privacy-critical parameters — the identity layer can otherwise re-link what Compartments are meant to keep separate. Whether Compartments map to one sovereign trust domain, per-Compartment trust domains, or a hybrid control-plane root with purpose-scoped boundary federation is an open question whose resolution must not weaken the Compartment non-correlation promise.
+
+None of this is required for Phase 1: no SPIFFE, SPIRE, OPA, OIDC, SAML, SVID issuance, or federation is needed for the dogfooding MVP. It is the boundary posture for when delegated and marketplace execution arrives.
 
 ---
 

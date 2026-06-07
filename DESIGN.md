@@ -342,6 +342,10 @@ Computer-use agents and background processes are high-risk actors because they m
 
 The long-term UX should evolve into a **state-transition cockpit** rather than chat plus calendar. The Phase 1 one-next-Task loop remains the narrow proof; later UIs should help the user inspect and approve state transitions such as Plan repairs, Log corrections, Delegation Substrate packets, agent actions, AssociationAttestations, and external projections.
 
+### 2.19 Directional authority
+
+Authority and intent originate at the individual and flow outward into coordination, never inward (`UBU-D0220`). This is the line between a legitimate social outgrowth of self-governance and self-governance absorbed into a coordination platform. From the schema's point of view the two look almost identical — the same Objectives, Associations, and Delegations — and only the direction of authority distinguishes them. Naming the invariant is what keeps the multi-scale coordination picture (§32) legible as UbU rather than as scope creep wearing UbU's vocabulary.
+
 ---
 
 ## 3. Model-committee dogfooding
@@ -705,6 +709,10 @@ A valid v0.1 committee result requires at least one mechanically valid work prop
 A valid automated v0.2 committee result requires at least one valid work proposal, at least one valid cross-score from a different frontier provider, no hard validation failure on the selected patch, and no critical disagreement flag unless manually overridden outside automatic selection. Human-review-required results should use a distinct exit code, provisionally `9`.
 
 Codex CLI and Claude Code CLI authority differ from direct API authority because they are invoked only as subprocess providers. Their outputs are proposal and scoring artifacts only. Direct OpenAI and Anthropic API authority is zero because direct cloud-provider API calls by `model-committee` are forbidden.
+
+### 3.11 Feature-to-data map
+
+Alongside bootstrap-dependency build ordering, the project maintains a **feature-to-data map** (`UBU-D0224`): for each feature, the data components it actually invokes at runtime versus those merely present in the model. As a worked example, the smart-Focus-mode decision invokes UniverseState, introspected affect, declared rules, divergence detection, dependency resolution (indirectly), and legitimization — and does not invoke extrospection, commitment tracking, or the privacy wire. The map is a legibility instrument: it makes "this feature needs nearly everything" falsifiable, prevents quiet scope creep, and gives reviewers a precise picture of what a slice depends on. It is a planned full-product artifact, not a Phase 1 deliverable.
 
 ---
 
@@ -1490,7 +1498,7 @@ External References are preserved by linking the external object to the new Cont
 
 GitHub-linked Task decomposition should keep the GitHub Issue or PR traceable to the Container and add child-level External References only for actionable subwork that needs projection or reconciliation.
 
-Automation/Super Automation expansion uses the same structural-replacement rule; worker-specific child Task details are in §24.1.2.
+Automation/Super Automation expansion uses the same structural-replacement rule; worker-specific child Task details are in §25.1.2.
 
 ### 9.5 Moot
 
@@ -3142,11 +3150,57 @@ Phase 1 can honestly claim that canonical planning state, Logs, and source-linke
 
 Phase 1 can honestly claim that cloud LLM usage is optional, explicit, and advisory. Cloud LLMs may be used by configured Automation Workers, Super Automation flows, or bootstrap tools such as model-committee, but they are not the canonical planner and must not receive `no_cloud_llm` Compartment content. When a workflow uses cloud LLMs on un-compartmented low-security content, the UI or run artifact must disclose that routing before or at execution time.
 
+### 23.6 Shared-authority compartments
+
+Most Compartments are solely user-set. Some Compartments may carry policy that is not solely user-set — accepted from an employer, counterparty, Association, or other external authority. For these shared-authority Compartments, sovereignty is preserved at the device boundary rather than at the field level.
+
+**Eject-not-override (`UBU-D0221`).** The user can always destroy or eject a shared-authority Compartment wholesale, but cannot selectively override its external policy while retaining that Compartment's data. A voluntarily-accepted, always-destroyable container keeps the sovereignty claim intact; a Compartment the user cannot destroy is the line at which UbU would become the thing it opposes.
+
+**Protective shared-authority compartments (future direction, `UBU-D0222`).** An inversion of corporate device management: a user's private affect or stress state may constrain a counterparty's behavior — for example, a work scheduler that refuses to book deep-work meetings against high modeled stress — while the counterparty never reads the raw signal. Control flows in the protective direction, which extends the sovereignty thesis rather than betraying it. The viable form requires eject-not-override plus a strict asymmetry: private state is constraint-only, never report-only, and that asymmetry must be structurally guaranteed rather than merely promised. Two gating conditions are not solved by cryptography and are tracked in `UBU-Q0127`: consent under employment power asymmetry (which some data-protection regimes already treat as generally invalid), and inference leakage, since a policy's observable behavior reveals something about the state it acts on.
+
 ---
 
-## 24. Automation Workers and Super Automation
+## 24. External Identity and Access Standards (IAM)
 
-### 24.1 Automation Worker
+Accepted in `UBU-D0219`. UbU adopts external identity-and-access standards — IAM — by layer, with deliberately asymmetric treatment: a standard adopted for external interoperability is surfaced verbatim at the boundary, while a standard used only as an internal engine stays below the design vocabulary. The organizing reason is that these standards earn their keep precisely where work crosses from the user's own control plane to a counterparty — at the Delegation Substrate, federation, worker, hosted-planning, marketplace, boundary-agent, and commercial-wire boundaries — and add only overhead inside the local single-user core.
+
+**SPIFFE/SPIRE — conformance target (outward-facing).** SPIFFE is adopted at the Delegation Substrate, federation, worker, hosted-planning, marketplace, boundary-agent, and commercial-wire boundary so that workload identity, execution provenance, and authority evidence are cryptographically attestable and externally auditable. Because the point is interoperability and external audit, SPIFFE terms appear unaliased at that boundary: trust domain, SPIFFE ID, SVID, node/workload attestation, federation. SPIFFE represents UbU-controlled workloads, worker instances, Devices when exposed as execution enclaves, Compartment-scoped boundary agents, hosted services, and delegation endpoints. It does **not** replace human Identity or user-sovereign Identity. SPIFFE is not built into the local single-user core, and the SPIRE attestation profile must avoid leaking hardware, cloud, device, or namespace metadata that would undermine privacy-first or Compartment non-correlation.
+
+**OPA — implementation substrate (inward-facing).** OPA may realize the policy checker, but it is an engine, not a vocabulary. Its terms — Rego, PDP, PEP, bundle, and especially "decision" — are realization notes only and never enter core vocabulary. OPA can return structured policy outputs, but conventional allow/deny authorization patterns are the wrong product vocabulary for UbU's graduated model: it must not flatten semi-legitimization, full legitimization, needs-clarification states, or bypass-as-introspection-evidence into a boolean gate. Where OPA backs the checker, affect margin and revealed-preference state live in the data layer and OPA is treated as a pure execution engine.
+
+**SAML/OIDC — boundary-only enterprise compatibility.** External enterprise authentication may be supported at the commercial wire when required, with OIDC/OAuth2 preferred for greenfield federation. External IdPs never become the source of truth for user-sovereign Identity.
+
+### 24.1 UbU-to-SPIFFE mapping
+
+| UbU concept | SPIFFE/SPIRE concept | Notes |
+|---|---|---|
+| user control plane / sovereign root | SPIFFE **trust domain** candidate | Root of cryptographic trust if the single-domain or hybrid model is chosen; alternatives open in `UBU-Q0126` |
+| Identities + Compartments | SPIFFE ID namespace paths, per-Compartment trust domains, or purpose-scoped federation | Granularity open in `UBU-Q0126`; no mapping may weaken Compartment non-correlation |
+| workload / worker / boundary agent identity | SPIFFE **ID** backed by an **SVID** | Authenticates the executor or boundary agent, not the human source of authority |
+| `authority_source` (Task/envelope field) | backed by SVID plus UbU-native provenance and grants | Field name unchanged; authority requires capability grants, `authority_scope`, Compartment policy, Log provenance, and admission checks |
+| SVID (claim type) | **JWT-SVID** / **X.509-SVID** | JWT-SVID for portable / marketplace reference; X.509-SVID for transport |
+| claim register | verifiable-claim store | Stores SVIDs as one claim type; no parallel structure |
+| IdentityAttestation | SPIFFE **node + workload attestation** | "Prove what you are" → workload/boundary-agent credential issuance |
+| Human / UbU Identity | *(not replaced by SPIFFE)* | User-sovereign Identity remains UbU-native; may be bound to workload claims only through approved provenance |
+| AssociationAttestation | *(not SPIFFE)* | Relationship attestation between parties; must not merge with IdentityAttestation |
+| Delegation Substrate cross-party executor identity | SPIFFE **federation** | Attested provenance for delegated Technique execution; pairs with the Ethereum settlement layer |
+| FOSS-core / commercial-wire split | **SVID scoping** plus UbU capability grants | Wire presents only SVIDs scoped to granted authority; cryptographic auditability does not by itself create authorization |
+
+At a delegation, federation, worker, hosted-planning, boundary-agent, or commercial-wire boundary, `authority_source` may be backed by one or more verifiable claims, including an SVID identifying the executing workload or boundary agent. The SVID authenticates the workload; UbU capability grants, Log provenance, Compartment policy, task-specific `authority_scope`, expected-prior-version checks, and review/admission rules establish whether that authenticated actor is authorized for the action. The SVID is stored as a claim type in the claim register rather than as a parallel structure, and the surrounding evidence fields remain authoritative.
+
+When a Delegation Substrate packet crosses to an external executor, the executing workload or boundary agent may present a SPIFFE-attested identity (SVID) under the applicable trust domain. The SVID gives cryptographic provenance for the executor, while `authority_source`, `authority_scope`, capability grants, Compartment policy, and Log provenance establish whether that executor is authorized for the delegated action. This pairs with the marketplace settlement layer without collapsing human authority into workload identity.
+
+Whether Compartments map to a single sovereign SPIFFE trust domain, to per-Compartment trust domains for cryptographic non-correlation, or to a hybrid control-plane root with purpose-scoped / pairwise / Compartment-scoped boundary federation is open in `UBU-Q0126`; whichever is chosen must not weaken the Compartment non-correlation promise.
+
+This section fixes vocabulary and adoption posture only. No SPIFFE, SPIRE, OPA, OIDC, SAML, SVID issuance, enterprise federation, or commercial-wire identity implementation is required for Phase 1 dogfooding.
+
+SPIFFE IDs, SVIDs, trust-domain names, federation bundles, issuance logs, and boundary telemetry are potentially correlating identifiers. Any SPIFFE/SPIRE profile must treat namespace shape, SVID lifetime, bundle exposure, logging, and federation scope as privacy-critical design parameters.
+
+---
+
+## 25. Automation Workers and Super Automation
+
+### 25.1 Automation Worker
 
 An **Automation Worker** is a worker-mode UbU instance or compatible execution unit that performs delegated work.
 
@@ -3161,7 +3215,7 @@ Automation Workers may:
 
 A worker-mode instance is externally represented as an Identity.
 
-### 24.1.1 Worker identity and capabilities
+### 25.1.1 Worker identity and capabilities
 
 A worker Identity may receive only explicit capability grants. The Identity stores stable external identity metadata and credential references; authority lives in separate capability-grant objects attached to that Identity and issued by a specific parent UbU instance. A grant names allowed actions, scope limits, lifecycle state, issuance time, expiration time when present, and audit/provenance metadata.
 
@@ -3186,7 +3240,7 @@ A worker may be revoked by disabling or deleting its capability grants, rotating
 
 A single worker-mode instance may serve multiple parent organization-mode or user-mode instances only through separate parent-specific capability grants, credentials, and audit trails. Cross-parent data sharing is forbidden unless each parent explicitly grants a route and all relevant Compartment policies allow it. Workers may operate for user-mode instances, but affect and other personal data require especially narrow read-subset grants and must respect `no_cloud_llm`, `no_external_export`, and low-security disclosure rules.
 
-### 24.1.2 Worker assignment lifecycle
+### 25.1.2 Worker assignment lifecycle
 
 Phase 1 worker work discovery is explicit assignment by the parent UbU instance. A worker may poll a parent-specific assignment inbox or receive pushed notifications, but the inbox returns only work that the parent has already assigned or offered to that worker Identity. Worker check-ins may advertise health, availability, local resource state, and granted capability metadata so the parent can choose an eligible worker; they are not an open task-claim or marketplace mechanism.
 
@@ -3232,7 +3286,7 @@ When attempts are exhausted, UbU stops automatic retry creation, leaves the late
 
 Worker failure affects derived reports and recalculation. Failed, expired, rejected, repeated, or exhausted worker attempts feed `worker_or_automation_bottleneck`, may increase dependency fragility or deadline risk, and create or batch recalculation triggers when they can affect the current or next recommended Task, Plan feasibility, or risk-report validity.
 
-### 24.1.3 Worker mutation request schema
+### 25.1.3 Worker mutation request schema
 
 Phase 1 worker submissions use three bounded payload families:
 
@@ -3254,7 +3308,7 @@ Worker mutations are reversible only through append-only repair. UbU does not re
 
 Stale overwrite prevention is mandatory. The canonical instance compares `expected_prior_version` or equivalent target version metadata with current canonical state before applying mutation requests. A mismatch rejects the request or converts it into a conflict candidate for review; it must not silently overwrite newer state. Idempotency keys prevent duplicate application, assignment leases prevent expired worker work from being accepted accidentally, and capability-grant versions prevent revoked or changed authority from authorizing late submissions.
 
-### 24.1.4 Model-committee worker pattern
+### 25.1.4 Model-committee worker pattern
 
 A model-committee worker is an Automation Worker pattern that reads canonical project state, runs configured provider workflows against a selected open question or problem, produces candidate changesets, scores candidate changesets, and writes reviewable artifacts.
 
@@ -3262,7 +3316,7 @@ In v0.1, this means Codex CLI plus local Ollama proposal workflows. In v0.2, thi
 
 In both versions, model-committee is still an external bootstrap tool rather than a fully integrated UbU worker-mode runtime component.
 
-### 24.2 Worker mode
+### 25.2 Worker mode
 
 Worker mode:
 
@@ -3273,7 +3327,7 @@ Worker mode:
 - often runs on GPU-capable hardware;
 - may control cloud compute resources.
 
-### 24.2.1 Worker-mode public UX
+### 25.2.1 Worker-mode public UX
 
 Worker-mode public UX is an administrative console for the worker operator, not the primary planning UI.
 
@@ -3290,7 +3344,7 @@ The worker UI may expose detailed logs and operational controls, but it should d
 
 No worker-mode web admin UI is required for Phase 1. Phase 1 only needs enough visible worker assignment/status information for the GitHub dogfooding demo, which may be shown in the user-mode dogfooding UI, CLI output, or run artifacts.
 
-### 24.3 Super Automation
+### 25.3 Super Automation
 
 **Super Automation** is a product/UX pattern, not the technical name of the device.
 
@@ -3307,7 +3361,7 @@ It may include:
 
 ---
 
-## 25. Organization Mode
+## 26. Organization Mode
 
 Organization mode is an instance-wide option.
 
@@ -3324,7 +3378,7 @@ Organization mode:
 
 For MVP, roles/RBAC may be omitted and all users treated as admin-equivalent.
 
-### 25.1 Organization-mode object rules
+### 26.1 Organization-mode object rules
 
 Organization mode uses the shared core object model unless a field or behavior is intrinsically personal-affect-specific. Objective, Preference, Task, Container, UniverseState, Snapshot, Plan, Calendar, Log, Identity, Relationship, Compartment, Automation Worker, External Event, External Reference, and deferred Association-related objects are available in organization mode to the depth needed by the instance's project-planning workflow.
 
@@ -3338,7 +3392,7 @@ Before RBAC exists, organization-mode users are represented as human operator Id
 
 Future personal `user_mode` instances may provide limited signals to an organization-mode instance only through explicit user-controlled sharing, Identity-mediated authorization, Compartment/export checks, and clear provenance. Phase 1 does not implement cross-instance personal-to-organization sharing. Later designs should prefer structural signals such as availability, commitment status, task completion, or user-approved projection summaries rather than raw affect, private relationship state, or broad personal context.
 
-### 25.2 Organization-mode public UX
+### 26.2 Organization-mode public UX
 
 Organization-mode public UX is a project operations dashboard for human operators of an organization or project instance.
 
@@ -3356,13 +3410,13 @@ No organization-mode web admin UI is required for Phase 1. The Phase 1 public de
 
 ---
 
-## 26. GitHub Dogfooding and Projection
+## 27. GitHub Dogfooding and Projection
 
 GitHub is a projection of UbU state, not the source of truth.
 
 UbU should be able to use GitHub as an interface for FOSS contributors while maintaining canonical state internally.
 
-### 26.1 GitHub object mapping
+### 27.1 GitHub object mapping
 
 Provisional mapping:
 
@@ -3376,7 +3430,7 @@ Provisional mapping:
 
 Contributor interactions may also be associated with a GitHub Identity and relationship-maintenance Objective when the user has explicitly modeled that contributor relationship. These imported events may update relationship-relevant UniverseState or satisfy/reactivate the maintenance Objective, but they do not directly rewrite private Relationship affect fields without user acceptance.
 
-### 26.2 Pipeline state
+### 27.2 Pipeline state
 
 `pipeline_state` is generic projection-scoped workflow/project-management state. It is not GitHub-specific, although Phase 1 uses it first for GitHub dogfooding and managed-label projection.
 
@@ -3425,7 +3479,7 @@ Automation Workers do not directly mutate `pipeline_state`. A worker may submit 
 
 Every accepted `pipeline_state` transition creates a `pipeline_state_transitioned` Log entry with old state, new state, projection id, target Objective ref, actor or authority source, reason, effective time, provenance, source refs, external refs, and any requested projection update. Rejected, stale, or unauthorized worker requests are logged through worker mutation rejection events.
 
-### 26.3 GitHub projection
+### 27.3 GitHub projection
 
 GitHub projection is a deliberately low-dimensional projection of canonical UbU state. Phase 1 may read any authorized GitHub object needed for import or reconciliation, but it writes only the following managed surfaces:
 
@@ -3447,7 +3501,7 @@ GitHub edits do not directly override canonical UbU state. A human GitHub edit, 
 
 Automation Workers may submit `projection.github.request_update` requests or reconciliation artifacts when granted authority, but they do not directly mutate canonical UbU state or bypass human approval rules for live GitHub writes.
 
-#### 26.3.1 GitHub token custody
+#### 27.3.1 GitHub token custody
 
 Phase 1 GitHub credentials are secret material held by the execution actor that performs a GitHub API call. The default MVP path is worker-held credentials: an assigned worker stores its GitHub token in its OS/device secret store, and the canonical UbU instance stores only credential refs, scope metadata, capability grants, projection requests, External References, results, and Logs.
 
@@ -3461,7 +3515,7 @@ Live GitHub writes are not treated as confirmed solely from the write response. 
 
 The MVP security assumption is cooperative, operator-administered local and worker enclaves with least-privilege GitHub credentials, explicit capability grants, human approval for live writes, append-only audit, and revocation/rotation. Phase 1 does not protect a token from a malicious local administrator or compromised worker that legitimately holds that token.
 
-### 26.4 GitHub reconciliation
+### 27.4 GitHub reconciliation
 
 Missed GitHub updates are expected in MVP. Reconciliation is therefore part of the normal GitHub dogfooding loop, not an exceptional recovery path.
 
@@ -3492,7 +3546,7 @@ Drift creates a reconciliation report first. It may recommend repair Tasks, muta
 
 Planner-relevant GitHub reconciliation findings create or batch `recalculation_triggered` Log entries with trigger kind `github_update`. Low-priority drift that does not affect the current Plan may mark projection or report caches stale instead of recalculating immediately.
 
-### 26.5 GitHub event triage
+### 27.5 GitHub event triage
 
 GitHub event triage converts authorized GitHub observations into External Events, Logs, candidate Objectives, candidate Tasks, recalculation triggers, worker assignments, and projection requests. A GitHub observation is not canonical domain state merely because GitHub emitted it. The importer first normalizes and deduplicates the observation, then records accepted unique observations through the normal admission path.
 
@@ -3552,7 +3606,7 @@ Missed events are reconstructed during reconciliation by comparing live GitHub o
 
 ---
 
-## 27. Risk Reporting
+## 28. Risk Reporting
 
 Risk is not a first-class object in MVP.
 
@@ -3591,7 +3645,7 @@ Affect-related risk reports should name plan fragility, not user blame. Phase 1 
 
 ---
 
-## 28. Recalculation Triggers
+## 29. Recalculation Triggers
 
 Recalculation triggers are explicit records that tell UbU when a Calendar, Plan, risk-report cache, explanation cache, or next-action recommendation may no longer reflect current state. A trigger does not mutate domain state by itself; it points at the Log entry, Snapshot, External Event, worker request, or clock condition that changed the planner's inputs.
 
@@ -3632,11 +3686,11 @@ Stale marking is sufficient when the trigger only means cached Plans, Calendars,
 
 ---
 
-## 29. Current Major Open Questions
+## 30. Current Major Open Questions
 
 Unresolved questions are tracked in [`OPEN_QUESTIONS.md`](OPEN_QUESTIONS.md).
 
-## 30. Design Process
+## 31. Design Process
 
 The GitHub repository is the canonical public design process for UbU.
 
@@ -3669,6 +3723,14 @@ Further broad philosophical elaboration should generally be subordinated to impl
 Public-facing materials should avoid implying that there is only one meaningful contributor role. They should welcome several serious contributors while still distinguishing committed work from passive interest.
 
 Public materials should also avoid negative metaphors when criticizing planning systems that fail to model affect. Preferred terms include affect-blind, emotionally incomplete, human-incomplete, mechanistic planning, or affect-insensitive planning.
+
+### Competitive positioning
+
+UbU risks confusion with AI calendar and scheduling assistants (Motion, Reclaim, Clockwise, SkedPal, Akiflow, and similar auto-schedulers). The differentiation is stated positively first (`UBU-D0225`): those tools take the user's to-do list and events as given and optimize their placement — they decide the *when* of an already-decided *what*. UbU is the generative goal-and-values layer above that: it originates *what belongs there at all* from the user's goals, values, affect, and resources, working from introspected state rather than inferred sensor data.
+
+The defensibility argument is about incentives, not technical capability, and must be framed that way to stay credible. An incumbent could build local-first; it will not, because matching UbU's sovereignty means abandoning the pooled-corpus data asset its business model and valuation depend on (a textbook innovator's dilemma), and a bolt-on "private mode" delivers a promise where UbU delivers a verifiable architecture — no server, open source, runs on the user's device. The future-feature extensions (resource/skill markets, delegation, protective compartments) are evidence of this foundational difference rather than a separate claim: a marketplace built on a surveillance platform is just more harvesting. The claim should never be the absolute "they cannot," which invites a falsifiable counterexample; it is "structurally disincentivized, and a partial copy cannot deliver verifiable rather than promised sovereignty." Strongest when tied to the running Phase 0 demo and the open repository rather than asserted.
+
+Per-audience calibration: `WHAT_IS_UBU.md` carries only the positive category line, no competitor names and no attack; `SOVEREIGN_COORDINATION.md` and `FUNDER_BRIEF.md` carry the full incentive/verifiability argument; mass-appeal surfaces avoid adversarial framing.
 
 ### Public recruitment language baseline
 
@@ -3807,38 +3869,30 @@ The model-committee process must treat directive decisions as authoritative inpu
 
 ---
 
-## 25. External Identity and Access Standards (IAM)
+## 32. Strategic future directions
 
-Accepted in `UBU-D0219`. UbU adopts external identity-and-access standards — IAM — by layer, with deliberately asymmetric treatment: a standard adopted for external interoperability is surfaced verbatim at the boundary, while a standard used only as an internal engine stays below the design vocabulary. The organizing reason is that these standards earn their keep precisely where work crosses from the user's own control plane to a counterparty — at the Delegation Substrate, federation, worker, hosted-planning, marketplace, boundary-agent, and commercial-wire boundaries — and add only overhead inside the local single-user core.
+These directions are accepted as named strategic directions (`UBU-D0222`) and presented as substantive, not speculative. Implementation is deferred to Phase 3+ / the full-product track; they are reasons the data model stays general and must not be used to over-scope the Phase 1 MVP. Related material lives in §23.6 (protective shared-authority compartments) and §2.19 (directional authority).
 
-**SPIFFE/SPIRE — conformance target (outward-facing).** SPIFFE is adopted at the Delegation Substrate, federation, worker, hosted-planning, marketplace, boundary-agent, and commercial-wire boundary so that workload identity, execution provenance, and authority evidence are cryptographically attestable and externally auditable. Because the point is interoperability and external audit, SPIFFE terms appear unaliased at that boundary: trust domain, SPIFFE ID, SVID, node/workload attestation, federation. SPIFFE represents UbU-controlled workloads, worker instances, Devices when exposed as execution enclaves, Compartment-scoped boundary agents, hosted services, and delegation endpoints. It does **not** replace human Identity or user-sovereign Identity. SPIFFE is not built into the local single-user core, and the SPIRE attestation profile must avoid leaking hardware, cloud, device, or namespace metadata that would undermine privacy-first or Compartment non-correlation.
+### 32.1 Concurrent multi-scale coordination
 
-**OPA — implementation substrate (inward-facing).** OPA may realize the policy checker, but it is an engine, not a vocabulary. Its terms — Rego, PDP, PEP, bundle, and especially "decision" — are realization notes only and never enter core vocabulary. OPA can return structured policy outputs, but conventional allow/deny authorization patterns are the wrong product vocabulary for UbU's graduated model: it must not flatten semi-legitimization, full legitimization, needs-clarification states, or bypass-as-introspection-evidence into a boolean gate. Where OPA backs the checker, affect margin and revealed-preference state live in the data layer and OPA is treated as a pure execution engine.
+The bottom-up and top-down pictures of coordination are not sequential phases; they coexist. UbU's primitives behave identically at every scale, so the same Compartment and Delegation semantics serve a two-person tool loan and a global exchange without translation. A neighborhood tool library, a small Association, and a regional or global marketplace can all operate at once: the local layer is fully self-contained, and any larger market is an optional integration point rather than a mandatory backbone. Neither requires the other; neither collapses the other.
 
-**SAML/OIDC — boundary-only enterprise compatibility.** External enterprise authentication may be supported at the commercial wire when required, with OIDC/OAuth2 preferred for greenfield federation. External IdPs never become the source of truth for user-sovereign Identity.
+### 32.2 Super-connectors
 
-### 25.1 UbU-to-SPIFFE mapping
+Some Identities hold standing in several contexts simultaneously — a local library, a regional market, a global network. They are the permeable membrane between layers, not gatekeepers over them. A super-connector can project a redacted piece outward ("this Resource is available") without exposing an Association's inventory, membership, or internal coordination; can be the only externally visible member of an otherwise-private Association; and carries reputation and Skill evidence across contexts under Compartment-safe redaction. Because no layer depends on a central authority, a super-connector can leave a layer without collapsing it. The result is multi-network interoperability without merging everything into one social graph.
 
-| UbU concept | SPIFFE/SPIRE concept | Notes |
-|---|---|---|
-| user control plane / sovereign root | SPIFFE **trust domain** candidate | Root of cryptographic trust if the single-domain or hybrid model is chosen; alternatives open in `UBU-Q0126` |
-| Identities + Compartments | SPIFFE ID namespace paths, per-Compartment trust domains, or purpose-scoped federation | Granularity open in `UBU-Q0126`; no mapping may weaken Compartment non-correlation |
-| workload / worker / boundary agent identity | SPIFFE **ID** backed by an **SVID** | Authenticates the executor or boundary agent, not the human source of authority |
-| `authority_source` (Task/envelope field) | backed by SVID plus UbU-native provenance and grants | Field name unchanged; authority requires capability grants, `authority_scope`, Compartment policy, Log provenance, and admission checks |
-| SVID (claim type) | **JWT-SVID** / **X.509-SVID** | JWT-SVID for portable / marketplace reference; X.509-SVID for transport |
-| claim register | verifiable-claim store | Stores SVIDs as one claim type; no parallel structure |
-| IdentityAttestation | SPIFFE **node + workload attestation** | "Prove what you are" → workload/boundary-agent credential issuance |
-| Human / UbU Identity | *(not replaced by SPIFFE)* | User-sovereign Identity remains UbU-native; may be bound to workload claims only through approved provenance |
-| AssociationAttestation | *(not SPIFFE)* | Relationship attestation between parties; must not merge with IdentityAttestation |
-| Delegation Substrate cross-party executor identity | SPIFFE **federation** | Attested provenance for delegated Technique execution; pairs with the Ethereum settlement layer |
-| FOSS-core / commercial-wire split | **SVID scoping** plus UbU capability grants | Wire presents only SVIDs scoped to granted authority; cryptographic auditability does not by itself create authorization |
+### 32.3 Governance as an emergent subsystem
 
-At a delegation, federation, worker, hosted-planning, boundary-agent, or commercial-wire boundary, `authority_source` may be backed by one or more verifiable claims, including an SVID identifying the executing workload or boundary agent. The SVID authenticates the workload; UbU capability grants, Log provenance, Compartment policy, task-specific `authority_scope`, expected-prior-version checks, and review/admission rules establish whether that authenticated actor is authorized for the action. The SVID is stored as a claim type in the claim register rather than as a parallel structure, and the surrounding evidence fields remain authoritative.
+The hard parts of multi-scale coordination — super-connector load, value drift between layers, incentive design, accountability at bridge boundaries — are well-solved governance problems that communities have handled for centuries. UbU does not solve governance. Its role is narrower and structural: honest data boundaries, Compartment control over what flows where, and a settlement-agnostic Delegation Substrate (gift, barter, time-banking, Ethereum, or otherwise). Communities and marketplaces layer their own governance on top, and because the data model is honest about boundaries, that governance can work instead of being theater. This is a present scope boundary, not a deferred feature.
 
-When a Delegation Substrate packet crosses to an external executor, the executing workload or boundary agent may present a SPIFFE-attested identity (SVID) under the applicable trust domain. The SVID gives cryptographic provenance for the executor, while `authority_source`, `authority_scope`, capability grants, Compartment policy, and Log provenance establish whether that executor is authorized for the delegated action. This pairs with the marketplace settlement layer without collapsing human authority into workload identity.
+### 32.4 Attention sovereignty
 
-Whether Compartments map to a single sovereign SPIFFE trust domain, to per-Compartment trust domains for cryptographic non-correlation, or to a hybrid control-plane root with purpose-scoped / pairwise / Compartment-scoped boundary federation is open in `UBU-Q0126`; whichever is chosen must not weaken the Compartment non-correlation promise.
+A full-product expression of sovereign coordination is attention sovereignty: cross-channel, values-driven, context-aware governance of interruptions. Whether a message reaches the user now depends on who it is from and how it ranks — and on what the user is doing and wants to protect, which only a user-held life-model knows — unified across email, chat, SMS, and calls. It merges modeled state with user-declared state, detects divergence, and grades permissiveness as a focus window closes rather than toggling it. The interruption chokepoint, today held by attention-capturing platforms whose incentive is to capture attention rather than protect it, moves under the user's control.
 
-This section fixes vocabulary and adoption posture only. No SPIFFE, SPIRE, OPA, OIDC, SAML, SVID issuance, enterprise federation, or commercial-wire identity implementation is required for Phase 1 dogfooding.
+### 32.5 Coordination with worker standing
 
-SPIFFE IDs, SVIDs, trust-domain names, federation bundles, issuance logs, and boundary telemetry are potentially correlating identifiers. Any SPIFFE/SPIRE profile must treat namespace shape, SVID lifetime, bundle exposure, logging, and federation scope as privacy-critical design parameters.
+Shift-based or operational coordination — cleaning, maintenance, queue response, training, exception handling — is a frequently-imagined direction, and it is deliberately not classical job control. Classical workforce-management software treats the worker as an execution node to schedule and optimize. UbU's primitives describe the opposite work-political architecture: each worker is an Identity with standing — Objectives, affect, and preferences that the coordination layer must satisfy, not merely consume. The same introspected-state primitive that protects an individual's focus block becomes the worker's standing in a shared plan. This holds only when the worker's say is structural — the eject-not-override principle of §23.6 — otherwise it collapses into job control with a consultation veneer.
+
+### 32.6 Premium compute is leak-minimization, not leak-elimination
+
+UbU's cloud story everywhere is leak-minimization, not leak-elimination (`UBU-D0223`). Any cloud computation leaks proportional to its duration through access patterns, timing, and resource profile; FHE protects the plaintext, not the side channels. A long-horizon premium planning run — for example a UbU Corp premium tier — is the largest instance of a leak the architecture already accepts when it is bounded and consented. The correct framing names the residual leak as residual and requires it to be ephemeral and Compartment-scoped, rather than implying a zero-leak guarantee that "local-first, inspectable" can be misread as making.

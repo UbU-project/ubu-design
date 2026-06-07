@@ -20,6 +20,8 @@ A GPS knows where you are. It knows where you're going. It calculates a route in
 
 Every productivity tool ever built is a map. A sophisticated map, perhaps a beautiful one, but still: a map. It holds your tasks, displays your schedule, shows you the territory. The actual navigation — the constant daily question of *what do I do right now* — is still entirely on you.
 
+Even the newer apps that promise to *automatically* arrange your day live on the map side of that line. They are clever about *where* things go — sliding tasks into open slots, guarding a block of focus time, reshuffling when a meeting moves. But they begin from the list you already handed them; they optimize *when* you do what you have already decided to do. They still can't tell you what is worth doing in the first place, or whether you have it in you today.
+
 UbU is built to be a GPS for your life.
 
 It takes in everything relevant to your situation — your goals, your ongoing work, your commitments, how much energy you have today, even the fact that you barely slept last night — and figures out what you should do next. Not "here are all your tasks." One clear answer: *this, now, here's why.* And when things change — a deadline moves, an appointment runs long, your afternoon falls apart — it recalculates.

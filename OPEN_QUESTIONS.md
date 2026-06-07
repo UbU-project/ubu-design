@@ -2359,3 +2359,22 @@ Open subquestions:
 10. Which model is required for Phase 3, and what minimum is needed earlier if any Compartment-scoped cryptographic identity appears before Phase 3?
 
 Single-domain gives unified attestation but a shared root that risks correlating Compartments. Per-Compartment trust domains give stronger cryptographic non-correlation at the cost of harder cross-Compartment attestation. A hybrid model may preserve a manageable user control-plane root while exposing only pairwise, purpose-scoped, or Compartment-scoped boundary federation to counterparties. The decision must not weaken the Compartment non-correlation promise.
+
+---
+
+## UBU-Q0127 — Protective shared-authority compartment gating: consent and inference-resistance
+
+**Status:** Open  
+**Candidate owner:** model-committee  
+**Decision dependency:** `UBU-D0222`, `UBU-D0221`
+
+Protective shared-authority compartments (DESIGN.md §23.6, `UBU-D0222`) let a user's private affect or stress state constrain a counterparty's behavior while the counterparty never reads the raw signal. Two gating conditions are not solved by cryptography and must be resolved before the direction can be built. What design and policy constraints make these compartments safe, and under what conditions should UbU refuse to offer them at all?
+
+Open subquestions:
+
+1. **Consent under power asymmetry.** When the counterparty is an employer or other party with structural leverage, how should UbU treat consent, given that some data-protection regimes already treat employee consent as generally invalid? What disclosure, revocability, and default-off conditions are required, and when should UbU decline to offer the compartment rather than rely on consent?
+2. **Inference leakage.** A policy's observable behavior reveals something about the state it acts on (a refused meeting slot implies high modeled stress). How can the constraint-only, never-report-only asymmetry be made structurally guaranteed and inference-resistant — e.g. through coarsening, noise, fixed-schedule commitments, or decoy behavior — and what residual leakage remains unavoidable?
+3. **Eject-not-override interaction.** How does the eject-not-override invariant (`UBU-D0221`) apply specifically to protective compartments, and what does wholesale ejection look like when the compartment's value depends on an ongoing counterparty relationship?
+4. **Scope boundary.** What distinguishes a legitimate protective compartment from corporate device management wearing the UbU name, and what test decides which side of that line a proposed deployment falls on?
+
+The asymmetry must be structurally guaranteed and inference-resistant, or the result is device management that should not carry the UbU name. The default posture should be conservative: absent a satisfactory answer to consent and inference-resistance, the direction is not offered.
