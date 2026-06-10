@@ -1,6 +1,6 @@
 # UbU Outreach
 
-**Status:** Derived public-facing outreach document — updated for Phase 0 / ETHConf NYC 2026  
+**Status:** Derived public-facing outreach document — updated post-ETHConf NYC 2026 / Phase 1 implementation start  
 **Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`  
 **Audience:** FOSS developers, project maintainers, Ethereum project leads, privacy engineers, automation builders, planning-tool researchers, independent technical consultants, prototype funders, and technically curious contributors
 
@@ -206,15 +206,15 @@ This is the product in action, applied to one of the hardest and most universal 
 
 ### Phase 0: ETHConf NYC demo
 
-The first runnable UbU demo is up and running for demo usage as Phase 0 at `ubu-phase0-demo` commit `9daffa7`, targeting **ETHConf NYC, June 8–10, 2026**.
+The first runnable UbU demo, Phase 0, frozen at `ubu-phase0-demo` commit `9daffa7`, was demonstrated at **ETHConf NYC, June 8–10, 2026**.
 
 The Phase 0 demo creates a new user, runs the bootstrap onboarding interview, connects to a dummy GitHub environment (a pre-configured clone of the `ubu-design` repository), asks affect calibration questions, ingests dummy GitHub Issues as Tasks, generates a Plan with affect-legitimized breaks and recovery constraints, and displays that Plan in a Calendar preview and next-issue UI.
 
-`model-committee` runs occur during public demonstration ceremonies. The primary demonstration is **association introspection in action**: UbU coordinating the UbU project using its own planning model, live and inspectable.
+`model-committee` runs occurred during public demonstration ceremonies. The primary demonstration is **association introspection in action**: UbU coordinating the UbU project using its own planning model, live and inspectable.
 
-Phase 0 is a standalone demo milestone. Phase 1 implementation begins after ETHConf, accelerated by the experience and patterns from the working Phase 0 demo.
+Phase 0 is a standalone demo milestone, now complete. Phase 1 implementation has begun, accelerated by the experience and patterns from the working Phase 0 demo.
 
-### Phase 1: GitHub dogfooding (post-ETHConf)
+### Phase 1: GitHub dogfooding (implementation in progress)
 
 The Phase 1 MVP is focused on single-user GitHub dogfooding. UbU should help coordinate the UbU project itself by observing and modeling GitHub issues, pull requests, review requests, CI events, comments, labels, milestones, design questions, release-readiness checks, contributor interactions, planning-kernel work, and automation-worker outputs.
 
@@ -268,7 +268,7 @@ That is directly useful to maintainers, and it is a strong first use case becaus
 
 Ethereum and FOSS teams are useful early feedback sources because many are remote, async-heavy, autonomy-heavy, GitHub-heavy, contributor-driven, cross-organizational, dependent on informal commitments, sensitive to surveillance and centralization, and forced to coordinate across chats, governance forums, code review, audits, releases, and calendars.
 
-At ETHConf NYC (June 8–10, 2026), UbU will demonstrate Phase 0, now up and running for demo usage at `ubu-phase0-demo` commit `9daffa7`: a live, running UbU instance that creates a user, onboards GitHub access, ingests Issues as Tasks, generates an affect-legitimized Plan, and shows Calendar preview — all applied to the UbU project itself. This is not a slide deck describing future features. It is a working demo of the core loop.
+At ETHConf NYC (June 8–10, 2026), UbU demonstrated Phase 0, frozen at `ubu-phase0-demo` commit `9daffa7`: a live, running UbU instance that creates a user, onboards GitHub access, ingests Issues as Tasks, generates an affect-legitimized Plan, and shows Calendar preview — all applied to the UbU project itself. This was not a slide deck describing future features. It was a working demo of the core loop.
 
 The goal is not to convert UbU into a conventional project-management product. The goal is to learn whether self-governance primitives can improve the work lives of autonomous contributors while also making project coordination more truthful.
 
@@ -314,7 +314,7 @@ Professional and FOSS use cases are valuable when they help build the same primi
 
 ## Why join now?
 
-UbU is at a concrete inflection point. Phase 1 design is frozen. Phase 0 — a live, runnable demo — is up and running for demo usage at `ubu-phase0-demo` commit `9daffa7` for ETHConf NYC, June 8–10, 2026. Phase 1 implementation begins immediately after.
+UbU is at a concrete inflection point. Phase 1 design is frozen. Phase 0 — a live, runnable demo — was demonstrated at ETHConf NYC, June 8–10, 2026, frozen at `ubu-phase0-demo` commit `9daffa7`. Phase 1 implementation has begun across the `UbU-project` repo constellation.
 
 This is the moment when early contributors can watch a working end-to-end demo, meet the project in person, and shape Phase 1 implementation while the architecture is still malleable. The design is coherent enough to act on; the code is early enough that concrete contributions matter.
 

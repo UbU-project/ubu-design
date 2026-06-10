@@ -358,7 +358,7 @@ every statement carries the same provenance backbone already present on `TaskSpe
   "sync_statement_id": "syncstmt_01JXYZ",
   "origin_device_id": "dev_phone_001",
   "actor_identity_id": "identity_user_main",
-  "authority_source": "user_override",
+  "authority_source": "user",
   "zone_id": "zone_personal",
   "statement_kind": "mutation",
   "object_refs": ["task_123"],
@@ -619,7 +619,7 @@ An offline completion reuses the existing `LogOutcome` vocabulary (`completed`,
   "mutation_kind": "task_completed",
   "origin_device_id": "dev_phone_001",
   "actor_identity_id": "identity_user_main",
-  "authority_source": "user_override",
+  "authority_source": "user",
   "object_refs": ["task_123"],
   "task_ref": "task_123",
   "outcome": "completed",
@@ -1167,7 +1167,7 @@ Phase 1/Phase 0 should avoid:
   `redaction_level` today, and a hard policy boundary tomorrow);
 * building Logs that cannot be merged;
 * building Task state transitions without origin/actor/provenance — note that
-  `authority_source` (UBU-D0185), already carried on every `TaskSpec` and `LogEntry`, is
+  `authority_source` (`UBU-D0185` as amended by `UBU-D0226`), already carried on every `TaskSpec` and `LogEntry`, is
   precisely this provenance slot and must be populated honestly;
 * building projection records without enough audit metadata.
 
@@ -1229,7 +1229,7 @@ right-hand column.
 | `known_stale_devices`         | `known_stale_device_ids`                              | Same. |
 | `redaction_reason` (specific) | `redaction_level` + generic `redaction_reason`        | Restricted Devices get `restricted` / `policy_restricted` only. |
 | `recorded_time`               | `recorded_time` **(net-new)**, paired with real `effective_time` | `effective_time` already exists; `recorded_time` is the Phase 2 companion. |
-| actor / provenance fields     | `actor_identity_id` + `authority_source` (`AuthoritySource`) | Provenance backbone already exists. Use the frozen enum's real members only. For ordinary user-driven actions use `user_override` — the value `LogEntry.authority_source` already defaults to. `AuthoritySource` is a **closed** enum (UBU-D0185): there is no `user` member, and inventing one would require a conscious freeze reopening + schema-change ticket. |
+| actor / provenance fields     | `actor_identity_id` + `authority_source` (`AuthoritySource`) | Provenance backbone already exists. Use the closed enum's real members only (`UBU-D0226`): ordinary user-driven actions use `user`; `user_override` is reserved for explicit override cases. `AuthoritySource` remains a **closed** enum; membership changes require a recorded decision and a schema-change ticket. |
 | task completion refs          | `task_ref` + `outcome` (`LogOutcome`)                 | Existing `LogEntry` vocabulary. |
 | "recalculate plan"            | `PlanningMode.repair`                                 | Present in schema, unsupported in Phase 0, first implemented in Phase 2. |
 | manual-merge "review Task"    | `SkeletonFailureDiagnostic` + `prompt_policy: immediate_blocking_prompt` + `SafeAlternative.action: manual_decision` | Existing blocking-prompt surface; avoids the planner loop (§17). |

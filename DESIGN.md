@@ -965,6 +965,20 @@ UbU may optionally demonstrate a **VoxPopuli** flow at EthConf if it does not di
 
 VoxPopuli is a trust-building outreach hook, not a replacement for the narrow Phase 1 bootstrap interview. It should demonstrate how LLMs can help structure abstract human concerns while UbU remains the explicit, inspectable planning system.
 
+### 4.1.6 Phase 1 implementation priority order
+
+Phase 1 implementation proceeds in this priority order:
+
+1. Remove all in-memory orchestrator state (`MemoryState`) and fully implement `ubu_store` as the canonical local admission and persistence path for the running loop.
+2. Log event vocabulary: correction, annotation, provenance, worker-submission, and recalculation-trigger entries.
+3. UniverseState facts.
+4. Affect Snapshot content, accepted mutation vocabulary, and deterministic precondition evaluation.
+5. Structured bootstrap interview with seed Objective, Task, and Snapshot creation.
+6. Plan and Calendar generation for a next work window with a default Plan and inspectable explanation.
+7. Activate `ubu_github_adapter` as a functioning orchestrator dependency for import, projection preview, approved writes, and reconciliation.
+
+The remaining §4.1 frozen-set items follow in bootstrap-dependency-driven ordering: persistence and vocabulary precede the features that must reference them.
+
 ### 4.2 Phase 2: Single-user multi-device synchronization
 
 A single user runs UbU across multiple Devices / execution enclaves.
@@ -1535,6 +1549,8 @@ Use the narrowest accurate code:
 - `user_declared_moot`: the user explicitly says the Task should be treated as moot and no more specific code is appropriate.
 - `automation_obsolete`: a worker, automation path, or generated work item is obsolete because automation state changed.
 - `duplicate`: the Task duplicates another active, completed, or canonical work item.
+
+Readiness and execution states such as proposed, ready, blocked, and in-progress are derived views, not canonical Task status (`UBU-D0227`). Candidacy is the store's candidate/admitted distinction; ready and blocked are computed from dependencies and deterministic precondition evaluation; in-progress is `active` plus recorded start evidence in the Log. Derived readiness may appear in API responses, UI, and reports, but it is never persisted as canonical Task status, and `canceled` is not a canonical status — the specific moot reason code is used instead.
 
 **Phase 2 status additions (not in Phase 1):**
 
@@ -2525,32 +2541,22 @@ Log review should not become a blame ritual. It is a model-maintenance Task for 
 
 ### 17.9 Authority source metadata
 
-`authority_source` is a coarse enum describing the authority/source path for an accepted object, projection state, or candidate mutation. It does not replace actor Identity, capability grants, External References, expected-prior-version checks, review policy, or Log provenance.
+`authority_source` is a coarse closed enum recording only the authority path for an accepted object, projection state, or candidate mutation (`UBU-D0185` as amended by `UBU-D0226`). It does not replace actor Identity, capability grants, External References, expected-prior-version checks, review policy, or Log provenance.
 
-Required in Phase 1:
+Carrier rule: every admitted canonical record carries `Provenance.authority_source`.
 
-- organization-mode accepted `Objective`, `Preference`, and `Task` records;
-- `pipeline_state` projection-state records;
-- worker assignment records;
-- worker mutation requests;
-- external projection requests, previews, and applied projection records;
-- Delegation Substrate packets when present.
+Values:
 
-It is not required on ordinary user-mode `Objective`, `Preference`, or `Task` records created directly by the user. It is still required in user mode for worker, projection, pipeline-state, and mutation-request records that use those envelopes.
+- `user`: ordinary direct user authority.
+- `user_override`: user-mode explicit override of a proposed, delegated, automated, policy, or system-derived action, including overrides of the current recommendation, Plan, Task choice, or modeled state.
+- `delegated`: action taken under a scoped delegation by an actor other than the sovereign user. Unrelated to the `delegated` moot reason code (§9.5), which is retained unchanged.
+- `automation_worker`: Automation Worker submission under a capability grant.
+- `policy`: accepted project or organization policy/directive.
+- `system`: system-originated action, including bootstrap, fixture, configured imports, and normalized external-event admission.
 
-MVP values are:
+Information-source distinctions formerly carried as enum members — GitHub events, bootstrap/fixture/configured imports, model-generated origins — are represented in `Provenance.source` / `source_refs`, which remain required wherever source-path visibility is required, including projection reconciliation. Model-generated content is never an authority path: advisory candidates acquire authority only at admission, from the admitting actor, with the model origin recorded in provenance.
 
-- `human_admin`: admin-equivalent human operator or human-approved import/projection action;
-- `automation_worker`: Automation Worker submission under a capability grant;
-- `github_event`: normalized GitHub event, webhook, fixture, or reconciliation observation;
-- `project_policy`: accepted project or organization policy/directive;
-- `imported_config`: bootstrap, fixture, or configured import source;
-- `llm_advisory`: model-generated candidate/advice; never sufficient authority without admission provenance;
-- `user_override`: user-mode explicit override of the current recommendation, Plan, Task choice, or modeled state.
-
-`authority_source` values are schema-controlled in MVP. Specific Identity, source object, and evidence path belong in surrounding fields such as `actor_identity_ref`, `created_by_identity_ref`, `capability_grant_ref`, `source_refs`, `external_reference_refs`, `provenance`, and the append-only Log entry.
-
----
+`authority_source` values are schema-controlled. Specific Identity, source object, and evidence path belong in surrounding fields such as `actor_identity_ref`, `created_by_identity_ref`, `capability_grant_ref`, `source_refs`, `external_reference_refs`, `provenance`, and the append-only Log entry. Automation, policy, and system authority sources are never unconstrained user-equivalent authority.
 
 ## 18. Identities
 

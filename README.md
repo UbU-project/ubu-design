@@ -1,6 +1,6 @@
 # UbU
 
-**Status:** Phase 0 demo runnable at `ubu-phase0-demo` commit `9daffa7` / Phase 1 design frozen  
+**Status:** Phase 0 complete — demonstrated at ETHConf NYC, June 8–10, 2026 / Phase 1 implementation in progress across the `UbU-project` repo constellation  
 **Repository:** `ubu-design`  
 **Primary purpose:** Canonical public design state for the UbU project  
 **Derived file:** This README is a technical contributor entry point. The canonical design authority is `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`.
@@ -136,8 +136,6 @@ Canonical design authority is maintained in:
 - `OPEN_QUESTIONS.md` - unresolved questions, prioritization metadata, and automation queue
 - `PLANNING_KERNEL_CONTRACT.md` - Phase 1 planning-kernel request/response contract, GPU stage boundaries, duration semantics, affect constraints, and correlation-matrix rules
 - `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md` - Phase 2 device sync, Zone, Compartment, partial-replica, and sync-statement contract
-- `docs/PHASE1_REPO_PLAN.md` - Phase 1 multi-repo implementation plan, dependency graph, scaffold order, and repo non-goals
-- `docs/PHASE1_CODEGEN_STRATEGY.md` - Phase 1 codegen issue unit standard, scaffold acceptance bar, and generated-PR review policy
 - `docs/PHASE1_CONTRACT_BOUNDARIES.md` - Phase 1 schema, Rust, store, planning, GitHub, UI/orchestrator, Compartment, and brand boundaries
 
 Derived public-facing projection files summarize the canonical state for different audiences:
@@ -149,6 +147,7 @@ Derived public-facing projection files summarize the canonical state for differe
 - `SOVEREIGN_COORDINATION.md` - cypherpunk, privacy, and sovereign-coordination brief
 - `ORG_INTROSPECTION_BRIEF.md` - organizational-introspection brief for mission-driven projects
 - `WHAT_IS_UBU.md` - mass-consumption public explanation of UbU's purpose and user-facing value proposition
+- `NIKOS_TUESDAY.md` - far-horizon narrative projection of the full-product user experience; depicts Phase 2/3+ capabilities as lived experience
 
 When a derived file conflicts with a canonical file, the canonical file wins.
 
@@ -156,9 +155,9 @@ When a derived file conflicts with a canonical file, the canonical file wins.
 
 ## Current project status
 
-### Phase 0: ETHConf NYC demo (runnable)
+### Phase 0: ETHConf NYC demo (complete)
 
-Phase 0 is the canonical pre-Phase-1 milestone. The `ubu-phase0-demo` project is now up and running for demo usage at commit `9daffa7`, targeting the **ETHConf NYC conference, June 8–10, 2026**.
+Phase 0 is the canonical pre-Phase-1 milestone. The `ubu-phase0-demo` project, frozen at commit `9daffa7`, was demonstrated at the **ETHConf NYC conference, June 8–10, 2026**.
 
 The Phase 0 demo covers the core UbU loop end-to-end using a self-contained dummy environment:
 
@@ -170,15 +169,17 @@ The Phase 0 demo covers the core UbU loop end-to-end using a self-contained dumm
 6. Generate a Plan for those Tasks including affect-legitimized breaks and recovery constraints.
 7. Display the Plan in Calendar preview and/or next-issue UI.
 
-`model-committee` runs are performed during public demonstration ceremonies only, due to real AI provider costs.
+`model-committee` runs were performed during public demonstration ceremonies only, due to real AI provider costs.
 
-Phase 0 is a standalone demo milestone. Code reuse into Phase 1 is not assumed, but the skills, experience, and demonstrated patterns acquired during Phase 0 will accelerate Phase 1 development directly. The primary demonstration value is **association introspection**: UbU using its own planning and self-governance model to coordinate the UbU project in public.
+Phase 0 is a standalone demo milestone, now complete. Code reuse into Phase 1 is not assumed, but the skills, experience, and demonstrated patterns acquired during Phase 0 accelerate Phase 1 development directly. The primary demonstration value is **association introspection**: UbU using its own planning and self-governance model to coordinate the UbU project in public.
 
-### Phase 1 design freeze
+### Phase 1 implementation (in progress)
 
-Phase 1 design is now frozen as of commit `cc8b339`. No further broad pre-MVP design automation is warranted. Remaining design activity should be limited to implementation-guidance gaps, open blocker certificates, or Phase 0 feedback that reveals genuine Phase 1 scope issues.
+Phase 1 design is frozen as of commit `cc8b339`. No further broad pre-MVP design automation is warranted. Remaining design activity should be limited to implementation-guidance gaps, open blocker certificates, or implementation feedback that reveals genuine Phase 1 scope issues.
 
-Phase 1 implementation will begin after ETHConf NYC. The operational target remains:
+Phase 1 implementation began on 2026-06-10 with the multi-repo scaffold under the `UbU-project` organization: `ubu-schemas`, `ubu-core`, `ubu-store`, `ubu-github-adapter`, `ubu-planning-kernel`, `ubu-orchestrator`, `ubu-ui`, `ubu-devshell`, and `ubu-brand`, initialized in bootstrap-dependency order with rev-pinned cross-repo dependencies and per-repo CI. Cross-repo authority boundaries are canonical in `docs/PHASE1_CONTRACT_BOUNDARIES.md`. The scaffold is a complete walking skeleton of the architecture; Phase 1 feature semantics are implemented incrementally against the frozen design in the priority order of `DESIGN.md` §4.1.6. The scaffold-reconciliation decisions are `UBU-D0226` through `UBU-D0230`.
+
+The operational target remains:
 
 > Use UbU's explicit model, `model-committee`, GitHub dogfooding inputs, the Phase 1 planning-kernel contract, regular Calendar preview, regular Log review, and bounded projection artifacts to help UbU coordinate the development of UbU itself.
 
@@ -196,7 +197,7 @@ This contract does not expand Phase 1 scope. Phase 1 remains a single-user local
 
 ### Phase 0 readiness
 
-Phase 0 is runnable for demo usage at `ubu-phase0-demo` commit `9daffa7`, targeting ETHConf NYC, June 8–10, 2026.
+Phase 0 was demonstrated at ETHConf NYC, June 8–10, 2026, frozen at `ubu-phase0-demo` commit `9daffa7`.
 
 - [x] Phase 1 design is frozen at commit `cc8b339`.
 - [x] Phase 0 demo scope is defined: new-user onboarding, dummy GitHub ingestion, affect calibration, Task generation, affect-legitimized planning, Calendar preview and/or next-issue UI.
@@ -210,7 +211,7 @@ Phase 0 is runnable for demo usage at `ubu-phase0-demo` commit `9daffa7`, target
 
 ### Phase 1 readiness (post-ETHConf)
 
-The Phase 1 design baseline is frozen and supports beginning implementation-first Phase 1 work after ETHConf NYC. `model-committee` dogfooding continues as an implementation-support and review-artifact workflow.
+The Phase 1 design baseline is frozen and implementation-first Phase 1 work has begun. `model-committee` dogfooding continues as an implementation-support and review-artifact workflow.
 
 - [x] Broad pre-MVP design automation is closed by `UBU-D0175`.
 - [x] The canonical design file set includes `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`.
@@ -220,6 +221,8 @@ The Phase 1 design baseline is frozen and supports beginning implementation-firs
 - [x] `model-committee` has advanced to the narrow v0.3 contract, including `PLANNING_KERNEL_CONTRACT.md` as a fourth model-committee input file.
 - [x] `model-committee` remains advisory: it writes review artifacts, not accepted design state.
 - [x] `model-committee` v0.3 keeps automatic patch application, auto-merge, auto-push, GitHub API use, direct OpenAI/Anthropic/Gemini API calls, adaptive model weights, and full planning-kernel work out of scope.
+- [x] The Phase 1 repo constellation exists under `UbU-project` with rev-pinned cross-repo dependencies and per-repo CI (`Init` commits, 2026-06-10).
+- [x] Cross-repo contract boundaries are canonical in `docs/PHASE1_CONTRACT_BOUNDARIES.md`.
 - [ ] The main UbU Phase 1 app exists as an end-to-end runnable prototype.
 - [ ] GitHub issue/PR/CI/milestone ingestion and projection are implemented in the main UbU app.
 - [ ] Objective/Task/Calendar/Log persistence is implemented in the main UbU app.
@@ -234,7 +237,7 @@ The Phase 1 design baseline is frozen and supports beginning implementation-firs
 **Evidence commit:** `cc8b339` — Phase 1 design freeze commit  
 **Report date:** 2026-05-28  
 **Scorer:** Human review  
-**Note:** Phase 1 design is now frozen. Phase 0 (ETHConf NYC demo, June 8–10 2026) is now runnable for demo usage at `ubu-phase0-demo` commit `9daffa7`. Phase 1 implementation begins after ETHConf. Readiness scores below reflect the Phase 1 implementation state as of the design freeze; they are not expected to improve until Phase 1 implementation begins.
+**Note:** Phase 1 design is frozen. Phase 0 (ETHConf NYC demo, June 8–10, 2026) was demonstrated at `ubu-phase0-demo` commit `9daffa7`. Phase 1 implementation began on 2026-06-10 with the repo-constellation scaffold (`b110471` in this repository plus the nine constellation `Init` commits). Readiness scores below reflect the Phase 1 implementation state as of the design freeze and predate implementation start; they will be regenerated at the next human-reviewed report per `UBU-D0189`.
 
 ---
 

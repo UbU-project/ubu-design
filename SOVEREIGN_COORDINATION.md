@@ -1,6 +1,6 @@
 # UbU for Sovereign Coordination
 
-**Status:** Derived audience-facing brief — updated for Phase 0 / ETHConf NYC 2026  
+**Status:** Derived audience-facing brief — updated post-ETHConf NYC 2026 / Phase 1 implementation start  
 **Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`  
 **Audience:** cypherpunks, privacy engineers, Ethereum privacy builders, FHE/ZK/secure-compute researchers, privacy-coin-adjacent developers, FOSS contributors, and people interested in voluntary private coordination
 
@@ -198,7 +198,7 @@ Preferred framing includes lawful private settlement, pseudonymous skill barter,
 
 ## EthConf conversation focus
 
-At ETHConf NYC (June 8–10, 2026), UbU will demonstrate **Phase 0**, now up and running for demo usage at `ubu-phase0-demo` commit `9daffa7`: a live, running UbU instance that creates a user, onboards dummy GitHub access, runs affect calibration, converts Issues to Tasks, generates an affect-legitimized Plan, and displays it in Calendar preview — all applied to the UbU project itself. This is the first public demonstration of UbU coordinating UbU.
+At ETHConf NYC (June 8–10, 2026), UbU demonstrated **Phase 0**, frozen at `ubu-phase0-demo` commit `9daffa7`: a live, running UbU instance that creates a user, onboards dummy GitHub access, runs affect calibration, converts Issues to Tasks, generates an affect-legitimized Plan, and displays it in Calendar preview — all applied to the UbU project itself. This was the first public demonstration of UbU coordinating UbU.
 
 The useful question for cypherpunk and privacy builders is:
 

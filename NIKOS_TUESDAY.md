@@ -1,5 +1,7 @@
 # Niko’s Tuesday
 
+**Status:** Derived far-horizon narrative — a projection of the full-product (Phase 2/3+) user experience; canonical design files win on any conflict
+
 The room was still dark when Niko surfaced, and his first thought was that he hadn't slept right. Third night in a row. He lay there a while doing the arithmetic he always did — how many hours, how badly he'd pay for it by two in the afternoon, whether coffee could carry the difference.
 
 When he finally reached for the phone on the crate beside the mattress and opened UbU, it didn't show him the usual wall of green. The shift was still there at nine; that wasn't going anywhere. But the morning around it had been loosened, like a belt let out a notch. The run he'd planned was gone, folded down into a walk. The dense two-hour study block — conduit-bending diagrams for his apprenticeship exam — had been trimmed to forty minutes and pushed later, after food and coffee, to the part of the morning when he might actually keep any of it in his head.

@@ -1,6 +1,6 @@
 # UbU for Project Leads and Technical PMs
 
-**Status:** Derived audience-facing brief — updated for Phase 0 / ETHConf NYC 2026  
+**Status:** Derived audience-facing brief — updated post-ETHConf NYC 2026 / Phase 1 implementation start  
 **Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`  
 **Audience:** Ethereum project leads, protocol leads, FOSS maintainers with coordination duties, engineering managers, release coordinators, grants/milestone coordinators, and technical PMs who coordinate autonomous contributors
 
@@ -58,7 +58,7 @@ For technical teams, this later supports better onboarding, clearer delegation p
 
 Two disciplines from UbU's own project management are worth surfacing for this audience, because they are exactly the kind of thing leads spend effort recovering after the fact.
 
-First, build order is driven by *bootstrap dependency*, not by feature value or by which feature is cheapest to ship. Circular-reference foundations such as UniverseState are implemented first — useful in isolation or not — because everything else references them. The Phase 1 dogfooding MVP follows the same logic: it is the smallest loop that lets UbU help coordinate the rest of UbU. This is why a feature-priority menu has limited use in early phases; sequencing is constrained by what must exist before what, not by demand ranking. That changes during the full 1.0 cycle, when lower-dependency, higher-choice features become schedulable.
+First, build order is driven by *bootstrap dependency*, not by feature value or by which feature is cheapest to ship. Circular-reference foundations such as UniverseState are implemented first — useful in isolation or not — because everything else references them. The Phase 1 dogfooding MVP follows the same logic: it is the smallest loop that lets UbU help coordinate the rest of UbU. This is why a feature-priority menu has limited use in early phases; sequencing is constrained by what must exist before what, not by demand ranking. That changes during the full 1.0 cycle, when lower-dependency, higher-choice features become schedulable. The Phase 1 scaffold demonstrated this ordering empirically: the nine constellation repos were initialized in strict bootstrap-dependency sequence (`ubu-schemas` → `ubu-core` → `ubu-store` → planning kernel → GitHub adapter → orchestrator → UI → devshell), visible in their `Init` commit timestamps.
 
 Second, the project is introducing an explicit *feature-to-data map*: for each feature, the data components it actually invokes at runtime versus those merely present in the model. As a worked example, the smart-Focus-mode decision invokes UniverseState, introspected affect, declared rules, divergence detection, dependency resolution (indirectly), and legitimization — and does not invoke extrospection, commitment tracking, or the privacy wire. For a coordinating lead, the map is a legibility instrument: it makes "this feature needs nearly everything" falsifiable, prevents quiet scope creep, and gives reviewers a precise picture of what a slice depends on. It is a planned full-product artifact rather than a Phase 1 deliverable.
 
@@ -110,15 +110,15 @@ This is especially relevant for teams that receive grants, coordinate public goo
 
 ### Phase 0: the ETHConf NYC demo
 
-Phase 0 is a live, runnable UbU demo, now up and running for demo usage at `ubu-phase0-demo` commit `9daffa7`, targeting **ETHConf NYC, June 8–10, 2026**. It is the canonical pre-Phase-1 milestone.
+Phase 0 is a live, runnable UbU demo, demonstrated at **ETHConf NYC, June 8–10, 2026** and frozen at `ubu-phase0-demo` commit `9daffa7`. It is the canonical pre-Phase-1 milestone, now complete.
 
 The demo creates a new user, completes the bootstrap interview, connects to a pre-configured dummy GitHub environment (a clone of `ubu-design`), runs affect calibration questions, ingests dummy GitHub Issues as Tasks, generates an affect-legitimized Plan with breaks and recovery constraints, and displays the result in Calendar preview and next-issue UI. `model-committee` runs occur during public demonstration ceremonies.
 
 The primary value demonstrated is **association introspection**: UbU using its own planning model to coordinate the UbU project, live and inspectable by conference attendees.
 
-Phase 0 is a standalone demo. Phase 1 implementation begins after ETHConf, informed and accelerated by the working Phase 0 patterns and experience.
+Phase 0 is a standalone demo, now complete. Phase 1 implementation has begun, informed and accelerated by the working Phase 0 patterns and experience.
 
-### Phase 1: post-ETHConf GitHub dogfooding
+### Phase 1: GitHub dogfooding (implementation in progress)
 
 Phase 1 design is now frozen as of commit `cc8b339`. Phase 1 does not need to solve full multi-user project management. The first MVP is single-user GitHub dogfooding: using UbU to coordinate UbU's own design, development, release, open questions, review artifacts, planning-kernel contract, contributor outreach, and `model-committee` v0.3 automation artifacts.
 
@@ -139,7 +139,7 @@ A technical PM or project lead does not need to believe in the full future syste
 
 ## Useful EthConf conversations
 
-At ETHConf NYC (June 8–10, 2026), UbU will be demonstrating Phase 0, now up and running for demo usage at `ubu-phase0-demo` commit `9daffa7`: a live running instance that onboards a user, ingests GitHub Issues as Tasks, generates an affect-legitimized Plan, and shows Calendar preview — all applied to the UbU project itself.
+At ETHConf NYC (June 8–10, 2026), UbU demonstrated Phase 0, frozen at `ubu-phase0-demo` commit `9daffa7`: a live running instance that onboards a user, ingests GitHub Issues as Tasks, generates an affect-legitimized Plan, and shows Calendar preview — all applied to the UbU project itself.
 
 UbU is seeking concrete examples and feedback, not generic praise.
 

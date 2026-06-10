@@ -47,7 +47,9 @@ https://schemas.ubunow.net/phase1/
 
 Cross-file `$ref` values use those `$id` URIs. Validation and TypeScript generation must resolve schemas from local bundled files during Phase 1; tooling must not require network access to fetch schema IDs.
 
-The ID registry is a single source of truth in `ubu-schemas`. It defines both the allowed prefix set and the prefix-to-object-type mapping. Canonical IDs use prefixed lowercase unhyphenated UUIDv7 strings with `_` as the delimiter:
+All Phase 1 JSON wire and schema field names use snake_case (`UBU-D0228`). The canonical Task lifecycle is `active`, `completed`, `failed`, `moot` with the closed `moot_reason_code` enum; readiness states are derived views and are not persisted as canonical Task status (`UBU-D0227`).
+
+The ID registry is a single source of truth in `ubu-schemas`. It defines both the allowed prefix set and the prefix-to-object-type mapping. The prefix set covers all fifteen Phase 1 object types (`UBU-D0229`). Canonical IDs use prefixed lowercase unhyphenated UUIDv7 strings with `_` as the delimiter:
 
 ```regex
 ^<prefix>_[0-9a-f]{12}7[0-9a-f]{3}[89ab][0-9a-f]{15}$
@@ -64,7 +66,7 @@ policy
 system
 ```
 
-`user` represents ordinary user authority. `user_override` is reserved for explicit user override of another proposed, delegated, automated, policy, or system-derived action. Automation, policy, and system authority sources must not be treated as unconstrained autonomous user-equivalent authority.
+`user` represents ordinary user authority. `user_override` is reserved for explicit user override of another proposed, delegated, automated, policy, or system-derived action. Automation, policy, and system authority sources must not be treated as unconstrained autonomous user-equivalent authority. Information-source distinctions — GitHub events, imports, model-generated origins — are carried in `Provenance.source` / `source_refs`, not in `AuthoritySource` (`UBU-D0226`).
 
 TODO Phase 2: support hosted or publish-time schema bundling without weakening local offline validation and generation.
 

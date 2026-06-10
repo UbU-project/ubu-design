@@ -3664,7 +3664,7 @@ MVP security assumes cooperative operator-administered local and worker enclaves
 
 ## UBU-D0185: Authority source is a closed MVP source-path enum
 
-**Status:** Accepted → DESIGN.md §§17.9, 25.1
+**Status:** Accepted → DESIGN.md §§17.9, 25.1 — value set and carrier exemption superseded by `UBU-D0226`
 
 Resolved question: `UBU-Q0013`.
 
@@ -4715,3 +4715,57 @@ Alongside bootstrap-dependency build ordering, the project maintains a feature-t
 **Status:** Accepted → DESIGN.md §31
 
 UbU is differentiated first positively: AI auto-schedulers take the user's to-do list and events as given and optimize their placement (the *when* of an already-decided *what*), whereas UbU is the generative goal-and-values layer that originates *what belongs there at all* from goals, values, affect, and resources, working from introspected rather than inferred sensor state. The defensibility claim is an incentive argument, not a capability one: an incumbent could build local-first but will not, because matching UbU's sovereignty means abandoning the pooled-corpus data asset its model depends on, and a partial "private mode" delivers a promise where UbU delivers a verifiable architecture. Public messaging must avoid the absolute "they cannot," frame it as "structurally disincentivized," tie it to the running demo and open repository, and calibrate by audience: `WHAT_IS_UBU.md` carries only the positive category line with no competitor names or accusations; `SOVEREIGN_COORDINATION.md` and `FUNDER_BRIEF.md` carry the full incentive/verifiability argument.
+
+---
+
+## UBU-D0226 — AuthoritySource is a pure authority-path enum; information source moves to provenance
+
+**Status:** Accepted → DESIGN.md §17.9; DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §8, §13, Appendix A; docs/PHASE1_CONTRACT_BOUNDARIES.md. Supersedes the `UBU-D0185` value set and carrier exemption; the `UBU-D0185` principles — a coarse closed enum that is never sufficient authorization by itself — stand.
+
+`authority_source` records only the authority path for an accepted object, projection state, or candidate mutation. The closed Phase 1 enum is: `user`, `user_override`, `delegated`, `automation_worker`, `policy`, `system`. `user` is ordinary direct user authority. `user_override` is reserved for explicit user override of a proposed, delegated, automated, policy, or system-derived action, including overrides of the current recommendation, Plan, Task choice, or modeled state. `delegated` names an authority path and is unrelated to the `delegated` moot reason code (DESIGN.md §9.5), which is retained unchanged.
+
+Information-source distinctions formerly carried as enum members move to provenance: GitHub events, bootstrap/fixture/configured imports, and model-generated origins are represented in `Provenance.source` / `source_refs`, which remain required wherever DESIGN.md requires source-path visibility, including projection reconciliation. Model-generated content is never an authority path: advisory candidates acquire authority only at admission, from the admitting actor, with the model origin recorded in provenance. `human_admin` maps to `user` in single-user Phase 1 and to `delegated` where a distinct administrator acts; `project_policy` maps to `policy`; `github_event` and `imported_config` map to `system` with the source in provenance.
+
+Carrier rule: every admitted canonical record carries `Provenance.authority_source`. The `UBU-D0185` exemption for ordinary user-mode records is removed; its honest value is `user`. This also corrects the prior guidance that ordinary user-driven actions default to `user_override`.
+
+**Consequences:** DESIGN.md §17.9 is rewritten to this vocabulary. The §24.1 SPIFFE mapping row is unchanged and remains accurate: the field name is unchanged, and authority still requires capability grants, `authority_scope`, Compartment policy, Log provenance, and admission checks. `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md` examples and Appendix A actor/provenance guidance are corrected. Automation, policy, and system authority sources are never unconstrained user-equivalent authority.
+
+---
+
+## UBU-D0227 — Task readiness states are derived views, not canonical status
+
+**Status:** Accepted → DESIGN.md §9.5; docs/PHASE1_CONTRACT_BOUNDARIES.md
+
+The canonical Task lifecycle is `active`, `completed`, `failed`, `moot` per DESIGN.md §9.5, with `moot_reason_code` as the existing closed enum. Readiness and execution states such as proposed, ready, blocked, and in-progress are derived: candidacy is the store's candidate/admitted distinction; ready and blocked are computed from dependencies and deterministic precondition evaluation; in-progress is `active` plus recorded start evidence in the Log. Derived readiness may appear in API responses, UI, and reports but must not be persisted as canonical Task status. `canceled` is not a canonical status; the specific moot reason code is used instead.
+
+**Consequences:** the `ubu-schemas` `task-status` schema is corrected to the canonical lifecycle and gains the `moot_reason_code` closed enum; `ubu-core`, `ubu-store`, `ubu-orchestrator`, and `ubu-ui` references to derived states are reworked as views.
+
+---
+
+## UBU-D0228 — Phase 1 wire convention: snake_case JSON field names
+
+**Status:** Accepted → ubu-schemas `CONTRACT.md`; docs/PHASE1_CONTRACT_BOUNDARIES.md
+
+All Phase 1 JSON wire and schema field names use snake_case, matching the literal field vocabulary of `PLANNING_KERNEL_CONTRACT.md` and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md` (`authority_source`, `schema_version`, `request_id`, `moot_reason_code`, and the rest). Enum values are snake_case. Rust types mirror the wire through serde rename conventions, and the serde-to-schema lockstep enforces the convention in fixtures and CI. This applies to `ubu-schemas`, `ubu-core`, and every consumer; generated TypeScript types follow the wire names.
+
+**Consequences:** the current camelCase fields in `ubu-schemas` and `ubu-core` are corrected before any consumer code grows; Phase 2 sync statements require no casing translation layer.
+
+---
+
+## UBU-D0229 — Phase 1 ID-registry expansion to all fifteen object types
+
+**Status:** Accepted → ubu-schemas id registry (single machine-readable source of truth per docs/PHASE1_CONTRACT_BOUNDARIES.md)
+
+Six prefixes are added so that every Phase 1 canonical object type is admissible: `pref_` → Preference; `container_` → Container; `ustate_` → UniverseState; `identity_` → Identity; `rel_` → Relationship; `xevent_` → External Event. Each uses the existing prefixed lowercase unhyphenated UUIDv7 suffix pattern. The registry in `ubu-schemas` remains the single machine-readable source of truth; this record authorizes the closed-set change. The current `universe-state` schema models a snapshot view rather than a facts container; the UniverseState facts schema is first-slice implementation work under DESIGN.md §4.1.6.
+
+**Consequences:** the `ubu-core` `ObjectType` enum and `ubu-store` admission mappings are extended in lockstep.
+
+---
+
+## UBU-D0230 — Compartment guardrails as policy-summary members with a logged boundary decision
+
+**Status:** Accepted → DESIGN.md §4.1 guardrail list; ubu-schemas `policy-summary`
+
+The Phase 1 Compartment guardrails `local_only`, `no_cloud_llm`, and `no_external_export` are closed policy-summary members rather than free-form labels. Every enforcement-gate evaluation of these members that blocks, permits with conditions, or redacts writes an append-only `compartment_boundary_decided` Log entry carrying the Compartment ref, the member evaluated, the adjudication result, actor Identity, `authority_source`, reason, effective time, and provenance. The event name follows the existing Log vocabulary pattern (`objective_transitioned`, `pipeline_state_transitioned`, `decision_recorded`).
+
+**Consequences:** the `ubu-schemas` `policy-summary` schema and the Log event vocabulary gain these members; the free-form Compartment label remains for naming, not for policy.
