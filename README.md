@@ -136,6 +136,9 @@ Canonical design authority is maintained in:
 - `OPEN_QUESTIONS.md` - unresolved questions, prioritization metadata, and automation queue
 - `PLANNING_KERNEL_CONTRACT.md` - Phase 1 planning-kernel request/response contract, GPU stage boundaries, duration semantics, affect constraints, and correlation-matrix rules
 - `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md` - Phase 2 device sync, Zone, Compartment, partial-replica, and sync-statement contract
+- `docs/PHASE1_REPO_PLAN.md` - Phase 1 multi-repo implementation plan, dependency graph, scaffold order, and repo non-goals
+- `docs/PHASE1_CODEGEN_STRATEGY.md` - Phase 1 codegen issue unit standard, scaffold acceptance bar, and generated-PR review policy
+- `docs/PHASE1_CONTRACT_BOUNDARIES.md` - Phase 1 schema, Rust, store, planning, GitHub, UI/orchestrator, Compartment, and brand boundaries
 
 Derived public-facing projection files summarize the canonical state for different audiences:
 
