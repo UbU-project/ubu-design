@@ -1,6 +1,6 @@
 # UbU
 
-**Status:** Phase 0 complete — demonstrated at ETHConf NYC, June 8–10, 2026 / Phase 1 implementation in progress across the `UbU-project` repo constellation  
+**Status:** Phase 0 complete — demonstrated at ETHConf NYC, June 8–10, 2026 / Phase 1 implementation in progress: the `UbU-project` repo constellation is conformant to the frozen wire contract and the orchestrator is store-backed; no user-facing loop yet  
 **Repository:** `ubu-design`  
 **Primary purpose:** Canonical public design state for the UbU project  
 **Derived file:** This README is a technical contributor entry point. The canonical design authority is `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`.
@@ -177,7 +177,7 @@ Phase 0 is a standalone demo milestone, now complete. Code reuse into Phase 1 is
 
 Phase 1 design is frozen as of commit `cc8b339`. No further broad pre-MVP design automation is warranted. Remaining design activity should be limited to implementation-guidance gaps, open blocker certificates, or implementation feedback that reveals genuine Phase 1 scope issues.
 
-Phase 1 implementation began on 2026-06-10 with the multi-repo scaffold under the `UbU-project` organization: `ubu-schemas`, `ubu-core`, `ubu-store`, `ubu-github-adapter`, `ubu-planning-kernel`, `ubu-orchestrator`, `ubu-ui`, `ubu-devshell`, and `ubu-brand`, initialized in bootstrap-dependency order with rev-pinned cross-repo dependencies and per-repo CI. Cross-repo authority boundaries are canonical in `docs/PHASE1_CONTRACT_BOUNDARIES.md`. The scaffold is a complete walking skeleton of the architecture; Phase 1 feature semantics are implemented incrementally against the frozen design in the priority order of `DESIGN.md` §4.1.6. The scaffold-reconciliation decisions are `UBU-D0226` through `UBU-D0230`.
+Phase 1 implementation began on 2026-06-10 with the multi-repo scaffold under the `UbU-project` organization: `ubu-schemas`, `ubu-core`, `ubu-store`, `ubu-github-adapter`, `ubu-planning-kernel`, `ubu-orchestrator`, `ubu-ui`, `ubu-devshell`, and `ubu-brand`, initialized in bootstrap-dependency order with rev-pinned cross-repo dependencies and per-repo CI. Cross-repo authority boundaries are canonical in `docs/PHASE1_CONTRACT_BOUNDARIES.md`. The scaffold is a complete walking skeleton of the architecture; Phase 1 feature semantics are implemented incrementally against the frozen design in the priority order of `DESIGN.md` §4.1.6. The scaffold-reconciliation decisions `UBU-D0226` through `UBU-D0230` have landed across the constellation: snake_case wire fields, the fifteen-object-type ID registry, the canonical Task lifecycle with derived readiness, the AuthoritySource and provenance split, and Compartment-guardrail policy members with logged boundary decisions. Building on that, `UBU-D0231` removes the orchestrator's ephemeral `MemoryState`: the orchestrator now opens `ubu-store` on startup and serves every canonical read and write through the store admission boundary, and the `ubu-devshell` cross-repo fixture smoke test runs green against the store-backed orchestrator. No user-facing loop — bootstrap interview, Calendar preview, next-Task view, or Log review — is implemented yet; that is the next slice.
 
 The operational target remains:
 
@@ -223,9 +223,12 @@ The Phase 1 design baseline is frozen and implementation-first Phase 1 work has 
 - [x] `model-committee` v0.3 keeps automatic patch application, auto-merge, auto-push, GitHub API use, direct OpenAI/Anthropic/Gemini API calls, adaptive model weights, and full planning-kernel work out of scope.
 - [x] The Phase 1 repo constellation exists under `UbU-project` with rev-pinned cross-repo dependencies and per-repo CI (`Init` commits, 2026-06-10).
 - [x] Cross-repo contract boundaries are canonical in `docs/PHASE1_CONTRACT_BOUNDARIES.md`.
+- [x] The Phase 1 schema → core → store → orchestrator path is implemented and conformant to the frozen wire contract (snake_case fields, fifteen admissible object types, canonical Task lifecycle with derived readiness); scaffold-reconciliation decisions `UBU-D0226` through `UBU-D0230` landed.
+- [x] The orchestrator persists and serves canonical state through the `ubu-store` admission boundary; the scaffold's in-memory `MemoryState` is removed (`UBU-D0231`).
+- [x] A store-backed cross-repo fixture smoke test runs green via `ubu-devshell`.
 - [ ] The main UbU Phase 1 app exists as an end-to-end runnable prototype.
-- [ ] GitHub issue/PR/CI/milestone ingestion and projection are implemented in the main UbU app.
-- [ ] Objective/Task/Calendar/Log persistence is implemented in the main UbU app.
+- [ ] GitHub issue/PR/CI/milestone ingestion and projection are implemented in the main UbU app. *(Partial: fixture-driven issue ingestion into UbU objects runs through store admission; live ingestion and projection write/reconciliation are pending.)*
+- [ ] Objective/Task/Calendar/Log persistence is implemented in the main UbU app. *(Partial: Objective, Task, and Log persistence runs through store admission; Calendar persistence awaits the planning slice.)*
 - [ ] The bootstrap interview, Calendar preview, one-next-Task view, and Log review loop are implemented in the main UbU app.
 - [ ] Release Outreach Pipeline artifacts are generated from implemented release state.
 
@@ -234,10 +237,10 @@ The Phase 1 design baseline is frozen and implementation-first Phase 1 work has 
 ## Phase 1 readiness report
 
 **Report type:** Human-reviewed MVP readiness signal (required by `UBU-D0189`)  
-**Evidence commit:** `cc8b339` — Phase 1 design freeze commit  
-**Report date:** 2026-05-28  
+**Evidence commit:** `5b7ae735` — `ubu-design` HEAD; reflects the landed constellation conformance pass and store-backed orchestrator  
+**Report date:** 2026-06-15  
 **Scorer:** Human review  
-**Note:** Phase 1 design is frozen. Phase 0 (ETHConf NYC demo, June 8–10, 2026) was demonstrated at `ubu-phase0-demo` commit `9daffa7`. Phase 1 implementation began on 2026-06-10 with the repo-constellation scaffold (`b110471` in this repository plus the nine constellation `Init` commits). Readiness scores below reflect the Phase 1 implementation state as of the design freeze and predate implementation start; they will be regenerated at the next human-reviewed report per `UBU-D0189`.
+**Note:** Phase 1 design remains frozen at `cc8b339`. Since the prior report (2026-05-28, design-freeze evidence), the constellation has landed the scaffold-reconciliation decisions `UBU-D0226`–`UBU-D0230` and `UBU-D0231` (orchestrator on `ubu-store`, `MemoryState` removed, fixture smoke test repointed). Scores below are re-scored against that implementation state. They move `mvp_readiness` out of the 0–39 band into the 40–59 band but remain under the *no runnable end-to-end dogfooding loop* cap of 59, because no user-facing loop yet exists. No live GitHub or CI signal was ingested, and constellation repo revs are not pinned in this report.
 
 ---
 
@@ -245,8 +248,8 @@ The Phase 1 design baseline is frozen and implementation-first Phase 1 work has 
 
 | Signal | Score | Band |
 |---|---|---|
-| `scope_freeze_readiness` | **85 / 100** | Scope stable; open Phase 1 questions are implementation-guidance gaps, not scope questions |
-| `mvp_readiness` | **22 / 100** | Design complete; no runnable end-to-end prototype exists yet |
+| `scope_freeze_readiness` | **85 / 100** | Scope stable; frozen scope now partially realized in conformant code; open questions remain implementation-guidance gaps |
+| `mvp_readiness` | **43 / 100** | Backend walking skeleton implemented and store-backed; no user-facing end-to-end loop yet (cap 59) |
 
 Score weights follow `UBU-D0189`. Active caps: *no runnable end-to-end dogfooding loop (cap 59)* — score is already below this ceiling and reflects honest implementation absence, not a cap artifact.
 
@@ -254,7 +257,7 @@ Score weights follow `UBU-D0189`. Active caps: *no runnable end-to-end dogfoodin
 
 ### `scope_freeze_readiness`: 85
 
-Phase 1 scope is formally frozen by `UBU-D0097` and `UBU-D0175`. The design model is internally consistent with no known hard failures in canonical files. The planning-kernel boundary contract (`PLANNING_KERNEL_CONTRACT.md`) is accepted and stable.
+Phase 1 scope is formally frozen by `UBU-D0097` and `UBU-D0175`. The design model is internally consistent with no known hard failures in canonical files. The planning-kernel boundary contract (`PLANNING_KERNEL_CONTRACT.md`) is accepted and stable. The scaffold-reconciliation decisions `UBU-D0226`–`UBU-D0231` have since been implemented across the constellation without surfacing new scope questions, which empirically reinforces scope stability.
 
 Three Phase 1 questions remain technically open:
 
@@ -266,19 +269,19 @@ None of these carry a `UBU-D0175` blocker certificate. None reduce `scope_freeze
 
 ---
 
-### `mvp_readiness`: 22
+### `mvp_readiness`: 43
 
 | Criterion (weight) | Evidence | Score |
 |---|---|---|
-| Scope and blocker discipline (15) | Scope frozen; no certified blockers; design model consistent | 12 / 15 |
-| Implementation slice coverage (25) | No runnable app; all Phase 1 slices are design-complete, not implemented | 3 / 25 |
-| User-facing loop evidence (15) | No bootstrap interview, Calendar preview, or next-Task loop implemented | 0 / 15 |
-| Integration / projection / worker / privacy boundaries (15) | Compartment, worker-authority, and GitHub-projection checks are designed but not implemented | 0 / 15 |
-| Verification, fixtures, and deterministic tests (15) | `model-committee` has partial fixture support; no planning-kernel test suite exists | 2 / 15 |
-| Dogfooding / artifact / public-claim evidence (10) | `model-committee` v0.3 produces reviewable dogfooding artifacts; no main-app dogfooding | 4 / 10 |
-| Operational polish and contributor-run diagnostics (5) | `model-committee` is contributor-runnable; no main-app diagnostics | 1 / 5 |
+| Scope and blocker discipline (15) | Scope frozen; no certified blockers; `UBU-D0226`–`UBU-D0231` landed consistently | 13 / 15 |
+| Implementation slice coverage (25) | Schema, core, store, adapter, and orchestrator implemented and conformant; store-backed persistence; ~3 of 9 slices in progress, no planner or UI loop | 11 / 25 |
+| User-facing loop evidence (15) | No bootstrap interview, Calendar preview, or next-Task loop; UI types reconciled only | 0 / 15 |
+| Integration / projection / worker / privacy boundaries (15) | Store admission boundary, `authority_source`/provenance, and logged Compartment boundary decisions exist; projection write/reconciliation and full enforcement-gate runtime pending | 5 / 15 |
+| Verification, fixtures, and deterministic tests (15) | Per-repo `cargo test`, serde↔schema lockstep CI, orchestrator integration test on a temp store, store-backed cross-repo smoke test; no planning-kernel reference test suite | 6 / 15 |
+| Dogfooding / artifact / public-claim evidence (10) | `model-committee` v0.3 artifacts plus a runnable store-backed constellation smoke test; no main-app dogfooding loop | 5 / 10 |
+| Operational polish and contributor-run diagnostics (5) | `ubu-devshell` provides rev-pin, signed-commit, check/test, codegen, and fixture-demo diagnostics; no main-app diagnostics | 3 / 5 |
 
-**Total: 22 / 100**
+**Total: 43 / 100**
 
 ---
 
@@ -287,33 +290,34 @@ None of these carry a `UBU-D0175` blocker certificate. None reduce `scope_freeze
 | Phase 1 slice | Status |
 |---|---|
 | Bootstrap and seed model | Not started |
-| GitHub import and External References | Not started |
-| Objective / Task / UniverseState / Log admission | Not started |
-| Plan / Calendar generation and explanation | Not started |
+| GitHub import and External References | In progress (fixture ingestion through store admission; no live ingestion or projection write) |
+| Objective / Task / UniverseState / Log admission | In progress (store admission live for Objective/Task/Log; UniverseState facts container pending) |
+| Plan / Calendar generation and explanation | Not started (contract conformant; no CPU reference planner) |
 | Next-action focus plus feedback / recalculation | Not started |
 | Risk and human-complete plan-quality reports | Not started |
-| Compartment, worker, and projection authority boundaries | Not started |
-| GitHub projection preview or approved write plus reconciliation | Not started |
+| Compartment, worker, and projection authority boundaries | In progress (policy members, logged boundary decisions, `authority_source`/provenance; full enforcement-gate runtime pending) |
+| GitHub projection preview or approved write plus reconciliation | Not started (managed-label preflight only) |
 | Release outreach and public dogfooding artifact package | Not started |
 
 ---
 
 ### Failing gates and stale inputs
 
-- **No runnable end-to-end dogfooding loop.** This is the primary gate. Until a prototype exists that can import GitHub state, generate a Calendar, and recommend one Task, no higher `mvp_readiness` score is warranted.
-- **No fixture-backed planning-kernel test suite.** `PLANNING_KERNEL_CONTRACT.md` specifies the typed request/response boundary, but no deterministic CPU reference path or test harness exists yet.
-- **No Compartment / GitHub-projection hard-boundary checks.** These are required before `mvp_readiness` can exceed 74 even with a working loop.
+- **No runnable end-to-end dogfooding loop.** This is the primary gate and the active cap (59). The store-backed cross-repo fixture smoke test is a smoke test, not the user-facing loop; until the app can run bootstrap → Calendar → one next Task → Log review, no higher `mvp_readiness` score is warranted.
+- **No planning-kernel reference implementation or test suite.** `PLANNING_KERNEL_CONTRACT.md` and the envelope/version conformance exist, but no deterministic CPU reference planner, Calendar generation, or fixture-backed kernel test suite exists yet.
+- **No GitHub projection write or reconciliation.** Managed-label preflight exists in the adapter; the approved-write and reconciliation loop does not, which keeps the projection-boundary gate (cap 74) unmet for that slice.
+- **UniverseState facts container not yet implemented.** Per `UBU-D0229` the current `universe-state` schema models a snapshot view; the facts container is first-slice implementation work.
 
 ### Manual assumptions and boundaries
 
-- Scores are based on file state at `c3b61b0`; no live GitHub or CI signal was ingested.
-- Implementation evidence is inferred from the Development readiness checklist above and from open/solved question counts; no fixture or test output was verified.
+- Scores are based on file state at `ubu-design` `5b7ae735` plus the landed conformance pass and `UBU-D0231` store wiring across the constellation; no live GitHub or CI signal was ingested, and constellation repo revs are not pinned here.
+- GitHub adapter behavior is verified against mocked fixtures, not live GitHub; no production data exists, as the store is pre-consumer.
 
 ---
 
 ### Next slice most likely to raise the score
 
-**Bootstrap and seed model.** This slice unblocks every other implementation slice. A working bootstrap interview with explicit Objective/Task seed creation is the minimum evidence needed to move `mvp_readiness` from the 0–39 band into the 40–59 band. Completing it alongside even a stub GitHub import and a single-step Calendar preview would move `mvp_readiness` to approximately 35–45 depending on test coverage.
+**Bootstrap-and-seed loop wired to the store-backed orchestrator through the Tauri UI, plus a single next-Task view.** The backend admission boundary now exists, so the highest-leverage move is the first user-facing slice: a bootstrap interview that seeds explicit Objectives and Tasks, a one-next-Task view, and the Tauri app building and running against the orchestrator over loopback with the paste-token UX. This is the slice that breaks the cap-59 ceiling; combined with even a stub Calendar preview it would move `mvp_readiness` into the 60–74 private-dogfooding band.
 
 ---
 
