@@ -1,6 +1,6 @@
 # UbU
 
-**Status:** Phase 0 complete — demonstrated at ETHConf NYC, June 8–10, 2026 / Phase 1 implementation in progress: the `UbU-project` constellation is store-backed, a runnable first-person loop runs end to end, and GitHub projection writes are gated by a deny-by-default export boundary; planner, Calendar, and live GitHub are still pending  
+**Status:** Phase 0 complete — demonstrated at ETHConf NYC, June 8–10, 2026 / Phase 1 implementation in progress: the `UbU-project` constellation is store-backed, a runnable first-person loop runs end to end with a recalculating skeleton Calendar, and GitHub projection writes are gated by a deny-by-default export boundary; affect-legitimized planning and live GitHub are still pending  
 **Repository:** `ubu-design`  
 **Primary purpose:** Canonical public design state for the UbU project  
 **Derived file:** This README is a technical contributor entry point. The canonical design authority is `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`.
@@ -177,7 +177,7 @@ Phase 0 is a standalone demo milestone, now complete. Code reuse into Phase 1 is
 
 Phase 1 design is frozen as of commit `cc8b339`. No further broad pre-MVP design automation is warranted. Remaining design activity should be limited to implementation-guidance gaps, open blocker certificates, or implementation feedback that reveals genuine Phase 1 scope issues.
 
-Phase 1 implementation began on 2026-06-10 with the multi-repo scaffold under the `UbU-project` organization: `ubu-schemas`, `ubu-core`, `ubu-store`, `ubu-github-adapter`, `ubu-planning-kernel`, `ubu-orchestrator`, `ubu-ui`, `ubu-devshell`, and `ubu-brand`, initialized in bootstrap-dependency order with rev-pinned cross-repo dependencies and per-repo CI. Cross-repo authority boundaries are canonical in `docs/PHASE1_CONTRACT_BOUNDARIES.md`. The scaffold is a complete walking skeleton of the architecture; Phase 1 feature semantics are implemented incrementally against the frozen design in the priority order of `DESIGN.md` §4.1.6. The scaffold-reconciliation decisions `UBU-D0226` through `UBU-D0230` and the store-wiring decision `UBU-D0231` landed first, then the first user-facing slice (`UBU-D0232`): a bootstrap interview seeds Objectives, Preferences, and Tasks through admission, and a deterministic readiness-ordered next-action recommendation with act and override drives a one-next-Task loop. On that base, GitHub projection landed: preview → per-batch approval → worker write → reconciliation with conflict surfacing, restricted to managed labels and implementing `UBU-D0159` (`UBU-D0233`); and the export boundary was made real — a single authoritative Legitimizer issues a deny-by-default export permit, the orchestrator can reach no external write without it, and worker-authority and redaction-identity export-boundary invariants are enforced with standing hard-boundary checks (`UBU-D0234`, extending `UBU-D0230`). The `ubu-devshell` fixture smoke test exercises the full onboard-to-act loop and the gated projection loop including the deny path, offline against a mock GitHub backend. The planner and Calendar generation, recalculation/re-planning, live GitHub, and risk reports remain the next slices.
+Phase 1 implementation began on 2026-06-10 with the multi-repo scaffold under the `UbU-project` organization: `ubu-schemas`, `ubu-core`, `ubu-store`, `ubu-github-adapter`, `ubu-planning-kernel`, `ubu-orchestrator`, `ubu-ui`, `ubu-devshell`, and `ubu-brand`, initialized in bootstrap-dependency order with rev-pinned cross-repo dependencies and per-repo CI. Cross-repo authority boundaries are canonical in `docs/PHASE1_CONTRACT_BOUNDARIES.md`. The scaffold is a complete walking skeleton of the architecture; Phase 1 feature semantics are implemented incrementally against the frozen design in the priority order of `DESIGN.md` §4.1.6. The scaffold-reconciliation decisions `UBU-D0226` through `UBU-D0230` and the store-wiring decision `UBU-D0231` landed first, then the first user-facing slice (`UBU-D0232`): a bootstrap interview seeds Objectives, Preferences, and Tasks through admission, and a deterministic readiness-ordered next-action recommendation with act and override drives a one-next-Task loop. On that base, GitHub projection landed: preview → per-batch approval → worker write → reconciliation with conflict surfacing, restricted to managed labels and implementing `UBU-D0159` (`UBU-D0233`); and the export boundary was made real — a single authoritative Legitimizer issues a deny-by-default export permit, the orchestrator can reach no external write without it, and worker-authority and redaction-identity export-boundary invariants are enforced with standing hard-boundary checks (`UBU-D0234`, extending `UBU-D0230`). The `ubu-devshell` fixture smoke test exercises the full onboard-to-act loop and the gated projection loop including the deny path, offline against a mock GitHub backend. Phase A of the planning slice then landed (`UBU-D0235`): a canonical timed Plan, deterministic skeleton Compact Calendar generation placed within the user's Calendar availability windows, override-safe recalculation that maps triggers to a repair scope and supersedes rather than mutates, and a diverse fixed-seed golden-fixture corpus. The affect-legitimacy filter that makes a plan human-viable, value scoring, Monte Carlo rollout, live GitHub, and risk reports remain the next slices.
 
 The operational target remains:
 
@@ -232,8 +232,9 @@ The Phase 1 design baseline is frozen and implementation-first Phase 1 work has 
 - [ ] GitHub issue/PR/CI/milestone ingestion and projection are implemented in the main UbU app. *(Partial: fixture-driven issue ingestion runs through store admission; projection preview/approved-write/reconciliation are implemented against a mock GitHub backend; live ingestion and live GitHub remain pending.)*
 - [x] GitHub projection writes only managed labels through preview → per-batch approval → worker write → reconciliation with conflict surfacing, implementing `UBU-D0159` (`UBU-D0233`).
 - [x] GitHub projection writes pass a deny-by-default export boundary — a single authoritative gate, worker-authority and redaction-identity export-boundary invariants, bypass-resistance, and standing hard-boundary checks (`UBU-D0234`).
-- [ ] Objective/Task/Calendar/Log persistence is implemented in the main UbU app. *(Partial: Objective, Task, Preference, and Log persistence runs through store admission; Calendar persistence awaits the planning slice.)*
-- [ ] The bootstrap interview, Calendar preview, one-next-Task view, and Log review loop are implemented in the main UbU app. *(Partial: bootstrap interview and one-next-Task view implemented; Calendar preview and a Log review view are pending.)*
+- [x] Objective, Task, Preference, Log, and the timed Plan/Calendar persist through store admission (`UBU-D0235`).
+- [x] The skeleton Compact Calendar generates from admitted Tasks, recalculates on triggers with override-safe supersession, and renders in the UI (`UBU-D0235`); affect-legitimized and value-scored Plans are pending.
+- [ ] The bootstrap interview, Calendar preview, one-next-Task view, and Log review loop are implemented in the main UbU app. *(Partial: bootstrap interview, the Compact Calendar preview, and one-next-Task view implemented; a Log review view is pending.)*
 - [ ] Release Outreach Pipeline artifacts are generated from implemented release state.
 
 ---
@@ -241,10 +242,10 @@ The Phase 1 design baseline is frozen and implementation-first Phase 1 work has 
 ## Phase 1 readiness report
 
 **Report type:** Human-reviewed MVP readiness signal (required by `UBU-D0189`)  
-**Evidence commit:** `e777195` — `ubu-design` HEAD; reflects the landed gated GitHub projection and the deny-by-default export boundary  
-**Report date:** 2026-06-16  
+**Evidence commit:** `f732b78` — `ubu-design` HEAD; reflects the landed skeleton Calendar generation, override-safe recalculation, and the golden-fixture corpus  
+**Report date:** 2026-06-17  
 **Scorer:** Human review  
-**Note:** Phase 1 design remains frozen at `cc8b339`. Since the prior report (evidence `5fd2a55`, `mvp_readiness` 66), the constellation landed `UBU-D0233` (GitHub projection: preview → per-batch approval → gated worker write → reconciliation with conflict surfacing, managed labels only) and `UBU-D0234` (the deny-by-default export boundary: a single authoritative Legitimizer-issued export permit, worker-authority and redaction-identity export-boundary invariants, bypass-resistance, and standing hard-boundary checks). The Compartment/export, worker-authority, and GitHub-projection hard-boundary checks now exist and pass, so the cap-74 ceiling is cleared and `mvp_readiness` enters the 75–89 band. The score sits low in that band: the boundary is enforced and the loop runs, but the planner, Calendar generation, recalculation, and risk reports are absent and GitHub is exercised against a mock, not live. No live GitHub or CI signal was ingested, and constellation repo revs are not pinned in this report.
+**Note:** Phase 1 design remains frozen at `cc8b339`. Since the prior report (evidence `e777195`, `mvp_readiness` 76), the constellation landed Phase A of the planning slice (`UBU-D0235`): the canonical timed Plan, deterministic skeleton Compact Calendar generation, override-safe recalculation (trigger → repair-scope, supersession, no clobber of `user_override` or the past), and a diverse fixed-seed golden-fixture corpus. The Calendar that the prior report named the largest missing capability now generates and recalculates, though it is a deterministic skeleton: the affect-legitimacy filter that makes a plan human-viable (`UBU-D0124`), value scoring, and Monte Carlo rollout are not yet implemented. No hard cap binds below 89; the score reflects sub-score gaps (the planner's affect/scoring/rollout layers, risk reports, live GitHub). No live GitHub or CI signal was ingested, and constellation repo revs are not pinned in this report.
 
 ---
 
@@ -253,9 +254,9 @@ The Phase 1 design baseline is frozen and implementation-first Phase 1 work has 
 | Signal | Score | Band |
 |---|---|---|
 | `scope_freeze_readiness` | **85 / 100** | Scope stable; frozen scope increasingly realized in conformant code; open questions remain implementation-guidance gaps |
-| `mvp_readiness` | **76 / 100** | Boundary-enforced loop with gated GitHub projection; public-demo-ready candidate, low in band — no planner/Calendar, mock GitHub |
+| `mvp_readiness` | **80 / 100** | Skeleton Calendar generates and recalculates override-safely; planner affect/scoring/rollout still absent, mock GitHub |
 
-Score weights follow `UBU-D0189`. The cap-59 (no runnable loop) and cap-74 (missing Compartment/export, worker-authority, and GitHub-projection hard-boundary checks) ceilings are both now cleared: the loop runs and those checks exist and pass. No hard cap currently binds below 89; the score reflects genuine sub-score gaps (planner, Calendar, recalculation, risk reports, live GitHub). Note: public or outreach claims must carry evidence labels to avoid the cap-79 constraint.
+Score weights follow `UBU-D0189`. The cap-59 and cap-74 ceilings remain cleared. No hard cap currently binds below 89; the score reflects genuine sub-score gaps — chiefly the planner's affect-legitimacy, value-scoring, and rollout layers, plus risk reports and live GitHub. Note: public or outreach claims must carry evidence labels to avoid the cap-79 constraint.
 
 ---
 
@@ -273,19 +274,19 @@ None of these carry a `UBU-D0175` blocker certificate. None reduce `scope_freeze
 
 ---
 
-### `mvp_readiness`: 76
+### `mvp_readiness`: 80
 
 | Criterion (weight) | Evidence | Score |
 |---|---|---|
-| Scope and blocker discipline (15) | Scope frozen; no certified blockers; `UBU-D0226`–`UBU-D0234` landed consistently | 13 / 15 |
-| Implementation slice coverage (25) | Bootstrap-seed, next-action focus/feedback, and gated GitHub projection (mock) implemented; ~6 of 9 slices in progress or implemented; no planner, Calendar, or live GitHub | 17 / 25 |
-| User-facing loop evidence (15) | Onboard → bootstrap-seed → next-Task → act runs over loopback and the projection preview/approve/conflict view is wired; no Calendar preview or recalculation | 10 / 15 |
-| Integration / projection / worker / privacy boundaries (15) | Single authoritative deny-by-default export gate, worker-authority and redaction-identity export-boundary invariants, bypass-resistance, standing checks; redaction is export-path-only and enforcement is not generalized beyond export | 12 / 15 |
-| Verification, fixtures, and deterministic tests (15) | Deny-by-default and worker-authority property suites, orchestrator bypass-resistance tests, the projection deny-path in the fixture demo, and standing `check-all`/`test-all` diagnostics; no planning-kernel reference test suite | 12 / 15 |
-| Dogfooding / artifact / public-claim evidence (10) | A runnable store-backed first-person loop with gated projection plus `model-committee` v0.3 artifacts; projection is mock GitHub and no public claims are made | 7 / 10 |
-| Operational polish and contributor-run diagnostics (5) | `ubu-devshell` runs the full loop, the gated projection deny path, and standing hard-boundary diagnostics as contributor checks | 5 / 5 |
+| Scope and blocker discipline (15) | Scope frozen; no certified blockers; `UBU-D0226`–`UBU-D0235` landed consistently | 13 / 15 |
+| Implementation slice coverage (25) | Bootstrap-seed, next-action with override-safe recalculation, gated GitHub projection, and skeleton Calendar generation implemented; ~7 of 9 slices in progress or implemented; no affect/scoring/rollout, risk reports, or live GitHub | 19 / 25 |
+| User-facing loop evidence (15) | Onboard → bootstrap-seed → next-Task → act → recalculate runs over loopback with a Compact Calendar preview; the Calendar is a deterministic skeleton without affect legitimization or ranked candidates | 11 / 15 |
+| Integration / projection / worker / privacy boundaries (15) | The deny-by-default export gate and its invariants hold; override-safety now extends the sovereignty invariant into the planner; enforcement not generalized beyond export | 12 / 15 |
+| Verification, fixtures, and deterministic tests (15) | Diverse fixed-seed planning golden fixtures, determinism and override-safety tests, the recalculation demo, plus the prior boundary suites; the stochastic stages have no reference suite yet | 13 / 15 |
+| Dogfooding / artifact / public-claim evidence (10) | A runnable store-backed first-person loop with a recalculating skeleton Calendar plus `model-committee` artifacts; projection is mock GitHub and no public claims are made | 7 / 10 |
+| Operational polish and contributor-run diagnostics (5) | `ubu-devshell` runs the full loop, the gated projection deny path, override-safe recalculation, and standing hard-boundary diagnostics | 5 / 5 |
 
-**Total: 76 / 100**
+**Total: 80 / 100**
 
 ---
 
@@ -296,8 +297,8 @@ None of these carry a `UBU-D0175` blocker certificate. None reduce `scope_freeze
 | Bootstrap and seed model | Implemented (bootstrap questionnaire seeds Objectives, Preferences, and Tasks through admission) |
 | GitHub import and External References | In progress (bootstrap-driven fixture ingestion through store admission; projection write now lands against mock GitHub; live ingestion pending) |
 | Objective / Task / UniverseState / Log admission | In progress (Objective/Task/Preference/Log admission exercised end to end; UniverseState facts container pending) |
-| Plan / Calendar generation and explanation | Not started (deterministic next-action recommendation and explanation exist; no Plan/Calendar generation or planner) |
-| Next-action focus plus feedback / recalculation | In progress (next-action focus and act/override feedback implemented; recalculation/re-planning pending) |
+| Plan / Calendar generation and explanation | In progress (deterministic skeleton Calendar generation with a canonical timed Plan and per-step explanations; affect legitimization, value scoring, and Monte Carlo rollout pending) |
+| Next-action focus plus feedback / recalculation | Implemented (next-action focus, act/override feedback, and override-safe recalculation via repair-mode planning with supersession) |
 | Risk and human-complete plan-quality reports | Not started |
 | Compartment, worker, and projection authority boundaries | Implemented for the export/projection boundary (single deny-by-default gate, worker-authority and redaction-identity export-boundary invariants, bypass-resistance, standing checks); enforcement not generalized to non-export Compartment operations |
 | GitHub projection preview or approved write plus reconciliation | Implemented against mock GitHub (managed labels; preview → per-batch approval → gated write → reconciliation with conflict surfacing); live GitHub pending |
@@ -307,7 +308,7 @@ None of these carry a `UBU-D0175` blocker certificate. None reduce `scope_freeze
 
 ### Failing gates and stale inputs
 
-- **No planner, Calendar generation, or recalculation.** The next-action recommendation is a deterministic readiness-ordered skeleton rule (`UBU-D0232`), not planner output; there is no Calendar generation, no recalculation/re-planning, no planning-kernel reference implementation, and no fixture-backed kernel test suite. This is now the largest missing capability.
+- **No affect legitimization, value scoring, or stochastic rollout.** The Compact Calendar is a deterministic skeleton; the affect-legitimacy filter that makes a plan human-viable (`UBU-D0124`), value scoring, bounded candidate ranking, and Monte Carlo robustness are not yet implemented. This is now the largest missing capability. The skeleton reference path and golden fixtures exist; the stochastic stages do not.
 - **GitHub projection is verified against a mock, not live GitHub.** The gated projection loop and the deny path run against a mock backend; no live GitHub write has been exercised.
 - **No risk or plan-quality reports.** The risk and human-complete plan-quality slice is not started.
 - **UniverseState facts container not yet implemented.** Per `UBU-D0229` the current `universe-state` schema models a snapshot view; the facts container is first-slice implementation work.
@@ -315,14 +316,14 @@ None of these carry a `UBU-D0175` blocker certificate. None reduce `scope_freeze
 
 ### Manual assumptions and boundaries
 
-- Scores are based on file state at `ubu-design` `e777195` plus the landed `UBU-D0233` gated projection and `UBU-D0234` export boundary across the constellation; the gated projection and deny path are exercised by the offline fixture smoke test against a mock GitHub backend, not live GitHub or CI, and constellation repo revs are not pinned here.
+- Scores are based on file state at `ubu-design` `f732b78` plus the landed Phase A planning work (`UBU-D0235`: canonical timed Plan, skeleton Calendar, override-safe recalculation, golden fixtures) across the constellation; the Calendar and recalculation are exercised by the offline fixture smoke test, not live GitHub or CI, and constellation repo revs are not pinned here.
 - GitHub adapter behavior is verified against mocked fixtures, not live GitHub; no production data exists, as the store is pre-consumer.
 
 ---
 
 ### Next slice most likely to raise the score
 
-**The planning slice: Plan and Calendar generation with recalculation.** With the loop runnable and the export boundary enforced, the cap ceilings are cleared and the largest remaining gap is the generative planning layer. A planning-kernel CPU reference path that produces a Calendar from admitted Tasks, an affect-legitimized skeleton Plan, and recalculation on feedback is the highest-leverage work and the heart of UbU's value. Moving GitHub projection from mock to live and adding the risk / plan-quality reports raise sub-scores in parallel. Any public or outreach use of these results must keep evidence labels to stay clear of the cap-79 constraint.
+**Phase B of the planning slice: the affect-legitimacy filter.** The skeleton Calendar now generates and recalculates, so the highest-leverage work is the affect legitimization that turns the deterministic skeleton into a human-viable plan (`UBU-D0124`): the sigmoid affect constraints on energy, stress, and mood-intensity (`PLANNING_KERNEL_CONTRACT.md` §6) against the AffectProfile the bootstrap already seeds, applied as the legitimacy filter with `enforce` and `warn_only` modes. Phase C (value scoring, bounded candidates, and Monte Carlo rollout) then layers optimization and robustness on top. Moving GitHub projection from mock to live and adding the risk / plan-quality reports raise sub-scores in parallel. Any public or outreach use must keep evidence labels to stay clear of the cap-79 constraint.
 
 ---
 
