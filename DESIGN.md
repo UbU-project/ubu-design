@@ -1987,6 +1987,8 @@ Once represented on a Calendar, a Plan is deterministic. It is best understood a
 
 Plan optimization and default Plan selection are separate operations. Each candidate Plan should be individually optimized for value while satisfying constraints within the modeled world-branch that produced it. The planning algorithm models uncertain parameters such as duration distributions, Task success or failure, external events, interruptions, affect uncertainty, availability changes, and sensor predictions. A particular modeled combination of those parameters can produce a deterministic candidate Plan. UbU may then ascribe a **Plan probability** to that candidate Plan: the probability mass of the modeled branch that yields that deterministic Plan.
 
+**Canonical representation and lifecycle.** A Plan is canonical, persisted, and auditable, not an ephemeral render. Its ordered steps carry their materialized timed placements — start and end times and any static anchor — so the timed schedule the user sees is itself canonical state, distinct from the `Calendar` availability windows it is placed within. A Plan carries a status lifecycle of `candidate`, `admitted`, `rejected`, or `superseded`. Recalculation does not mutate a Plan in place: it produces a new Plan that links the Plan it supersedes and marks the prior Plan `superseded`, so the full planning history is replayable (`UBU-D0235`).
+
 ### 15.2 Calendar
 
 A **Calendar** is a group of possible Plans.
@@ -3689,6 +3691,10 @@ Immediate recalculation is required when the trigger can change the current or n
 Stale marking is sufficient when the trigger only means cached Plans, Calendars, explanations, or reports should be refreshed before later reliance. The default stale-only triggers are `calendar_preview_due`, `log_review_due`, `discovery_mode_reconciliation_due`, `elapsed_time` outside the reactive repair envelope, `affect_confidence_decay` that has not yet crossed a configured planning threshold or current affect constraint, and low-priority external or GitHub observations that do not affect the current Plan.
 
 `elapsed_time` should not create one Log entry per clock tick. It is materialized only when crossing a modeled boundary such as Task start/end, static commitment proximity, review due time, stale-affect threshold, reactive horizon expiry, offline precompute boundary, or compact Calendar expiration.
+
+**Repair scope and supersession.** Each accepted immediate trigger maps to a planning-kernel repair scope of `local`, `remaining_window`, or `full_window`; most triggers default to `remaining_window`, and `full_window` is used only when the change can invalidate the wider plan. Recalculation invokes the planning kernel in `repair` mode with a `repair_context` identifying the prior Plan and the observed divergence. The repaired Plan supersedes the prior Plan, linking `supersedes_plan_id` and marking the prior Plan `superseded`, rather than mutating it in place (`UBU-D0235`).
+
+**Override-safety.** A recalculation must not re-place completed or in-progress Tasks, and must not clobber a user-override placement. User authority outranks the planner's automation authority: a placement carrying `user_override` (`UBU-D0226`) is preserved across recalculation, and the planner repairs around it rather than over it. This makes the sovereignty invariant — the operator role is never rented to automation — hold inside the planner itself (`UBU-D0235`, `UBU-D0227`).
 
 ---
 
