@@ -1854,6 +1854,8 @@ They include:
 - source: `user`
 - per-dimension values
 
+Phase 1 separates the affect **observation** from the affect **profile** (`UBU-D0236`). The snapshot is the observation: a per-dimension value, a `source_kind` of `live_observation` or `bootstrap_default_profile`, and `observed_at`. The standing per-dimension tolerances — `direction`, `location`, `scale`, `threshold`, and `freshness_seconds` — live in the AffectProfile, not on the observation; the planning kernel evaluates the profile against the observation, and the snapshot never carries the sigmoid parameters.
+
 ### 13.4 Affect confidence
 
 In MVP, affect confidence decays with age.
@@ -1900,7 +1902,7 @@ Phase 1 must not require ordinary users to edit raw sigmoid parameters. The UX s
 
 Composite or cross-dimension affect interactions are post-MVP.
 
-See also: `UBU-D0167`, `UBU-D0173`, `PLANNING_KERNEL_CONTRACT.md §6`.
+See also: `UBU-D0167`, `UBU-D0173`, `UBU-D0236`, `PLANNING_KERNEL_CONTRACT.md §6`.
 
 ---
 
@@ -2058,6 +2060,8 @@ Safe alternatives are limited to: provide or correct starting state, mark the re
 A skeleton failure becomes an immediate blocking prompt when it prevents any valid baseline for the current Calendar, current or next recommended Task, a Static Task placement, a hard dependency or precondition, deadline feasibility, or a required Resource or External Event. It may remain a normal planning warning only when a valid skeleton exists and the failed chain is outside the current recommendation path or future horizon, in which case UbU records the diagnostic and marks the relevant Calendar, explanation, or risk report stale.
 
 Full legitimization records the constraints it enforced and any support Tasks or buffers it inserted. Its hard result is `passed`, `failed`, or `needs_clarification`. Graded fields such as `legitimacy_score`, `legitimacy_margin`, and `legitimacy_delta_from_baseline` are advisory comparison signals, not permission to violate hard legitimacy.
+
+In Phase 1, `full_legitimize` implements the **affect-feasibility filter** (`UBU-D0236`). It computes each active dimension's sigmoid satisfaction from the AffectProfile and the affect observation, marks the candidate affect-feasible only when every dimension meets its threshold, and records per-dimension satisfaction, the `violated_dimensions`, and an `affect_margin` that is the legitimacy margin while affect is the only enforced constraint. It runs in `enforce` for user-facing planning and `warn_only` for onboarding, test, and stale or missing affect. Support-task insertion — breaks, recovery, meals, sleep, and transition buffers — and `semi_legitimize` are deferred follow-ons within full legitimization; Phase 1 legitimization is the affect filter only.
 
 The Phase 1 semi-legitimization heuristic set is affect budget, slack preservation, dependency fragility, user-mode compatibility, local repair viability, and legitimacy-delta estimate. Semi-legitimization returns `passes_cheap_checks`, `reject_obvious`, or `needs_full_legitimization`; it is not sufficient to certify a default Plan.
 
