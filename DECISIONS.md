@@ -4867,3 +4867,19 @@ The rollout runs `n_rollouts` samples per finalist (default 1000, sample cap 500
 Rollout re-ranks the default Plan: after rollout, the composite folds in the rollout robustness and probability, so the §15.2.1 default-by-Plan-probability selection becomes the actual selection rather than the C-1 deterministic proxy, and `next_action` follows the re-ranked default. External-event assumptions remain empty in Phase 1 (deferred with a detailed follow-on); GPU execution is deferred (the §5 tensor profile is advisory; the CPU reference path is authoritative); negative correlations and signed loadings are Phase 2.
 
 **Consequences:** the kernel populates `probability_summary` and `probability_quality`, adds the correlation matrix and the rollout, replaces the proxy robustness with the p10 rollout estimate, and re-ranks the default; the orchestrator threads `n_rollouts`/`top_k`/strict validation and surfaces probability, robustness, and quality; the UI surfaces probability with its Wilson interval, the rollout robustness, and the degraded and not-estimated states; the devshell asserts the rollout, degraded, and re-rank paths. This record does not add external-event modeling, signed correlations, or GPU execution.
+
+---
+
+## UBU-D0239 — The Task carries an optional duration estimate and correlation-group membership, feeding the rollout
+
+**Status:** Accepted → DESIGN.md §9 (Tasks), §15.2.1; PLANNING_KERNEL_CONTRACT.md §3; ubu-schemas (`core/task`), ubu-store, ubu-orchestrator, ubu-devshell. Builds on `UBU-D0237` and `UBU-D0238`, which consume these inputs.
+
+The Phase 1 rollout (`UBU-D0238`) requires per-Task duration uncertainty and correlation structure, but the canonical Task carried no duration estimate and the orchestrator built fixed scalar durations with empty correlation groups, so the rollout only ever saw degenerate fixed input. This decision establishes the input path.
+
+The canonical Task gains an optional `duration_estimate` — either `fixed` (a scalar `seconds`) or the §3 three-point `shifted_lognormal_p95` (`min_seconds`, `mode_seconds`, `p95_seconds`, ordered `0 <= min < mode < p95`) — and an optional `correlation_groups` membership (`[{group, strength in [0,1]}]`, positive loadings, no duplicate groups). Both default to absent: an absent estimate is treated as a fixed default, and absent correlation is independent. Invalid three-point triples are rejected at admission and at request-tensor build, never silently repaired.
+
+The store admits and persists these optional fields. The orchestrator carries them into the kernel `TaskSpec` — from the store Task on the live path and from the request body on the demo and fixture path — mapping to `DurationModel::Fixed` or `DurationModel::ShiftedLognormalP95` and the correlation groups, replacing the prior fixed-scalar and empty-correlation hardcoding. The kernel already accepts these inputs (`UBU-D0237`/`UBU-D0238`); no kernel change is required.
+
+For Phase 1 the estimates are supplied by import, bootstrap, and fixtures; a user-facing editor for three-point estimates and correlation groups is deferred. The stochastic integration smoke test belongs after this input path: the C-2 D11 is re-issued as a minimal duration-agnostic check (candidate retention, `not_estimated`, and `full` quality on a degenerate fixed-duration rollout), and the full stochastic integration test (D12) lands with this slice.
+
+**Consequences:** `ubu-schemas` extends `core/task` with the optional `duration_estimate` and `correlation_groups`; `ubu-store` admits and persists them; `ubu-orchestrator` carries them from the store Task and the request body into the kernel `TaskSpec`; `ubu-devshell` D12 exercises the stochastic rollout, the re-rank, the degraded and strict paths, and `not_estimated` end to end through `/planning/generate`. This record does not add a user-facing estimate editor, external-event modeling, or signed correlations.
