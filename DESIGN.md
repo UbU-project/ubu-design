@@ -1431,6 +1431,8 @@ Dynamic Tasks may have:
 - affect delta
 - expected cost
 
+**Phase 1 realization (`UBU-D0239`).** A Phase 1 Task carries an optional `duration_estimate` — either a fixed scalar or the §3 three-point shifted-log-normal (`min_seconds`/`mode_seconds`/`p95_seconds`) — and optional `correlation_groups` membership, defaulting to a fixed estimate and independence when absent. These are the per-Task duration uncertainty and correlation inputs the planning rollout consumes; the store admits and persists them, and the orchestrator carries them into the kernel `TaskSpec`.
+
 ### 9.3 MVP Task schedulability invariant
 
 A Task is schedulable in MVP if it has:
@@ -2011,7 +2013,7 @@ The default Plan is critical to UbU's user experience. Calendar preview must be 
 
 The ideal search over candidate Plans may be NP-hard or otherwise combinatorially expensive. Practical Compact Calendar implementations should therefore use bounded finite Task instances, time-delta configuration, pruning, greedy baselines, cached subplans, GPU-friendly batch scoring/simulation, device-specific resource limits, and other heuristics. Exact ideality is a north-star property, not a Phase 1 runtime promise.
 
-**Phase 1 realization (`UBU-D0237`).** Phase 1 generates a bounded candidate set — the legitimized skeleton baseline plus deterministic slack-based perturbations seeded by `rng_seed`, capped at sixteen — and runs each candidate through the affect filter (`full_legitimize`), semi-legitimization pruning (`UBU-D0211`), and Stage 3 value scoring. Scoring composes utility, an approximate pre-rollout robustness, affect margin, and schedule diversity into a `total_score` weighted by the request's `scoring_policy`, and tags each candidate by `candidate_role` (`highest_utility`/`most_robust`/`most_schedule_diverse`). Until the Monte Carlo rollout lands, the default Plan is the rank-1 candidate by `total_score`; once rollout produces Plan probabilities over the same bounded set, the probability-based default selection above is realized.
+**Phase 1 realization (`UBU-D0237`).** Phase 1 generates a bounded candidate set — the legitimized skeleton baseline plus deterministic slack-based perturbations seeded by `rng_seed`, capped at sixteen — and runs each candidate through the affect filter (`full_legitimize`), semi-legitimization pruning (`UBU-D0211`), and Stage 3 value scoring. Scoring composes utility, an approximate pre-rollout robustness, affect margin, and schedule diversity into a `total_score` weighted by the request's `scoring_policy`, and tags each candidate by `candidate_role` (`highest_utility`/`most_robust`/`most_schedule_diverse`). The Monte Carlo rollout (`UBU-D0238`) now runs over the top-K finalists from this bounded set, sampling correlated durations from the §3 model and the §7 correlation matrix — supplied as real per-Task duration uncertainty and correlation-group membership through the input path (`UBU-D0239`) — and folds the resulting feasibility, p10 robustness, and Wilson-interval probability into the composite, so the probability-based default selection above is realized over the rolled-out finalists rather than the pre-rollout proxy. Non-finalists are retained as alternatives marked `not_estimated`, and the robustness score is now a rollout estimate. The degraded-mode and strict-rejection paths are verified at the kernel unit level and are unreachable through the request contract by the §7 positive-definite-by-construction guarantee.
 
 ### 15.2.1.1 Objective expansion and technicalizing (Phase 3)
 
@@ -2151,6 +2153,8 @@ A compact Calendar may include:
 - protected, flexible, and disposable Task metadata;
 - cached explanations and repair recipes;
 - execution-mode metadata such as time delta, branch horizon, CPU/GPU resource limits, and privacy-routing limits.
+
+**Phase 1 surfacing (`UBU-D0238`).** The Compact Calendar surfaces the selected finalist's `display_probability` with its Wilson interval, the p10 rollout robustness, and the `probability_quality` (`full`/`degraded_numeric_jitter`/`degraded_independence`/`not_estimated`); non-finalist alternatives are surfaced with `not_estimated`.
 
 ### 16.2 Coverage
 
