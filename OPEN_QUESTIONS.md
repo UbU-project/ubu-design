@@ -2337,15 +2337,15 @@ Open.
 
 ---
 
-## UBU-Q0126 — SPIFFE trust-domain granularity and Compartment non-correlation
+## UBU-Q0126: SPIFFE trust-domain granularity and Compartment non-correlation
 
-**Status:** Open  
-**Candidate owner:** model-committee  
-**Decision dependency:** `UBU-D0219`
+Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-D0219 Blocks: Compartment isolation proofs, cryptographic non-correlation, workload-identity federation, Ethereum settlement Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
 
 Should UbU represent Compartment-scoped boundary identity with one sovereign trust domain, per-Compartment trust domains, or a hybrid model with one user control-plane trust domain for operator-side services plus pairwise, purpose-scoped, or Compartment-scoped delegated trust domains / federation bundles for boundary exposure?
 
-Open subquestions:
+### Subquestions
 
 1. Should UbU use one sovereign trust domain — the user's control-plane root — with Identities and Compartments expressed as paths in the SPIFFE ID namespace?
 2. Should UbU instead use a distinct trust domain per Compartment to maximize cryptographic non-correlation?
@@ -2358,23 +2358,127 @@ Open subquestions:
 9. What is the unlinkability guarantee under each model against a colluding counterparty or a passive observer, including linkage through SPIFFE IDs, SVID lifetimes, trust-domain names, federation bundles, issuance logs, and boundary telemetry?
 10. Which model is required for Phase 3, and what minimum is needed earlier if any Compartment-scoped cryptographic identity appears before Phase 3?
 
+### Current direction
+
 Single-domain gives unified attestation but a shared root that risks correlating Compartments. Per-Compartment trust domains give stronger cryptographic non-correlation at the cost of harder cross-Compartment attestation. A hybrid model may preserve a manageable user control-plane root while exposing only pairwise, purpose-scoped, or Compartment-scoped boundary federation to counterparties. The decision must not weaken the Compartment non-correlation promise.
+
+### Resolution
+
+Open.
 
 ---
 
-## UBU-Q0127 — Protective shared-authority compartment gating: consent and inference-resistance
+## UBU-Q0127: Protective shared-authority compartment gating: consent and inference-resistance
 
-**Status:** Open  
-**Candidate owner:** model-committee  
-**Decision dependency:** `UBU-D0222`, `UBU-D0221`
+Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Policy Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-D0221, UBU-D0222 Blocks: Protective compartments, workplace compartments, power-asymmetry scenarios Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
 
 Protective shared-authority compartments (DESIGN.md §23.6, `UBU-D0222`) let a user's private affect or stress state constrain a counterparty's behavior while the counterparty never reads the raw signal. Two gating conditions are not solved by cryptography and must be resolved before the direction can be built. What design and policy constraints make these compartments safe, and under what conditions should UbU refuse to offer them at all?
 
-Open subquestions:
+### Subquestions
 
-1. **Consent under power asymmetry.** When the counterparty is an employer or other party with structural leverage, how should UbU treat consent, given that some data-protection regimes already treat employee consent as generally invalid? What disclosure, revocability, and default-off conditions are required, and when should UbU decline to offer the compartment rather than rely on consent?
-2. **Inference leakage.** A policy's observable behavior reveals something about the state it acts on (a refused meeting slot implies high modeled stress). How can the constraint-only, never-report-only asymmetry be made structurally guaranteed and inference-resistant — e.g. through coarsening, noise, fixed-schedule commitments, or decoy behavior — and what residual leakage remains unavoidable?
-3. **Eject-not-override interaction.** How does the eject-not-override invariant (`UBU-D0221`) apply specifically to protective compartments, and what does wholesale ejection look like when the compartment's value depends on an ongoing counterparty relationship?
-4. **Scope boundary.** What distinguishes a legitimate protective compartment from corporate device management wearing the UbU name, and what test decides which side of that line a proposed deployment falls on?
+1. Consent under power asymmetry: When the counterparty is an employer or other party with structural leverage, how should UbU treat consent, given that some data-protection regimes already treat employee consent as generally invalid? What disclosure, revocability, and default-off conditions are required, and when should UbU decline to offer the compartment rather than rely on consent?
+2. Inference leakage: A policy's observable behavior reveals something about the state it acts on (a refused meeting slot implies high modeled stress). How can the constraint-only, never-report-only asymmetry be made structurally guaranteed and inference-resistant — e.g. through coarsening, noise, fixed-schedule commitments, or decoy behavior — and what residual leakage remains unavoidable?
+3. Eject-not-override interaction: How does the eject-not-override invariant (`UBU-D0221`) apply specifically to protective compartments, and what does wholesale ejection look like when the compartment's value depends on an ongoing counterparty relationship?
+4. Scope boundary: What distinguishes a legitimate protective compartment from corporate device management wearing the UbU name, and what test decides which side of that line a proposed deployment falls on?
+
+### Current direction
 
 The asymmetry must be structurally guaranteed and inference-resistant, or the result is device management that should not carry the UbU name. The default posture should be conservative: absent a satisfactory answer to consent and inference-resistance, the direction is not offered.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0128: Embodied Audio Interaction
+
+Status: Open Priority: Important Phase: Phase 3 Decision type: UX architecture / Interaction model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: Affect model, Compartment policy, audio I/O policy, MCP/tool harness policy, device context model Blocks: Commute Mode, restricted-attention interaction, audio-only task capture, audio-safe messaging, media-state routing, exercise/rest/walking interaction modes Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+UbU may support Embodied Audio Interaction: audio-first or audio-only interaction for situations where hands, visuals, or intellectual bandwidth are restricted, including driving, bicycling, walking, running, jogging, stationary exercise, physical resting, cooking, housework, and other embodied contexts. What is the interaction model, policy envelope, context-routing architecture, and safety boundary for using UbU as a harness over STT, TTS, MCP-scoped LLM calls, media apps, and structured UbU state during these restricted-attention contexts?
+
+### Subquestions
+
+1. What activity contexts should Embodied Audio Interaction explicitly model: driving, bicycling, walking, running, jogging, stationary exercise, resting, cooking, housework, showering, transit, or user-defined modes?
+2. What input and output constraints should be represented for each mode: hands availability, visual availability, locomotion risk, interruptability, working-memory budget, intellectual bandwidth, emotional bandwidth, maximum prompt length, maximum response length, and maximum number of choices?
+3. How should UbU distinguish interaction mode from Compartment: for example, `Compartment: UbU Project / Public Outreach` and `Mode: Driving`, rather than making driving itself a Compartment?
+4. What deterministic policy layer should sit between audio input, MCP/tool access, LLM interpretation, UbU state, and external actions?
+5. How should UbU package scoped context for an LLM during audio-only use so that the model receives enough context for high performance without overexposing private, irrelevant, or unsafe data?
+6. What structured JSON contract should audio-interaction LLM calls return: intent, entities, confidence, ambiguity, cognitive-load estimate, action risk, proposed action, required confirmation, defer reason, and safe-for-mode flag?
+7. What actions are safe in each embodied mode: idea capture, task creation, message drafting, calendar review, media control, lightweight reflection, exercise coaching, original narration, or external sends?
+8. What actions should be prohibited or deferred in high-risk modes such as driving or bicycling: high-stakes messages, irreversible deletion, financial actions, legal commitments, major scheduling changes, multi-party communication, or visually dependent review?
+9. How should UbU handle speech recognition uncertainty, road noise, breath noise, interruptions, partial utterances, ambiguous references, and false continuity?
+10. What confirmation grammar should UbU require for external actions in restricted-attention contexts, especially where a generic “yes” is too ambiguous?
+11. How should UbU use affect information to decide whether the user is ready for intellectual interaction, should only capture ideas, should defer complex work, or should receive non-intellectual audio instead?
+12. How should UbU detect and model user understandability during embodied contexts, including reduced recall, reduced intelligence-in-the-moment, lower working memory, or increased interruption probability?
+13. How should UbU support audio-safe messaging: relationship-aware drafting, concise readback, wrong-recipient prevention, tone checking, review queues, and defer-until-parked policies?
+14. How should UbU integrate with media apps without replacing them: music playback, podcast resume state, audiobook state, skip/rewind, queue, save, summarize, and “what did I miss?” interactions?
+15. How should UbU interpret vague audio commands such as “go back,” “pause that,” “save this,” “what was that?”, or “remind me about this” based on current activity, media state, recent interruptions, and project context?
+16. Should UbU expose an `InteractionBudget` object, and if so, what fields should it include for input channels, output channels, visual attention, manual control, locomotion risk, intellectual bandwidth, emotional bandwidth, social risk tolerance, max turn length, action permissions, and deferral policy?
+17. How should Embodied Audio Interaction interact with local-first architecture, cross-device sync, car audio systems, headphones, watches, phones, and future wearable devices?
+18. What audit trail should UbU preserve for audio interactions, especially when external actions were proposed, confirmed, deferred, or rejected?
+19. How should UbU avoid becoming an attention-extraction system or productivity grinder, and instead act as an attention steward that sometimes recommends silence, music, rest, or non-intellectual content?
+20. What minimum version of Embodied Audio Interaction, if any, belongs in earlier phases as audio note capture or voice-to-task capture, while preserving the full feature galaxy for Phase 3?
+
+### Current direction
+
+Embodied Audio Interaction is accepted as the better name for this future feature galaxy. It generalizes the earlier Commute Mode concept beyond driving to any situation where audio interaction is available while hands, visuals, attention, or intellectual bandwidth are constrained. Driving and bicycling are the most safety-critical cases, but walking, running, gym use, physical resting, cooking, housework, and similar contexts share the same architectural pattern.
+
+UbU should not merely provide “ChatGPT in the car” or generic voice chat. UbU should remain the harness, context controller, policy layer, and action authority. STT, TTS, MCP, LLMs, media apps, and device integrations should be subordinate components. UbU should decide what context is exposed, what actions are allowed, how much complexity the user can handle, when confirmation is required, and when work should be deferred.
+
+The feature should distinguish agency audio, media-control audio, and generative-experience audio. UbU may allow complex processes in restricted-attention contexts only by decomposing them into bounded, audio-safe primitives such as capture, triage, short drafting, readback, review-queue creation, and low-risk execution. UbU should be conservative with external messages, irreversible actions, financial/legal commitments, and any action requiring visual review.
+
+The affect model is central. UbU may know that the user is not in the right state for intellectual work and may instead recommend silence, music, podcasts, audiobooks, or original narration. This makes UbU an attention steward rather than a productivity maximizer.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0129: Original Narration
+
+Status: Open Priority: Important Phase: Phase 3 Decision type: Research / Generative experience Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: Embodied Audio Interaction, affect model, Compartment policy, generative content policy, user preference model Blocks: Affect-aware narration, recovery audio, personalized non-intellectual interaction, generative experience routing Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Original Narration may be a valuable UbU feature in which the system generates audio-first narrative content suited to the user’s affective state, activity context, cognitive bandwidth, and preferences. What should Original Narration be, when should UbU recommend it, how personalized should it be, what privacy and dependency risks must be controlled, and how should it relate to music, podcasts, audiobooks, and ordinary LLM conversation?
+
+### Subquestions
+
+1. What is the intended role of Original Narration: entertainment, recovery, emotional decompression, motivation, reflection, education, fictional ambience, companionship, or a hybrid?
+2. How should UbU decide that Original Narration is preferable to intellectual work, silence, music, podcasts, audiobooks, meditation, or direct conversation?
+3. What affect states should make Original Narration appropriate: tired-but-stable, overstimulated, lonely, bored, recovering, walking, cooling down after exercise, resting, anxious, or low-cognitive-bandwidth?
+4. What affect states should make Original Narration inappropriate or require extra caution: acute distress, avoidance spirals, insomnia, rumination, dissociation, dependency risk, or emotional manipulation risk?
+5. How personalized should narration be: fully generic, preference-personalized, project-adjacent, life-context-aware, or explicitly compartment-scoped?
+6. What private data, if any, may be used in generating narration, and what consent or Compartment rules are required before using personal memories, relationships, tasks, health state, finances, or project details?
+7. Should UbU support user-selectable genres, styles, pacing, intensity, continuity, voices, recurring fictional worlds, or “do not mention my real life” constraints?
+8. Should Original Narration be ephemeral, saved, summarized, indexed, replayable, exportable, or intentionally discarded after playback?
+9. Should narration be generated locally, remotely, or through a hybrid model, and how does this affect privacy, latency, cost, quality, and offline usability?
+10. What structured request object should UbU produce for narration generation: mood, activity, cognitive budget, desired duration, topic constraints, forbidden topics, personalization level, Compartment, tone, and safety flags?
+11. What structured output should narration generation return: title, synopsis, audio script, duration estimate, affect intent, content warnings, memory usage declaration, and continuation hooks?
+12. How should UbU prevent Original Narration from becoming manipulative, addictive, overly parasocial, or a substitute for necessary action, rest, social contact, or professional support?
+13. How should UbU distinguish restorative narration from avoidance, procrastination, or affect laundering?
+14. Should Original Narration be integrated with activity modes such as walking, running, gym cooldown, physical resting, commuting, cooking, or bedtime-like decompression?
+15. How should users interrupt, rewind, summarize, redirect, continue, save, or convert a narration moment into a task, note, or reflection?
+16. Should UbU support narration derived from the user’s projects, such as “explain my current project as a myth,” or should project-derived narration be treated as intellectual work rather than recovery content?
+17. What is the relationship between Original Narration and external media apps: should UbU only recommend narration when normal media is not preferred, or should narration compete as its own content mode?
+18. What policy should govern voice synthesis, especially if users request styles, celebrity-like voices, familiar-person voices, or emotionally intimate narration?
+19. What minimum prototype could validate the feature without overbuilding: text-only scripts, TTS from a local model, manually selected mood presets, or post-walk narration summaries?
+20. What metrics should determine whether Original Narration is valuable: user-reported restoration, reduced rumination, successful decompression, lower cognitive load, increased agency, or lower dependence on passive media?
+
+### Current direction
+
+Original Narration should be treated as a distinct Phase 3 research task under the broader Embodied Audio Interaction feature galaxy. It is likely higher-value than originally speculated because UbU may know when the user is not suited for intellectual work and can route the user toward restorative, non-intellectual audio.
+
+UbU should not try to replace music, podcasts, or audiobooks. Those apps remain appropriate execution layers for prepared media. Original Narration is different: it can be generated for the user’s current affective state, activity context, cognitive bandwidth, and stated preferences. The strongest version is not generic AI storytelling, but affect-aware, privacy-governed, user-sovereign generative audio that supports recovery, decompression, light reflection, ambience, or motivation without requiring intellectual effort.
+
+This feature must be designed carefully. It should avoid emotional manipulation, dependency, over-personalization, and productivity pressure. UbU should sometimes recommend silence, ordinary music, podcasts, or rest instead of generating narration. Personal context should only be used when explicitly allowed by Compartment and narration policy.
+
+### Resolution
+
+Open.
