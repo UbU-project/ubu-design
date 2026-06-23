@@ -981,6 +981,8 @@ Phase 1 implementation proceeds in this priority order:
 
 The remaining §4.1 frozen-set items follow in bootstrap-dependency-driven ordering: persistence and vocabulary precede the features that must reference them.
 
+**Phase 1 realization (`UBU-D0241`).** Step 3 (UniverseState facts) is foundationally realized, together with the accepted mutation vocabulary and deterministic precondition evaluation named in step 4, implemented as the §11 container and pure `ubu-core` semantics and persisted by `ubu-store`. Step 4's affect-Snapshot content, step 5's bootstrap interview, and the precondition/effect/bootstrap wiring of these facts into the loop remain.
+
 ### 4.2 Phase 2: Single-user multi-device synchronization
 
 A single user runs UbU across multiple Devices / execution enclaves.
@@ -1586,6 +1588,8 @@ Preconditions may reference event markers, affect-related UniverseState keys in 
 
 A failed precondition means the Task is blocked for planning and execution, not invalid. `unschedulable` is a derived planner result when no placement satisfies otherwise valid preconditions and Calendar Logic; `invalid` is reserved for malformed Tasks, malformed precondition schema, forbidden targets, or contradictions in canonical state.
 
+**Phase 1 realization (`UBU-D0241`).** The deterministic evaluator — recursive `all_of`/`any_of`, leaf predicates `equals`/`member_of`/`absent`, unknown or partially modeled targets treated as absent, malformed preconditions surfaced as evaluation errors — is implemented as a pure `ubu-core` function over a UniverseState. Attaching `preconditions` to the Task schema and consuming the evaluator in the planner's `unschedulable` result is deferred to the wiring follow-on.
+
 ### 10.2 Effects
 
 A Task effect describes predicted mutation of UniverseState if the Task succeeds.
@@ -1703,6 +1707,8 @@ See `UBU-Q0114`, `UBU-Q0115`, `UBU-Q0118`, `UBU-Q0119`, `UBU-Q0120`, and `UBU-Q0
 **UniverseState** is a first-class object representing the modeled state of the world relevant to UbU planning.
 
 For MVP, UniverseState is a lightweight shell with loosely typed facts and events.
+
+**Phase 1 realization (`UBU-D0241`).** UniverseState is realized as this four-collection container (`facts`, `numeric_values`, `set_memberships`, `event_markers` plus shell fields) in `ubu-core`, replacing a dormant objectives+tasks placeholder, and is admitted and persisted by `ubu-store`. The seven-operation mutation vocabulary (§11.3) and the deterministic precondition evaluator (§10.1) are implemented as pure `ubu-core` functions — validate-the-whole-list-then-apply-in-order for mutations; recursive `all_of`/`any_of` with `equals`/`member_of`/`absent` for preconditions. It is a single current-state object: mutations apply in place with `captured_at` as valid-at, and history lives in Logs and the containing envelopes, not in UniverseState versioning. Wiring preconditions onto Tasks and into the planner's `unschedulable` result, applying effects on Task completion, recording bootstrap facts, and Compartment/redaction-identity enforcement on Relationship/affect targets are the follow-on; they are not yet implemented.
 
 ### 11.1 MVP UniverseState fields
 
