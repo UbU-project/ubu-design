@@ -4917,3 +4917,19 @@ UniverseState is a single current-state object: mutations are applied in place w
 The container, vocabulary, and evaluator are Compartment-agnostic in this slice (single-user). The design's Compartment policy on Relationship- and affect-related targets, and the redaction-identity invariant (denied Compartment labels never cross a boundary), attach when multi-Compartment fact access is exercised — part of the wiring follow-on, not this slice.
 
 **Consequences:** ubu-schemas reshapes `core/universe-state` and adds the mutation-item and precondition schemas; ubu-core carries the reshaped type plus the evaluator and applicator and repurposes the `planning_request.state` field to carry the facts snapshot; ubu-store admits and persists the container; ubu-devshell exercises admit → mutate → evaluate on fixtures. This record adds no Task `preconditions`/`effects` field, no kernel `unschedulable` evaluation, no effect application on Task completion, no bootstrap fact-recording, no Compartment enforcement, and no live GitHub — those are the wiring follow-on.
+
+---
+
+## UBU-D0242 — Wiring the UniverseState facts container into the loop
+
+**Status:** Accepted → DESIGN.md §10.1, §10.2, §11.3, §4.1.6; ubu-schemas, ubu-core, ubu-orchestrator, ubu-devshell. Builds on `UBU-D0241` (the facts container and its pure mutation/precondition semantics), which this program consumes rather than re-implements.
+
+Phase 1 wires the UniverseState facts container into the loop in three sequenced slices, run A → B → C:
+
+- **A — preconditions block planning.** The Task schema and `ubu-core` Task type gain optional `preconditions` (the `core/precondition` shape). The orchestrator reads the current UniverseState and evaluates each Task's preconditions through the pure `ubu-core` evaluator (`evaluate_universe_precondition`) during request building: satisfied is eligible, a failed precondition makes the Task **blocked** (excluded from planning and surfaced), and a malformed precondition makes the Task **invalid** (surfaced distinctly). The kernel plans the eligible set, unchanged. Preconditions are evaluated against the current static facts snapshot, matching §1571's **blocked** result (distinct from the planner's placement-based **unschedulable**). A Task without preconditions, or one whose target is unknown in UniverseState, is treated as absent and eligible.
+
+- **B — effects mutate facts on completion.** The Task schema and type gain `effects` (scalar success probability and a mutation list). The orchestrator applies a completed Task's effects through the pure `ubu-core` applicator (`apply_universe_mutations`) in the completion transition, persisting the mutated UniverseState under the completing action's `authority_source`; a failed Task leaves UniverseState unchanged (§10.2), and effects do not silently overwrite user-declared private affect or Relationship truths (§11.3). Slice B also enforces the §1585/§11.3 rule that organization and worker modes reject intrinsic-affect targets — applied to both preconditions and mutations.
+
+- **C — bootstrap records facts.** The bootstrap records the project/context answer and available time, static commitments, deadlines, and immediate constraints as UniverseState facts alongside the existing Objective/Task/Snapshot seeding. The full interactive bootstrap interview UX is a separate concern and is not part of this program.
+
+**Consequences:** Wiring-A touches ubu-schemas, ubu-core, ubu-orchestrator, and ubu-devshell, with no kernel change (the orchestrator pre-filters). Wiring-B touches the schema, the Task type, the orchestrator completion path, and the store persistence of the mutated container. Wiring-C touches the bootstrap and the store. This record defers full Compartment policy and redaction-identity enforcement on facts (single-user, not yet exercised), placement-dependent precondition re-evaluation, the interactive bootstrap interview UX, and live GitHub.
