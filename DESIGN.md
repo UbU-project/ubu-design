@@ -158,6 +158,8 @@ Informative failure is failure that improves the model: it shortens future feedb
 
 UbU should present failed execution as a failed plan assumption or changed world state unless the user explicitly records another interpretation. Suggested improvements should be framed as model repairs, constraint changes, smaller Tasks, added checkpoints, revised timing, recovery, clarification, delegation, or Objective reconsideration.
 
+**Phase 1 realization (`UBU-D0240`).** The `human_complete_plan_quality` assessment and a companion risk report are implemented as derived, recalculable artifacts computed in the orchestrator over the kernel's emitted signals (affect margin, rollout robustness and feasibility, skeleton failures) joined with store context (Task deadlines, Log history, affect Snapshot freshness, worker status). Risk findings are categorized (`deadline_risk`, `dependency_fragility`, `worker_bottleneck`, `stale_affect`, `affect_margin`, `destructive_pressure`, `post_plan_depletion`, `low_coverage`, `skeleton_failure`) with a severity and a blocking flag; `destructive_pressure`, hard deadline-infeasibility, and recommendation-path skeleton failures are blocking and drive recalculation. The affect signals (`affect_margin`, `stretch_pressure`, `post_plan_state_delta`) are derived behind a single `post_plan_affect_projection` seam from the kernel's affect margin; a per-task `affect_delta` input and a non-linear (clamped, sigmoid) forward affect trajectory, eventually kernel-owned, are deferred behind that seam.
+
 Sustainable stretch means a Plan asks for more than the user's current baseline while retaining near-term feedback, recovery margin, and a plausible improvement path. Destructive pressure means the Plan depends on overriding observed limits, lacks recovery, hides failure until too late, repeatedly requires success above observed capacity, or leaves the user worse off even if tasks are completed.
 
 Post-MVP work may add richer growth models, personalized baseline learning, longitudinal dignity and morale trend reports, and UI-specific coaching language. Phase 1 only needs derived assessment, risk-report findings, recalculation triggers, and non-blaming revision suggestions.
@@ -2155,6 +2157,8 @@ A compact Calendar may include:
 - execution-mode metadata such as time delta, branch horizon, CPU/GPU resource limits, and privacy-routing limits.
 
 **Phase 1 surfacing (`UBU-D0238`).** The Compact Calendar surfaces the selected finalist's `display_probability` with its Wilson interval, the p10 rollout robustness, and the `probability_quality` (`full`/`degraded_numeric_jitter`/`degraded_independence`/`not_estimated`); non-finalist alternatives are surfaced with `not_estimated`.
+
+**Phase 1 surfacing (`UBU-D0240`).** The Compact Calendar and next-action also surface the risk report — the aggregated `level` and the categorized findings, with blocking findings prominent — and the six `human_complete_plan_quality` signals with their non-blaming `revision_suggestions`.
 
 ### 16.2 Coverage
 
