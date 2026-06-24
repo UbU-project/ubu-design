@@ -1605,6 +1605,8 @@ If success probability is `1` or `null`, the effect is assumed to occur when the
 
 If a Task fails, UniverseState is unchanged in MVP.
 
+**Phase 1 realization (`UBU-D0242`, Wiring-B).** When a Task completes, the orchestrator applies its `effects.mutations` to the current UniverseState through the pure `ubu-core` applicator and persists the result through `ubu-store`, which owns UniverseState persistence — no other component writes to it. A failed Task leaves UniverseState unchanged. `success_probability` is planning/rollout metadata and has no bearing once the Task has completed: completion means the Task succeeded, so the effect applies regardless of it.
+
 ### 10.3 Duration and success probability
 
 Duration uncertainty and success probability are distinct.
@@ -1762,6 +1764,8 @@ Payload rules by operation:
 A Task effect's mutation list is unconditional once that effect succeeds. Conditional behavior belongs in Task preconditions, effect success probability, or planner branching, not in individual mutation items. Implementations should validate the full mutation list before applying it and apply valid items in list order.
 
 Mutation targets may include affect-related UniverseState keys in `user_mode`; organization and worker modes must reject intrinsic-affect mutations. Mutation targets may include Relationship-relevant UniverseState keys, but inferred or worker-generated relationship facts remain subject to Compartment policy, mode rules, provenance/logging envelopes, and user acceptance where required. Task effects should not silently overwrite user-declared private affect or Relationship truths.
+
+**Phase 1 realization (`UBU-D0242`, Wiring-B).** A minimal `InstanceMode` (the §5 modes) and a pure `ubu-core` validation enforce the organization/worker-mode rejection of intrinsic-affect targets for **both** preconditions (§1585) and mutations (this section). A target is intrinsic-affect by namespace — the segment after its collection is `affect` (e.g. `numeric_values.affect.energy`). In `user_mode` such targets are permitted; in organization or worker mode they make the Task `invalid`. The orchestrator passes the instance mode (`user_mode` for the MVP single-user instance), so the rejection is dormant but encoded and tested. The user-declared-private-truths guard above remains deferred (it needs a provenance/acceptance model).
 
 ---
 
