@@ -1588,7 +1588,9 @@ Preconditions may reference event markers, affect-related UniverseState keys in 
 
 A failed precondition means the Task is blocked for planning and execution, not invalid. `unschedulable` is a derived planner result when no placement satisfies otherwise valid preconditions and Calendar Logic; `invalid` is reserved for malformed Tasks, malformed precondition schema, forbidden targets, or contradictions in canonical state.
 
-**Phase 1 realization (`UBU-D0241`).** The deterministic evaluator — recursive `all_of`/`any_of`, leaf predicates `equals`/`member_of`/`absent`, unknown or partially modeled targets treated as absent, malformed preconditions surfaced as evaluation errors — is implemented as a pure `ubu-core` function over a UniverseState. Attaching `preconditions` to the Task schema and consuming the evaluator in the planner's `unschedulable` result is deferred to the wiring follow-on.
+**Phase 1 realization (`UBU-D0241`).** The deterministic evaluator — recursive `all_of`/`any_of`, leaf predicates `equals`/`member_of`/`absent`, unknown or partially modeled targets treated as absent, malformed preconditions surfaced as evaluation errors — is implemented as a pure `ubu-core` function over a UniverseState. Attaching `preconditions` to the Task schema and consuming the evaluator are realized in Wiring-A (`UBU-D0242`); effect application and bootstrap fact-recording remain.
+
+**Phase 1 realization (`UBU-D0242`, Wiring-A).** A Task carries optional `preconditions`, and the orchestrator evaluates them against the current UniverseState via the pure `ubu-core` evaluator during request building, partitioning Tasks: satisfied or absent → eligible, a failed precondition → **blocked** (excluded from planning and surfaced), a malformed precondition → **invalid** (surfaced distinctly). Only eligible Tasks reach the kernel, which is unchanged. This realizes the §10.1 blocked result in the orchestrator; the planner's placement-based `unschedulable` is a separate concern, untouched.
 
 ### 10.2 Effects
 
