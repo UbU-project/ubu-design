@@ -4933,3 +4933,26 @@ Phase 1 wires the UniverseState facts container into the loop in three sequenced
 - **C — bootstrap records facts.** The bootstrap records the project/context answer and available time, static commitments, deadlines, and immediate constraints as UniverseState facts alongside the existing Objective/Task/Snapshot seeding. The full interactive bootstrap interview UX is a separate concern and is not part of this program.
 
 **Consequences:** Wiring-A touches ubu-schemas, ubu-core, ubu-orchestrator, and ubu-devshell, with no kernel change (the orchestrator pre-filters). Wiring-B touches the schema, the Task type, the orchestrator completion path, and the store persistence of the mutated container. Wiring-C touches the bootstrap and the store. This record defers full Compartment policy and redaction-identity enforcement on facts (single-user, not yet exercised), placement-dependent precondition re-evaluation, the interactive bootstrap interview UX, and live GitHub.
+
+---
+
+## UBU-D0243 — UniverseState namespace convention: subject–predicate with a controlled subject vocabulary
+
+**Status:** Accepted → DESIGN.md §11.2, §11 (the §1744 dotted-target grammar). Standalone; governs all UniverseState targets (facts, preconditions, mutations) across `ubu-schemas`, `ubu-core`, `ubu-orchestrator`. First applied by Wiring-C (`UBU-D0242`).
+
+The §1744 grammar fixes that a target is a dotted string rooted in one of the four collections (`facts`, `numeric_values`, `set_memberships`, `event_markers`) with a namespaced key, but it does not fix the key vocabulary. The first segment after the collection is effectively a permanent top-level taxonomy referenced by every fact, precondition target, and mutation target, so it is governed deliberately.
+
+**Convention.** A target is `<collection>.<subject>(.<entity-path>)?.<predicate>`, an entity–attribute (EAV / RDF subject–predicate) model:
+
+- `<collection>` is one of the four §11.1 collections.
+- `<subject>` is the first segment after the collection and **must be a member of the controlled subject vocabulary** below — an entity or domain root.
+- `<entity-path>` is an optional sequence of nested-entity or instance segments (e.g. `issue.14`, `rel_123`).
+- `<predicate>` is the final segment: a snake_case attribute name. Where a clean standard attribute name exists (schema.org / Dublin Core), it is preferred as a light overlay (e.g. `due_at`); external vocabularies are not adopted wholesale.
+
+Examples: `facts.operator.work_style`, `facts.project.repository`, `numeric_values.affect.energy`, `facts.github.issue.14.pipeline_state`, `set_memberships.github.issue.14.labels`, `event_markers.relationship.rel_123.interactions`.
+
+**Initial controlled subject vocabulary:** `operator` (the operating individual — not "user" or "self"), `project`, `github`, `affect`, `relationship`. The latter three ratify the subjects the design already used by example; `operator` and `project` are introduced by the Wiring-C bootstrap.
+
+**Rule for adding a subject root.** Adding a subject to the controlled vocabulary requires a recorded `UBU-D` decision (governed like the closed enums). A subject root is a snake_case singular noun naming an entity or domain — never an instance, an attribute, a provenance/source, or a reverse-DNS authority prefix. Predicates and entity-path segments do not require a decision; only the top-level subject set is governed.
+
+**Consequences:** the organization/worker-mode intrinsic-affect rejection (`UBU-D0242`, Wiring-B) keys off `<subject> == affect`, which this record formalizes. The Wiring-C bootstrap records facts only under `operator` and `project`. Source/provenance stays on the containing envelope (§11.3), never in the subject (this is why an origin-rooted convention was rejected). Future facts use the governed vocabulary; new subject roots are added only by recorded decision.
