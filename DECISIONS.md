@@ -4956,3 +4956,22 @@ Examples: `facts.operator.work_style`, `facts.project.repository`, `numeric_valu
 **Rule for adding a subject root.** Adding a subject to the controlled vocabulary requires a recorded `UBU-D` decision (governed like the closed enums). A subject root is a snake_case singular noun naming an entity or domain — never an instance, an attribute, a provenance/source, or a reverse-DNS authority prefix. Predicates and entity-path segments do not require a decision; only the top-level subject set is governed.
 
 **Consequences:** the organization/worker-mode intrinsic-affect rejection (`UBU-D0242`, Wiring-B) keys off `<subject> == affect`, which this record formalizes. The Wiring-C bootstrap records facts only under `operator` and `project`. Source/provenance stays on the containing envelope (§11.3), never in the subject (this is why an origin-rooted convention was rejected). Future facts use the governed vocabulary; new subject roots are added only by recorded decision.
+
+---
+
+## UBU-D0244 — Live GitHub managed-label projection policy
+
+**Status:** Accepted → DESIGN.md §2.5 (the export boundary), §5 (instance modes). Governs the live projection path in `ubu-orchestrator` and `ubu-github-adapter`. First applied by the live-GitHub wave (O19/GA1/D18).
+
+The projection machinery — the deny-by-default gate, the managed-label-only assertion, the preview → approve → reconcile workflow, the in-memory session token, and the adapter's live `octocrab` client — already exists. This decision fixes the policy under which the orchestrator is allowed to drive the adapter's live write path.
+
+1. **Server-side opt-in.** Live egress is enabled only by a deliberate server-side mode (configuration/environment), never by a request field. No request body can trigger a network write; the default build is mock.
+2. **Deny-by-default, unchanged.** `no_external_export` denies the export. Export is permitted only for managed-label projection of an approved batch.
+3. **Managed-label-only scope and identity invariant.** The live path may only add or remove labels in the managed set (`ubu`, `ubu-managed`); every operation is asserted `is_managed_label` before it is sent, and a non-managed target is refused. UbU never reads-to-write, modifies, or removes a user's own labels, and never creates issues or comments on the live path in Phase 1, even though the adapter supports those operations.
+4. **In-memory, non-persisted session token.** The GitHub token lives only in process memory (the orchestrator's session state) and is never written to disk; the live client is built per run from it. The operator supplies a fine-grained, minimum-scope, short-expiry token, uses it once, and revokes it after the run.
+5. **Dry-run first, single confirmation.** Preview computes the operations and writes nothing (the dry run); a single approval of the previewed batch is the only thing that authorizes the write. No write occurs without an approval.
+6. **Rate-limit fail-safe.** On a rate-limit or transport error the batch aborts cleanly and reports which operations were applied; writes are idempotent (adding an existing managed label or removing an absent one is a no-op), so a re-run is safe. Adaptive backoff is deferred to Phase 2.
+7. **Faithful mock through the real path.** Mock and live runs use the *same* adapter write path (`apply_managed_label_write`), differing only in the injected `GitHubApi` implementation — the live `octocrab` client or an in-memory recording fake. Offline verification uses the fake and performs no network egress; the divergent local mock is retired.
+8. **Reproduction must be documented.** The reproducible live-smoke procedure — creating a throwaway repository and creating the minimum-scope token, and revoking it afterward — must be documented in a `README.md`, canonically in `ubu-design`'s `README.md` (and may be mirrored next to the smoke script). This decision deliberately does **not** specify those steps; it requires that the README specify as much detail as a user needs to reproduce the smoke.
+
+**Consequences:** the live path is reachable only by an operator who has set the server-side mode, supplied a token, previewed, and approved — four deliberate acts. The managed-label identity invariant is the export-boundary analogue of the redaction-identity invariant: the projection can only ever touch UbU's own labels. Per-run bearer/CSRF hardening of the desktop HTTP bridge remains a separate, documented TODO.
