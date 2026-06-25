@@ -981,7 +981,7 @@ Phase 1 implementation proceeds in this priority order:
 
 The remaining §4.1 frozen-set items follow in bootstrap-dependency-driven ordering: persistence and vocabulary precede the features that must reference them.
 
-**Phase 1 realization (`UBU-D0241`).** Step 3 (UniverseState facts) is foundationally realized, together with the accepted mutation vocabulary and deterministic precondition evaluation named in step 4, implemented as the §11 container and pure `ubu-core` semantics and persisted by `ubu-store`. Step 4's affect-Snapshot content, step 5's bootstrap interview, and the precondition/effect/bootstrap wiring of these facts into the loop remain.
+**Phase 1 realization (`UBU-D0241`).** Step 3 (UniverseState facts) is foundationally realized, together with the accepted mutation vocabulary and deterministic precondition evaluation named in step 4, implemented as the §11 container and pure `ubu-core` semantics and persisted by `ubu-store`. The precondition, effect, and bootstrap-fact wiring of these facts into the loop is realized across Wiring-A/B/C (`UBU-D0242`): preconditions gate planning, a completed Task's effects mutate the facts, and the bootstrap records the initial facts under the `UBU-D0243` namespace convention. Step 4's affect-Snapshot content and step 5's interactive bootstrap interview remain.
 
 ### 4.2 Phase 2: Single-user multi-device synchronization
 
@@ -1735,6 +1735,8 @@ MVP value discipline:
 - default keys should use a lightweight namespace convention;
 - values are text / JSON-like payloads.
 
+**Namespace convention (`UBU-D0243`).** A target is `<collection>.<subject>(.<entity-path>)?.<predicate>`: the first segment after the collection is a `<subject>` drawn from a controlled vocabulary (an entity or domain root), optionally followed by an entity/instance path, with a snake_case `<predicate>` leaf. The initial controlled subject vocabulary is `operator`, `project`, `github`, `affect`, `relationship`. Adding a subject root requires a recorded decision, governed like the closed enums: a snake_case singular noun naming an entity or domain, never an instance, attribute, source, or reverse-DNS prefix. The organization/worker-mode intrinsic-affect rejection keys off `<subject> == affect`.
+
 A stricter ontology can be added later.
 
 ### 11.3 Mutation vocabulary
@@ -1751,7 +1753,7 @@ MVP mutations support:
 
 MVP mutation items use a small deterministic schema. Required fields are `operation` and `target`; `payload` is required except for `clear_fact`; `note` is optional. Mutation items do not carry item-level confidence, source, or provenance in MVP. Those belong on the containing Task effect, Snapshot, Log entry, worker mutation request, External Reference, or other envelope.
 
-Targets are dotted strings. The first segment names the UniverseState collection being changed: `facts`, `numeric_values`, `set_memberships`, or `event_markers`. Remaining segments form the lightweight namespaced key inside that collection. Example targets include `facts.github.issue.14.pipeline_state`, `numeric_values.affect.energy`, `set_memberships.github.issue.14.labels`, and `event_markers.relationship.rel_123.interactions`.
+Targets are dotted strings. The first segment names the UniverseState collection being changed: `facts`, `numeric_values`, `set_memberships`, or `event_markers`. Remaining segments form the lightweight namespaced key inside that collection. Example targets include `facts.github.issue.14.pipeline_state`, `numeric_values.affect.energy`, `set_memberships.github.issue.14.labels`, and `event_markers.relationship.rel_123.interactions`. The first post-collection segment is a controlled-vocabulary `<subject>` governed by `UBU-D0243`, the final segment is a snake_case `<predicate>`, and any segments between form an entity/instance path.
 
 Payload rules by operation:
 

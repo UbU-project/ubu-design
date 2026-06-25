@@ -1,6 +1,6 @@
 # UbU
 
-**Status:** Phase 0 complete — demonstrated at ETHConf NYC, June 8–10, 2026 / Phase 1 implementation in progress: the `UbU-project` constellation is store-backed, a runnable first-person loop runs end to end with a Monte-Carlo-rollout-ranked, affect-legitimized Calendar and humane risk and plan-quality feedback, GitHub projection writes are gated by a deny-by-default export boundary, and the UniverseState facts container is wired into the loop in both directions — preconditions gate planning and a completed Task's effects mutate the facts; bootstrap fact-recording and live GitHub are still pending  
+**Status:** Phase 0 complete — demonstrated at ETHConf NYC, June 8–10, 2026 / Phase 1 implementation in progress: the `UbU-project` constellation is store-backed and the internal first-person loop is self-sustaining end to end — the bootstrap records the initial UniverseState facts, preconditions gate planning, a Monte-Carlo-rollout-ranked affect-legitimized Calendar with humane risk and plan-quality feedback recommends the next Task, and a completed Task's effects mutate the facts so the next plan reflects the acted-on world; GitHub projection writes are gated by a deny-by-default export boundary; live GitHub is the remaining feature  
 **Repository:** `ubu-design`  
 **Primary purpose:** Canonical public design state for the UbU project  
 **Derived file:** This README is a technical contributor entry point. The canonical design authority is `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`.
@@ -241,6 +241,7 @@ The Phase 1 design baseline is frozen and implementation-first Phase 1 work has 
 - [x] The UniverseState facts container is implemented: the §11.1 four-collection container with its seven-operation mutation vocabulary and deterministic precondition evaluator as pure `ubu-core` functions, admitted and persisted by the store; the planner/effect/bootstrap wiring is deferred (`UBU-D0241`).
 - [x] Wiring-A — preconditions gate planning: the orchestrator evaluates each Task's `preconditions` against the current UniverseState via the pure `ubu-core` evaluator and partitions Tasks into eligible / blocked / invalid; only eligible Tasks reach the kernel, which is unchanged (`UBU-D0242`).
 - [x] Wiring-B — effects mutate facts on completion: a completed Task's `effects` are applied to UniverseState through the pure `ubu-core` applicator and persisted by the store (a failed Task leaves it unchanged); the organization/worker-mode intrinsic-affect rejection is enforced for both preconditions and mutations (`UBU-D0242`).
+- [x] Wiring-C — the bootstrap records the initial UniverseState facts (`operator`/`project` subjects under the `UBU-D0243` namespace convention), making the loop self-sustaining from onboarding; preconditions then gate and effects then mutate those bootstrap-seeded facts (`UBU-D0242`).
 - [ ] The bootstrap interview, Calendar preview, one-next-Task view, and Log review loop are implemented in the main UbU app. *(Partial: bootstrap interview, the Compact Calendar preview, and one-next-Task view implemented; a Log review view is pending.)*
 - [ ] Release Outreach Pipeline artifacts are generated from implemented release state.
 
@@ -249,10 +250,10 @@ The Phase 1 design baseline is frozen and implementation-first Phase 1 work has 
 ## Phase 1 readiness report
 
 **Report type:** Human-reviewed MVP readiness signal (required by `UBU-D0189`)  
-**Evidence commit:** `bcb0074` — `ubu-design` HEAD; reflects Wiring-B, effects mutating facts on completion (`UBU-D0242`)  
+**Evidence commit:** `bc4e534` — `ubu-design` HEAD; reflects Wiring-C, the bootstrap recording initial facts, and the `UBU-D0243` namespace convention  
 **Report date:** 2026-06-24  
 **Scorer:** Human review  
-**Note:** Phase 1 design remains frozen at `cc8b339`. Since the prior report (evidence `878a663`, `mvp_readiness` 92), Wiring-B landed (`UBU-D0242`): the act→state loop now closes. A Task carries optional `effects` (a scalar `success_probability` and a mutation list), and when a Task completes the orchestrator applies the mutations to the current UniverseState through the pure `ubu-core` applicator and persists the result through `ubu-store`, which owns UniverseState persistence (no other component writes to it); a failed Task leaves it unchanged, and `success_probability` has no bearing at completion. A minimal `InstanceMode` and a pure validation enforce the organization/worker-mode rejection of intrinsic-affect targets — by namespace — for both preconditions and mutations, dormant in the MVP `user_mode` instance but encoded and tested. Two pre-existing cross-repo issues were cleared en route: the `ubu-core` `AffectDimensionObservation` `UBU-D0236` violation (C11) and the stale planning-fixture test references left by the S11/S13 cleanup (C13). Bootstrap fact-recording remains (Wiring-C). No live GitHub or CI signal was ingested, and constellation repo revs are not pinned in this report.
+**Note:** Phase 1 design remains frozen at `cc8b339`. Since the prior report (evidence `bcb0074`, `mvp_readiness` 93), Wiring-C landed (`UBU-D0242`) and the namespace convention was recorded (`UBU-D0243`): the wiring program is complete and the internal loop is self-sustaining from onboarding. The bootstrap now builds the initial UniverseState from the answers it already collects — `facts.operator.work_style`, `facts.operator.attention_preference`, `facts.project.repository`, `facts.project.objective`, and `numeric_values.operator.planning_horizon_days` — and admits it through the store under bootstrap provenance, respecting the re-seed guard; preconditions then gate planning against those facts and a completed Task's effects mutate them. The `UBU-D0243` subject–predicate convention with its controlled subject vocabulary (`operator`, `project`, `github`, `affect`, `relationship`) and its subject-root rule now governs all UniverseState targets. Affect calibration is deliberately excluded from facts (it is AffectProfile tolerance data), and the AffectProfile/Snapshot seeding from the calibration answers is tracked separately. No live GitHub or CI signal was ingested, and constellation repo revs are not pinned in this report.
 
 ---
 
@@ -261,9 +262,9 @@ The Phase 1 design baseline is frozen and implementation-first Phase 1 work has 
 | Signal | Score | Band |
 |---|---|---|
 | `scope_freeze_readiness` | **85 / 100** | Scope stable; frozen scope increasingly realized in conformant code; open questions remain implementation-guidance gaps |
-| `mvp_readiness` | **93 / 100** | The UniverseState facts loop closes — preconditions gate, effects mutate; bootstrap fact-recording and live GitHub remain |
+| `mvp_readiness` | **94 / 100** | The internal loop is self-sustaining from onboarding; live GitHub is the remaining feature |
 
-Score weights follow `UBU-D0189`. The cap-59 and cap-74 ceilings remain cleared. No hard cap currently binds; the score reflects genuine sub-score gaps — chiefly bootstrap fact-recording (Wiring-C), live GitHub (still mock), the full interactive bootstrap interview, and public artifact/claim evidence. Note: public or outreach claims must carry evidence labels to avoid the cap-79 constraint.
+Score weights follow `UBU-D0189`. The cap-59 and cap-74 ceilings remain cleared. No hard cap currently binds; the score reflects genuine sub-score gaps — chiefly live GitHub (still mock), the interactive bootstrap interview, and public artifact/claim evidence. Note: public or outreach claims must carry evidence labels to avoid the cap-79 constraint.
 
 ---
 
@@ -281,19 +282,19 @@ None of these carry a `UBU-D0175` blocker certificate. None reduce `scope_freeze
 
 ---
 
-### `mvp_readiness`: 93
+### `mvp_readiness`: 94
 
 | Criterion (weight) | Evidence | Score |
 |---|---|---|
 | Scope and blocker discipline (15) | Scope frozen; no open blockers; `UBU-D0237`–`UBU-D0239` landed, the input-path gap that surfaced mid-wave was diagnosed and closed via scoped corrective tickets, and the vestigial planning-envelope stubs were removed (S13) | 13 / 15 |
-| Implementation slice coverage (25) | The planning slice, the derived risk/plan-quality reports, and the UniverseState facts container with both directions of its loop are implemented — affect-legitimized, value-scored, Monte-Carlo-rollout-ranked planning with stochastic input; categorized risk findings and the six plan-quality signals; the §11.1 four-collection facts container with its mutation vocabulary and precondition evaluator as pure `ubu-core` functions, with preconditions gating planning and a completed Task's effects mutating the facts; bootstrap-seed and gated GitHub projection implemented; bootstrap fact-recording remains and live GitHub is still mock | 24 / 25 |
-| User-facing loop evidence (15) | Onboard → bootstrap-seed → rollout-ranked Calendar → next-Task → act → recalculate runs over loopback; the Calendar surfaces the score breakdown, role-tagged alternatives, the rollout probability with its Wilson interval and robustness, and the risk findings and plan-quality signals in non-blaming framing; the full bootstrap interview is the remaining loop gap | 14 / 15 |
+| Implementation slice coverage (25) | The planning slice, the derived risk/plan-quality reports, and the full UniverseState facts loop are implemented — affect-legitimized, value-scored, Monte-Carlo-rollout-ranked planning with stochastic input; categorized risk findings and the six plan-quality signals; the §11.1 four-collection facts container with its mutation vocabulary and precondition evaluator as pure `ubu-core` functions, wired in all three directions (bootstrap records facts, preconditions gate planning, effects mutate facts) under the `UBU-D0243` namespace convention; bootstrap-seed and gated GitHub projection implemented; live GitHub (mock → live) is the remaining slice | 24 / 25 |
+| User-facing loop evidence (15) | The full first-person loop runs end to end from a cold bootstrap over loopback: answer the bootstrapping questions → the bootstrap constructs the initial UniverseState context model → rollout-ranked affect-legitimized Calendar → next Task with its score breakdown, role-tagged alternatives, rollout probability with Wilson interval and robustness, and non-blaming risk/plan-quality signals → act or override → effects update the facts → recalculate; the interactive bootstrap interview is a remaining UX refinement of the onboarding step, not a missing loop step | 15 / 15 |
 | Integration / projection / worker / privacy boundaries (15) | The deny-by-default export gate and its invariants hold; the stochastic input path is integration-tested end to end via D12; the UniverseState facts container is wired into the loop in both directions — the orchestrator partitions planning by preconditions and applies a completed Task's effects through the store (which owns persistence), with the organization/worker-mode intrinsic-affect rejection enforced on both; bootstrap fact-recording remains, projection is still mock GitHub, and enforcement is not generalized beyond export | 14 / 15 |
 | Verification, fixtures, and deterministic tests (15) | A fixed-seed rollout golden corpus and property tests (PSD-by-construction, the `sigma`/`mu` derivation, Wilson bounds, p10, determinism, degraded branches) join the scoring, affect, and boundary suites, and the integration gate caught the wave's systemic defect; the degraded path is unit-only and unbuilt slices lack tests | 14 / 15 |
-| Dogfooding / artifact / public-claim evidence (10) | A runnable store-backed first-person loop now closes — it produces probability-ranked plans with rollout robustness and humane risk/plan-quality feedback on its own plans, and completing Tasks mutates its own UniverseState so subsequent planning reflects the acted-on world; plus `model-committee` artifacts; the fully bootstrap-driven loop, projection (mock GitHub), and public claims remain | 9 / 10 |
+| Dogfooding / artifact / public-claim evidence (10) | A runnable store-backed first-person loop is self-sustaining from onboarding — the bootstrap seeds the initial facts, planning produces probability-ranked plans with rollout robustness and humane risk/plan-quality feedback, and completing Tasks mutates UbU's own UniverseState so subsequent planning reflects the acted-on world; plus `model-committee` artifacts; projection (mock GitHub) and public claims remain | 9 / 10 |
 | Operational polish and contributor-run diagnostics (5) | `ubu-devshell` runs the full loop, the gated projection deny path, override-safe recalculation, the affect/scoring/rollout paths, and standing hard-boundary diagnostics | 5 / 5 |
 
-**Total: 93 / 100**
+**Total: 94 / 100**
 
 ---
 
@@ -317,7 +318,6 @@ None of these carry a `UBU-D0175` blocker certificate. None reduce `scope_freeze
 
 - **Planning kernel is feature-complete, with bounded deferrals.** The Monte Carlo rollout, probability estimation, and the stochastic input path are implemented and integration-tested. Remaining planning-side deferrals: semi-legitimization implements affect-budget and slack with the other four heuristics as named TODOs; external-event modeling is deferred; and the degraded-mode and strict-rejection paths are verified at the kernel unit level (unreachable through the API by the §7 positive-definite-by-construction guarantee).
 - **GitHub projection is verified against a mock, not live GitHub.** The gated projection loop and the deny path run against a mock backend; no live GitHub write has been exercised.
-- **Bootstrap fact-recording is not yet wired.** Preconditions gate planning and a completed Task's effects mutate UniverseState (`UBU-D0242`, Wiring-A and Wiring-B), but the bootstrap does not yet record project/context and commitments/deadlines/constraints as facts (Wiring-C), so the loop is not yet self-sustaining from onboarding.
 - **Redaction-identity is enforced on the export path only.** Full cross-cutting serializer coverage of the redaction-identity invariant is a named TODO beyond the export boundary.
 
 ### Manual assumptions and boundaries
@@ -329,7 +329,7 @@ None of these carry a `UBU-D0175` blocker certificate. None reduce `scope_freeze
 
 ### Next slice most likely to raise the score
 
-**Wiring-C (bootstrap facts), then live GitHub last.** With both directions of the facts loop wired, the remaining wiring slice records the bootstrap's project/context and commitments/deadlines/constraints as UniverseState facts — making the loop self-sustaining from onboarding and raising the dogfooding and user-facing sub-scores, and unblocking the full interactive bootstrap interview. Live GitHub projection (mock → live, gated write plus reconciliation) is sequenced last by design, since it is the only external-facing, cost-bearing test and is cheapest to run once everything provable against the mock is proven. Any public or outreach use must keep evidence labels to stay clear of the cap-79 constraint.
+**Live GitHub last.** The wiring program is complete and the internal loop is self-sustaining from onboarding; the only remaining Phase 1 feature is live GitHub projection (mock → live, gated write plus reconciliation), sequenced last by design since it is the only external-facing, cost-bearing test and is cheapest to run once everything provable against the mock is proven — a faithful mock first, a throwaway test repo, a fine-grained run-once revoked token, dry-run, batched and rate-limit-aware, a single confirmation pass. Any public or outreach use must keep evidence labels to stay clear of the cap-79 constraint.
 
 ---
 
