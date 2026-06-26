@@ -1,6 +1,6 @@
 # UbU
 
-**Status:** Phase 0 complete — demonstrated at ETHConf NYC, June 8–10, 2026 / Phase 1 implementation in progress: the `UbU-project` constellation is store-backed and the internal first-person loop is self-sustaining end to end — the bootstrap records the initial UniverseState facts, preconditions gate planning, a Monte-Carlo-rollout-ranked affect-legitimized Calendar with humane risk and plan-quality feedback recommends the next Task, and a completed Task's effects mutate the facts so the next plan reflects the acted-on world; GitHub projection writes are gated by a deny-by-default export boundary; live GitHub is the remaining feature  
+**Status:** Phase 0 complete — demonstrated at ETHConf NYC, June 8–10, 2026 / Phase 1 implementation in progress: the `UbU-project` constellation is store-backed, the internal first-person loop is self-sustaining from onboarding, and the managed-label projection now writes to live GitHub behind a deliberate server-side opt-in and a deny-by-default export gate; the bootstrap records the initial UniverseState facts, preconditions gate planning, a Monte-Carlo-rollout-ranked affect-legitimized Calendar with humane risk and plan-quality feedback recommends the next Task, and a completed Task's effects mutate the facts; live GitHub ingestion is the one remaining live-GitHub piece  
 **Repository:** `ubu-design`  
 **Primary purpose:** Canonical public design state for the UbU project  
 **Derived file:** This README is a technical contributor entry point. The canonical design authority is `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`.
@@ -229,7 +229,7 @@ The Phase 1 design baseline is frozen and implementation-first Phase 1 work has 
 - [x] The main UbU Phase 1 app exists as an end-to-end runnable prototype: onboarding, bootstrap-seed, a one-next-Task view, and act/override run end to end against the store-backed orchestrator over loopback, and the Tauri app builds (`UBU-D0232`).
 - [x] A bootstrap interview seeds Objectives, Preferences, and Tasks through store admission, and act/override records append-only Log events.
 - [x] The full onboard-to-act loop runs store-backed and offline via the `ubu-devshell` fixture smoke test.
-- [ ] GitHub issue/PR/CI/milestone ingestion and projection are implemented in the main UbU app. *(Partial: fixture-driven issue ingestion runs through store admission; projection preview/approved-write/reconciliation are implemented against a mock GitHub backend; live ingestion and live GitHub remain pending.)*
+- [ ] GitHub issue/PR/CI/milestone ingestion and projection are implemented in the main UbU app. *(Partial: fixture-driven issue ingestion runs through store admission; the managed-label projection write now runs against live GitHub behind a server-side opt-in and the deny-by-default gate (`UBU-D0244`), exercised by a manually-run gated smoke; live ingestion — the bootstrap reading real issues — remains pending.)*
 - [x] GitHub projection writes only managed labels through preview → per-batch approval → worker write → reconciliation with conflict surfacing, implementing `UBU-D0159` (`UBU-D0233`).
 - [x] GitHub projection writes pass a deny-by-default export boundary — a single authoritative gate, worker-authority and redaction-identity export-boundary invariants, bypass-resistance, and standing hard-boundary checks (`UBU-D0234`).
 - [x] Objective, Task, Preference, Log, and the timed Plan/Calendar persist through store admission (`UBU-D0235`).
@@ -250,10 +250,10 @@ The Phase 1 design baseline is frozen and implementation-first Phase 1 work has 
 ## Phase 1 readiness report
 
 **Report type:** Human-reviewed MVP readiness signal (required by `UBU-D0189`)  
-**Evidence commit:** `bc4e534` — `ubu-design` HEAD; reflects Wiring-C, the bootstrap recording initial facts, and the `UBU-D0243` namespace convention  
+**Evidence commit:** `4da86b7` — `ubu-design` HEAD; reflects the live-GitHub managed-label projection (`UBU-D0244`)  
 **Report date:** 2026-06-24  
 **Scorer:** Human review  
-**Note:** Phase 1 design remains frozen at `cc8b339`. Since the prior report (evidence `bcb0074`, `mvp_readiness` 93), Wiring-C landed (`UBU-D0242`) and the namespace convention was recorded (`UBU-D0243`): the wiring program is complete and the internal loop is self-sustaining from onboarding. The bootstrap now builds the initial UniverseState from the answers it already collects — `facts.operator.work_style`, `facts.operator.attention_preference`, `facts.project.repository`, `facts.project.objective`, and `numeric_values.operator.planning_horizon_days` — and admits it through the store under bootstrap provenance, respecting the re-seed guard; preconditions then gate planning against those facts and a completed Task's effects mutate them. The `UBU-D0243` subject–predicate convention with its controlled subject vocabulary (`operator`, `project`, `github`, `affect`, `relationship`) and its subject-root rule now governs all UniverseState targets. Affect calibration is deliberately excluded from facts (it is AffectProfile tolerance data), and the AffectProfile/Snapshot seeding from the calibration answers is tracked separately. No live GitHub or CI signal was ingested, and constellation repo revs are not pinned in this report.
+**Note:** Phase 1 design remains frozen at `cc8b339`. Since the prior report (evidence `bc4e534`, `mvp_readiness` 94), the live-GitHub managed-label projection landed (`UBU-D0244`): the managed-label write now runs against live GitHub through the same adapter path as the offline fake, selected only by a deliberate server-side mode (never a request field), behind the deny-by-default export gate, the export permit, and the `is_managed_label` identity invariant — UbU can only ever add or remove its own `ubu`/`ubu-managed` labels. The token lives only in process memory and is never persisted; the operator supplies a fine-grained, minimum-scope, short-expiry token, uses it once, and revokes it. Preview is the dry run and a single approval authorizes the write; on a rate-limit or transport error the batch aborts cleanly and reports which operations applied (writes are idempotent); `reconcile` reads live labels. The automated suites run this same projection path against a faithful in-memory recording fake with no network egress, and a separate, explicitly-gated, manually-run smoke exercises the live path against a throwaway repository. Live GitHub ingestion — the bootstrap reading real issues rather than the mock import — is the one remaining live-GitHub piece. No CI signal was ingested, and constellation repo revs are not pinned in this report.
 
 ---
 
@@ -262,9 +262,9 @@ The Phase 1 design baseline is frozen and implementation-first Phase 1 work has 
 | Signal | Score | Band |
 |---|---|---|
 | `scope_freeze_readiness` | **85 / 100** | Scope stable; frozen scope increasingly realized in conformant code; open questions remain implementation-guidance gaps |
-| `mvp_readiness` | **94 / 100** | The internal loop is self-sustaining from onboarding; live GitHub is the remaining feature |
+| `mvp_readiness` | **95 / 100** | Live managed-label projection writes to live GitHub behind the deny-by-default gate; live ingestion is the one remaining live-GitHub piece |
 
-Score weights follow `UBU-D0189`. The cap-59 and cap-74 ceilings remain cleared. No hard cap currently binds; the score reflects genuine sub-score gaps — chiefly live GitHub (still mock), the interactive bootstrap interview, and public artifact/claim evidence. Note: public or outreach claims must carry evidence labels to avoid the cap-79 constraint.
+Score weights follow `UBU-D0189`. The cap-59 and cap-74 ceilings remain cleared. No hard cap currently binds; the score reflects genuine sub-score gaps — live GitHub ingestion (the bootstrap still reads a mock backend), automated CI staying offline by design (the live path is covered by a manual smoke), the postmortem-ledger and deferred-heuristic debt, and public artifact/claim evidence. Public or outreach claims must carry evidence labels to avoid the cap-79 constraint.
 
 ---
 
@@ -282,19 +282,19 @@ None of these carry a `UBU-D0175` blocker certificate. None reduce `scope_freeze
 
 ---
 
-### `mvp_readiness`: 94
+### `mvp_readiness`: 95
 
 | Criterion (weight) | Evidence | Score |
 |---|---|---|
 | Scope and blocker discipline (15) | Scope frozen; no open blockers; `UBU-D0237`–`UBU-D0239` landed, the input-path gap that surfaced mid-wave was diagnosed and closed via scoped corrective tickets, and the vestigial planning-envelope stubs were removed (S13) | 13 / 15 |
-| Implementation slice coverage (25) | The planning slice, the derived risk/plan-quality reports, and the full UniverseState facts loop are implemented — affect-legitimized, value-scored, Monte-Carlo-rollout-ranked planning with stochastic input; categorized risk findings and the six plan-quality signals; the §11.1 four-collection facts container with its mutation vocabulary and precondition evaluator as pure `ubu-core` functions, wired in all three directions (bootstrap records facts, preconditions gate planning, effects mutate facts) under the `UBU-D0243` namespace convention; bootstrap-seed and gated GitHub projection implemented; live GitHub (mock → live) is the remaining slice | 24 / 25 |
+| Implementation slice coverage (25) | The planning slice, the derived risk/plan-quality reports, the full UniverseState facts loop, and live managed-label projection are implemented — affect-legitimized, value-scored, Monte-Carlo-rollout-ranked planning with stochastic input; categorized risk findings and the six plan-quality signals; the §11.1 four-collection facts container wired in all three directions under the `UBU-D0243` namespace convention; and the managed-label projection write now running against live GitHub behind a server-side opt-in and the deny-by-default gate (`UBU-D0244`). Live GitHub ingestion — the bootstrap reading real issues rather than the mock import — is the one remaining live-GitHub piece | 24 / 25 |
 | User-facing loop evidence (15) | The full first-person loop runs end to end from a cold bootstrap over loopback: answer the bootstrapping questions → the bootstrap constructs the initial UniverseState context model → rollout-ranked affect-legitimized Calendar → next Task with its score breakdown, role-tagged alternatives, rollout probability with Wilson interval and robustness, and non-blaming risk/plan-quality signals → act or override → effects update the facts → recalculate; the interactive bootstrap interview is a remaining UX refinement of the onboarding step, not a missing loop step | 15 / 15 |
-| Integration / projection / worker / privacy boundaries (15) | The deny-by-default export gate and its invariants hold; the stochastic input path is integration-tested end to end via D12; the UniverseState facts container is wired into the loop in both directions — the orchestrator partitions planning by preconditions and applies a completed Task's effects through the store (which owns persistence), with the organization/worker-mode intrinsic-affect rejection enforced on both; bootstrap fact-recording remains, projection is still mock GitHub, and enforcement is not generalized beyond export | 14 / 15 |
+| Integration / projection / worker / privacy boundaries (15) | The deny-by-default export gate and its invariants hold and now govern a live write: the managed-label projection writes to live GitHub through the gate, the permit, and the `is_managed_label` identity invariant, with an in-memory non-persisted token, dry-run-then-single-approval, and rate-limit fail-safe (`UBU-D0244`); the stochastic input path is integration-tested end to end; the UniverseState facts loop is wired in all three directions with the organization/worker-mode intrinsic-affect rejection enforced. Enforcement generalized beyond the export boundary and worker-device coordination are Phase 2 | 15 / 15 |
 | Verification, fixtures, and deterministic tests (15) | A fixed-seed rollout golden corpus and property tests (PSD-by-construction, the `sigma`/`mu` derivation, Wilson bounds, p10, determinism, degraded branches) join the scoring, affect, and boundary suites, and the integration gate caught the wave's systemic defect; the degraded path is unit-only and unbuilt slices lack tests | 14 / 15 |
-| Dogfooding / artifact / public-claim evidence (10) | A runnable store-backed first-person loop is self-sustaining from onboarding — the bootstrap seeds the initial facts, planning produces probability-ranked plans with rollout robustness and humane risk/plan-quality feedback, and completing Tasks mutates UbU's own UniverseState so subsequent planning reflects the acted-on world; plus `model-committee` artifacts; projection (mock GitHub) and public claims remain | 9 / 10 |
+| Dogfooding / artifact / public-claim evidence (10) | A runnable store-backed first-person loop is self-sustaining from onboarding, and UbU can now project its managed labels onto a live GitHub repository through the gated write — the recursive dogfood is real, not mock; plus `model-committee` artifacts. Live ingestion and public-claim/outreach evidence remain | 9 / 10 |
 | Operational polish and contributor-run diagnostics (5) | `ubu-devshell` runs the full loop, the gated projection deny path, override-safe recalculation, the affect/scoring/rollout paths, and standing hard-boundary diagnostics | 5 / 5 |
 
-**Total: 94 / 100**
+**Total: 95 / 100**
 
 ---
 
@@ -317,7 +317,7 @@ None of these carry a `UBU-D0175` blocker certificate. None reduce `scope_freeze
 ### Failing gates and stale inputs
 
 - **Planning kernel is feature-complete, with bounded deferrals.** The Monte Carlo rollout, probability estimation, and the stochastic input path are implemented and integration-tested. Remaining planning-side deferrals: semi-legitimization implements affect-budget and slack with the other four heuristics as named TODOs; external-event modeling is deferred; and the degraded-mode and strict-rejection paths are verified at the kernel unit level (unreachable through the API by the §7 positive-definite-by-construction guarantee).
-- **GitHub projection is verified against a mock, not live GitHub.** The gated projection loop and the deny path run against a mock backend; no live GitHub write has been exercised.
+- **Live GitHub projection is implemented behind a server-side opt-in; automated verification stays offline by design.** The managed-label write now runs against live GitHub through the deny-by-default gate and the `is_managed_label` identity invariant (`UBU-D0244`), exercised by a manually-run, explicitly-gated smoke against a throwaway repository; the automated suites run the same projection path against a faithful in-memory fake with no network egress, so the live path is not covered by CI. Live ingestion still reads a mock backend.
 - **Redaction-identity is enforced on the export path only.** Full cross-cutting serializer coverage of the redaction-identity invariant is a named TODO beyond the export boundary.
 
 ### Manual assumptions and boundaries
@@ -329,7 +329,7 @@ None of these carry a `UBU-D0175` blocker certificate. None reduce `scope_freeze
 
 ### Next slice most likely to raise the score
 
-**Live GitHub last.** The wiring program is complete and the internal loop is self-sustaining from onboarding; the only remaining Phase 1 feature is live GitHub projection (mock → live, gated write plus reconciliation), sequenced last by design since it is the only external-facing, cost-bearing test and is cheapest to run once everything provable against the mock is proven — a faithful mock first, a throwaway test repo, a fine-grained run-once revoked token, dry-run, batched and rate-limit-aware, a single confirmation pass. Any public or outreach use must keep evidence labels to stay clear of the cap-79 constraint.
+**Live GitHub ingestion, then hardening.** The cost-bearing projection write is live; the one remaining live-GitHub piece is ingestion — wiring the bootstrap to the adapter's existing live import (`import_live`) so it reads real issues rather than the mock backend. After that the score is gated not by features but by hardening and outreach: the postmortem-ledger and deferred-heuristic debt (scope), automated CI staying offline by design so the live path rests on a manual smoke (verification), and public artifact/claim evidence (dogfooding). Any public or outreach use must keep evidence labels to stay clear of the cap-79 constraint.
 
 ---
 
@@ -381,6 +381,17 @@ For dogfooding, GitHub is treated as a low-dimensional projection of canonical U
 GitHub Issues, PRs, comments, labels, reviews, CI, and milestones must be interpreted into UbU objects and events. UbU may project selected state back into GitHub through clearly marked managed labels, comments, or body blocks. Other GitHub edits are treated as external events by default.
 
 Missed GitHub updates are expected in MVP, so reconciliation is a first-class concern.
+
+### Reproducing the live GitHub managed-label smoke
+
+The live managed-label projection is exercised by a manually-run, explicitly-gated smoke (in `ubu-devshell`); it never runs in CI. To reproduce it safely (`UBU-D0244`):
+
+1. **Create a throwaway repository.** Create a new private repository you are willing to have labels written to and deleted from — not a real project repo — and open one issue in it to target.
+2. **Create a minimum-scope token.** In GitHub *Settings → Developer settings → Personal access tokens → Fine-grained tokens*, generate a token whose **Repository access** is limited to *only* that one throwaway repository, with **Permissions → Issues: Read and write** (the always-required **Metadata: Read** is included automatically). No Contents, Administration, or other permission is needed. Set the shortest practical expiry.
+3. **Run the smoke.** Supply the token at run time (never commit it). The smoke previews the operation (a dry run, no write), then on an explicit second confirmation applies one `ubu-managed` label to the target issue, reads it back to verify, and removes it to leave the repository clean.
+4. **Revoke the token immediately afterward.** Delete the fine-grained token as soon as the smoke completes. The token is held only in process memory during the run and is never written to disk.
+
+This procedure is canonical here; the `ubu-devshell` README mirrors the operational steps next to the smoke script.
 
 ---
 

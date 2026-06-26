@@ -3517,6 +3517,8 @@ Every accepted `pipeline_state` transition creates a `pipeline_state_transitione
 
 ### 27.3 GitHub projection
 
+**Phase 1 realization (`UBU-D0244`).** The managed-label projection write now runs against live GitHub, selected only by a deliberate server-side mode (never a request field) and gated by the deny-by-default export permit and the `is_managed_label` identity invariant — UbU can only ever add or remove its own `ubu`/`ubu-managed` labels, never a user's. Mock and live runs share one adapter write path, differing only in the injected `GitHubApi` (a live `octocrab` client or an in-memory recording fake); the token lives only in process memory and is never persisted; preview is the dry run and a single approval authorizes the write; on a rate-limit or transport error the batch aborts cleanly and reports applied operations (writes are idempotent); `reconcile` reads live labels. Live ingestion still reads a mock backend.
+
 GitHub projection is a deliberately low-dimensional projection of canonical UbU state. Phase 1 may read any authorized GitHub object needed for import or reconciliation, but it writes only the following managed surfaces:
 
 - `ubu:`-prefixed labels or another explicitly configured UbU-owned label prefix;
