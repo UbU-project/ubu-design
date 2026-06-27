@@ -3454,6 +3454,8 @@ UbU should be able to use GitHub as an interface for FOSS contributors while mai
 
 ### 27.1 GitHub object mapping
 
+**Phase 1 realization (`UBU-D0245`).** Live ingestion is implemented: in a dedicated server-side `GithubIngestMode` (default mock, separate from the projection export mode so read and write are opted into independently — never triggered by token presence), the bootstrap enumerates a repository's issues through the adapter and maps them into Tasks and GitHub External References via the existing normalization and candidate mapping, the same admission downstream as the fixture import. Mock and live share one path, differing only in the injected `GitHubApi` (a live `octocrab` client or an in-memory recording fake seeded from a raw-issue fixture); the import is one-shot at bootstrap under `reject_if_already_seeded`. Pull requests, reviews, CI events, milestones, and comments are not ingested in Phase 1, and per-issue GitHub state is not recorded as UniverseState facts. With `UBU-D0244`, the live GitHub path is now symmetric: at bootstrap UbU reads its own real issues, plans, and projects its managed labels back.
+
 Provisional mapping:
 
 - GitHub Issue → one or more Objectives
