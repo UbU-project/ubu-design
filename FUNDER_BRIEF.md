@@ -1,6 +1,6 @@
 # UbU Funder Brief
 
-**Status:** Derived audience-facing brief — updated post-ETHConf NYC 2026 / Phase 1 implementation start  
+**Status:** Derived audience-facing brief — Phase 1 feature-complete; canonical design files win on any conflict  
 **Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`  
 **Audience:** grantmakers, ecosystem sponsors, angels, hackathon judges, aligned funders, and prototype sponsors
 
@@ -28,7 +28,7 @@ UbU has moved through pure concept work, active design dogfooding, and is now en
 
 Phase 0 was the first runnable public demonstration of the core UbU loop on the UbU project itself.
 
-**Phase 1 implementation has begun.** Nine public repositories under the `UbU-project` organization — schemas, core types, store, GitHub adapter, planning kernel, orchestrator, desktop UI, developer harness, and brand — were initialized on 2026-06-10 as a rev-pinned, CI-backed multi-repo architecture, with the delegation, credentials, and identity substrate separated into independently auditable units. The architecture is in place; Phase 1 feature semantics are now implemented incrementally against the frozen design. The immediate opportunity is to fund that conversion while the scope is still narrow enough to stay inspectable. The patterns and experience from the working Phase 0 demo directly accelerate the work.
+**Phase 1 is feature-complete.** Nine public repositories under the `UbU-project` organization — schemas, core types, store, GitHub adapter, planning kernel, orchestrator, desktop UI, developer harness, and brand — were initialized on 2026-06-10 as a rev-pinned, CI-backed multi-repo architecture, with the delegation, credentials, and identity substrate separated into independently auditable units, and the Phase 1 feature set has since been implemented in full against the frozen design. UbU now runs its own development loop end to end on real infrastructure: at bootstrap it ingests its own real GitHub issues as Tasks, records its initial world-state facts, plans against them with affect-legitimized, rollout-ranked scheduling and humane feedback, acts, updates its facts, and projects its managed labels back to live GitHub — each external direction behind a deliberate, independently-chosen opt-in and a token that never touches disk. The recursive dogfood is actualized: UbU builds UbU. The immediate opportunity is to fund the hardening and the Phase 2 expansion (multi-device sync) from a working, inspectable base rather than a promise; the scope is still narrow enough to stay fully inspectable. The patterns and experience from the working system directly accelerate the next phase.
 
 ---
 
@@ -113,7 +113,7 @@ The strongest funding target is work that becomes ordinary open-core trunk capab
 
 ## Acceptable funding shapes
 
-Compatible funding may include grants, hackathon prizes, sponsorship for a concrete Phase 1 implementation slice, prepaid prototype sponsorship, narrow design-partner retainers, paid discovery sessions that produce reusable trunk requirements, or infrastructure support that does not create hidden proprietary dependency.
+Compatible funding may include grants, hackathon prizes, sponsorship for a concrete Phase 2 implementation slice, prepaid prototype sponsorship, narrow design-partner retainers, paid discovery sessions that produce reusable trunk requirements, or infrastructure support that does not create hidden proprietary dependency.
 
 Customer-specific configuration, hosting, packaging, support, or compliance work can be commercial when it stays outside the open-core boundary and does not become required for public dogfooding.
 

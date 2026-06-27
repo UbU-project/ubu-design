@@ -1,6 +1,6 @@
 # UbU Organizational Introspection Brief
 
-**Status:** Derived audience-facing brief — updated post-ETHConf NYC 2026 / Phase 1 implementation start  
+**Status:** Derived audience-facing brief — Phase 1 feature-complete; canonical design files win on any conflict  
 **Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`  
 **Audience:** FOSS maintainers, DAOs, nonprofits, mission-driven software teams, grant-funded projects, foundations, research groups, protocol teams, and organizations that want evidence of mission alignment
 
@@ -141,7 +141,7 @@ UbU uses organizational introspection on itself — and Phase 0 is the first pub
 
 The primary demonstration value of Phase 0 is exactly what this brief describes: **UbU applying its own planning and self-governance model to the UbU project, live, in public, in front of an audience that can inspect the result**. This is association introspection running on the association that built it.
 
-Phase 1 implementation has begun. The full organizational introspection loop — EthConf notes, outreach follow-ups, project artifacts, design decisions, open questions, `model-committee v0.3` cross-scoring artifacts, planning-kernel contract work, release work, and contributor interactions — is now reviewable: the first post-conference retrospective applies UbU's own introspection model to its own conference outreach, asking whether UbU actually pursued its stated goals.
+Phase 1 is now feature-complete. The full organizational introspection loop — EthConf notes, outreach follow-ups, project artifacts, design decisions, open questions, `model-committee v0.3` cross-scoring artifacts, planning-kernel contract work, release work, and contributor interactions — is reviewable: the first post-conference retrospective applies UbU's own introspection model to its own conference outreach, asking whether UbU actually pursued its stated goals.
 
 This dogfooding matters because the project claims to support evidence-backed self-governance. UbU should be able to show its own alignment process before asking other projects to trust the concept.
 

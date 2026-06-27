@@ -1,6 +1,6 @@
 # UbU for Project Leads and Technical PMs
 
-**Status:** Derived audience-facing brief — updated post-ETHConf NYC 2026 / Phase 1 implementation start  
+**Status:** Derived audience-facing brief — Phase 1 feature-complete; canonical design files win on any conflict  
 **Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`  
 **Audience:** Ethereum project leads, protocol leads, FOSS maintainers with coordination duties, engineering managers, release coordinators, grants/milestone coordinators, and technical PMs who coordinate autonomous contributors
 
@@ -116,7 +116,7 @@ The demo creates a new user, completes the bootstrap interview, connects to a pr
 
 The primary value demonstrated is **association introspection**: UbU using its own planning model to coordinate the UbU project, live and inspectable by conference attendees.
 
-Phase 0 is a standalone demo, now complete. Phase 1 implementation has begun, informed and accelerated by the working Phase 0 patterns and experience.
+Phase 0 is a standalone demo, now complete. Phase 1 is now feature-complete, informed and accelerated by the working Phase 0 patterns and experience.
 
 ### Phase 1: GitHub dogfooding (implementation in progress)
 
