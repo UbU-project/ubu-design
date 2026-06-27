@@ -4975,3 +4975,20 @@ The projection machinery — the deny-by-default gate, the managed-label-only as
 8. **Reproduction must be documented.** The reproducible live-smoke procedure — creating a throwaway repository and creating the minimum-scope token, and revoking it afterward — must be documented in a `README.md`, canonically in `ubu-design`'s `README.md` (and may be mirrored next to the smoke script). This decision deliberately does **not** specify those steps; it requires that the README specify as much detail as a user needs to reproduce the smoke.
 
 **Consequences:** the live path is reachable only by an operator who has set the server-side mode, supplied a token, previewed, and approved — four deliberate acts. The managed-label identity invariant is the export-boundary analogue of the redaction-identity invariant: the projection can only ever touch UbU's own labels. Per-run bearer/CSRF hardening of the desktop HTTP bridge remains a separate, documented TODO.
+
+---
+
+## UBU-D0245 — Live GitHub ingestion policy
+
+**Status:** Accepted → DESIGN.md §27 (GitHub import). Governs the live import path in `ubu-orchestrator` and `ubu-github-adapter`. First applied by the live-ingestion wave (O20/GA2/D19). Companion to `UBU-D0244` (live projection).
+
+The bootstrap already calls a live-import entry point, but both it and the adapter's `import_live_repository` are stubs, and the orchestrator gates live import only on token presence. This decision fixes the policy for making it real.
+
+1. **Deliberate server-side ingest mode.** Live import is enabled only by a dedicated server-side `GithubIngestMode` (default mock), separate from the projection `ProjectionExportMode` so that read and write are opted into independently. Token presence alone never triggers a live read; no request field selects live.
+2. **In-memory, non-persisted token, reused.** Live import uses the same in-memory session token as projection (never written to disk), or the developer token in developer mode. The operator supplies a fine-grained, minimum-scope, short-expiry token and revokes it after.
+3. **Scope: issues become Tasks and External References.** The live import enumerates a repository's issues and maps them through the existing normalization and candidate mapping into Tasks plus GitHub External References — the same admission downstream as the fixture import. Pull requests, reviews, CI events, milestones, and comments are not ingested in Phase 1, and per-issue GitHub state is not recorded as UniverseState facts (the Wiring-C boundary holds).
+4. **One-shot at bootstrap, not a sync.** Live import runs once at bootstrap, guarded by `reject_if_already_seeded`. Continuous or incremental re-sync is Phase 2 (the QSYNC series).
+5. **Faithful fake offline.** Mock and live runs share one import path through the adapter, differing only in the injected `GitHubApi`: a live `octocrab` client, or an in-memory recording fake seeded from a raw-issue fixture. Offline verification uses the fake and performs no network egress.
+6. **Ingress provenance.** Each ingested issue carries GitHub provenance as an External Reference; canonical UbU state still changes only through the normal admission path.
+
+**Consequences:** with `UBU-D0244`, the live path is now symmetric — a deliberate server-side mode and a supplied token are required for the orchestrator to read issues (ingest mode) or write managed labels (export mode), each opted into independently. The recursive dogfood is actualized: at bootstrap UbU reads its own real issues, plans, and projects its managed labels back. Continuous sync and broader object ingestion remain Phase 2.
