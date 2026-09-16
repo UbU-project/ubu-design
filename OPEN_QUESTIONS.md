@@ -749,7 +749,7 @@ Resolved. See UBU-D0203.
 
 ## UBU-Q0059: Execution-provider trust, worker backends, and privacy-preserving compute roadmap
 
-Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016 Blocks: Phase 2 personal worker devices, hosted compute policy, third-party provider compatibility Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016 Blocks: Phase 2 personal worker devices, hosted compute policy, third-party provider compatibility, Phase 1b advisory worker boundary Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -769,6 +769,8 @@ How should UbU define the trust, privacy, capability, API, and disclosure bounda
 ### Current direction
 
 Cloud or external compute may improve performance, granularity, and analysis depth, but must not be a hidden mandatory dependency for the open-core planning loop. User-owned worker devices are Phase 2. Dedicated appliances, corporate cloud, third-party providers, compute monetization, and FHE/private encrypted compute are future commercial or strategic-research directions.
+
+Phase 1b re-scope: this question is pulled forward from Phase 2 under the Phase 1b rule, which requires every Quick UbU feature merged into mainline to adopt the restrictions, forms, and functional boundaries of the MVP design it corresponds to, even when that design's implementation phase is beyond Phase 1. Phase 1b emits artifacts whose shape depends on this answer, so it is answered now. Phase 1b scope: the local advisory worker (ollama) must be invoked as a worker behind a scoped `WorkerAuthority` and pass admission, never as a privileged internal service, so that a later remote or rented backend is a transport substitution rather than an advisory-layer rebuild. Subquestions 1, 2, 3, and 5 are Phase 1b-relevant. Subquestions 6, 7, and 8 (appliances, FHE, compute monetization) remain future commercial or strategic-research directions and are not answered by Phase 1b. The minimum local worker protocol is decomposed into UBU-Q0135.
 
 ### Resolution
 
@@ -1058,7 +1060,7 @@ Resolved. See UBU-D0212.
 
 ## UBU-Q0073: Mobile stewardship metadata and MVP repair rules
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0016, UBU-Q0058 Blocks: mobile/local planning UX Resolved by: None Last scored: 2026-05-26 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0016, UBU-Q0058 Blocks: mobile/local planning UX, Phase 1b device-side provisional re-planning Resolved by: None Last scored: 2026-05-26 Scored from commit: None
 
 ### Question
 
@@ -1077,6 +1079,8 @@ What compact Calendar metadata and local repair rules are required so mobile UbU
 ### Current direction
 
 Mobile should be a real-time steward of Plan legitimacy, user agency, and next-action clarity. MVP should include Task criticality, last legitimate Plan storage, simple repair rules, conflict severity, cached explanations, next-best-action mode, and basic decision envelopes.
+
+Phase 1b re-scope: this question is pulled forward from Phase 2 under the Phase 1b rule, which requires every Quick UbU feature merged into mainline to adopt the restrictions, forms, and functional boundaries of the MVP design it corresponds to, even when that design's implementation phase is beyond Phase 1. Phase 1b emits artifacts whose shape depends on this answer, so it is answered now. Phase 1b scope: device-side provisional re-planning over a redacted shareable slice already exists in the Quick UbU implementation and becomes load-bearing again under the Phase 1b rule, so the criticality, decision-envelope, conflict-severity, cached-explanation, and repair-recipe schemas are required now. Conflict severity levels should be reconciled with the projection conflict classes in UBU-Q0134 so that one severity vocabulary serves both.
 
 ### Resolution
 
@@ -1166,7 +1170,7 @@ Open.
 
 ## UBU-Q0077: Realtime interaction session and candidate update schema
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0025, UBU-Q0031, UBU-Q0068 Blocks: realtime model adapters, discovery mode, meeting capture, interruption handling Resolved by: None Last scored: 2026-05-26 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0025, UBU-Q0031, UBU-Q0068 Blocks: realtime model adapters, discovery mode, meeting capture, interruption handling, Phase 1b candidate/admitted state boundary Resolved by: None Last scored: 2026-05-26 Scored from commit: None
 
 ### Question
 
@@ -1183,6 +1187,8 @@ What is the minimum schema for realtime interaction sessions and realtime-derive
 ### Current direction
 
 Realtime models are optional interaction backends. They emit candidate updates. The planner, Logs, Compartment policy, and user-review rules decide what becomes canonical.
+
+Phase 1b re-scope: this question is pulled forward from Phase 2 under the Phase 1b rule, which requires every Quick UbU feature merged into mainline to adopt the restrictions, forms, and functional boundaries of the MVP design it corresponds to, even when that design's implementation phase is beyond Phase 1. Phase 1b emits artifacts whose shape depends on this answer, so it is answered now. Phase 1b scope: the advisory review queue is the candidate/admitted boundary in practice, so the candidate-update schema and its provenance and confidence metadata are required now, independently of any realtime audio or video backend. Candidate update types needed in Phase 1b are tag, dependency, preference, decomposition, and clarification question. Subquestion 4's audio/video provenance and the AssociationAttestation candidate type are not Phase 1b concerns, since the message crawler and the association model are deferred. Candidate lifecycle and durable rejection are decomposed into UBU-Q0138.
 
 ### Resolution
 
@@ -1348,6 +1354,8 @@ How should UbU model computer-use agents and background processes that consume c
 
 Computer-use and background agents are high-risk external actors. They require authority scopes, audit trails, rollback or mitigation paths, prompt-injection handling, and candidate-update semantics.
 
+Phase 1b split: the advisory background-process subset of this question is decomposed into UBU-Q0137 and answered under the Phase 1b rule, because Phase 1b's unattended advisory batch runner is a real BackgroundProcess that consumes compute and external credentials outside Calendar time. Computer-use `AgentAction` semantics, irreversible-side-effect rollback metadata, and general prompt-injection scoring remain open here and are not answered by Phase 1b.
+
 ### Resolution
 
 Open.
@@ -1451,6 +1459,8 @@ How should candidate, deferred, resurfaced, accepted, rejected, superseded, and 
 ### Current direction
 
 Unreviewed findings must not silently update durable state. Rejection is a first-class correction path, not merely dismissal.
+
+Phase 1b split: the candidate-lifecycle and durable-rejection subset of this question is decomposed into UBU-Q0138 and answered under the Phase 1b rule, because Phase 1b's advisory review queue already implements durable rejection as dedup-against-rejected history and must express each candidate as a first-class labeled object. `ExtrospectionFinding`-specific state transitions and the effect of accepted findings on Relationship state remain open here, since extrospection and the association model are deferred.
 
 ### Resolution
 
@@ -2478,6 +2488,249 @@ Original Narration should be treated as a distinct Phase 3 research task under t
 UbU should not try to replace music, podcasts, or audiobooks. Those apps remain appropriate execution layers for prepared media. Original Narration is different: it can be generated for the user’s current affective state, activity context, cognitive bandwidth, and stated preferences. The strongest version is not generic AI storytelling, but affect-aware, privacy-governed, user-sovereign generative audio that supports recovery, decompression, light reflection, ambience, or motivation without requiring intellectual effort.
 
 This feature must be designed carefully. It should avoid emotional manipulation, dependency, over-personalization, and productivity pressure. UbU should sometimes recommend silence, ordinary music, podcasts, or rest instead of generating narration. Personal context should only be used when explicitly allowed by Compartment and narration policy.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0130: Phase 1b mutation envelope causality and idempotency metadata
+
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-QSYNC-002, UBU-Q0131 Blocks: Phase 1b mutation paths, Phase 2 sync statement compatibility Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What causality and idempotency metadata must every Phase 1b canonical mutation carry so that a single-Device Phase 1b mutation can later be wrapped as a Phase 2 `SyncStatement` without reshaping the emitted artifact?
+
+### Subquestions
+
+1. Which of the mandated fields are required on every Phase 1b mutation: idempotency key, `observed_versions`, origin Device, actor Identity, `authority_source`, and created, effective, and recorded timestamps?
+2. How is `observed_versions` represented against the existing single integer version counter on canonical objects?
+3. What abstract seam defers the Phase 2 ordering mechanism (hybrid logical clocks, Lamport clocks, vector clocks, per-object counters, signed append-only log, or content-addressed bundles) without leaking that choice into Phase 1b call sites?
+4. How are `effective_time` and `recorded_time` distinguished for an unattended batch advisory run that proposes overnight and is admitted the following morning?
+5. What is the deterministic duplicate-handling rule for a replayed idempotency key within a single Device?
+6. Do derived artifacts (Plan, Calendar, reports) carry envelope metadata, or are they excluded as `derived_state`?
+
+### Current direction
+
+Phase 1b carries the frozen field set on every mutation but does not choose the causality mechanism, which remains open under UBU-QSYNC-002 and must not be prematurely settled here. The ordering mechanism sits behind a trait so Phase 2 can supply its chosen clock without reshaping anything Phase 1b emits. Bitemporality is load-bearing in Phase 1b rather than theoretical, because unattended advisory batch runs propose at a materially different time than the operator admits, and clarify sessions span days. This is the first Phase 1b ticket's governing constraint: no later mutation path may emit an unshaped mutation.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0131: Phase 1b Device and execution-context identity
+
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-QSYNC-010 Blocks: Phase 1b origin-Device attribution, Phase 2 Device registry Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What is a Device in Phase 1b, and how are physical devices, UbU Devices, and execution contexts distinguished so that origin-Device attribution on every mutation is stable and meaningful with a single operator on a single machine?
+
+### Subquestions
+
+1. Is a Phase 1b Device a persisted canonical object, a configuration record, or a derived identity?
+2. Are the desktop instance, the CLI process, the unattended batch runner, and the advisory worker one Device or several execution contexts under one Device?
+3. What Device identifier remains stable across reinstallation, database reset, and re-authorization of external integrations?
+4. Does the Google Calendar surface count as a Device, an external projection surface, or neither?
+5. What minimum Device registry must exist in Phase 1b, given that a registry of one must not encode assumptions that break at two or many?
+
+### Current direction
+
+Phase 1b has one Device but must attribute every mutation to it explicitly, because canonical state is derived from valid statements rather than from machine hierarchy and no Device is automatically the canonical source of all state. The Quick UbU assumption that the desktop is authoritative and the phone is a command-only client was a correct single-machine simplification and must not be re-encoded as an invariant. The Google Calendar surface is a projection, not a Device. Any Phase 1b answer must avoid a design that only works for one or two Devices.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0132: Phase 1b tombstone and best-effort purge semantics
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-QSYNC-006, UBU-Q0130 Blocks: Phase 1b deletion paths, decomposition undo, projection deletion Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should Phase 1b represent deletion and redaction of canonical objects so that tombstone-then-best-effort-purge semantics hold on a single Device?
+
+### Subquestions
+
+1. What tombstone record shape replaces hard deletion for retired Tasks, removed Tasks, and discarded candidates?
+2. How does decomposition's parent retirement become a tombstone plus the existing parent snapshot rather than a row deletion?
+3. How does undo un-tombstone a retired parent without resurrecting a payload that was purged rather than merely tombstoned?
+4. What does a tombstone retain versus purge: id, Compartment label, timestamps, or nothing beyond existence?
+5. How do tombstoned canonical objects interact with queued external projection deletions, which are a separate and non-canonical surface?
+6. Does a tombstone itself carry envelope metadata per UBU-Q0130?
+
+### Current direction
+
+Phase 1b replaces hard deletes with tombstones. This makes decomposition undo cleaner rather than harder: parent retirement becomes a tombstone, and undo un-tombstones and restores the snapshot the decomposition record already captures. Purge propagation to Devices that were offline when Compartment policy changed remains open under UBU-QSYNC-006 and is not answered by Phase 1b.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0133: Phase 1b redacted Handle stability and disclosure limits
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-QSYNC-012 Blocks: Phase 1b Compartment egress, redaction-identity enforcement Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Should Phase 1b redacted object and Compartment Handles be stable per Device, per session, or per egress operation, and what may a Handle reveal?
+
+### Subquestions
+
+1. Is a Handle stable for the lifetime of the object, the lifetime of the Device, or a single egress operation?
+2. May a Handle reveal existence, time block, and duration only, and what is explicitly withheld?
+3. How is the redaction-identity invariant enforced so that no Compartment id or label crosses a denied boundary, not merely no payload?
+4. Does Handle stability leak correlation across repeated egress, and is that acceptable for a single operator with a single Compartment set?
+5. How do the existing `Handle` projection and clearance egress filter map onto real `CompartmentLabel` values, replacing the three-tier simplification?
+
+### Current direction
+
+The existing `Handle` projection and clearance egress filter went largely unused after the Google Calendar pivot and become load-bearing again under the Phase 1b rule: they are the compartment egress mechanism the redaction-identity invariant requires. The settled part is that a Handle hides content, not existence. The open part is stability granularity and whether per-operation instability is worth the correlation resistance for a single operator.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0134: Phase 1b projection conflict classes: auto-resolve versus required review
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-QSYNC-005, UBU-Q0073 Blocks: Phase 1b projection reconciliation, conflict severity vocabulary Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Which conflict classes arising between canonical state and an external projection may be auto-resolved in Phase 1b, and which must always require operator review?
+
+### Subquestions
+
+1. How is each external-edit quadrant (known object edited, known object deleted, unknown object appeared, expected object absent) classified as auto-resolvable or review-required?
+2. Is an external duration edit auto-admissible, and is an external time edit that pins a dynamic object different in kind?
+3. Is a confirmed external deletion auto-resolvable as an object removal, or must it always be reviewed?
+4. What conflict severity levels does Phase 1b need, and do they share one vocabulary with the mobile-stewardship severities of UBU-Q0073?
+5. How is an auto-resolved projection conflict recorded so that it remains auditable as a first-class event rather than a silent mutation?
+6. What happens when an external edit conflicts with a still-pending candidate for the same object?
+
+### Current direction
+
+Phase 1b resolves projection conflicts only, and the existing four-quadrant calendar import classification is the behavior to formalize rather than invent. Device-to-Device sync conflict classes — concurrent edits on two replicas, policy change while offline — remain open under UBU-QSYNC-005 and must not be treated as answered by this entry, which is scoped to the canonical-versus-projection family.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0135: Phase 1b local advisory worker protocol
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-QSYNC-007, UBU-Q0059, UBU-Q0136 Blocks: Phase 1b advisory operations, Phase 3 worker substitution Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What is the minimum worker protocol for a Phase 1b local advisory worker invoked through scoped authority and admission, such that a later remote worker is a transport substitution rather than a re-architecture?
+
+### Subquestions
+
+1. What `WorkerAuthority` scope does an advisory worker require, and what is it explicitly denied?
+2. What submission and result envelope does an advisory call use, and by what path does its output reach admission?
+3. How are worker failures, timeouts, and partial or malformed results represented without corrupting candidate state?
+4. What model and provider identity, version, and configuration metadata must a submission carry for provenance?
+5. What prevents an advisory worker from mutating canonical state directly, and how is that enforced rather than merely conventional?
+6. Which parts of the protocol must remain unchanged when the transport becomes remote, rented, or multi-provider?
+
+### Current direction
+
+Phase 1b builds the local advisory worker behind a scoped authority and the admission boundary so that the marketplace phase becomes a transport substitution. The invariant that advisory proposals never directly mutate state is non-negotiable and already holds in the Quick UbU implementation, where the advisor only enqueues candidates. The general Phase 2 worker-Device protocol for user-owned remote Devices remains open under UBU-QSYNC-007.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0136: Phase 1b single-Device token and worker-credential custody
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-QSYNC-011, UBU-Q0135 Blocks: Phase 1b external projection adapters, advisory worker configuration Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How are external integration tokens and local worker credentials stored, scoped, and revoked on a single Phase 1b Device without violating Compartment policy?
+
+### Subquestions
+
+1. Where do external OAuth tokens live relative to the canonical store, and are they canonical objects at all?
+2. What Compartment label governs a credential, and may a worker operating in one Compartment read a credential labelled for another?
+3. How is a token revoked or rotated, and what happens to queued projection operations that depended on it?
+4. What worker configuration counts as a credential: a local endpoint, a model name, a remote provider key?
+5. What must never be replicated, projected, or logged, and how is that enforced at egress rather than by convention?
+6. How are credentials excluded from store exports, backups, and diagnostic bundles?
+
+### Current direction
+
+Phase 1b holds external OAuth tokens and local worker configuration from its first adapter ticket onward, so custody is decided de facto unless decided deliberately. This entry is scoped to a single Device. Cross-Device replication, rotation propagation, and local encryption-key custody remain open under UBU-QSYNC-011, as does encryption at rest, which is explicitly not claimed before Phase 2.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0137: Phase 1b BackgroundProcess model for unattended advisory batches
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0084, UBU-Q0130, UBU-Q0135 Blocks: Phase 1b batch runner, unattended advisory execution Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What is the minimum `BackgroundProcess` model for Phase 1b's unattended advisory batch runner, which consumes compute and external credentials without occupying Calendar time?
+
+### Subquestions
+
+1. What fields does a Phase 1b `BackgroundProcess` need: operation kind, eligibility filter, pass caps, interval, and interrupt state?
+2. How are per-object pass counts represented as per-object state rather than a single aggregate blob, so they can later be versioned and replicated?
+3. How are interruption and resumption recorded as events rather than as in-memory state?
+4. What notification or escalation policy applies when a batch run fails, produces nothing, or fails for every object?
+5. Does a background advisory run occupy Calendar time, and if not, how is its compute cost and duration surfaced to the operator?
+6. What prompt-injection exposure does an advisory batch incur when it consumes operator-authored lore and external message content, and how is that scored?
+7. What is the contract for an unattended run that completes with no successful work, given that the operator may chain a power-off to a successful exit?
+
+### Current direction
+
+Phase 1b's advisory batch runner is the first real `BackgroundProcess`: unattended, interrupt-safe, pass-capped, and consuming credentials and compute outside Calendar time. The Quick UbU implementation already establishes incremental save per chunk, graceful interrupt, bounded reprocessing, and an exit contract usable for chaining a shutdown. Computer-use `AgentAction` semantics and irreversible-side-effect rollback metadata remain open under UBU-Q0084 and are not answered here.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0138: Phase 1b advisory candidate lifecycle and durable rejection
+
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0088, UBU-Q0077, UBU-Q0130 Blocks: Phase 1b review queue, candidate/admitted distinction Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What lifecycle states and durable-rejection semantics does a Phase 1b advisory candidate require between proposal and admission?
+
+### Subquestions
+
+1. What state transitions are valid for an advisory candidate: proposed, deferred, resurfaced, admitted, rejected, superseded, archived?
+2. What must a rejected candidate retain in order to suppress the same proposal being regenerated, without retaining the rejected content itself indefinitely?
+3. How is each candidate expressed as a first-class object with its own id, Compartment label, and version, rather than as an aggregate queue blob?
+4. What model influence is prohibited before operator review, and how is the prohibition enforced?
+5. When may a deferred candidate resurface, and on what new evidence?
+6. How is an admission or rejection decision recorded as a first-class event carrying actor Identity and `authority_source`?
+7. How does candidate review order interact with the state categories, so that a contested region is never presented as admitted state?
+
+### Current direction
+
+Phase 1b's advisory review queue is the candidate-to-admitted boundary in practice, and it already implements durable rejection as dedup against rejected history, so the lifecycle is being decided implicitly unless decided explicitly. The structural requirement is that clarify sessions, pending decompositions, and queued decisions become per-object labelled objects rather than aggregate blobs, because an aggregate holding state about many objects across many Compartments cannot be per-object versioned or partially replicated and leaks the existence of everything inside it. Extrospection-specific finding semantics remain open under UBU-Q0088.
 
 ### Resolution
 
