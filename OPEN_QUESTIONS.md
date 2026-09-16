@@ -532,7 +532,7 @@ Resolved. See UBU-D0203.
 
 ## UBU-Q0059: Execution-provider trust, worker backends, and privacy-preserving compute roadmap
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016 Blocks: Phase 2 personal worker devices, hosted compute policy, third-party provider compatibility, Phase 1b advisory worker boundary Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: UBU-Q0016 Blocks: Phase 2 personal worker devices, hosted compute policy, third-party provider compatibility, Phase 1b advisory worker boundary Resolved by: UBU-D0254 Last scored: 2026-09-16 Scored from commit: None
 
 ### Question
 
@@ -557,7 +557,7 @@ Phase 1b re-scope: this question is pulled forward from Phase 2 under the Phase 
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0254`: every non-local execution backend is an explicitly authorized, interchangeable advisory worker behind `WorkerAuthority`, Compartment/export admission, payload minimization, provenance, user-visible routing, and CPU certification on return. The open-core planner must remain self-hostable through the FOSS schemas, Compact Calendar representation, planning loop, and CPU admission/certification path; corporate hosted compute, third-party providers, appliances, FHE-like encrypted compute, and idle-compute monetization are optional future backends or packaging choices, not privileged dependencies.
 
 ---
 
@@ -2313,7 +2313,7 @@ Open.
 
 ## UBU-Q0133: Phase 1b redacted Handle stability and disclosure limits
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0150 Blocks: Phase 1b Compartment egress, redaction-identity enforcement Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0150 Blocks: Phase 1b Compartment egress, redaction-identity enforcement Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
 ### Question
 
