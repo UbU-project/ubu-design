@@ -3676,3 +3676,36 @@ See DESIGN.md §2.5.
 **Status:** Accepted → DESIGN.md §27 (GitHub import). Governs the live import path in `ubu-orchestrator` and `ubu-github-adapter`. First applied by the live-ingestion wave (O20/GA2/D19). Companion to `UBU-D0244` (live projection).
 
 See DESIGN.md §27.
+
+---
+
+## UBU-D0246: The model-committee sends dependency-closure context, not whole canonical files
+
+**Status:** Accepted → model-committee `IMPLEMENTATION_CONTRACT.md` v0.4; `PROMPT_CONTEXT_PLAN.md`. Extends `UBU-D0150` (model-committee architecture) and `UBU-D0176` (file authority model).
+
+`model-committee` v0.3 injected every canonical file into every work prompt in full. Against this repository that was about 769,000 characters, roughly 7.7x the tool's own prompt budget, and it grew with the corpus rather than with the question being answered.
+
+Prose compression was tried first and reached its floor. Sixty Phase 1 decisions were compressed against their `→ DESIGN.md §N` pointers and twelve solved questions were tombstoned, removing about 178,000 characters. Measured duplication across the whole corpus after that is under 4,000 characters. The remaining bulk is not redundant, so the budget could not be closed by editing text.
+
+v0.4 sends only the context a selected question needs, resolved by following the reference graph this repository already maintains:
+
+- the selected question, plus the transitive closure of its `Depends on:`;
+- the decisions those questions name in `Resolved by:`, plus decisions cited in their bodies;
+- the sections those cite by file-qualified `§` reference;
+- a small always-include core for cross-cutting material nothing links to.
+
+Mean prompt context falls to about 0.40x the budget from 7.7x. `prompt_size_warning` becomes a per-question signal instead of firing on every run.
+
+Consequences for this repository, which are the load-bearing part of this decision:
+
+1. **Section pointers are now functional, not decorative.** A question that links to nothing is answered with almost no context. The `→ DESIGN.md §N` convention already carried by 189 decisions is what makes closure work, and it must be maintained on new questions and decisions. `check` reports `QUESTION_CONTEXT_THIN` and `QUESTION_SECTION_REF_UNRESOLVED` so a missing or broken edge is visible rather than silent.
+
+2. **Only file-qualified references resolve.** A bare `§15` is ambiguous across five source files and is ignored rather than guessed at. Write `DESIGN.md §15`, not `§15`.
+
+3. **`DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md` is a read-only fifth source.** Phase 1b questions depend on vocabulary defined only there — `SyncStatement`, `observed_versions`, `effective_time`, `recorded_time`, `derived_state` appear zero times in `DESIGN.md`. It is read and injected but deliberately not in the patch allowlist, so the committee may reason about it and not rewrite it. Extending write authority to it would be a change to `UBU-D0176` and is not made here.
+
+4. **The file-hygiene prompt rules are withdrawn.** v0.3 instructed models to tombstone solved questions, remove duplicate information across source files, and compress to minimum. All three require seeing the whole corpus. Under excerpts, "remove duplicate information" would instruct a model to delete text whose other copy it cannot see. Hygiene that still matters belongs in `check`, where whole files are visible. Note the consequence: nothing now instructs tombstoning of a question this process resolves, and that is a known gap.
+
+5. **Runs stay auditable.** `manifest.prompt_context` records the exact questions, decisions, and sections a prompt was built from, and `runs/<run-id>/snapshot/` still holds the full files. A reviewer can see both what the model was shown and what the repository contained.
+
+This does not change what is canonical. Accepted design state still exists only when a human operator commits to this repository.

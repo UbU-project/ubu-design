@@ -532,7 +532,7 @@ Resolved. See UBU-D0203.
 
 ## UBU-Q0059: Execution-provider trust, worker backends, and privacy-preserving compute roadmap
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016 Blocks: Phase 2 personal worker devices, hosted compute policy, third-party provider compatibility, Phase 1b advisory worker boundary Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016 Blocks: Phase 2 personal worker devices, hosted compute policy, third-party provider compatibility, Phase 1b advisory worker boundary Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
 ### Question
 
@@ -822,7 +822,7 @@ Resolved. See UBU-D0212.
 
 ## UBU-Q0073: Mobile stewardship metadata and MVP repair rules
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016, UBU-Q0058 Blocks: mobile/local planning UX, Phase 1b device-side provisional re-planning Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016, UBU-Q0058 Blocks: mobile/local planning UX, Phase 1b device-side provisional re-planning Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
 ### Question
 
@@ -932,7 +932,7 @@ Open.
 
 ## UBU-Q0077: Realtime interaction session and candidate update schema
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0025, UBU-Q0031, UBU-Q0068 Blocks: realtime model adapters, discovery mode, meeting capture, interruption handling, Phase 1b candidate/admitted state boundary Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0025, UBU-Q0031, UBU-Q0068 Blocks: realtime model adapters, discovery mode, meeting capture, interruption handling, Phase 1b candidate/admitted state boundary Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
 ### Question
 
@@ -2231,7 +2231,9 @@ Open.
 
 ## UBU-Q0130: Phase 1b mutation envelope causality and idempotency metadata
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0140, UBU-Q0131 Blocks: Phase 1b mutation paths, Phase 2 sync statement compatibility Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0140, UBU-Q0131 Blocks: Phase 1b mutation paths, Phase 2 sync statement compatibility Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+
+Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §4, §8, §9, §15.
 
 ### Question
 
@@ -2258,7 +2260,7 @@ Open.
 
 ## UBU-Q0131: Phase 1b Device and execution-context identity
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0148 Blocks: Phase 1b origin-Device attribution, Phase 2 Device registry Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0148 Blocks: Phase 1b origin-Device attribution, Phase 2 Device registry Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
 ### Question
 
@@ -2284,7 +2286,7 @@ Open.
 
 ## UBU-Q0132: Phase 1b tombstone and best-effort purge semantics
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0144, UBU-Q0130 Blocks: Phase 1b deletion paths, decomposition undo, projection deletion Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0144, UBU-Q0130 Blocks: Phase 1b deletion paths, decomposition undo, projection deletion Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
 ### Question
 
@@ -2311,7 +2313,7 @@ Open.
 
 ## UBU-Q0133: Phase 1b redacted Handle stability and disclosure limits
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0150 Blocks: Phase 1b Compartment egress, redaction-identity enforcement Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0150 Blocks: Phase 1b Compartment egress, redaction-identity enforcement Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
 ### Question
 
@@ -2337,7 +2339,7 @@ Open.
 
 ## UBU-Q0134: Phase 1b projection conflict classes: auto-resolve versus required review
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0143, UBU-Q0073 Blocks: Phase 1b projection reconciliation, conflict severity vocabulary Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0143, UBU-Q0073 Blocks: Phase 1b projection reconciliation, conflict severity vocabulary Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
 ### Question
 
@@ -2364,7 +2366,7 @@ Open.
 
 ## UBU-Q0135: Phase 1b local advisory worker protocol
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0145, UBU-Q0059 Blocks: Phase 1b advisory operations, Phase 3 worker substitution Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0145, UBU-Q0059 Blocks: Phase 1b advisory operations, Phase 3 worker substitution Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
 ### Question
 
@@ -2391,7 +2393,7 @@ Open.
 
 ## UBU-Q0136: Phase 1b single-Device token and worker-credential custody
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0149, UBU-Q0135 Blocks: Phase 1b external projection adapters, advisory worker configuration Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0149, UBU-Q0135 Blocks: Phase 1b external projection adapters, advisory worker configuration Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
 ### Question
 
@@ -2418,7 +2420,7 @@ Open.
 
 ## UBU-Q0137: Phase 1b BackgroundProcess model for unattended advisory batches
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0084, UBU-Q0130, UBU-Q0135 Blocks: Phase 1b batch runner, unattended advisory execution Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0084, UBU-Q0130, UBU-Q0135 Blocks: Phase 1b batch runner, unattended advisory execution Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
 ### Question
 
@@ -2446,7 +2448,7 @@ Open.
 
 ## UBU-Q0138: Phase 1b advisory candidate lifecycle and durable rejection
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0088, UBU-Q0077, UBU-Q0130 Blocks: Phase 1b review queue, candidate/admitted distinction Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0088, UBU-Q0077, UBU-Q0130 Blocks: Phase 1b review queue, candidate/admitted distinction Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
 ### Question
 
@@ -2476,7 +2478,7 @@ Open.
 
 Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 2 sync topology Resolved by: None Last scored: Never Scored from commit: None
 
-Formerly UBU-QSYNC-001 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+Formerly UBU-QSYNC-001 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §3, §25, §26.
 
 ### Question
 
@@ -2491,9 +2493,9 @@ Open.
 
 ## UBU-Q0140: Phase 2 causality mechanism for sync ordering
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0130, Phase 2 sync statement compatibility Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0130, Phase 2 sync statement compatibility Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
-Formerly UBU-QSYNC-002 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+Formerly UBU-QSYNC-002 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §8, §15.
 
 ### Question
 
@@ -2510,7 +2512,7 @@ Open.
 
 Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 2 sync transport Resolved by: None Last scored: Never Scored from commit: None
 
-Formerly UBU-QSYNC-003 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+Formerly UBU-QSYNC-003 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §8, §27.
 
 ### Question
 
@@ -2527,7 +2529,7 @@ Open.
 
 Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 2 sync session recovery Resolved by: None Last scored: Never Scored from commit: None
 
-Formerly UBU-QSYNC-004 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+Formerly UBU-QSYNC-004 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §16, §17.
 
 ### Question
 
@@ -2541,9 +2543,9 @@ Open.
 
 ## UBU-Q0143: Auto-resolvable versus review-required conflict classes
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0134, Phase 2 conflict resolution Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0134, Phase 2 conflict resolution Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
-Formerly UBU-QSYNC-005 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+Formerly UBU-QSYNC-005 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §16, §17.
 
 ### Question
 
@@ -2557,9 +2559,9 @@ Open.
 
 ## UBU-Q0144: Best-effort deletion and redaction on offline Devices
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0132, Phase 2 deletion propagation Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0132, Phase 2 deletion propagation Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
-Formerly UBU-QSYNC-006 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+Formerly UBU-QSYNC-006 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §12, §18.
 
 ### Question
 
@@ -2574,9 +2576,9 @@ Open.
 
 ## UBU-Q0145: Minimum useful worker Device protocol for Phase 2
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0135, Phase 2 worker Device protocol Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0135, Phase 2 worker Device protocol Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
-Formerly UBU-QSYNC-007 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+Formerly UBU-QSYNC-007 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §20.
 
 ### Question
 
@@ -2592,7 +2594,7 @@ Open.
 
 Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 2 sync-state surfacing Resolved by: None Last scored: Never Scored from commit: None
 
-Formerly UBU-QSYNC-008 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+Formerly UBU-QSYNC-008 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §23.
 
 ### Question
 
@@ -2609,7 +2611,7 @@ Open.
 
 Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 2+ manual-review Task scheduling Resolved by: None Last scored: Never Scored from commit: None
 
-Formerly UBU-QSYNC-009 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+Formerly UBU-QSYNC-009 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §17.
 
 ### Question
 
@@ -2625,9 +2627,9 @@ Open.
 
 ## UBU-Q0148: Distinguishing physical devices, UbU Devices, installs, and workers
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0131, Phase 2 Device registry Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0131, Phase 2 Device registry Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
-Formerly UBU-QSYNC-010 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+Formerly UBU-QSYNC-010 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §4, §5.
 
 ### Question
 
@@ -2643,9 +2645,9 @@ Open.
 
 ## UBU-Q0149: Phase 3 token, key, and credential custody across Devices
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0136, Phase 3 token custody Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0136, Phase 3 token custody Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
-Formerly UBU-QSYNC-011 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+Formerly UBU-QSYNC-011 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §21.
 
 ### Question
 
@@ -2661,9 +2663,9 @@ Open.
 
 ## UBU-Q0150: Redacted object and Compartment handle stability scope
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0133, Phase 2 redaction identity Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0133, Phase 2 redaction identity Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
-Formerly UBU-QSYNC-012 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+Formerly UBU-QSYNC-012 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §10, §12.
 
 ### Question
 
