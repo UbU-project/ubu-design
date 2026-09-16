@@ -223,7 +223,6 @@ Short-turnaround execution decisions should be computed by UbU’s explicit deci
 
 ---
 
-
 ### 2.10 Associations and organizational introspection
 
 UbU models formal and informal organizations as **Associations**: Identity-scoped, perspective-bound coordination structures that emerge from Relationships, shared Objectives, commitments, norms, Logs, External References, and evidence.
@@ -294,7 +293,6 @@ For Phase 3, a minimal version of this is a premier feature because it allows a 
 Legacy-system integration can still provide value before native UbU-to-UbU messaging exists. UbU may ingest flat legacy messages and use a structured extraction layer to generate candidate planning state. When both parties have UbU, legacy transports may be upgraded by attaching, linking, or side-channeling a UbU Message Context Envelope while preserving the normal human-readable legacy message.
 
 This metadata must be intentionally bounded. UbU should not leak private Relationship history, hidden Objectives, private Association assumptions, or sensitive Compartment contents simply because the receiver would benefit from richer context.
-
 
 ### 2.13 Realtime and agentic AI boundary
 
@@ -2607,7 +2605,6 @@ Examples:
 - worker identity
 - organization identity
 
-
 ---
 
 ## 19. Associations
@@ -2712,7 +2709,6 @@ The organizational-introspection hook for outreach is: `Can your project prove f
 
 ---
 
-
 ## 20. Contextual Messaging and Message Extraction
 
 A **Message Context Envelope** is a bounded metadata wrapper around a human-readable message or external message reference.
@@ -2790,7 +2786,6 @@ The intended use is expressive and accessibility-oriented rendering: a receiver 
 Voice descriptors are sensitive. They must be opt-in, policy-governed, clearly separated from authentication, and protected against deceptive impersonation.
 
 ---
-
 
 ## 21. Agentic Interaction, MCP, and Delegation Substrate
 
@@ -2987,7 +2982,6 @@ These objects are not equivalent to ordinary user Calendar events. They may cons
 The long-term UX should present the current state transition and its evidence, constraints, expected effects, authority, privacy scope, and available actions.
 
 Phase 1 proves this through one recommended next Task and an inspectable explanation. Later cockpit surfaces may include message triage, Log review, Plan repair, Delegation Substrate packets, agent approvals, AssociationAttestation review, organizational introspection, and projection publication.
-
 
 ## 22. Relationships
 
@@ -3749,7 +3743,6 @@ Design changes should be recorded as:
 
 The project should prefer explicit decisions over hidden assumptions.
 
-
 ### Current strategic posture
 
 UbU has moved from pure design preparation into active pre-MVP dogfooding.
@@ -3789,7 +3782,6 @@ Public materials may name the staged roles already used by onboarding: workflow 
 Avoid language such as `the co-builder`, `highest-priority contact`, `one founding slot`, `competing for a role`, `exclusive inner circle`, `prove you belong`, `hand-picked elite`, or any phrasing that treats passive interest as worthless. Casual interest should be welcomed when it can become a workflow example, design feedback, contributor lead, prototype-funder lead, or public issue.
 
 ETHConf and similar follow-up should route each person into one concrete next action: send a workflow example, review a model-committee artifact, comment on a public design question, contribute a fixture or test, take a narrow implementation-ready issue, introduce a serious contributor, or discuss a trunk-compatible prototype sponsorship.
-
 
 ### Release Outreach Pipeline baseline
 

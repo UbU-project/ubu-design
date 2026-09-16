@@ -7,7 +7,6 @@ This file records accepted design decisions so they do not need to be rediscover
 
 ---
 
-
 ## UBU-D0001: GitHub repository is canonical for public design
 
 **Status:** Accepted → DESIGN.md §31
@@ -957,7 +956,6 @@ Codex CLI has subprocess-provider authority only. It may produce schema-constrai
 
 ---
 
-
 ## UBU-D0071: MVP Logs are append-only per-instance event records
 
 **Status:** Accepted
@@ -982,7 +980,6 @@ Automation Workers contribute to Logs through worker Identities by submitting ev
 
 ---
 
-
 ## UBU-D0072: Phase 1 public demo is an end-to-end GitHub dogfooding loop
 
 **Status:** Accepted
@@ -1002,7 +999,6 @@ Live GitHub mutation is not required in a public recording. A dry-run projection
 - Public messaging should describe any fixture, dry-run, or human-approval boundary explicitly.
 
 ---
-
 
 ## UBU-D0073: Core UbU planning and contributor surfaces are open source
 
@@ -1028,7 +1024,6 @@ Implementation repositories should use OSI-approved licenses. The default licens
 
 ---
 
-
 ## UBU-D0074: Phase 1 privacy promise is a minimal Compartment guardrail layer
 
 **Status:** Accepted
@@ -1053,7 +1048,6 @@ Phase 1 may claim local-first operation only in the limited sense that canonical
 
 ---
 
-
 ## UBU-D0075: Organization and worker web admin UIs are post-MVP public surfaces
 
 **Status:** Accepted
@@ -1075,9 +1069,7 @@ No organization-mode or worker-mode web admin UI is required for Phase 1. Phase 
 - Future organization and worker admin UIs have a stable default first-screen direction without forcing RBAC or full admin products into MVP.
 - Admin views must respect Compartment boundaries and mode boundaries.
 
-
 ---
-
 
 ## UBU-D0076: Relationship maintenance uses Objectives, history, and risk reports
 
@@ -1458,19 +1450,7 @@ The essay should distinguish UbU from adjacent tools as follows:
 
 **Status:** Accepted → DESIGN.md §2.5.1
 
-Phase 1 models human-complete plan quality as derived analysis over Plans, Tasks, Logs, Snapshots, affect constraints, and risk reports. It does not add a first-class canonical PlanQuality object in MVP. Any cached assessment is advisory and recalculable.
-
-A candidate Plan should be checked for:
-
-- fast feedback: important work has an observable checkpoint soon enough to revise before large loss;
-- checkpoint coverage: success, failure, blocked preconditions, user overrides, affect Snapshots, or External Events can reveal whether the Plan is still accurate;
-- affect margin: scheduled work does not consume energy, stress, mood, or recovery capacity beyond configured user-mode limits;
-- dignity preservation: failure presentation does not moralize the user, expose avoidable embarrassment, or reuse wording that frames observed limits as character flaws;
-- non-blaming revision: failed execution should suggest model repair, smaller Tasks, added checkpoints, updated estimates, recovery, clarification, delegation, or Objective reconsideration;
-- humane stretch: the Plan may exceed the current baseline when feedback is close, recovery margin remains, and the expected post-plan state is not worse;
-- destructive pressure: the Plan depends on overriding observed limits, lacks recovery, hides failure until too late, or repeatedly requires performance above observed capacity.
-
-Task failure remains an ordinary Log result, but the interpretation of that failure should be plan-centered. UbU should treat failure as evidence about estimates, constraints, dependencies, affect state, interruptions, or Objective fit unless the user explicitly records another interpretation.
+See DESIGN.md §2.5.1.
 
 ---
 
@@ -1524,15 +1504,7 @@ The implementation should be staged:
 
 **Status:** Accepted → DESIGN.md §25
 
-Automation Worker authority is represented through explicit capability grants associated with a worker Identity. The Identity is the external-facing actor and credential subject; the capability grant is the authoritative object that says what the worker may do for a specific parent UbU instance.
-
-Phase 1 capability verbs are `task.read`, `objective.read`, `universe_state.read_subset`, `external_event.append`, `snapshot.submit`, `mutation_request.submit`, `recalculation.request`, and `projection.github.request_update`. Direct creation or mutation of Tasks, Objectives, UniverseState, `pipeline_state`, or GitHub projection state is not granted to workers in Phase 1. Workers submit mutation or projection requests, and the canonical instance validates, applies, rejects, and logs the result.
-
-Capability grants may be scoped by object ID, Objective subtree, Task set, Compartment, external integration, operation kind, and time window. Compartment policy is a hard upper bound on any worker grant: a grant cannot authorize cloud LLM routing, external export, worker handoff, or payload disclosure that the relevant Compartment forbids.
-
-Workers can be revoked by disabling or deleting grants and invalidating or rotating credentials. Revocation affects future access and submissions only; prior Log entries remain append-only history. Credential rotation creates a new credential version for the worker Identity while preserving audit continuity unless the underlying grants are changed.
-
-A worker may serve multiple organization-mode or user-mode parent instances only through separate parent-specific grants, credentials, and audit trails. Cross-parent data sharing is forbidden unless each parent explicitly grants the route and all relevant Compartment policies allow it. User-mode workers are allowed, but access to affect or other personal data must use narrow read-subset grants and obey Compartment and low-security disclosure rules.
+See DESIGN.md §25.
 
 ---
 
@@ -1540,21 +1512,7 @@ A worker may serve multiple organization-mode or user-mode parent instances only
 
 **Status:** Accepted → DESIGN.md §4.1
 
-UbU Phase 1 must include a minimal first-person user-facing loop, not merely an internal planner, GitHub importer, model-committee loop, or project-state analyzer.
-
-Phase 1 requires two user-facing UX primitives:
-
-1. **Bootstrap interview**: UbU begins by asking a small number of questions that help form an initial model of the user, current context, important Objectives, relevant constraints, current or stale affect Snapshot, and immediate dogfooding/project context.
-
-2. **Next-action focus mode**: UbU can present one recommended next Task at a time, with an explanation of why that Task matters now. The full Plan remains inspectable, but the default user experience may reduce immediate cognitive load by showing a single next action.
-
-The Phase 1 next-action screen should include, at minimum:
-
-- the recommended Task;
-- estimated duration or work window when available;
-- why this Task matters now;
-- what inputs or constraints UbU considered;
-- current affect or stale-affect status when relevant;
+See DESIGN.md §4.1.
 
 ---
 
@@ -1562,18 +1520,7 @@ The Phase 1 next-action screen should include, at minimum:
 
 **Status:** Accepted → DESIGN.md §4.1
 
-Phase 1 is frozen as the minimum single-user `user_mode` implementation that proves UbU can coordinate UbU's own development through explicit state, an inspectable Plan, one recommended next action, feedback, recalculation, and bounded GitHub projection.
-
-The exact Phase 1 feature set is:
-
-- local single-user UbU instance for UbU-runs-UbU;
-- bootstrap interview, current or stale affect Snapshot handling, and initial Objective/Task seed creation;
-- live or fixture-backed GitHub import for issues, PRs, reviews, CI events, milestones, comments, and source links;
-- ExternalReference-style mapping between GitHub objects and UbU Objectives, Tasks, External Events, and Logs;
-- MVP Objective, Preference, Task, Container, UniverseState, Snapshot, Plan, Calendar, Log, Identity, Relationship, Compartment, Automation Worker, External Event, External Reference, and deferred Association-related schemas only to the depth required for the dogfooding loop;
-- schedulable Static and Dynamic Tasks with Objective links, duration, dependency/precondition/effect fields, lifecycle status, and moot handling;
-- lightweight UniverseState mutation and precondition evaluation sufficient for Task effects, affect, relationship-relevant facts, and GitHub/project facts;
-- append-only per-instance Logs with provenance, correction, annotation, worker-submission, and recalculation-trigger entries;
+See DESIGN.md §4.1.
 
 ---
 
@@ -1581,17 +1528,7 @@ The exact Phase 1 feature set is:
 
 **Status:** Accepted → DESIGN.md §19
 
-GitHub-to-UbU links are represented by first-class `ExternalReference` objects rather than by embedding all many-to-many source links directly on core objects. Lightweight `external_refs` fields may still appear on Log entries, provenance payloads, or import artifacts as convenience references, but they are not the authoritative external-link model.
-
-MVP `ExternalReference` required fields are `external_reference_id`, `external_system`, `external_object_type`, `external_object_id`, `ubu_object_type`, `ubu_object_id`, `relation_type`, `confidence`, `created_by_identity_ref`, `created_at`, `last_verified_at`, `sync_policy`, `projection_policy`, and `provenance`.
-
-Phase 1 external references may target Objectives, Tasks, External Events, and Log entries. This supports GitHub Issues mapping to multiple Objectives, Objectives mapping to multiple Issues, PRs and CI runs being retained as External Events, and comments or reviews acting as evidence for Tasks, Objective transitions, reconciliation, or projection decisions.
-
-MVP relation types are `represents`, `supports`, `evidence_for`, `source_event_for`, `projection_of`, `duplicate_of`, and `supersedes`. Relation types are schema-controlled enums in MVP, not free-form labels.
-
-Duplicate detection uses a normalized uniqueness key over `external_system`, `external_object_type`, `external_object_id`, `ubu_object_type`, `ubu_object_id`, and `relation_type`. Importers must normalize equivalent GitHub identifiers such as repository name, issue or PR number, node ID, URL, comment ID, run ID, and webhook delivery ID before comparing. Reobserving the same external reference updates verification metadata or creates an idempotent no-op Log entry rather than duplicating the external reference. Distinct relation types between the same objects are allowed.
-
-Automation Workers cannot directly create or mutate canonical External References in Phase 1. They may submit external-reference mutation requests only through authorized `mutation_request.submit` capability grants. The canonical instance validates authority, Compartment/export policy, duplicate keys, expected prior version, and provenance, then logs applied or rejected outcomes.
+See DESIGN.md §19.
 
 ---
 
@@ -1599,23 +1536,7 @@ Automation Workers cannot directly create or mutate canonical External Reference
 
 **Status:** Accepted → DESIGN.md §2.2.1
 
-UbU should not expose internally computed utility values as user-facing truth. Derived utils remain transient computational artifacts used for scheduling, ranking, and comparison. User-facing value remains grounded in explicit Preferences, user declarations, Logs, Snapshots, review, and later correction.
-
-Psychological and philosophical decision-theory inputs should usually enter Phase 1 through calibration, discovery, Calendar preview, Log review, reports, and reusable Tasks rather than through a large new psychology ontology.
-
-Prospect-theory implications are accepted as preference-calibration requirements, not as an exposed utility model. UbU may show default preference examples and common-situation emotional-value examples during onboarding, Calendar preview, or Log review so the user can make more thoughtful Preference statements. These examples are grounding aids. They do not become canonical Preferences unless accepted by the user.
-
-Temporal discounting is usually part of Preference for short-horizon Phase 1 planning. Long-horizon Objectives may later require explicit future-self or commitment-device modeling, but this is not a Phase 1 blocker.
-
-Habit-related behavior should be handled through discovery mode, Logs, Snapshots, configured integrations, sensor-derived observations, and later clarification prompts. Discovery mode is a user-selectable workflow state that the user may choose at any time, especially from a mobile app with useful embedded sensors. Discovery mode supports later Log review and UbU-directed reconciliation for undetailed or under-specified time periods.
-
-The Calendar is advisory. User overrides remain authoritative and should be treated as model evidence, not disobedience. Repeated overrides may trigger review, preference recalibration, Task decomposition, Objective reconsideration, or habit-pattern hypotheses only after appropriate user-visible reconciliation.
-
-Calendar preview and Log review are notable Tasks that should run on a regular basis. They help verify whether UbU is correctly modeling the user's intended behavior, actual behavior, affective constraints, and preference judgments. These review Tasks should remain inspectable, interruptible, and adjustable by the user.
-
-Self-determination theory and theory of planned behavior should primarily inform Calendar preview, Log review, reporting annotations, and optional user comments about motivation, autonomy, competence, relatedness, attitude, subjective norms, perceived control, and expected execution. Detailed modeling of those constructs remains open unless required by a concrete MVP workflow.
-
-Narrative identity is partly addressed through Objectives and Reports. Social identity theory, social choice theory, and game theory are important post-MVP open-question areas and should be tracked explicitly without blocking Phase 1 implementation.
+See DESIGN.md §2.2.1.
 
 ---
 
@@ -1639,17 +1560,7 @@ A Snapshot can be corrected or revoked, but only through a new Log entry. Correc
 
 **Status:** Accepted → DESIGN.md §26
 
-Organization mode uses the shared UbU core object model except where fields or behavior are intrinsically personal-affect-specific. Objective, Preference, Task, Container, UniverseState, Snapshot, Plan, Calendar, Log, Identity, Relationship, Compartment, Automation Worker, External Event, External Reference, and deferred Association-related objects are available in organization mode to the depth required by the organization or project planning workflow.
-
-Organization mode does not model intrinsic affect. In mode-specific schemas, intrinsic affect fields are absent. In shared implementation schemas that contain affect-capable fields for storage or migration convenience, those fields are disabled in organization mode and validators must reject organization-created intrinsic-affect values rather than silently treating them as unused.
-
-Relationship objects may exist in organization mode without affect dimensions. Organization-mode Relationships represent structured UniverseState between Identities such as contributors, maintainers, workers, projects, vendors, integrations, or external organizations. Non-affect relationship-relevant project information belongs in ordinary UniverseState facts, External Events, Logs, External References, candidate AssociationAttestations, Objectives, Tasks, or risk reports. Organization mode must not claim that the organization has a private emotional state toward another Identity.
-
-Organization-created Objectives, Preferences, and Tasks require `authority_source` metadata as defined in `UBU-D0185`.
-
-Before RBAC exists, organization-mode human users are represented as operator Identities with admin-equivalent authority over the instance. This is an MVP simplification only. Their actions must still be logged with actor Identity and provenance so future RBAC can be introduced without rewriting history.
-
-Organization-mode instances may later receive limited signals from personal user-mode instances only through explicit user-controlled sharing, Identity-mediated authorization, Compartment/export checks, and clear provenance. Phase 1 does not implement personal-to-organization cross-instance sharing. Future designs should prefer structural signals such as availability, commitment status, task completion, or user-approved projection summaries rather than raw affect, private relationship state, or broad personal context.
+See DESIGN.md §26.
 
 ---
 
@@ -1657,13 +1568,7 @@ Organization-mode instances may later receive limited signals from personal user
 
 **Status:** Accepted → DESIGN.md §4.1
 
-The Phase 1 bootstrap interview and next-action focus UX are the first user-facing proof that UbU is more than an internal planner, GitHub importer, or automation loop. They must stay narrow, inspectable, and honest about implemented capability.
-
-The bootstrap interview should ask only the minimum useful set of questions needed to seed the current user, context, available work window, important Objectives, relevant constraints, and current or stale affect Snapshot. It should not imply broad personal-data ingestion, therapeutic authority, complete life modeling, or autonomous coaching unless those capabilities have been separately implemented and disclosed.
-
-The next-action focus mode should present one recommended Task at a time with a clear explanation of why that Task matters now. The full Plan must remain inspectable. One-task focus is a cognitive-load reduction pattern, not permission to hide the planner, omit Calendar preview, or turn UbU into opaque automation.
-
-This decision is compatible with the Compact Calendar planning architecture. The default Plan supplies the inspectable ordered context behind the next-action recommendation, while reactive recalculation keeps the recommendation responsive when reality diverges. The planning layer should support the narrow UX rather than expanding Phase 1 scope beyond the single-user dogfooding loop.
+See DESIGN.md §4.1.
 
 ---
 
@@ -1967,18 +1872,7 @@ This early-preparation bias is not unlimited. Beyond a reasonable detailed horiz
 
 **Status:** Accepted → DESIGN.md §4
 
-The minimum Phase 1 bootstrap interview asks only enough to recommend one useful dogfooding Task from explicit state. The required questions are:
-
-1. `What are you trying to move forward right now?`
-2. `Which project context should UbU use for this first session?`
-3. `How much usable time do you have for the next work window?`
-4. `Is there a deadline, meeting, release target, or external event that changes what matters today?`
-5. `What work should UbU consider first?`
-6. `What is already blocked, unavailable, or not worth recommending right now?`
-7. `How are your energy, stress, and mood right now?`
-8. `When choosing between useful work, what should UbU favor today?`
-
-The answers map into existing Phase 1 objects. Project context, availability, deadlines, constraints, fixture/import source, and hard blockers become UniverseState facts, External Events, Tasks, External References, and Log entries as appropriate. Affect answers become a user-declared Snapshot; skipped or stale affect data creates or prioritizes an affect-collection Task. Initial work answers seed Objectives and Tasks. Tradeoff answers become Preferences only when UbU presents an explicit Preference statement and the user accepts it; otherwise they remain Log notes, Objective annotations, or noncanonical preview/review evidence.
+See DESIGN.md §4.
 
 ---
 
@@ -2248,32 +2142,7 @@ The protocol should eventually support at least these payload families:
 
 **Status:** Accepted → DESIGN.md §28
 
-Risk reports in MVP are derived, recalculable analyses over Calendars, Plans, Tasks, Logs, Snapshots, External Events, worker status, External References, and compact Calendar metadata. Risk remains reportable state, not a first-class canonical object.
-
-The Phase 1 MVP risk-report set is:
-
-- `p90_completion_time`;
-- `critical_path`;
-- `deadline_miss_probability`;
-- `affect_constraint_violation_probability`;
-- `low_compact_calendar_coverage_warning`;
-- `dependency_fragility`;
-- `worker_or_automation_bottleneck`;
-- `stale_affect_warning`;
-- `destructive_pressure_warning`;
-- `post_plan_depletion_warning`.
-
-Additional findings may be computed when source data is already available, but they are not required Phase 1 reports: relationship-maintenance neglect, preference uncertainty, repeated override or deviation patterns, motivation mismatch, stale or missing discovery-mode reconciliation, and overdue Calendar preview or Log review.
-
-Risk reports are computed on demand from the current Calendar or Plan. Implementations may cache a risk-report artifact with a Calendar, Plan, run artifact, release package, or UI view for auditability and performance. Cached reports are derived state and must be invalidated or marked stale when relevant Tasks, Logs, Snapshots, External Events, worker status, compact Calendar coverage, or recalculation triggers change.
-
-Automation Workers may compute or refresh risk-report artifacts only through explicit capability grants. Worker-produced risk reports are advisory until admitted by the canonical instance. Workers may submit report artifacts, refresh requests, mutation requests, or projection requests according to authority; they do not create canonical Risk objects or directly mutate Tasks.
-
-Risk reports may recommend follow-up Tasks or submit Task candidates through the normal request/review path, but they must not silently create canonical Tasks in MVP. Typical follow-ups include clarification, affect collection, dependency repair, worker retry or escalation, Calendar regeneration, Log review, Calendar preview, and GitHub projection or reconciliation.
-
-Risk reporting is part of UbU-runs-UbU release ceremonies. Release readiness and Release Outreach Pipeline packages should include deadline risk, critical path, dependency fragility, worker or automation bottleneck, and low coverage warnings when inputs exist, while respecting Compartment, Identity, export, and public-projection boundaries.
-
-UbU's PERT-superiority demonstration should be precise: Phase 1 should not claim to replace every PERT use. It should show that UbU handles the planning dimensions PERT leaves out: explicit preconditions and UniverseState, affect constraints, worker status, compact Calendar coverage, recalculation from Logs and Snapshots, and actionable Plan repair or next-Task recommendations.
+See DESIGN.md §28.
 
 ---
 
@@ -2281,59 +2150,7 @@ UbU's PERT-superiority demonstration should be precise: Phase 1 should not claim
 
 **Status:** Accepted → DESIGN.md §29
 
-Recalculation triggers are explicit event-like records that tell UbU when a Calendar, Plan, risk-report cache, explanation cache, or next-action recommendation may no longer reflect the current modeled state. A trigger is not a separate canonical domain mutation by itself; it references the Log entry, Snapshot, External Event, worker request, or clock condition that changed the planner's inputs.
-
-The Phase 1 trigger kinds are:
-
-- `task_completed`;
-- `task_failed`;
-- `task_moot`;
-- `observed_snapshot`;
-- `affect_confidence_decay`;
-- `external_event`;
-- `github_update`;
-- `user_override`;
-- `calendar_preview_due`;
-- `log_review_due`;
-- `discovery_mode_reconciliation_due`;
-- `elapsed_time`;
-- `low_compact_calendar_coverage`;
-- `worker_request`.
-
-Phase 1 user feedback controls such as snooze, reject, decompose, and override should be represented through ordinary Task, Log, or user-override payloads rather than separate trigger kinds unless implementation evidence shows that a distinct trigger kind is required.
-
-Phase 2 trigger kinds are limited to sync and personal-worker conditions that can invalidate a local Calendar: `sync_state_changed`, `device_reconnected`, `remote_worker_status_changed`, and `offline_window_changed`. These belong with multi-device local-first sync and user-owned worker coordination.
-
-Post-MVP trigger families include native cross-user message arrival, AssociationAttestation review, broad legacy-message ingestion, background AgentAction policy events, external compute budget or provider changes, and other high-level agentic or multi-user coordination events.
-
-Accepted Phase 1 triggers are logged using the existing Log event type `recalculation_triggered`. The event payload should include `trigger_kind`, `scope`, `target_refs`, `source_event_refs`, `requested_action`, `batch_key`, `reason`, and optional `idempotency_key`. `requested_action` is either `recalculate_now` or `mark_calendar_stale`.
-
-Automation Workers cannot directly create canonical triggers. A worker with the `recalculation.request` capability may submit a recalculation request. The canonical instance validates capability, target scope, Compartment/export policy, source evidence, and idempotency before recording an accepted `recalculation_triggered` Log entry or a rejected worker request/mutation Log entry.
-
-Triggers may be batched when they share the same Calendar or Plan scope and no trigger in the batch requires user-visible immediate repair before the batch window closes. Batching must preserve each source reference and reason. A short event-loop batch is acceptable for multiple imported GitHub events, worker updates, or stale markers.
-
-Immediate recalculation is required when the trigger can change the current or next recommended Task, hard feasibility, Task lifecycle state, dependency or precondition truth, Objective status, affect legitimacy, worker assignment needed for current work, or compact Calendar coverage below the configured minimum.
-
-Default Phase 1 immediate triggers are:
-
-- `task_completed`, `task_failed`, and `task_moot` for current, planned, dependency-relevant, or Objective-relevant Tasks;
-- `user_override`;
-- planner-relevant `observed_snapshot`;
-- planner-relevant `external_event`;
-- planner-relevant `github_update`;
-- `low_compact_calendar_coverage`;
-- urgent accepted `worker_request`.
-
-Stale marking is sufficient when the trigger only means cached Plans, Calendars, explanations, or reports must be refreshed before later reliance. Default stale-only triggers are:
-
-- `calendar_preview_due`;
-- `log_review_due`;
-- `discovery_mode_reconciliation_due`;
-- `elapsed_time` outside the reactive repair envelope;
-- `affect_confidence_decay` that has not crossed a configured planning threshold or current affect constraint;
-- low-priority `external_event` or `github_update` observations that do not affect the current Plan.
-
-`elapsed_time` is materialized only when crossing a modeled boundary such as Task start or end, Static Task proximity, review due time, stale-affect threshold, reactive horizon expiry, offline precompute boundary, or compact Calendar expiration. It does not create continuous clock-tick Log entries.
+See DESIGN.md §29.
 
 ---
 
@@ -2341,39 +2158,7 @@ Stale marking is sufficient when the trigger only means cached Plans, Calendars,
 
 **Status:** Accepted → DESIGN.md §9.5
 
-`moot` remains a first-class terminal Task status that is functionally equivalent to completion for planning but distinct for logs, reporting, audit, and user review. Every Task transition to `moot` requires a reason code.
-
-The Phase 1 MVP moot reason-code enum is:
-
-- `externally_satisfied`;
-- `superseded`;
-- `delegated`;
-- `no_longer_relevant`;
-- `invalidated_by_universe_change`;
-- `replaced_by_new_plan_structure`;
-- `user_declared_moot`;
-- `automation_obsolete`;
-- `duplicate`.
-
-This list is sufficient for MVP. It covers externally completed work, supersession, delegation, user-directed closure, world-state invalidation, plan-structure replacement, obsolete automation output, and duplicate imported or generated work. Additional nuance belongs in the `task_moot` Log entry's notes, reason text, provenance, External References, or correction/annotation entries rather than in ad hoc canonical codes.
-
-`duplicate` is included because duplicate Tasks are common when importing GitHub Issues, PRs, comments, fixtures, worker outputs, or decomposed work. Duplicate closure must remain queryable and auditable rather than being collapsed into generic supersession.
-
-`delegated` is separate from `externally_satisfied`. `delegated` means this Task is no longer assigned to this executor because responsibility moved to another executor, worker, Identity, Association, or delegation path. It does not assert that the underlying Objective or required world state is already satisfied. `externally_satisfied` means the required state became true through another action, observation, import, or external event.
-
-Reason codes are enum-only in MVP. Implementations may accept human-readable notes and implementation-local diagnostic labels, but canonical `moot_reason_code` values must be one of the accepted enum values. New canonical reason codes require an explicit schema migration or accepted decision.
-
-Selection guidance:
-
-- use `externally_satisfied` when the required state is already true;
-- use `superseded` when a newer Task, Objective, decision, or source artifact replaces this Task;
-- use `delegated` when responsibility moved to another executor and will be tracked elsewhere;
-- use `no_longer_relevant` when the Task is no longer useful but not invalidated by the world;
-- use `invalidated_by_universe_change` when an external state change made the Task wrong or impossible;
-- use `replaced_by_new_plan_structure` when decomposition, regrouping, or restructuring replaced this Task while preserving the underlying intent;
-- use `user_declared_moot` when the user explicitly says the Task is moot and no more specific code applies;
-- use `automation_obsolete` when worker or automation state makes generated work obsolete;
-- use `duplicate` when another active, completed, or canonical work item already represents the same work.
+See DESIGN.md §9.5.
 
 ---
 
@@ -2540,72 +2325,7 @@ These commands are instructions for a human operator or separately authorized re
 
 **Status:** Accepted → DESIGN.md §§15.2.2, 16
 
-Resolved question: `UBU-Q0016`.
-
-Compact Calendar planning for Phase 1 uses a staged explicit grammar rather than a bare DFS grammar.
-
-The minimum skeleton Plan representation includes:
-
-- Static Task placements with fixed start and end times;
-- dependency DAG frontier for the current planning scope;
-- prerequisite roots whose required state is not already true in the initial UniverseState;
-- ordered prerequisite chains with dependency and precondition references;
-- initial UniverseState assumptions, including known true, known false, assumed, and unresolved planner-relevant facts;
-- unsatisfied dependency diagnostics with failing Task, missing state, causal chain, and clarification alternatives where available.
-
-Skeleton generation must check the initial UniverseState before inserting a prerequisite Task. A dependency requires a state, not necessarily a new Task. If skeletonization cannot produce a viable baseline, ordinary planning stops and UbU reports a concrete diagnostic instead of continuing into optimization.
-
-Legitimization adds the minimum human-viability constraints and support work required to make the skeleton plausible for execution:
-
-- affect constraints in `user_mode`;
-- recovery, break, meal, sleep, and rest requirements when applicable;
-- transition buffers;
-- setup and teardown time;
-- context-switch limits;
-- slack and dependency-fragility thresholds.
-
-The legitimized skeleton baseline is the minimum feasible Plan. Support work inserted by legitimization is represented as ordinary Tasks or buffers with explanation lineage, not as hidden planner magic.
-
-The minimum candidate Plan representation after legitimization includes:
-
-- materialized Task placements;
-- decision envelopes for movable Tasks;
-- Plan probability metadata;
-- value score;
-- legitimacy threshold result or score;
-- hard-validation status;
-- explanation lineage back to Objectives, dependencies, preconditions, affect constraints, worker status, risk findings, and probability inputs.
-
-Execution profiles are allowed as follows:
-
-- `baseline`: greedy mean-duration planning is required as a benchmark and fallback reference.
-- `mobile_local`: deterministic skeletonization, conservative legitimization, exact hard-constraint checks, local repair recipes, basic decision envelopes, cached explanations, and short-horizon BFS-like branch or repair reconstruction are required.
-- `desktop_or_worker`: DFS-like candidate construction, local search, larger branch horizons, cached subplans, and solver-backed finalist validation are allowed.
-- `solver_validation`: CP-SAT, SMT/MaxSMT, local-search, or comparable exact/conservative solvers may validate finalists, diagnose contradictions, or certify hard constraints.
-- `gpu_or_hosted`: GPU-friendly scoring, stochastic simulation, affect scoring, robustness scoring, and learned-model inference may propose or rank candidates, but exact or conservative validation must certify selected Plans.
-
-Search methods are implementation techniques, not semantic authority. DFS-like, BFS-like, greedy, solver-backed, GPU-friendly, and local repair methods may be combined as long as hard constraints, explanations, and selected-Plan validity remain inspectable.
-
-Plan probability is represented as probability metadata with:
-
-- a scalar display probability;
-- a log probability for stable computation;
-- an optional probability interval;
-- a provenance expression over modeled probabilistic inputs;
-- correlation-group, scenario, joint-distribution, or shared-random-variable references when inputs are not independent.
-
-Implementations must not multiply probabilistic inputs unless independence is explicitly declared by the model. Correlated or unknown relationships must use joint scenarios, shared random variables, correlation groups, or conservative intervals rather than pretending independence. MVP may be conservative and mark correlation unknown instead of producing false precision.
-
-Compact Calendar encoding should include, when present in the planning scope:
-
-- skeleton Plan metadata;
-- legitimized skeleton baseline;
-- ordering constraints;
-- duration PDFs;
-- Task success probabilities;
-- external-event and interruption distributions;
-- affect constraints;
-- decision envelopes;
+See DESIGN.md §§15.2.2, 16.
 
 ---
 
@@ -2710,31 +2430,7 @@ Behavioral safeguards should generally be default-on, user-aware, uncertainty-tr
 
 **Status:** Accepted → DESIGN.md §2.11
 
-Resolved question: `UBU-Q0060`.
-
-UbU resolves external/cloud LLM routing through a provider-neutral descriptor plus a policy-gated route decision. Local Ollama-style providers, user-configured BYOK cloud APIs, user-owned remote workers, optional UbUCorp managed inference, and future compatible providers are all represented as LLM providers, but their trust boundaries remain explicit.
-
-The minimum `LLMProviderDescriptor` records `provider_id`, `provider_class`, `endpoint_or_worker_ref`, execution location, operator, region or jurisdiction when known, supported models, modalities, context window, structured-output and tool-use capability, safety behavior, retention/training/disclosure profile, cost and rate-limit metadata, credential reference kind, default-enabled state, and user-visible name. The Phase 1 provider classes are `local_process`, `byok_cloud_api`, `user_owned_worker`, `ubucorp_managed_gateway`, and `third_party_compatible`.
-
-Every provider adapter exposes the same narrow interface: list available models and capabilities, estimate cost and context fit, prepare a minimized request, invoke or stream completion, cancel when supported, and return usage, provider, model, and provenance metadata. The adapter interface normalizes execution mechanics only. It must not hide whether a request stays local, goes to a user-owned worker, or crosses a cloud/provider boundary.
-
-An `LLMRouteRequest` records purpose, actor Identity, related Task/Objective/workflow refs, required capabilities, candidate provider policy, cost and latency limits, ContextBundle or source refs, required output schema when any, review requirement, and requested advisory use. An `LLMRouteDecision` records selected provider and model, boundary classification, Compartment policy result, minimization and redaction summary, estimated cost, disclosure text, approval state, and Log refs for allowed or denied routing.
-
-Compartment policy is a hard upper bound on routing. `no_cloud_llm` content cannot be sent to cloud provider classes, including BYOK cloud APIs, UbUCorp managed gateways, or third-party compatible cloud providers. `no_external_export` content cannot be sent to external providers, remote workers, managed gateways, or third-party services except as redacted structural references that expose no protected payload. `local_only` content is limited to eligible local Devices and local providers. A capability grant, provider preference, workflow setting, or user click cannot override these denials.
-
-Cloud routing requires context minimization before invocation. The route should use a `ContextBundle` or equivalent envelope that records purpose, source refs, Compartment refs, Identity and Association refs exposed, destination provider, model ref, data categories exposed, redaction policy, minimization notes, retention policy, user-visible summary, creation time, expiry when applicable, and downstream candidate refs. Raw payload should be replaced by references, summaries, hashes, or redacted structural fields whenever the task can still be performed.
-
-BYOK credentials are credential references, not provider metadata payload. Secrets must not appear in provider descriptors, prompts, ContextBundles, Logs, or exported artifacts. Credential references may be scoped by provider, account, model family, Identity, Compartment, workflow, cost budget, and Device or worker. The default storage target is the local instance or OS/device secret store; a user-owned worker may hold a credential only when explicitly configured. Rotation and revocation preserve audit continuity through credential version refs without exposing the secret.
-
-UbUCorp managed inference is represented as a provider class, not as a mandatory dependency or privileged protocol path. It uses the same descriptor, route request, route decision, Compartment gates, disclosure, provenance, cost controls, and output admission pipeline as any other cloud provider. The FOSS core must remain local-capable, BYOK-capable, self-hostable, and useful when UbUCorp managed inference is unavailable.
-
-Any workflow using a cloud or external LLM must disclose, before or at execution time, the provider, model or model class, operator, local-vs-cloud status, destination region when known, whether BYOK or UbUCorp-managed credentials are used, data categories and Compartments exposed, retention/training profile, estimated cost when available, and that output is advisory until admitted through UbU validation and review. Approval may be per-run, per-session, per-workflow, or policy-based only when Compartment policy allows it.
-
-**Consequences:**
-
-- LLM routing can proceed without privileging Ollama, UbUCorp, or any single cloud API as the canonical interface.
-- `UBU-Q0079`, `UBU-Q0080`, `UBU-Q0083`, and `UBU-Q0084` may depend on this routing boundary while still refining MCP tools, Delegation Substrate fields, ContextBundle governance, and background-agent policy.
-- Provider-specific SDK details, exact secret-store implementation, and long-context bundle review UX may evolve without changing the minimum boundary.
+See DESIGN.md §2.11.
 
 ---
 
@@ -2742,30 +2438,7 @@ Any workflow using a cloud or external LLM must disclose, before or at execution
 
 **Status:** Accepted → DESIGN.md §25.1.2
 
-Resolved question: `UBU-Q0008`.
-
-Phase 1 worker work discovery uses explicit assignment by the parent UbU instance. Workers may poll a parent-specific assignment inbox or receive pushed notifications, but the inbox contains only work already offered or assigned to that worker Identity. Worker check-ins may advertise health, availability, local resource state, and capability metadata so the parent can select an eligible worker; they are not an open task-claim, work-stealing, bidding, or marketplace mechanism.
-
-A worker assignment is a scoped execution lease binding one Task or Delegation Substrate packet to one worker Identity for one active executor slot. The minimum assignment record includes `assignment_id`, parent instance ref, `task_ref`, worker Identity ref, capability grant ref, assigned-by Identity or authority source, assignment status, lease or heartbeat deadline, expected output summary, review requirement, idempotency key, and provenance. Assignment handoffs that expose protected or low-security content must also reference the relevant Compartment decision or ContextBundle.
-
-The minimum Phase 1 assignment statuses are `offered`, `accepted`, `in_progress`, `clarification_requested`, `delivered`, `completed`, `rejected_by_worker`, `cancelled`, `expired`, and `failed`. Assignment status does not replace Task status. A delivered assignment is awaiting parent review; a completed assignment means the canonical instance accepted the outcome or determined that no more worker action is required.
-
-Multiple workers may observe the same Task only through explicit read grants, observer roles, or separate review assignments. Observation does not confer execution authority. Only one worker may hold the active execution lease for a given executor slot on a Task in Phase 1. If parallel work is needed, UbU should model separate child Tasks or separate named assignment roles rather than allowing multiple workers to compete for the same Task. Competitive worker claiming and marketplace-style bidding are deferred.
-
-Every assignment lifecycle transition is logged. This decision extends the Phase 1 Log event-type set with `worker_assignment_updated`. Its payload records the assignment id, old and new status when applicable, worker Identity, Task ref, capability grant ref, lease deadline, reason, evidence refs, idempotency key, and whether recalculation was requested. Assignment events that affect the current or next recommended Task, worker bottleneck risk, or Plan feasibility create or batch a `recalculation_triggered` Log entry using the existing trigger taxonomy.
-
-Workers may reject assignments by returning `rejected_by_worker` with a reason and evidence when relevant. Rejection does not mutate the Task directly. The canonical instance decides whether to reassign, ask the user, mark the Task blocked, revise the Delegation Substrate packet, or leave the Task available for manual work.
-
-If a worker disappears mid-Task, the parent marks the assignment `expired` after the heartbeat or lease deadline, logs the transition, and treats the Task as unresolved unless separate accepted evidence proves completion or mootness. Late worker submissions after expiration are stale by default and must pass expected-prior-version, idempotency, authority, and review checks before they can affect canonical state. The parent may then reassign the Task, create a retry or repair Task, request clarification, or surface the worker bottleneck in risk reporting. Retry construction is defined by `UBU-D0187`.
-
-Workers may request clarification through assignment status or an authorized mutation/request payload. The canonical instance may convert the request into a clarification Task, user prompt, revised assignment packet, or rejection of the request. Workers may propose child Tasks or Task-to-Container restructuring only through authorized mutation requests; approved restructuring follows the accepted Task-to-Container and child Task semantics. Workers do not directly create canonical child Tasks in Phase 1.
-
-**Consequences:**
-
-- Assignment is parent-directed and audit-oriented; worker polling is only a delivery mechanism for explicit assignments.
-- Phase 1 avoids competitive worker claiming while preserving future compatibility with richer delegation, General Contractor, and Skill Barter workflows.
-- Worker disappearance, rejection, clarification, and child-Task proposals are handled through logged assignment transitions and mutation/request review rather than direct canonical writes.
-- Delegation Substrate details remain open in `UBU-Q0080`.
+See DESIGN.md §25.1.2.
 
 ---
 
@@ -2773,48 +2446,7 @@ Workers may request clarification through assignment status or an authorized mut
 
 **Status:** Accepted → DESIGN.md §27
 
-Resolved question: `UBU-Q0002`.
-
-GitHub remains a projection of UbU state, not the source of truth. Phase 1 uses GitHub as a contributor-facing interface while keeping canonical Objective, Task, External Event, External Reference, Log, Plan, and projection state inside UbU.
-
-Phase 1 may read any authorized GitHub object needed for import, planning, or reconciliation. Live GitHub writes are limited to explicitly managed projection surfaces:
-
-- `ubu:`-prefixed labels or another explicitly configured UbU-owned label prefix;
-- issue or PR body blocks delimited by UbU-managed HTML comments;
-- UbU-authored comments that include stable projection identity and managed-marker text.
-
-Milestones and assignees are preview-only by default in Phase 1. A live milestone or assignee write requires explicit human approval for that operation or a later accepted decision that narrows the automation rule.
-
-PR statuses, CI checks, branch protection, repository settings, issue titles, and unmarked issue or PR body text are read/import-only in Phase 1. UbU does not set PR status checks or mutate arbitrary repository metadata as part of MVP projection.
-
-All non-UbU GitHub edits are External Events. This includes edits outside UbU-managed surfaces and manual edits to UbU-managed labels, blocks, or comments. Such edits may create drift, mutation candidates, repair requests, Task candidates, or recalculation triggers, but they are not canonical state transitions by themselves.
-
-A GitHub edit cannot directly override canonical UbU state. Canonical changes occur only through UbU's normal admission path, validation, authority checks, Compartment/export policy, and append-only Logs.
-
-Missed updates are detected through manual sync, polling, webhook intake, fixture replay, or worker-submitted observations. The canonical UbU instance owns reconciliation admission. Automation Workers may poll GitHub, receive webhooks, compute candidate reconciliation reports, or submit projection requests when granted authority, but the canonical instance validates and logs accepted or rejected outcomes.
-
-The reconciliation report compares at least:
-
-- GitHub issues and PRs against External References that link them to UbU Objectives, Tasks, External Events, or Logs;
-- managed labels against the expected projection of `pipeline_state` or other accepted projection metadata;
-- managed blocks and comments against projection records and source UbU object refs;
-- GitHub comments, reviews, PR changes, CI runs, and milestone changes against External Events and Logs;
-- expected projection payloads against live GitHub state.
-
-Report items should include external object identity, matched UbU object refs, External Reference refs, observed GitHub version or timestamp, expected projection version when any, drift classification, severity, provenance, and recommended handling.
-
-MVP drift classes are `missing_external_reference`, `missing_external_event_log`, `stale_managed_projection`, `manual_edit_to_managed_surface`, `unexpected_ubu_label_or_block`, `foreign_edit_outside_ubu_surface`, `projection_request_failed`, and `github_object_missing_or_inaccessible`.
-
-Drift produces a report before repair. It may recommend repair Tasks, mutation requests, projection update requests, External Reference verification, or recalculation. It must not silently create canonical repair Tasks or perform live GitHub writes in Phase 1; those require human approval or a later explicitly accepted policy.
-
-Planner-relevant reconciliation findings create or batch `recalculation_triggered` Log entries with trigger kind `github_update`. Low-priority drift that does not affect the current Plan may mark projection or report caches stale instead of recalculating immediately.
-
-**Consequences:**
-
-- Phase 1 GitHub dogfooding can implement projection previews and live writes without deciding the full `pipeline_state` storage model in `UBU-Q0004`.
-- `UBU-Q0005` can define GitHub event triage against the boundary that every GitHub edit is an External Event unless admitted through UbU.
-- GitHub token custody is governed by `UBU-D0184`; this projection decision does not require the canonical instance to hold worker GitHub tokens.
-- Workers retain request/report authority only; canonical state admission and human-approved live writes remain with the parent UbU instance.
+See DESIGN.md §27.
 
 ---
 
@@ -2822,49 +2454,7 @@ Planner-relevant reconciliation findings create or batch `recalculation_triggere
 
 **Status:** Accepted → DESIGN.md §3
 
-Resolved question: `UBU-Q0036`.
-
-The minimum `model-committee` run log for v0.1 and v0.2 is a filesystem run directory anchored by `manifest.json`. The manifest is the index of every input, schema, prompt, raw provider output, parsed provider output, candidate patch, validation result, score result, selected artifact, and review artifact produced by the run.
-
-Required top-level artifacts are:
-
-- `manifest.json`;
-- `selected.patch` when selection succeeds or a human-review-required selected candidate exists;
-- `commit_message.txt` when a commit message is produced;
-- `review.md`;
-- `inputs/`;
-- `schemas/`;
-- `prompts/`;
-- `raw/`;
-- `parsed/`;
-- `patches/`;
-- `scores/`.
-
-The manifest required fields are `run_id`, `run_schema_version`, `tool_version`, `base_commit`, `working_tree_state`, `started_at`, `finished_at`, `question_id`, selected question title and metadata, canonical input snapshot paths and hashes, schema artifact paths and hashes, provider configuration summary, provider invocation records, proposal records, patch validation records, score matrix path, disagreement flags, quorum result, selection result, selected proposal ID, selected patch path, review artifact paths, exit code, and artifact-publication status or instructions path. `working_tree_state` includes at least a clean/dirty flag and a path list for uncommitted changes visible to the run.
-
-`inputs/` preserves snapshots of the canonical design files used by the run: `DESIGN.md`, `DECISIONS.md`, and `OPEN_QUESTIONS.md`. If derived files or other repository files are used by a consistency check or work item, those inputs are also preserved as snapshots or hash-addressed references.
-
-`schemas/` preserves the exact schemas or schema hashes used for work proposals, score results, the run manifest, provider invocation metadata, score-matrix entries, and review artifacts. A later schema migration may add fields, but a reviewer must be able to identify which schema version validated each artifact.
-
-`prompts/`, `raw/`, and `parsed/` preserve provider provenance. Each provider invocation receives an `invocation_id`. Its record includes provider ID, provider class, model name or alias, phase, command/argv shape with secrets redacted, timeout, start and end timestamps, exit status, stdout path, stderr path, raw output path, parsed output path, schema path or hash, validation result, and failure class when applicable.
-
-Provider-specific raw artifacts include Codex prompt files, Codex JSON outputs, Codex JSONL event logs, Codex stderr, Ollama prompts and raw responses, Claude Code prompts, raw Claude CLI JSON envelopes, and Claude schema-native `structured_output` payloads as extracted parsed artifacts. Provider failures are preserved with provider ID, model name when known, run phase, failure class, timeout or exit status, stderr or raw-response artifact path when available, and whether quorum remained satisfied.
-
-`patches/` preserves one candidate patch per proposal, mechanical patch-validation results, selected patch identity, and selected patch validation diagnostics. `scores/` preserves score-matrix entries with author provider, scorer provider, proposal ID, score, validity, rationale, risks, and required fixes; retained self-scores are diagnostic and marked as non-quorum evidence.
-
-Quorum and disagreement outcomes are first-class run artifacts. v0.2 logs preserve the score matrix, frontier cross-score provenance, disagreement flags, selected score, selected-score threshold result, selected patch validation result, quorum decision, human-review-required reason when applicable, and final exit code.
-
-`review.md` must include the selected patch summary, relevant validation status, score matrix summary, disagreement and quorum status, human-review-required reason when applicable, and the operator-run commands for publishing the run directory to `../model-committee-artifacts`. Those commands are instructions only; `model-committee` must not execute artifact publication, remote push, PR creation, or canonical-file mutation automatically.
-
-Run logs must not contain API keys, bearer tokens, credential files, private environment dumps, or unredacted secrets. They may record redacted argv shapes, credential reference kinds, provider IDs, configured model aliases, and artifact hashes needed for audit.
-
-**Consequences:**
-
-- `UBU-Q0036` is resolved for the v0.1/v0.2 minimum run-log and provenance format.
-- `UBU-D0064` remains the v0.1 provisional-format starting point; this decision adds the accepted v0.2 minimum and makes the manifest explicit.
-- The final long-term artifact format may evolve through schema migrations and later decisions, but the Phase 1 logging blocker is closed.
-- `UBU-Q0046` can focus on which artifacts are published publicly and how they are summarized, not on what the local run log must preserve.
-- Implementations may add artifacts or fields, but omitting the minimum artifacts requires a later accepted decision.
+See DESIGN.md §3.
 
 ---
 
@@ -2934,56 +2524,7 @@ ContextBundles are immutable after use. Corrections, narrower reruns, broader re
 
 **Status:** Accepted → DESIGN.md §27.5
 
-Resolved question: `UBU-Q0005`.
-
-GitHub event triage converts authorized GitHub observations into External Events, Logs, candidate Objectives, candidate Tasks, recalculation triggers, worker assignments, and projection requests. GitHub remains a projection and integration source, not canonical UbU state. A GitHub event therefore enters UbU through normalization, duplicate detection, External Reference matching, authority and Compartment checks, and append-only Logs before it affects planning.
-
-Phase 1 has four log-only cases:
-
-- duplicate webhook deliveries, fixture events, worker submissions, or reconciliation observations whose idempotency key already exists;
-- reconciliation checks that verify no meaningful change to a GitHub object or managed projection surface;
-- events outside the configured repository, object, milestone, or fixture import scope;
-- projection write acknowledgements already represented by an accepted projection Log entry when the acknowledgement reveals no new GitHub state.
-
-All other unique in-scope GitHub changes create a GitHub External Event and an `external_event_observed` Log entry, even if no Objective, Task, worker assignment, or projection update follows immediately. Source External References should link the GitHub object, delivery, timeline item, CI run, review, comment, or milestone record to the External Event and Log when the identifier is available.
-
-Phase 1 triage rules for the candidate event classes are:
-
-- `issue_opened`: create an External Event; create or link an issue-backed Objective when the issue represents durable work; create a triage or clarification Task when the issue lacks enough structure for planning.
-- `issue_commented`: create an External Event; create a response, clarification, review, contributor-follow-up, or evidence-review Task only when the comment asks for action, supplies blocker or acceptance evidence, or changes a relationship-maintenance or project-follow-up need.
-- `issue_labeled`: create an External Event; treat non-`ubu:` labels as evidence only; check UbU-managed labels for projection drift and recommend projection repair when they differ from accepted projection state.
-- `issue_closed`: create an External Event; only transition linked Tasks or Objectives after admission validates that the modeled effect or Objective state is satisfied; otherwise create a reconciliation or clarification Task when closure conflicts with UbU state.
-- `pr_opened`: create an External Event; link the PR to existing work when possible; usually create a PR-triage or review Task.
-- `pr_updated`: create an External Event; create a re-review, CI-wait, or projection-update Task only when commits, body, title, base branch, mergeability, or linked issue state affects active work.
-- `review_requested`: create an External Event and a review Task for the requested reviewer, user, or eligible worker path.
-- `review_submitted`: create an External Event; approvals may unblock existing Tasks; change requests, blocking comments, or failed review requirements create follow-up Tasks.
-- `ci_failed`: create an External Event plus a failure-analysis or fix Task; request Automation Worker assignment only when an admitted Task or Delegation Substrate packet has an eligible worker and explicit parent assignment path.
-- `ci_passed`: create an External Event; usually unblock or complete waiting Tasks and may request projection update; create a new Task only when a next action such as merge review, release step, or projection repair is required.
-- `milestone_changed`: create an External Event; create or update a release Objective, deadline fact, Calendar constraint, or release-planning Task when the change affects planned work.
-
-GitHub events create Objectives only when they introduce durable desired state, release scope, or accepted project work that is not already represented by an Objective. Routine comments, labels, CI transitions, PR updates, and reviews attach as evidence to existing Objectives or Tasks rather than creating analysis Objectives by default.
-
-GitHub events create Tasks when they imply concrete next action: triage, clarification, review, fix, projection repair, reconciliation, release planning, merge readiness, or contributor follow-up. Imported Tasks use normal Task admission, External References, provenance, Compartment/export checks, and duplicate detection.
-
-Recalculation uses existing trigger kind `github_update`. Immediate recalculation is required when the event can affect the current or next recommended Task, hard feasibility, dependency or precondition truth, Task lifecycle state, Objective status, milestone or deadline constraints, worker assignment needed for current work, projection state that affects current work, or risk-report validity. Low-priority events may mark Calendar, projection, explanation, or report caches stale instead of recalculating immediately.
-
-Automation Worker assignment is Task-driven, not GitHub-event-driven. A raw GitHub event may lead to a Task, Delegation Substrate packet, projection request, or reconciliation request; the parent UbU instance then explicitly assigns eligible worker work under the accepted worker-assignment model. Workers may observe, poll, or report GitHub events only under capability grants and do not create canonical state directly.
-
-GitHub projection update requests are projection-driven. They arise when canonical UbU state changes or reconciliation detects drift in managed labels, managed body blocks, managed comments, milestone previews, or assignee previews. A GitHub event may recommend a projection preview or update request, but live writes still follow managed-surface and human-approval rules.
-
-Duplicate detection uses two layers:
-
-- Delivery-level deduplication uses the strongest normalized key available: GitHub delivery ID; otherwise repository identity, event class, action, external object type and ID, actor, source timestamp, object version such as commit SHA or CI run attempt, and affected UbU target.
-- State-link deduplication uses the accepted External Reference uniqueness key plus Log `idempotency_key` checks so repeated observation updates verification metadata or records an idempotent no-op instead of duplicating External Events, Objectives, Tasks, projection requests, or reconciliation findings.
-
-Missed events are reconstructed during reconciliation by comparing live GitHub issues, PRs, timelines, comments, reviews, CI runs, milestones, and managed projection surfaces against External References, imported External Events, Logs, and projection records. Reconstructed events receive GitHub-derived `effective_at` timestamps when available, reconciliation provenance, confidence metadata when needed, and synthetic idempotency keys. If only final state is available, UbU records the observed state transition or drift finding rather than inventing a precise unseen sequence.
-
-**Consequences:**
-
-- The candidate MVP event classes have deterministic default triage without requiring GitHub to become canonical state.
-- `UBU-Q0004` is resolved by `UBU-D0182`; label and projection events can already be triaged as evidence or drift.
-- GitHub token custody is governed by `UBU-D0184`; event triage does not require any specific actor to hold GitHub write credentials.
-- GitHub event handling now aligns with append-only Logs, External References, worker assignment, recalculation triggers, and managed projection reconciliation.
+See DESIGN.md §27.5.
 
 ---
 
@@ -2991,30 +2532,7 @@ Missed events are reconstructed during reconciliation by comparing live GitHub i
 
 **Status:** Accepted → DESIGN.md §§17.5, 24.1.3
 
-Resolved question: `UBU-Q0009`.
-
-Phase 1 Automation Workers submit bounded candidate payloads, not direct canonical writes. The three supported payload families are event or observation submissions, mutation requests, and proposed patch artifacts. Event or observation submissions cover authorized External Event, Snapshot, Log-candidate, status, clarification, and recalculation requests. Mutation requests are the normal worker path for changing canonical UbU objects. Proposed patches are reviewable evidence or explicit patch-style mutation requests for supported textual or external artifacts; they are never direct edits to canonical state.
-
-A worker mutation request is a state-transition envelope. The minimum fields are `mutation_request_id`, `schema_version`, `parent_instance_ref`, `worker_identity_ref`, `capability_grant_ref`, `authority_source`, `submitted_at`, `target_ref`, `operation`, `operation_payload` or `new_value`, `reason`, `evidence_refs`, `provenance`, `idempotency_key`, and either `expected_prior_version` or an explicit no-prior-version reason for create-only requests. Optional fields include `assignment_ref`, `effective_at`, `old_value_observed`, `originating_context_bundle_refs`, `compartment_refs`, `compartment_policy_result`, `confidence`, `review_requirement`, `batch_id`, `batch_atomicity`, and `supersedes_request_ref`.
-
-Phase 1 mutation operations are a closed typed set: UniverseState mutation-list requests; Task lifecycle transition requests, including completion, failure, moot, and estimate or delegation-field updates; Objective transition requests; External Reference create, verify, supersede, or duplicate-link requests; `pipeline_state` projection-state requests; Task or Objective candidate creation requests; Task-to-Container restructuring requests; and Log correction or annotation requests. New operation kinds require a schema migration or accepted decision. Projection writes, GitHub API actions, and external side effects remain separate projection or AgentAction requests.
-
-A valid request is applied immediately only when schema validation, semantic validation, capability scope, Compartment/export policy, idempotency, expected-prior-version checks, assignment lease status, and operation review policy all pass and the request's `review_requirement` allows automatic application. Otherwise a valid request remains a submitted candidate awaiting human or policy review. Invalid, unauthorized, stale, duplicate-conflicting, or policy-denied requests are logged as `worker_mutation_rejected` with a sanitized reason and evidence references when safe. Every received mutation request creates a `worker_mutation_submitted` Log entry or operation-specific submission record; applied requests create `worker_mutation_applied` entries.
-
-Batches are allowed when the request envelope declares a `batch_id` and `batch_atomicity`. `all_or_nothing` batches validate the whole batch before application and either apply every item in declared order or reject the batch without partial canonical mutation. `independent_items` batches may apply valid items and reject invalid items separately, but this is not atomic. MVP implementations may restrict atomic batches to one parent instance and one validation transaction.
-
-Workers may request creation of new Objectives, Tasks, External References, child Tasks, or Containers only as mutation requests or candidates. They do not receive direct create authority in Phase 1. Objective creation should require review by default unless a later accepted policy grants a very narrow auto-create path. Task creation may be auto-applied only when the grant, assignment, operation kind, target scope, and review policy explicitly allow it.
-
-Worker mutations are reversible only through append-only repair. UbU does not rewrite or delete the original request or applied Log entry. Reversal uses a compensating mutation, Log correction, superseding object, Task moot transition, or projection repair. Requests should include enough observed old value, evidence, and expected-prior-version metadata to make compensation possible when the operation is logically reversible. Irreversible external side effects require projection or AgentAction mitigation metadata rather than ordinary mutation reversal.
-
-Stale overwrite prevention is mandatory. The canonical instance compares `expected_prior_version` or equivalent target version metadata with current canonical state before applying mutation requests. A mismatch rejects the request or converts it into a conflict candidate for review; it must not silently overwrite newer state. Idempotency keys prevent duplicate application, assignment leases prevent expired worker work from being accepted accidentally, and capability-grant versions prevent revoked or changed authority from authorizing late submissions.
-
-**Consequences:**
-
-- Worker authority remains request-based and bounded by capability grants, Compartment policy, expected versions, idempotency, assignment leases, and review policy.
-- Valid worker outputs can support automation without granting direct canonical write authority.
-- Invalid and stale worker submissions remain auditable without polluting canonical state.
-- `UBU-Q0084` remains open for external AgentAction side-effect modeling.
+See DESIGN.md §§17.5, 24.1.3.
 
 ---
 
@@ -3022,30 +2540,7 @@ Stale overwrite prevention is mandatory. The canonical instance compares `expect
 
 **Status:** Accepted → DESIGN.md §§2.10.2, 22.4
 
-Resolved question: `UBU-Q0100`.
-
-UbU classifies safeguards into four governance categories.
-
-**Product hard boundaries** are structural invariants UbU can enforce through the data model, routing layer, authorization checks, validation, storage layout, provenance, or append-only audit mechanics. The accepted hard-boundary set includes Compartment denials, privacy/export policy, data-access authorization, EvidenceUsePolicy restrictions, identity and Compartment isolation, integration authorization, provenance integrity, audit-record integrity, and immutable Log/correction rules. A user preference, workflow setting, provider preference, or ordinary approval click cannot override these denials.
-
-**External hard constraints** are provider, platform, app-store, integration, or legal constraints that UbU must obey for a specific jurisdiction, distribution channel, account, or external surface. They are source-labeled constraints rather than independent expressions of UbU philosophy. When practical, UbU should record their source, scope, affected integration or workflow, enforcement mechanism, review path, and last verification time. If the constraint is explicit and mechanically detectable, UbU may refuse the action. If the constraint depends on uncertain interpretation, UbU should disclose uncertainty and avoid claiming full legal or platform-policy enforcement.
-
-**User-configured required gates** are self-imposed user, Identity, Association, or project policy gates. They may block a workflow while enabled, but they are not product invariants and must not be documented as proof that the underlying behavioral judgment is mechanically certain. A required gate should record the configuring authority, scope, trigger, required review, bypass or disablement authority, expiration or review cadence when any, and Log refs for configuration, bypass, disablement, or denial.
-
-**Advisory behavioral safeguards** are fallible risk assessments. Examples include manipulation, coercion, harassment, stalking, deception, romantic or professional power-asymmetry risk, vulnerability exploitation, rumination risk, relationship-transition ethics, and similar behavioral misuse checks. These depend on classifiers, heuristics, evidence quality, cultural context, and user interpretation. They should generally be default-on, uncertainty-aware, transparent about false-positive and false-negative risk, user-overrideable, and introspection-relevant when bypassed.
-
-Behavioral-risk checks should not be unconditional hard gates by default. Treating them as hard gates would risk blocking legitimate autonomous action, over-trusting false negatives, and falsely advertising that UbU can reliably prevent misuse, illegal behavior, or harm. UbU may still refuse a workflow when the requested action violates a product hard boundary, an external hard constraint, or a currently enabled user-configured required gate.
-
-Documentation and UI copy must distinguish these categories. Strong claims such as enforce, prevent, disallow, cannot, or must not should be used only for named hard boundaries with an actual enforcement path. Behavioral-safeguard copy should use advisory language such as recommends, warns, asks for review, flags uncertainty, records bypass, or blocks only because the user configured this gate. Public documentation must not imply that UbU polices all harmful, illegal, coercive, stalking, harassing, deceptive, or manipulative behavior.
-
-This decision does not remove future safety work. It fixes the authority boundary: structural enforcement protects product integrity and privacy, external constraints are obeyed as external constraints, user-required gates express chosen self-governance, and behavioral-risk safeguards remain advisory unless another accepted hard boundary applies.
-
-**Consequences:**
-
-- `UBU-Q0101` remains open for the detailed UX of uncertainty display, bypass controls, disablement, and introspection consequences.
-- Relationship and RelationshipScopeTransition safeguards use the same taxonomy as the rest of UbU rather than a separate paternalistic gate model.
-- Product and public documentation must avoid claiming that UbU reliably prevents behavioral misuse or illegal behavior.
-- Implementation schemas may add a safeguard-category enum or policy-gate records later, but the Phase 1 design boundary is now settled.
+See DESIGN.md §§2.10.2, 22.4.
 
 ---
 
@@ -3053,17 +2548,7 @@ This decision does not remove future safety work. It fixes the authority boundar
 
 **Status:** Accepted → DESIGN.md §16.10; PLANNING_KERNEL_CONTRACT.md §§3, 7
 
-Task durations use a shifted log-normal distribution for stochastic duration estimates, and fixed-duration Tasks use an explicit delta model. The three-point stochastic duration estimate is now specified as `(min_seconds, mode_seconds, p95_seconds)`, where `min_seconds` is the optimistic lower support shift, `mode_seconds` is the most likely duration, and `p95_seconds` is the 95th percentile rather than a hard cap. The canonical conversion to log-normal `mu` and `sigma` is specified in `PLANNING_KERNEL_CONTRACT.md` and resolved by `UBU-D0174`.
-
-Correlation groups use named positive latent factors with explicit strength. Each Task may carry `correlation_groups: [{group: str, strength: float}]`, with strength in `[0, 1]`. Joint sampling in the Monte Carlo rollout stage uses Gaussian copula sampling over the deterministic latent-factor correlation matrix specified in `PLANNING_KERNEL_CONTRACT.md` and resolved by `UBU-D0172`.
-
-Latent factor loadings beyond the Phase 1 positive correlation-group model, negative correlations, learned correlation structures, and richer stochastic models remain post-MVP.
-
-**Consequences:**
-
-- The log-normal parameterization directly motivates and formalizes the forward-pull early-completion behavior described in `DESIGN.md §16.6`.
-- `UBU-Q0104` and `UBU-Q0106` are resolved for Phase 1 by the deterministic positive-factor matrix construction and `p95` duration semantics.
-- Future implementations may add richer stochastic models only if they preserve replayability, schema versioning, and CPU validation.
+See DESIGN.md §16.10.
 
 ---
 
@@ -3071,25 +2556,7 @@ Latent factor loadings beyond the Phase 1 positive correlation-group model, nega
 
 **Status:** Accepted → DESIGN.md §§13.7, 16.10; PLANNING_KERNEL_CONTRACT.md §6
 
-Affect constraints in the GPU planning kernel use sigmoid-family functional form. Piecewise-linear form is rejected for this use.
-
-Sigmoid is mandated over piecewise-linear because:
-
-- UbU intends to eventually infer AffectProfile parameters from execution history; sigmoid parameters are directly fittable with standard logistic regression or MLE whereas piecewise-linear fitting is a non-standard constrained optimization;
-- sigmoid naturally models gradual saturation at extremes, preventing the hard-clipping planning artifacts that piecewise-linear produces near constraint boundaries;
-- recovery curves typically follow an S-shape that sigmoid captures with two parameters and piecewise-linear approximates poorly with fewer than four hand-placed breakpoints.
-
-The three MVP affect dimensions — energy, stress, and mood intensity — each carry an independent sigmoid satisfaction function. The output is a constraint-satisfaction score in `[0, 1]`, not a literal success probability and not canonical utility. `energy` is `higher_is_better`; `stress` is `lower_is_better`; `mood_intensity` is `lower_is_better` and means affective arousal or volatility intensity rather than mood valence.
-
-Phase 1 must not require ordinary users to hand-edit raw sigmoid parameters. The UI should use qualitative calibration questions and map them into the internal schema. Conservative bootstrap defaults are permitted as temporary planning priors and must be marked for review. Advanced users may inspect and edit raw parameters.
-
-The GPU pipeline stage that applies sigmoid affect constraints is named `affect_legitimacy_filter`. Full legitimization in UbU design refers to the broader process of making a skeleton Plan human-viable by adding or respecting affect, recovery, transition, rest, sustainability, and support constraints. The `affect_legitimacy_filter` GPU stage implements only the sigmoid affect-constraint portion of that broader process; it does not replace or subsume full legitimization.
-
-**Consequences:**
-
-- `UBU-Q0105` is resolved for Phase 1 by the per-dimension schema and bootstrap UX semantics in `PLANNING_KERNEL_CONTRACT.md`.
-- Manual raw sigmoid editing is an advanced capability, not a normal Phase 1 onboarding requirement.
-- Composite or cross-dimension affect interactions remain post-MVP.
+See DESIGN.md §§13.7, 16.10.
 
 ---
 
@@ -3097,30 +2564,7 @@ The GPU pipeline stage that applies sigmoid affect constraints is named `affect_
 
 **Status:** Accepted → DESIGN.md §16.10; PLANNING_KERNEL_CONTRACT.md §5
 
-The GPU planning engine is a pure function. Its inputs are carried by `PlanningRequest`; its output is a `PlanningResponse` containing ranked PlanCandidates, diagnostics, warnings, and probability-quality metadata. The engine has no side effects, no mutable state, and performs no I/O. The CPU kernel owns all state mutation; the GPU engine is advisory only.
-
-The engine is invoked as a typed Python function call, not a subprocess or service. The framework is PyTorch.
-
-All tensor batches use padded fixed-size shape `(N_CANDIDATES, MAX_PLANNING_TASKS, ...)` with an explicit boolean validity mask tensor marking valid task slots. Ragged tensors are not used in Phase 1.
-
-`MAX_PLANNING_TASKS = 256` is the Phase 1 planning window ceiling. This constant is defined at a single site. Future premium or wide-horizon tiers may increase this ceiling by scalar configuration, subject to memory, scenario-count, correlation-matrix, validation-cost, and backend performance limits. Linear scaling is not assumed as a mathematical guarantee.
-
-The four pipeline stages are first-class design artifacts:
-
-1. **Skeleton sampling** — parallel shifted-log-normal or fixed duration sampling across candidates with vectorized topological-order constraint propagation;
-2. **`affect_legitimacy_filter`** — batch sigmoid affect constraint evaluation; eliminates candidates that fail feasibility thresholds;
-3. **Value scoring** — parallel utility, approximate robustness, affect-margin, and schedule-diversity scoring across surviving candidates;
-4. **Monte Carlo rollout** — joint scenario simulation using correlation-group Gaussian copula for finalists.
-
-The Phase 1 performance target is a local desktop/laptop GPU backend. A CPU reference path or fixture-backed deterministic path remains required for tests, CI, and contributors without GPU hardware. Mobile and cloud planner backends are deferred beyond Phase 1.
-
-GPU search proposes candidates. Hard constraint certification and final Plan validity are performed by the CPU kernel using exact or conservative validation, not by the GPU engine.
-
-**Consequences:**
-
-- Pure function architecture means the GPU engine can be tested by input/output comparison in isolation from other UbU state.
-- The CPU reference path is a Phase 1 requirement, not optional.
-- `UBU-Q0103` is resolved for Phase 1 by the stage-boundary semantics in `PLANNING_KERNEL_CONTRACT.md`; exact tensor dtypes and implementation classes belong in `model-committee`.
+See DESIGN.md §16.10.
 
 ---
 
@@ -3128,19 +2572,7 @@ GPU search proposes candidates. Hard constraint certification and final Plan val
 
 **Status:** Accepted → DESIGN.md §16.10; PLANNING_KERNEL_CONTRACT.md §§1-4
 
-The CPU/GPU boundary is defined by two typed objects — `PlanningRequest` and `PlanningResponse`. The dedicated minimal schema document for these objects is `PLANNING_KERNEL_CONTRACT.md`.
-
-`PlanningRequest` carries schema and planner versioning, request identity, effective time, generation time, mode (`fresh_generation` or `repair`), RNG seed, time-window policy, horizon policy, compute budget, task graph, UniverseState snapshot, AffectProfile, scoring policy, constraint policy, and privacy/provenance payload-safety proof. Optional fields include external event assumptions, repair context, explanation request, and debug flags.
-
-`PlanningResponse` returns ranked PlanCandidates plus diagnostics, warnings, probability-quality metadata, rejection counts, coverage estimate when available, and compute telemetry when available. `K=3` PlanCandidates remains the Phase 1 default: highest-utility, most-robust, and most-schedule-diverse.
-
-The Phase 1 performance target is a local desktop/laptop GPU backend. A CPU reference path or fixture-backed deterministic path remains required for tests, CI, and contributors without GPU hardware. Mobile and cloud planner backends are deferred beyond Phase 1.
-
-**Consequences:**
-
-- `UBU-Q0102` is resolved for Phase 1 by `PLANNING_KERNEL_CONTRACT.md`.
-- The interface contract is backend-agnostic and can be reused by deferred mobile and cloud backends when implemented.
-- GPU or CPU-reference planner output remains advisory until CPU validation certifies a candidate Plan.
+See DESIGN.md §16.10.
 
 ---
 
@@ -3162,7 +2594,6 @@ The Phase 1 performance target is a local desktop/laptop GPU backend. A CPU refe
 
 ---
 
-
 ## UBU-D0171: GPU pipeline stage-boundary contract
 
 **Status:** Accepted → PLANNING_KERNEL_CONTRACT.md §5
@@ -3181,7 +2612,6 @@ Stage 1 consumes a CPU-provided `topological_order`; the GPU engine does not dis
 - Implementation details may vary as long as they preserve the contract and replayable output semantics.
 
 ---
-
 
 ## UBU-D0172: Correlation-group matrix construction and PSD handling
 
@@ -3202,7 +2632,6 @@ CPU validation checks finite values, duplicate group declarations, range constra
 - Negative-correlation support remains a recorded roadmap item rather than an indefinite deferral.
 
 ---
-
 
 ## UBU-D0173: Sigmoid affect constraint semantics and bootstrap UX
 
@@ -3225,7 +2654,6 @@ Phase 1 UX must not require ordinary users to edit raw sigmoid parameters. The U
 - The bounded-optimum arousal model with task/category overrides is explicitly roadmapped for Phase 2, not abandoned.
 
 ---
-
 
 ## UBU-D0174: Shifted log-normal duration semantics and invalid triple handling
 
@@ -3314,34 +2742,7 @@ The canonical source files for model-committee question-answering and work-propo
 
 **Status:** Accepted → DESIGN.md §21.4
 
-Resolved question: `UBU-Q0079`.
-
-UbU may act as both MCP-style client and server in Phase 1, but the server-side tool surface is limited to query and candidate-submission operations. The Phase 1 exposed tool set is:
-
-- `plan_summary.read`;
-- `objective_status.query`;
-- `task_candidate.create`;
-- `log_candidate.submit`;
-- `plan_repair.submit`;
-- `clarification.request`;
-- `delegation_packet.prepare`;
-- `projection_preview.submit`;
-- `association_attestation_candidate.submit` for fixtures or manually reviewed Association-introspection dogfooding.
-
-These tools do not directly mutate canonical Objectives, Tasks, Logs, UniverseState, External References, Plans, Calendars, projection state, credentials, or external systems. Write-like calls produce candidate envelopes, worker-style mutation requests, projection requests, clarification requests, or review artifacts. The canonical UbU instance validates schema, semantics, authority, Compartment policy, idempotency, expected prior version, workflow or assignment status, and review policy before applying, rejecting, or leaving a candidate pending.
-
-A minimum MCP capability grant records grant ID, issuing parent instance, actor Identity, integration or agent identity, allowed tool names, operation kinds, payload schema refs, object scope, Objective subtree scope, Task set or Container scope, Compartment constraints, Identity or Association disclosure constraints when applicable, integration or destination refs, time window or expiration, rate and cost limits, review requirement, idempotency/version requirement, audit policy, lifecycle status, and revocation refs. Compartment policy is a hard upper bound; a grant cannot override `local_only`, `no_cloud_llm`, `no_external_export`, allowed-integration, allowed-device, identity-isolation, or EvidenceUsePolicy denials.
-
-Every tool call that reaches UbU creates an append-only audit record with redacted argument summary or hash, policy decision, source and destination Identity, Compartment result, cost and rate counters when relevant, result refs, denial or failure reason when safe, and downstream candidate refs. Denied calls fail closed. Retries require the same idempotency key or an explicit superseding request. Rollback uses append-only repair through compensating mutation, Log correction, supersession, Task moot transition, projection repair, or AgentAction mitigation metadata; prior invocation and candidate records are not rewritten.
-
-The minimum dogfooding fixture is a local loopback MCP adapter over synthetic or redacted UbU project data. It exposes the Phase 1 tools, exercises capability grants and Compartment denials, writes only candidate/review artifacts and audit Logs, and supports a dry-run client path for calling external tools without live external mutation.
-
-**Consequences:**
-
-- Phase 1 external agents can integrate with UbU without broad authority over the user's life model.
-- MCP tool access reuses the worker mutation, ContextBundle, Compartment, Log, and review boundaries rather than creating a parallel authorization model.
-- Direct canonical writes, credential mutation, and live external side effects remain outside MCP server authority unless a later accepted decision adds a narrower tool with explicit hard-boundary checks.
-- `UBU-Q0080` can define Delegation Substrate fields on top of this candidate and capability boundary.
+See DESIGN.md §21.4.
 
 ---
 
@@ -3444,54 +2845,7 @@ Failed and partially successful runs are publishable when labeled by failure cla
 
 **Status:** Accepted → DESIGN.md §§2.6, 4.1.3
 
-Resolved question: `UBU-Q0049`.
-
-A release outreach package is a derived release artifact set, not a new Phase 1 canonical entity. It is attached to ordinary Objectives, WorkItems, Logs, release artifacts, External References, Automation Worker outputs, and export/projection gates.
-
-Minimum package artifacts:
-
-- `manifest.json`: package ID, schema version, project/release refs, version or release range, base commit or build refs, generated/updated timestamps, actor Identity, package status, linked Objective/Task/Log refs, source summary, Compartment/export summary, and package hash list.
-- `claim_register.json`: claim ID, text, audience, claim kind, support status, evidence refs, source object refs, allowed public wording, review state, and publication eligibility.
-- `evidence_index.json`: release notes, accepted decisions, closed issues, commits, tests, fixtures, screenshots, recordings, risk reports, or other evidence with hashes, selectors, source refs, and capture/import provenance.
-- Draft artifacts: public release notes, developer release notes, video script, narration text, captions, YouTube title/description/chapters, announcement drafts, known limitations, future-work notes, and contributor calls-to-action when relevant.
-- `media_refs.json`: screenshot, UI-test export, fixture capture, and demo-recording references. Raw media is copied into the package only when export policy allows it and review approves it.
-- `export_review.json`, `approvals.json`, and `publication_plan.json`: privacy/export decisions, approval records, intended audiences, channels, destinations, and required next gates.
-
-Every public claim uses one support status:
-
-- `implemented_behavior`: backed by implemented code, accepted release notes, closed issue, test artifact, screenshot, recording, or other release evidence.
-- `mock_or_fixture_behavior`: backed by synthetic, redacted, fixture, or demo-only data and visibly labeled as such.
-- `future_plan`: backed by an accepted decision, roadmap item, issue, or future-work note, and visibly not implemented.
-- `speculative_goal`: aspirational or exploratory; allowed only when labeled and excluded from implementation claims.
-
-Known limitations are represented as limitations or future-work claims, not as hidden qualifiers on implementation claims. An `implemented_behavior` claim without evidence is invalid for public output.
-
-Media provenance records at least artifact ID, artifact type, source workflow or worker, generator tool, repo commit or build ref, test or demo flow ref, fixture/live/mock mode, input source refs, visible Identity refs, Compartment refs, redaction or minimization applied, hash, capture time, approval state, supported claim refs, retention policy, and export policy.
-
-Approval gates are separate and append-only:
-
-- package assembly may be automatic after source selection and local policy checks;
-- public export requires artifact-safety and Compartment/export review;
-- script, narration, and caption drafts require human review before being treated as approved public copy;
-- video rendering requires explicit approval because it may combine protected media, voice, captions, and public claims into a harder-to-edit artifact;
-- platform upload, public posting, mailing-list send, social posting, or any external channel mutation requires explicit human approval unless a narrow trusted auto-publication rule names the workflow, destination, audience, source scope, claim labels, Compartment/export constraints, and rollback or correction path.
-
-Compartment and Identity policy is a hard upper bound. `no_external_export` content cannot enter public packages except as redacted structural references. `no_cloud_llm` content cannot be sent to cloud drafting or video tools. Low-security un-compartmented content may be used only through a user-visible route. Screenshots and recordings must be reviewed for private data, contributor communications, personal data, credentials, private notes, hidden repository context, and unintended Identity disclosure before public use.
-
-Project configurations may define audience-specific communication Objectives. A minimum configuration maps audience labels to Objective refs, intended channels, allowed source categories, required package sections, tone or reading-level guidance, claim-label policy, destination refs, and approval policy. This is configuration over ordinary Objectives, not a new MVP Objective subtype.
-
-Phase 1 includes manual structured packages, claim/evidence registers, approved media references, manual or worker-assisted drafts, contributor calls-to-action tied to real issues or artifacts, export review, approval records, and publication plans. Phase 1 may generate renderer commands or upload instructions as review artifacts, but it must not auto-render videos, upload to platforms, publish posts, send announcements, or mutate external channels.
-
-Post-MVP work includes automated UI screenshot capture, demo-flow export, script generation from repository state, narration or voice generation, caption generation, thumbnail generation, video rendering automation, upload/publication connectors, analytics feedback, and trusted auto-publication policies.
-
-Local renderers, UI-test capture tools, LLM script drafters, TTS tools, caption generators, and thumbnail generators are Automation Workers when they produce candidate artifacts under capability grants without mutating external public channels. YouTube, social, mailing-list, website, app-store, or other public-channel APIs are external publication systems; calls to them are projection or AgentAction workflows with the approval gates above. A combined render-and-upload tool must be split by boundary or treated as an external publication system for the upload step.
-
-**Consequences:**
-
-- Release outreach can proceed through manual packages without waiting for automated video generation or publication.
-- Public release artifacts have a stable claim-label and provenance model that prevents mock, future, or speculative behavior from being described as implemented.
-- `UBU-Q0063` can reuse release outreach packages as public organizational-introspection evidence.
-- `UBU-Q0084` may later refine AgentAction details for external publication connectors without reopening the Phase 1 package boundary.
+See DESIGN.md §§2.6, 4.1.3.
 
 ---
 
@@ -3499,49 +2853,7 @@ Local renderers, UI-test capture tools, LLM script drafters, TTS tools, caption 
 
 **Status:** Accepted → DESIGN.md §§4.1.2, 17.8
 
-Resolved question: `UBU-Q0053`.
-
-Calendar preview and Log review are recurring model-maintenance Tasks, not new psychological ontology.
-
-Minimum Calendar preview Task:
-
-- Runs before the first recommended Task in a user-declared work window and after a material Calendar regeneration when UbU is about to rely on the new default Plan.
-- Shows the ordered default Plan, assumptions, affect/staleness status, availability, blockers, worker/projection state, and top risk/opportunity.
-- Asks whether the Plan is plausible, humane, motivating enough, context-consistent, and executable; user actions are accept, correct model, replan, snooze, skip, or change cadence.
-
-Minimum Log review Task:
-
-- Runs at the end of a work window or at next startup when unreconciled plan/reality differences exist, with a weekly catch-up if routine review is skipped.
-- Reviews completed, failed, moot, snoozed, rejected, overridden, and unobserved Tasks plus under-specified time periods.
-- Asks what model assumption should be repaired: duration or effect estimate, dependency or precondition, stale affect, interruption, social pressure, unclear Task, changed priority, changed Preference, or Objective fit.
-
-Cadence is stored as ordinary Task recurrence or snooze policy. Phase 1 defaults are per work window or daily for active use, weekly catch-up for skipped reviews, and on-demand review. The user may snooze, skip, disable automatic prompting, or choose per-session, daily, weekly, or manual cadence. Overdue review is a derived report or stale marker, not user blame.
-
-Canonical admission rules:
-
-- Logs: accepted preview/review answers that annotate a Plan, Task, Log entry, or decision use existing `log_annotation_added`, `log_correction_added`, `decision_recorded`, or outcome event payloads.
-- Preferences: only explicit accepted pairwise Preference statements become canonical Preferences.
-- Snapshots: only current user-declared affect, availability, capacity, or similar observed state becomes a Snapshot.
-- Objectives: only user-approved Objective status, importance, scope, or fit changes become Objective updates or annotations.
-- Tasks: only accepted lifecycle, estimate, dependency, precondition, decomposition, delegation, recurrence, or cadence changes mutate Tasks.
-- Reports: repeated deviation, motivation mismatch, social-pressure pattern, stale affect, overdue review, and expected-execution concerns are derived findings.
-
-Phase 1 does not add canonical fields for autonomy, competence, relatedness, attitude, subjective norms, perceived control, or expected execution. These constructs may appear as prompt labels, structured review-note categories, and derived report tags. They become canonical only through a concrete user-approved update to an existing object type.
-
-Noncanonical review notes include raw free text, unaccepted hypotheses, calibration examples, tentative motivation explanations, subjective norms, social pressure comments, and reactions such as `feels plausible`, `motivating`, or `humane` that the user has not admitted into canonical state. Noncanonical notes may be retained for local review and report generation, but they are not Preferences, diagnoses, Objectives, or durable psychological facts about the user.
-
-Question wording must use model-repair framing:
-
-- ask `What assumption should UbU repair?` rather than `Why did you fail?`;
-- ask whether the Plan fits today's context rather than whether the user is committed enough;
-- present social-pressure and motivation prompts as optional explanations, not accusations;
-- avoid therapy, diagnosis, moral judgment, compliance scoring, or paternalistic language.
-
-**Consequences:**
-
-- Self-determination theory and theory of planned behavior remain interface and reporting influences, not Phase 1 ontology.
-- Review Tasks can be implemented with existing Task, Log, Snapshot, Preference, Objective, Report, and recalculation-trigger mechanisms.
-- Preference-calibration examples are resolved by `UBU-D0200`; discovery-mode inference is resolved by `UBU-D0201`; deeper affect/personality modeling remains post-MVP in `UBU-Q0074`.
+See DESIGN.md §§4.1.2, 17.8.
 
 ---
 
@@ -3549,49 +2861,7 @@ Question wording must use model-repair framing:
 
 **Status:** Accepted → DESIGN.md §§17.2, 26.2
 
-Resolved question: `UBU-Q0004`.
-
-`pipeline_state` is generic projection-scoped workflow/project-management metadata, not GitHub-specific. Phase 1 uses it first for GitHub issue/PR dogfooding and managed labels.
-
-`pipeline_state` is not stored directly on `Objective` in Phase 1. It is stored in projection metadata keyed by `pipeline_projection_id` and target Objective. One Objective may have multiple current pipeline states across different projections. A projection has at most one current state per Objective; historical changes are represented by Logs.
-
-Minimum record fields:
-
-- `pipeline_state_id`
-- `pipeline_projection_id`
-- `target_ref` (`Objective` only in Phase 1)
-- `pipeline_state`
-- `authority_source`
-- `source_refs`
-- `external_reference_refs`
-- `updated_at`
-- `version`
-- `provenance`
-
-The Phase 1 enum is:
-
-- `unlabeled`
-- `invalid`
-- `under_specified`
-- `valid_unprioritized`
-- `unassigned`
-- `in_process_awaiting_pr`
-- `awaiting_review`
-- `awaiting_ci`
-- `complete`
-
-`complete` is workflow completion for the projection and does not by itself prove `Objective.status = completed` or `satisfied`.
-
-Automation Workers do not directly mutate `pipeline_state`. A worker may submit a `pipeline_state` projection-state mutation request through `mutation_request.submit`; the canonical instance validates authority, expected prior version, Compartment/export policy, External References, idempotency, and review policy before applying or rejecting it.
-
-Every accepted `pipeline_state` transition creates a `pipeline_state_transitioned` Log entry with old state, new state, projection id, target Objective ref, actor or authority source, reason, effective time, provenance, source refs, external refs, and any requested projection update. Rejected, stale, or unauthorized worker requests are logged through worker mutation rejection events.
-
-**Consequences:**
-
-- Objective lifecycle remains on `Objective.status`; workflow state stays projection-scoped.
-- GitHub managed labels project accepted `pipeline_state` values but do not become canonical state.
-- Multiple projections can coexist without changing the Objective schema.
-- Worker authority remains request-only for pipeline changes.
+See DESIGN.md §§17.2, 26.2.
 
 ---
 
@@ -3599,39 +2869,7 @@ Every accepted `pipeline_state` transition creates a `pipeline_state_transitione
 
 **Status:** Accepted → DESIGN.md §27.5
 
-Resolved question: `UBU-Q0006`.
-
-GitHub-derived Objectives and Tasks are admitted only when they reduce uncertainty or create executable work. Every unique in-scope GitHub observation still creates the External Event and Log required by `UBU-D0163`; most observations do not create new Objectives or Tasks.
-
-New Objective admission:
-
-- create a durable Objective only for durable desired state, release scope, or accepted project work not already represented;
-- create an analysis Objective only when the investigation cannot be represented as a Task under an existing Objective and has a parent Objective or durable source link, a crisp question, termination condition, owner or review path, source refs, and duplicate key;
-- otherwise append the event as evidence to an existing Objective or Task.
-
-Task admission:
-
-- create a Task only for a concrete next action with an actionable completion criterion, such as triage, clarification, review, fix, projection repair, reconciliation, release planning, merge readiness, contributor follow-up, or bounded analysis;
-- append evidence to an active equivalent Task instead of creating a duplicate;
-- batch low-priority evidence into reconciliation, Calendar preview, Log review, or risk-report refresh when no immediate action is needed.
-
-Analysis Objective duplicate detection uses a normalized key over parent Objective refs, analysis kind or failure class, source refs, affected artifact or GitHub object, unresolved question text, and active or terminal status. A matching active Objective receives appended evidence. A matching terminal Objective is reopened only by a superseding analysis Objective when new evidence materially reopens the question; otherwise the event is logged as duplicate or idempotent evidence.
-
-Analysis Objectives are instrumental. They do not receive independent Preferences in Phase 1. Scheduling value derives from parent Objective refs and is capped by the parent scope. A candidate analysis Objective without a parent or durable source link is under-specified.
-
-Analysis Objectives close through normal Objective transitions. They complete when accepted evidence answers the question or accepts the artifact. They become terminal or make related Tasks moot with accepted reason codes when duplicated, superseded, externally satisfied, obsolete, invalid, or no longer relevant. Closures are logged.
-
-Noise budget defaults:
-
-- one GitHub delivery creates at most one new Objective and one immediate Task unless a human-approved decomposition or worker mutation request creates a Container and child Tasks;
-- generated analysis work has a review window, owner or worker assignment path, and stale-after policy;
-- repeated equivalent events update External References, Logs, verification metadata, or cache staleness rather than creating more work.
-
-**Consequences:**
-
-- GitHub event handling remains task-oriented and does not turn every comment, label, CI transition, or PR update into management work.
-- Analysis work can still be modeled when it is bounded, parent-scoped, deduplicated, and automatically closed.
-- Implementations can enforce Objective and Task admission before worker assignment, recalculation, or GitHub projection requests.
+See DESIGN.md §27.5.
 
 ---
 
@@ -3639,26 +2877,7 @@ Noise budget defaults:
 
 **Status:** Accepted → DESIGN.md §27.3.1
 
-Resolved question: `UBU-Q0010`.
-
-Phase 1 GitHub credentials are scoped credential references plus secret material held by the execution actor that performs a GitHub API call. The default MVP path is worker-held credentials: a worker stores its token in its own OS/device secret store, while the canonical UbU instance stores only credential refs, scope metadata, capability grants, projection requests, External References, write results, verification metadata, and Logs.
-
-The canonical instance may hold a local GitHub credential only when it performs a human-approved local projection itself. It does not need to see worker-held tokens and must not store raw GitHub secrets in canonical objects, ContextBundles, Logs, run artifacts, projection payloads, or External References.
-
-Phase 1 GitHub write credentials should use a dedicated GitHub App installation, fine-grained bot/service token, or equivalent service identity for UbU-managed projection writes. A maintainer-owned token is allowed for single-user dogfooding when explicitly configured and logged as that operator's credential. Individual contributor tokens are not shared with the parent instance or other workers; they may be used only by that contributor's own authorized instance or worker.
-
-Credentials must be repository-scoped where GitHub supports it. Task-level authority is enforced inside UbU by capability grants, assignment leases, projection payload allowlists, idempotency keys, and review policy. Short-lived or narrower per-Task GitHub tokens may be used when available, but Phase 1 does not depend on provider-native per-Task tokens.
-
-Every live GitHub write must be verified by re-reading the managed surface and reconciling the observed version or timestamp against the expected projection. API success alone is not confirmation. Unverified or drifted writes remain reconciliation findings until admitted through the normal projection and Log path.
-
-MVP security assumes cooperative operator-administered local and worker enclaves, least-privilege credentials, explicit capability grants, human approval for live writes, append-only audit, and credential revocation/rotation. Phase 1 does not claim to protect a token from a malicious local administrator or a compromised worker that legitimately holds it.
-
-**Consequences:**
-
-- The canonical instance may coordinate GitHub projection without custody of worker-held secrets.
-- Worker GitHub authority remains bounded by both GitHub credential scope and UbU capability/assignment scope.
-- Repository scope is required when available; Task scope is an UbU authorization boundary unless provider-native short-lived tokens are available.
-- Reconciliation and read-after-write verification remain part of the write path.
+See DESIGN.md §27.3.1.
 
 ---
 
@@ -3666,39 +2885,7 @@ MVP security assumes cooperative operator-administered local and worker enclaves
 
 **Status:** Accepted → DESIGN.md §§17.9, 25.1 — value set and carrier exemption superseded by `UBU-D0226`
 
-Resolved question: `UBU-Q0013`.
-
-`authority_source` is a coarse enum that records the authority/source path for an accepted object, projection state, or candidate mutation. It is not sufficient authorization by itself and does not replace actor Identity, capability grants, External References, expected-prior-version checks, review policy, or Log provenance.
-
-Phase 1 required carriers:
-
-- organization-mode accepted `Objective`, `Preference`, and `Task` records;
-- `pipeline_state` projection-state records;
-- worker assignment records;
-- worker mutation requests;
-- external projection requests, previews, and applied projection records;
-- Delegation Substrate packets when present.
-
-Ordinary user-mode `Objective`, `Preference`, and `Task` records created directly by the user do not require `authority_source`. Worker, projection, pipeline-state, and mutation-request records require it in any mode that uses those envelopes.
-
-MVP enum values:
-
-- `human_admin`: admin-equivalent human operator or human-approved import/projection action;
-- `automation_worker`: Automation Worker submission under a capability grant;
-- `github_event`: normalized GitHub event, webhook, fixture, or reconciliation observation;
-- `project_policy`: accepted project or organization policy/directive;
-- `imported_config`: bootstrap, fixture, or configured import source;
-- `llm_advisory`: model-generated candidate/advice; never sufficient authority without admission provenance;
-- `user_override`: user-mode explicit override of the current recommendation, Plan, Task choice, or modeled state.
-
-Values are schema-controlled for MVP. Specific Identity, source object, and evidence path belong in surrounding fields such as `actor_identity_ref`, `created_by_identity_ref`, `capability_grant_ref`, `source_refs`, `external_reference_refs`, `provenance`, and the append-only Log entry.
-
-**Consequences:**
-
-- Organization-mode value/work objects now have a closed coarse authority-source vocabulary without introducing RBAC.
-- Worker, projection, and mutation envelopes use the same vocabulary across modes.
-- `llm_advisory` remains advisory and cannot create canonical state without an admitting actor, review policy, and provenance.
-- Future RBAC or richer governance may add role and decision-procedure metadata without rewriting the MVP enum.
+See DESIGN.md §§17.9, 25.1.
 
 ---
 
@@ -3706,37 +2893,7 @@ Values are schema-controlled for MVP. Specific Identity, source object, and evid
 
 **Status:** Accepted → DESIGN.md §§16.2, 16.9; PLANNING_KERNEL_CONTRACT.md §§2, 4
 
-Resolved question: `UBU-Q0017`.
-
-Phase 1 compact Calendar coverage is an estimate, not an exact proof. It represents covered modeled probability mass within the recorded coverage scope, usually the reactive horizon. Exact coverage proof and complete post-MVP uncertainty coverage are not MVP requirements.
-
-MVP coverage includes only uncertainties represented in the compact grammar or PlanningRequest for that scope:
-
-- duration distributions and correlation groups;
-- Task success/failure probabilities when they affect branch reconstruction;
-- modeled external-event and interruption assumptions.
-
-Objective recurrence uncertainty is not included in MVP coverage. Evergreen recurrence is evaluated deterministically before generation or repair; probabilistic recurrence may become a later stochastic input.
-
-A compact Calendar stores:
-
-- `coverage_estimate`;
-- `uncovered_mass_estimate`;
-- `coverage_scope`;
-- `coverage_threshold_used`;
-- `coverage_inputs_summary`;
-- `probability_quality`;
-- warning or diagnostic refs when inputs are unmodeled, stale, or degraded.
-
-The default Phase 1 regeneration threshold is `0.99` for short-horizon branch coverage. Policy resolution is: Calendar-specific override, then execution profile or Device policy, then global default. The effective threshold is stored with the compact Calendar so later regeneration decisions are replayable.
-
-When recalculated coverage falls below the effective threshold, UbU records or batches a `low_compact_calendar_coverage` recalculation trigger and includes the finding in risk reporting. The requested action is `recalculate_now` when low coverage can affect the current or next recommended Task, hard feasibility, affect legitimacy, or default Plan; otherwise `mark_calendar_stale` is sufficient. Low coverage does not directly create a canonical Task or worker assignment. Follow-up Tasks or worker work may be recommended only through normal Task admission, worker assignment, and review policy.
-
-**Consequences:**
-
-- Coverage is auditable enough for regeneration without pretending mathematical completeness.
-- The same default `0.99` value remains the short-horizon branch target and regeneration threshold unless overridden by recorded policy.
-- Objective recurrence uncertainty can be added later as a typed stochastic input without changing the MVP coverage boundary.
+See DESIGN.md §§16.2, 16.9.
 
 ---
 
@@ -3744,40 +2901,7 @@ When recalculated coverage falls below the effective threshold, UbU records or b
 
 **Status:** Accepted → DESIGN.md §§25.1.2, 27
 
-Resolved question: `UBU-Q0020`.
-
-Phase 1 does not mutate failed worker-created child Tasks back to `active`. A failed attempt remains a failed Task with its own assignment, evidence, and Logs. When retry is warranted, the parent creates a new retry sibling Task with a new `task_id` under the same parent Container or lineage when one exists. The retry sibling carries `retry_of_task_ref`, `retry_root_task_ref`, `attempt_number`, `retry_policy_summary`, `source_failure_log_refs`, and evidence refs.
-
-Worker assignment failure on an existing Task may leave the underlying Task unresolved when no attempt Task was created. In that case retry or repair work is represented by a new assignment or retry/repair Task; accepted completion evidence or mootness is required before the underlying work stops being planned.
-
-The effective retry policy resolves in this order:
-
-- Task or Delegation Substrate packet;
-- parent Container or Objective;
-- worker or integration default;
-- global Phase 1 default.
-
-Worker and integration defaults cannot exceed capability grants, Compartment/export policy, assignment leases, idempotency, expected-prior-version, or review policy. Policy denials, authorization failures, Compartment/export denials, invalid mutation requests, required human review, and stale expected-prior-version conflicts are not automatically retryable.
-
-The global Phase 1 default is at most three total attempts per retry root, including the initial attempt. A policy may set a lower cap or require human review after any failure. Each retry attempt receives its own assignment and idempotency key. Retrying repeats precondition, capability, Compartment, expected-version, and review checks against current state.
-
-Logging uses existing event surfaces:
-
-- failed attempt Task: `task_failed`;
-- assignment status change: `worker_assignment_updated`;
-- worker request admission or denial: `worker_mutation_submitted`, `worker_mutation_applied`, or `worker_mutation_rejected`;
-- retry decision or retry sibling admission: normal Task creation or mutation-request admission path with retry metadata;
-- planner impact: `recalculation_triggered` when the failure affects current or next Task, feasibility, worker bottleneck risk, or report validity.
-
-Infinite retry loops are blocked by retry-root attempt caps, idempotency keys, expected-prior-version checks, assignment lease checks, failure-class nonretryability, and human review after cap exhaustion. Exhaustion stops automatic retry creation and routes parent work to human review, clarification, reassignment, repair, or an ordinary Task lifecycle decision such as leaving the latest attempt failed or marking work moot with an accepted reason code.
-
-Worker failure affects derived risk reports. Failed, expired, rejected, repeated, or exhausted worker attempts feed `worker_or_automation_bottleneck` and may affect dependency fragility, deadline risk, release readiness, and recalculation urgency. They do not create canonical Risk objects or silently create follow-up Tasks.
-
-**Consequences:**
-
-- Attempt history remains auditable because failed attempts are preserved instead of overwritten.
-- Retry lineage is independent of whether the retry root began as a direct assignment or as an automation child Task.
-- Implementations can use a conservative retry default without schema-level infinite loops.
+See DESIGN.md §§25.1.2, 27.
 
 ---
 
@@ -3785,28 +2909,7 @@ Worker failure affects derived risk reports. Failed, expired, rejected, repeated
 
 **Status:** Accepted → DESIGN.md §§9.4, 24.1.2
 
-Resolved question: `UBU-Q0021`.
-
-Phase 1 Automation/Super Automation expansion uses Task-to-Container restructuring. The outer automation Task is not also the Container. When an accepted worker or parent workflow decomposes automation into canonical children, the parent creates a separate Container with a new `container_id`, records `origin_task_ref` and mutation provenance, and usually moves the original Task to `moot` with `replaced_by_new_plan_structure`.
-
-Child Tasks are ordinary Tasks, normally Dynamic Tasks. Phase 1 does not add an `automation_step` subtype. A child may be Static only when it independently has fixed start and end times under ordinary Static Task rules.
-
-Automation-specific metadata stays in existing envelopes:
-
-- Container lineage/provenance for workflow-level intent, source Task, mutation request, and grouping;
-- Task delegation/executor fields or Delegation Substrate packets for child-specific execution intent, expected output, evidence, privacy scope, review, and escalation;
-- worker assignment records for lease, status, heartbeat, delivery, and review;
-- capability grants, mutation request refs, ContextBundle refs, External References, and Logs for authority, provenance, evidence, and audit.
-
-Workers may propose child Tasks or the restructuring Container only through authorized mutation requests. The canonical parent validates scope, expected prior version, Compartment/export policy, idempotency, review policy, and External Reference changes before admitting canonical children.
-
-Retries use `UBU-D0187`: a failed child remains failed, and retry work is a new sibling Task under the same Container or lineage with retry metadata.
-
-**Consequences:**
-
-- Automation workflows do not require a new WorkItem subtype.
-- Plans continue to contain Tasks only; Containers group automation structure and derive completion from child state.
-- Worker-created means worker-proposed and parent-admitted, not direct worker canonical write authority.
+See DESIGN.md §§9.4, 24.1.2.
 
 ---
 
@@ -3814,64 +2917,7 @@ Retries use `UBU-D0187`: a failed child remains failed, and retry work is a new 
 
 **Status:** Accepted → DESIGN.md §4.1
 
-Resolved question: `UBU-Q0033`.
-
-Phase 1 readiness is a derived planning signal, not canonical release authority. It may inform README or public status text only after human review; it must not by itself mark scope freeze, release readiness, or go/no-go decisions.
-
-Readiness reporting has two top-level scores:
-
-- `scope_freeze_readiness`: how stable Phase 1 design scope is after `UBU-D0097` and `UBU-D0175`.
-- `mvp_readiness`: how close the implementation is to a public Phase 1 MVP demo.
-
-Both scores are `0-100` and include evidence refs, last input commit, scorer version, blocking gates, and stale-warning state. The report must also show per-slice status instead of only a single aggregate number.
-
-Required Phase 1 slices:
-
-- bootstrap and seed model;
-- GitHub import and External References;
-- Objective/Task/UniverseState/Log admission;
-- Plan/Calendar generation and explanation;
-- next-action focus plus feedback/recalculation;
-- risk and human-complete plan-quality reports;
-- Compartment, worker, and projection authority boundaries;
-- GitHub projection preview or approved write plus reconciliation;
-- release outreach and public dogfooding artifact package when relevant.
-
-Default `mvp_readiness` weights:
-
-- 15 scope and blocker discipline;
-- 25 implementation slice coverage;
-- 15 user-facing loop evidence;
-- 15 integration/projection/worker/privacy boundaries;
-- 15 verification, fixtures, and deterministic tests;
-- 10 dogfooding/artifact/public-claim evidence;
-- 5 operational polish and contributor-run diagnostics.
-
-Score caps:
-
-- no solved Phase 1 scope-freeze decision: maximum 39;
-- any hard consistency failure in canonical files: maximum 49;
-- any unresolved `UBU-D0175`-certified blocker for the reported slice: maximum 69;
-- no runnable end-to-end dogfooding loop: maximum 59;
-- missing or failing Compartment/export, worker-authority, or GitHub-projection hard-boundary checks: maximum 74;
-- public demo or outreach claims without evidence labels: maximum 79;
-- no human-reviewed readiness report: maximum 89.
-
-Readiness bands:
-
-- `0-39`: design or consistency not stable enough for implementation signal.
-- `40-59`: implementation skeleton exists, but no reliable end-to-end loop.
-- `60-74`: private dogfooding candidate with known blockers or boundary gaps.
-- `75-89`: public-demo candidate requiring human review and polish.
-- `90-100`: MVP readiness candidate; release and scope-freeze claims still require human approval.
-
-A readiness report must name blockers, failing gates, stale inputs, manual assumptions, fixture/mock/live-data boundaries, and the next implementation slice most likely to raise the score. Model-committee may compute the report and propose README readiness text, but it must not update derived public readiness signals automatically.
-
-**Consequences:**
-
-- README readiness signals derive from an evidence-backed report, not from raw open-question count or model confidence.
-- Readiness is judged slice-by-slice after `UBU-D0175`; unresolved post-MVP or nonblocking questions do not reduce Phase 1 readiness unless they carry a valid blocker certificate.
-- Human review remains required before public readiness claims, release decisions, or scope-freeze claims.
+See DESIGN.md §4.1.
 
 ---
 
@@ -3909,15 +2955,7 @@ Classification rules:
 
 **Status:** Accepted → DESIGN.md §§1, 2.3.1, 4
 
-UbU's core motivation is to help individual human beings plan and implement life logistics. Organizational coordination, project management, Association introspection, and marketplace behavior are important emergent properties of the same model, but they are not the root purpose.
-
-The first Phase 1 MVP remains GitHub dogfooding because that is the bootstrapping path available to the project, not because UbU is primarily a developer project-management tool. Public and contributor-facing language should avoid implying that organizational introspection replaces user introspection or that organizational coordination is the center of the product.
-
-**Consequences:**
-
-- Resource and Skill modeling are central product directions even if delayed by bootstrapping.
-- Derived outreach documents should keep the personal life-logistics purpose visible.
-- Organization-mode and Association features should be framed as downstream or emergent from the user-sovereign planning model.
+See DESIGN.md §§1, 2.3.1, 4.
 
 ---
 
@@ -3925,19 +2963,7 @@ The first Phase 1 MVP remains GitHub dogfooding because that is the bootstrappin
 
 **Status:** Accepted → DESIGN.md §§4, 10.4
 
-Resource is a first-class long-term abstraction for task readiness. It represents physical, digital, legal, financial, informational, access-controlled, location, tool, and consumable prerequisites whose state affects whether a Task can begin, continue, or complete.
-
-Resource development is delayed from Phase 1 because of the bootstrapping development process, not because Resource is peripheral. UbU should try to include a thin Resource-aware task-readiness layer in Phase 3, provided it does not expand into full inventory or financial management before release.
-
-Phase 3 Resource scope should answer: what must be true about the world for this Task to be realistically executable? Minimal fields may include identifier, name, kind, availability state, location or access hint, owner Identity, Compartment, and notes. Task resource requirements may mark a Resource as required, helpful, blocking start, or blocking completion.
-
-Full inventory control, procurement automation, subscription management, bank syncing, investment tracking, receipt OCR, depreciation, tax categorization, double-entry accounting, and Quicken-like financial workflows are Phase 3B/Phase 4+ full-version-1.0 features or later, not Phase 3A requirements.
-
-**Consequences:**
-
-- `UBU-Q0114` should no longer describe Resource as merely post-MVP.
-- Phase 1 schemas should avoid blocking later Resource predicates.
-- The MVP-facing Resource feature is task readiness, not asset management.
+See DESIGN.md §§4, 10.4.
 
 ---
 
@@ -3999,15 +3025,7 @@ This tradeoff supports economic self-sufficiency without forcing the user toward
 
 **Status:** Accepted → DESIGN.md §21.7
 
-Skill Barter should build on the private Skill model, Resource/Skill readiness, Delegation Substrate, Identity, Association, evidence, and Compartment boundaries. It should not be presented as a Phase 1 marketplace, a token-first product, an illicit market, or a platform-captive closed ecosystem.
-
-Preferred framing is an open, user-sovereign skill economy or a self-reinforcing ecosystem for skill acquisition, task execution, and voluntary exchange. Users should become more capable inside and outside UbU, not locked into UbU.
-
-**Consequences:**
-
-- Skill Barter outreach should emphasize voluntary coordination, economic self-sufficiency, lifelong skill acquisition, privacy, pseudonymous capability, and lawful exchange.
-- Reputation and evidence questions remain open for later phases.
-- Marketplace operation should not delay private Resource/Skill usefulness.
+See DESIGN.md §21.7.
 
 ---
 
@@ -4015,15 +3033,7 @@ Preferred framing is an open, user-sovereign skill economy or a self-reinforcing
 
 **Status:** Accepted → DESIGN.md §4
 
-Phase 3 should be treated as the bridge from MVP/bootstrap work into the full product. Phase 3A may contain minimal Resource/Skill-aware task readiness and narrow Identity coordination that are still close to MVP expansion. Phase 3B and Phase 4+ represent the full version 1.0 release track.
-
-Phase 3B should expand user-facing Resource, Skill, Technique, DIY-versus-purchase/hire, and capability-graph features enough that UbU begins to feel like the intended life-logistics product. Phase 4+ may add mature inventory, Quicken-like financial extensions, public or federated Skill Barter, reputation/evidence, dispute workflows, and broader marketplace features.
-
-**Consequences:**
-
-- Phase 1 remains implementation-first and must not absorb Resource/Skill scope.
-- Phase 3 planning should explicitly separate thin readiness features from full inventory, finance, and marketplace systems.
-- Full version 1.0 messaging can emphasize life logistics, real-world capability acquisition, and Skill Barter direction without promising those features in Phase 1.
+See DESIGN.md §4.
 
 ---
 
@@ -4066,45 +3076,11 @@ Preference inference may consume only uncorrected counterfactual entries and mus
 - Optional reason prompts can stay lightweight without losing the fact of the decision.
 - No new Log event type is required beyond `decision_recorded`.
 
-
 ## UBU-D0199: Question decomposition reduces design burden, not question count
 
 **Status:** Accepted → DESIGN.md §§3.6, 3.7
 
-Resolved question: `UBU-Q0040`.
-
-Model-committee evaluates decomposition by unresolved design burden, not raw open-question count. A burden estimate combines:
-
-- dependency burden: unresolved dependency count, dependency depth, and blocker status;
-- ambiguity burden: mixed decision types, vague scope, missing acceptance criteria, or unclear authority class;
-- automation burden: automation-likelihood, validator availability, patchability, risk, and human-involvement class;
-- implementation burden: whether the question blocks a concrete Phase 1 slice, hard invariant, needed contract, or persistent schema choice.
-
-Answerability is a hard gate for ordinary answering:
-
-- no dependencies, solved dependencies, or dependencies answered in the same work item: eligible;
-- unresolved dependencies outside the work item: not eligible for ordinary answering;
-- blocked questions may be selected only for decomposition or consistency repair.
-
-A decomposition is valid when replacement questions:
-
-- preserve the parent's intent without expanding scope;
-- are narrower and have clear decision type, phase, priority, dependencies, automation class, blockers, and resolution conditions;
-- include lineage metadata, using `Decomposes: UBU-Qxxxx` or equivalent metadata once parser support exists;
-- reduce total burden, dependency depth, ambiguity, risk, or automation difficulty;
-- produce at least one answerable replacement now, or clearly shorten the path to answerability.
-
-A parent question may be marked decomposed only when accepted replacement questions are canonical and the parent no longer needs ordinary answering as one unit. It may be marked solved only when an accepted decision answers the parent. Until parser support for decomposed status and lineage metadata exists, leave the parent open unless an accepted decision resolves it.
-
-Work scoring rewards valid decomposition when it lowers burden or unlocks immediate work, even if open-question count rises. It penalizes proliferation that creates vaguer, harder, more coupled, dependency-heavier, or lineage-free questions.
-
-The `UBU-D0175` stop rule applies to replacement questions. A replacement question is not an MVP blocker unless it includes a valid blocker certificate. Dependency-reducing decomposition is preferred over waiting when it can create answerable work without violating accepted dependencies, hard invariants, or file/schema consistency.
-
-**Consequences:**
-
-- Raw open-question count is not used as the stop rule or decomposition score.
-- Blocked questions can be selected for decomposition, but not ordinary answering.
-- Future parser work may add first-class decomposed-status and lineage fields without changing the scoring rule.
+See DESIGN.md §§3.6, 3.7.
 
 ---
 
@@ -4112,49 +3088,7 @@ The `UBU-D0175` stop rule applies to replacement questions. A replacement questi
 
 **Status:** Accepted → DESIGN.md §§2.2.1, 4.1.2, 8.6
 
-Resolved question: `UBU-Q0051`.
-
-Phase 1 preference calibration is a small prompt library, not a new canonical value object or hidden utility model. The minimum library has six neutral example frames:
-
-- urgent external commitment versus important but nonurgent Objective;
-- emotionally costly repair, clarification, or maintenance work versus easier visible progress;
-- socially pressured request versus planned user-chosen Objective;
-- recovery or rest versus another useful Task;
-- short-term relief or cleanup versus long-term capability, relationship, or project importance;
-- decomposition of ambiguous work versus starting a larger unclear Task.
-
-Presentation budget:
-
-- Bootstrap shows at most two examples by default, after the user has named real Objectives or candidate Tasks.
-- Calendar preview shows at most one relevant example for the Plan being previewed.
-- Log review shows at most one relevant example for an unreconciled rejection, override, failure, or repeated deviation unless the user asks for more.
-- Skipping calibration is allowed; UbU records only the ordinary note or decision evidence needed for review.
-
-Each example is tagged with one or more Phase 1 calibration dimensions: `urgent_value`, `emotional_cost`, `social_pressure`, `recovery_value`, `long_term_importance`, and `ambiguity_value`. These tags explain the tradeoff being surfaced; they are not utility components.
-
-Admission rules:
-
-- accepted explicit pairwise Objective comparisons become Preferences;
-- current affect, availability, capacity, or recovery reports become Snapshots or UniverseState facts when they describe observed current state;
-- preview/review explanations for outcomes, rejections, overrides, or calibration interactions become Logs, Log annotations, or Log corrections;
-- Objective-importance comments without pairwise order become Objective annotations or noncanonical review notes;
-- raw feelings, social-pressure comments, skipped examples, and unaccepted hypotheses remain noncanonical review notes.
-
-Neutrality rules:
-
-- use actual user Objectives or Tasks when possible;
-- present plausible costs and rewards for both sides;
-- provide `neither`, `indifferent`, `not applicable`, edit, and free-text paths;
-- avoid preselected answers, hidden scoring, therapy, diagnosis, moral judgment, and "should" language;
-- disclose that examples are prompts for self-reporting, not UbU's values.
-
-Examples are versioned derived content. UbU may revise or retire an example when corrections, skips, edits, repeated non-use, or review feedback show that it is confusing, leading, or unhelpful. Historical Logs stay append-only; only future example presentation changes.
-
-**Consequences:**
-
-- Preference calibration can improve onboarding, Calendar preview, and Log review without adding a psychology ontology or canonical value objects.
-- Phase 1 onboarding remains lightweight because calibration has a strict presentation budget and can be skipped.
-- Future richer examples may be added as versioned prompt content without schema migration unless they change admission rules or canonical fields.
+See DESIGN.md §§2.2.1, 4.1.2, 8.6.
 
 ---
 
@@ -4162,38 +3096,7 @@ Examples are versioned derived content. UbU may revise or retire an example when
 
 **Status:** Accepted → DESIGN.md §§4.1.2, 12.2, 17.8
 
-Resolved question: `UBU-Q0052`.
-
-Discovery mode is a user-selectable workflow state, not an instance mode and not always-on surveillance. It is off by default. The user may start, pause, resume, exit, inspect, reject, delete where retention policy permits, correct, defer, or accept collected evidence. UI must show active capture state, enabled sources, routing status, retention limits, and pending-review count.
-
-Phase 1 session states are `inactive`, `active`, `paused`, `ended`, and `pending_review`. Discovery observations are stored as reviewable candidate artifacts, not final truth. A minimal evidence item records session ref, effective time or interval, source kind, signal kind, payload ref or redacted summary, confidence, Compartment or low-security label, provenance, and review status.
-
-Allowed Phase 1 inputs are narrow:
-
-- explicit quick notes, user-selected current action, intentional voice/text notes, and manual start/stop markers;
-- UbU app state, Task controls, Calendar or default Plan context, timers, focus state, and explicitly enabled foreground app category or app identifier;
-- configured integration events already allowed by existing External Event and External Reference policy;
-- coarse motion state, coarse user-defined location category or geofence event, and basic device state such as screen or network state.
-
-Excluded by default: covert continuous microphone, camera, screen recording, keystroke logging, raw message bodies, raw file contents, raw GPS trails, and cross-Identity sharing. Later use of any excluded source requires a separate explicit mode, Compartment review, routing disclosure, and user approval.
-
-Admission rules:
-
-- accepted actual actions that reconcile planned intervals use `plan_realized`; accepted Task outcomes also write `task_completed`, `task_failed`, or `task_moot`;
-- overrides of a recommendation write `decision_recorded` with `decision_kind = system_recommendation_overridden`, `authority_source = user_override`, chosen action or Task when known, optional reason, and a planner-relevant `user_override` recalculation trigger;
-- user-declared observed state becomes a Snapshot only when it asserts current state such as affect, availability, capacity, or location category;
-- Preferences change only through explicit accepted pairwise Preference statements; repeated behavior and inferred reasons are not Preferences;
-- Task estimates, dependencies, status, Objective annotations, or Objective status change only through user acceptance or normal validated admission; otherwise the evidence remains an unresolved review item.
-
-Undetailed time periods must preserve uncertainty. Review may mark a period as `unknown`, `private`, `rest`, `interruption`, `planned_task`, `different_task`, `quick_note`, or `other`. UbU must not infer Preference changes, Objective failure, habit patterns, or moral meaning from unknown or private time.
-
-Before treating repeated behavior as a habit pattern, UbU asks a clarification prompt: `I have seen this pattern more than once: [behavior] during [context]. Should UbU plan around it, help you change it, treat it as not a pattern, or leave it unresolved?` Valid answers are `endorse_and_plan_around`, `tolerate_but_review`, `unwanted_help_change`, `not_a_pattern`, and `leave_unresolved`.
-
-**Consequences:**
-
-- Discovery mode can support mobile evidence gathering without converting sensor inference into canonical truth.
-- Overrides are authoritative user evidence, but durable model changes still pass through explicit Log, Snapshot, Preference, Task, Objective, and recalculation admission rules.
-- Habit-pattern inference requires user clarification before it affects planning as a stable pattern.
+See DESIGN.md §§4.1.2, 12.2, 17.8.
 
 ---
 
@@ -4201,39 +3104,7 @@ Before treating repeated behavior as a habit pattern, UbU asks a clarification p
 
 **Status:** Accepted → DESIGN.md §§9.3.1, 15.4, 16.4, 16.6
 
-Resolved question: `UBU-Q0057`.
-
-Phase 1 does not add an evergreen Task subtype or `GapTask`. An evergreen gap-filler is an ordinary active Dynamic Task, usually linked to an evergreen Objective, with a `gap_fill_policy`. The planner considers it only after Static Tasks, predetermined Dynamic Tasks, dependencies, preconditions, legitimization support, recovery, and transition buffers are respected.
-
-Minimum Phase 1 `gap_fill_policy` fields:
-
-- `eligible`;
-- `minimum_useful_duration_seconds`;
-- `maximum_useful_duration_seconds`;
-- `cooldown_policy`, including explicit `none_declared` when no cooldown applies;
-- `autonomy_mode`, fixed to `suggest_only` in Phase 1.
-
-Optional fields:
-
-- `preferred_duration_seconds`;
-- `location_scope`;
-- `required_context_refs` for material, device, app, integration, or broad location state;
-- `affect_suitability`;
-- `rank_hint`.
-
-Existing Task fields provide Objective link, duration, title, active status, recurrence or reactivation linkage, dependencies, preconditions, effects, and provenance. Location, material, device, and integration requirements should use ordinary preconditions when they affect readiness.
-
-Gap-fill selection ranks candidates by fit to the gap, Objective-derived value, due cadence, readiness, affect suitability, expected affect delta, cooldown, setup/teardown cost, and recent user snooze/reject/override evidence. Calendar preview, Log review, affect collection, lightweight cleanup, reflection, review queues, meditation, and relationship-maintenance prompts can all use the same representation.
-
-Phase 1 gap-fillers are suggestions outside the default Plan. Accepting or starting one records ordinary Task execution or decision evidence and may trigger recalculation. A gap-filler must not crowd out recovery, meals, sleep, transition buffers, setup/teardown, deadline-fragile prerequisites, Static Tasks, or a user-declared desire to keep the gap open.
-
-The reactive branch layer may compute a small ranked suggestion set when early completion leaves a gap before the next Static Task and no predetermined Dynamic Task can be pulled forward. Future versions may add Gap Tasks, trusted auto-insertion policies, Technique-generated maintenance Tasks, richer Resource/Skill readiness, and stochastic Objective recurrence.
-
-**Consequences:**
-
-- Phase 1 implementation can support useful spare-time suggestions without adding a WorkItem subtype or making idle time a planning failure.
-- Calendar preview and mobile next-action UX can explain why a gap is protected, discretionary, or has an optional suggestion.
-- Later richer maintenance automation remains compatible with ordinary Task, Objective recurrence, and planner behavior.
+See DESIGN.md §§9.3.1, 15.4, 16.4, 16.6.
 
 ---
 
@@ -4241,32 +3112,7 @@ The reactive branch layer may compute a small ranked suggestion set when early c
 
 **Status:** Accepted → DESIGN.md §16.7
 
-Resolved question: `UBU-Q0058`.
-
-Compact Calendar runtime chooses from configurable execution profiles. Phase 1 default presets are:
-
-- `full_detail`: 60-second delta, 3600-second reactive horizon, `0.99` branch coverage target;
-- `mobile_moderate`: 300-second delta, 3600-second reactive horizon, `0.99` branch coverage target;
-- `mobile_low_power`: 900-second delta, 1800-second reactive horizon, `0.95` branch coverage target;
-- `offline_steward`: 900-second delta, 1800-second reactive horizon, `0.95` branch coverage target, with precomputed branches and local repair metadata.
-
-The one-, five-, and fifteen-minute deltas are presets, not schema constants. Calendar policy, Device policy, user settings, and runtime conditions may override delta, horizon, coverage target, and compute budget. The effective values are stored with the compact Calendar or PlanningRequest for replay and explanation.
-
-Coarser switching is allowed for `low_battery`, `low_power_mode`, `thermal_pressure`, `offline`, `expected_offline_window`, `heavy_workload`, `user_setting`, `external_worker_unavailable`, and `compute_budget_exceeded`. Finer switching is allowed when power, temperature, connectivity, worker availability, idle time, or user settings permit it. A switch records its reason in runtime or compact Calendar metadata. If it can affect the current or next recommendation, hard feasibility, affect legitimacy, or coverage threshold result, UbU records or batches a recalculation trigger using an existing trigger kind. No new Phase 1 trigger kind is required.
-
-A coarser-profile explanation must show the active profile, switch reason, effective delta, reactive horizon, coverage target or estimate, expected loss of precision, guarantees still in force, and how the user can request more detailed planning or wait for a finer-capability backend.
-
-Known offline windows trigger precomputation when connectivity and compute are available. The precompute package should cover the declared offline window plus the current reactive horizon when feasible. It stores the default Plan, last legitimate Plan, decision envelopes, Task criticality, cached explanations, simple repair recipes, and high-probability branch materialization or reconstruction instructions up to the effective coverage target. Precomputation is bounded by battery, thermal, user, Compartment, and compute-budget policy.
-
-Cached branches expire when accepted Logs, Snapshots, External Events, elapsed time, or user actions leave their decision envelopes; when dependencies, preconditions, Static Task constraints, affect assumptions, or coverage become invalid; or when the branch passes its recorded expiry. Expiration falls back to the last legitimate Plan, local repair, clarification, or stale marking.
-
-The minimum mobile-only guarantee is the core UbU loop on one local device: explicit state, one next Task or clarification Task, explanation, conservative hard-constraint checks, affect/staleness and coverage-degradation disclosure, feedback Logs, and local repair for the current or next Task. Mobile may reduce granularity, coverage, analysis depth, and LLM-assisted features; it may not hide a mandatory external compute dependency.
-
-**Consequences:**
-
-- `UBU-Q0073` can define exact mobile stewardship schemas and repair recipes on top of this profile policy.
-- Low-power or offline degradation is user-visible and auditable rather than a silent quality change.
-- The default `0.99` coverage target remains normal/full-detail policy; low-power and offline profiles use explicit profile overrides.
+See DESIGN.md §16.7.
 
 ---
 
@@ -4274,22 +3120,7 @@ The minimum mobile-only guarantee is the core UbU loop on one local device: expl
 
 **Status:** Accepted → DESIGN.md §4.1.4
 
-Resolved question: `UBU-Q0063`.
-
-Phase 1 organizational introspection uses the EthConf/outreach workflow in `DESIGN.md §4.1.4`: an evidence-backed retrospective and follow-up plan over existing UbU project records, not full Association automation.
-
-Accepted constraints:
-
-- Use existing Phase 1 objects and artifact packages: Objectives, Tasks, Logs, External Events, External References, public dogfooding review packages, Release Outreach packages, export review, and candidate AssociationAttestations.
-- Manual and fixture-backed work is acceptable when live outreach notes, contact details, or private communications are unsafe to publish.
-- Candidate attestations remain reviewable candidates until human approval, whether hand-authored or produced by a local or policy-allowed LLM.
-- Public artifacts expose only redacted summaries, evidence selectors, hashes, public links, reviewed claims, approved follow-up Tasks, and recorded evidence gaps.
-- Private notes, raw contact details, unapproved conversation content, private funding terms, private relationship hypotheses, and Compartment-protected payloads are not public artifacts.
-
-**Consequences:**
-
-- Organizational introspection can be demonstrated without first implementing Association objects, dispute semantics, multi-user sync, or automatic archive analysis.
-- EthConf follow-up becomes a dogfooding case with auditable mission-alignment evidence instead of a marketing-only activity.
+See DESIGN.md §4.1.4.
 
 ---
 
@@ -4449,35 +3280,7 @@ Use `immediate_blocking_prompt` when the failure prevents a valid baseline for t
 
 **Status:** Accepted → DESIGN.md §15.2.2; PLANNING_KERNEL_CONTRACT.md §4
 
-Resolved question: `UBU-Q0071`.
-
-Phase 1 treats full legitimization as a finalist oracle. Full legitimization must run for the legitimized skeleton baseline and for any Plan that can become the default Plan. It does not run inside every high-fan-out candidate-construction step unless implementation measurements show it is cheap enough.
-
-Full legitimization includes exact or conservative validation of Calendar Logic, dependencies, preconditions, affect limits in `user_mode`, required recovery, breaks, meals, sleep, rest, transition buffers, setup and teardown time, context-switch limits, slack thresholds, dependency-fragility thresholds, support Task or buffer insertion, and user-facing diagnostics.
-
-Semi-legitimization is the cheap prevalidation layer. The MVP heuristic set is sufficient:
-
-- affect budget;
-- slack preservation;
-- dependency fragility;
-- user-mode compatibility;
-- local repair viability;
-- legitimacy-delta estimate against the legitimized skeleton baseline.
-
-Semi-legitimization returns `passes_cheap_checks`, `reject_obvious`, or `needs_full_legitimization`. It may prune obvious failures and rank candidates, but it cannot certify a default Plan. Any uncertain or selected candidate requires full legitimization before default selection.
-
-Legitimacy is both binary and graded. Binary legitimacy is the validity gate: `passed`, `failed`, or `needs_clarification`. Graded legitimacy fields such as `legitimacy_score`, `legitimacy_margin`, and `legitimacy_delta_from_baseline` are advisory ranking and explanation signals only.
-
-A high-value brittle Plan may beat a lower-value humane Plan only after full legitimization passes and minimum slack, local repair envelope, affect margin, destructive-pressure, and post-plan-state checks pass. Objective value cannot buy down hard legitimacy failure. If no richer candidate clears that bar, the default remains the lower-value humane finalist or the legitimized skeleton baseline.
-
-Recuperative work required for legitimacy is not optional gap-filling. Meals, sleep, rest, breaks, recovery, setup/teardown, transition buffers, affect collection, and checkpoint work inserted or protected by legitimization are ordinary Tasks or buffers with explanation lineage, protected criticality, and support refs. Optional `gap_fill_policy` suggestions are considered only after that support work is protected.
-
-**Consequences:**
-
-- Candidate search can use cheap pruning without making semi-legitimization a hidden validity oracle.
-- Full legitimacy remains CPU-certified before default Plan selection.
-- Planner scoring can compare humane and brittle Plans without treating hard human-viability constraints as ordinary utility penalties.
-- Recuperative Tasks are represented through ordinary Plan support work, not as evergreen gap-fillers.
+See DESIGN.md §15.2.2.
 
 ---
 
@@ -4485,40 +3288,7 @@ Recuperative work required for legitimacy is not optional gap-filling. Meals, sl
 
 **Status:** Accepted → DESIGN.md §16.10; PLANNING_KERNEL_CONTRACT.md §2
 
-Resolved question: `UBU-Q0072`.
-
-Phase 1 planner backend selection uses a mandatory CPU certification layer and optional advisory accelerators.
-
-Mandatory CPU responsibilities:
-
-- dependency DAG and topological-order validation;
-- deterministic precondition and UniverseState effect evaluation;
-- skeleton validity and bounded contradiction diagnostics;
-- full legitimization and semi-legitimization admission;
-- hard Calendar Logic validation, provenance validation, payload-safety validation, and final Plan commit.
-
-Advisory acceleration responsibilities:
-
-- PyTorch GPU execution for `skeleton_sampling`, `affect_legitimacy_filter`, `value_scoring`, and `monte_carlo_rollout`;
-- PyTorch or CPU local-search experiments for candidate optimization and ranking;
-- learned-model inference only as advisory candidate ranking or parameter estimation until the CPU layer admits the output.
-
-Solver/library candidates are evaluation targets, not Phase 1 dependencies:
-
-- built-in CPU graph/precondition validator: required reference path and certification source;
-- OR-Tools CP-SAT: optional finalist schedule-feasibility and contradiction-minimization experiment;
-- Z3 or comparable SMT/MaxSMT: optional logical contradiction-diagnosis experiment;
-- additional local-search libraries: optional candidate-optimization experiments only.
-
-Phase 1 has no mobile GPU target and no cloud GPU provider target. The required mobile fallback is CPU stewardship for current/next Task hard checks, cached last-legitimate Plan repair, decision envelopes, and simple repair recipes, with exact mobile metadata deferred to `UBU-Q0073`. Premium or cloud GPU planning is deferred to `UBU-Q0059` and later provider work; any future backend must preserve the same request/response contract, Compartment/export gating, and CPU certification on return.
-
-No solver, GPU backend, or learned model may write canonical state or certify final validity. If optional solver output and the CPU validator disagree, the CPU validator blocks commit and records diagnostics.
-
-**Consequences:**
-
-- `UBU-Q0072` is resolved for Phase 1.
-- Solver benchmarking becomes implementation work rather than an open design blocker.
-- Mobile GPU, cloud GPU, and premium wide-horizon provider details remain deferred without blocking the local desktop/laptop Phase 1 backend.
+See DESIGN.md §16.10.
 
 ---
 
@@ -4690,7 +3460,7 @@ For any Compartment whose policy is not solely user-set, sovereignty is preserve
 
 **Status:** Accepted → DESIGN.md §32
 
-The following are accepted as named strategic directions, presented as substantive rather than speculative, with implementation deferred to Phase 3+ / the full-product track and explicitly not Phase 1 commitments: concurrent multi-scale coordination, super-connectors, attention sovereignty, coordination with worker standing, and protective shared-authority compartments (DESIGN.md §23.6). They are reasons the data model stays general and must not be used to over-scope the MVP. Governance-as-an-emergent-subsystem is recorded here as the present scope boundary on these directions: UbU does not solve governance; it supplies honest data boundaries, Compartment control, and a settlement-agnostic Delegation Substrate, and communities layer their own governance on top. The protective-compartment direction is additionally gated by `UBU-Q0127` and by eject-not-override (`UBU-D0221`).
+See DESIGN.md §32.
 
 ---
 
@@ -4722,13 +3492,7 @@ UbU is differentiated first positively: AI auto-schedulers take the user's to-do
 
 **Status:** Accepted → DESIGN.md §17.9; DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §8, §13, Appendix A; docs/PHASE1_CONTRACT_BOUNDARIES.md. Supersedes the `UBU-D0185` value set and carrier exemption; the `UBU-D0185` principles — a coarse closed enum that is never sufficient authorization by itself — stand.
 
-`authority_source` records only the authority path for an accepted object, projection state, or candidate mutation. The closed Phase 1 enum is: `user`, `user_override`, `delegated`, `automation_worker`, `policy`, `system`. `user` is ordinary direct user authority. `user_override` is reserved for explicit user override of a proposed, delegated, automated, policy, or system-derived action, including overrides of the current recommendation, Plan, Task choice, or modeled state. `delegated` names an authority path and is unrelated to the `delegated` moot reason code (DESIGN.md §9.5), which is retained unchanged.
-
-Information-source distinctions formerly carried as enum members move to provenance: GitHub events, bootstrap/fixture/configured imports, and model-generated origins are represented in `Provenance.source` / `source_refs`, which remain required wherever DESIGN.md requires source-path visibility, including projection reconciliation. Model-generated content is never an authority path: advisory candidates acquire authority only at admission, from the admitting actor, with the model origin recorded in provenance. `human_admin` maps to `user` in single-user Phase 1 and to `delegated` where a distinct administrator acts; `project_policy` maps to `policy`; `github_event` and `imported_config` map to `system` with the source in provenance.
-
-Carrier rule: every admitted canonical record carries `Provenance.authority_source`. The `UBU-D0185` exemption for ordinary user-mode records is removed; its honest value is `user`. This also corrects the prior guidance that ordinary user-driven actions default to `user_override`.
-
-**Consequences:** DESIGN.md §17.9 is rewritten to this vocabulary. The §24.1 SPIFFE mapping row is unchanged and remains accurate: the field name is unchanged, and authority still requires capability grants, `authority_scope`, Compartment policy, Log provenance, and admission checks. `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md` examples and Appendix A actor/provenance guidance are corrected. Automation, policy, and system authority sources are never unconstrained user-equivalent authority.
+See DESIGN.md §17.9.
 
 ---
 
@@ -4766,9 +3530,7 @@ Six prefixes are added so that every Phase 1 canonical object type is admissible
 
 **Status:** Accepted → DESIGN.md §4.1 guardrail list; ubu-schemas `policy-summary`
 
-The Phase 1 Compartment guardrails `local_only`, `no_cloud_llm`, and `no_external_export` are closed policy-summary members rather than free-form labels. Every enforcement-gate evaluation of these members that blocks, permits with conditions, or redacts writes an append-only `compartment_boundary_decided` Log entry carrying the Compartment ref, the member evaluated, the adjudication result, actor Identity, `authority_source`, reason, effective time, and provenance. The event name follows the existing Log vocabulary pattern (`objective_transitioned`, `pipeline_state_transitioned`, `decision_recorded`).
-
-**Consequences:** the `ubu-schemas` `policy-summary` schema and the Log event vocabulary gain these members; the free-form Compartment label remains for naming, not for policy.
+See DESIGN.md §4.1.
 
 ---
 
@@ -4818,13 +3580,7 @@ Every export-class operation — in Phase 1, a GitHub managed-label write — pa
 
 **Status:** Accepted → DESIGN.md §15, §16, §29; PLANNING_KERNEL_CONTRACT.md; ubu-schemas (`planning/plan-step`, `planning/plan`); ubu-planning-kernel; ubu-orchestrator; ubu-ui; ubu-devshell. Refines `UBU-D0124` (legitimization makes skeleton Plans human-viable), `UBU-D0151` (Compact Calendar grammar), and `UBU-D0227` (canonical Task lifecycle and derived readiness).
 
-The Phase 1 Plan is canonical, persisted, and auditable, not a derived render. The timed schedule is represented in canonical state: `plan-step` carries optional `start`, `end`, and `static_anchor` placement fields, so the placements the user sees are themselves auditable, while the `Calendar` object (`cal_`) continues to model only availability windows. A Plan carries the `candidate`/`admitted`/`rejected`/`superseded` status lifecycle and an optional `supersedes_plan_id` link. The legitimized skeleton is the human-viable baseline (`UBU-D0124`); affect legitimization, value scoring, and stochastic rollout are layered on later per `PLANNING_KERNEL_CONTRACT.md` without changing this representation.
-
-Recalculation regenerates rather than mutates. Each accepted immediate recalculation trigger (§29) maps to a planning-kernel repair scope — `local`, `remaining_window`, or `full_window`, defaulting to `remaining_window` — and the kernel runs in `mode = repair` with a `repair_context` identifying the prior Plan and the observed divergence. The repaired Plan supersedes the prior Plan, linking `supersedes_plan_id` and marking the prior Plan `superseded`, preserving a replayable planning history.
-
-Recalculation is override-safe. A recalculation must not re-place completed or in-progress Tasks (`UBU-D0227`) and must not clobber a user-override placement: a placement carrying `user_override` (`UBU-D0226`) is preserved, and the planner repairs around it rather than over it. The operator role is never rented to automation; the sovereignty invariant holds inside the planner.
-
-**Consequences:** `ubu-schemas` extends `plan-step` with optional `start`/`end`/`static_anchor` and `plan` with optional `supersedes_plan_id`, additively and under this decision; the planning kernel emits the canonical timed Plan and supports `mode = repair`; the orchestrator persists the canonical Plan and wires the recalculation trigger to repair-mode planning with override-safe supersession; the UI renders the Compact Calendar (`UBU-D0151`) of the timed Plan; the devshell fixture demo asserts override-safe recalculation. This record authorizes the additive schema change; it does not add affect, scoring, or rollout, which are layered on in later planning phases, and it does not yet repoint the `UBU-D0232` next-action rule at the Calendar.
+See DESIGN.md §15.
 
 ---
 
@@ -4832,11 +3588,7 @@ Recalculation is override-safe. A recalculation must not re-place completed or i
 
 **Status:** Accepted → DESIGN.md §13, §15.2.2; PLANNING_KERNEL_CONTRACT.md §6; ubu-schemas (`planning/affect-profile`, `core/snapshot` affect observation, planning-response legitimization fields); ubu-planning-kernel; ubu-orchestrator; ubu-ui; ubu-devshell. Refines `UBU-D0124` (legitimization makes skeleton Plans human-viable) and builds on `UBU-D0235` (canonical timed Plan).
 
-Affect legitimization is the Phase 1 filter that makes a skeleton Plan human-viable. The affect model separates two concerns. An **AffectProfile** holds the user's tolerances per dimension — `direction`, `location` (the 0–10 point where satisfaction is 0.5), `scale` (the positive sigmoid slope), `threshold` (the feasibility cutoff in `[0,1]`), and an optional `freshness_seconds` — and is built from the bootstrap affect-calibration answers, with documented bootstrap defaults marked as temporary review priors. An **affect observation** (in `core/snapshot`) holds the current state — a per-dimension `value` on the 0–10 scale, a `source_kind` of `live_observation` or `bootstrap_default_profile`, and `observed_at`. The profile is the standing tolerance; the observation is the point-in-time reading. The `core/snapshot` affect block is therefore observation-only: the sigmoid parameters that previously lived on the observation move to the AffectProfile, and any per-observation display deltas are not the planning feasibility model.
-
-For a current affect value `x`, each active dimension's satisfaction is `sigmoid((x - location)/scale)` for `higher_is_better` and `sigmoid((location - x)/scale)` for `lower_is_better`, per `PLANNING_KERNEL_CONTRACT.md` §6. Phase 1 directions are `energy = higher_is_better`, `stress = lower_is_better`, and `mood_intensity = lower_is_better` (arousal/volatility, not valence); the prior `core/snapshot` fixture that recorded `mood_intensity` as `higher_is_better` was an error and is corrected to `lower_is_better`. A candidate is affect-feasible only if every active dimension meets its threshold at the CPU-selected aggregate evaluation point; the filter records per-dimension satisfaction, an `affect_margin`, the `violated_dimensions`, and a legitimization result of `passed`, `failed`, or `needs_clarification`. The filter runs in `enforce` for user-facing planning and `warn_only` for onboarding, test, and stale or missing affect. A missing or stale observation (older than `freshness_seconds`) uses the bootstrap default profile with a marked warning or `warn_only`, never silently presented as current measured state. The `mood_intensity` `lower_is_better` direction is an explicit Phase 1 simplification; the `bounded_optimum` roadmap is Phase 2.
-
-**Consequences:** `ubu-schemas` adds the `affect-profile` schema (the §6 tolerances), narrows the `core/snapshot` affect block to the observation, corrects the `mood_intensity` direction, and adds the legitimization-result fields on the planning response, under this decision. The planning kernel implements `full_legitimize` as the affect filter over the AffectProfile and the observation; the orchestrator builds the AffectProfile from bootstrap Preferences and resolves the observation from the snapshot, sets the affect mode, and surfaces the result; the UI surfaces affect legitimization on the Compact Calendar; the devshell asserts the feasible, infeasible, and stale-affect paths. This record authorizes the schema change; it does not add support-task insertion, `semi_legitimize`, value scoring, or rollout, which are later steps, and `full_legitimize` here covers the affect filter only.
+See DESIGN.md §13.
 
 ---
 
@@ -4844,13 +3596,7 @@ For a current affect value `x`, each active dimension's satisfaction is `sigmoid
 
 **Status:** Accepted → DESIGN.md §15.2, §16.3.1; PLANNING_KERNEL_CONTRACT.md §3, §4, §5; ubu-planning-kernel; ubu-orchestrator; ubu-ui; ubu-devshell; ubu-schemas (removal of the thin planning stubs). Refines `UBU-D0124`, `UBU-D0151`, and `UBU-D0211`; builds on `UBU-D0235` and `UBU-D0236`.
 
-The Phase 1 planning contract surface is the kernel's Rust contract types (`request.rs`, `response.rs`), governed by `PLANNING_KERNEL_CONTRACT.md`. The thin `ubu-schemas` `planning-request`, `planning-response`, and `task-spec` schemas were development scaffolding, never tracked the contract, are unused by the live planning path, and are deprecated and removed; this is a cleanup, not a contract change.
-
-Phase C-1 implements the deterministic optimization layer. The kernel generates a bounded candidate set — the legitimized skeleton baseline plus up to fifteen deterministic slack-based perturbations seeded by `rng_seed`, capped at sixteen — runs the Phase B affect filter (`full_legitimize`) per candidate, prunes with semi-legitimization (`UBU-D0211`: `passes_cheap_checks`/`reject_obvious`/`needs_full_legitimization` over the Phase 1 heuristic set), and value-scores survivors (utility, affect-margin, schedule-diversity, and an approximate pre-rollout robustness) into a `total_score` composite weighted by `scoring_policy`. The response carries ranked `PlanCandidate`s with `score_summary`, `candidate_role`, `feasibility_summary`, and `semi_legitimization_summary`; `probability_summary` is present but unpopulated until C-2. The default Calendar is the rank-1 candidate by `total_score`, and `next_action` follows it.
-
-The Monte Carlo rollout (Stage 4), shifted-log-normal duration sampling, the §7 correlation matrix, and probability summaries are deferred to C-2. GPU execution is deferred; the §5 tensor profile is advisory and the CPU reference path is authoritative.
-
-**Consequences:** the kernel contract types gain the §3 duration model and `correlation_groups`, the `scoring_policy` weights, and the §4 `PlanCandidate` summaries with a `plan_candidates` response shape; the orchestrator threads `scoring_policy` in and surfaces the ranked candidates and selection; the UI surfaces scores and role-tagged alternatives; the devshell asserts the multi-candidate scoring and selection; and `ubu-schemas` removes the thin planning stubs. This record does not add rollout, probability estimation, or GPU.
+See DESIGN.md §15.2.
 
 ---
 
@@ -4858,15 +3604,7 @@ The Monte Carlo rollout (Stage 4), shifted-log-normal duration sampling, the §7
 
 **Status:** Accepted → DESIGN.md §15.2.1, §16; PLANNING_KERNEL_CONTRACT.md §3, §5, §7; ubu-planning-kernel; ubu-orchestrator; ubu-ui; ubu-devshell. Refines `UBU-D0151` and the §15.2.1 default-by-Plan-probability selection; builds on `UBU-D0237` (value scoring and bounded candidates).
 
-Phase C-2 implements the stochastic robustness layer (`PLANNING_KERNEL_CONTRACT.md` §5 Stage 4). For the top-K finalists — default three, cap eight, drawn from the C-1 composite ranking — the kernel samples correlated Task durations and estimates feasibility, robustness, and probability.
-
-Duration sampling (§3) is the shifted-log-normal `D = min + LogNormal(mu, sigma)` with the exact derivation (`a = mode-min`, `b = p95-min`, `z95 = 1.6448536269514722`, `sigma = (-z95 + sqrt(z95^2 + 4*ln(b/a)))/2`, `mu = ln(a) + sigma^2`); fixed durations are delta distributions. Correlation (§7) is the positive latent-factor construction `C = L*L^T + diag(1 - row_norm(L)^2)`, positive semi-definite by construction, with any Task's loading norm capped at 0.95 (scaled, with a warning); the CPU validates symmetry, finite values, unit diagonal, strength ranges, the absence of duplicate groups, and PSD factorization before rollout.
-
-The rollout runs `n_rollouts` samples per finalist (default 1000, sample cap 5000; `n_rollouts = 0` skips rollout and reports `probability_quality = not_estimated`, keeping the C-1 proxy). The stage-4 seed is `rng_seed + 3` with deterministic per-finalist substreams; results are byte-exact under a fixed seed. Outputs are the feasibility frequency; `robustness_score` as the p10 lower percentile of the per-rollout outcome (the percentile is a recorded rollout-config parameter); `display_probability` with a Wilson-score `probability_interval_low`/`high`; and `probability_quality` ∈ `full`/`degraded_numeric_jitter`/`degraded_independence`/`not_estimated`. On Cholesky failure the CPU adds diagonal jitter up to an epsilon (`degraded_numeric_jitter`); on persistent failure it rejects when the request sets strict validation, otherwise runs an explicitly degraded independent rollout (`degraded_independence`) with a visible diagnostic; nearest-PSD projection is never used.
-
-Rollout re-ranks the default Plan: after rollout, the composite folds in the rollout robustness and probability, so the §15.2.1 default-by-Plan-probability selection becomes the actual selection rather than the C-1 deterministic proxy, and `next_action` follows the re-ranked default. External-event assumptions remain empty in Phase 1 (deferred with a detailed follow-on); GPU execution is deferred (the §5 tensor profile is advisory; the CPU reference path is authoritative); negative correlations and signed loadings are Phase 2.
-
-**Consequences:** the kernel populates `probability_summary` and `probability_quality`, adds the correlation matrix and the rollout, replaces the proxy robustness with the p10 rollout estimate, and re-ranks the default; the orchestrator threads `n_rollouts`/`top_k`/strict validation and surfaces probability, robustness, and quality; the UI surfaces probability with its Wilson interval, the rollout robustness, and the degraded and not-estimated states; the devshell asserts the rollout, degraded, and re-rank paths. This record does not add external-event modeling, signed correlations, or GPU execution.
+See DESIGN.md §15.2.1.
 
 ---
 
@@ -4874,15 +3612,7 @@ Rollout re-ranks the default Plan: after rollout, the composite folds in the rol
 
 **Status:** Accepted → DESIGN.md §9 (Tasks), §15.2.1; PLANNING_KERNEL_CONTRACT.md §3; ubu-schemas (`core/task`), ubu-store, ubu-orchestrator, ubu-devshell. Builds on `UBU-D0237` and `UBU-D0238`, which consume these inputs.
 
-The Phase 1 rollout (`UBU-D0238`) requires per-Task duration uncertainty and correlation structure, but the canonical Task carried no duration estimate and the orchestrator built fixed scalar durations with empty correlation groups, so the rollout only ever saw degenerate fixed input. This decision establishes the input path.
-
-The canonical Task gains an optional `duration_estimate` — either `fixed` (a scalar `seconds`) or the §3 three-point `shifted_lognormal_p95` (`min_seconds`, `mode_seconds`, `p95_seconds`, ordered `0 <= min < mode < p95`) — and an optional `correlation_groups` membership (`[{group, strength in [0,1]}]`, positive loadings, no duplicate groups). Both default to absent: an absent estimate is treated as a fixed default, and absent correlation is independent. Invalid three-point triples are rejected at admission and at request-tensor build, never silently repaired.
-
-The store admits and persists these optional fields. The orchestrator carries them into the kernel `TaskSpec` — from the store Task on the live path and from the request body on the demo and fixture path — mapping to `DurationModel::Fixed` or `DurationModel::ShiftedLognormalP95` and the correlation groups, replacing the prior fixed-scalar and empty-correlation hardcoding. The kernel already accepts these inputs (`UBU-D0237`/`UBU-D0238`); no kernel change is required.
-
-For Phase 1 the estimates are supplied by import, bootstrap, and fixtures; a user-facing editor for three-point estimates and correlation groups is deferred. The stochastic integration smoke test belongs after this input path: the C-2 D11 is re-issued as a minimal duration-agnostic check (candidate retention, `not_estimated`, and `full` quality on a degenerate fixed-duration rollout), and the full stochastic integration test (D12) lands with this slice.
-
-**Consequences:** `ubu-schemas` extends `core/task` with the optional `duration_estimate` and `correlation_groups`; `ubu-store` admits and persists them; `ubu-orchestrator` carries them from the store Task and the request body into the kernel `TaskSpec`; `ubu-devshell` D12 exercises the stochastic rollout, the re-rank, the correlation effect, and `not_estimated` end to end, with the degraded and strict paths verified at the kernel unit level. This record does not add a user-facing estimate editor, external-event modeling, or signed correlations.
+See DESIGN.md §9.
 
 ---
 
@@ -4890,17 +3620,7 @@ For Phase 1 the estimates are supplied by import, bootstrap, and fixtures; a use
 
 **Status:** Accepted → DESIGN.md §2.5.1, §16; ubu-schemas (`api/risk-report` enrichment, new `api/human-complete-plan-quality`), ubu-orchestrator, ubu-ui, ubu-devshell. Builds on `UBU-D0238` (the planning kernel emits the signals these reports aggregate).
 
-Phase 1 adds two derived, non-canonical, recalculable reports: a risk report and a `human_complete_plan_quality` assessment (DESIGN §2.5.1). Both are computed in the orchestrator from the kernel response and store context; neither is a canonical object and the kernel is unchanged.
-
-The reports are computed in the orchestrator, not the kernel. The kernel already emits the plan-intrinsic signals — affect margin, rollout robustness and feasibility, and skeleton failures — and the orchestrator joins them with store context the pure kernel cannot see (Task deadlines, Log history, affect Snapshot freshness, worker status). Planning that carries little risk produces a minimal report without burdening the kernel path.
-
-The thin `api/risk-report` schema is enriched so each finding carries a `category` (`deadline_risk`, `dependency_fragility`, `worker_bottleneck`, `stale_affect`, `affect_margin`, `destructive_pressure`, `post_plan_depletion`, `low_coverage`, `skeleton_failure`), a `severity`, and a `blocking` flag, retaining the top-level `low`/`medium`/`high` level. A new `api/human-complete-plan-quality` schema structures the six §2.5.1 signals — `feedback_latency`, `checkpoint_coverage`, `affect_margin`, `failure_pattern`, `stretch_pressure` (`comfort`/`sustainable_stretch`/`destructive_pressure`), and `post_plan_state_delta` (`better`/`neutral`/`depleted`/`at_risk`) — plus non-blaming `revision_suggestions`. The existing `api/human-complete-report` schema (a user reporting manual task completion) is a different concept and is unchanged.
-
-The affect signals (`affect_margin`, `stretch_pressure`, `post_plan_state_delta`) are derived in the orchestrator from the kernel's existing affect-margin output, behind a single `post_plan_affect_projection` seam. Because the Task model does not yet carry a per-task `affect_delta` field, Phase 1 uses the affect margin as the projection input; a per-task `affect_delta` and a non-linear (clamped, sigmoid) forward affect trajectory — eventually kernel-owned — are deferred behind the seam.
-
-`destructive_pressure`, hard deadline-infeasibility, and recommendation-path skeleton failures are blocking and recalculation-driving (consistent with the §2062 immediate blocking prompt and the §16.2 low-coverage recalculation); all other findings are advisory. `failure_pattern` points only to model causes (estimates, dependencies, stale affect, interruption, overload, changed Objective), never the user, and `revision_suggestions` are framed as model repairs.
-
-**Consequences:** ubu-schemas enriches `api/risk-report` and adds `api/human-complete-plan-quality`; the orchestrator computes both reports from the kernel response and store and drives recalculation on the blocking set; the UI surfaces the level, findings, and the six signals on the Calendar and next-action; the devshell asserts each finding and signal on fixtures. This record adds no kernel change, no canonical object, no per-task `affect_delta` field, no non-linear affect trajectory, no richer growth or longitudinal model, and no live GitHub.
+See DESIGN.md §2.5.1.
 
 ---
 
@@ -4908,15 +3628,7 @@ The affect signals (`affect_margin`, `stretch_pressure`, `post_plan_state_delta`
 
 **Status:** Accepted → DESIGN.md §10.1, §11, §4.1.6; ubu-schemas (`core/universe-state` reshape, new mutation-item and precondition schemas), ubu-core, ubu-store, ubu-devshell. Builds on `UBU-D0229` (which added the `ustate_` prefix and `ObjectType::UniverseState`).
 
-Phase 1 realizes UniverseState as the §11.1 lightweight facts container. At time of record the `core/universe-state` schema and the `ubu-core` type were a dormant objectives+tasks bundle — not the four-collection container the schema description claimed — referenced only by an unused `Option<UniverseState>` planning-request field. This slice reshapes that dormant object into the container of four collections (`facts`, `numeric_values`, `set_memberships`, `event_markers`) plus the shell fields (`id`, `captured_at`, `source_summary`, optional `confidence_summary`), and implements its read and write semantics.
-
-The seven-operation mutation vocabulary (`set_fact`, `clear_fact`, `increment_numeric`, `decrement_numeric`, `add_membership`, `remove_membership`, `append_event_marker`) over dotted targets, and the deterministic precondition evaluator (recursive `all_of`/`any_of` with the three predicates `equals`, `member_of`, `absent` — no numeric comparison in MVP), are implemented as pure functions in `ubu-core` alongside the type, with no store or network dependency. Mutation lists are validated in full before being applied in list order. `increment_numeric`/`decrement_numeric` against a missing key initializes from zero; `append_event_marker` appends a loosely-typed JSON object to a list at the target key. The store admits and persists the container; registry, `ObjectType`, and the admission type-mapping already exist from `UBU-D0229`.
-
-UniverseState is a single current-state object: mutations are applied in place with `captured_at` as valid-at, and mutation history lives in Logs and the containing envelopes (the design places provenance on the envelope, not the mutation item), not in UniverseState versioning. There is no supersession or event-sourcing in MVP.
-
-The container, vocabulary, and evaluator are Compartment-agnostic in this slice (single-user). The design's Compartment policy on Relationship- and affect-related targets, and the redaction-identity invariant (denied Compartment labels never cross a boundary), attach when multi-Compartment fact access is exercised — part of the wiring follow-on, not this slice.
-
-**Consequences:** ubu-schemas reshapes `core/universe-state` and adds the mutation-item and precondition schemas; ubu-core carries the reshaped type plus the evaluator and applicator and repurposes the `planning_request.state` field to carry the facts snapshot; ubu-store admits and persists the container; ubu-devshell exercises admit → mutate → evaluate on fixtures. This record adds no Task `preconditions`/`effects` field, no kernel `unschedulable` evaluation, no effect application on Task completion, no bootstrap fact-recording, no Compartment enforcement, and no live GitHub — those are the wiring follow-on.
+See DESIGN.md §10.1.
 
 ---
 
@@ -4924,15 +3636,7 @@ The container, vocabulary, and evaluator are Compartment-agnostic in this slice 
 
 **Status:** Accepted → DESIGN.md §10.1, §10.2, §11.3, §4.1.6; ubu-schemas, ubu-core, ubu-orchestrator, ubu-devshell. Builds on `UBU-D0241` (the facts container and its pure mutation/precondition semantics), which this program consumes rather than re-implements.
 
-Phase 1 wires the UniverseState facts container into the loop in three sequenced slices, run A → B → C:
-
-- **A — preconditions block planning.** The Task schema and `ubu-core` Task type gain optional `preconditions` (the `core/precondition` shape). The orchestrator reads the current UniverseState and evaluates each Task's preconditions through the pure `ubu-core` evaluator (`evaluate_universe_precondition`) during request building: satisfied is eligible, a failed precondition makes the Task **blocked** (excluded from planning and surfaced), and a malformed precondition makes the Task **invalid** (surfaced distinctly). The kernel plans the eligible set, unchanged. Preconditions are evaluated against the current static facts snapshot, matching §1571's **blocked** result (distinct from the planner's placement-based **unschedulable**). A Task without preconditions, or one whose target is unknown in UniverseState, is treated as absent and eligible.
-
-- **B — effects mutate facts on completion.** The Task schema and type gain `effects` (scalar success probability and a mutation list). The orchestrator applies a completed Task's effects through the pure `ubu-core` applicator (`apply_universe_mutations`) in the completion transition, persisting the mutated UniverseState under the completing action's `authority_source`; a failed Task leaves UniverseState unchanged (§10.2), and effects do not silently overwrite user-declared private affect or Relationship truths (§11.3). Slice B also enforces the §1585/§11.3 rule that organization and worker modes reject intrinsic-affect targets — applied to both preconditions and mutations.
-
-- **C — bootstrap records facts.** The bootstrap records the project/context answer and available time, static commitments, deadlines, and immediate constraints as UniverseState facts alongside the existing Objective/Task/Snapshot seeding. The full interactive bootstrap interview UX is a separate concern and is not part of this program.
-
-**Consequences:** Wiring-A touches ubu-schemas, ubu-core, ubu-orchestrator, and ubu-devshell, with no kernel change (the orchestrator pre-filters). Wiring-B touches the schema, the Task type, the orchestrator completion path, and the store persistence of the mutated container. Wiring-C touches the bootstrap and the store. This record defers full Compartment policy and redaction-identity enforcement on facts (single-user, not yet exercised), placement-dependent precondition re-evaluation, the interactive bootstrap interview UX, and live GitHub.
+See DESIGN.md §10.1.
 
 ---
 
@@ -4963,18 +3667,7 @@ Examples: `facts.operator.work_style`, `facts.project.repository`, `numeric_valu
 
 **Status:** Accepted → DESIGN.md §2.5 (the export boundary), §5 (instance modes). Governs the live projection path in `ubu-orchestrator` and `ubu-github-adapter`. First applied by the live-GitHub wave (O19/GA1/D18).
 
-The projection machinery — the deny-by-default gate, the managed-label-only assertion, the preview → approve → reconcile workflow, the in-memory session token, and the adapter's live `octocrab` client — already exists. This decision fixes the policy under which the orchestrator is allowed to drive the adapter's live write path.
-
-1. **Server-side opt-in.** Live egress is enabled only by a deliberate server-side mode (configuration/environment), never by a request field. No request body can trigger a network write; the default build is mock.
-2. **Deny-by-default, unchanged.** `no_external_export` denies the export. Export is permitted only for managed-label projection of an approved batch.
-3. **Managed-label-only scope and identity invariant.** The live path may only add or remove labels in the managed set (`ubu`, `ubu-managed`); every operation is asserted `is_managed_label` before it is sent, and a non-managed target is refused. UbU never reads-to-write, modifies, or removes a user's own labels, and never creates issues or comments on the live path in Phase 1, even though the adapter supports those operations.
-4. **In-memory, non-persisted session token.** The GitHub token lives only in process memory (the orchestrator's session state) and is never written to disk; the live client is built per run from it. The operator supplies a fine-grained, minimum-scope, short-expiry token, uses it once, and revokes it after the run.
-5. **Dry-run first, single confirmation.** Preview computes the operations and writes nothing (the dry run); a single approval of the previewed batch is the only thing that authorizes the write. No write occurs without an approval.
-6. **Rate-limit fail-safe.** On a rate-limit or transport error the batch aborts cleanly and reports which operations were applied; writes are idempotent (adding an existing managed label or removing an absent one is a no-op), so a re-run is safe. Adaptive backoff is deferred to Phase 2.
-7. **Faithful mock through the real path.** Mock and live runs use the *same* adapter write path (`apply_managed_label_write`), differing only in the injected `GitHubApi` implementation — the live `octocrab` client or an in-memory recording fake. Offline verification uses the fake and performs no network egress; the divergent local mock is retired.
-8. **Reproduction must be documented.** The reproducible live-smoke procedure — creating a throwaway repository and creating the minimum-scope token, and revoking it afterward — must be documented in a `README.md`, canonically in `ubu-design`'s `README.md` (and may be mirrored next to the smoke script). This decision deliberately does **not** specify those steps; it requires that the README specify as much detail as a user needs to reproduce the smoke.
-
-**Consequences:** the live path is reachable only by an operator who has set the server-side mode, supplied a token, previewed, and approved — four deliberate acts. The managed-label identity invariant is the export-boundary analogue of the redaction-identity invariant: the projection can only ever touch UbU's own labels. Per-run bearer/CSRF hardening of the desktop HTTP bridge remains a separate, documented TODO.
+See DESIGN.md §2.5.
 
 ---
 
@@ -4982,13 +3675,4 @@ The projection machinery — the deny-by-default gate, the managed-label-only as
 
 **Status:** Accepted → DESIGN.md §27 (GitHub import). Governs the live import path in `ubu-orchestrator` and `ubu-github-adapter`. First applied by the live-ingestion wave (O20/GA2/D19). Companion to `UBU-D0244` (live projection).
 
-The bootstrap already calls a live-import entry point, but both it and the adapter's `import_live_repository` are stubs, and the orchestrator gates live import only on token presence. This decision fixes the policy for making it real.
-
-1. **Deliberate server-side ingest mode.** Live import is enabled only by a dedicated server-side `GithubIngestMode` (default mock), separate from the projection `ProjectionExportMode` so that read and write are opted into independently. Token presence alone never triggers a live read; no request field selects live.
-2. **In-memory, non-persisted token, reused.** Live import uses the same in-memory session token as projection (never written to disk), or the developer token in developer mode. The operator supplies a fine-grained, minimum-scope, short-expiry token and revokes it after.
-3. **Scope: issues become Tasks and External References.** The live import enumerates a repository's issues and maps them through the existing normalization and candidate mapping into Tasks plus GitHub External References — the same admission downstream as the fixture import. Pull requests, reviews, CI events, milestones, and comments are not ingested in Phase 1, and per-issue GitHub state is not recorded as UniverseState facts (the Wiring-C boundary holds).
-4. **One-shot at bootstrap, not a sync.** Live import runs once at bootstrap, guarded by `reject_if_already_seeded`. Continuous or incremental re-sync is Phase 2 (`UBU-Q0139`-`UBU-Q0150`).
-5. **Faithful fake offline.** Mock and live runs share one import path through the adapter, differing only in the injected `GitHubApi`: a live `octocrab` client, or an in-memory recording fake seeded from a raw-issue fixture. Offline verification uses the fake and performs no network egress.
-6. **Ingress provenance.** Each ingested issue carries GitHub provenance as an External Reference; canonical UbU state still changes only through the normal admission path.
-
-**Consequences:** with `UBU-D0244`, the live path is now symmetric — a deliberate server-side mode and a supplied token are required for the orchestrator to read issues (ingest mode) or write managed labels (export mode), each opted into independently. The recursive dogfood is actualized: at bootstrap UbU reads its own real issues, plans, and projects its managed labels back. Continuous sync and broader object ingestion remain Phase 2.
+See DESIGN.md §27.

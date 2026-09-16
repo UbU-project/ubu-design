@@ -7,7 +7,6 @@ Solved questions appear as compact tombstones. Open questions include full metad
 
 ---
 
-
 ## UBU-Q0001: Phase 1 MVP Scope Freeze
 
 Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Scope Auto-choice eligibility: Human only Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 1 implementation Resolved by: UBU-D0097 Last scored: Never Scored from commit: None
@@ -19,37 +18,6 @@ Resolved. See UBU-D0097.
 ## UBU-Q0002: GitHub Projection and Reconciliation
 
 Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0003 Blocks: Phase 1 GitHub dogfooding Resolved by: UBU-D0159 Last scored: Never Scored from commit: None
-
-### Question
-
-1. Which GitHub fields does UbU write?
-   - labels
-   - issue body blocks
-   - comments
-   - milestones
-   - assignees
-   - PR statuses
-2. Should UbU write only clearly marked `ubu:` labels and managed blocks?
-3. Which GitHub edits are treated as external events?
-4. Can any GitHub edit override UbU state?
-5. How does UbU detect missed GitHub updates?
-   - polling
-   - webhooks
-   - manual sync
-   - worker-driven reconciliation
-6. What does the reconciliation report compare?
-   - GitHub Issues vs UbU Objectives
-   - GitHub labels vs `pipeline_state`
-   - GitHub comments vs event log
-   - PRs / CI runs vs External Events
-7. Does drift create a report only, or also Tasks to repair drift?
-8. Does GitHub reconciliation run in the main UbU instance or an Automation Worker?
-
-### Current direction
-
-UbU should write only clearly marked UbU-managed labels, comments, or blocks, and treat other GitHub edits as External Events.
-
-### Resolution
 
 Resolved. See UBU-D0159.
 
@@ -75,38 +43,6 @@ Resolved. See UBU-D0182.
 
 Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0002 Blocks: Phase 1 implementation Resolved by: UBU-D0163 Last scored: Never Scored from commit: None
 
-GitHub events must be interpreted into UbU events, Tasks, Objectives, or recalculation triggers.
-
-### Question
-
-1. Which GitHub events are logged only?
-2. Which GitHub events create External Events?
-3. Which GitHub events create Objectives?
-4. Which GitHub events create Tasks?
-5. Which GitHub events trigger recalculation?
-6. Which GitHub events trigger Automation Worker assignment?
-7. Which GitHub events trigger GitHub projection updates?
-8. How are duplicate GitHub events detected?
-9. How are missed events reconstructed during reconciliation?
-
-### Candidate MVP event classes
-
-```text
-issue_opened
-issue_commented
-issue_labeled
-issue_closed
-pr_opened
-pr_updated
-review_requested
-review_submitted
-ci_failed
-ci_passed
-milestone_changed
-```
-
-### Resolution
-
 Resolved. See UBU-D0163.
 
 ---
@@ -131,26 +67,6 @@ Resolved. See UBU-D0095.
 
 Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0007 Blocks: Phase 1 implementation Resolved by: UBU-D0158 Last scored: Never Scored from commit: None
 
-Workers need a way to discover or receive work.
-
-### Question
-
-1. Does an organization-mode instance explicitly assign Tasks to workers?
-2. Or do workers poll for Tasks matching their capabilities?
-3. Can multiple workers observe the same Task?
-4. Can multiple workers compete for the same Task?
-5. What happens if a worker disappears mid-Task?
-6. Is assignment itself logged?
-7. Can workers reject assignments?
-8. Can workers request clarification Tasks?
-9. Can workers spawn child Tasks?
-
-### Current MVP leaning
-
-Explicit assignment is likely simplest.
-
-### Resolution
-
 Resolved. See UBU-D0158.
 
 ---
@@ -158,35 +74,6 @@ Resolved. See UBU-D0158.
 ## UBU-Q0009: Worker Mutation Request Schema
 
 Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0007 Blocks: Phase 1 implementation Resolved by: UBU-D0164 Last scored: Never Scored from commit: None
-
-Automation Workers need a bounded way to submit changes back to canonical UbU state.
-
-### Question
-
-1. Does a worker submit:
-   - event records,
-   - mutation requests,
-   - proposed patches,
-   - or all three?
-2. What fields are required?
-   - worker Identity
-   - authority source
-   - target object
-   - operation
-   - expected prior version
-   - new value
-   - reason
-   - evidence reference
-   - timestamp
-   - idempotency key
-3. Are valid mutations applied immediately?
-4. Are invalid mutation attempts logged?
-5. Can mutation requests be batched atomically?
-6. Can workers request creation of new Objectives or Tasks?
-7. Are worker mutations reversible?
-8. How does UbU prevent stale worker mutations from overwriting newer canonical state?
-
-### Resolution
 
 Resolved. See UBU-D0164.
 
@@ -243,77 +130,6 @@ Resolved. See UBU-D0131.
 ## UBU-Q0016: Compact Calendar planner grammar and execution profile
 
 Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0014, UBU-Q0015 Blocks: Phase 1 implementation Resolved by: UBU-D0151 Last scored: Never Scored from commit: None
-
-Compact Calendar support is important for recursive self-analysis, future sync/transport, and fast recalculation. The current direction is no longer a bare DFS grammar. The planner architecture begins with skeleton Plan generation, then legitimization, then candidate Plan expansion and validation, with reactive mobile stewardship around the selected Plan.
-
-### Question
-
-1. What is the minimum skeleton Plan representation?
-   - Static Task placement
-   - dependency DAG frontier
-   - prerequisite roots
-   - ordered prerequisite chains
-   - initial UniverseState assumptions
-   - unsatisfied dependency diagnostics
-2. What does legitimization add?
-   - affect constraints
-   - recovery Tasks
-   - transition buffers
-   - sleep/food/rest requirements
-   - setup/teardown time
-   - context-switch limits
-   - slack and fragility thresholds
-3. What is the minimum candidate Plan representation after legitimization?
-   - materialized Tasks
-   - decision envelopes
-   - Plan probability provenance
-   - value score
-   - legitimacy score or threshold result
-   - explanation lineage
-4. Which search methods are allowed in each execution profile?
-   - greedy baseline
-   - DFS-like candidate construction
-   - BFS-like near-term branch construction
-   - solver-backed exact validation
-   - GPU-friendly candidate scoring/simulation
-   - local repair recipes
-5. How is Plan probability represented?
-   - scalar probability
-   - log probability
-   - probability interval
-   - provenance expression over probabilistic inputs
-6. How does the implementation avoid naïve independence assumptions when probabilities are correlated?
-7. Does Compact Calendar encode:
-   - skeleton Plan metadata
-   - legitimized skeleton baseline
-   - ordering constraints
-   - duration PDFs
-   - success probabilities
-   - external-event distributions
-   - interruption distributions
-   - affect constraints
-   - decision envelopes
-   - protected/flexible/disposable Task metadata
-   - cached explanations
-   - execution-mode metadata such as time delta, branch horizon, GPU/CPU resource limits, and privacy-routing limits
-8. Which concrete Plans are stored?
-   - the legitimized skeleton baseline
-   - the default Plan
-   - user-previewed Plans
-   - risk-report Plans
-   - debug/reproducibility Plans
-   - high-probability near-term Plans within a horizon
-9. Which Plans or repairs are reconstructed on demand?
-10. How is coverage recalculated after time advances?
-11. What is the minimum MVP implementation?
-
-### Current direction
-
-The planner should first create a skeleton Plan from Static Tasks and dependency DAGs, then legitimize that skeleton Plan into a minimally human-viable baseline. Candidate Plans are then generated, semi-legitimized or fully legitimized, validated, and compared. DFS-like search may be one candidate-construction strategy, but it is no longer the full conceptual foundation. BFS-like branch caching remains useful for near-term divergence, but mobile UX should also use decision envelopes, cached explanations, criticality metadata, last-legitimate-Plan repair, and conflict severity.
-
-The ideal search may be NP-hard or otherwise combinatorially expensive, but finite Task instances, bounded time scope, configurable deltas, pruning, greedy baselines, GPU-friendly scoring/simulation, cached subplans, and adaptive execution modes should make practical approximations tractable.
-
-### Resolution
 
 Resolved. See UBU-D0151.
 
@@ -459,7 +275,7 @@ Resolved. See UBU-D0189.
 
 Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0001 Blocks: Phase 1 scope freeze Resolved by: UBU-D0175 Last scored: Never Scored from commit: None
 
-Broad pre-MVP design automation stops after the Phase 1 planning-kernel blockers are resolved. Future design questions may block Phase 1 only when they are required for a concrete implementation slice, an accepted hard invariant, a needed contract, or avoidance of an irreversible schema contradiction. New MVP blockers require a blocker certificate showing the blocked implementation object, failed acceptance criterion, unsafe fallback, minimum answer needed, and persistence impact.
+Resolved. See UBU-D0175.
 
 ---
 
@@ -475,17 +291,7 @@ Resolved. See UBU-D0190.
 
 Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0032 Blocks: model-committee logging Resolved by: UBU-D0064, UBU-D0160 Last scored: Never Scored from commit: None
 
-### Question
-
-What minimum files and fields must a model-committee run log preserve?
-
-### Current direction
-
-v0.1 uses the provisional filesystem log format defined in `UBU-D0064`. `UBU-D0160` accepts the v0.2 minimum: a manifest-indexed run directory preserving canonical input snapshots, schemas, prompts, raw provider artifacts, parsed structured outputs, candidate patches, validation results, score matrices, disagreement and quorum results, selected artifacts, review notes, commit-message suggestions, and operator-run artifact-publication instructions. The long-term format may evolve through schema migrations and later decisions, but the Phase 1 logging blocker is resolved.
-
-### Resolution
-
-Resolved. See `UBU-D0064` and `UBU-D0160`.
+Resolved. See UBU-D0064, UBU-D0160.
 
 ---
 
@@ -507,30 +313,7 @@ Unresolved.
 
 Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0032 Blocks: model-committee work execution Resolved by: UBU-D0063, UBU-D0069, UBU-D0150, UBU-D0161 Last scored: Never Scored from commit: None
 
-### Question
-
-How should the model-committee work phase represent, score, select, apply, and commit concrete changesets?
-
-### Subquestions
-
-1. What format should work proposals use?
-2. What validation is required before work scoring?
-3. May models score their own work?
-4. What criteria should work scoring use?
-5. When may a selected changeset be committed locally?
-6. What files may be modified in v0.1?
-7. How does the work phase generalize from design questions to code changes and bug fixes?
-8. How should Codex CLI schema-constrained proposals fit into the work phase?
-9. How should Ollama secondary proposals be included in Codex scoring?
-10. What should happen when Codex scoring selects a mechanically invalid proposal?
-
-### Current direction
-
-The work phase should produce explicit patch-style changesets, score those changesets, select the best one when quorum is satisfied, and create reviewable artifacts. v0.1 uses Codex CLI as the primary schema-constrained work and scoring provider, with Ollama as secondary proposal providers. v0.2 adds Claude Code CLI as a schema-native frontier provider and requires cross-scoring: Codex scores Claude proposals and Claude scores Codex proposals. Self-scores may be diagnostic but do not count as quorum evidence. v0.2 writes or updates `selected.patch`, `commit_message.txt`, `review.md`, score-matrix artifacts, disagreement flags, and logs. Remote GitHub mutation, automatic patch application, automatic artifact push, and automatic PR creation remain out of scope.
-
-### Resolution
-
-Resolved. See `UBU-D0063`, `UBU-D0069`, `UBU-D0150`, and `UBU-D0161`.
+Resolved. See UBU-D0063, UBU-D0069, UBU-D0150, UBU-D0161.
 
 ---
 
@@ -549,7 +332,6 @@ Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Process Aut
 Resolved. See UBU-D0199.
 
 ---
-
 
 ## UBU-Q0041: Public recruitment language for a small core cohort
 
@@ -594,6 +376,7 @@ Resolved. See UBU-D0079, UBU-D0089.
 ## UBU-Q0046: Public dogfooding artifacts for contributor credibility
 Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Process Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0036, UBU-Q0038 Blocks: Contributor recruitment Resolved by: UBU-D0179 Last scored: 2026-05-26 Scored from commit: None
 Resolved. See UBU-D0179.
+
 ---
 
 ## UBU-Q0047: Minimum committed-contributor onboarding path
@@ -776,32 +559,11 @@ Phase 1b re-scope: this question is pulled forward from Phase 2 under the Phase 
 
 Open.
 
-
 ---
 
 ## UBU-Q0060: External/cloud LLM provider abstraction and routing policy
 
 Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0028 Blocks: LLM provider routing, cloud LLM disclosure, UbUCorp inference boundary, BYOK configuration Resolved by: UBU-D0157 Last scored: Never Scored from commit: None
-
-### Question
-
-What is the minimum provider-neutral LLM routing model that supports local Ollama, user-configured BYOK cloud APIs, optional UbUCorp managed inference, user-owned remote workers, and future compatible providers while preserving Compartment policy and user sovereignty?
-
-### Subquestions
-
-1. What interface should normalize local and cloud model providers?
-2. What provider metadata is required for location, cost, context window, capability, retention/disclosure profile, and safety behavior?
-3. How should Compartment policy prevent `no_cloud_llm` or `no_external_export` payloads from crossing a provider boundary?
-4. What context-minimization, redaction, and provenance fields are required before cloud routing?
-5. How should BYOK mode store and scope provider credentials?
-6. How should UbUCorp managed inference be represented without becoming a mandatory dependency of the open core?
-7. What user-visible disclosure is required before a workflow uses a cloud LLM?
-
-### Current direction
-
-Cloud LLMs are optional execution providers, not the canonical planner. The FOSS core should remain local-capable, provider-neutral, BYOK-capable, and self-hostable. Cloud routing must be policy-governed, explicit, and advisory.
-
-### Resolution
 
 Resolved. See UBU-D0157.
 
@@ -1312,24 +1074,6 @@ Open.
 
 Status: Solved Priority: MVP important Phase: Phase 1 Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0028, UBU-Q0060 Blocks: long-context LLM use, organizational introspection, repository/chat archive review Resolved by: UBU-D0162 Last scored: Never Scored from commit: None
 
-### Question
-
-How should UbU represent and govern context assembly for LLMs and agents, especially when long-context models can ingest large archives or repositories?
-
-### Subquestions
-
-1. What fields should a `ContextBundle` contain?
-2. How should Compartments, Identities, Associations, retention policy, provider destination, and minimization rules be recorded?
-3. When must the user approve a ContextBundle before routing it to a model?
-4. How should UbU summarize context exposure after a run?
-5. How should ContextBundles link to downstream candidate updates and Logs?
-
-### Current direction
-
-Context assembly is a privacy-relevant act. More context is not automatically better context.
-
-### Resolution
-
 Resolved. See UBU-D0162.
 
 ---
@@ -1758,24 +1502,6 @@ Open.
 
 Status: Solved Priority: MVP blocker Phase: Phase 1 Decision type: Governance Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0028, UBU-Q0083 Blocks: safeguard policy, relationship safeguards, product integrity, user autonomy Resolved by: UBU-D0165 Last scored: Never Scored from commit: None
 
-### Question
-
-How should UbU distinguish structurally enforceable hard boundaries from fallible behavioral-risk safeguards, so that it preserves user autonomy without falsely claiming to prevent misuse or illegal behavior?
-
-### Subquestions
-
-1. Which boundaries are true product invariants: Compartment, privacy, authorization, EvidenceUsePolicy, export, provenance, audit, identity isolation, and integration authorization?
-2. Which constraints come from external providers, platforms, app stores, or law rather than UbU's own philosophy?
-3. Which behavioral-risk checks are too fallible to act as hard gates by default?
-4. How should user-configured required gates be represented without confusing them with product hard boundaries?
-5. How should documentation avoid implying that UbU reliably prevents behavioral misuse?
-
-### Current direction
-
-Hard boundaries should be structural or externally required. Behavioral-risk checks should generally be advisory by default.
-
-### Resolution
-
 Resolved. See UBU-D0165.
 
 ---
@@ -2051,7 +1777,7 @@ Open.
 
 Status: Solved Priority: Post-MVP Phase: Post-MVP Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0114, UBU-Q0118 Blocks: None Resolved by: UBU-D0215 Last scored: Never Scored from commit: None
 
-Resolved by elimination. See UBU-D0215. TaskFactory is removed as an over-design; Technique instantiation into a Container subsumes template expansion, and recurring project scaffolding is served by an evergreen Objective with a calendar-style recurrence schedule (UBU-D0213) driving Technique-based expansion (UBU-D0216).
+Resolved. See UBU-D0215.
 
 ---
 
