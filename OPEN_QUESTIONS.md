@@ -2565,7 +2565,7 @@ Review-required cases surface as blocking diagnostics with `manual_decision` saf
 
 ## UBU-Q0144: Best-effort deletion and redaction on offline Devices
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0132, Phase 2 deletion propagation Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0132, Phase 2 deletion propagation Resolved by: UBU-D0249 Last scored: 2026-09-16 Scored from commit: None
 
 Formerly UBU-QSYNC-006 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §12, §18.
 
@@ -2576,7 +2576,11 @@ Compartment policy changed?
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0249`: represent enforcement against offline Devices as a per-Device deletion/redaction enforcement record linked to the policy update and affected objects.
+
+Devices that have not confirmed remain `potentially_exposed`; UbU may record attempts and retries, but may not claim purge or redaction success until confirmation or explicit user acceptance of an unknown exposure state.
+
+Diagnostics and user-facing review may disclose only structural status, not restricted payload or Compartment identity.
 
 ---
 
