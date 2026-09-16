@@ -3741,3 +3741,39 @@ Rejected alternatives:
 - Pure content-addressed bundles provide integrity and deduplication but do not, by themselves, encode happened-before ordering.
 
 This decision is design-compatible with direct peer, local LAN, removable-file, and encrypted indirect transports because the causality evidence lives in the signed statement payload and its content address rather than in any canonical server.
+
+---
+
+## UBU-D0248: Sync conflict auto-resolution is limited to deterministic non-authority cases
+
+**Status:** Accepted → DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §16, §17. Resolves `UBU-Q0143`.
+
+Phase 1b and Phase 2 distinguish three conflict-handling classes:
+
+1. **Automatically resolvable.** A Device may resolve the condition without prompting the user when the result is deterministic, idempotent, and does not choose between incompatible user intent, visibility authority, policy authority, Device trust, protected Calendar ownership, or third-party truth.
+2. **Automatically containable or recalculable.** A Device may quarantine, retry, resume, discard an incomplete import, or trigger recalculation without treating the conflicting mutation as admitted.
+3. **Human-review-required.** A Device must surface a blocking diagnostic with an immediate `manual_decision` safe-alternative; only the resulting `conflict_resolution` sync statement can enter admitted state.
+
+Automatically resolvable classes:
+
+- `duplicate_statement`: collapse duplicate idempotency keys or duplicate content to the already-admitted statement result.
+- Non-overlapping `stale_prior_version`: admit only when deterministic field-level merge proves the stale statement does not affect a field, invariant, policy input, schedule region, or causal precondition changed by the newer version.
+
+Automatically containable or recalculable classes:
+
+- `derived_state_stale`: reject or defer the derived result and recompute from current Plan, Calendar, risk, and policy state.
+- `incomplete_sync_session`: do not mark the session complete; resume, retry, or discard while preserving idempotency and dependency metadata.
+- Low-risk `projection_conflict`: perform deterministic projection repair only when the canonical-vs-projection rule for that integration explicitly says the external delta can be imported, ignored, or logged without changing protected canonical intent.
+
+Human-review-required classes:
+
+- `concurrent_status_change` whenever the competing statuses encode incompatible user intent, including complete-vs-reject.
+- Overlapping or invariant-affecting `stale_prior_version`.
+- `compartment_policy_conflict`.
+- `policy_version_conflict`.
+- `device_revoked_conflict`, except for deterministic rejection of still-pending statements from the revoked Device before any user recovery flow.
+- `calendar_region_conflict` whenever the mutation would alter or override a protected Calendar region; deterministic rejection is allowed only when the contract for that region leaves no admissible override path.
+- `payload_visibility_conflict`.
+- `projection_conflict` whenever projection repair would choose between canonical user intent and independently changed third-party state.
+
+For auditability, automatic handling must still emit enough local diagnostic and log metadata to explain what was collapsed, recomputed, quarantined, rejected, or admitted. Review-required conflicts are surfaced through the diagnostic/prompt path, not as synchronized Tasks.

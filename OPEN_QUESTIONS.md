@@ -2545,7 +2545,7 @@ Open.
 
 ## UBU-Q0143: Auto-resolvable versus review-required conflict classes
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0134, Phase 2 conflict resolution Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0134, Phase 2 conflict resolution Resolved by: UBU-D0248 Last scored: 2026-09-16 Scored from commit: None
 
 Formerly UBU-QSYNC-005 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §16, §17.
 
@@ -2555,7 +2555,11 @@ Which conflict classes can be auto-resolved safely, and which must always requir
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0248`: automatic handling is permitted only for deterministic, idempotent, non-authority-changing cases. `duplicate_statement` is auto-collapsed; non-overlapping `stale_prior_version` may be field-merged; `derived_state_stale`, `incomplete_sync_session`, and low-risk `projection_conflict` may be contained, retried, discarded, or recalculated without admitting an unsafe mutation.
+
+Human review is required for conflicts that choose between incompatible user intent, visibility authority, policy authority, Device trust, protected Calendar ownership, or third-party truth. That includes incompatible `concurrent_status_change`, overlapping `stale_prior_version`, `compartment_policy_conflict`, `policy_version_conflict`, `payload_visibility_conflict`, review-worthy `calendar_region_conflict`, review-worthy `projection_conflict`, and any `device_revoked_conflict` that is not merely deterministic rejection of still-pending statements.
+
+Review-required cases surface as blocking diagnostics with `manual_decision` safe-alternatives; the user's decision is admitted only through a `conflict_resolution` sync statement.
 
 ---
 
