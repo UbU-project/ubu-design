@@ -4650,7 +4650,7 @@ Required properties:
 
 ---
 
-## UBU-D0219 — External identity-and-access standards posture
+## UBU-D0219: External identity-and-access standards posture
 
 **Status:** Accepted
 
@@ -4670,7 +4670,7 @@ UbU adopts external identity-and-access standards — IAM — by layer, with del
 
 ---
 
-## UBU-D0220 — Directional authority
+## UBU-D0220: Directional authority
 
 **Status:** Accepted → DESIGN.md §2.19
 
@@ -4678,7 +4678,7 @@ Authority and intent originate at the individual and flow outward into coordinat
 
 ---
 
-## UBU-D0221 — Eject-not-override for shared-authority compartments
+## UBU-D0221: Eject-not-override for shared-authority compartments
 
 **Status:** Accepted → DESIGN.md §23.6
 
@@ -4686,7 +4686,7 @@ For any Compartment whose policy is not solely user-set, sovereignty is preserve
 
 ---
 
-## UBU-D0222 — Named multi-scale and sovereign-coordination strategic directions (Phase 3+)
+## UBU-D0222: Named multi-scale and sovereign-coordination strategic directions (Phase 3+)
 
 **Status:** Accepted → DESIGN.md §32
 
@@ -4694,7 +4694,7 @@ The following are accepted as named strategic directions, presented as substanti
 
 ---
 
-## UBU-D0223 — Cloud and premium compute is leak-minimization, not leak-elimination
+## UBU-D0223: Cloud and premium compute is leak-minimization, not leak-elimination
 
 **Status:** Accepted → DESIGN.md §32.6
 
@@ -4702,7 +4702,7 @@ Any cloud computation leaks proportional to its duration through access patterns
 
 ---
 
-## UBU-D0224 — Feature-to-data map as a planned full-product legibility artifact
+## UBU-D0224: Feature-to-data map as a planned full-product legibility artifact
 
 **Status:** Accepted → DESIGN.md §3.11
 
@@ -4710,7 +4710,7 @@ Alongside bootstrap-dependency build ordering, the project maintains a feature-t
 
 ---
 
-## UBU-D0225 — Competitive positioning against AI calendar and scheduling assistants
+## UBU-D0225: Competitive positioning against AI calendar and scheduling assistants
 
 **Status:** Accepted → DESIGN.md §31
 
@@ -4718,7 +4718,7 @@ UbU is differentiated first positively: AI auto-schedulers take the user's to-do
 
 ---
 
-## UBU-D0226 — AuthoritySource is a pure authority-path enum; information source moves to provenance
+## UBU-D0226: AuthoritySource is a pure authority-path enum; information source moves to provenance
 
 **Status:** Accepted → DESIGN.md §17.9; DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §8, §13, Appendix A; docs/PHASE1_CONTRACT_BOUNDARIES.md. Supersedes the `UBU-D0185` value set and carrier exemption; the `UBU-D0185` principles — a coarse closed enum that is never sufficient authorization by itself — stand.
 
@@ -4732,7 +4732,7 @@ Carrier rule: every admitted canonical record carries `Provenance.authority_sour
 
 ---
 
-## UBU-D0227 — Task readiness states are derived views, not canonical status
+## UBU-D0227: Task readiness states are derived views, not canonical status
 
 **Status:** Accepted → DESIGN.md §9.5; docs/PHASE1_CONTRACT_BOUNDARIES.md
 
@@ -4742,7 +4742,7 @@ The canonical Task lifecycle is `active`, `completed`, `failed`, `moot` per DESI
 
 ---
 
-## UBU-D0228 — Phase 1 wire convention: snake_case JSON field names
+## UBU-D0228: Phase 1 wire convention: snake_case JSON field names
 
 **Status:** Accepted → ubu-schemas `CONTRACT.md`; docs/PHASE1_CONTRACT_BOUNDARIES.md
 
@@ -4752,7 +4752,7 @@ All Phase 1 JSON wire and schema field names use snake_case, matching the litera
 
 ---
 
-## UBU-D0229 — Phase 1 ID-registry expansion to all fifteen object types
+## UBU-D0229: Phase 1 ID-registry expansion to all fifteen object types
 
 **Status:** Accepted → ubu-schemas id registry (single machine-readable source of truth per docs/PHASE1_CONTRACT_BOUNDARIES.md)
 
@@ -4762,7 +4762,7 @@ Six prefixes are added so that every Phase 1 canonical object type is admissible
 
 ---
 
-## UBU-D0230 — Compartment guardrails as policy-summary members with a logged boundary decision
+## UBU-D0230: Compartment guardrails as policy-summary members with a logged boundary decision
 
 **Status:** Accepted → DESIGN.md §4.1 guardrail list; ubu-schemas `policy-summary`
 
@@ -4772,7 +4772,7 @@ The Phase 1 Compartment guardrails `local_only`, `no_cloud_llm`, and `no_externa
 
 ---
 
-## UBU-D0231 — Orchestrator state is the ubu-store admission boundary; MemoryState is eliminated
+## UBU-D0231: Orchestrator state is the ubu-store admission boundary; MemoryState is eliminated
 
 **Status:** Accepted → docs/PHASE1_CONTRACT_BOUNDARIES.md; ubu-store `PHASE1_STORE_CONTRACT.md`; ubu-orchestrator. Implements the Phase 1 local state contract and admission vocabulary established by `UBU-D0226`, `UBU-D0227`, `UBU-D0229`, and `UBU-D0230`.
 
@@ -4782,7 +4782,7 @@ The `ubu-orchestrator` holds no canonical state of its own. The ephemeral in-mem
 
 ---
 
-## UBU-D0232 — Phase 1 next-action selection is a deterministic readiness-ordered skeleton rule with explicit action recording
+## UBU-D0232: Phase 1 next-action selection is a deterministic readiness-ordered skeleton rule with explicit action recording
 
 **Status:** Accepted → docs/PHASE1_CONTRACT_BOUNDARIES.md; ubu-orchestrator; ubu-ui; ubu-devshell. Builds on `UBU-D0227` (derived readiness), `UBU-D0210` (bounded skeleton diagnostics), and `UBU-D0226` (authority paths).
 
@@ -4794,7 +4794,7 @@ Recording a user action against the recommendation is an explicit canonical writ
 
 ---
 
-## UBU-D0233 — GitHub projection is preview, per-batch approval, gated worker write, and reconciliation with conflict surfacing
+## UBU-D0233: GitHub projection is preview, per-batch approval, gated worker write, and reconciliation with conflict surfacing
 
 **Status:** Accepted → ubu-orchestrator; ubu-github-adapter; ubu-ui; ubu-devshell. Implements `UBU-D0159` for Phase 1 and conforms to the frozen `ubu-schemas` projection family (`projection-preview`, `projection-operation`, `projection-approval`, `projection-result`, `projection-reconciliation`, `github-label-write`).
 
@@ -4804,7 +4804,7 @@ GitHub projection in Phase 1 is a four-stage flow: a deterministic, side-effect-
 
 ---
 
-## UBU-D0234 — External export is gated by a single authoritative deny-by-default boundary with worker-authority and redaction-identity invariants
+## UBU-D0234: External export is gated by a single authoritative deny-by-default boundary with worker-authority and redaction-identity invariants
 
 **Status:** Accepted → ubu-core; ubu-orchestrator; ubu-devshell. Extends `UBU-D0230` (Compartment guardrails as policy-summary members with a logged boundary decision) from a recorded decision into an enforced runtime chokepoint.
 
@@ -4814,7 +4814,7 @@ Every export-class operation — in Phase 1, a GitHub managed-label write — pa
 
 ---
 
-## UBU-D0235 — The Phase 1 Plan is a canonical timed artifact regenerated by override-safe recalculation
+## UBU-D0235: The Phase 1 Plan is a canonical timed artifact regenerated by override-safe recalculation
 
 **Status:** Accepted → DESIGN.md §15, §16, §29; PLANNING_KERNEL_CONTRACT.md; ubu-schemas (`planning/plan-step`, `planning/plan`); ubu-planning-kernel; ubu-orchestrator; ubu-ui; ubu-devshell. Refines `UBU-D0124` (legitimization makes skeleton Plans human-viable), `UBU-D0151` (Compact Calendar grammar), and `UBU-D0227` (canonical Task lifecycle and derived readiness).
 
@@ -4828,7 +4828,7 @@ Recalculation is override-safe. A recalculation must not re-place completed or i
 
 ---
 
-## UBU-D0236 — Affect legitimization is the Phase 1 human-viability filter via sigmoid affect constraints
+## UBU-D0236: Affect legitimization is the Phase 1 human-viability filter via sigmoid affect constraints
 
 **Status:** Accepted → DESIGN.md §13, §15.2.2; PLANNING_KERNEL_CONTRACT.md §6; ubu-schemas (`planning/affect-profile`, `core/snapshot` affect observation, planning-response legitimization fields); ubu-planning-kernel; ubu-orchestrator; ubu-ui; ubu-devshell. Refines `UBU-D0124` (legitimization makes skeleton Plans human-viable) and builds on `UBU-D0235` (canonical timed Plan).
 
@@ -4840,7 +4840,7 @@ For a current affect value `x`, each active dimension's satisfaction is `sigmoid
 
 ---
 
-## UBU-D0237 — The kernel contract types are the planning surface; Phase C-1 adds value scoring, bounded candidates, and semi-legitimization
+## UBU-D0237: The kernel contract types are the planning surface; Phase C-1 adds value scoring, bounded candidates, and semi-legitimization
 
 **Status:** Accepted → DESIGN.md §15.2, §16.3.1; PLANNING_KERNEL_CONTRACT.md §3, §4, §5; ubu-planning-kernel; ubu-orchestrator; ubu-ui; ubu-devshell; ubu-schemas (removal of the thin planning stubs). Refines `UBU-D0124`, `UBU-D0151`, and `UBU-D0211`; builds on `UBU-D0235` and `UBU-D0236`.
 
@@ -4854,7 +4854,7 @@ The Monte Carlo rollout (Stage 4), shifted-log-normal duration sampling, the §7
 
 ---
 
-## UBU-D0238 — Phase C-2 adds the Monte Carlo rollout, and rollout re-ranks the default Plan
+## UBU-D0238: Phase C-2 adds the Monte Carlo rollout, and rollout re-ranks the default Plan
 
 **Status:** Accepted → DESIGN.md §15.2.1, §16; PLANNING_KERNEL_CONTRACT.md §3, §5, §7; ubu-planning-kernel; ubu-orchestrator; ubu-ui; ubu-devshell. Refines `UBU-D0151` and the §15.2.1 default-by-Plan-probability selection; builds on `UBU-D0237` (value scoring and bounded candidates).
 
@@ -4870,7 +4870,7 @@ Rollout re-ranks the default Plan: after rollout, the composite folds in the rol
 
 ---
 
-## UBU-D0239 — The Task carries an optional duration estimate and correlation-group membership, feeding the rollout
+## UBU-D0239: The Task carries an optional duration estimate and correlation-group membership, feeding the rollout
 
 **Status:** Accepted → DESIGN.md §9 (Tasks), §15.2.1; PLANNING_KERNEL_CONTRACT.md §3; ubu-schemas (`core/task`), ubu-store, ubu-orchestrator, ubu-devshell. Builds on `UBU-D0237` and `UBU-D0238`, which consume these inputs.
 
@@ -4886,7 +4886,7 @@ For Phase 1 the estimates are supplied by import, bootstrap, and fixtures; a use
 
 ---
 
-## UBU-D0240 — Derived risk and human-complete plan-quality reports
+## UBU-D0240: Derived risk and human-complete plan-quality reports
 
 **Status:** Accepted → DESIGN.md §2.5.1, §16; ubu-schemas (`api/risk-report` enrichment, new `api/human-complete-plan-quality`), ubu-orchestrator, ubu-ui, ubu-devshell. Builds on `UBU-D0238` (the planning kernel emits the signals these reports aggregate).
 
@@ -4904,7 +4904,7 @@ The affect signals (`affect_margin`, `stretch_pressure`, `post_plan_state_delta`
 
 ---
 
-## UBU-D0241 — UniverseState facts container and deterministic precondition/mutation semantics
+## UBU-D0241: UniverseState facts container and deterministic precondition/mutation semantics
 
 **Status:** Accepted → DESIGN.md §10.1, §11, §4.1.6; ubu-schemas (`core/universe-state` reshape, new mutation-item and precondition schemas), ubu-core, ubu-store, ubu-devshell. Builds on `UBU-D0229` (which added the `ustate_` prefix and `ObjectType::UniverseState`).
 
@@ -4920,7 +4920,7 @@ The container, vocabulary, and evaluator are Compartment-agnostic in this slice 
 
 ---
 
-## UBU-D0242 — Wiring the UniverseState facts container into the loop
+## UBU-D0242: Wiring the UniverseState facts container into the loop
 
 **Status:** Accepted → DESIGN.md §10.1, §10.2, §11.3, §4.1.6; ubu-schemas, ubu-core, ubu-orchestrator, ubu-devshell. Builds on `UBU-D0241` (the facts container and its pure mutation/precondition semantics), which this program consumes rather than re-implements.
 
@@ -4936,7 +4936,7 @@ Phase 1 wires the UniverseState facts container into the loop in three sequenced
 
 ---
 
-## UBU-D0243 — UniverseState namespace convention: subject–predicate with a controlled subject vocabulary
+## UBU-D0243: UniverseState namespace convention: subject–predicate with a controlled subject vocabulary
 
 **Status:** Accepted → DESIGN.md §11.2, §11 (the §1744 dotted-target grammar). Standalone; governs all UniverseState targets (facts, preconditions, mutations) across `ubu-schemas`, `ubu-core`, `ubu-orchestrator`. First applied by Wiring-C (`UBU-D0242`).
 
@@ -4959,7 +4959,7 @@ Examples: `facts.operator.work_style`, `facts.project.repository`, `numeric_valu
 
 ---
 
-## UBU-D0244 — Live GitHub managed-label projection policy
+## UBU-D0244: Live GitHub managed-label projection policy
 
 **Status:** Accepted → DESIGN.md §2.5 (the export boundary), §5 (instance modes). Governs the live projection path in `ubu-orchestrator` and `ubu-github-adapter`. First applied by the live-GitHub wave (O19/GA1/D18).
 
@@ -4978,7 +4978,7 @@ The projection machinery — the deny-by-default gate, the managed-label-only as
 
 ---
 
-## UBU-D0245 — Live GitHub ingestion policy
+## UBU-D0245: Live GitHub ingestion policy
 
 **Status:** Accepted → DESIGN.md §27 (GitHub import). Governs the live import path in `ubu-orchestrator` and `ubu-github-adapter`. First applied by the live-ingestion wave (O20/GA2/D19). Companion to `UBU-D0244` (live projection).
 
@@ -4987,7 +4987,7 @@ The bootstrap already calls a live-import entry point, but both it and the adapt
 1. **Deliberate server-side ingest mode.** Live import is enabled only by a dedicated server-side `GithubIngestMode` (default mock), separate from the projection `ProjectionExportMode` so that read and write are opted into independently. Token presence alone never triggers a live read; no request field selects live.
 2. **In-memory, non-persisted token, reused.** Live import uses the same in-memory session token as projection (never written to disk), or the developer token in developer mode. The operator supplies a fine-grained, minimum-scope, short-expiry token and revokes it after.
 3. **Scope: issues become Tasks and External References.** The live import enumerates a repository's issues and maps them through the existing normalization and candidate mapping into Tasks plus GitHub External References — the same admission downstream as the fixture import. Pull requests, reviews, CI events, milestones, and comments are not ingested in Phase 1, and per-issue GitHub state is not recorded as UniverseState facts (the Wiring-C boundary holds).
-4. **One-shot at bootstrap, not a sync.** Live import runs once at bootstrap, guarded by `reject_if_already_seeded`. Continuous or incremental re-sync is Phase 2 (the QSYNC series).
+4. **One-shot at bootstrap, not a sync.** Live import runs once at bootstrap, guarded by `reject_if_already_seeded`. Continuous or incremental re-sync is Phase 2 (`UBU-Q0139`-`UBU-Q0150`).
 5. **Faithful fake offline.** Mock and live runs share one import path through the adapter, differing only in the injected `GitHubApi`: a live `octocrab` client, or an in-memory recording fake seeded from a raw-issue fixture. Offline verification uses the fake and performs no network egress.
 6. **Ingress provenance.** Each ingested issue carries GitHub provenance as an External Reference; canonical UbU state still changes only through the normal admission path.
 

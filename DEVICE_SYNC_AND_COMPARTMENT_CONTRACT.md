@@ -414,7 +414,7 @@ manual_import
 Phase 2 need not support every listed transport. It must support at least one direct
 or local sync path and must be design-compatible with at least one encrypted indirect
 transport. Whether encrypted rclone/rsync compatibility is implemented or only
-fixture-certified remains UBU-QSYNC-003.
+fixture-certified remains `UBU-Q0141`.
 
 `cloud_relay_user_selected` is permitted only as a user-selected transport for
 encrypted sync statements or opaque bundles. It must not become a required canonical
@@ -677,7 +677,7 @@ versions; causal parents; idempotency keys; created/effective/recorded timestamp
 deterministic duplicate handling; and observed policy versions for any Compartment,
 Zone, projection, or routing policy relied on by the statement.
 
-Candidate mechanisms (not yet mandated — see UBU-QSYNC-002): hybrid logical clocks,
+Candidate mechanisms (not yet mandated — see `UBU-Q0140`): hybrid logical clocks,
 Lamport clocks, vector clocks, per-object version counters, signed append-only event log,
 content-addressed sync bundles. Phase 2 must not adopt a design that only works for two
 Devices.
@@ -789,7 +789,7 @@ that looks Task-like. If it does, that item must be:
 
 In other words: the review may *look* like a Task to the user, but it must not *be* a
 synchronized Task object. If a future phase wants a genuinely schedulable, syncable review
-Task, that requires solving the regress above first — tracked as UBU-QSYNC-009.
+Task, that requires solving the regress above first — tracked as `UBU-Q0147`.
 
 ---
 
@@ -1087,49 +1087,28 @@ authority.
 
 ## 28. Open questions
 
-```text
-UBU-QSYNC-001: Does Phase 2 require full peer-to-peer mesh synchronization, or is a
-single-live-session model sufficient if the sync statement format is N-device compatible
-and transport-independent?
+The `UBU-QSYNC-*` series previously held here has been merged into the canonical
+`OPEN_QUESTIONS.md` register as `UBU-Q0139`-`UBU-Q0150`. It was kept separate on the
+assumption that these questions were not applicable before Phase 2; seven of them turned
+out to block Phase 1b, so they now live with every other open question and are ranked and
+worked through the same path.
 
-UBU-QSYNC-002: What exact causality mechanism should Phase 2 use: hybrid logical clocks,
-Lamport clocks, vector clocks, per-object version counters, content-addressed logs, or a
-hybrid?
+This section is retained as a redirect only. Do not add new questions here.
 
-UBU-QSYNC-003: What is the minimum acceptable encrypted indirect sync transport? Should
-encrypted rclone/rsync-compatible storage be an MVP-supported path or only
-design-compatible?
-
-UBU-QSYNC-004: What should happen if a Device disconnects midway through a sync session?
-
-UBU-QSYNC-005: Which conflict classes can be auto-resolved safely, and which must always
-require user review?
-
-UBU-QSYNC-006: How should UbU represent best-effort deletion/redaction on Devices that
-were offline when Compartment policy changed?
-
-UBU-QSYNC-007: What is the minimum useful worker Device protocol for Phase 2?
-
-UBU-QSYNC-008: What sync-state warnings are necessary to prevent the
-one-device-powered-on-at-a-time anti-pattern without becoming annoying or paternalistic?
-
-UBU-QSYNC-009: If a future phase wants a genuinely schedulable, syncable manual-review
-Task (rather than the device-local diagnostic surface of §17), how is the causal regress
-and planner loop resolved so that the review Task does not depend on the coherence it
-exists to restore?
-
-UBU-QSYNC-010: How should UbU distinguish physical devices, UbU Devices/execution
-enclaves, app installs, browser sessions, and worker processes? Can one physical machine
-host multiple UbU Devices/enclaves, and under what Identity/Compartment conditions?
-
-UBU-QSYNC-011: Phase 3 token custody: how are external integration tokens, local
-encryption keys, and worker credentials stored, rotated, revoked, and optionally
-replicated across Devices without violating Compartment policy?
-
-UBU-QSYNC-012: Should redacted object/Compartment handles be stable per Device, per sync
-session, per Calendar window, or per object version, and how much correlation risk is
-acceptable?
-```
+| Retired ID | Canonical ID | Phase |
+|---|---|---|
+| `UBU-QSYNC-001` | `UBU-Q0139` | Phase 2 |
+| `UBU-QSYNC-002` | `UBU-Q0140` | Phase 1b |
+| `UBU-QSYNC-003` | `UBU-Q0141` | Phase 2 |
+| `UBU-QSYNC-004` | `UBU-Q0142` | Phase 2 |
+| `UBU-QSYNC-005` | `UBU-Q0143` | Phase 1b |
+| `UBU-QSYNC-006` | `UBU-Q0144` | Phase 1b |
+| `UBU-QSYNC-007` | `UBU-Q0145` | Phase 1b |
+| `UBU-QSYNC-008` | `UBU-Q0146` | Phase 2 |
+| `UBU-QSYNC-009` | `UBU-Q0147` | Phase 2 |
+| `UBU-QSYNC-010` | `UBU-Q0148` | Phase 1b |
+| `UBU-QSYNC-011` | `UBU-Q0149` | Phase 1b |
+| `UBU-QSYNC-012` | `UBU-Q0150` | Phase 1b |
 
 ---
 

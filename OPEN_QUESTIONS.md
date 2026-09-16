@@ -749,7 +749,7 @@ Resolved. See UBU-D0203.
 
 ## UBU-Q0059: Execution-provider trust, worker backends, and privacy-preserving compute roadmap
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0016 Blocks: Phase 2 personal worker devices, hosted compute policy, third-party provider compatibility, Phase 1b advisory worker boundary Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016 Blocks: Phase 2 personal worker devices, hosted compute policy, third-party provider compatibility, Phase 1b advisory worker boundary Resolved by: None Last scored: 2026-09-15 Scored from commit: None
 
 ### Question
 
@@ -1060,7 +1060,7 @@ Resolved. See UBU-D0212.
 
 ## UBU-Q0073: Mobile stewardship metadata and MVP repair rules
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0016, UBU-Q0058 Blocks: mobile/local planning UX, Phase 1b device-side provisional re-planning Resolved by: None Last scored: 2026-05-26 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016, UBU-Q0058 Blocks: mobile/local planning UX, Phase 1b device-side provisional re-planning Resolved by: None Last scored: 2026-09-15 Scored from commit: None
 
 ### Question
 
@@ -1170,7 +1170,7 @@ Open.
 
 ## UBU-Q0077: Realtime interaction session and candidate update schema
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0025, UBU-Q0031, UBU-Q0068 Blocks: realtime model adapters, discovery mode, meeting capture, interruption handling, Phase 1b candidate/admitted state boundary Resolved by: None Last scored: 2026-05-26 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0025, UBU-Q0031, UBU-Q0068 Blocks: realtime model adapters, discovery mode, meeting capture, interruption handling, Phase 1b candidate/admitted state boundary Resolved by: None Last scored: 2026-09-15 Scored from commit: None
 
 ### Question
 
@@ -2349,7 +2349,9 @@ Open.
 
 ## UBU-Q0126: SPIFFE trust-domain granularity and Compartment non-correlation
 
-Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-D0219 Blocks: Compartment isolation proofs, cryptographic non-correlation, workload-identity federation, Ethereum settlement Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Compartment isolation proofs, cryptographic non-correlation, workload-identity federation, Ethereum settlement Resolved by: None Last scored: Never Scored from commit: None
+
+Builds on UBU-D0219 (external identity-and-access standards posture).
 
 ### Question
 
@@ -2380,7 +2382,7 @@ Open.
 
 ## UBU-Q0127: Protective shared-authority compartment gating: consent and inference-resistance
 
-Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Policy Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-D0221, UBU-D0222 Blocks: Protective compartments, workplace compartments, power-asymmetry scenarios Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Governance Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Protective compartments, workplace compartments, power-asymmetry scenarios Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -2405,7 +2407,10 @@ Open.
 
 ## UBU-Q0128: Embodied Audio Interaction
 
-Status: Open Priority: Important Phase: Phase 3 Decision type: UX architecture / Interaction model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: Affect model, Compartment policy, audio I/O policy, MCP/tool harness policy, device context model Blocks: Commute Mode, restricted-attention interaction, audio-only task capture, audio-safe messaging, media-state routing, exercise/rest/walking interaction modes Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 3 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Commute Mode, restricted-attention interaction, audio-only task capture, audio-safe messaging, media-state routing, exercise/rest/walking interaction modes Resolved by: None Last scored: Never Scored from commit: None
+
+Depends on unregistered areas: Affect model, Compartment policy, audio I/O policy,
+MCP/tool harness policy, device context model.
 
 ### Question
 
@@ -2452,7 +2457,10 @@ Open.
 
 ## UBU-Q0129: Original Narration
 
-Status: Open Priority: Important Phase: Phase 3 Decision type: Research / Generative experience Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: Embodied Audio Interaction, affect model, Compartment policy, generative content policy, user preference model Blocks: Affect-aware narration, recovery audio, personalized non-intellectual interaction, generative experience routing Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 3 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0128 Blocks: Affect-aware narration, recovery audio, personalized non-intellectual interaction, generative experience routing Resolved by: None Last scored: Never Scored from commit: None
+
+Depends on unregistered areas: affect model, Compartment policy, generative content
+policy, user preference model.
 
 ### Question
 
@@ -2497,7 +2505,7 @@ Open.
 
 ## UBU-Q0130: Phase 1b mutation envelope causality and idempotency metadata
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-QSYNC-002, UBU-Q0131 Blocks: Phase 1b mutation paths, Phase 2 sync statement compatibility Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0140, UBU-Q0131 Blocks: Phase 1b mutation paths, Phase 2 sync statement compatibility Resolved by: None Last scored: 2026-09-15 Scored from commit: None
 
 ### Question
 
@@ -2514,7 +2522,7 @@ What causality and idempotency metadata must every Phase 1b canonical mutation c
 
 ### Current direction
 
-Phase 1b carries the frozen field set on every mutation but does not choose the causality mechanism, which remains open under UBU-QSYNC-002 and must not be prematurely settled here. The ordering mechanism sits behind a trait so Phase 2 can supply its chosen clock without reshaping anything Phase 1b emits. Bitemporality is load-bearing in Phase 1b rather than theoretical, because unattended advisory batch runs propose at a materially different time than the operator admits, and clarify sessions span days. This is the first Phase 1b ticket's governing constraint: no later mutation path may emit an unshaped mutation.
+Phase 1b carries the frozen field set on every mutation but does not choose the causality mechanism, which remains open under UBU-Q0140 and must not be prematurely settled here. The ordering mechanism sits behind a trait so Phase 2 can supply its chosen clock without reshaping anything Phase 1b emits. Bitemporality is load-bearing in Phase 1b rather than theoretical, because unattended advisory batch runs propose at a materially different time than the operator admits, and clarify sessions span days. This is the first Phase 1b ticket's governing constraint: no later mutation path may emit an unshaped mutation.
 
 ### Resolution
 
@@ -2524,7 +2532,7 @@ Open.
 
 ## UBU-Q0131: Phase 1b Device and execution-context identity
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-QSYNC-010 Blocks: Phase 1b origin-Device attribution, Phase 2 Device registry Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0148 Blocks: Phase 1b origin-Device attribution, Phase 2 Device registry Resolved by: None Last scored: 2026-09-15 Scored from commit: None
 
 ### Question
 
@@ -2550,7 +2558,7 @@ Open.
 
 ## UBU-Q0132: Phase 1b tombstone and best-effort purge semantics
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-QSYNC-006, UBU-Q0130 Blocks: Phase 1b deletion paths, decomposition undo, projection deletion Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0144, UBU-Q0130 Blocks: Phase 1b deletion paths, decomposition undo, projection deletion Resolved by: None Last scored: 2026-09-15 Scored from commit: None
 
 ### Question
 
@@ -2567,7 +2575,7 @@ How should Phase 1b represent deletion and redaction of canonical objects so tha
 
 ### Current direction
 
-Phase 1b replaces hard deletes with tombstones. This makes decomposition undo cleaner rather than harder: parent retirement becomes a tombstone, and undo un-tombstones and restores the snapshot the decomposition record already captures. Purge propagation to Devices that were offline when Compartment policy changed remains open under UBU-QSYNC-006 and is not answered by Phase 1b.
+Phase 1b replaces hard deletes with tombstones. This makes decomposition undo cleaner rather than harder: parent retirement becomes a tombstone, and undo un-tombstones and restores the snapshot the decomposition record already captures. Purge propagation to Devices that were offline when Compartment policy changed remains open under UBU-Q0144 and is not answered by Phase 1b.
 
 ### Resolution
 
@@ -2577,7 +2585,7 @@ Open.
 
 ## UBU-Q0133: Phase 1b redacted Handle stability and disclosure limits
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-QSYNC-012 Blocks: Phase 1b Compartment egress, redaction-identity enforcement Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0150 Blocks: Phase 1b Compartment egress, redaction-identity enforcement Resolved by: None Last scored: 2026-09-15 Scored from commit: None
 
 ### Question
 
@@ -2603,7 +2611,7 @@ Open.
 
 ## UBU-Q0134: Phase 1b projection conflict classes: auto-resolve versus required review
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-QSYNC-005, UBU-Q0073 Blocks: Phase 1b projection reconciliation, conflict severity vocabulary Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0143, UBU-Q0073 Blocks: Phase 1b projection reconciliation, conflict severity vocabulary Resolved by: None Last scored: 2026-09-15 Scored from commit: None
 
 ### Question
 
@@ -2620,7 +2628,7 @@ Which conflict classes arising between canonical state and an external projectio
 
 ### Current direction
 
-Phase 1b resolves projection conflicts only, and the existing four-quadrant calendar import classification is the behavior to formalize rather than invent. Device-to-Device sync conflict classes — concurrent edits on two replicas, policy change while offline — remain open under UBU-QSYNC-005 and must not be treated as answered by this entry, which is scoped to the canonical-versus-projection family.
+Phase 1b resolves projection conflicts only, and the existing four-quadrant calendar import classification is the behavior to formalize rather than invent. Device-to-Device sync conflict classes — concurrent edits on two replicas, policy change while offline — remain open under UBU-Q0143 and must not be treated as answered by this entry, which is scoped to the canonical-versus-projection family.
 
 ### Resolution
 
@@ -2630,7 +2638,7 @@ Open.
 
 ## UBU-Q0135: Phase 1b local advisory worker protocol
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-QSYNC-007, UBU-Q0059, UBU-Q0136 Blocks: Phase 1b advisory operations, Phase 3 worker substitution Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0145, UBU-Q0059 Blocks: Phase 1b advisory operations, Phase 3 worker substitution Resolved by: None Last scored: 2026-09-15 Scored from commit: None
 
 ### Question
 
@@ -2647,7 +2655,7 @@ What is the minimum worker protocol for a Phase 1b local advisory worker invoked
 
 ### Current direction
 
-Phase 1b builds the local advisory worker behind a scoped authority and the admission boundary so that the marketplace phase becomes a transport substitution. The invariant that advisory proposals never directly mutate state is non-negotiable and already holds in the Quick UbU implementation, where the advisor only enqueues candidates. The general Phase 2 worker-Device protocol for user-owned remote Devices remains open under UBU-QSYNC-007.
+Phase 1b builds the local advisory worker behind a scoped authority and the admission boundary so that the marketplace phase becomes a transport substitution. The invariant that advisory proposals never directly mutate state is non-negotiable and already holds in the Quick UbU implementation, where the advisor only enqueues candidates. The general Phase 2 worker-Device protocol for user-owned remote Devices remains open under UBU-Q0145.
 
 ### Resolution
 
@@ -2657,7 +2665,7 @@ Open.
 
 ## UBU-Q0136: Phase 1b single-Device token and worker-credential custody
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-QSYNC-011, UBU-Q0135 Blocks: Phase 1b external projection adapters, advisory worker configuration Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0149, UBU-Q0135 Blocks: Phase 1b external projection adapters, advisory worker configuration Resolved by: None Last scored: 2026-09-15 Scored from commit: None
 
 ### Question
 
@@ -2674,7 +2682,7 @@ How are external integration tokens and local worker credentials stored, scoped,
 
 ### Current direction
 
-Phase 1b holds external OAuth tokens and local worker configuration from its first adapter ticket onward, so custody is decided de facto unless decided deliberately. This entry is scoped to a single Device. Cross-Device replication, rotation propagation, and local encryption-key custody remain open under UBU-QSYNC-011, as does encryption at rest, which is explicitly not claimed before Phase 2.
+Phase 1b holds external OAuth tokens and local worker configuration from its first adapter ticket onward, so custody is decided de facto unless decided deliberately. This entry is scoped to a single Device. Cross-Device replication, rotation propagation, and local encryption-key custody remain open under UBU-Q0149, as does encryption at rest, which is explicitly not claimed before Phase 2.
 
 ### Resolution
 
@@ -2684,7 +2692,7 @@ Open.
 
 ## UBU-Q0137: Phase 1b BackgroundProcess model for unattended advisory batches
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0084, UBU-Q0130, UBU-Q0135 Blocks: Phase 1b batch runner, unattended advisory execution Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0084, UBU-Q0130, UBU-Q0135 Blocks: Phase 1b batch runner, unattended advisory execution Resolved by: None Last scored: 2026-09-15 Scored from commit: None
 
 ### Question
 
@@ -2712,7 +2720,7 @@ Open.
 
 ## UBU-Q0138: Phase 1b advisory candidate lifecycle and durable rejection
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0088, UBU-Q0077, UBU-Q0130 Blocks: Phase 1b review queue, candidate/admitted distinction Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0088, UBU-Q0077, UBU-Q0130 Blocks: Phase 1b review queue, candidate/admitted distinction Resolved by: None Last scored: 2026-09-15 Scored from commit: None
 
 ### Question
 
@@ -2731,6 +2739,210 @@ What lifecycle states and durable-rejection semantics does a Phase 1b advisory c
 ### Current direction
 
 Phase 1b's advisory review queue is the candidate-to-admitted boundary in practice, and it already implements durable rejection as dedup against rejected history, so the lifecycle is being decided implicitly unless decided explicitly. The structural requirement is that clarify sessions, pending decompositions, and queued decisions become per-object labelled objects rather than aggregate blobs, because an aggregate holding state about many objects across many Compartments cannot be per-object versioned or partially replicated and leaks the existence of everything inside it. Extrospection-specific finding semantics remain open under UBU-Q0088.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0139: Phase 2 sync topology: peer-to-peer mesh or single-live-session
+
+Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 2 sync topology Resolved by: None Last scored: Never Scored from commit: None
+
+Formerly UBU-QSYNC-001 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+
+### Question
+
+Does Phase 2 require full peer-to-peer mesh synchronization, or is a single-live-session model
+sufficient if the sync statement format is N-device compatible and transport-independent?
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0140: Phase 2 causality mechanism for sync ordering
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0130, Phase 2 sync statement compatibility Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+
+Formerly UBU-QSYNC-002 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+
+### Question
+
+What exact causality mechanism should Phase 2 use: hybrid logical clocks, Lamport clocks, vector
+clocks, per-object version counters, content-addressed logs, or a hybrid?
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0141: Minimum acceptable encrypted indirect sync transport
+
+Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 2 sync transport Resolved by: None Last scored: Never Scored from commit: None
+
+Formerly UBU-QSYNC-003 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+
+### Question
+
+What is the minimum acceptable encrypted indirect sync transport? Should encrypted rclone/rsync-
+compatible storage be an MVP-supported path or only design-compatible?
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0142: Device disconnection midway through a sync session
+
+Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 2 sync session recovery Resolved by: None Last scored: Never Scored from commit: None
+
+Formerly UBU-QSYNC-004 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+
+### Question
+
+What should happen if a Device disconnects midway through a sync session?
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0143: Auto-resolvable versus review-required conflict classes
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0134, Phase 2 conflict resolution Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+
+Formerly UBU-QSYNC-005 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+
+### Question
+
+Which conflict classes can be auto-resolved safely, and which must always require user review?
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0144: Best-effort deletion and redaction on offline Devices
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0132, Phase 2 deletion propagation Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+
+Formerly UBU-QSYNC-006 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+
+### Question
+
+How should UbU represent best-effort deletion/redaction on Devices that were offline when
+Compartment policy changed?
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0145: Minimum useful worker Device protocol for Phase 2
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0135, Phase 2 worker Device protocol Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+
+Formerly UBU-QSYNC-007 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+
+### Question
+
+What is the minimum useful worker Device protocol for Phase 2?
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0146: Sync-state warnings without the one-device-at-a-time anti-pattern
+
+Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 2 sync-state surfacing Resolved by: None Last scored: Never Scored from commit: None
+
+Formerly UBU-QSYNC-008 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+
+### Question
+
+What sync-state warnings are necessary to prevent the one-device-powered-on-at-a-time anti-pattern
+without becoming annoying or paternalistic?
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0147: Schedulable syncable manual-review Task and the causal regress
+
+Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Phase 2+ manual-review Task scheduling Resolved by: None Last scored: Never Scored from commit: None
+
+Formerly UBU-QSYNC-009 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+
+### Question
+
+If a future phase wants a genuinely schedulable, syncable manual-review Task (rather than the
+device-local diagnostic surface of §17), how is the causal regress and planner loop resolved so that
+the review Task does not depend on the coherence it exists to restore?
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0148: Distinguishing physical devices, UbU Devices, installs, and workers
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0131, Phase 2 Device registry Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+
+Formerly UBU-QSYNC-010 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+
+### Question
+
+How should UbU distinguish physical devices, UbU Devices/execution enclaves, app installs, browser
+sessions, and worker processes? Can one physical machine host multiple UbU Devices/enclaves, and
+under what Identity/Compartment conditions?
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0149: Phase 3 token, key, and credential custody across Devices
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0136, Phase 3 token custody Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+
+Formerly UBU-QSYNC-011 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+
+### Question
+
+Phase 3 token custody: how are external integration tokens, local encryption keys, and worker
+credentials stored, rotated, revoked, and optionally replicated across Devices without violating
+Compartment policy?
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0150: Redacted object and Compartment handle stability scope
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0133, Phase 2 redaction identity Resolved by: None Last scored: 2026-09-15 Scored from commit: None
+
+Formerly UBU-QSYNC-012 (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §28, retired).
+
+### Question
+
+Should redacted object/Compartment handles be stable per Device, per sync session, per Calendar
+window, or per object version, and how much correlation risk is acceptable?
 
 ### Resolution
 
