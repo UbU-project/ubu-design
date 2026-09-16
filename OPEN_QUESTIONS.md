@@ -2586,7 +2586,7 @@ Diagnostics and user-facing review may disclose only structural status, not rest
 
 ## UBU-Q0145: Minimum useful worker Device protocol for Phase 2
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0135, Phase 2 worker Device protocol Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0135, Phase 2 worker Device protocol Resolved by: UBU-D0250 Last scored: 2026-09-16 Scored from commit: None
 
 Formerly UBU-QSYNC-007 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §20.
 
@@ -2596,7 +2596,7 @@ What is the minimum useful worker Device protocol for Phase 2?
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0250`: Phase 2 worker Devices use a scoped request/response protocol over normal sync statements. A controller sends a policy-checked `worker_request` with scope, purpose, allowed operations, input references or redacted context bundle, policy versions, retention deadline, and result schema. The worker may compute only within that scope and returns `worker_result` statements containing derived artifacts, candidate mutations, diagnostics, provenance, and deletion confirmation for transient payloads. Candidate mutations are never admitted state until normal sync-statement admission accepts them.
 
 ---
 
