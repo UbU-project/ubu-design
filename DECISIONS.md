@@ -3709,3 +3709,31 @@ Consequences for this repository, which are the load-bearing part of this decisi
 5. **Runs stay auditable.** `manifest.prompt_context` records the exact questions, decisions, and sections a prompt was built from, and `runs/<run-id>/snapshot/` still holds the full files. A reviewer can see both what the model was shown and what the repository contained.
 
 This does not change what is canonical. Accepted design state still exists only when a human operator commits to this repository.
+
+---
+
+## UBU-D0247: Phase 2 sync uses hybrid HLC, DAG, and content-addressed statements
+
+**Status:** Accepted → DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §8, §15. Resolves `UBU-Q0140`.
+
+Phase 2 sync ordering uses a hybrid causality mechanism rather than selecting a single scalar clock.
+
+Canonical components:
+
+- The durable unit is the signed or integrity-protected `SyncStatement`; accepted statements are retained as an append-only, content-addressed log or bundle record.
+- Each statement has a deterministic content address computed over its canonical signed payload, excluding replica-local metadata such as `received_time` and `admitted_time`.
+- Each origin Device maintains a hybrid logical clock. The HLC tick is included in the statement payload and advances on local statement creation and on admitting remote causal parents.
+- `causal_parents` define the statement DAG and are the authoritative happened-before evidence across Devices.
+- `observed_versions` and `observed_policy_versions` are per-object preconditions used to detect stale writes, policy races, and deterministic conflicts; they are not a replacement for the statement DAG.
+- Admitted-state application order is a deterministic topological traversal of available causal parents, with ties broken by HLC tick, origin Device ID, and sync statement ID.
+
+The HLC tick is an ordering aid and operator-review affordance, not an authority source. It never overrides missing causal parents, observed-version failures, policy failures, or invalid statement integrity. `effective_time`, `recorded_time`, `received_time`, and `admitted_time` retain their separate meanings and must not be collapsed into the causality clock.
+
+Rejected alternatives:
+
+- Pure Lamport clocks lose useful physical-time adjacency for review and diagnostics while still requiring deterministic tie breakers.
+- Pure vector clocks are too large and privacy-leaky for N-device sync with partial, redacted, stale, or restricted replicas.
+- Pure per-object counters cannot represent cross-object mutations, policy races, worker results, or conflict-resolution statements without an additional statement-level causal graph.
+- Pure content-addressed bundles provide integrity and deduplication but do not, by themselves, encode happened-before ordering.
+
+This decision is design-compatible with direct peer, local LAN, removable-file, and encrypted indirect transports because the causality evidence lives in the signed statement payload and its content address rather than in any canonical server.
