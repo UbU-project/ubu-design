@@ -3115,7 +3115,7 @@ Relationship documentation must not claim that UbU prevents coercion, harassment
 
 ### 23.1 Device
 
-A **Device** is an execution enclave, not necessarily physical hardware.
+A **Device** is an execution enclave, not necessarily physical hardware. A physical machine, app install, browser session, and worker process are substrates or runtime contexts; they become UbU Devices only when admitted as separately identifiable execution enclaves with their own `device_id`, trust state, capability profile, Zone membership, and effective Compartment access.
 
 Examples:
 
@@ -3123,8 +3123,10 @@ Examples:
 - container
 - VM
 - secure enclave
+- browser profile or session
+- worker process or worker runtime
 
-One physical machine may host multiple Devices.
+One physical machine may host multiple Devices when each enclave is intentionally registered, isolated enough for its trust and capability claims, associated with an authorized Identity, assigned to exactly one Zone, and granted only the Compartments it is allowed to know about. App installs and browser sessions that merely render or project another Device's state are projection surfaces or execution contexts, not Devices. Workers are Devices only when they hold independent execution authority under policy; otherwise they are child processes of the controlling Device.
 
 ### 23.2 Zone
 
