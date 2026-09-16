@@ -2673,7 +2673,7 @@ Resolved by `UBU-D0252`: Phase 3 treats external tokens, local encryption keys, 
 
 ## UBU-Q0150: Redacted object and Compartment handle stability scope
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0133, Phase 2 redaction identity Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0133, Phase 2 redaction identity Resolved by: UBU-D0253 Last scored: 2026-09-16 Scored from commit: None
 
 Formerly UBU-QSYNC-012 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §10, §12.
 
@@ -2684,4 +2684,4 @@ window, or per object version, and how much correlation risk is acceptable?
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0253`: Redacted object handles are local rotating aliases stable only for the receiving Device, the redacted source-object version, and the declared projection window, with rotation on version, redaction, policy, authority, or window changes. Compartment grouping handles are omitted by default; when policy permits them, they are stable only for the receiving Device, projection window, and policy epoch. Acceptable correlation is limited to local UI continuity and de-duplication inside one authorized restricted projection window; durable cross-Device, cross-window, cross-version, or Compartment-pattern correlation is not acceptable.

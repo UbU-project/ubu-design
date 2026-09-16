@@ -3870,3 +3870,19 @@ Recovery is a separate custody path, not a backdoor replication exception. A rec
 Sync statements may reference secret capability IDs, version IDs, envelope IDs, rotation records, and revocation records. They must not carry reusable bearer tokens, raw local encryption keys, or worker credentials as plaintext sync content.
 
 This decision intentionally leaves concrete cryptographic algorithms, OS keychain integrations, hardware enclave support, and provider-specific refresh-token mechanics to implementation design, while fixing the custody semantics needed to keep Phase 3 integrations inside the Compartment model.
+
+---
+
+## UBU-D0253: Redacted handles are local rotating aliases
+
+**Status:** Accepted → DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §10, §12. Resolves `UBU-Q0150`.
+
+Redacted object and Compartment handles are privacy-preserving aliases for a restricted Replica. They are never real object IDs, `compartment_id` values, Compartment labels, or encodings from which a restricted Device can recover or recognize those identities.
+
+For `redacted_object_ref`, the default stability scope is the receiving Device, the redacted source-object version, and the declared projection window. The handle may remain stable across retries or repeated sync of that same version within that same window so the restricted Device can de-duplicate and render consistently, but it rotates when the source object version, redaction level, policy epoch, target Device authority, or projection window changes.
+
+For `compartment_ref`, the default is omission. If policy explicitly permits restricted grouping, the grouping handle is stable only for the receiving Device, declared projection window, and policy epoch. It rotates across Devices, across projection windows, and across policy epochs, and it must be omitted whenever the fact of grouping would itself leak sensitive context.
+
+All redacted handles must be generated as high-entropy random aliases or keyed aliases whose key is unavailable to the restricted Device. Handles must carry no semantic prefix, reason code, sequence, compartment vocabulary, or stable global identifier.
+
+The acceptable correlation risk is limited to local correlation needed for one authorized restricted Device to maintain UI continuity and de-duplication inside one projection window. Durable cross-Device, cross-window, cross-version, or Compartment-pattern correlation is not acceptable for redacted replicas.
