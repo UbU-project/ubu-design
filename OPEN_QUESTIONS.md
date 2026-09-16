@@ -2260,7 +2260,7 @@ Open.
 
 ## UBU-Q0131: Phase 1b Device and execution-context identity
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0148 Blocks: Phase 1b origin-Device attribution, Phase 2 Device registry Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0148 Blocks: Phase 1b origin-Device attribution, Phase 2 Device registry Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
 ### Question
 
@@ -2655,7 +2655,7 @@ Resolved by `UBU-D0251`: UbU Device identity is per registered execution enclave
 
 ## UBU-Q0149: Phase 3 token, key, and credential custody across Devices
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0136, Phase 3 token custody Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0136, Phase 3 token custody Resolved by: UBU-D0252 Last scored: 2026-09-16 Scored from commit: None
 
 Formerly UBU-QSYNC-011 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §21.
 
@@ -2667,7 +2667,7 @@ Compartment policy?
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0252`: Phase 3 treats external tokens, local encryption keys, and worker credentials as Compartment-scoped secret capabilities with explicit Device custody. Secret values are held only in local Device secret stores or encrypted envelopes for policy-authorized Devices, never in plaintext sync payloads, projection records, worker messages, diagnostics, or redacted replicas. Rotation creates new versions and rewrap obligations; revocation denies new use for Devices that have admitted it and tracks offline holders as enforcement obligations until confirmed or explicitly accepted as unknown exposure.
 
 ---
 

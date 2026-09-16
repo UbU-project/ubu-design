@@ -3842,3 +3842,31 @@ A UbU Device is a registered execution enclave. A physical machine, app install,
 One physical machine may host multiple UbU Devices when each enclave is intentionally registered, has isolation appropriate to its claimed trust and capabilities, is associated with an authorized Identity, belongs to exactly one Zone, and receives only policy-authorized Compartment knowledge and payload access. Separate OS profiles, containers, VMs, secure enclaves, browser profiles, removable-import environments, and worker runtimes may therefore be separate Devices.
 
 An app install or browser session that only presents another Device's state is a projection surface or execution context, not a Device. A worker process is a Device only when it holds independent execution authority and participates under Device policy; otherwise it is a child process of the controlling Device. Worker candidate mutations still require normal admission and cannot expand Identity, Zone, or Compartment authority.
+
+---
+
+## UBU-D0252: Phase 3 secrets are Compartment-scoped capabilities with explicit Device custody
+
+**Status:** Accepted → DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §21. Resolves `UBU-Q0149`.
+
+Phase 3 custody for external integration tokens, local encryption keys, and worker credentials is modeled as policy-governed secret capability custody, not as ordinary plaintext sync payloads and not as implicit authority attached to a Device name.
+
+Secret custody records carry the secret kind, owning Integration or worker authority, permitted operation scope, authorized `device_id` set or Device class, applicable `zone_id`, `compartment_ids`, retention and export limits, rotation state, revocation state, and audit references. The secret value itself must never appear in a `projection_record`, worker request/result, ordinary object payload, diagnostic, or redacted replica.
+
+- External integration tokens may be stored only in a local Device secret store or in an encrypted secret envelope addressed to specifically authorized Devices.
+- Local encryption keys are local by default. Replication or recovery wrapping is allowed only when Compartment policy explicitly authorizes the target Device, recovery Device, or user-approved recovery flow.
+- Worker credentials must be scoped to the worker Device's admitted authority and should be short-lived or derivable from a revocable parent capability whenever the integration permits it.
+
+A Device may use a secret only after checking its current Device trust state, Zone membership, Compartment policy, capability scope, retention state, and revocation state. If any of those inputs are stale in a way that could expand access, the Device must refuse use until policy is refreshed or the user explicitly approves a recovery path.
+
+Secret material may be replicated only by envelope encryption to authorized recipient Devices. The envelope metadata is syncable; plaintext is not. A redacted or unauthorized Replica may know that a capability exists only through an opaque handle if policy allows even that structural disclosure.
+
+Rotation is represented as a new secret version plus policy-scoped rewrap or reauthorization records for each authorized Device. Old versions become disabled for new projection or worker use as soon as the rotating Device admits the rotation, but offline Devices are treated as potentially stale until they confirm enforcement.
+
+Revocation denies new use immediately for Devices that have admitted the revocation and creates per-target enforcement obligations for Devices that may still hold usable material. UbU may audit attempted revocation, confirmation, failure, and user-accepted unknown exposure, but it must not claim an offline or unreachable Device has destroyed a token or key until that Device confirms deletion or invalidation.
+
+Recovery is a separate custody path, not a backdoor replication exception. A recovery flow may restore access only by satisfying Identity, Device admission, Compartment policy, and audit requirements, and it may expose no more secret scope than the recovered Device or recovery policy authorizes.
+
+Sync statements may reference secret capability IDs, version IDs, envelope IDs, rotation records, and revocation records. They must not carry reusable bearer tokens, raw local encryption keys, or worker credentials as plaintext sync content.
+
+This decision intentionally leaves concrete cryptographic algorithms, OS keychain integrations, hardware enclave support, and provider-specific refresh-token mechanics to implementation design, while fixing the custody semantics needed to keep Phase 3 integrations inside the Compartment model.
