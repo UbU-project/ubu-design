@@ -1939,6 +1939,7 @@ LLM output
   -> policy and Compartment validation
   -> provenance attachment
   -> conflict detection
+```
 
 ---
 
@@ -1958,6 +1959,7 @@ ContextBundle
   - Identities exposed
   - Association references exposed
   - provider or model destination
+```
 
 ---
 
@@ -2017,6 +2019,7 @@ DelegationPacket
   - purpose / why this matters
   - expected output
   - authority granted or self-authority note
+```
 
 ---
 
@@ -2058,6 +2061,7 @@ AgentAction / BackgroundProcess
   - credentials or integrations used
   - Compartment and Identity scope
   - external surface touched
+```
 
 ---
 
