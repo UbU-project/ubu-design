@@ -2366,7 +2366,7 @@ Open.
 
 ## UBU-Q0135: Phase 1b local advisory worker protocol
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0145, UBU-Q0059 Blocks: Phase 1b advisory operations, Phase 3 worker substitution Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: UBU-Q0145, UBU-Q0059 Blocks: Phase 1b advisory operations, Phase 3 worker substitution Resolved by: UBU-D0255 Last scored: 2026-09-16 Scored from commit: None
 
 ### Question
 
@@ -2387,7 +2387,7 @@ Phase 1b builds the local advisory worker behind a scoped authority and the admi
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0255`: Phase 1b local advisory workers use a scoped local request/result protocol under `WorkerAuthority`; the worker receives only minimized by-value payloads, returns proposal artifacts or diagnostics, and has no direct canonical-state mutation path. Local output reaches state only through the controller's candidate queue and ordinary admission, preserving the same authority, provenance, status, retention, and CPU-certification boundary required for later remote transport substitution.
 
 ---
 
