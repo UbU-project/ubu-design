@@ -2393,7 +2393,7 @@ Resolved by `UBU-D0255`: Phase 1b local advisory workers use a scoped local requ
 
 ## UBU-Q0136: Phase 1b single-Device token and worker-credential custody
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0149, UBU-Q0135 Blocks: Phase 1b external projection adapters, advisory worker configuration Resolved by: None Last scored: 2026-09-17 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: UBU-Q0149, UBU-Q0135 Blocks: Phase 1b external projection adapters, advisory worker configuration Resolved by: UBU-D0262 Last scored: 2026-09-17 Scored from commit: None
 
 ### Question
 
@@ -2414,7 +2414,7 @@ Phase 1b holds external OAuth tokens and local worker configuration from its fir
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0262`: Phase 1b keeps external tokens and worker credential values outside the canonical StateStore as Device-local secret capabilities. Canonical state may hold only scoped metadata and opaque secret handles; use is brokered by the controller under Compartment policy, WorkerAuthority or projection authority, capability version, and revocation state. Credential values are denied to workers and to all projection, worker, log, export, backup, and diagnostic egress; queued work depending on revoked or rotated credentials blocks, cancels, retries after reauthorization, or surfaces review rather than silently reusing or substituting secrets.
 
 ---
 
