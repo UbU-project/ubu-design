@@ -2339,7 +2339,7 @@ Resolved by `UBU-D0260`: Phase 1b uses the local rotating-alias policy from `UBU
 
 ## UBU-Q0134: Phase 1b projection conflict classes: auto-resolve versus required review
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0143, UBU-Q0073 Blocks: Phase 1b projection reconciliation, conflict severity vocabulary Resolved by: None Last scored: 2026-09-17 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: UBU-Q0143, UBU-Q0073 Blocks: Phase 1b projection reconciliation, conflict severity vocabulary Resolved by: UBU-D0261 Last scored: 2026-09-17 Scored from commit: None
 
 ### Question
 
@@ -2360,7 +2360,7 @@ Phase 1b resolves projection conflicts only, and the existing four-quadrant cale
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0261`: Phase 1b projection reconciliation uses the shared `advisory`/`minor`/`major`/`blocking` severity vocabulary and classifies the four projection quadrants explicitly. Deterministic non-authority projection repairs may be auto-recorded as first-class `projection_conflict_event` records, but external edits that choose user intent, protected Calendar ownership, third-party truth, or canonical deletion require operator review; pending candidates may be collapsed or annotated only when the external delta is deterministic and non-overlapping, otherwise they are quarantined or routed to review before admission.
 
 ---
 
