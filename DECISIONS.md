@@ -3942,3 +3942,19 @@ Cached explanation fragments are short, non-blaming strings with lineage refs fo
 MVP repair recipes cover `late_task`, `skipped_task`, `fatigue_report`, `approaching_static_task`, and `missing_prerequisite`. They may condition on accepted local evidence and adjust only flexible/disposable work inside recorded envelopes, preserve Static Tasks and protected support, use next-best-action mode when no safe default exists, and produce diagnostics or clarification Tasks when required starting state is missing. They must not invent canonical state, Resources, Skills, Techniques, external facts, or user commitments.
 
 The last legitimate Plan is stored by digest and replay cursors: Plan id/digest, generated/effective time, horizon, execution profile, legitimacy and hard-validation refs, default segment digest, UniverseState digest, Log/Snapshot/External Event cursors, Compact Calendar digest, protected Task refs, decision-envelope digest, and explanation-lineage digest. Mobile asks the user for protected changes, meaningful omissions, missing state, or major/blocking conflicts; silently repairs only explicit minor cases; and waits for desktop/cloud refinement when the issue is advisory, outside the reactive horizon, low-coverage but not current-action-critical, or requires global optimization.
+
+---
+
+## UBU-D0257: Phase 1b has one persisted Device and several execution contexts
+
+**Status:** Accepted → DESIGN.md §23.1. Resolves `UBU-Q0131`.
+
+Phase 1b has one UbU Device: the registered operator-controlled execution enclave that owns the local StateStore and admission path. It is a persisted registry record, not a physical-machine identity, not an app-install identity, not a browser/session identity, and not a value derived from the database contents or external integrations.
+
+The Phase 1b `device_id` is assigned at Device registration and restored from operator-controlled local registration material, such as a config or secret-store record outside the ordinary mutable database. Reinstallation, database reset, and external integration reauthorization preserve Device continuity only when that registration material is preserved or restored. If it is lost, the next installation is a new Device and must not claim the old `device_id` merely because it runs on the same physical machine.
+
+Desktop UI sessions, CLI processes, unattended batch runs, and the local advisory worker are execution contexts under the Phase 1b Device unless one is explicitly admitted later as its own Device with independent trust, capability, Zone, Identity, and Compartment policy. Their mutations and candidate mutations use the controlling Device's `origin_device_id`; context ids, process ids, request ids, backend ids, and model provenance may refine auditability but do not confer Device authority.
+
+External projection surfaces, including Google Calendar, are not Devices in Phase 1b. They may receive projected state, provide external events or integration evidence, and appear in provenance as integration or projection surfaces, but they do not receive a UbU `device_id` and cannot be the origin Device for admitted mutations.
+
+The minimum Phase 1b Device registry may have one row, but it must be modeled as the future registry rather than as a singleton constant. It records `device_id`, label/kind, registration metadata, registered Identity association, trust state, sync state, exactly one Zone membership, capability profile, effective Compartment access summary, and last-seen or local-observed timestamp. The single entry is not proof of global authority, canonical-source status, or permission to know every Compartment; unlisted Compartment access remains default-denied.

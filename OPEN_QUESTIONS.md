@@ -2260,7 +2260,7 @@ Open.
 
 ## UBU-Q0131: Phase 1b Device and execution-context identity
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0148 Blocks: Phase 1b origin-Device attribution, Phase 2 Device registry Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: UBU-Q0148 Blocks: Phase 1b origin-Device attribution, Phase 2 Device registry Resolved by: UBU-D0257 Last scored: 2026-09-16 Scored from commit: None
 
 ### Question
 
@@ -2280,7 +2280,7 @@ Phase 1b has one Device but must attribute every mutation to it explicitly, beca
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0257`: Phase 1b uses one persisted registered Device record for the operator-controlled execution enclave, with a stable `device_id` restored from local registration material rather than derived from hardware, app install, database contents, or external integration authorization. The desktop UI, CLI, unattended batch runner, and local advisory worker are execution contexts under that Device unless separately admitted with their own Device authority; Google Calendar is an external projection surface, not a Device. The Phase 1b registry may contain one entry but must use the future multi-Device shape, explicit trust/capability/Zone/Compartment fields, and default-deny semantics.
 
 ---
 
@@ -2339,7 +2339,7 @@ Open.
 
 ## UBU-Q0134: Phase 1b projection conflict classes: auto-resolve versus required review
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0143, UBU-Q0073 Blocks: Phase 1b projection reconciliation, conflict severity vocabulary Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0143, UBU-Q0073 Blocks: Phase 1b projection reconciliation, conflict severity vocabulary Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
 ### Question
 
