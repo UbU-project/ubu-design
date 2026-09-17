@@ -2231,7 +2231,7 @@ Open.
 
 ## UBU-Q0130: Phase 1b mutation envelope causality and idempotency metadata
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0140, UBU-Q0131 Blocks: Phase 1b mutation paths, Phase 2 sync statement compatibility Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: UBU-Q0140, UBU-Q0131 Blocks: Phase 1b mutation paths, Phase 2 sync statement compatibility Resolved by: UBU-D0258 Last scored: 2026-09-16 Scored from commit: None
 
 Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §4, §8, §9, §15.
 
@@ -2250,11 +2250,11 @@ What causality and idempotency metadata must every Phase 1b canonical mutation c
 
 ### Current direction
 
-Phase 1b carries the frozen field set on every mutation but does not choose the causality mechanism, which remains open under UBU-Q0140 and must not be prematurely settled here. The ordering mechanism sits behind a trait so Phase 2 can supply its chosen clock without reshaping anything Phase 1b emits. Bitemporality is load-bearing in Phase 1b rather than theoretical, because unattended advisory batch runs propose at a materially different time than the operator admits, and clarify sessions span days. This is the first Phase 1b ticket's governing constraint: no later mutation path may emit an unshaped mutation.
+Phase 1b carries the frozen field set on every mutation while keeping the Phase 2 hybrid causality stack behind an admission-owned issuer rather than in domain call sites. Bitemporality is load-bearing in Phase 1b rather than theoretical, because unattended advisory batch runs propose at a materially different time than the operator admits, and clarify sessions span days. This is the first Phase 1b ticket's governing constraint: no later mutation path may emit an unshaped mutation.
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0258`: every Phase 1b canonical mutation carries a sync-ready mutation envelope with idempotency, observed-version preconditions, origin Device, actor Identity, authority source, created/effective/recorded timestamps, and policy-version observations when policy is relied on. Existing integer object versions serialize as per-object version refs inside `observed_versions`; ordering mechanics remain behind the admission-owned issuer seam; `effective_time` and `recorded_time` remain distinct for delayed admission; duplicate idempotency keys collapse only when the canonical payload matches; and derived artifacts remain `derived_state` unless separately admitted as canonical state.
 
 ---
 

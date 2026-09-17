@@ -3958,3 +3958,21 @@ Desktop UI sessions, CLI processes, unattended batch runs, and the local advisor
 External projection surfaces, including Google Calendar, are not Devices in Phase 1b. They may receive projected state, provide external events or integration evidence, and appear in provenance as integration or projection surfaces, but they do not receive a UbU `device_id` and cannot be the origin Device for admitted mutations.
 
 The minimum Phase 1b Device registry may have one row, but it must be modeled as the future registry rather than as a singleton constant. It records `device_id`, label/kind, registration metadata, registered Identity association, trust state, sync state, exactly one Zone membership, capability profile, effective Compartment access summary, and last-seen or local-observed timestamp. The single entry is not proof of global authority, canonical-source status, or permission to know every Compartment; unlisted Compartment access remains default-denied.
+
+---
+
+## UBU-D0258: Phase 1b canonical mutations carry sync-ready envelopes
+
+**Status:** Accepted → DESIGN.md §23.1. Resolves `UBU-Q0130`.
+
+Every Phase 1b canonical mutation carries a mutation envelope before it enters the StateStore/admission writer. The required Phase 1b fields are `idempotency_key`, `observed_versions`, `origin_device_id`, `actor_identity_id`, `authority_source`, `created_time`, `effective_time`, and `recorded_time`; `observed_policy_versions` is also required whenever the mutation relies on Compartment, Zone, projection, routing, or other policy state. Optional execution-context and backend provenance may refine auditability but cannot replace origin Device, actor Identity, or authority source.
+
+`observed_versions` is a map from canonical object id to the version reference observed for that object. The Phase 1b representation derives that reference from the existing per-object integer counter, serialized canonically as `v<N>` for existing objects and as an explicit absence precondition for creates or operations whose correctness depends on non-existence. It is a precondition set, not the ordering clock and not a global version.
+
+Phase 1b mutation call sites do not name hybrid logical clocks, Lamport clocks, vector clocks, append-only logs, or content-addressed bundles. They ask an admission-owned causality/idempotency issuer for the envelope; that seam returns the frozen provenance, precondition, idempotency, timestamp, and opaque local-causality fields needed by the current single-Device reducer. Phase 2 may implement the same seam with the `UBU-D0247` hybrid stack, including HLC ticks and causal parents, without changing domain mutation APIs or reinterpreting existing Phase 1b fields.
+
+`created_time`, `effective_time`, and `recorded_time` are distinct. `created_time` records when the mutation artifact was first assembled, `effective_time` records the domain time the mutation asserts for the changed fact or decision, and `recorded_time` records when the controlling Device durably records the mutation for admission. If an unattended advisory batch proposes a candidate at 02:00 and the operator admits it at 09:00, the admitted mutation may preserve 02:00 as created/effective time while using 09:00 as recorded time.
+
+Within one origin Device, `(origin_device_id, idempotency_key)` is the duplicate-detection key. Replaying it with the same canonical payload returns the previously recorded result and performs no new write, version increment, side-effect emission, projection push, or derived-state invalidation. Replaying it with a different canonical payload is an `idempotency_key_conflict`; the new payload is not admitted except through an explicit conflict-resolution mutation.
+
+Derived artifacts such as Plans, Calendars, reports, risk summaries, and projection previews are `derived_state`. They carry lineage, provenance, input digests, freshness, and invalidation metadata, but not the canonical mutation envelope unless UbU admits the artifact itself as canonical state. The mutation that records, invalidates, or publishes such an artifact carries the envelope.
