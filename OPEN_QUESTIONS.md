@@ -822,7 +822,7 @@ Resolved. See UBU-D0212.
 
 ## UBU-Q0073: Mobile stewardship metadata and MVP repair rules
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016, UBU-Q0058 Blocks: mobile/local planning UX, Phase 1b device-side provisional re-planning Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: UBU-Q0016, UBU-Q0058 Blocks: mobile/local planning UX, Phase 1b device-side provisional re-planning Resolved by: UBU-D0256 Last scored: 2026-09-16 Scored from commit: None
 
 ### Question
 
@@ -846,7 +846,7 @@ Phase 1b re-scope: this question is pulled forward from Phase 2 under the Phase 
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0256`: Mobile stewardship metadata carries Task criticality, decision envelopes, conflict severity, cached explanation fragments, last-legitimate Plan identity, simple repair recipes, next-best-action mode, recalculation triggers, and remote-assist eligibility. Local repair may silently preserve legitimacy only inside recorded envelopes; it asks for protected/major/blocking choices or missing facts, and waits or escalates when global optimization, policy, or external compute is needed.
 
 ---
 
@@ -2393,7 +2393,7 @@ Resolved by `UBU-D0255`: Phase 1b local advisory workers use a scoped local requ
 
 ## UBU-Q0136: Phase 1b single-Device token and worker-credential custody
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0149, UBU-Q0135 Blocks: Phase 1b external projection adapters, advisory worker configuration Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0149, UBU-Q0135 Blocks: Phase 1b external projection adapters, advisory worker configuration Resolved by: None Last scored: 2026-09-16 Scored from commit: None
 
 ### Question
 
