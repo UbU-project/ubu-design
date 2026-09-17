@@ -2313,7 +2313,7 @@ Resolved by `UBU-D0259`: Phase 1b canonical deletion is represented as a sync-re
 
 ## UBU-Q0133: Phase 1b redacted Handle stability and disclosure limits
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0150 Blocks: Phase 1b Compartment egress, redaction-identity enforcement Resolved by: None Last scored: 2026-09-17 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: UBU-Q0150 Blocks: Phase 1b Compartment egress, redaction-identity enforcement Resolved by: UBU-D0260 Last scored: 2026-09-17 Scored from commit: None
 
 ### Question
 
@@ -2333,7 +2333,7 @@ The existing `Handle` projection and clearance egress filter went largely unused
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0260`: Phase 1b uses the local rotating-alias policy from `UBU-D0253` as the binding egress rule. Redacted object Handles are stable only for the receiving Device, redacted source-object version, and declared projection window, and rotate on version, redaction, policy, authority, or window changes. Compartment Handles are omitted by default; when policy permits grouping, they are stable only for the receiving Device, projection window, and policy epoch. A Handle itself reveals no semantic fact; the surrounding redacted projection may reveal only policy-allowed existence, timing, duration, and generic status, while object ids, Compartment ids, Compartment labels, reason vocabulary, sequence, stable global identifiers, and inferable Compartment identity are withheld at the clearance egress filter.
 
 ---
 

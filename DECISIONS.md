@@ -3994,3 +3994,19 @@ Decomposition parent retirement becomes a tombstone of the parent Task plus the 
 A best-effort physical purge may remove payload blobs, snapshots, derived caches, local projection payload, and external-handle material after or alongside tombstoning, but it does not erase the minimal tombstone while that record is needed for causality, idempotency, audit, or retry. If policy later requires the tombstone itself to be redacted for a Device, the Device receives only an allowed structural representation or an opaque redacted handle; it must not receive forbidden Compartment ids or labels.
 
 External projections are separate `projection_state`. Tombstoning a canonical object may enqueue idempotent projection-deletion obligations keyed by projection surface, external object reference, canonical object id, and tombstone mutation, but success or failure of those queued deletions does not determine whether the canonical object is tombstoned. Projection deletion retries may keep only the minimum external handle allowed by policy, and projection diagnostics must remain structural if payload or Compartment identity is restricted.
+
+---
+
+## UBU-D0260: Phase 1b redacted Handles disclose only opaque local projection identity
+
+**Status:** Accepted → DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §10, §12. Resolves `UBU-Q0133`.
+
+Phase 1b redacted Handles use the `UBU-D0253` rotating-alias rule directly. A `redacted_object_ref` is neither lifetime-stable nor session-global nor regenerated for every retry by default; it is stable only for the receiving Device, the redacted source-object version, and the declared projection window, and rotates when the source version, redaction level, policy epoch, target authority, or projection window changes.
+
+`compartment_ref` remains omitted by default. When policy explicitly permits restricted grouping, it is an opaque grouping alias stable only for the receiving Device, declared projection window, and policy epoch. It must be omitted whenever grouping would reveal sensitive context or a Compartment pattern, even if the payload itself is already redacted.
+
+A Handle itself may reveal no semantic fact beyond being an opaque local placeholder. The redacted projection around it may expose only the metadata allowed by the effective replication level, such as existence, scheduled time, duration, and generic non-Compartment status. It must withhold canonical object IDs, source object refs, `compartment_id` values, human-readable Compartment labels, reason strings naming the Compartment or subject, semantic prefixes, sequence numbers, stable global identifiers, and any value from which the restricted side can recover or infer Compartment identity.
+
+The clearance egress filter enforces the redaction-identity invariant before serialization. It evaluates the real object `compartment_ids` and effective `CompartmentLabel`/policy set inside the trusted boundary, chooses the permitted replication level, then emits only allowed metadata plus opaque aliases whose generation key or lookup table is unavailable to the restricted Device. The old three-tier simplification is not an egress vocabulary: real Compartment labels are enforcement inputs, while restricted outputs carry no Compartment label unless the target authority permits the payload boundary itself.
+
+This accepts only the correlation needed for local UI continuity, retry de-duplication, and consistent rendering inside one authorized projection window. Per-operation instability is reserved for policies that forbid even that local continuity; durable cross-Device, cross-window, cross-version, or Compartment-pattern correlation remains unacceptable.
