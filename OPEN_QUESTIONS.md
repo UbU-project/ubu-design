@@ -932,7 +932,7 @@ Open.
 
 ## UBU-Q0077: Realtime interaction session and candidate update schema
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0025, UBU-Q0031, UBU-Q0068 Blocks: realtime model adapters, discovery mode, meeting capture, interruption handling, Phase 1b candidate/admitted state boundary Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0025, UBU-Q0031, UBU-Q0068 Blocks: realtime model adapters, discovery mode, meeting capture, interruption handling, Phase 1b candidate/admitted state boundary Resolved by: None Last scored: 2026-09-17 Scored from commit: None
 
 ### Question
 
@@ -2286,7 +2286,7 @@ Resolved by `UBU-D0257`: Phase 1b uses one persisted registered Device record fo
 
 ## UBU-Q0132: Phase 1b tombstone and best-effort purge semantics
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0144, UBU-Q0130 Blocks: Phase 1b deletion paths, decomposition undo, projection deletion Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: UBU-Q0144, UBU-Q0130 Blocks: Phase 1b deletion paths, decomposition undo, projection deletion Resolved by: UBU-D0259 Last scored: 2026-09-17 Scored from commit: None
 
 ### Question
 
@@ -2307,13 +2307,13 @@ Phase 1b replaces hard deletes with tombstones. This makes decomposition undo cl
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0259`: Phase 1b canonical deletion is represented as a sync-ready tombstone mutation plus a retained minimal tombstone record, not a hard row deletion. The tombstone keeps stable structural identity, version/provenance, policy-safe Compartment refs, lifecycle timestamps, and projection-deletion/audit refs while purging payload, human labels, sensitive reasons, private evidence, derived explanation content, and Compartment labels when purge or redaction applies. Decomposition retires the parent by tombstoning it and linking to the existing decomposition parent snapshot; undo may un-tombstone only while an authorized restorable snapshot still exists, and otherwise must not recreate purged payload. External projection deletion remains a separate idempotent projection obligation queued from the tombstone and never becomes the canonical delete.
 
 ---
 
 ## UBU-Q0133: Phase 1b redacted Handle stability and disclosure limits
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0150 Blocks: Phase 1b Compartment egress, redaction-identity enforcement Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0150 Blocks: Phase 1b Compartment egress, redaction-identity enforcement Resolved by: None Last scored: 2026-09-17 Scored from commit: None
 
 ### Question
 
@@ -2339,7 +2339,7 @@ Open.
 
 ## UBU-Q0134: Phase 1b projection conflict classes: auto-resolve versus required review
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0143, UBU-Q0073 Blocks: Phase 1b projection reconciliation, conflict severity vocabulary Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0143, UBU-Q0073 Blocks: Phase 1b projection reconciliation, conflict severity vocabulary Resolved by: None Last scored: 2026-09-17 Scored from commit: None
 
 ### Question
 
@@ -2393,7 +2393,7 @@ Resolved by `UBU-D0255`: Phase 1b local advisory workers use a scoped local requ
 
 ## UBU-Q0136: Phase 1b single-Device token and worker-credential custody
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0149, UBU-Q0135 Blocks: Phase 1b external projection adapters, advisory worker configuration Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0149, UBU-Q0135 Blocks: Phase 1b external projection adapters, advisory worker configuration Resolved by: None Last scored: 2026-09-17 Scored from commit: None
 
 ### Question
 
@@ -2420,7 +2420,7 @@ Open.
 
 ## UBU-Q0137: Phase 1b BackgroundProcess model for unattended advisory batches
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0084, UBU-Q0130, UBU-Q0135 Blocks: Phase 1b batch runner, unattended advisory execution Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0084, UBU-Q0130, UBU-Q0135 Blocks: Phase 1b batch runner, unattended advisory execution Resolved by: None Last scored: 2026-09-17 Scored from commit: None
 
 ### Question
 
@@ -2448,7 +2448,7 @@ Open.
 
 ## UBU-Q0138: Phase 1b advisory candidate lifecycle and durable rejection
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0088, UBU-Q0077, UBU-Q0130 Blocks: Phase 1b review queue, candidate/admitted distinction Resolved by: None Last scored: 2026-09-16 Scored from commit: None
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0088, UBU-Q0077, UBU-Q0130 Blocks: Phase 1b review queue, candidate/admitted distinction Resolved by: None Last scored: 2026-09-17 Scored from commit: None
 
 ### Question
 

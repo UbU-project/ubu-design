@@ -3197,6 +3197,10 @@ A replayed `(origin_device_id, idempotency_key)` with the same canonical payload
 
 Derived artifacts such as Plans, Calendars, reports, risk summaries, and projection previews are `derived_state`: they carry lineage, provenance, input digests, and freshness data, but not the canonical mutation envelope unless a later operation admits a derived artifact itself as canonical state. The mutation that records or invalidates derived state carries the envelope.
 
+Phase 1b deletion of canonical objects is lifecycle mutation, not row removal. Retired Tasks, removed Tasks, decomposition-retired parents, and admitted discarded candidates become tombstones with stable object id, object kind, current version reference, lifecycle state/reason code, envelope/provenance reference, created/effective/recorded lifecycle timestamps, policy-safe Compartment refs needed for local enforcement, and any decomposition, supersession, audit, or projection-deletion refs needed for replay. Tombstones do not retain active payload fields, private evidence, cached explanations, human-readable Compartment labels, or sensitive reason text after those fields are redacted or purged.
+
+A decomposition that retires a parent Task records the parent as tombstoned and relies on the decomposition record's parent snapshot as the restore source. Undo is a new admitted mutation that observes the tombstone and snapshot, un-tombstones the parent only when policy permits and the snapshot payload still exists, and refuses to resurrect content that was physically purged or redacted beyond restoration. Projection deletions caused by tombstones are queued idempotent obligations in `projection_state`; their retry or confirmation status never replaces the canonical tombstone.
+
 ### 23.2 Zone
 
 A **Zone** is a workspace-like UbU instance context.
