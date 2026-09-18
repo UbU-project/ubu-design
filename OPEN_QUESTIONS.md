@@ -2420,7 +2420,7 @@ Resolved by `UBU-D0262`: Phase 1b keeps external tokens and worker credential va
 
 ## UBU-Q0137: Phase 1b BackgroundProcess model for unattended advisory batches
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0084, UBU-Q0130, UBU-Q0135 Blocks: Phase 1b batch runner, unattended advisory execution Resolved by: None Last scored: 2026-09-18 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: UBU-Q0084, UBU-Q0130, UBU-Q0135 Blocks: Phase 1b batch runner, unattended advisory execution Resolved by: UBU-D0264 Last scored: 2026-09-18 Scored from commit: None
 
 ### Question
 
@@ -2442,7 +2442,7 @@ Phase 1b's advisory batch runner is the first real `BackgroundProcess`: unattend
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0264`: Phase 1b models the unattended advisory batch runner as a narrow `BackgroundProcess` with durable per-object pass state, append-only run/interruption events, candidate-only worker output, prompt-injection containment, operator-visible compute telemetry, and a no-Calendar-time policy. A zero-exit no-work run is valid only when it ends without escalation-required failures; all-failed, denied, malformed, or policy-blocked batches escalate and cannot be treated as successful shutdown chains.
 
 ---
 
