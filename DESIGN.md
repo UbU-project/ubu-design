@@ -3027,27 +3027,39 @@ The preferred framing is an open, user-sovereign skill economy or a self-reinfor
 
 ### 21.8 AgentAction and BackgroundProcess
 
-An `AgentAction` is a bounded action by an agent or tool against an external surface. A `BackgroundProcess` is a recurring or conditional process that may run without occupying user Calendar time.
+An `AgentAction` is one bounded attempted action by an agent, model, worker, or tool against an external or privileged surface. A `BackgroundProcess` is the durable controller object that decides when zero or more `AgentAction`s should be proposed, run, retried, cancelled, or escalated without necessarily occupying user Calendar time.
 
-Provisional shared fields:
+`AgentAction` fields describe a single dispatch or candidate dispatch:
 
-- `actor_identity_ref`;
-- `agent_or_tool_ref`;
-- `trigger`;
-- `schedule_or_condition`;
-- `authority_scope`;
-- `credential_refs`;
-- `compartment_refs`;
-- `external_surface_refs`;
-- `irreversible_side_effect`;
-- `prompt_injection_exposure`;
-- `compute_or_cost_budget`;
-- `notification_policy`;
-- `rollback_or_mitigation_path`;
-- `completion_evidence`;
-- `failure_escalation_policy`.
+- `agent_action_id`;
+- optional `background_process_ref`;
+- `actor_identity_ref` and `agent_or_tool_ref`;
+- purpose, related Objective/Task/workflow refs, and originating ContextBundle refs;
+- target surface, operation kind, payload summary or hash, expected prior external version, and idempotency key;
+- authority source, capability grant refs, credential or secret-capability refs by opaque handle and version, Compartment refs, Identity/Association disclosure constraints, and provider/tool route decision refs;
+- prompt-injection exposure assessment and containment policy;
+- compute, rate, money, and privacy-budget estimate plus actual usage when known;
+- side-effect class, reversibility, dry-run/candidate status, review requirement, and approval state;
+- result status, external result refs, downstream candidate refs, completion evidence, Log refs, and failure or denial reason when safe;
+- rollback or mitigation metadata for any external effect that cannot simply be ignored.
 
-These objects are not equivalent to ordinary user Calendar events. They may consume compute, credentials, money, privacy budget, or external authority without consuming the user's direct time.
+`BackgroundProcess` fields describe standing permission and scheduling policy:
+
+- `background_process_id`, owner Identity, purpose, lifecycle status, created/updated/disabled refs, and policy version;
+- trigger spec, recurrence or polling rule, event subscriptions, manual-start affordance, run window, deadline when any, expiry, concurrency limit, retry and backoff policy, cancellation policy, and maximum catch-up behavior after downtime;
+- allowed action kinds, target surfaces, provider/tool classes, capability grants, credential handles, Compartments, and ContextBundle templates;
+- compute, rate, money, and privacy-budget caps per action, per period, and lifetime;
+- prompt-injection risk ceiling, required isolation mode, review threshold, output-admission policy, and candidate-update policy;
+- notification policy, quiet-hours behavior, escalation path, failure threshold, and required user-visible summary;
+- Calendar projection policy, audit/logging policy, retained evidence refs, and cleanup or mitigation obligations.
+
+Prompt-injection exposure is scored before dispatch and updated after execution. The score combines source trust, whether the agent consumed untrusted webpages, messages, documents, tool outputs, or mixed-Compartment content, the amount of raw private context exposed, whether untrusted text can influence tool choice or arguments, and the authority at risk: credentials, spending, external mutation, privacy export, or user-facing commitments. The minimum qualitative bands are `low`, `medium`, `high`, and `critical`. `High` exposure requires containment such as instruction stripping, source separation, allowlisted tools, candidate-only writes, narrowed ContextBundles, or human review. `Critical` exposure fails closed unless a specific approved policy permits the run and the action remains inside hard Compartment, credential, cost, and review gates.
+
+External side effects carry a side-effect class: `read_only`, `local_candidate_only`, `externally_reversible`, `compensating_action_possible`, `externally_irreversible`, or `unknown`. Anything outside `read_only` or `local_candidate_only` must record expected external prior state when available, idempotency keys, evidence to reconcile the result, and the review gate that admitted the effect. `Compensating_action_possible`, `externally_irreversible`, and `unknown` actions require mitigation metadata before dispatch: mitigation owner, user notification rule, cancellation or revocation path, compensating operation when one exists, external support/contact path when relevant, deadline for mitigation, and the Log or candidate records that should be written if mitigation is needed.
+
+Background processes are Calendar items only when they reserve or require the user's attention, represent a user commitment to another party, or make the user's availability materially unavailable. Compute-only work, polling, sync, advisory analysis, candidate generation, projection reconciliation, and scheduled external checks remain separate process state. They may surface Calendar overlays, deadlines, reminders, or review Tasks, but those projections do not become user time blocks unless the user must attend, decide, travel, meet, or be unavailable.
+
+All AgentAction and BackgroundProcess mutations remain candidate/admission workflows unless an accepted integration policy gives narrower automatic authority. Dispatch rechecks current Compartment policy, credential version, capability grant, budget, lifecycle status, and expected external version immediately before use. Logs are append-only: failed, denied, cancelled, mitigated, and superseded actions are recorded rather than rewritten.
 
 ### 21.9 State-transition cockpit
 

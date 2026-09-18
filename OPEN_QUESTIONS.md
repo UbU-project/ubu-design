@@ -743,7 +743,7 @@ Open.
 
 ## UBU-Q0068: Structured message extraction schema, validation, and model strategy
 
-Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0066 Blocks: direct-message ingestion, group-chat ingestion, communication-to-Task conversion, Association evidence extraction Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0066 Blocks: direct-message ingestion, group-chat ingestion, communication-to-Task conversion, Association evidence extraction Resolved by: None Last scored: 2026-09-18 Scored from commit: None
 
 ### Question
 
@@ -932,7 +932,7 @@ Open.
 
 ## UBU-Q0077: Realtime interaction session and candidate update schema
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0025, UBU-Q0031, UBU-Q0068 Blocks: realtime model adapters, discovery mode, meeting capture, interruption handling, Phase 1b candidate/admitted state boundary Resolved by: None Last scored: 2026-09-17 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0025, UBU-Q0031, UBU-Q0068 Blocks: realtime model adapters, discovery mode, meeting capture, interruption handling, Phase 1b candidate/admitted state boundary Resolved by: None Last scored: 2026-09-18 Scored from commit: None
 
 ### Question
 
@@ -1080,7 +1080,7 @@ Resolved. See UBU-D0162.
 
 ## UBU-Q0084: Computer-use AgentAction and BackgroundProcess model
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0031, UBU-Q0032, UBU-Q0060, UBU-Q0079 Blocks: background agents, scheduled agents, computer-use automation, prompt-injection controls Resolved by: None Last scored: 2026-05-26 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: UBU-Q0031, UBU-Q0032, UBU-Q0060, UBU-Q0079 Blocks: background agents, scheduled agents, computer-use automation, prompt-injection controls Resolved by: UBU-D0263 Last scored: 2026-09-18 Scored from commit: None
 
 ### Question
 
@@ -1102,7 +1102,7 @@ Phase 1b split: the advisory background-process subset of this question is decom
 
 ### Resolution
 
-Open.
+Resolved. See UBU-D0263.
 
 ---
 
@@ -1186,7 +1186,7 @@ Open.
 
 ## UBU-Q0088: Extrospection finding lifecycle and durable rejection semantics
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0062 Blocks: extrospection review, candidate/canonical distinction, state-transition cockpit Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0062 Blocks: extrospection review, candidate/canonical distinction, state-transition cockpit Resolved by: None Last scored: 2026-09-18 Scored from commit: None
 
 ### Question
 
@@ -2420,7 +2420,7 @@ Resolved by `UBU-D0262`: Phase 1b keeps external tokens and worker credential va
 
 ## UBU-Q0137: Phase 1b BackgroundProcess model for unattended advisory batches
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0084, UBU-Q0130, UBU-Q0135 Blocks: Phase 1b batch runner, unattended advisory execution Resolved by: None Last scored: 2026-09-17 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0084, UBU-Q0130, UBU-Q0135 Blocks: Phase 1b batch runner, unattended advisory execution Resolved by: None Last scored: 2026-09-18 Scored from commit: None
 
 ### Question
 
@@ -2448,7 +2448,7 @@ Open.
 
 ## UBU-Q0138: Phase 1b advisory candidate lifecycle and durable rejection
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0088, UBU-Q0077, UBU-Q0130 Blocks: Phase 1b review queue, candidate/admitted distinction Resolved by: None Last scored: 2026-09-17 Scored from commit: None
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0088, UBU-Q0077, UBU-Q0130 Blocks: Phase 1b review queue, candidate/admitted distinction Resolved by: None Last scored: 2026-09-18 Scored from commit: None
 
 ### Question
 
