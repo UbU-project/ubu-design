@@ -743,7 +743,7 @@ Open.
 
 ## UBU-Q0068: Structured message extraction schema, validation, and model strategy
 
-Status: Open Priority: Post-MVP Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0066 Blocks: direct-message ingestion, group-chat ingestion, communication-to-Task conversion, Association evidence extraction Resolved by: None Last scored: 2026-09-18 Scored from commit: None
+Status: Solved Priority: Post-MVP Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0066 Blocks: direct-message ingestion, group-chat ingestion, communication-to-Task conversion, Association evidence extraction Resolved by: UBU-D0271 Last scored: 2026-09-18 Scored from commit: None
 
 ### Question
 
@@ -765,7 +765,7 @@ Start with schema-constrained general LLMs or local models plus validation, repa
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0271`: the Message Context Extractor is a schema-constrained extraction pipeline that receives a policy-filtered `MessageExtractionBundle`, emits strict candidate `MessageExtractionResult` JSON with per-field confidence and provenance, uses deterministic validation plus bounded repair, distinguishes explicit facts from metadata, thread, Relationship, Association, model, and user-correction sources, limits automatic acceptance to low-risk non-mutating facts, and defers custom extractor models until schemas and correction datasets justify them.
 
 ---
 
