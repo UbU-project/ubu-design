@@ -4230,3 +4230,23 @@ Model-noticed elapsed time is evidence, not canonical semantics. A realtime mode
 Mandatory provenance for realtime observations includes source kind, observation or capture interval, Device and backend refs, model or tool identifier, prompt/template or schema version where applicable, evidence refs or payload hashes, source Compartment, redaction level, processing route, confidence, and review status. Audio, video, screen, keystroke, raw message body, raw file, raw GPS, and similarly sensitive inputs require explicit source enablement, visible capture state, and Compartment approval before they can produce candidates.
 
 Routing is conservative by default. Raw sensitive capture, `no_cloud_llm` Compartments, and externally restricted Compartments are local-only or prohibited according to policy. Cloud processing is permitted only for policy-approved, visible, intentionally provided or redacted inputs. Cross-user projection, external export, covert or broad background capture, hidden persuasion timing, and automatic external mutation remain prohibited unless a later explicit mode, Compartment policy, capability grant, and user approval authorize the exact behavior.
+
+---
+
+## UBU-D0273: Extrospection findings are durable review candidates, not Relationship truth
+
+**Status:** Accepted → DESIGN.md §2.10.1. Resolves `UBU-Q0088`.
+
+An `ExtrospectionFinding` is an evidence-backed review candidate about a Relationship or affected Identity, not a fact about another person's inner state. The record carries a finding id, affected refs, finding kind, normalized claim shape, evidence refs or hashes, supporting and disconfirming notes, assumptions, ambiguities, confidence, Compartment and disclosure policy, provenance, surfaced-at time, review status, and correction, rejection, revocation, supersession, or archive links.
+
+The valid lifecycle states are `candidate`, `deferred`, `resurfaced`, `accepted`, `rejected`, `superseded`, and `archived`. Findings begin as candidates. Candidates may be accepted, rejected, deferred, superseded by a replacement, or archived. Deferred findings may resurface only when materially new evidence, a user request, a policy-triggered review interval, or an accepted Relationship change makes review newly relevant. Accepted, rejected, and superseded findings remain historical records and may later be archived under retention policy.
+
+Before acceptance, extrospection findings may influence only review surfaces: ordering, explanation, clarification prompts, risk warnings, and local candidate suggestions. They must not mutate Relationship state, Association state, Preferences, trust or reputation scores, capability grants, disclosure policy, projection state, external messages, or external actions, and they must not become hidden planner constraints that treat a counterparty hypothesis as settled fact.
+
+Deferral preserves uncertainty rather than hiding it. A resurfaced finding links the prior deferral, the new evidence or trigger, and the reason resurfacing is justified, so the user can see both the old decision and the new support. Resurfacing creates a review item; it does not promote the old candidate automatically.
+
+Rejection is durable correction metadata, not mere dismissal. A rejected finding retains a privacy-minimized suppression key: normalized finding kind, subject and scope, polarity or asserted-value shape, evidence hashes or source fingerprints, model or extractor version, prompt/template digest when relevant, Compartment and redaction class, rejection reason or user correction, deciding actor, authority source, decided-at time, and retention or purge policy. Retaining this key suppresses repeated bad framings without making the rejected claim accepted, exportable, or more visible.
+
+Accepting an extrospection finding admits a separate scoped Relationship observation, annotation, Snapshot, Log entry, AssociationAttestation, or correction record through ordinary authority, provenance, confidence, Compartment, and effective-interval rules. The finding itself remains provenance for the decision and does not rewrite the Relationship object in place. Counterparty-perspective claims remain hypotheses unless backed by an accepted source with authority for that claim.
+
+Supersession is the ordinary path for narrowing an overbroad finding, replacing unsupported framing, or updating after Relationship evidence changes. Superseded findings point to the replacement finding or admitted record and remain queryable for audit, correction, and rejection-deduplication.

@@ -1186,7 +1186,7 @@ Open.
 
 ## UBU-Q0088: Extrospection finding lifecycle and durable rejection semantics
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0062 Blocks: extrospection review, candidate/canonical distinction, state-transition cockpit Resolved by: None Last scored: 2026-09-18 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0062 Blocks: extrospection review, candidate/canonical distinction, state-transition cockpit Resolved by: UBU-D0273 Last scored: 2026-09-18 Scored from commit: None
 
 ### Question
 
@@ -1208,7 +1208,7 @@ Phase 1b split: the candidate-lifecycle and durable-rejection subset of this que
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0273`: `ExtrospectionFinding` records use the lifecycle states `candidate`, `deferred`, `resurfaced`, `accepted`, `rejected`, `superseded`, and `archived`. Unaccepted findings may affect only review ordering, explanations, and local suggestions, not durable Relationship, Association, Preference, trust, capability, projection, or external-action state. Deferred findings resurface only on materially new evidence, user request, policy-triggered review, or relevant accepted Relationship change. Rejected findings retain privacy-minimized suppression keys, normalized claim shape, evidence hashes, rejection reason, actor, authority source, and retention policy so repeated bad framings can be suppressed without treating the rejected claim as truth. Accepted findings do not directly rewrite Relationship state; they admit separate scoped Relationship observations, annotations, Snapshots, Logs, or AssociationAttestations through ordinary authority, provenance, Compartment, and correction rules.
 
 ---
 
