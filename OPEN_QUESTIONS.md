@@ -932,7 +932,7 @@ Open.
 
 ## UBU-Q0077: Realtime interaction session and candidate update schema
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0025, UBU-Q0031, UBU-Q0068 Blocks: realtime model adapters, discovery mode, meeting capture, interruption handling, Phase 1b candidate/admitted state boundary Resolved by: None Last scored: 2026-09-18 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0025, UBU-Q0031, UBU-Q0068 Blocks: realtime model adapters, discovery mode, meeting capture, interruption handling, Phase 1b candidate/admitted state boundary Resolved by: UBU-D0272 Last scored: 2026-09-18 Scored from commit: None
 
 ### Question
 
@@ -954,7 +954,7 @@ Phase 1b re-scope: this question is pulled forward from Phase 2 under the Phase 
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0272`: realtime interaction is represented by a lightweight `RealtimeInteractionSession` plus reviewable `RealtimeCandidateUpdate` records. Sessions describe the consented interaction context and routing boundary; candidate updates carry typed, provenance-bearing suggestions that remain outside admitted state until ordinary review or explicit policy admission. Phase 1b candidate types are tag, dependency, preference, decomposition, and clarification question, while interruption, task progress, affect, external condition, Plan deviation, Log candidate, Task candidate, and AssociationAttestation candidates are allowed only within their existing review and Compartment gates. Model-noticed elapsed time is evidence, not Task, Calendar, or Log truth. Raw audio, video, screen, keystroke, and sensitive Compartment capture is local-only or prohibited unless a separate explicit mode and policy grant allow more.
 
 ---
 
