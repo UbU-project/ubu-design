@@ -688,7 +688,7 @@ Open.
 
 ## UBU-Q0066: Minimal Phase 3 Message Context Envelope schema
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0061, UBU-Q0062 Blocks: Phase 3 cross-user communication, message priority triage, UbU-to-UbU interoperability Resolved by: None Last scored: 2026-09-18 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0061, UBU-Q0062 Blocks: Phase 3 cross-user communication, message priority triage, UbU-to-UbU interoperability Resolved by: UBU-D0270 Last scored: 2026-09-18 Scored from commit: None
 
 ### Question
 
@@ -709,7 +709,7 @@ Phase 3 should include a small context-rich messaging envelope as a premier feat
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0270`: Phase 3 uses a minimal `MessageContextEnvelope` with sender and receiver Identity refs, source metadata, body or body ref, message kind, topic, priority, interrupt recommendation, response expectation, optional deadline, receiver treatment hint, assumptions, ambiguities, provenance, confidence, Compartment refs, and disclosure policy. Local objects may be referenced only through envelope-scoped opaque handles or redacted labels, inferred metadata remains provenance-marked and non-authoritative, and receiver UbU instances may create interruption, communication-review, or Task-creation suggestions but not mutate state without policy or user approval.
 
 ---
 
@@ -1186,7 +1186,7 @@ Open.
 
 ## UBU-Q0088: Extrospection finding lifecycle and durable rejection semantics
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0062 Blocks: extrospection review, candidate/canonical distinction, state-transition cockpit Resolved by: None Last scored: 2026-09-18 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0062 Blocks: extrospection review, candidate/canonical distinction, state-transition cockpit Resolved by: None Last scored: 2026-09-18 Scored from commit: None
 
 ### Question
 
