@@ -4095,7 +4095,7 @@ Clean no-work is a successful terminal condition only when it is actually clean.
 
 ## UBU-D0265: Social identity is scoped context, not intrinsic judgment
 
-**Status:** Accepted → DESIGN.md §1.1, §12. Resolves `UBU-Q0054`.
+**Status:** Accepted → DESIGN.md §18.1, §12. Resolves `UBU-Q0054`.
 
 UbU adopts social identity theory as a modeling caution rather than as a stereotype engine. Identity, Role, GroupMembership, SelfConcept, Compartment, and ModeContext are distinct records. Identity carries presentation, accountability, and permission-bearing actor identity; Role captures situated expectations or authority; GroupMembership captures scoped membership in a group; SelfConcept captures user-declared first-person meaning; Compartment remains a privacy/routing boundary; ModeContext captures the currently salient planning or coordination lens. Cross-references are allowed, but no dimension implies another by default.
 
@@ -4143,7 +4143,7 @@ For FOSS coordination, skilled contributors, grants, issue triage, bug bounties,
 
 ## UBU-D0268: Associations are perspective-bound coordination structures
 
-**Status:** Accepted → DESIGN.md §1.2. Resolves `UBU-Q0061`.
+**Status:** Accepted → DESIGN.md §19.1. Resolves `UBU-Q0061`.
 
 UbU introduces an `Association` as a first-class, Identity-scoped record of perceived coordination among people, Identities, projects, or groups. An Association is perspective-bound: it records what a modeling Identity believes, has observed, or is allowed to rely on, not an objective global fact about who belongs, who has authority, or where the boundary of the group truly is. An Association may exist entirely inside one user's `user_mode` model.
 
@@ -4163,7 +4163,7 @@ For Phase 3, UbU needs the minimal Association record, lifecycle state, links to
 
 ## UBU-D0269: AssociationAttestations are evidence-backed scoped claims
 
-**Status:** Accepted → DESIGN.md §1.2. Resolves `UBU-Q0062`.
+**Status:** Accepted → DESIGN.md §19.2. Resolves `UBU-Q0062`.
 
 UbU represents claims about an Association as `AssociationAttestation` records: immutable, scoped claims with claim type, polarity or asserted value, subject Identity or Association refs, scope, effective interval, evidence refs, provenance, confidence, Compartment refs, disclosure policy, review status, and correction, dispute, revocation, or supersession links. Required claim types are membership, non-membership, role, authority, commitment, Objective, norm, governance rule, capability, reputation, relationship, priority, lifecycle, and dissolution. Attestations are partial assertions; omitted claims do not imply absence.
 
@@ -4181,7 +4181,7 @@ AssociationAttestations may support Association reconciliation, organizational i
 
 ## UBU-D0270: Message Context Envelopes carry minimal triage metadata without private reconstruction
 
-**Status:** Accepted → DESIGN.md §1.3. Resolves `UBU-Q0066`.
+**Status:** Accepted → DESIGN.md §20.1. Resolves `UBU-Q0066`.
 
 UbU introduces a Phase 3 `MessageContextEnvelope` as a small cross-user communication projection for useful priority, interruption, response, Task, Objective, and blocker triage. The envelope is not a SyncStatement, Relationship record, Association record, Objective disclosure, or proof of authority; it is a sender-scoped message plus bounded metadata that the receiver may inspect, review, and map into local suggestions.
 
@@ -4199,7 +4199,7 @@ Minimum user controls are export preview, per-field redaction, Compartment and d
 
 ## UBU-D0271: Message Context Extractors produce validated candidate structures
 
-**Status:** Accepted → DESIGN.md §1.4. Resolves `UBU-Q0068`.
+**Status:** Accepted → DESIGN.md §20.4. Resolves `UBU-Q0068`.
 
 UbU implements the `MessageContextExtractor` as a schema-constrained extraction pipeline that converts raw or referenced messages plus allowed metadata into candidate UbU JSON structures. The extractor receives a `MessageExtractionBundle` containing source system, channel type and purpose, source message and thread refs, observed timestamp, raw body or body ref, sender and receiver Identity mapping candidates, channel participants, Association mapping candidates, allowed thread context, allowed Relationship summaries, Compartment and disclosure policy, locale or timezone, and extraction run metadata. Private context is included only when policy permits it.
 
@@ -4217,7 +4217,7 @@ UbU should begin with general schema-constrained LLMs or local models plus valid
 
 ## UBU-D0272: Realtime interaction emits reviewable candidate updates
 
-**Status:** Accepted → DESIGN.md §1.5. Resolves `UBU-Q0077`.
+**Status:** Accepted → DESIGN.md §21.1. Resolves `UBU-Q0077`.
 
 UbU represents realtime interaction as a hybrid boundary: a `RealtimeInteractionSession` records the consented interaction context, enabled sources, backend or model, Device, Identity, Compartment, routing, retention, evidence, candidate refs, provenance, review status, and correction or revocation links; it is not itself a Task, Calendar event, canonical Log entry, or raw sensor stream. Session states align with discovery mode where applicable: `inactive`, `active`, `paused`, `ended`, and `pending_review`.
 
@@ -4255,7 +4255,7 @@ Supersession is the ordinary path for narrowing an overbroad finding, replacing 
 
 ## UBU-D0274: Phase 1b advisory candidates are first-class durable review objects
 
-**Status:** Accepted -> DESIGN.md §1.6. Resolves `UBU-Q0138`.
+**Status:** Accepted → DESIGN.md §21.2.1. Resolves `UBU-Q0138`.
 
 Phase 1b represents every advisory review-queue proposal as a first-class `AdvisoryCandidate`, not as an aggregate queue blob. The object has its own id, schema version, candidate kind, lifecycle state, version, target or scope refs, normalized proposal shape, payload ref or redacted summary, evidence refs or hashes, confidence, per-field provenance, origin Device and execution-context provenance, idempotency key, Compartment refs, review-visible Compartment label or redacted label, disclosure and retention policy, review order metadata, and correction, rejection, deferral, resurfacing, supersession, admission, or archive links. Per-object representation is required so candidates can be versioned, partially replicated, redacted, and reviewed without leaking unrelated queue contents across Compartments.
 
