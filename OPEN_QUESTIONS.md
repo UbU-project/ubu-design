@@ -2448,7 +2448,7 @@ Resolved by `UBU-D0264`: Phase 1b models the unattended advisory batch runner as
 
 ## UBU-Q0138: Phase 1b advisory candidate lifecycle and durable rejection
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0088, UBU-Q0077, UBU-Q0130 Blocks: Phase 1b review queue, candidate/admitted distinction Resolved by: None Last scored: 2026-09-18 Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0088, UBU-Q0077, UBU-Q0130 Blocks: Phase 1b review queue, candidate/admitted distinction Resolved by: UBU-D0274 Last scored: 2026-09-18 Scored from commit: None
 
 ### Question
 
@@ -2470,7 +2470,7 @@ Phase 1b's advisory review queue is the candidate-to-admitted boundary in practi
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0274`: Phase 1b advisory proposals are first-class `AdvisoryCandidate` objects with their own id, version, Compartment refs and review-visible label, provenance, evidence hashes, normalized proposal shape, lifecycle state, retention policy, and review links rather than aggregate queue blobs. Valid states are `proposed`, `deferred`, `resurfaced`, `admitted`, `rejected`, `superseded`, and `archived`; unadmitted candidates may affect only review surfaces and explicit previews, never admitted state, hidden planner constraints, projection, external action, or cross-Compartment disclosure. Deferred candidates resurface only on materially new evidence, user request, policy interval, relevant accepted target/dependency change, or a clarification/external reference that changes reviewability. Admission, rejection, deferral, resurfacing, supersession, and archival are first-class review events carrying actor Identity, `authority_source`, Device, observed versions, policy observations where needed, timestamps, idempotency, and links to resulting mutations, replacement candidates, or suppression records. Rejection retains a privacy-minimized suppression key and decision metadata sufficient to suppress repeated bad proposals while permitting rejected payload redaction or purge; the key does not make the proposal true, accepted, exportable, or more visible. Review order never changes state category, so contested regions remain `candidate_state` or `pending_state` until the relevant admission or conflict-resolution event is admitted.
 
 ---
 
