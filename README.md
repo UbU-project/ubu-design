@@ -1,6 +1,6 @@
 # UbU
 
-**Status:** Phase 0 complete — demonstrated at ETHConf NYC, June 8–10, 2026 / **Phase 1 is feature-complete.** The `UbU-project` constellation is store-backed and the live GitHub path is symmetric and closed: at bootstrap UbU ingests its own real GitHub issues as Tasks behind a deliberate server-side ingest mode, records the initial UniverseState facts, gates planning by preconditions, recommends the next Task from a Monte-Carlo-rollout-ranked affect-legitimized Calendar with humane risk and plan-quality feedback, mutates the facts on completion, and projects its managed labels back to live GitHub behind a deny-by-default export gate — the recursive dogfood, actualized on real infrastructure. What remains is hardening and outreach, not features  
+**Status:** Phase 0 complete — demonstrated at ETHConf NYC, June 8–10, 2026 / **Phase 1 is feature-complete.** The `UbU-project` constellation is store-backed and the live GitHub path is symmetric and closed: at bootstrap UbU ingests its own real GitHub issues as Tasks behind a deliberate server-side ingest mode, records the initial UniverseState facts, gates planning by preconditions, recommends the next Task from a Monte-Carlo-rollout-ranked affect-legitimized Calendar with humane risk and plan-quality feedback, mutates the facts on completion, and projects its managed labels back to live GitHub behind a deny-by-default export gate — the recursive dogfood, actualized on real infrastructure. Phase 1 hardening and outreach remain, and **Phase 1b is in progress**: mainline is being extended to replace Quick UbU through the switch, including the planner, before Phase 2 sync (`UBU-D0275`).  
 **Repository:** `ubu-design`  
 **Primary purpose:** Canonical public design state for the UbU project  
 **Derived file:** This README is a technical contributor entry point. The canonical design authority is `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`.
@@ -63,7 +63,7 @@ Many life-planning failures happen because the user lacks something needed to do
 
 Resources include documents, tools, ingredients, credentials, software licenses, API keys, locations, payment methods, quiet spaces, and other stateful things a Task may need. Skills include capabilities the user can learn, test, forget, refresh, and evidence.
 
-This is not Phase 1 scope, but it is central to the full product. Phase 3 should try to add a thin Resource/Skill-aware task-readiness layer. Phase 3B and Phase 4+ form the full version 1.0 release track, including richer Resource, Skill, Technique, DIY-versus-purchase/hire, inventory, financial-management, and Skill Barter features.
+This is not Phase 1 scope, but it is central to the full product. Phase 3 should try to add a thin Resource/Skill-aware task-readiness layer. Phase 4 and Phase 5+ form the full version 1.0 release track, including richer Resource, Skill, Technique, DIY-versus-purchase/hire, inventory, financial-management, and Skill Barter features.
 
 Resources also include community and public Resources: library tool loans, makerspace equipment, public workshops, community gardens, seed libraries, and repair cafés. UbU should eventually support a Library and Community Resource Mode that turns publicly accessible Resources into first-class planning inputs.
 
@@ -173,7 +173,7 @@ The Phase 0 demo covers the core UbU loop end-to-end using a self-contained dumm
 
 Phase 0 is a standalone demo milestone, now complete. Code reuse into Phase 1 is not assumed, but the skills, experience, and demonstrated patterns acquired during Phase 0 accelerate Phase 1 development directly. The primary demonstration value is **association introspection**: UbU using its own planning and self-governance model to coordinate the UbU project in public.
 
-### Phase 1 implementation (in progress)
+### Phase 1 implementation (feature-complete)
 
 Phase 1 design is frozen as of commit `cc8b339`. No further broad pre-MVP design automation is warranted. Remaining design activity should be limited to implementation-guidance gaps, open blocker certificates, or implementation feedback that reveals genuine Phase 1 scope issues.
 
@@ -184,6 +184,10 @@ The operational target remains:
 > Use UbU's explicit model, `model-committee`, GitHub dogfooding inputs, the Phase 1 planning-kernel contract, regular Calendar preview, regular Log review, and bounded projection artifacts to help UbU coordinate the development of UbU itself.
 
 The project is seeking a small core cohort of serious, self-directed builders. It does not need popularity for its own sake. It needs concrete patches, test fixtures, design review, workflow examples, prototype funding, and sustained subsystem ownership.
+
+### Phase 1b: Quick UbU merge through the switch (in progress)
+
+Phase 1b extends the feature-complete Phase 1 system until it can replace Quick UbU, the separately developed personal planner used for daily planning, so that Quick UbU becomes legacy software (`DESIGN.md` §4.2, `UBU-D0275`). Every merged Quick UbU feature adopts the forms and boundaries of the MVP design it corresponds to (the Phase 1b rule). Phase 1b ends at the switch, when primary daily planning runs on mainline UbU, and therefore includes the planner the switch requires, including the desktop GPU backend. Multi-device sync remains Phase 2 and follows Phase 1b.
 
 ### Phase 2 sync and Compartment contract
 

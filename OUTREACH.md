@@ -316,7 +316,7 @@ Professional and FOSS use cases are valuable when they help build the same primi
 
 UbU is at a concrete inflection point. Phase 1 design is frozen, and Phase 1 is now feature-complete across the `UbU-project` repo constellation. Phase 0 — a live, runnable demo — was demonstrated at ETHConf NYC, June 8–10, 2026, frozen at `ubu-phase0-demo` commit `9daffa7`; the Phase 1 feature set has since been built out in full, and UbU now runs its own development loop on real infrastructure.
 
-This is the moment when early contributors can engage with a working end-to-end system that runs its own development loop, meet the project in person, and shape the hardening and the Phase 2 expansion. The design is coherent and the Phase 1 feature set is complete enough to build on; the project is early enough that concrete contributions still matter.
+This is the moment when early contributors can engage with a working end-to-end system that runs its own development loop, meet the project in person, and shape the hardening, the Phase 1b planner, and the Phase 2 expansion. The design is coherent and the Phase 1 feature set is complete enough to build on; the project is early enough that concrete contributions still matter.
 
 ---
 
