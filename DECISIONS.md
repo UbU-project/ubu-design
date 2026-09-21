@@ -4347,3 +4347,31 @@ Consequences:
 - `OPEN_QUESTIONS.md` marks `UBU-Q0153` solved.
 
 ---
+
+## UBU-D0278: Phase 1b decomposition segments are Container split points compiled as placement units
+
+**Status:** Accepted → DESIGN.md §9.4, §21.2.1. Resolves `UBU-Q0151`.
+
+Phase 1b represents an admitted decomposition as a structural Task-to-Container replacement. The Container carries `container_id`, `origin_task_ref`, `mutation_reason`, `mutation_log_ref`, ordered child Task refs, segment split points, lineage, and provenance. Children are ordinary Task records with their own executable fields; the original Task becomes historical and moot with `replaced_by_new_plan_structure` when the decomposition preserves the underlying intent.
+
+Segments are stored as split points over the ordered child list, not as a separate list of child groups. A split point ends the current contiguous segment after a child; no split points means the entire ordered child list is one segment. Materialized segment ids may be derived from the Container version and child-index range but are not separate WorkItems.
+
+Within a segment, children stay strictly back-to-back. Phase 1b does not add a maximum-gap edge: if there should be a pause, handoff, recovery interval, wait, or independent scheduling opportunity, the decomposition uses a segment boundary or an explicit child Task.
+
+The planner handoff is orchestrator-side compilation. Each admitted segment becomes one temporary placement unit sent through the existing planning kernel contract. Fixed child durations sum exactly; stochastic child durations use a conservative component-wise sum of minimum, mode, and p95 with one rollout sample for the whole segment. After placement, the orchestrator expands the unit into child Plan entries with contiguous offsets. Native no-gap kernel edges are deferred until measurement shows that the conservative segment approximation materially distorts rollout results.
+
+Child-specific hard constraints are preserved by segmentation. Static timing, allowed time ranges, preconditions, dependencies, or effects that safely apply to the whole segment constrain the compiled placement unit. Constraints that apply only at an interior child force a boundary before or after that child as appropriate. If review cannot express the decomposition as valid contiguous segments without violating a child constraint, admission rejects the candidate or requires edits.
+
+`Decomposition` advisory candidates normalize to the target Task ref, proposed Container summary or inherited original-intent fields, ordered child specs with stable proposed-child keys, titles, duration models, child-specific constraints and provenance, and split markers after child positions. The advisor proposes split markers at natural pause points and before constraint boundaries; review can edit child specs, order, and split markers before admission. Unadmitted proposed segments stay candidate-state preview material.
+
+Progress and repair operate on the unstarted suffix of the current segment. Completed children remain historical facts. If a child finishes early or late, local repair keeps the remaining siblings contiguous from the actual completion boundary; if the suffix can no longer satisfy admitted hard constraints, repair replans from the next segment boundary or surfaces a reviewable repair candidate rather than scattering siblings independently.
+
+Undo is another admitted structural replacement, not erasure. Undo creates a restored Task with a new Task handle carrying the original intent and prior schedulable fields when still valid, marks the decomposition Container and children as superseded or moot by the restoration, and retains the original Task's moot event, mutation logs, child Task history, Plan history, External Reference lineage, and review/admission records.
+
+Consequences:
+
+- `DESIGN.md` §9.4 records Phase 1b Container fields, split-point segment representation, strict adjacency, orchestrator-side segment compilation, repair, and undo behavior.
+- `DESIGN.md` §21.2.1 records the normalized `Decomposition` advisory candidate shape.
+- `OPEN_QUESTIONS.md` marks `UBU-Q0151` solved.
+
+---

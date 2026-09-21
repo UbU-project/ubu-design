@@ -2690,7 +2690,7 @@ Resolved by `UBU-D0253`: Redacted object handles are local rotating aliases stab
 
 ## UBU-Q0151: Phase 1b decomposition Containers and segments that stay together
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 1b decomposition port, reactivation of clarify and decompose Resolved by: None Last scored: 2026-09-21 Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 1b decomposition port, reactivation of clarify and decompose Resolved by: UBU-D0278 Last scored: 2026-09-21 Scored from commit: None
 
 Defining context: DESIGN.md §9.4, DESIGN.md §4.2, `UBU-D0274`, `UBU-D0275`.
 
@@ -2715,7 +2715,7 @@ Segments live on the Container. The decomposition advisor proposes split points,
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0278`: Phase 1b decomposition creates a new Container with `container_id`, `origin_task_ref`, `mutation_reason`, `mutation_log_ref`, ordered child Task refs, segment split points, lineage, and provenance. Segments are contiguous ranges derived from split points over the ordered child list; no split points means the whole list is one segment. Children inside a segment are strictly back-to-back. The orchestrator, not the planning kernel, compiles each segment into one temporary placement unit, sums fixed durations exactly and stochastic duration summaries conservatively, asks the kernel to place that unit under the existing contract, then expands the placed unit back into child Plan entries. Child-specific hard constraints either constrain the whole segment when safe, force a segment boundary, or require rejection/review edits. Decomposition advisory candidates normalize to ordered proposed children plus split markers; review may edit child specs and split markers before admission. Repair treats the unstarted suffix of a segment as the contiguous unit. Undo is an admitted structural replacement that creates a restored Task with a new handle while retaining Container, child, Plan, Log, External Reference, and review history.
 
 ---
 
@@ -2810,7 +2810,7 @@ Open.
 
 ## UBU-Q0155: Partial placement when the horizon cannot hold every Dynamic Task
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0153 Blocks: bounded-horizon planning with a real backlog Resolved by: None Last scored: 2026-09-21 Scored from commit: None
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0153 Blocks: bounded-horizon planning with a real backlog Resolved by: None Last scored: 2026-09-21 Scored from commit: None
 
 Defining context: DESIGN.md §15.2.2, PLANNING_KERNEL_CONTRACT.md §4, `UBU-D0275`.
 
