@@ -730,7 +730,9 @@ Alongside bootstrap-dependency build ordering, the project maintains a **feature
 
 ---
 
-## 4. MVP Release Phases
+## 4. Release Phases
+
+Phase labels name the phase that implements an item. The phases, their build order, and the mapping from labels used before `UBU-D0275` are recorded in §4.7.
 
 ### 4.1 Phase 1: Single-user GitHub dogfooding
 
@@ -774,11 +776,7 @@ Phase 2 explicitly defers:
 - sync conflict handling;
 - cross-device worker or enclave coordination beyond the single local instance boundary.
 
-Phase 3 is the bridge from the bootstrap MVP toward the full personal life-logistics product. It may be subdivided during implementation planning:
-
-- **Phase 3A** should prioritize minimal Resource/Skill-aware task readiness, private skill-tree foundations, and narrow Identity coordination that directly improves single-user life logistics.
-- **Phase 3B** begins the full version 1.0 release track. It should expand Resource and Skill usability, Technique-database integration, DIY-versus-purchase/hire planning, and the user-facing capability graph without requiring the public Skill Barter marketplace.
-- **Phase 4+** continues the full version 1.0+ track with mature inventory, financial-management extensions, public or federated Skill Barter, reputation/evidence, dispute workflows, and other multi-party marketplace features.
+Phase 3 is the bridge from the bootstrap MVP toward the full personal life-logistics product. It prioritizes minimal Resource/Skill-aware task readiness, private skill-tree foundations, and narrow Identity coordination that directly improves single-user life logistics. Phase 4 (§4.5) begins the full version 1.0 release track, and Phase 5+ (§4.6) continues it.
 
 Phase 3 explicitly includes:
 
@@ -995,7 +993,27 @@ The remaining §4.1 frozen-set items follow in bootstrap-dependency-driven order
 
 **Phase 1 realization (`UBU-D0241`).** Step 3 (UniverseState facts) is foundationally realized, together with the accepted mutation vocabulary and deterministic precondition evaluation named in step 4, implemented as the §11 container and pure `ubu-core` semantics and persisted by `ubu-store`. The precondition, effect, and bootstrap-fact wiring of these facts into the loop is realized across Wiring-A/B/C (`UBU-D0242`): preconditions gate planning, a completed Task's effects mutate the facts, and the bootstrap records the initial facts under the `UBU-D0243` namespace convention. Step 4's affect-Snapshot content and step 5's interactive bootstrap interview remain.
 
-### 4.2 Phase 2: Single-user multi-device synchronization
+### 4.2 Phase 1b: Quick UbU merge through the switch
+
+Phase 1b extends the Phase 1 system until it can replace Quick UbU, the separately developed personal planner that serves as the dogfooding user's working daily tool, so that Quick UbU becomes legacy software (`UBU-D0275`).
+
+Exit criterion:
+
+> The switch: the dogfooding user's primary daily planning runs on mainline UbU.
+
+Until the switch, Quick UbU remains the primary tool and mainline is exercised against non-primary test data.
+
+**The Phase 1b rule.** Every Quick UbU feature merged into mainline adopts the restrictions, forms, and functional boundaries of the MVP design it corresponds to, even when that design's implementation phase is later. Open questions that block Phase 1b are answered during Phase 1b whatever phase they were previously tagged, and the items they pull forward are re-tagged Phase 1b.
+
+Phase 1b includes:
+
+- the Phase 1b foundations already decided, including sync-ready mutation envelopes, the Device registry, tombstones, redacted Handles, projection-conflict repair, Device-local credentials, the local advisory worker, advisory batches, and first-class advisory candidate review;
+- the Quick UbU practical features, ported under the Phase 1b rule;
+- the planner the switch requires: decomposition into Containers whose ordered child Tasks are grouped into segments that stay together (§9.4); an allowed time range on Tasks; Task value and priority inputs to Plan scoring; routines as evergreen-Objective recurrence that instantiates Tasks (§7.4.1); partial placement when not every Dynamic Task fits the planning horizon; and the desktop GPU backend with its CPU reference path (§16.10).
+
+Phase 1b defers multi-device sync and everything else assigned to Phase 2 and later.
+
+### 4.3 Phase 2: Single-user multi-device synchronization
 
 A single user runs UbU across multiple Devices / execution enclaves.
 
@@ -1014,11 +1032,33 @@ Design rubric:
 
 A Phase 2 personal worker is not a mandatory cloud dependency. It is an optional execution backend for a user's own UbU instance. It may provide more CPU, GPU, memory, storage, network availability, or battery-independent runtime than the mobile device while preserving the user's practical control over the compute environment.
 
-### 4.3 Phase 3: Minimal multi-user / Identity coordination
+### 4.4 Phase 3: Minimal multi-user / Identity coordination
 
 Multiple humans coordinate through explicit Identities, capabilities, limited disclosure, and commitments.
 
 Phase 3 should enable coordination without surveillance or shared global truth.
+
+### 4.5 Phase 4: Version 1.0 release track
+
+Phase 4 begins the full version 1.0 release track. It expands Resource and Skill usability, Technique-database integration, DIY-versus-purchase/hire planning, and the user-facing capability graph without requiring the public Skill Barter marketplace.
+
+### 4.6 Phase 5+: Version 1.0+ release track
+
+Phase 5+ continues the full version 1.0+ track with mature inventory, financial-management extensions, public or federated Skill Barter, reputation/evidence, dispute workflows, and other multi-party marketplace features.
+
+### 4.7 Phase map and build order
+
+| Phase | Scope | Status |
+|---|---|---|
+| Phase 0 | ETHConf NYC demo | Complete |
+| Phase 1 | Single-user GitHub dogfooding (§4.1) | Feature-complete |
+| Phase 1b | Quick UbU merge through the switch, including the planner (§4.2) | In progress |
+| Phase 2 | Single-user multi-device synchronization (§4.3) | Next |
+| Phase 3 | Minimal multi-user / Identity coordination and Resource/Skill task readiness (§4.4) | Planned |
+| Phase 4 | Version 1.0 release track (§4.5) | Planned |
+| Phase 5+ | Version 1.0+ release track (§4.6) | Planned |
+
+Phases are built in table order. A phase label names the phase that implements an item; pulling an item forward re-tags that item and never renumbers phases (`UBU-D0275`). Labels used before `UBU-D0275` map as follows: Phase 3A becomes Phase 3, Phase 3B becomes Phase 4, and Phase 4+ becomes Phase 5+.
 
 ---
 
@@ -1222,11 +1262,11 @@ For MVP:
 - recurrence may be represented as a static timespan or simple PDF-like field
 - user declarations or authorized observations may modify satisfaction state
 
-#### 7.4.1 Calendar-style recurrence with exceptions (Phase 3)
+#### 7.4.1 Calendar-style recurrence with exceptions (Phase 1b)
 
-The MVP `maintenance_time_decay` field cannot express scheduled recurrence with named exceptions, such as "Mondays at 09:00, except company holidays, when it moves to the next day at 08:00." Phase 3 extends evergreen recurrence with a calendar-style schedule modeled on the RFC 5545 (iCalendar) base-rule-plus-exception pattern that generic calendar event schedules use.
+The MVP `maintenance_time_decay` field cannot express scheduled recurrence with named exceptions, such as "Mondays at 09:00, except company holidays, when it moves to the next day at 08:00." Phase 1b extends evergreen recurrence with a calendar-style schedule modeled on the RFC 5545 (iCalendar) base-rule-plus-exception pattern that generic calendar event schedules use.
 
-A Phase 3 recurrence schedule carries:
+A Phase 1b recurrence schedule carries (`UBU-D0275`):
 
 - a base rule (RRULE-shaped): frequency, interval, by-day/by-month-day/by-hour constraints, time-of-day, duration, and a timezone reference;
 - exclusion dates (EXDATE-shaped): occurrences removed from the base rule, e.g. holidays;
@@ -1660,7 +1700,7 @@ A Task may carry `resource_requirements[]` with:
 
 If a required Resource is missing, UbU may suggest or create prerequisite Tasks such as buying a part, finding a document, charging a battery, downloading a form, renewing a license, preparing a workspace, or checking whether a store or service is available. A Task requiring a Resource cannot be scheduled as ready unless the required Resource is in the required availability state in UniverseState.
 
-A mature Resource model naturally extends into inventory control, subscriptions, household logistics, procurement, cost history, depreciation, budgeting, and Quicken-like financial management. These are Phase 3B/Phase 4+ full-version-1.0 features, not Phase 3A requirements. The distinctive UbU finance path is not to clone a ledger application first; it is to connect spending, ownership, maintenance, and acquisition to Objectives, Tasks, Techniques, Compartments, and capability growth.
+A mature Resource model naturally extends into inventory control, subscriptions, household logistics, procurement, cost history, depreciation, budgeting, and Quicken-like financial management. These are Phase 4/Phase 5+ full-version-1.0 features, not Phase 3 requirements. The distinctive UbU finance path is not to clone a ledger application first; it is to connect spending, ownership, maintenance, and acquisition to Objectives, Tasks, Techniques, Compartments, and capability growth.
 
 ### 10.5 Skill preconditions and capability readiness
 
@@ -2230,7 +2270,7 @@ When an Objective can be satisfied by more than one already-modeled Technique (t
 
 **Dominance over the full outcome vector.** A candidate dominates another only if it is at least as good on **every** outcome axis, including robustness, affect-margin, dependency fragility, and Plan probability — not only money and time. A candidate that saves money but is more fragile or has lower completion probability is **not** dominated and must not be pruned. Pruning on a partial vector would discard exactly the robust Plans legitimization exists to protect.
 
-**Surface outcomes, not utils.** Utils are transient internal computational artifacts, not canonical user values (§2.2, §8.5). The user-facing comparison must show concrete predicted terminal UniverseState — money expended, time spent, Resources consumed, affect cost, relaxation, and Plan probability — not a util scalar. Money is shown here as a **generic cost outcome only** (e.g. "this Technique consumes $3.95"); analysis of which account is affected, balances, or overdraft thresholds requires a financial model that UbU does not yet specify and is deferred to Phase 3B/4+. UbU must not imply affordability or account impact without that model.
+**Surface outcomes, not utils.** Utils are transient internal computational artifacts, not canonical user values (§2.2, §8.5). The user-facing comparison must show concrete predicted terminal UniverseState — money expended, time spent, Resources consumed, affect cost, relaxation, and Plan probability — not a util scalar. Money is shown here as a **generic cost outcome only** (e.g. "this Technique consumes $3.95"); analysis of which account is affected, balances, or overdraft thresholds requires a financial model that UbU does not yet specify and is deferred to Phase 4/5+. UbU must not imply affordability or account impact without that model.
 
 **User choice and revealed preference.** The user's declared or learned trade-off weights parameterize the existing `scoring_policy` weights (`utility_weight`, `robustness_weight`, `affect_margin_weight`, `schedule_diversity_weight`; `PLANNING_KERNEL_CONTRACT.md` §2). Two modes follow: auto-select applies the weights; ask-the-user presents a small, diverse finalist set and lets the user pick. A revealed choice is a **proposal, not a fact** (`UBU-D0217`): it may propose a weight or Preference update surfaced for explicit user acceptance, and must never silently rewrite the trade-off vector. A single choice is a weak signal (one inequality in weight-space) and must be accumulated conservatively. Because trade-offs are affect- and state-conditioned, learned weights are a function of current state, not a fixed global vector.
 
@@ -2398,7 +2438,7 @@ MVP planning does not require exhaustive optimal search, cloud compute, GPU exec
 
 ### 16.10 GPU desktop execution backend
 
-The Phase 1 performance target is a local desktop/laptop GPU backend. A small CPU reference path or fixture-backed deterministic path remains required for tests, CI, and contributors without GPU access. Mobile and cloud planner backends are deferred beyond Phase 1.
+The Phase 1 performance target is a local desktop/laptop GPU backend, delivered in Phase 1b as part of the planner the switch requires (`UBU-D0275`). A small CPU reference path or fixture-backed deterministic path remains required for tests, CI, and contributors without GPU access. Mobile and cloud planner backends are deferred beyond Phase 1.
 
 The implementation-facing contract for this section is `PLANNING_KERNEL_CONTRACT.md`. `DESIGN.md` defines the architectural intent; the contract file defines the Phase 1 schema and boundary details.
 
