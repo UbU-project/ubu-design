@@ -2052,7 +2052,7 @@ Status: Open Priority: MVP important Phase: Phase 3 Decision type: Architecture 
 
 ### Subquestions
 
-1. **Recurrence schema.** What exact fields and grammar does the calendar-style recurrence schedule (`UBU-D0213`) use? How closely should it track RFC 5545 RRULE/EXDATE/RDATE, what subset is required for Phase 3, and how are timezones, DST transitions, and override occurrences represented deterministically?
+1. **Recurrence schema.** What exact fields and grammar does the calendar-style recurrence schedule (`UBU-D0213`) use? How closely should it track RFC 5545 RRULE/EXDATE/RDATE, what subset is required for Phase 3, and how are timezones, DST transitions, and override occurrences represented deterministically? The Phase 1b subset is decided by `UBU-Q0154`; this subquestion keeps the remainder.
 2. **Expand/skeletonize fixpoint.** When synthesized Tasks have their own prerequisites, is expansion a single pre-skeleton pass or a bounded expand/skeletonize fixpoint? What is the iteration cap, and how are non-terminating or oscillating expansions detected and reported?
 3. **Determinism under alternative exploration.** Should the CPU enumerate a bounded set of Technique instantiations and run/score each deterministically (no schema change), or should the `task_graph` gain mutually-exclusive choice-group nodes so the kernel selects among pre-materialized alternatives deterministically (additive schema change)? What are the trade-offs?
 4. **Scoring sensitivity / many-objective robustness.** Adding outcome axes (money, time, affect, robustness, skill, relationship, health) triggers many-objective dominance resistance (almost everything becomes non-dominated past ~4–5 axes) and ranking instability when candidates fall within stochastic-input noise. How many axes stay active as competing objectives versus demoted to constraints/thresholds? How are within-noise finalists detected and presented as ties? What does `sensitivity_summary` carry on the comparison surface? This is robust multi-objective ranking under uncertainty, not dynamical chaos, but warrants explicit research.
@@ -2061,7 +2061,7 @@ Status: Open Priority: MVP important Phase: Phase 3 Decision type: Architecture 
 7. **Affect-conditioned introspection wording.** What is the exact prompt grammar for surfacing an observed choice-under-affect correlation and offering a context remedy, routed through habit-pattern reconciliation, without asserting mechanism, blaming, or nudging toward a scored-better option?
 8. **Generic-cost vs. financial model boundary.** What cost outcomes may be shown pre-finance-model (e.g. "this Technique consumes $3.95") and what claims are forbidden (affordability, account impact, overdraft) until the Phase 4/5+ financial model exists?
 9. **Stochastic evergreen Objectives.** Could a recurrence schedule or Technique outcome legitimately be stochastic rather than deterministic, and if so, how would that interact with the existing rule that evergreen recurrence is evaluated deterministically before Calendar generation? (Parked alongside existing stochastic-recurrence deferral.)
-10. **Default Technique selection and well-formedness.** How is an Objective's default Technique chosen, declared, or learned, and what is the precise well-formedness/consistency report for an Objective with no Technique or a non-instantiable default Technique?
+10. **Default Technique selection and well-formedness.** How is an Objective's default Technique chosen, declared, or learned, and what is the precise well-formedness/consistency report for an Objective with no Technique or a non-instantiable default Technique? The Phase 1b routine instantiation rule is decided by `UBU-Q0154`; Technique-based default selection remains here.
 
 ### Current direction
 
@@ -2685,3 +2685,181 @@ window, or per object version, and how much correlation risk is acceptable?
 ### Resolution
 
 Resolved by `UBU-D0253`: Redacted object handles are local rotating aliases stable only for the receiving Device, the redacted source-object version, and the declared projection window, with rotation on version, redaction, policy, authority, or window changes. Compartment grouping handles are omitted by default; when policy permits them, they are stable only for the receiving Device, projection window, and policy epoch. Acceptable correlation is limited to local UI continuity and de-duplication inside one authorized restricted projection window; durable cross-Device, cross-window, cross-version, or Compartment-pattern correlation is not acceptable.
+
+---
+
+## UBU-Q0151: Phase 1b decomposition Containers and segments that stay together
+
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 1b decomposition port, reactivation of clarify and decompose Resolved by: None Last scored: 2026-09-21 Scored from commit: None
+
+Defining context: DESIGN.md §9.4, DESIGN.md §4.2, `UBU-D0274`, `UBU-D0275`.
+
+### Question
+
+How does Phase 1b represent a decomposed Task as a Container whose ordered child Tasks are grouped into segments that stay together, and how do those segments reach the planner?
+
+### Subquestions
+
+1. **Container record.** `ubu-core` currently holds a stub `Container { name, items }` with embedded WorkItems. Which §9.4 fields are required in Phase 1b: `container_id`, `origin_task_ref`, `mutation_reason`, `mutation_log_ref`, ordered child Task refs, lineage and provenance?
+2. **Segment representation.** Are segments recorded as split points over the ordered child list, or as an explicit list of child groups? With no split points, the whole list is one segment.
+3. **Gap semantics.** Quick UbU chains decomposed children with `offset_minutes`, which is only a minimum gap, so other Tasks can slide between them and scatter the checklist. Within a segment, are children strictly back-to-back, or bounded by a maximum gap?
+4. **Planner handoff.** Either the orchestrator sends each segment to the kernel as one placement unit and splits it back into child steps afterwards, or the kernel contract gains a native no-gap edge. The first keeps the contract unchanged. Its duration is exact for fixed durations and a conservative sum for stochastic ones (minimum, mode, and p95 each summed), with one rollout sample per segment. The second samples each child. Which applies in Phase 1b?
+5. **Constraints inside a segment.** How are children with their own static window, allowed time range, preconditions, or dependencies outside the segment handled: split the segment there, reject the decomposition, or constrain the whole unit?
+6. **Proposal shape.** What is the normalized proposal of a `Decomposition` advisory candidate: ordered children with titles, durations, and split markers? How does the decomposition advisor propose natural split points, and how does review edit them?
+7. **Progress and repair.** When a child finishes early or late, how does repair treat the rest of its segment?
+8. **Undo.** Under §9.4 structural replacement the original Task becomes moot with `replaced_by_new_plan_structure`. What does undoing a decomposition restore, and what history is retained?
+
+### Current direction
+
+Segments live on the Container. The decomposition advisor proposes split points, review can edit them, and a decomposition with no split points is one segment, which reproduces the original Task's timing. The orchestrator sends each segment to the kernel as one placement unit and splits the placed unit back into child steps, so the planning kernel contract is unchanged and the CPU planner keeps checklists together before the GPU engine exists. A native no-gap edge is deferred until measurement shows that the conservative-sum approximation distorts rollout results.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0152: Allowed time range on Tasks
+
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0154, routine planning, retirement of occupies_capacity Resolved by: None Last scored: 2026-09-21 Scored from commit: None
+
+Defining context: DESIGN.md §9.2, DESIGN.md §16.5, PLANNING_KERNEL_CONTRACT.md §2, `UBU-D0256`, `UBU-D0275`.
+
+### Question
+
+What Task input expresses the range of times a Dynamic Task may occupy, and how does planning consume it?
+
+### Subquestions
+
+1. **Shape.** Is the range a single `{ earliest_start, latest_finish }` interval, an ordered list of movable windows like the decision envelope's `movable_windows`, or a recurring local time-of-day window such as 09:00–11:45?
+2. **Input versus output.** The decision envelope (`UBU-D0256`) is derived from a Plan for mobile repair. How is the Task's declared range kept distinct from it, and from due dates and deadlines?
+3. **Relation to `static_window`.** Are the two mutually exclusive, or is a Static Task a range with no slack?
+4. **Hard or soft.** Must placement fall inside the range, or may it spill outside at a scored cost?
+5. **Kernel mapping.** `TaskSpec` carries one per-task `window`, which the kernel intersects with the plan window. Several windows would need either a contract change or the orchestrator choosing one window per horizon.
+6. **Retiring `occupies_capacity`.** The orchestrator currently refuses non-capacity Dynamic Tasks, because `occupies_capacity` is a bridge until the planner can place hard-to-schedule routine Tasks. Do allowed ranges plus the Phase 1b planner retire the field, and on what evidence?
+7. **Time zones.** The planning timeline is UTC seconds. How are local time-of-day ranges converted, including across DST changes?
+
+### Current direction
+
+One-off Tasks carry an absolute `{ earliest_start, latest_finish }` range, which the orchestrator maps onto `TaskSpec.window`. Routine instances receive their range from the recurrence rule when they are instantiated (`UBU-Q0154`). The range is a hard constraint. Multiple movable windows are deferred. The range is a declared input, and the decision envelope stays a derived output.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0153: Task value and priority for Plan scoring
+
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0155, Phase 1b planner quality Resolved by: None Last scored: 2026-09-21 Scored from commit: None
+
+Defining context: PLANNING_KERNEL_CONTRACT.md §5, DESIGN.md §16.10, `UBU-D0275`.
+
+### Question
+
+Where do Task value and priority come from for Plan scoring? Today the orchestrator builds every `TaskSpec` with `value: 1.0` and `priority: 1.0`, so the value-scoring stage cannot distinguish one Task from another.
+
+### Subquestions
+
+1. **Source.** Which input sets a Task's value: Objective value, explicit per-Task priority, deadlines, or Quick UbU's review-and-prioritize ranking?
+2. **Scale.** How does an ordinal ranking become a bounded numeric value, and is it normalized per request? Utility is transient and never persisted. Which value inputs are canonical, and which are computed per request?
+3. **Routine value.** How does a routine instance's value relate to a one-off Task's? Does it rise as a deadline or a missed occurrence approaches?
+4. **Scoring policy.** How does Task value interact with the affect and robustness weights in `scoring_policy`?
+5. **Revealed preference.** Which part, if any, of learning trade-off weights from review decisions belongs in Phase 1b? The rest stays with `UBU-Q0125`.
+
+### Current direction
+
+Phase 1b takes Task value from explicit operator prioritization: Quick UbU's prioritize flow is ported as admitted records, and the orchestrator maps them onto a bounded numeric scale when it builds each request. The computed values are never persisted as utility. Learning weights from revealed preference stays with `UBU-Q0125`.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0154: Phase 1b routines as evergreen-Objective recurrence
+
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0152 Blocks: Phase 1b routine port, Quick UbU routine import Resolved by: None Last scored: 2026-09-21 Scored from commit: None
+
+Defining context: DESIGN.md §7.4.1, DESIGN.md §15.2.1.1, `UBU-D0213`, `UBU-D0214`, `UBU-D0216`, `UBU-D0275`. This question takes the Phase 1b slice of `UBU-Q0125` subquestions 1 and 10.
+
+### Question
+
+How are Quick UbU routines represented and instantiated in Phase 1b, given that recurrence lives on evergreen Objectives and Tasks are pure instances?
+
+### Subquestions
+
+1. **Schedule subset.** Quick UbU's 71 routine templates use daily, weekly-by-weekday, day-of-month, first-workday-of-month, and first-workday-of-quarter rules. Which subset of the §7.4.1 calendar-style schedule does Phase 1b implement? Does first-workday need a workday calendar, and does that make exceptions (holidays) a Phase 1b requirement?
+2. **Routine to Objective.** Is each routine template one evergreen Objective? Where do the template's title, duration, `category_tag`, `occupies_capacity`, reminders (projection-only), nominal start, and allowed time-of-day range live?
+3. **Minimal Task synthesis.** Is each occurrence instantiated by a default Technique, or by a direct instantiation rule on the Objective with Technique expansion left in Phase 3?
+4. **Instantiation window and identity.** When are occurrence Tasks created (per planning horizon, or over a rolling window)? How are duplicates prevented, for example with deterministic occurrence ids? How do rule edits reach future occurrences that already exist?
+5. **Relative routines.** Some templates start a fixed offset after another routine (Quick UbU's `after`). Is that a dependency with a minimum lag, or an allowed range derived from the predecessor?
+6. **Static or planned.** Does each instance carry both its nominal start and its allowed range, with a per-routine choice between Static placement and planner placement, so that routines can move to the planner one at a time?
+7. **Completion and misses.** How do done, skipped, and missed occurrences update the evergreen Objective, including streaks (`UBU-Q0111`)?
+8. **Import.** How do the existing Quick UbU templates map onto this representation? Importing them is a soft goal.
+
+### Current direction
+
+Each routine template becomes an evergreen Objective carrying a Phase 1b calendar-style schedule in the local time zone, without general exception sets unless first-workday rules require a workday calendar. A direct instantiation rule creates one Task per occurrence inside the planning horizon, with deterministic ids. Instances carry a nominal start and an allowed range (`UBU-Q0152`), and each routine is either placed as a Static Task or planned within its range, so it can move to planner placement once the planner proves itself on it. Technique-based expansion stays in Phase 3.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0155: Partial placement when the horizon cannot hold every Dynamic Task
+
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0153 Blocks: bounded-horizon planning with a real backlog Resolved by: None Last scored: 2026-09-21 Scored from commit: None
+
+Defining context: DESIGN.md §15.2.2, PLANNING_KERNEL_CONTRACT.md §4, `UBU-D0275`.
+
+### Question
+
+How should planning behave when not every Dynamic Task fits the planning horizon? Today the kernel fails the whole skeleton when any single Task has insufficient window, so one oversized backlog item removes the entire Plan.
+
+### Subquestions
+
+1. **Local or blocking.** Which failures stay local to one Task, such as a Dynamic Task with insufficient window, and which block the Plan, such as Static collisions, dependency cycles, and precondition contradictions? §15.2.2 allows a skeleton failure outside the recommendation path to remain a warning.
+2. **Deferral.** How is an unplaced Task reported, and what reason does it carry? Are its dependents deferred with it?
+3. **Selection.** When capacity is short, which Tasks are left out: lowest value (`UBU-Q0153`), latest deadline, or a fixed order? What is the deterministic tie-break?
+4. **Contract.** Does `PlanningResponse` gain an additive list of unplaced Tasks, and does that require a contract version change?
+5. **Horizon extension.** Should the orchestrator first retry with an extended horizon, the §15.2.2 safe alternative, before deferring Tasks?
+6. **Surfacing.** How do unplaced Tasks appear in risk reports and next-action?
+
+### Current direction
+
+A Dynamic Task that cannot fit becomes a per-Task unplaced diagnostic, and the rest of the Plan proceeds. Static collisions and structural failures remain plan-blocking. Tasks are left out in order of lowest value, then latest deadline, then id. `PlanningResponse` gains an additive unplaced-Task list under a minor contract version.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0156: Phase 1b GPU engine invocation boundary
+
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 1b GPU engine Resolved by: None Last scored: 2026-09-21 Scored from commit: None
+
+Defining context: DESIGN.md §16.10, PLANNING_KERNEL_CONTRACT.md §5, `UBU-D0275`.
+
+### Question
+
+How does the planning kernel invoke the desktop GPU engine in Phase 1b? The design text and the existing scaffold disagree.
+
+### Subquestions
+
+1. **Invocation.** DESIGN.md §16.10.1 specifies an in-process typed Python function call, not a subprocess or service. The existing scaffold (`ubu-planning-advisory-protocol`, `request_via_process`) spawns `python -m ubu_gpu_advisory.main` and exchanges JSON over stdin and stdout. Which applies? Weigh crash isolation, startup cost, packaging a Python runtime with the desktop app, the interpreter lock, and the security boundary.
+2. **Boundary types.** The contract boundary is `PlanningRequest` and `PlanningResponse`, but the scaffold carries `ubu_core::worker::GpuAdvisoryRequest` and `GpuAdvisoryResponse`. Which types cross the boundary?
+3. **Framework.** Is PyTorch, as §16.10.1 specifies, confirmed for Phase 1b?
+4. **Reproducibility.** GPU floating-point reduction is not bitwise deterministic, while the RNG seed exists so that Plans are reproducible for peer debugging. Is reproducibility required bit for bit, or within a stated tolerance, with CPU certification as the final authority?
+5. **Parity testing.** How is the GPU engine tested against the CPU reference path and its goldens? Which stage outputs must match exactly (validity masks, feasibility) and which statistically (rollout probabilities)?
+6. **Fallback and provenance.** How is the backend selected on machines without a GPU, and how does a Plan record which backend produced it?
+
+### Current direction
+
+The `PlanningRequest`/`PlanningResponse` boundary, CPU certification of every selected Plan, and the CPU fallback path are fixed by §16.10 and are not reopened. The Phase 1b planner inputs (segments as placement units, allowed ranges, Task value) enter through the existing `TaskSpec`, so they need no GPU-specific contract. The open decision is how the engine is invoked, which must be settled before implementation because the design and the scaffold contradict each other.
+
+### Resolution
+
+Open.
