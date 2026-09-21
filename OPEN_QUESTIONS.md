@@ -2794,7 +2794,7 @@ How are Quick UbU routines represented and instantiated in Phase 1b, given that 
 3. **Minimal Task synthesis.** Is each occurrence instantiated by a default Technique, or by a direct instantiation rule on the Objective with Technique expansion left in Phase 3?
 4. **Instantiation window and identity.** When are occurrence Tasks created (per planning horizon, or over a rolling window)? How are duplicates prevented, for example with deterministic occurrence ids? How do rule edits reach future occurrences that already exist?
 5. **Relative routines.** Some templates start a fixed offset after another routine (Quick UbU's `after`). Is that a dependency with a minimum lag, or an allowed range derived from the predecessor?
-6. **Static or planned.** Does each instance carry both its nominal start and its allowed range, with a per-routine choice between Static placement and planner placement, so that routines can move to the planner one at a time?
+6. **Static or planned.** Does each instance carry both its nominal start and its allowed range, with a per-routine choice between Static placement and planner placement, so that routines can move to the planner one at a time? Capacity-occupying Static routine instances bound chunks (`UBU-D0279`), so moving a routine to planner placement also merges the chunks it separated.
 7. **Completion and misses.** How do done, skipped, and missed occurrences update the evergreen Objective, including streaks (`UBU-Q0111`)?
 8. **Import.** How do the existing Quick UbU templates map onto this representation? Importing them is a soft goal.
 
@@ -2812,7 +2812,7 @@ Open.
 
 Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0153 Blocks: bounded-horizon planning with a real backlog Resolved by: None Last scored: 2026-09-21 Scored from commit: None
 
-Defining context: DESIGN.md §15.2.2, PLANNING_KERNEL_CONTRACT.md §4, `UBU-D0275`.
+Defining context: DESIGN.md §15.2.2, DESIGN.md §16.3, PLANNING_KERNEL_CONTRACT.md §4, `UBU-D0275`, `UBU-D0277`, `UBU-D0279`.
 
 ### Question
 
@@ -2822,14 +2822,15 @@ How should planning behave when not every Dynamic Task fits the planning horizon
 
 1. **Local or blocking.** Which failures stay local to one Task, such as a Dynamic Task with insufficient window, and which block the Plan, such as Static collisions, dependency cycles, and precondition contradictions? §15.2.2 allows a skeleton failure outside the recommendation path to remain a warning.
 2. **Deferral.** How is an unplaced Task reported, and what reason does it carry? Are its dependents deferred with it?
-3. **Selection.** When capacity is short, which Tasks are left out: lowest value (`UBU-Q0153`), latest deadline, or a fixed order? What is the deterministic tie-break?
-4. **Contract.** Does `PlanningResponse` gain an additive list of unplaced Tasks, and does that require a contract version change?
+3. **Selection.** When capacity is short, which Tasks are left out: lowest value (`UBU-D0277`), latest deadline, or a fixed order? What is the deterministic tie-break?
+4. **Contract.** Does `PlanningResponse` gain an additive list of unplaced Tasks, and does that require a contract version change? Should that change share one minor version with the split-policy change of `UBU-Q0157`?
 5. **Horizon extension.** Should the orchestrator first retry with an extended horizon, the §15.2.2 safe alternative, before deferring Tasks?
 6. **Surfacing.** How do unplaced Tasks appear in risk reports and next-action?
+7. **Chunks and splitting.** Under chunked search (`UBU-D0279`), a unit longer than every chunk it may occupy cannot be placed even when the horizon holds enough free time in total. Is that reported as its own unplaced reason? If splittable Tasks are adopted (`UBU-Q0157`), may partial placement place part of a splittable Task and carry the remainder forward?
 
 ### Current direction
 
-A Dynamic Task that cannot fit becomes a per-Task unplaced diagnostic, and the rest of the Plan proceeds. Static collisions and structural failures remain plan-blocking. Tasks are left out in order of lowest value, then latest deadline, then id. `PlanningResponse` gains an additive unplaced-Task list under a minor contract version.
+A Dynamic Task that cannot fit becomes a per-Task unplaced diagnostic, and the rest of the Plan proceeds. Static collisions and structural failures remain plan-blocking. Tasks are left out in order of lowest value, then latest deadline, then id. `PlanningResponse` gains an additive unplaced-Task list under a minor contract version. Under chunked search, a unit is unplaced when no chunk can accept it, and the unplaced reason distinguishes a lack of total time from the lack of a large enough chunk.
 
 ### Resolution
 
@@ -2841,7 +2842,7 @@ Open.
 
 Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 1b GPU engine Resolved by: None Last scored: 2026-09-21 Scored from commit: None
 
-Defining context: DESIGN.md §16.10, PLANNING_KERNEL_CONTRACT.md §5, `UBU-D0275`.
+Defining context: DESIGN.md §16.10, DESIGN.md §16.3, PLANNING_KERNEL_CONTRACT.md §5, `UBU-D0275`, `UBU-D0279`.
 
 ### Question
 
@@ -2850,15 +2851,56 @@ How does the planning kernel invoke the desktop GPU engine in Phase 1b? The desi
 ### Subquestions
 
 1. **Invocation.** DESIGN.md §16.10.1 specifies an in-process typed Python function call, not a subprocess or service. The existing scaffold (`ubu-planning-advisory-protocol`, `request_via_process`) spawns `python -m ubu_gpu_advisory.main` and exchanges JSON over stdin and stdout. Which applies? Weigh crash isolation, startup cost, packaging a Python runtime with the desktop app, the interpreter lock, and the security boundary.
-2. **Boundary types.** The contract boundary is `PlanningRequest` and `PlanningResponse`, but the scaffold carries `ubu_core::worker::GpuAdvisoryRequest` and `GpuAdvisoryResponse`. Which types cross the boundary?
+2. **Boundary types.** The contract boundary is `PlanningRequest` and `PlanningResponse`, but the scaffold carries `ubu_core::worker::GpuAdvisoryRequest` and `GpuAdvisoryResponse`. Which types cross the boundary? The contract also expresses time windows as RFC 3339 timestamps, while the Rust kernel's `TimeWindow` uses integer coordinates (Unix seconds in the orchestrator). Which representation crosses the boundary?
 3. **Framework.** Is PyTorch, as §16.10.1 specifies, confirmed for Phase 1b?
 4. **Reproducibility.** GPU floating-point reduction is not bitwise deterministic, while the RNG seed exists so that Plans are reproducible for peer debugging. Is reproducibility required bit for bit, or within a stated tolerance, with CPU certification as the final authority?
 5. **Parity testing.** How is the GPU engine tested against the CPU reference path and its goldens? Which stage outputs must match exactly (validity masks, feasibility) and which statistically (rollout probabilities)?
 6. **Fallback and provenance.** How is the backend selected on machines without a GPU, and how does a Plan record which backend produced it?
+7. **Chunked search.** The chunked search of `UBU-D0279` runs inside whichever invocation is chosen. Does batching every chunk into one call, or dispatching chunks separately, affect the invocation choice or the memory budget of each call?
 
 ### Current direction
 
-The `PlanningRequest`/`PlanningResponse` boundary, CPU certification of every selected Plan, and the CPU fallback path are fixed by §16.10 and are not reopened. The Phase 1b planner inputs (segments as placement units, allowed ranges, Task value) enter through the existing `TaskSpec`, so they need no GPU-specific contract. The open decision is how the engine is invoked, which must be settled before implementation because the design and the scaffold contradict each other.
+The `PlanningRequest`/`PlanningResponse` boundary, CPU certification of every selected Plan, and the CPU fallback path are fixed by §16.10 and are not reopened. The Phase 1b planner inputs (segments as placement units, allowed ranges, Task value) enter through the existing `TaskSpec`, so they need no GPU-specific contract. The only pending `TaskSpec` change is the split policy of `UBU-Q0157`. The open decision is how the engine is invoked, which must be settled before implementation because the design and the scaffold contradict each other.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0157: Splittable Tasks and resume overhead
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: save-and-continue planning, interruption-aware rollouts Resolved by: None Last scored: Never Scored from commit: None
+
+Defining context: DESIGN.md §9.4, DESIGN.md §16.3, PLANNING_KERNEL_CONTRACT.md §3, `UBU-D0276`, `UBU-D0277`, `UBU-D0278`, `UBU-D0279`.
+
+### Question
+
+How does planning represent and place Tasks whose work may be split into pieces across chunks, with a modest resume overhead for each resumption, while Tasks that cannot be split stay atomic?
+
+### Subquestions
+
+1. **Policy shape.** Is the Task input a split policy that is either `atomic`, the default, or `splittable { min_piece, resume_overhead, max_pieces }`? Which fields are required? How are defaults chosen, for example by category, with the advisor proposing them for review?
+2. **Overhead model.** Is the resume overhead constant for every resumed piece, or does it depend on the time since the previous piece? Does resuming also carry an affect cost?
+3. **Piece placement.** Are pieces restricted to at most one per chunk (`UBU-D0279`), excluding splits inside a chunk because they only add overhead? Must every piece lie inside the Task's allowed range (`UBU-D0276`)?
+4. **Relation to segments.** Decomposition segments (`UBU-D0278`) are pause points fixed at decomposition time and stay atomic placement units. Does a split policy apply only to individual Tasks, including decomposition children?
+5. **Contract.** The split policy would change the kernel contract:
+   - `TaskSpec` gains the split policy;
+   - Plan steps gain a piece index and a piece count;
+   - validation accepts several non-overlapping steps for one Task;
+   - dependencies attach to a Task's first and last pieces;
+   - rollouts draw one total duration per Task and spend it across that Task's pieces.
+
+   Does this change share one minor contract version with partial placement (`UBU-Q0155`)?
+6. **Uncertainty.** A splittable Task that overruns can continue in a later chunk at the cost of one resumption, instead of colliding with the next fixed placement. How do rollouts account for that, and how does it change Plan probability?
+7. **Interruptions.** Stochastic external-event modeling is deferred to Phase 2. Once it exists, an interruption during splittable work costs one resumption, while an interruption during atomic work forces a restart. Does Phase 1b need any interruption input, or only the split policy that the later modeling depends on?
+8. **Progress.** Planned pieces are Plan steps of one Task. When execution stops partway, how is progress recorded, through Log evidence and a remaining-work estimate on the Task, without the §9.4 structural replacement that a Container implies?
+9. **Partial value.** Does progress on a splittable Task within the horizon earn proportional value (`UBU-D0277`), or does value accrue only when the Task is completed?
+10. **Projection.** How are pieces shown on projection surfaces, for example as separate Google Calendar events titled "(2/3)"?
+
+### Current direction
+
+A Task's split policy is `atomic` by default. A splittable Task declares a minimum piece, a constant resume overhead added to each resumed piece, and a maximum piece count. Pieces are placed at most one per chunk and inside the Task's allowed range. The chunk-assignment level of `UBU-D0279` therefore decides how much of each splittable Task goes into each chunk, and ordering within chunks is unchanged. Decomposition segments stay atomic. Planned pieces are Plan steps of one Task, and an actual stop partway records progress instead of restructuring the Task. The contract change shares one minor version with partial placement. Splitting is not required for the switch and is implemented after chunked search lands.
 
 ### Resolution
 
