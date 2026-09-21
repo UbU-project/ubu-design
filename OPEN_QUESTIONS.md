@@ -2842,7 +2842,7 @@ Open.
 
 Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 1b GPU engine Resolved by: None Last scored: 2026-09-21 Scored from commit: None
 
-Defining context: DESIGN.md §16.10, DESIGN.md §16.3, PLANNING_KERNEL_CONTRACT.md §5, `UBU-D0275`, `UBU-D0279`.
+Defining context: DESIGN.md §16.10, DESIGN.md §16.3, PLANNING_KERNEL_CONTRACT.md §5, `UBU-D0275`, `UBU-D0279`, `UBU-D0281`.
 
 ### Question
 
@@ -2857,6 +2857,7 @@ How does the planning kernel invoke the desktop GPU engine in Phase 1b? The desi
 5. **Parity testing.** How is the GPU engine tested against the CPU reference path and its goldens? Which stage outputs must match exactly (validity masks, feasibility) and which statistically (rollout probabilities)?
 6. **Fallback and provenance.** How is the backend selected on machines without a GPU, and how does a Plan record which backend produced it?
 7. **Chunked search.** The chunked search of `UBU-D0279` runs inside whichever invocation is chosen. Does batching every chunk into one call, or dispatching chunks separately, affect the invocation choice or the memory budget of each call?
+8. **Streaming.** Interactive requests stream certified chunk results (`UBU-D0281`). A persistent worker process can emit one framed result per completed chunk depth, while an in-process call needs callbacks or an iterator across the language boundary. How does streaming bear on the invocation choice, and what framing carries the partial results?
 
 ### Current direction
 
@@ -2901,6 +2902,36 @@ How does planning represent and place Tasks whose work may be split into pieces 
 ### Current direction
 
 A Task's split policy is `atomic` by default. A splittable Task declares a minimum piece, a constant resume overhead added to each resumed piece, and a maximum piece count. Pieces are placed at most one per chunk and inside the Task's allowed range. The chunk-assignment level of `UBU-D0279` therefore decides how much of each splittable Task goes into each chunk, and ordering within chunks is unchanged. Decomposition segments stay atomic. Planned pieces are Plan steps of one Task, and an actual stop partway records progress instead of restructuring the Task. The contract change shares one minor version with partial placement. Splitting is not required for the switch and is implemented after chunked search lands.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0158: Outcome branching at chunk boundaries and compact Calendar coverage
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: compact Calendar coverage, mobile stewardship packaging Resolved by: None Last scored: Never Scored from commit: None
+
+Defining context: DESIGN.md §16.2, DESIGN.md §16.3, DESIGN.md §16.5, PLANNING_KERNEL_CONTRACT.md §2, `UBU-D0279`, `UBU-D0280`, `UBU-D0281`.
+
+### Question
+
+How does the compact Calendar cover the stochastic range of possible futures under chunked search? Alternatives per chunk (`UBU-D0280`) are decision branches, not outcome branches. Coverage (§16.2) is probability mass over outcomes: durations, success and failure, and interruptions.
+
+### Subquestions
+
+1. **Outcome states.** Fixed placements realign the clock at every chunk boundary, so futures differ there only in which units completed, how far splittable Tasks progressed (`UBU-Q0157`), and the carried state. Which of these define an outcome branch, and how are near-identical outcomes grouped?
+2. **Probabilities.** Per-chunk rollouts with shared latent draws (`UBU-D0279`) yield outcome frequencies. How are outcome probabilities estimated, and with what confidence?
+3. **Coverage accounting.** How does the probability mass of the outcomes that have precomputed continuations map to `branch_coverage_target` and `reactive_horizon_seconds` (contract §2), and to the coverage fields of the response?
+4. **Budget.** Under a fixed compute budget, how is effort split between decision branching (K alternatives per chunk) and outcome branching (continuations for probable outcomes)?
+5. **Packaging.** Which continuations enter the compact Calendar and the mobile stewardship metadata (§16.5), and how many chunks deep?
+6. **Inside a chunk.** Is a deviation inside a chunk handled only by decision envelopes and repair recipes (§16.5), rather than by precomputed branches?
+7. **Streaming.** Are outcome continuations streamed with interactive chunk results (`UBU-D0281`), or computed after the first chunk is delivered?
+
+### Current direction
+
+At each chunk boundary the sweep precomputes next-chunk continuations for the most probable outcome states, in descending probability, until the coverage target is met within the reactive horizon. Decision alternatives and outcome continuations share one compute budget. A deviation inside a chunk remains local repair. The mobile stewardship package carries the current chunk's plan and the continuations for its probable outcomes.
 
 ### Resolution
 
