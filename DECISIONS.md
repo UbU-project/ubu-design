@@ -3033,7 +3033,7 @@ See DESIGN.md §21.7.
 
 ---
 
-## UBU-D0197: Phase 3B and Phase 4+ are the full version 1.0 release track
+## UBU-D0197: Phase 4 and Phase 5+ are the full version 1.0 release track
 
 **Status:** Accepted → DESIGN.md §4
 
@@ -3190,7 +3190,7 @@ This feature supports the public-good, frugality, sustainability, self-sufficien
 **Consequences:**
 
 - Community Resources become first-class planning inputs alongside owned, rented, and purchased Resources.
-- The Library and Community Resource Mode is a Phase 3B product hook that requires no new ontology — it is an application of the existing Resource model to a new category of providers.
+- The Library and Community Resource Mode is a Phase 4 product hook that requires no new ontology — it is an application of the existing Resource model to a new category of providers.
 
 ---
 
@@ -3240,7 +3240,7 @@ UbU can compare: borrow free from a neighbor or library; use a tool library; ren
 
 **Consequences:**
 
-- The Resource Exchange becomes a named Phase 3B/4+ direction distinct from the Skill Barter marketplace.
+- The Resource Exchange becomes a named Phase 4/5+ direction distinct from the Skill Barter marketplace.
 - Ethereum fits naturally as the settlement and trust layer beneath a task-driven Resource and Skill exchange.
 
 ---
@@ -3413,7 +3413,7 @@ Required properties:
 
 - **No cross-product enumeration.** The full `k^N` Technique cross-product contradicts the bounded-search commitment. The required shape is branch-and-bound with semi-legitimization (`reject_obvious` / `passes_cheap_checks`) as the cheap pruner; only a small Pareto-frontier finalist set reaches full legitimization and full scoring. Dominance is a bound during search, not a post-enumeration filter.
 - **Full-vector dominance.** A candidate dominates only if at least as good on every outcome axis, including robustness, affect-margin, dependency fragility, and Plan probability — not only money and time. Cheaper-but-more-fragile candidates are not dominated.
-- **Surface outcomes, not utils.** The user sees concrete predicted terminal UniverseState (money, time, Resources, affect, relaxation, Plan probability), not a util scalar. Money is a generic cost outcome only; account identity, balances, and overdraft analysis require a financial model deferred to Phase 3B/4+.
+- **Surface outcomes, not utils.** The user sees concrete predicted terminal UniverseState (money, time, Resources, affect, relaxation, Plan probability), not a util scalar. Money is a generic cost outcome only; account identity, balances, and overdraft analysis require a financial model deferred to Phase 4/5+.
 - **Cognitive load and cadence.** The comparison reuses the Calendar-preview UX surface and roughly its choice counts; diverging is a user configuration. Within-noise finalists are presented as a tie with a `sensitivity_summary`, not a manufactured ranking.
 - This engine is the demand-side driver for the Technique database (`UBU-Q0119`): more Technique variety widens the achievable outcome frontier.
 
@@ -4270,3 +4270,34 @@ Rejected candidates retain durable correction metadata rather than the rejected 
 Admission, rejection, deferral, resurfacing, supersession, and archival decisions are first-class review events. Each carries actor Identity, `authority_source`, origin Device, observed candidate version, observed policy versions when policy is relied on, effective and recorded times, idempotency key, and links to resulting canonical mutations, suppression records, or replacement candidates. Admission emits the ordinary sync-ready mutation envelope for the admitted object change, while rejection records the decision and suppression key without creating the proposed canonical state.
 
 Review ordering does not affect state category. Proposed and resurfaced candidates may be prioritized for operator attention, while deferred, rejected, superseded, and archived candidates are normally out of the active queue except for audit, resurfacing, or deduplication. A contested region remains `candidate_state` or `pending_state` until the relevant admission or conflict-resolution event is admitted, so no UI, API, preview, report, or planner surface may present advisory material as `admitted_state` merely because it is high priority, repeated, old, or uncontested in the queue.
+
+## UBU-D0275: Phase 1b runs through the switch, the planner precedes sync, and later phases are renumbered
+
+**Status:** Accepted → DESIGN.md §4, §4.2, §4.7
+
+Phase 1b is the phase in which mainline UbU reproduces the practical features of Quick UbU, the dogfooding user's working personal planner, so that Quick UbU can become legacy software. Its exit criterion is the switch: the dogfooding user's primary daily planning runs on mainline UbU. Until the switch, Quick UbU remains the primary tool and mainline is exercised against non-primary test data.
+
+The switch requires planning that places routine and decomposed work better than the greedy baseline, so the planner belongs to Phase 1b. In addition to the feature ports, Phase 1b therefore includes decomposition into Containers (§9.4) whose ordered child Tasks are grouped into segments that stay together; an allowed time range on Tasks; Task value and priority inputs to Plan scoring; routines as evergreen-Objective recurrence that instantiates Tasks; partial placement when not every Dynamic Task fits the planning horizon; and the desktop GPU backend of §16.10, which was already the Phase 1 performance target and is delivered in Phase 1b together with its CPU reference path. Calendar-style recurrence (§7.4.1) moves to Phase 1b with this decision. The Phase 1b slice of recurrence and Task synthesis is carved out of `UBU-Q0125` when the Phase 1b planner questions are recorded.
+
+The planner precedes multi-device sync, which remains Phase 2. Neither constrains the other. The planning engine is a pure function over `PlanningRequest` and `PlanningResponse` (§16.10.1) and never sees replicas, Devices, mutation envelopes, or Compartments; sync carries canonical state and the Plan artifacts already specified for Phase 1. Sync is not needed for the switch, because the dogfooding configuration is one desktop Device with Google Calendar as a projection surface, which is not a Device (`UBU-D0257`). Building the planner first shortens the path to the switch, starts full dogfooding of mainline sooner, and returns time to the user through more efficient daily planning.
+
+Later phases are renumbered to remove lettered subdivisions:
+
+| Label before `UBU-D0275` | Label after |
+|---|---|
+| Phase 3A | Phase 3 |
+| Phase 3 | Phase 3 |
+| Phase 3B | Phase 4 |
+| Phase 4+ | Phase 5+ |
+
+Phase 0, Phase 1, Phase 1b, Phase 2, Phase 3+, and Post-MVP keep their labels and meanings. Earlier tickets, commits, and external documents that use the old labels are read through this map.
+
+A phase label names the phase that implements an item. Pulling an individual item forward, as the Phase 1b rule does, re-tags that item to the implementing phase and never renumbers phases. Build order follows the phase table in §4.7.
+
+Consequences:
+
+- `DESIGN.md` §4 gains a Phase 1b section (§4.2) and a phase map (§4.7); Phase 2 and Phase 3 move to §4.3 and §4.4, and Phase 4 and Phase 5+ receive §4.5 and §4.6.
+- The `model-committee` phase vocabulary adds `Phase 4` and `Phase 5` so that Open Questions can carry the new labels.
+- Phase 2 sync scope, the Device Sync and Compartment contract, and all Phase 1 and Phase 1b decisions are unchanged.
+
+---
