@@ -2483,6 +2483,8 @@ The GPU engine has four first-class pipeline stages, with semantic boundaries sp
 
 3. **Value scoring** — parallel utility, approximate robustness, affect-margin, and schedule-diversity scoring across surviving candidates.
 
+Phase 1b value scoring uses CPU-computed, request-local Task value/priority metadata derived from admitted explicit prioritization records (`UBU-D0277`). Objective labels, deadlines, routine cadence, and revealed-preference evidence may inform review, risk, urgency, or later policy work, but the GPU stage receives only the bounded transient values supplied in the `PlanningRequest`.
+
 4. **Monte Carlo rollout** — joint scenario simulation for finalists using correlation-group Gaussian copula sampling with deterministic rollout seed derivation.
 
 GPU search proposes candidates. Hard constraint certification and final Plan validity are performed by the CPU kernel using exact or conservative validation.

@@ -342,6 +342,10 @@ Consumes:
 - affect-margin outputs;
 - schedule-diversity policy.
 
+Phase 1b `TaskSpec.value` is a CPU-computed float in `[0.1, 1.0]` derived from admitted explicit Task prioritization for the request. Given dense priority buckets ordered best to worst, bucket position `p`, and bucket count `m`, value is `1.0` when `m = 1` and otherwise `1.0 - 0.9 * p / (m - 1)`. Tied Tasks share `p`; unranked eligible Tasks use `0.1`. `TaskSpec.priority` carries the corresponding normalized priority rank for tie-breaking, diagnostics, and explanation.
+
+The canonical persisted input is the admitted ordinal priority declaration. The bounded value and normalized priority are transient request metadata and must not be persisted as utility. Routine instances enter Stage 3 as ordinary TaskSpecs after recurrence instantiation: explicit occurrence priority wins, then routine-template or evergreen-Objective priority. Objective labels, deadlines, missed occurrences, and cadence do not rewrite value/priority unless admitted prioritization changes the underlying rank.
+
 Produces:
 
 - utility score;

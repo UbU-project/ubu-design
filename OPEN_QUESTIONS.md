@@ -2751,7 +2751,7 @@ Resolved by `UBU-D0276`: One-off Dynamic Tasks use a declared `allowed_time_rang
 
 ## UBU-Q0153: Task value and priority for Plan scoring
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0155, Phase 1b planner quality Resolved by: None Last scored: 2026-09-21 Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0155, Phase 1b planner quality Resolved by: UBU-D0277 Last scored: 2026-09-21 Scored from commit: None
 
 Defining context: PLANNING_KERNEL_CONTRACT.md §5, DESIGN.md §16.10, `UBU-D0275`.
 
@@ -2773,13 +2773,13 @@ Phase 1b takes Task value from explicit operator prioritization: Quick UbU's pri
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0277`: Phase 1b uses admitted explicit operator prioritization as the canonical source of Task priority, including the ported Quick UbU review-and-prioritize flow. The CPU kernel converts ordinal priority buckets among the request's eligible schedulable Tasks into transient `TaskSpec.value` and `TaskSpec.priority` values in `[0.1, 1.0]`; ties share values, a single ranked bucket maps to `1.0`, and unranked eligible Tasks use `0.1`. Objective labels, deadlines, routine cadence, and missed occurrences may affect eligibility, risk, urgency diagnostics, review prompts, or later policy work, but they do not automatically become persisted utility. Routine instances inherit explicit occurrence priority when present, then routine-template or evergreen-Objective priority. Stage 3 combines value-weighted utility with robustness, affect-margin, and schedule-diversity only through `scoring_policy`; affect filtering and CPU hard-constraint certification remain gates. Phase 1b records review decisions as evidence but leaves revealed-preference learning and adaptive weights to `UBU-Q0125`.
 
 ---
 
 ## UBU-Q0154: Phase 1b routines as evergreen-Objective recurrence
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0152 Blocks: Phase 1b routine port, Quick UbU routine import Resolved by: None Last scored: 2026-09-21 Scored from commit: None
+Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0152 Blocks: Phase 1b routine port, Quick UbU routine import Resolved by: None Last scored: 2026-09-21 Scored from commit: None
 
 Defining context: DESIGN.md §7.4.1, DESIGN.md §15.2.1.1, `UBU-D0213`, `UBU-D0214`, `UBU-D0216`, `UBU-D0275`. This question takes the Phase 1b slice of `UBU-Q0125` subquestions 1 and 10.
 

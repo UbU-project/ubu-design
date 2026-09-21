@@ -4325,3 +4325,25 @@ Consequences:
 - `OPEN_QUESTIONS.md` marks `UBU-Q0152` solved.
 
 ---
+
+## UBU-D0277: Phase 1b Task value is explicit priority normalized per planning request
+
+**Status:** Accepted → DESIGN.md §16.10; PLANNING_KERNEL_CONTRACT.md §5. Resolves `UBU-Q0153`.
+
+Phase 1b Task value for Plan scoring comes from admitted explicit operator prioritization, including the Quick UbU review-and-prioritize flow once it is ported as admitted records. The canonical persisted input is an ordinal Task priority declaration, not a persisted utility number. Objective labels, deadlines, due dates, routine cadence, and imported source urgency may affect eligibility, risk reporting, explanation, or future policy work, but they do not become canonical Task value in Phase 1b unless the operator admits them as explicit prioritization.
+
+When the CPU kernel builds a `PlanningRequest`, it maps admitted ordinal priority among the request's eligible schedulable Tasks onto bounded transient metadata. `TaskSpec.value` is a float in `[0.1, 1.0]`: the highest priority bucket maps to `1.0`, the lowest ranked bucket maps to `0.1`, ties share a bucket, a single ranked bucket maps to `1.0`, and unranked eligible Tasks use `0.1`. `TaskSpec.priority` carries the corresponding normalized priority rank for tie-breaks, diagnostics, and explanation. These computed numbers are request-local and are never persisted as utility.
+
+Routine instances are scored as ordinary Task instances after recurrence instantiation. They inherit explicit occurrence priority when present; otherwise they inherit the priority declared on the routine template or evergreen Objective that produced them. Missed occurrences, approaching local windows, or due dates may create review prompts, risk findings, or deadline/urgency diagnostics, but they do not automatically rewrite base value in Phase 1b.
+
+In Stage 3, utility is the value-weighted scheduled work signal for a candidate. It combines with approximate robustness, affect-margin, and schedule-diversity only through the request's `scoring_policy` weights. The Stage 2 affect filter and CPU hard-constraint certification remain gates: high value cannot legitimize affect-infeasible or hard-invalid Plans, and low value does not make a Task ineligible unless partial-placement selection later omits it.
+
+Phase 1b records review decisions, overrides, snoozes, rejections, and operator reprioritization as evidence for later learning, but it does not learn trade-off weights or automatically mutate priority from revealed preference. Adaptive weighting and preference learning remain with `UBU-Q0125`.
+
+Consequences:
+
+- `DESIGN.md` §16.10 records that Stage 3 consumes CPU-computed transient value/priority metadata from admitted prioritization records.
+- `PLANNING_KERNEL_CONTRACT.md` §5 fixes the Phase 1b normalization and non-persistence rule for `TaskSpec.value` and `TaskSpec.priority`.
+- `OPEN_QUESTIONS.md` marks `UBU-Q0153` solved.
+
+---
