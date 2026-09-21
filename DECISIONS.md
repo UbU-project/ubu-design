@@ -4405,3 +4405,38 @@ Consequences:
 - `OPEN_QUESTIONS.md` updates `UBU-Q0154`, `UBU-Q0155`, and `UBU-Q0156` for chunked search and records splittable Tasks as `UBU-Q0157`.
 
 ---
+
+## UBU-D0280: The chunk sweep is a bounded beam with state merging and constraint-aware look-ahead
+
+**Status:** Accepted → DESIGN.md §16.3
+
+The chunked search of `UBU-D0279` expands each surviving branch into up to K alternative plans for the next chunk. K defaults to the Phase 1 candidate count of 3 and is tunable. Unbounded, this expansion grows as K raised to the number of chunks, so the sweep keeps a beam: after each chunk depth, only the best B partial plans survive, with B tuned to the execution profile's memory budget.
+
+Branches that reach the same state after a chunk are merged, and the best-scoring one is kept. The state is the set of units still unplaced together with the carried state: UniverseState effects, dependency completion, and the affect summary. Many orderings of one chunk leave the same remainder, so merging turns the sweep into dynamic programming over chunks and removes most redundant branches.
+
+Each chunk's assignment looks ahead cheaply, so that early chunks do not consume units that only fit later or leave deadlines unmet. Units with the fewest remaining eligible chunks, or the nearest deadlines, are assigned first. This most-constrained-first rule is a heuristic ordering of the assignment level, not an additional hard constraint.
+
+The K alternatives for the first chunk stay alive while later chunks are searched. The best of them is presented as soon as it is certified. A later-found continuation may make another first-chunk alternative better by more than a configured replacement margin before the user starts that chunk; the presented plan is then replaced, and the margin keeps it from churning. Once the user starts executing, branches inconsistent with the observed execution are pruned.
+
+Consequences:
+
+- `DESIGN.md` §16.3 records the sweep mechanics.
+
+---
+
+## UBU-D0281: Interactive planning streams certified chunk results; batch planning does not
+
+**Status:** Accepted → DESIGN.md §16.3, §16.10.2
+
+A planning request declares either interactive or batch delivery. Interactive delivery serves a user who wants to act now, for example after an interruption, without waiting for a long horizon to finish. The engine emits the results for each chunk depth as that depth completes, and the CPU certifies each chunk result on arrival; certifying chunks separately is sound because chunks are independent given their boundary state (`UBU-D0279`). The first chunk's plan therefore reaches the user almost immediately while later chunks are still being searched. A streamed chunk plan stays provisional until the user starts it (`UBU-D0280`) and is fixed afterwards. The final response completes the stream.
+
+Batch delivery, such as an overnight run over a long horizon, returns only the final response and does not stream.
+
+Streaming changes how an interactive response is delivered. It therefore amends `UBU-D0279`'s statement that the `PlanningRequest`/`PlanningResponse` contract is unchanged: the request gains a delivery mode, and the response gains a streamed partial-result form for interactive delivery. How that stream is framed across the engine boundary is settled together with the invocation boundary in `UBU-Q0156`.
+
+Consequences:
+
+- `DESIGN.md` §16.3 and §16.10.2 record interactive and batch delivery.
+- `OPEN_QUESTIONS.md` adds a streaming subquestion to `UBU-Q0156` and records chunk-boundary outcome coverage as `UBU-Q0158`.
+
+---
