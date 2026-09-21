@@ -2721,7 +2721,7 @@ Open.
 
 ## UBU-Q0152: Allowed time range on Tasks
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0154, routine planning, retirement of occupies_capacity Resolved by: None Last scored: 2026-09-21 Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: UBU-Q0154, routine planning, retirement of occupies_capacity Resolved by: UBU-D0276 Last scored: 2026-09-21 Scored from commit: None
 
 Defining context: DESIGN.md §9.2, DESIGN.md §16.5, PLANNING_KERNEL_CONTRACT.md §2, `UBU-D0256`, `UBU-D0275`.
 
@@ -2745,7 +2745,7 @@ One-off Tasks carry an absolute `{ earliest_start, latest_finish }` range, which
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0276`: One-off Dynamic Tasks use a declared `allowed_time_range: { earliest_start, latest_finish }` absolute UTC interval. The entire planned occupied interval must fit inside it; violations are hard infeasibility, not scored spillover. Static Tasks continue to use fixed start/end times, and decision envelopes remain derived Plan/mobile-repair outputs rather than Task inputs. Routine instances get their concrete range from recurrence instantiation under `UBU-Q0154`; recurring local time-of-day windows and multiple movable windows are outside the one-off Task shape and must be resolved before kernel dispatch. The orchestrator maps the single range to `TaskSpec.window` by intersecting it with the request `time_window`. Local time-of-day rules are converted during routine instantiation with IANA time zone data; ambiguous or nonexistent local endpoints require recorded disambiguation or review before becoming UTC Task ranges. `occupies_capacity` is retired only after implementation evidence shows Dynamic Tasks and routine instances with ranges are placed, partially omitted, and hard-validated without the old gate.
 
 ---
 

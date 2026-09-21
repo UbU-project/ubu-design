@@ -105,9 +105,11 @@ The existing `scoring_policy` weights (`utility_weight`, `robustness_weight`, `a
 
 ---
 
-## 3. `TaskSpec` duration and correlation fields
+## 3. `TaskSpec` duration, allowed-range, and correlation fields
 
 Each `TaskSpec` used by the planning kernel must include either a fixed duration model or a three-point shifted-log-normal duration model.
+
+Each Dynamic `TaskSpec` also carries a single hard `window: { earliest_start, latest_finish }` with RFC 3339 / ISO 8601 UTC timestamps. The CPU side builds it by intersecting the admitted Task's one-off `allowed_time_range`, or the concrete range on an instantiated routine Task, with `PlanningRequest.time_window`. If the intersection is empty or shorter than the Task's minimum possible duration, the Task is unplaceable for that request rather than soft-scored outside the window. Multiple allowed windows are not represented in Phase 1b `TaskSpec`; any future support requires a contract change or CPU-side occurrence/window selection before dispatch.
 
 ### Fixed duration
 

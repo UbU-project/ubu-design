@@ -4301,3 +4301,27 @@ Consequences:
 - Phase 2 sync scope, the Device Sync and Compartment contract, and all Phase 1 and Phase 1b decisions are unchanged.
 
 ---
+
+## UBU-D0276: Dynamic Task allowed ranges are single hard absolute occupancy intervals
+
+**Status:** Accepted → DESIGN.md §9.2, §16.5; PLANNING_KERNEL_CONTRACT.md §3. Resolves `UBU-Q0152`.
+
+One-off Dynamic Tasks express when they may occupy Calendar time with `allowed_time_range: { earliest_start, latest_finish }`, where both endpoints are absolute UTC instants and `earliest_start < latest_finish`. The entire planned occupied interval for the Task must fit inside this range. Placement outside the range is hard infeasibility, not a soft penalty.
+
+The allowed range is a declared Task input. It is distinct from due dates, deadlines, or target dates, which may affect scoring, risk, explanation, or completion legitimacy but do not by themselves define occupancy eligibility. It is also distinct from the `UBU-D0256` decision envelope, which is derived from a concrete Plan and compact Calendar policy for mobile stewardship and local repair.
+
+Static Tasks and Dynamic allowed ranges are mutually exclusive at the Task scheduling layer. A Static Task uses fixed start and end times and enters the skeleton directly. A Dynamic Task uses `allowed_time_range` plus duration and is placed by the planner. A zero-slack range is not a substitute for a Static Task commitment; if the wall-clock slot itself is committed, the Task is Static.
+
+For kernel dispatch, the CPU converts the single allowed range to the per-Task `TaskSpec.window` by intersecting it with `PlanningRequest.time_window`. If the intersection is empty or shorter than the Task's minimum possible duration, that Task is unplaceable for the request. Phase 1b does not add multiple movable windows to `TaskSpec`; future multi-window support needs a later contract change or CPU-side selection before dispatch.
+
+Local time-of-day constraints are not stored on one-off Tasks. Recurrence templates may describe local windows, but instantiation resolves each occurrence into a concrete UTC `allowed_time_range` using the schedule's IANA time zone and recorded DST disambiguation. Ambiguous or nonexistent local endpoints must be resolved or surfaced for review before the occurrence becomes a kernel input.
+
+`occupies_capacity` is retired as a scheduling semantic once Phase 1b implementation evidence shows that Dynamic Tasks and routine instances with admitted ranges are placed, omitted through partial-placement rules, and hard-validated without the old gate. Until that evidence exists, existing compatibility fields may remain as migration scaffolding, but the canonical rule is that a schedulable Dynamic Task with duration and an allowed range occupies planning capacity.
+
+Consequences:
+
+- `DESIGN.md` §9.2 records `allowed_time_range` as the Phase 1b Dynamic Task input and distinguishes it from Static Task timing.
+- `PLANNING_KERNEL_CONTRACT.md` §3 records the one-window `TaskSpec.window` mapping and hard infeasibility rule.
+- `OPEN_QUESTIONS.md` marks `UBU-Q0152` solved.
+
+---
