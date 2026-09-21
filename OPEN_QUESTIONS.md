@@ -1746,7 +1746,7 @@ Status: Open Priority: MVP important Phase: Phase 3 Decision type: Architecture 
 
 ### Question
 
-Resource is now accepted as a core life-logistics abstraction rather than a merely post-MVP convenience. Resources are physical, digital, legal, financial, informational, location, access-controlled, tool-like, or consumable things whose state affects whether a Task can begin, continue, or complete. A Technique can describe how a Resource is used to accomplish work and how Resource state changes when the work succeeds. What is the Resource and Technique object model, and where is the Phase 3A thin task-readiness boundary relative to Phase 3B/Phase 4+ inventory and financial management?
+Resource is now accepted as a core life-logistics abstraction rather than a merely post-MVP convenience. Resources are physical, digital, legal, financial, informational, location, access-controlled, tool-like, or consumable things whose state affects whether a Task can begin, continue, or complete. A Technique can describe how a Resource is used to accomplish work and how Resource state changes when the work succeeds. What is the Resource and Technique object model, and where is the Phase 3 thin task-readiness boundary relative to Phase 4/Phase 5+ inventory and financial management?
 
 ### Subquestions
 
@@ -1765,7 +1765,7 @@ Resource is now accepted as a core life-logistics abstraction rather than a mere
 
 ### Current direction
 
-`UBU-D0192` changes the roadmap: Resource should be treated as a core life-logistics abstraction and a thin Phase 3 task-readiness candidate, not merely post-MVP. The Phase 3A feature answers whether a Task is realistically ready to start or complete and may create prerequisite preparation/acquisition Tasks. Full inventory control, procurement automation, subscription management, bank syncing, investment tracking, receipt OCR, tax categorization, and Quicken-like financial management remain Phase 3B/Phase 4+ full-version-1.0 features or later. The Resource model should remain compatible with UniverseState preconditions and Technique state-transform semantics.
+`UBU-D0192` changes the roadmap: Resource should be treated as a core life-logistics abstraction and a thin Phase 3 task-readiness candidate, not merely post-MVP. The Phase 3 feature answers whether a Task is realistically ready to start or complete and may create prerequisite preparation/acquisition Tasks. Full inventory control, procurement automation, subscription management, bank syncing, investment tracking, receipt OCR, tax categorization, and Quicken-like financial management remain Phase 4/Phase 5+ full-version-1.0 features or later. The Resource model should remain compatible with UniverseState preconditions and Technique state-transform semantics.
 
 ### Resolution
 
@@ -1888,7 +1888,7 @@ A large UbU-run or UbU-compatible Technique database could let users select, lea
 
 ### Current direction
 
-`UBU-D0194` accepts the Technique database and real-life skill tree as premier future features. The metaphor is valuable only when grounded in real Skills, Resources, evidence, risks, and Objective-serving work. Phase 3B should explore private capability graph usefulness before public marketplace dependence.
+`UBU-D0194` accepts the Technique database and real-life skill tree as premier future features. The metaphor is valuable only when grounded in real Skills, Resources, evidence, risks, and Objective-serving work. Phase 4 should explore private capability graph usefulness before public marketplace dependence.
 
 ### Resolution
 
@@ -1947,7 +1947,7 @@ Skill Barter should become an open, user-sovereign skill economy direction built
 
 ### Current direction
 
-`UBU-D0196` accepts Skill Barter as a future open, user-sovereign skill economy direction, not a Phase 1 marketplace or closed ecosystem. Private Skill and Technique usefulness should come first. Marketplace operation belongs to Phase 4+ unless a narrower prototype can be proven lawful, safe, privacy-preserving, and non-distracting from the personal life-logistics product.
+`UBU-D0196` accepts Skill Barter as a future open, user-sovereign skill economy direction, not a Phase 1 marketplace or closed ecosystem. Private Skill and Technique usefulness should come first. Marketplace operation belongs to Phase 5+ unless a narrower prototype can be proven lawful, safe, privacy-preserving, and non-distracting from the personal life-logistics product.
 
 ### Resolution
 
@@ -1977,7 +1977,7 @@ UbU-D0208 accepts Expert-Guided DIY and Technique Commissioning as a first-class
 
 ### Current direction
 
-`UBU-D0208` establishes the middle tier: expert diagnosis plus custom Technique Package, distinct from generic guides (Tier 1) and full-service labor (Tier 3). The economic primitive is situated expert knowledge packaged as an executable artifact. Technique Request and Technique Package are marketplace objects distinct from "hire someone to do the job." This should be designed as a Phase 3B/4+ feature built on top of the existing Technique, Skill, Resource, Delegation Substrate, and Identity models.
+`UBU-D0208` establishes the middle tier: expert diagnosis plus custom Technique Package, distinct from generic guides (Tier 1) and full-service labor (Tier 3). The economic primitive is situated expert knowledge packaged as an executable artifact. Technique Request and Technique Package are marketplace objects distinct from "hire someone to do the job." This should be designed as a Phase 4/5+ feature built on top of the existing Technique, Skill, Resource, Delegation Substrate, and Identity models.
 
 ### Resolution
 
@@ -2006,7 +2006,7 @@ Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Data model Auto-ch
 
 ### Current direction
 
-`UBU-D0206` establishes the principle. The first implementation should focus on generating prerequisite Tasks when a potentially eligible program is identified, and on modeling conditional Resource availability states. Full program databases, API integrations, and eligibility engines are Phase 3B/4+ concerns. The Phase 3A version should answer: "Is there a lawful permit, benefit, appeal, waiver, public service, or government-supported Resource that can make this plan possible or cheaper?"
+`UBU-D0206` establishes the principle. The first implementation should focus on generating prerequisite Tasks when a potentially eligible program is identified, and on modeling conditional Resource availability states. Full program databases, API integrations, and eligibility engines are Phase 4/5+ concerns. The Phase 3 version should answer: "Is there a lawful permit, benefit, appeal, waiver, public service, or government-supported Resource that can make this plan possible or cheaper?"
 
 ### Resolution
 
@@ -2034,7 +2034,7 @@ Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Architecture Auto-
 
 ### Current direction
 
-`UBU-D0209` establishes task-driven markets as distinct from search-driven markets. The progression is: early (external recommendations), middle (listing/bid support), late (native marketplace). Full marketplace operation with escrow, deposits, and dispute workflows belongs to Phase 4+. The Ethereum settlement layer is a natural fit for the late-stage native marketplace.
+`UBU-D0209` establishes task-driven markets as distinct from search-driven markets. The progression is: early (external recommendations), middle (listing/bid support), late (native marketplace). Full marketplace operation with escrow, deposits, and dispute workflows belongs to Phase 5+. The Ethereum settlement layer is a natural fit for the late-stage native marketplace.
 
 ### Resolution
 
@@ -2059,7 +2059,7 @@ Status: Open Priority: MVP important Phase: Phase 3 Decision type: Architecture 
 5. **Revealed-preference accumulation.** How are weak single-choice signals accumulated into state-conditioned trade-off weights without over-claiming a stable global exchange rate (relates to `UBU-Q0074`)? How is the affect/state conditioning represented?
 6. **Confidence→authority automation.** What confidence metric and threshold, plus what user-granted auto-choice authority scope, jointly gate automatic selection (`UBU-D0217`)? What is the revocation and audit model?
 7. **Affect-conditioned introspection wording.** What is the exact prompt grammar for surfacing an observed choice-under-affect correlation and offering a context remedy, routed through habit-pattern reconciliation, without asserting mechanism, blaming, or nudging toward a scored-better option?
-8. **Generic-cost vs. financial model boundary.** What cost outcomes may be shown pre-finance-model (e.g. "this Technique consumes $3.95") and what claims are forbidden (affordability, account impact, overdraft) until the Phase 3B/4+ financial model exists?
+8. **Generic-cost vs. financial model boundary.** What cost outcomes may be shown pre-finance-model (e.g. "this Technique consumes $3.95") and what claims are forbidden (affordability, account impact, overdraft) until the Phase 4/5+ financial model exists?
 9. **Stochastic evergreen Objectives.** Could a recurrence schedule or Technique outcome legitimately be stochastic rather than deterministic, and if so, how would that interact with the existing rule that evergreen recurrence is evaluated deterministically before Calendar generation? (Parked alongside existing stochastic-recurrence deferral.)
 10. **Default Technique selection and well-formedness.** How is an Objective's default Technique chosen, declared, or learned, and what is the precise well-formedness/consistency report for an Objective with no Technique or a non-instantiable default Technique?
 
