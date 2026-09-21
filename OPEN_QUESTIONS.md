@@ -1957,7 +1957,7 @@ Open.
 
 ## UBU-Q0122: Expert-Guided DIY and Technique Request / Technique Package schema
 
-Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0114, UBU-Q0118, UBU-Q0119 Blocks: Expert-Guided DIY marketplace, Technique commissioning, situated expert knowledge products Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Phase 4 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0114, UBU-Q0118, UBU-Q0119 Blocks: Expert-Guided DIY marketplace, Technique commissioning, situated expert knowledge products Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -2016,7 +2016,7 @@ Open.
 
 ## UBU-Q0124: Task-driven Resource Exchange staging and marketplace model
 
-Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0114, UBU-Q0065 Blocks: Resource Exchange marketplace, local resource rental, peer-to-peer Resource sharing, Ethereum settlement Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Phase 4 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0114, UBU-Q0065 Blocks: Resource Exchange marketplace, local resource rental, peer-to-peer Resource sharing, Ethereum settlement Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
