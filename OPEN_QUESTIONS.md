@@ -2840,7 +2840,7 @@ Open.
 
 ## UBU-Q0156: Phase 1b GPU engine invocation boundary
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 1b GPU engine Resolved by: None Last scored: 2026-09-21 Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 1b GPU engine Resolved by: UBU-D0283 Last scored: 2026-09-21 Scored from commit: None
 
 Defining context: DESIGN.md §16.10, DESIGN.md §16.3, PLANNING_KERNEL_CONTRACT.md §5, `UBU-D0275`, `UBU-D0279`, `UBU-D0281`.
 
@@ -2865,13 +2865,13 @@ The `PlanningRequest`/`PlanningResponse` boundary, CPU certification of every se
 
 ### Resolution
 
-Open.
+Resolved. See UBU-D0283.
 
 ---
 
 ## UBU-Q0157: Splittable Tasks and resume overhead
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: save-and-continue planning, interruption-aware rollouts Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: save-and-continue planning, interruption-aware rollouts Resolved by: None Last scored: 2026-09-21 Scored from commit: None
 
 Defining context: DESIGN.md §9.4, DESIGN.md §16.3, PLANNING_KERNEL_CONTRACT.md §3, `UBU-D0276`, `UBU-D0277`, `UBU-D0278`, `UBU-D0279`.
 
@@ -2911,7 +2911,7 @@ Open.
 
 ## UBU-Q0158: Outcome branching at chunk boundaries and compact Calendar coverage
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: compact Calendar coverage, mobile stewardship packaging Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: compact Calendar coverage, mobile stewardship packaging Resolved by: None Last scored: 2026-09-21 Scored from commit: None
 
 Defining context: DESIGN.md §16.2, DESIGN.md §16.3, DESIGN.md §16.5, PLANNING_KERNEL_CONTRACT.md §2, `UBU-D0279`, `UBU-D0280`, `UBU-D0281`.
 

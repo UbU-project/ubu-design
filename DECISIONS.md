@@ -4466,3 +4466,29 @@ Consequences:
 - `DESIGN.md` §16.10.4 and `PLANNING_KERNEL_CONTRACT.md` §5 name pairwise Task Preferences as the source of value and state that `TaskSpec.priority` is sent as `1.0`.
 
 ---
+
+## UBU-D0283: Phase 1b GPU engine is a persistent local Python worker over framed PlanningKernel messages
+
+**Status:** Accepted → DESIGN.md §16.10, PLANNING_KERNEL_CONTRACT.md §1, §2, §4, §5. Resolves `UBU-Q0156`.
+
+Phase 1b invokes the desktop GPU engine through a persistent local Python worker process, not through an in-process Rust-to-Python call and not through a network service. The CPU kernel starts and owns the worker as a child process for the duration of a planning session or bounded worker lifetime. The worker communicates over length-prefixed JSON frames on local pipes. Startup cost is amortized by worker reuse; crash isolation is explicit because a Python, CUDA, or PyTorch fault can terminate the child without corrupting the CPU kernel; and the interpreter lock remains inside the worker instead of entering the Rust desktop process. The worker has no listening socket and receives only the already-minimized planning payload, so it is an invocation boundary, not a new trust or sync boundary.
+
+The semantic contract remains a pure planning function over `PlanningRequest` and `PlanningResponse`. `ubu_core::worker::GpuAdvisoryRequest` and `GpuAdvisoryResponse` may exist only as implementation envelopes for spawning, framing, cancellation, error reporting, and telemetry; they must carry exactly one `PlanningRequest`, `PlanningResponse`, or stream frame and must not become a second planning schema. Time values crossing the semantic boundary use the contract's RFC 3339 UTC timestamps. Rust may store Unix-second coordinates internally, and the Python/PyTorch implementation may lower timestamps to integer offsets or seconds inside tensors, but that lowering is implementation-local and is replayable from the request.
+
+PyTorch is confirmed for the Phase 1b GPU backend. The CPU reference path remains the built-in authoritative certification path and the no-GPU fallback. Backend selection is CPU-owned: use the GPU worker only when policy allows it, a compatible local Python/PyTorch/CUDA environment is available, and the compute budget justifies it; otherwise use the CPU reference path. Every returned response and committed Plan records backend provenance, including backend kind, invocation kind, engine version, framework, device summary when available, request id, RNG seed, and CPU certification status.
+
+The RNG seed is required for replay and peer debugging, but GPU execution is not required to be bitwise deterministic across hardware, drivers, PyTorch versions, or reduction orders. Exact reproducibility is required for request construction, CPU reference certification, structural validity results, hard-constraint feasibility, masks, dependency ordering, and selected Plan certification. Floating-point scores, rollout frequencies, and probability intervals may match within a named tolerance profile. When GPU and CPU advisory scores disagree beyond tolerance, CPU certification and CPU reference goldens are the final authority.
+
+Parity tests compare the GPU worker against the CPU reference path at each stage. Schema decoding, chunk partitioning, task-slot masks, dependency feasibility, hard-constraint feasibility, rejection classes, and CPU-certified selected Plan validity must match exactly. Floating-point stage scores, rollout probability estimates, probability intervals, and schedule-diversity scores are compared by documented absolute/relative tolerances or statistical acceptance tests tied to the rollout count and seed. Goldens include CPU-only fixtures so contributors and CI systems without a GPU can run the certification suite.
+
+Chunked search stays inside one planning invocation for a whole request. The worker may batch chunks internally to fit memory, but the CPU does not dispatch each chunk as a separate semantic request. Keeping chunks inside one invocation preserves shared latent rollout draws, boundary-state propagation, and coherent streaming. The per-call memory budget is therefore the maximum active frontier and chunk batch chosen by the engine under `compute_budget`, not the sum of all chunks materialized at once.
+
+Interactive delivery uses the same worker framing. A stream consists of zero or more `PlanningStreamFrame` objects with `frame_type = chunk_result`, each carrying one CPU-certifiable chunk-depth partial response, followed by exactly one `frame_type = final_response` carrying the final `PlanningResponse`. Batch delivery emits only the final response. Error and cancellation frames are transport outcomes; they do not certify a Plan.
+
+Consequences:
+
+- `DESIGN.md` §16.10 replaces the in-process typed-call requirement with a persistent local Python worker boundary and records fallback, provenance, reproducibility, chunking, and streaming consequences.
+- `PLANNING_KERNEL_CONTRACT.md` records delivery mode, engine provenance, worker frame semantics, and parity expectations.
+- `OPEN_QUESTIONS.md` marks `UBU-Q0156` solved.
+
+---

@@ -24,6 +24,10 @@ All request and response objects must carry explicit versions so that planner ar
 
 `effective_time` is the time from which the Plan should be evaluated. It may differ from `generated_at` when replaying a prior request, repairing a Plan from a recorded Log point, or testing fixtures. The planning engine treats `effective_time` as authoritative.
 
+Phase 1b invokes the PyTorch GPU implementation through a persistent local Python worker process owned by the CPU kernel (`UBU-D0283`). Worker transport uses length-prefixed JSON frames over local pipes. The frame envelope is allowed to carry process-management fields such as frame type, cancellation, error details, and telemetry, but planning semantics are only the typed contract objects in this file. The worker has no listening socket and is not a service boundary.
+
+Timestamps crossing this contract use RFC 3339 / ISO 8601 UTC strings. Implementations may lower them to Unix seconds, planning ticks, or tensor offsets after decoding, but those lowered coordinates are not the cross-language semantic representation.
+
 ---
 
 ## 2. `PlanningRequest`
@@ -38,6 +42,7 @@ All request and response objects must carry explicit versions so that planner ar
 - `effective_time`
 - `generated_at`
 - `mode`: enum, one of `fresh_generation`, `repair`.
+- `delivery_mode`: enum, one of `interactive`, `batch`. Interactive delivery permits chunk-result stream frames; batch delivery returns only the final response.
 - `rng_seed`: integer seed. Required for reproducibility and peer debugging.
 - `time_window`:
   - `start_time`: RFC 3339 / ISO 8601 UTC timestamp.
@@ -95,7 +100,7 @@ All request and response objects must carry explicit versions so that planner ar
 
 The Phase 1 contract deliberately defers mobile GPU targets, cloud GPU provider metadata, encrypted-compute metadata, cross-user coordination payloads, realtime stream state, and premium wide-horizon planning-provider negotiation. These may be added later without changing the Phase 1 CPU/GPU authority boundary.
 
-Solver/library identity is not part of `PlanningRequest`. Optional OR-Tools, SMT/MaxSMT, local-search, mobile GPU, cloud GPU, or learned-model backends must preserve this request/response contract and remain advisory until CPU certification.
+Solver/library identity is not part of `PlanningRequest`. Optional OR-Tools, SMT/MaxSMT, local-search, mobile GPU, cloud GPU, or learned-model backends must preserve this request/response contract and remain advisory until CPU certification. Backend choice is recorded on `PlanningResponse.engine_provenance`, not requested as a semantic planner input.
 
 ### Phase 3 note: Objective expansion is pre-kernel; `scoring_policy` carries trade-off weights
 
@@ -193,6 +198,15 @@ Phase 1 rules:
 - `rng_seed_echo`
 - `generated_at`
 - `status`: enum, one of `ok`, `partial`, `rejected`, `engine_error`.
+- `engine_provenance`:
+  - `backend_kind`: enum, one of `cpu_reference`, `gpu_worker`.
+  - `invocation_kind`: enum, one of `in_process_cpu`, `persistent_python_worker`.
+  - `engine_version`: implementation version string.
+  - `framework`: optional string, required as `pytorch` for the Phase 1b GPU worker.
+  - `framework_version`: optional string.
+  - `device_summary`: optional compact local hardware/runtime summary, for example GPU model or `cpu`.
+  - `tolerance_profile`: optional name of the numeric tolerance profile used for parity checks.
+  - `cpu_certification_status`: enum, one of `not_yet_certified`, `certified`, `rejected_by_cpu`.
 - `plan_candidates`: ranked list of `PlanCandidate` objects.
 - `diagnostics`:
   - `candidate_counts_by_stage`
@@ -268,13 +282,32 @@ Each `PlanCandidate` must carry:
 - `explanation_fragments`: optional list of user-facing explanation fragments.
 - `validation_hints`: optional CPU-consumable hints. These must not be treated as certification.
 
-The CPU kernel must validate any returned candidate before canonical Plan commit.
+The CPU kernel must validate any returned candidate before canonical Plan commit. The committed Plan records the response's `engine_provenance` together with the CPU certification result.
+
+### `PlanningStreamFrame`
+
+Interactive delivery is a sequence of worker frames for a single `PlanningRequest`: zero or more chunk results followed by exactly one final response. Batch delivery emits only the final response.
+
+Common frame fields:
+
+- `schema_version`
+- `request_id`
+- `frame_index`: zero-based monotonically increasing integer within the request.
+- `frame_type`: enum, one of `chunk_result`, `final_response`, `engine_error`, `cancelled`.
+
+A `chunk_result` frame carries:
+
+- `chunk_depth`: positive integer sweep depth completed.
+- `chunk_id` or deterministic chunk range identifier.
+- `partial_response`: a CPU-certifiable partial `PlanningResponse` form containing only candidates and diagnostics whose placements end at or before the completed chunk depth.
+
+A `final_response` frame carries exactly one complete `PlanningResponse`. `engine_error` and `cancelled` frames are transport outcomes and do not certify a Plan. The CPU may surface a streamed chunk only after CPU certification of that frame's partial response.
 
 ---
 
 ## 5. GPU pipeline stage boundaries
 
-The following stage-boundary contracts are design artifacts. Exact tensor dtypes, device placement, batching mechanics, and PyTorch implementation classes belong in `model-committee`, but their semantic inputs and outputs are fixed here.
+The following stage-boundary contracts are design artifacts. Exact tensor dtypes, device placement, batching mechanics, and PyTorch implementation classes belong in `model-committee`, but their semantic inputs and outputs are fixed here. Chunked search is executed inside one planning invocation for the whole request; the worker may batch chunks internally to fit memory, but separate chunks are not separate semantic requests.
 
 ### Phase 1 recommended tensor profile
 
@@ -373,7 +406,11 @@ Produces:
 - probability summaries and intervals when estimable, including `probability_interval_low` and `probability_interval_high` where supported;
 - rollout diagnostics and degradation warnings.
 
-Stage 4 uses deterministic rollout seed derivation from the request seed. Phase 1 may use `rng_seed + 3` as the stage-4 rollout seed stream convention until named substreams are introduced.
+Stage 4 uses deterministic rollout seed derivation from the request seed. Phase 1 may use `rng_seed + 3` as the stage-4 rollout seed stream convention until named substreams are introduced. GPU floating-point rollout summaries are reproducible within the recorded tolerance profile, not bitwise across hardware, drivers, PyTorch versions, or reduction orders.
+
+### CPU/GPU parity expectations
+
+Parity tests compare the GPU worker with the CPU reference path and CPU-only goldens. Schema decoding, chunk partitioning, task-slot `validity_mask`, dependency feasibility, hard-constraint feasibility, rejection classes, and CPU-certified selected Plan validity must match exactly. Floating-point scores, rollout frequencies, probability intervals, and schedule-diversity scores match by documented absolute/relative tolerances or statistical acceptance tests tied to rollout count and seed. CPU certification is the final authority for any selected Plan.
 
 ---
 
