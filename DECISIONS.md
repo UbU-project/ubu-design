@@ -4613,3 +4613,33 @@ Consequences:
 - `OPEN_QUESTIONS.md` marks `UBU-Q0159` solved and records the mandatory rule in `UBU-Q0155`.
 
 ---
+
+## UBU-D0289: Phase 1b partial placement keeps valid Plans when optional Dynamic work does not fit
+
+**Status:** Accepted → DESIGN.md §15.2.2, §16.3; PLANNING_KERNEL_CONTRACT.md §1, §4. Resolves `UBU-Q0155`. Refines `UBU-D0275`, `UBU-D0277`, `UBU-D0279`, `UBU-D0284`, and `UBU-D0288`.
+
+Phase 1b planning treats optional Dynamic backlog placement as best-effort once the Static, mandatory, dependency, and legitimacy baseline can be built. A single optional Dynamic Task with too little window or too little capacity no longer rejects the whole Plan. It becomes an unplaced Task diagnostic, and the response may still return Plan candidates with `status = partial`.
+
+The blocking/local boundary is:
+
+- Blocking: Static collisions, dependency cycles, impossible dependencies, hard precondition contradictions, missing required starting state, required Resource or External Event failures, deadline infeasibility for required work, and any inability to place mandatory routine occurrences or required support Tasks. These stop ordinary planning when they prevent a valid baseline or required recommendation path.
+- Local: optional Dynamic Tasks, optional splittable remainders, and dependents whose only problem is that their prerequisite optional Task was unplaced. These are reported in `PlanningResponse.diagnostics.unplaced_tasks`.
+
+Before reporting an optional Task as unplaced solely because of horizon or window pressure, the CPU kernel may attempt one policy-bounded horizon extension when `extend_planning_horizon` is a safe alternative and the extension stays inside the request's privacy, payload, compute, and user-visible bounds. If extension is skipped or exhausted, the diagnostic records that fact. The planner must not silently expand beyond policy, hide the changed horizon, or use horizon extension to avoid reporting risk.
+
+Selection is deterministic. Static placements, mandatory routine occurrences, required support Tasks, and prerequisites of placed work are protected first. Optional Dynamic placement units are omitted in order of lowest `TaskSpec.value`, then latest deadline or `latest_finish`, then Task id. Missing deadlines sort after concrete deadlines. Dependents of an unplaced Task are not scheduled independently; they are deferred with reason `deferred_dependency` and name the unplaced prerequisite.
+
+Chunked search distinguishes why a Task is unplaced. `insufficient_total_capacity` means the eligible horizon lacks enough free time in aggregate. `no_eligible_chunk_large_enough` means aggregate time may exist, but no allowed chunk can hold the atomic unit. `outside_allowed_window`, `unsupported_split_policy`, `omitted_lower_value`, and `horizon_extension_limit` preserve the other common explanations. For splittable Tasks, partial placement may place valid pieces inside the horizon and carry the remainder forward as an unplaced diagnostic; scheduled-work value is proportional to placed work, while completion, effects, and outgoing dependencies still require the final piece.
+
+Unplaced diagnostics are user-visible planning facts. They feed risk reports, Plan explanation, and next-action context. Focus mode must not recommend an unplaced Task as executable; it may recommend an explicit triage action such as decompose the Task, reprioritize, extend the horizon, relax a window, skip or move a commitment, or remove/moot stale work.
+
+The contract change is additive and shares the Phase 1b minor contract version with the split-policy change from `UBU-D0284`: `PlanningResponse.diagnostics` gains `unplaced_tasks`, and `status = partial` is the normal successful response when at least one candidate exists but optional Dynamic work remains unplaced.
+
+Consequences:
+
+- `DESIGN.md` §15.2.2 records the blocking/local boundary for insufficient optional Dynamic capacity.
+- `DESIGN.md` §16.3 records deterministic omission order, horizon-extension behavior, chunk-specific reasons, splittable carry-forward semantics, and next-action surfacing.
+- `PLANNING_KERNEL_CONTRACT.md` §1 records the shared minor version, and §4 defines `diagnostics.unplaced_tasks` and `UnplacedTaskDiagnostic`.
+- `OPEN_QUESTIONS.md` marks `UBU-Q0155` solved.
+
+---

@@ -2810,7 +2810,7 @@ Resolved by `UBU-D0286`: each Quick UbU routine template imports as one evergree
 
 ## UBU-Q0155: Partial placement when the horizon cannot hold every Dynamic Task
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0153 Blocks: bounded-horizon planning with a real backlog Resolved by: None Last scored: 2026-09-21 Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: UBU-Q0153 Blocks: bounded-horizon planning with a real backlog Resolved by: UBU-D0289 Last scored: 2026-09-22 Scored from commit: None
 
 Defining context: DESIGN.md §15.2.2, DESIGN.md §16.3, PLANNING_KERNEL_CONTRACT.md §4, `UBU-D0275`, `UBU-D0277`, `UBU-D0279`.
 
@@ -2834,7 +2834,7 @@ A Dynamic Task that cannot fit becomes a per-Task unplaced diagnostic, and the r
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0289`: Phase 1b uses partial placement for optional Dynamic Tasks. A valid baseline Plan is allowed to proceed when optional Dynamic backlog items cannot fit; each omitted or partially carried-forward Task is returned in `PlanningResponse.diagnostics.unplaced_tasks`, and the response status is `partial` when candidates exist but that list is non-empty. Blocking failures remain blocking when they prevent the baseline or a required recommendation path: Static collisions, dependency cycles, hard precondition contradictions, missing required starting state/resource/external event, deadline infeasibility for required work, and mandatory routine or support Tasks that cannot be placed. The CPU may attempt one policy-bounded horizon extension before reporting optional Tasks as unplaced; skipped or exhausted extension is recorded on the diagnostic. Capacity omission is deterministic: protect Static placements, mandatory routine occurrences, baseline/support work, and prerequisites of placed work, then omit optional units by lowest `TaskSpec.value`, latest deadline or `latest_finish`, and task id. Dependents of an unplaced Task are deferred with reason `deferred_dependency`. Chunked search distinguishes insufficient total free capacity from no eligible chunk large enough for an atomic unit. Splittable Tasks may receive some pieces inside the horizon and carry the remainder forward as an unplaced diagnostic; completion, effects, and outgoing dependencies still wait for the final piece. Unplaced Tasks appear in risk reports, Plan explanation, and next-action context, but the next-action recommendation never selects an unplaced Task except as an explicit triage action such as decompose, reprioritize, extend the horizon, or change commitments. The additive response field shares the Phase 1b minor contract version with the split-policy change.
 
 ---
 
