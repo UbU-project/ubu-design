@@ -4590,3 +4590,26 @@ Consequences:
 - `DESIGN.md` §8 records that Settings are not Preferences.
 
 ---
+
+## UBU-D0288: Phase 1b routine occurrences are mandatory and carry no priority
+
+**Status:** Accepted → DESIGN.md §7.4.1; PLANNING_KERNEL_CONTRACT.md §5. Resolves `UBU-Q0159`. Amends `UBU-D0277`.
+
+A routine is a chore the user has committed to doing whenever it recurs. Every occurrence Task instantiated from a routine (`UBU-D0286`), whether Static or planned, is therefore mandatory. Routines carry no priority: no Preference, tag, or template field expresses a routine's value, and Objective Preferences are not lowered onto occurrences. This replaces `UBU-D0277`'s rule that an occurrence inherits priority from itself, its routine template, or its evergreen Objective. Category tags remain projection metadata and do not affect planning.
+
+Mandatory is a constraint, not a value:
+
+- Occurrence Tasks are not eligible for Preference layering (`UBU-D0282`). A Preference that names an occurrence Task is not counted.
+- The CPU sends `TaskSpec.value = 0.0` for an occurrence. Its position within its allowed range therefore earns no utility, and the best slots are left to valued work.
+- Search must place every mandatory occurrence. Partial placement (`UBU-Q0155`) never selects a mandatory occurrence for omission, whatever its value.
+- The CPU reference path places mandatory occurrences before every priority bucket, earliest `latest_finish` first, so that optional work cannot take the slots they need. Because that path places Tasks first-fit, a mandatory occurrence with a wide range may take an early slot that valued work wanted. Chunked search (`UBU-D0279`) removes this limitation by treating mandatory occurrences as assignment constraints rather than as first-placed units.
+
+When a day cannot hold every mandatory occurrence, UbU does not choose which routine gives way. It reports the occurrences it cannot place and asks the user to triage: skip an occurrence, move it through an occurrence override, or change other commitments. A skipped occurrence is an ordinary skipped occurrence Log (`UBU-D0286`): a non-completion that breaks the streak unless the user excuses it. An occurrence whose allowed range has passed without execution is missed, not triaged.
+
+Consequences:
+
+- `DESIGN.md` §7.4.1 records that routine occurrences are mandatory, carry no priority, and are triaged by the user when they do not fit.
+- `PLANNING_KERNEL_CONTRACT.md` §5 replaces the routine-priority sentence and records the `0.0` value for occurrences.
+- `OPEN_QUESTIONS.md` marks `UBU-Q0159` solved and records the mandatory rule in `UBU-Q0155`.
+
+---
