@@ -4575,3 +4575,18 @@ Consequences:
 - `OPEN_QUESTIONS.md` marks `UBU-Q0154` solved.
 
 ---
+
+## UBU-D0287: Named operator settings are `Setting` records, not Preferences
+
+**Status:** Accepted → DESIGN.md §6, §8.
+
+Before Phase 1b implementation, the code stored named configuration values as Preference records: onboarding answers such as `work_style` and `planning_horizon_days`, and AffectProfile parameters such as `acceptable_energy_floor` and `affect_freshness_seconds`. Each record holds a name, a value, and an authority source. It relates no two subjects and never enters value derivation. DESIGN.md §8.1, `UBU-D0282`, and Quick UbU all use Preference for the pairwise relation.
+
+Named configuration values are therefore `Setting` records, `{ id, name, value, authority_source }`, with the ID prefix `setting_`. A Setting configures planning inputs, such as the bootstrap AffectProfile, but it is not a Preference: it is never compared pairwise, never layered into priority buckets, and never read as a statement of value. `Preference` and the prefix `pref_` belong only to the pairwise relation of §8.1.
+
+Consequences:
+
+- `DESIGN.md` §6 lists Setting among the core entities.
+- `DESIGN.md` §8 records that Settings are not Preferences.
+
+---
