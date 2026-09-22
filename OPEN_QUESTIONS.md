@@ -2822,7 +2822,7 @@ How should planning behave when not every Dynamic Task fits the planning horizon
 
 1. **Local or blocking.** Which failures stay local to one Task, such as a Dynamic Task with insufficient window, and which block the Plan, such as Static collisions, dependency cycles, and precondition contradictions? §15.2.2 allows a skeleton failure outside the recommendation path to remain a warning.
 2. **Deferral.** How is an unplaced Task reported, and what reason does it carry? Are its dependents deferred with it?
-3. **Selection.** When capacity is short, which Tasks are left out: lowest value (`UBU-D0277`), latest deadline, or a fixed order? What is the deterministic tie-break?
+3. **Selection.** When capacity is short, which Tasks are left out: lowest value (`UBU-D0277`), latest deadline, or a fixed order? What is the deterministic tie-break? Mandatory routine occurrences are never left out; when they alone do not fit, the user triages.
 4. **Contract.** Does `PlanningResponse` gain an additive list of unplaced Tasks, and does that require a contract version change? Should that change share one minor version with the split-policy change of `UBU-Q0157`?
 5. **Horizon extension.** Should the orchestrator first retry with an extended horizon, the §15.2.2 safe alternative, before deferring Tasks?
 6. **Surfacing.** How do unplaced Tasks appear in risk reports and next-action?
@@ -2830,7 +2830,7 @@ How should planning behave when not every Dynamic Task fits the planning horizon
 
 ### Current direction
 
-A Dynamic Task that cannot fit becomes a per-Task unplaced diagnostic, and the rest of the Plan proceeds. Static collisions and structural failures remain plan-blocking. Tasks are left out in order of lowest value, then latest deadline, then id. `PlanningResponse` gains an additive unplaced-Task list under a minor contract version. Under chunked search, a unit is unplaced when no chunk can accept it, and the unplaced reason distinguishes a lack of total time from the lack of a large enough chunk.
+A Dynamic Task that cannot fit becomes a per-Task unplaced diagnostic, and the rest of the Plan proceeds. Static collisions and structural failures remain plan-blocking. Tasks are left out in order of lowest value, then latest deadline, then id; mandatory routine occurrences are never left out. `PlanningResponse` gains an additive unplaced-Task list under a minor contract version. Under chunked search, a unit is unplaced when no chunk can accept it, and the unplaced reason distinguishes a lack of total time from the lack of a large enough chunk.
 
 ### Resolution
 
@@ -2941,7 +2941,7 @@ Resolved by `UBU-D0285`: compact Calendar coverage under chunked search is proba
 
 ## UBU-Q0159: Routine occurrence priority under pairwise Task Preferences
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: prioritized planned routine occurrences Resolved by: None Last scored: Never Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: prioritized planned routine occurrences Resolved by: UBU-D0288 Last scored: Never Scored from commit: None
 
 Defining context: DESIGN.md §7.4.1, DESIGN.md §8.1, PLANNING_KERNEL_CONTRACT.md §5, `UBU-D0277`, `UBU-D0282`, `UBU-D0286`.
 
@@ -2966,4 +2966,4 @@ Enabled Preferences between two routine evergreen Objectives lower at request ti
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0288`: routine occurrences are mandatory and carry no priority. They are not layered, are sent with `TaskSpec.value = 0.0`, must be placed, and are never omitted by partial placement; when a day cannot hold them all, the user triages.
