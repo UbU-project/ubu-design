@@ -4440,3 +4440,29 @@ Consequences:
 - `OPEN_QUESTIONS.md` adds a streaming subquestion to `UBU-Q0156` and records chunk-boundary outcome coverage as `UBU-Q0158`.
 
 ---
+
+## UBU-D0282: Phase 1b Task prioritization is stored as pairwise Preferences
+
+**Status:** Accepted → DESIGN.md §8.1, §16.10.4; PLANNING_KERNEL_CONTRACT.md §5. Amends `UBU-D0277`.
+
+`UBU-D0277` names an ordinal Task priority declaration as the canonical input for Phase 1b Task value. `UBU-D0009` already fixes how ordinal input is stored: an ordinal ranking compiles immediately into pairwise Preference objects, the original ordering may be kept in the Log, and the canonical value model stays pairwise. Phase 1b follows `UBU-D0009`.
+
+Phase 1b therefore extends the Preference relation of §8.1 so that its two subjects may be Tasks as well as Objectives. A Preference always relates two subjects of the same kind. Explicit prioritization, including the ported Quick UbU review-and-prioritize flow, is admitted as pairwise Task Preferences with the §8.1 orders `a_preferred_to_b` and `a_indifferent_to_b`.
+
+When the CPU builds a request, it derives the dense priority buckets of `UBU-D0277` from the enabled Preferences among the eligible schedulable Tasks:
+
+- A Task is ranked if at least one enabled Preference relates it to another eligible Task. Unranked eligible Tasks use value `0.1`.
+- Indifferent Tasks are merged into one node.
+- A preference cycle among eligible Tasks is a logistical consistency error (§8.4). For the current request, the members of the cycle are also merged into one node, and UbU raises the high-priority resolution query.
+- The buckets are the longest-path layers of the resulting acyclic order, best first.
+
+The value formula of `UBU-D0277` applies unchanged to these buckets.
+
+The kernel's Stage 3 utility multiplies each Task's `value` by its `priority`. So that the rank is not counted twice, the CPU sends `TaskSpec.priority` as `1.0` in Phase 1b and keeps the normalized rank in the orchestrator's explanation and diagnostic records. This amends `UBU-D0277`'s statement that `TaskSpec.priority` carries the normalized rank. The kernel's accepted ranges for `value` and `priority` are unchanged.
+
+Consequences:
+
+- `DESIGN.md` §8.1 records that a Phase 1b Preference may relate two Tasks.
+- `DESIGN.md` §16.10.4 and `PLANNING_KERNEL_CONTRACT.md` §5 name pairwise Task Preferences as the source of value and state that `TaskSpec.priority` is sent as `1.0`.
+
+---
