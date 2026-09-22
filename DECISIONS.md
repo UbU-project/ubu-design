@@ -4520,3 +4520,32 @@ Consequences:
 - `OPEN_QUESTIONS.md` marks `UBU-Q0157` solved.
 
 ---
+
+## UBU-D0285: Compact Calendar coverage is ranked chunk-boundary outcome continuations
+
+**Status:** Accepted -> DESIGN.md §16.2, §16.3, §16.5; PLANNING_KERNEL_CONTRACT.md §2, §4. Resolves `UBU-Q0158`.
+
+Under chunked search, compact Calendar branch coverage is probability mass over stochastic outcome states that have certified precomputed continuations, not over the K decision alternatives generated for a chunk. Decision alternatives answer which plan the user may choose; outcome continuations answer what plan remains legitimate after modeled duration, success/failure, external-event, interruption, and splittable-progress uncertainty is observed at a chunk boundary.
+
+An outcome state is the equivalence class at a fixed-placement chunk boundary over completed units, failed or omitted units when those affect reconstruction, progress and remaining work for splittable Tasks, carried UniverseState effects, dependency completion, affect summary, modeled external-event or interruption state, and the next chunk cursor. The wall clock is realigned by the fixed placement, so small timing differences before the boundary are not separate states unless they change feasibility, local repair eligibility, explanation, coverage accounting, or the next recommended Task. Near-identical rollout endings may be merged only by a deterministic digest or quantization rule recorded in diagnostics; uncertain merges are conservative and count toward uncovered or degraded mass.
+
+Outcome probabilities are estimated from the shared-latent Monte Carlo rollouts of `UBU-D0279`. For each finalist or streamed partial response, the planner counts rollout frequencies for boundary outcome states, records the rollout count and seed provenance, and reports a binomial or multinomial confidence interval for covered mass. Probability quality is `full` only when modeled stochastic inputs and sample counts support the estimate; stale assumptions, weak sample counts, independence shortcuts, or unmodeled interruptions degrade `probability_quality` and may lower the confidence bound used for warnings.
+
+Coverage accounting sums, within `coverage_scope`, the estimated probability mass of outcome states whose continuation through the relevant chunk depth has been precomputed and CPU-certified. For the usual `reactive_horizon` scope, the sweep takes boundary states in descending probability and precomputes next-chunk continuations until `branch_coverage_target` is met inside `reactive_horizon_seconds`, or until compute budget is exhausted. `coverage_estimate` is that covered mass, `uncovered_mass_estimate` is the remaining modeled mass for the same scope, and `coverage_below_threshold` is true when the target is not met. The estimate does not receive credit for a decision branch unless that branch is attached to one of the covered outcome states.
+
+Decision branching and outcome branching share one `compute_budget`. The current chunk, hard-constraint certification, and the requested K decision alternatives are protected first so the user can act. Remaining budget is assigned to outcome continuations by descending probability and then by deadline fragility or recovery criticality. If the budget cannot provide both useful decision diversity and target coverage, the response keeps the best certified current recommendation, reports budget-limited coverage diagnostics, and lets policy choose replanning, remote assist, or a stale-but-explainable compact Calendar.
+
+The compact Calendar stores the current chunk's plan, decision envelopes, repair recipes, and compact references to certified continuations for probable boundary outcomes through the reactive horizon. Mobile stewardship metadata carries only the refs, digests, probabilities, stale-after values, and explanation fragments needed to select or explain the next chunk after observing a boundary outcome; it does not carry an unbounded outcome tree. Packaging may continue beyond the reactive horizon only as an execution-profile optimization, and that extra mass is not counted toward the default short-horizon threshold unless the coverage scope says so.
+
+Interactive streaming may deliver the first certified chunk before full continuation coverage is finished. Outcome continuations are computed by the same invocation and may appear in later `chunk_result` frames as their boundary states and continuations become CPU-certified; the final response carries the authoritative coverage fields. A streamed continuation remains provisional until the user starts executing the corresponding chunk, using the same replacement-margin discipline as decision alternatives.
+
+Deviations inside a chunk are handled by decision envelopes and repair recipes, not by precomputed intra-chunk outcome branches. If an observed deviation cannot be repaired locally, changes a protected commitment, invalidates a hard constraint or affect assumption, or drops coverage below the effective threshold for the current or next recommendation, UbU triggers repair or regeneration instead of selecting an unseen intra-chunk branch.
+
+Consequences:
+
+- `DESIGN.md` §16.2 and §16.3 distinguish decision alternatives from outcome continuation coverage and define coverage accounting for chunked search.
+- `DESIGN.md` §16.5 records compact mobile continuation refs as part of the MVP stewardship package without admitting unbounded rich branch packaging.
+- `PLANNING_KERNEL_CONTRACT.md` §2 and §4 clarify that `branch_coverage_target` applies to certified outcome continuations and that response diagnostics may carry confidence and continuation summaries.
+- `OPEN_QUESTIONS.md` marks `UBU-Q0158` solved.
+
+---

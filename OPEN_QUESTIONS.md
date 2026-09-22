@@ -2911,7 +2911,7 @@ Resolved by `UBU-D0284`: every schedulable Task has a split policy, defaulting t
 
 ## UBU-Q0158: Outcome branching at chunk boundaries and compact Calendar coverage
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: compact Calendar coverage, mobile stewardship packaging Resolved by: None Last scored: 2026-09-21 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: compact Calendar coverage, mobile stewardship packaging Resolved by: UBU-D0285 Last scored: 2026-09-21 Scored from commit: None
 
 Defining context: DESIGN.md §16.2, DESIGN.md §16.3, DESIGN.md §16.5, PLANNING_KERNEL_CONTRACT.md §2, `UBU-D0279`, `UBU-D0280`, `UBU-D0281`.
 
@@ -2935,4 +2935,4 @@ At each chunk boundary the sweep precomputes next-chunk continuations for the mo
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0285`: compact Calendar coverage under chunked search is probability mass over certified chunk-boundary outcome continuations, not over K decision alternatives. An outcome state is grouped by completed units, splittable progress and remaining work, carried UniverseState/dependency/affect state, external-event or interruption assumptions, and next chunk cursor; near-identical states may merge only when quantized differences cannot change local repair, feasibility, explanation, coverage accounting, or the next recommended Task. Shared-latent rollouts estimate probabilities from outcome frequencies with recorded confidence intervals and degraded `probability_quality` when sample size or assumptions are weak. The sweep spends one compute budget on both decision alternatives and outcome continuations: current-chunk certification and K alternatives first, then next-chunk continuations in descending outcome probability until `branch_coverage_target` is met inside `reactive_horizon_seconds` or budget is exhausted. Compact/mobile packaging carries the current chunk plus certified continuation refs for probable boundary outcomes through the reactive horizon, with coverage fields and warnings when uncovered mass remains. Deviations inside a chunk are handled by decision envelopes and repair recipes; if they escape those local bounds, coverage drops and replanning is triggered. Interactive streaming may deliver the first certified chunk before full continuation coverage, then stream certified continuation coverage in later chunk frames and the final response.

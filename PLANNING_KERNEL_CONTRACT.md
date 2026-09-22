@@ -50,7 +50,7 @@ Timestamps crossing this contract use RFC 3339 / ISO 8601 UTC strings. Implement
   - `planning_delta_seconds`: positive integer. Phase 1 default is `60`.
 - `horizon_policy`:
   - `reactive_horizon_seconds`: positive integer. Phase 1 default is `3600`.
-  - `branch_coverage_target`: float in `(0, 1]`. The CPU supplies the effective value after Calendar, execution-profile, Device, and global policy resolution. Phase 1 default is `0.99`.
+  - `branch_coverage_target`: float in `(0, 1]`. The CPU supplies the effective value after Calendar, execution-profile, Device, and global policy resolution. It applies to the modeled probability mass of certified chunk-boundary outcome continuations within `reactive_horizon_seconds`, not to the count of K decision alternatives. Phase 1 default is `0.99`.
 - `compute_budget`:
   - `max_planning_tasks`: positive integer. Phase 1 default is `256`.
   - `n_candidates`: positive integer chosen by the CPU kernel.
@@ -244,6 +244,8 @@ Phase 1 rules:
   - `uncovered_mass_estimate`: optional numeric estimate, normally `max(0, 1 - coverage_estimate)` for the same scope.
   - `coverage_threshold_used`: optional numeric threshold used for regeneration decisions.
   - `coverage_below_threshold`: optional boolean.
+  - `coverage_confidence`: optional object summarizing probability estimation method, rollout count, confidence level, and lower/upper bounds for the coverage estimate.
+  - `outcome_continuation_summary`: optional compact counts and digests for precomputed chunk-boundary outcome states, including covered outcome count, uncovered sampled outcome count, and whether the target was budget-limited.
   - `compute_telemetry`: optional backend timing and resource summary, including `duration_ms` when available.
 
 ### `SkeletonFailureDiagnostic`
@@ -325,6 +327,8 @@ A `chunk_result` frame carries:
 - `chunk_depth`: positive integer sweep depth completed.
 - `chunk_id` or deterministic chunk range identifier.
 - `partial_response`: a CPU-certifiable partial `PlanningResponse` form containing only candidates and diagnostics whose placements end at or before the completed chunk depth.
+
+Chunk-result partial responses may include outcome-continuation summaries and references for already certified boundary outcomes at or before the completed chunk depth. Later frames may increase coverage; they must not remove a continuation that the user has started executing except through the ordinary post-start pruning and repair rules.
 
 A `final_response` frame carries exactly one complete `PlanningResponse`. `engine_error` and `cancelled` frames are transport outcomes and do not certify a Plan. The CPU may surface a streamed chunk only after CPU certification of that frame's partial response.
 
