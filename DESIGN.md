@@ -1120,6 +1120,7 @@ The core model includes:
 - Objective
 - Technique
 - Preference
+- Setting
 - WorkItem
 - Task
 - Container
@@ -1329,6 +1330,8 @@ A Relationship keeps reverse references to active, completed, abandoned, decline
 A **Preference** is a relation between Objectives.
 
 Value is derived from Preferences, not directly authored as an absolute scalar.
+
+**Settings are not Preferences (`UBU-D0287`).** Named configuration values, such as onboarding answers and AffectProfile parameters, are `Setting` records with a name, a value, and an authority source. A Setting configures planning inputs but never expresses value: it is not compared pairwise and never enters Preference layering.
 
 ### 8.1 Preference object
 
