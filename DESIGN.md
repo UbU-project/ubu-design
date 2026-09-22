@@ -1289,6 +1289,8 @@ Quick UbU `after` is Objective-level relative placement metadata. Instantiation 
 
 Done, skipped, and missed are occurrence Task Logs that roll up to the evergreen Objective. Done counts as successful completion. Skipped and missed break the Objective streak unless an explicit exclusion, override, or reviewed excusal says the occurrence should not count. Streaks remain per-evergreen-Objective as decided by `UBU-D0214`.
 
+**Mandatory routine occurrences (`UBU-D0288`).** Every routine occurrence, Static or planned, is mandatory. Routines carry no priority: occurrences take no part in Preference layering, and the CPU sends them with `TaskSpec.value = 0.0`, so their position within the allowed range earns no utility. Search must place every mandatory occurrence, and partial placement never omits one. When a day cannot hold them all, UbU reports the occurrences it cannot place and the user triages by skipping, moving, or changing other commitments; a skip is an ordinary skipped occurrence Log.
+
 A recurrence schedule with no resolvable occurrences inside its enablement window, or that references an undefined exception set, is a philosophical-consistency finding surfaced during ordinary review, not a hard logistical block, unless it prevents a required baseline (§15.2.2). See `UBU-D0213`.
 
 ### 7.5 RelationshipScopeTransition Objectives
