@@ -116,6 +116,27 @@ Each `TaskSpec` used by the planning kernel must include either a fixed duration
 
 Each Dynamic `TaskSpec` also carries a single hard `window: { earliest_start, latest_finish }` with RFC 3339 / ISO 8601 UTC timestamps. The CPU side builds it by intersecting the admitted Task's one-off `allowed_time_range`, or the concrete range on an instantiated routine Task, with `PlanningRequest.time_window`. If the intersection is empty or shorter than the Task's minimum possible duration, the Task is unplaceable for that request rather than soft-scored outside the window. Multiple allowed windows are not represented in Phase 1b `TaskSpec`; any future support requires a contract change or CPU-side occurrence/window selection before dispatch.
 
+Each `TaskSpec` also carries a split policy:
+
+```text
+{ type: "atomic" }
+```
+
+or:
+
+```text
+{
+  type: "splittable",
+  min_piece_seconds: positive_integer,
+  resume_overhead_seconds: non_negative_integer,
+  max_pieces: integer >= 2
+}
+```
+
+`atomic` is the default admitted Task policy and requires one placement. A splittable Task may produce multiple Plan placements for the same Task, but no more than one piece per chunk, no more than `max_pieces` total pieces, and no piece outside the Task's `window`. Splitting within one chunk is invalid.
+
+For a splittable Task, the kernel samples one total work duration from the Task's duration model and spends that work across pieces. The first piece has no resume overhead. Each later piece consumes `resume_overhead_seconds` of occupied time before additional sampled work is performed. Incoming dependencies and preconditions gate the first piece; outgoing dependencies and effects are satisfied only by the final piece. Unsupported execution profiles must reject splittable TaskSpecs or mark them unplaceable with an explicit diagnostic rather than silently treating them as atomic.
+
 ### Fixed duration
 
 ```text
@@ -254,7 +275,11 @@ Each `PlanCandidate` must carry:
 - `candidate_id`
 - `rank`
 - `candidate_role`: enum, one of `highest_utility`, `most_robust`, `most_schedule_diverse`, `other`.
-- `schedule`: ordered list of planned Task placements.
+- `schedule`: ordered list of planned Task placements. Each placement carries:
+  - `task_id`
+  - `piece_index`: 1-based integer; atomic placements use `1`.
+  - `piece_count`: positive integer; atomic placements use `1`.
+  - start/end or equivalent occupied interval fields required by the implementation profile.
 - `score_summary`:
   - `utility_score`
   - `robustness_score`
@@ -318,6 +343,8 @@ Common names:
 - `task_index`: padded task-slot index within `MAX_PLANNING_TASKS`.
 - `validity_mask`: boolean mask for occupied task slots or valid candidates.
 - `start_time_offsets`: planned start offsets from `time_window.start_time`, in planning ticks or seconds as declared by the implementation profile.
+- `piece_index`: 1-based planned piece index per placement, with `1` for atomic placements.
+- `piece_count`: total planned piece count for that Task in the candidate, with `1` for atomic placements.
 - `duration_samples`: sampled duration tensor.
 - `feasible_mask`: boolean candidate feasibility mask after stage-local checks.
 - `surviving_indices`: compacted indices of candidates that survive a filter stage.
@@ -333,6 +360,7 @@ Consumes:
 - CPU-provided `topological_order` and validity masks;
 - dependency edge data or adjacency tensors;
 - duration-model parameters;
+- split-policy parameters;
 - time-window and planning-delta parameters;
 - candidate seeds derived from `rng_seed`.
 
@@ -342,6 +370,7 @@ Produces:
 - `start_time_offsets`;
 - `duration_samples`;
 - candidate `validity_mask`;
+- per-placement `piece_index` and `piece_count` metadata;
 - dependency-slack summary;
 - rejection/failure code per invalid candidate.
 
@@ -407,6 +436,8 @@ Produces:
 - rollout diagnostics and degradation warnings.
 
 Stage 4 uses deterministic rollout seed derivation from the request seed. Phase 1 may use `rng_seed + 3` as the stage-4 rollout seed stream convention until named substreams are introduced. GPU floating-point rollout summaries are reproducible within the recorded tolerance profile, not bitwise across hardware, drivers, PyTorch versions, or reduction orders.
+
+For splittable Tasks, Stage 4 reuses the single sampled total work duration for every piece of that Task in a rollout and accounts for deterministic resume overhead before each resumed piece. A rollout remains feasible when unfinished sampled work can continue in a later planned or repair-eligible piece inside the Task window and `max_pieces`; it is infeasible when remaining work, overhead, fixed placements, dependency state, or the allowed range prevent completion under the candidate's policy. Partial scheduled-work value is proportional to completed sampled work for splittable Tasks, while effects and outgoing dependencies require completion of the last piece.
 
 ### CPU/GPU parity expectations
 

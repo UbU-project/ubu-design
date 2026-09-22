@@ -4492,3 +4492,31 @@ Consequences:
 - `OPEN_QUESTIONS.md` marks `UBU-Q0156` solved.
 
 ---
+
+## UBU-D0284: Phase 1b splittable Tasks are per-Task chunk pieces with constant resume overhead
+
+**Status:** Accepted -> DESIGN.md §9.2, §9.4, §16.3; PLANNING_KERNEL_CONTRACT.md §3, §4, §5. Resolves `UBU-Q0157`.
+
+Every schedulable Task has a split policy. The default is `atomic`, which preserves the existing rule that the Task must be planned as one placement unit inside one chunk. A Task may instead declare `splittable` with all three fields required: `min_piece_seconds`, `resume_overhead_seconds`, and `max_pieces`. The minimum piece and resume overhead are non-negative integer seconds, with `min_piece_seconds` positive; `max_pieces` is an integer of at least 2. The store does not silently infer these fields. Advisors may propose category-based defaults as reviewable advisory candidates, but admission records the explicit policy on the Task.
+
+For Phase 1b, resume overhead is constant. The first piece consumes only work duration; every later planned or rollout continuation consumes one `resume_overhead_seconds` interval before doing additional work. There is no separate Phase 1b affect cost for resumption. Later interruption modeling may add affect consequences, but the split policy is the only interruption-facing Task input needed now.
+
+Pieces are a placement shape for one Task, not new WorkItems and not a Container replacement. A splittable Task may contribute at most one piece to any chunk, and every piece must lie inside the Task's hard `allowed_time_range`/`TaskSpec.window`. Splitting inside a chunk is invalid because it only adds overhead without expanding feasibility. The chunk-assignment level decides how many seconds of a splittable Task are assigned to each eligible chunk, then the ordinary within-chunk ordering places that chunk's piece. Atomic Tasks and compiled decomposition segments remain single placement units.
+
+The split policy applies to individual Tasks, including decomposition child Tasks. A compiled decomposition segment remains atomic: if a child inside an admitted multi-child segment needs to be split independently, admission must put segment boundaries around that child or reject/ask for edits. The kernel never splits the interior of a compiled segment.
+
+Plan steps may contain several non-overlapping placements for the same Task. Each piece records `piece_index` and `piece_count`; atomic placements use `1/1`. Dependencies, preconditions, and effects attach to the Task as a whole: incoming dependencies and preconditions gate the first piece, and outgoing dependencies and effects become satisfied only after the last piece completes. Projection surfaces may show pieces as separate external objects with stable piece ids and titles such as `(2/3)`, but all pieces point back to the same canonical Task and projection edits reconcile by piece.
+
+Rollouts draw one total work duration per Task and spend that sampled work across the Task's pieces. Resume overhead is deterministic occupied time added before each resumed piece. If a piece overruns its planned work budget, a splittable Task may continue in a later eligible chunk when remaining `max_pieces`, window, dependencies, and carried state permit; otherwise the rollout is infeasible in the same way an atomic overrun that collides with a fixed placement is infeasible. This improves Plan probability only through the measured frequency of feasible continuations under the same rollout draws.
+
+Progress on a stopped splittable Task is recorded as execution evidence and a remaining-work estimate on the same Task. It is not a §9.4 structural replacement and does not create a Container merely because work paused. For scoring, Phase 1b gives splittable work proportional scheduled-work value for the fraction of sampled total work completed inside the horizon, while dependency satisfaction, effects, completion state, and completion-dependent value still require the last piece. Atomic Tasks earn value only when their one placement is completed or scheduled according to the ordinary candidate semantics.
+
+The kernel contract changes share the same Phase 1b minor contract version reserved for partial placement (`UBU-Q0155`): `TaskSpec` gains the split policy, PlanCandidate schedules gain piece metadata, validation accepts multiple ordered non-overlapping pieces for one Task, and rollout consumes one sampled Task duration across those pieces. Splitting is not required for the switch itself and may land after chunked search, provided unsupported splittable Tasks are rejected or treated as unplaceable with an explicit diagnostic rather than silently made atomic.
+
+Consequences:
+
+- `DESIGN.md` §9.2 records the Task split policy; §9.4 records the relation to decomposition segments; §16.3 records chunk placement and rollout semantics.
+- `PLANNING_KERNEL_CONTRACT.md` §3 records `TaskSpec.split_policy`; §4 records PlanCandidate piece metadata; §5 records split-aware tensor and rollout semantics.
+- `OPEN_QUESTIONS.md` marks `UBU-Q0157` solved.
+
+---

@@ -2871,7 +2871,7 @@ Resolved. See UBU-D0283.
 
 ## UBU-Q0157: Splittable Tasks and resume overhead
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: save-and-continue planning, interruption-aware rollouts Resolved by: None Last scored: 2026-09-21 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: save-and-continue planning, interruption-aware rollouts Resolved by: UBU-D0284 Last scored: 2026-09-21 Scored from commit: None
 
 Defining context: DESIGN.md §9.4, DESIGN.md §16.3, PLANNING_KERNEL_CONTRACT.md §3, `UBU-D0276`, `UBU-D0277`, `UBU-D0278`, `UBU-D0279`.
 
@@ -2905,7 +2905,7 @@ A Task's split policy is `atomic` by default. A splittable Task declares a minim
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0284`: every schedulable Task has a split policy, defaulting to `atomic`; a splittable Task explicitly declares required `min_piece_seconds`, `resume_overhead_seconds`, and `max_pieces` fields. Resume overhead is constant and applies before each piece after the first, with no separate Phase 1b affect cost or interruption input. Pieces are same-Task Plan placements, at most one per chunk, all inside the Task's allowed range, and never splits inside a chunk. Decomposition segments remain atomic; a decomposition child may be splittable only as an independently segmented placement unit. The kernel contract gains `TaskSpec.split_policy`, PlanCandidate piece metadata, validation for multiple ordered non-overlapping pieces, and rollout semantics that draw one total Task duration and spend it across pieces. Dependencies and effects attach to the Task's first and last pieces. Progress stops are recorded as Log evidence and a remaining-work estimate on the same Task, not a Container replacement. Splittable work earns proportional scheduled-work value for completed sampled work inside the horizon, while completion, effects, and outgoing dependencies require the final piece. Projection surfaces may show separate piece events such as `(2/3)` while preserving one canonical Task. The contract change shares the Phase 1b minor version reserved with partial placement.
 
 ---
 
