@@ -1343,6 +1343,8 @@ MVP fields:
 
 More detailed method metadata may be added later.
 
+**Phase 1b Task Preferences (`UBU-D0282`).** In Phase 1b a Preference may relate two Tasks instead of two Objectives, with the same `order` values, so explicit Task prioritization stays pairwise (`UBU-D0009`). A Preference never relates a Task to an Objective.
+
 ### 8.2 Ordinal rankings
 
 Ordinal UI input compiles immediately into pairwise Preference objects.
@@ -2503,7 +2505,7 @@ The GPU engine has four first-class pipeline stages, with semantic boundaries sp
 
 3. **Value scoring** — parallel utility, approximate robustness, affect-margin, and schedule-diversity scoring across surviving candidates.
 
-Phase 1b value scoring uses CPU-computed, request-local Task value/priority metadata derived from admitted explicit prioritization records (`UBU-D0277`). Objective labels, deadlines, routine cadence, and revealed-preference evidence may inform review, risk, urgency, or later policy work, but the GPU stage receives only the bounded transient values supplied in the `PlanningRequest`.
+Phase 1b value scoring uses CPU-computed, request-local Task value/priority metadata derived from admitted pairwise Task Preferences (`UBU-D0277`, `UBU-D0282`). Objective labels, deadlines, routine cadence, and revealed-preference evidence may inform review, risk, urgency, or later policy work, but the GPU stage receives only the bounded transient values supplied in the `PlanningRequest`.
 
 4. **Monte Carlo rollout** — joint scenario simulation for finalists using correlation-group Gaussian copula sampling with deterministic rollout seed derivation.
 
