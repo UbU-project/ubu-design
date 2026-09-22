@@ -2936,3 +2936,34 @@ At each chunk boundary the sweep precomputes next-chunk continuations for the mo
 ### Resolution
 
 Resolved by `UBU-D0285`: compact Calendar coverage under chunked search is probability mass over certified chunk-boundary outcome continuations, not over K decision alternatives. An outcome state is grouped by completed units, splittable progress and remaining work, carried UniverseState/dependency/affect state, external-event or interruption assumptions, and next chunk cursor; near-identical states may merge only when quantized differences cannot change local repair, feasibility, explanation, coverage accounting, or the next recommended Task. Shared-latent rollouts estimate probabilities from outcome frequencies with recorded confidence intervals and degraded `probability_quality` when sample size or assumptions are weak. The sweep spends one compute budget on both decision alternatives and outcome continuations: current-chunk certification and K alternatives first, then next-chunk continuations in descending outcome probability until `branch_coverage_target` is met inside `reactive_horizon_seconds` or budget is exhausted. Compact/mobile packaging carries the current chunk plus certified continuation refs for probable boundary outcomes through the reactive horizon, with coverage fields and warnings when uncovered mass remains. Deviations inside a chunk are handled by decision envelopes and repair recipes; if they escape those local bounds, coverage drops and replanning is triggered. Interactive streaming may deliver the first certified chunk before full continuation coverage, then stream certified continuation coverage in later chunk frames and the final response.
+
+---
+
+## UBU-Q0159: Routine occurrence priority under pairwise Task Preferences
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: prioritized planned routine occurrences Resolved by: None Last scored: Never Scored from commit: None
+
+Defining context: DESIGN.md §7.4.1, DESIGN.md §8.1, PLANNING_KERNEL_CONTRACT.md §5, `UBU-D0277`, `UBU-D0282`, `UBU-D0286`.
+
+### Question
+
+How do instantiated routine occurrences get priority, now that Task priority is stored only as pairwise Task Preferences?
+
+`UBU-D0277` says an occurrence inherits its explicit occurrence priority when present, and otherwise the priority declared on the routine template or evergreen Objective; `PLANNING_KERNEL_CONTRACT.md` §5 repeats this. Under `UBU-D0282`, priority exists only as Preferences between two subjects of the same kind, and the Phase 1b planner counts only Task pairs. Under `UBU-D0286`, occurrence Tasks are derived per planning request, so a Task Preference naming one occurrence applies to that occurrence only. Nothing currently represents a priority declared on a routine.
+
+### Subquestions
+
+1. **Lowering.** Do enabled Preferences between two routine evergreen Objectives lower, at request time, into Task pairs between their occurrences in the request? Between every pair of occurrences, or only occurrences whose allowed ranges overlap?
+2. **Routine versus one-off Task.** A Preference never relates a Task to an Objective. How is a routine compared with a one-off Task: through explicit Preferences on individual occurrences, through a subject that means "every occurrence of" an Objective, or not at all in Phase 1b?
+3. **Precedence.** When an explicit occurrence Preference and a lowered Objective Preference relate the same two occurrences with different orders, which one counts? Is the other ignored, or treated as a §8.4 cycle?
+4. **Persistence.** Are lowered pairs request-local and never persisted, like the values of `UBU-D0277`?
+5. **Static occurrences.** Most imported routines instantiate Static occurrences, whose placement is fixed. Does priority matter for them in Phase 1b, or only for planned occurrences?
+6. **Contract text.** What replaces the routine sentence of `PLANNING_KERNEL_CONTRACT.md` §5 ("explicit occurrence priority wins, then routine-template or evergreen-Objective priority")?
+
+### Current direction
+
+Enabled Preferences between two routine evergreen Objectives lower at request time into Task pairs, with the same order, between every pair of their occurrences in the request, and join the counted Preferences of `UBU-D0282`. An explicit Preference between the same two occurrences replaces the lowered pair for that request. In Phase 1b a routine is compared with a one-off Task only through explicit Preferences on its occurrences. Lowered pairs are request-local. Static occurrences take part like any other eligible Task. The contract §5 routine sentence is rewritten to this rule when the question is resolved.
+
+### Resolution
+
+Open.
