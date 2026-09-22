@@ -2779,7 +2779,7 @@ Resolved by `UBU-D0277`: Phase 1b uses admitted explicit operator prioritization
 
 ## UBU-Q0154: Phase 1b routines as evergreen-Objective recurrence
 
-Status: Open Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0152 Blocks: Phase 1b routine port, Quick UbU routine import Resolved by: None Last scored: 2026-09-21 Scored from commit: None
+Status: Solved Priority: MVP blocker Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: UBU-Q0152 Blocks: Phase 1b routine port, Quick UbU routine import Resolved by: UBU-D0286 Last scored: 2026-09-21 Scored from commit: None
 
 Defining context: DESIGN.md §7.4.1, DESIGN.md §15.2.1.1, `UBU-D0213`, `UBU-D0214`, `UBU-D0216`, `UBU-D0275`. This question takes the Phase 1b slice of `UBU-Q0125` subquestions 1 and 10.
 
@@ -2804,7 +2804,7 @@ Each routine template becomes an evergreen Objective carrying a Phase 1b calenda
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0286`: each Quick UbU routine template imports as one evergreen Objective with a Phase 1b recurrence schedule and Objective-local `routine_instance_template` metadata. The implemented schedule subset is daily, weekly by weekday set, day-of-month, first-workday-of-month, and first-workday-of-quarter, evaluated in the schedule's IANA timezone with optional interval and enablement window. `Workday` means Monday through Friday; holiday calendars and general exception-set management are not Phase 1b requirements, though explicit EXDATE/RDATE/override corrections remain allowed. Occurrences instantiate directly into Tasks pre-kernel, without default Technique expansion, over each planning horizon or an equivalent rolling materialized cache. Deterministic occurrence keys from Objective id, schedule version, local occurrence anchor, placement mode, and template version prevent duplicates and let edits supersede unstarted future instances while preserving logged history. Instances carry nominal local start plus either Static start/end or a concrete UTC `allowed_time_range`; per-routine placement mode controls whether future occurrences are Static or planner-placed Dynamic Tasks. Quick UbU `after` becomes Objective-level relative placement metadata resolved at instantiation into nominal/range values, with an ordinary dependency edge only when execution order matters; Phase 1b adds no minimum-lag kernel edge. Done, skipped, and missed are occurrence Task Logs that roll up to per-Objective recurrence summaries and streaks; skipped/missed break streaks unless explicitly excluded, overridden, or reviewed as excused. Quick UbU import is a schema mapping into this Objective/template representation.
 
 ---
 

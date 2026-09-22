@@ -4549,3 +4549,29 @@ Consequences:
 - `OPEN_QUESTIONS.md` marks `UBU-Q0158` solved.
 
 ---
+
+## UBU-D0286: Phase 1b routines instantiate Tasks directly from evergreen Objectives
+
+**Status:** Accepted -> DESIGN.md §7.4.1; PLANNING_KERNEL_CONTRACT.md §2. Resolves `UBU-Q0154`.
+
+Each Quick UbU routine template imports as one evergreen Objective. The Objective owns the recurrence schedule, because Tasks are pure instances, and it also owns a Phase 1b `routine_instance_template` that says how each occurrence becomes a Task. Technique selection and Technique-step expansion remain Phase 3 concerns and are not required for routine import.
+
+The Phase 1b schedule subset is intentionally limited to the Quick UbU rules needed for the switch: daily, weekly by weekday set, monthly by day of month, first workday of month, and first workday of quarter, each evaluated in the schedule's IANA timezone with an optional interval and enablement window. In this subset, `workday` means Monday through Friday in the schedule timezone. Named holiday calendars, general exception-set management, and automatic holiday shifting are not Phase 1b requirements; explicit EXDATE/RDATE/override entries may still be used when the user or importer supplies deterministic corrections.
+
+A routine Objective carries imported template fields as Objective-local recurrence/template metadata: title, duration or duration PDF, category tag/provenance label, projection reminder policy, nominal local start, local allowed time-of-day range, placement mode, and any legacy `occupies_capacity` compatibility value. Reminders remain projection metadata and do not create planning commitments. The canonical scheduling input for a planned occurrence is the concrete UTC `allowed_time_range` produced during instantiation (`UBU-D0276`). A static occurrence is emitted as a Static Task at the nominal start/end; if it is capacity-occupying, it bounds chunks under `UBU-D0279`. Moving a routine from static to planned changes future occurrence instantiation and may merge the chunks that the static instances previously separated.
+
+Routine instantiation runs pre-kernel over each planning request's horizon; implementations may maintain a rolling materialized cache, but canonical identity is derived rather than allocated. Each occurrence Task has a deterministic occurrence key from the routine Objective id, schedule version, local occurrence anchor, placement mode, and template version. Admission enforces uniqueness on that key. Rule edits affect future unstarted occurrences by deriving new occurrence keys or superseding cached future Tasks with no execution evidence. Started, completed, skipped, or otherwise logged occurrences are retained as history; if a rule edit conflicts with logged future evidence, UbU surfaces a review candidate instead of silently rewriting history.
+
+Quick UbU `after` imports as Objective-level relative placement metadata on the dependent routine. At instantiation it resolves against the matched predecessor occurrence's nominal local end plus the offset to produce the dependent occurrence's nominal start and allowed range. If execution order also matters, the instantiator emits an ordinary dependency edge between the occurrence Tasks. Phase 1b does not add minimum-lag edges to the kernel contract.
+
+For completion accounting, done, skipped, and missed are occurrence Task Logs that roll up to the evergreen Objective. Done counts as a successful occurrence. Skipped and missed count as non-completions and break streaks unless an explicit schedule exclusion, override, or reviewed excusal says the occurrence should not count. Streaks are attributed per evergreen Objective as already decided by `UBU-D0214`; Phase 1b stores enough occurrence history to recompute last occurrence, current streak, and missed-count summaries deterministically.
+
+Importing the existing Quick UbU templates is therefore a schema mapping, not a new planning abstraction: each template creates or updates an evergreen Objective plus routine template metadata, and the planner receives only the instantiated Static or Dynamic Tasks.
+
+Consequences:
+
+- `DESIGN.md` §7.4.1 records the Phase 1b routine schedule subset, template metadata, direct instantiation, relative-routine lowering, and completion rollup.
+- `PLANNING_KERNEL_CONTRACT.md` §2 clarifies that routine instantiation is pre-kernel and that the kernel receives only materialized Tasks.
+- `OPEN_QUESTIONS.md` marks `UBU-Q0154` solved.
+
+---
