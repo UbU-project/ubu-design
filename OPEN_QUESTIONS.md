@@ -2967,3 +2967,30 @@ Enabled Preferences between two routine evergreen Objectives lower at request ti
 ### Resolution
 
 Resolved by `UBU-D0288`: routine occurrences are mandatory and carry no priority. They are not layered, are sent with `TaskSpec.value = 0.0`, must be placed, and are never omitted by partial placement; when a day cannot hold them all, the user triages.
+
+---
+
+## UBU-Q0160: Which mobile compute API should the mobile GPU backend target?
+
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0156 Blocks: mobile GPU backend selection Resolved by: None Last scored: Never Scored from commit: None
+
+Defining context: DESIGN.md §16.5, §16.10.6; PLANNING_KERNEL_CONTRACT.md §4; `UBU-D0126`, `UBU-D0256`, `UBU-D0283`, `UBU-D0290`.
+
+### Question
+
+Which compute API should implement the in-process mobile GPU backend while preserving CPU certification, provenance and the existing parity contract?
+
+### Subquestions
+
+1. How do Vulkan compute, OpenCL on Adreno, ExecuTorch and NNAPI compare on the actual supported device and driver stack?
+2. Which candidate passes exact structural/hard-constraint parity and the named numeric tolerances against the CPU reference path?
+3. What latency, memory, energy and sustained thermal behavior does each exhibit for deterministic skeletonization, hard checks, local repair recipes and a short-horizon branch cache?
+4. Which APIs and operations are actually available on the selected LineageOS build, and what CPU fallback is required?
+
+### Current direction
+
+No compute API is selected. `UBU-Q0156` settled the desktop invocation boundary; it does not select a mobile backend. This question is blocked on the on-device parity harness producing measurements. The gate is satisfied only once the stewardship workload has been measured against the CPU reference path on physically connected real hardware under the `UBU-D0283` parity rule. Emulator timings and desktop full-search benchmarks do not answer it.
+
+### Resolution
+
+Open pending that measurement gate; no hardware result is inferred from API availability alone.
