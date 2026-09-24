@@ -2494,7 +2494,7 @@ MVP planning does not require exhaustive optimal search, cloud compute, GPU exec
 
 ### 16.10 GPU desktop execution backend
 
-The Phase 1 performance target is a local desktop/laptop GPU backend, delivered in Phase 1b as part of the planner the switch requires (`UBU-D0275`). A small CPU reference path or fixture-backed deterministic path remains required for tests, CI, and contributors without GPU access. Mobile and cloud planner backends are deferred beyond Phase 1.
+The Phase 1 performance target is a local desktop/laptop GPU backend, delivered in Phase 1b as part of the planner the switch requires (`UBU-D0275`). A small CPU reference path or fixture-backed deterministic path remains required for tests, CI, and contributors without GPU access. Cloud planner backends and the full mobile planner remain deferred beyond Phase 1. Mobile already has a smaller stewardship role; its execution profile and validation contract are specified in §16.10.6.
 
 The implementation-facing contract for this section is `PLANNING_KERNEL_CONTRACT.md`. `DESIGN.md` defines the architectural intent; the contract file defines the Phase 1 schema and boundary details.
 
@@ -2560,7 +2560,17 @@ Fixed known durations use a separate fixed-duration model and are represented as
 
 For lay audiences this is well described as a stop-light model: a sequence of independent delay sources where slowdowns stack asymmetrically and early arrivals are absorbed cheaply by forward-pulling the next eligible Dynamic Task.
 
-#### 16.10.6 Correlation groups and rollout matrix
+#### 16.10.6 Mobile execution profile
+
+Mobile is a real-time steward of Plan legitimacy (`UBU-D0126`, `UBU-D0256`, `UBU-D0290`). Its measured workload is deterministic skeletonization, exact hard-constraint checks, local repair recipes and a short-horizon branch cache from §16.5, explicitly not the full desktop chunked search.
+
+The persistent Python worker in `UBU-D0283` is a desktop invocation mechanism. A mobile backend runs in process on the device; no Python runtime is shipped on device. The pure `PlanningRequest` → `PlanningResponse` semantic boundary, CPU-owned backend selection, CPU certification and recorded provenance remain unchanged. Mobile execution records `mobile_cpu` or `mobile_gpu`, `in_process_mobile`, and its own framework or compute API. The compute API is undecided pending `UBU-Q0160`'s measurement gate.
+
+The parity rule from `UBU-D0283` applies unchanged: schema decoding, chunk partitioning, task-slot masks, dependency feasibility, hard-constraint feasibility, rejection classes and CPU-certified Plan validity agree exactly with the CPU reference path. Floating-point scores and rollout estimates use named tolerances or statistical criteria. Shared parity fixtures exercise the applicable stages; the workload benchmark remains stewardship. Every mobile-produced Plan is CPU-certified on the device before it is user-visible.
+
+Validation uses a physically connected device over `adb`, not an AVD: emulator graphics use host rendering and cannot measure the phone's driver, vendor extensions, timing or thermal response. The rooted LineageOS device procedure and mandatory pre-flight are in `docs/MOBILE_DEVICE_TESTING.md`. No device procedure may leave the phone in a state that needs a cable to recover.
+
+#### 16.10.7 Correlation groups and rollout matrix
 
 Each stochastic-duration Task may carry `correlation_groups: [{group: str, strength: float}]`. In Phase 1, `strength` is a positive latent-factor loading in `[0, 1]`; negative correlations are deferred.
 
@@ -2570,7 +2580,7 @@ Negative correlations are not rejected philosophically. They are deferred becaus
 
 The RNG seed is an explicit required input, ensuring plan generation is reproducible for peer debugging.
 
-#### 16.10.7 Solver selection and deferred backend targets
+#### 16.10.8 Solver selection and deferred backend targets
 
 Phase 1 does not require OR-Tools, Z3, CP-SAT, SMT, MaxSMT, or another external exact solver as a runtime dependency. The mandatory certification path is the built-in CPU kernel: dependency DAG validation, deterministic precondition and effect evaluation, skeleton validity, bounded contradiction diagnostics, full legitimization, hard Calendar Logic checks, provenance validation, payload-safety validation, and final Plan commit.
 
