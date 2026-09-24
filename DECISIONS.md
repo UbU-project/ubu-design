@@ -4643,3 +4643,26 @@ Consequences:
 - `OPEN_QUESTIONS.md` marks `UBU-Q0155` solved.
 
 ---
+
+## UBU-D0290: Mobile is a stewardship execution profile with its own backend kind, validated by on-device parity
+
+**Status:** Accepted → DESIGN.md §16.10.6; PLANNING_KERNEL_CONTRACT.md §4; OPEN_QUESTIONS.md `UBU-Q0160`. Refines `UBU-D0126`, `UBU-D0256` and `UBU-D0283`.
+
+`UBU-D0283`'s persistent Python/PyTorch worker over local pipes is a desktop invocation mechanism, not a mobile backend definition. Mobile GPU execution is a new backend kind, not a port of that worker. What carries over is the pure `PlanningRequest` → `PlanningResponse` function, CPU-owned backend selection, CPU certification as final authority, and recorded provenance on responses and Plans. The authority and admission boundaries of `UBU-D0254` and `UBU-D0255` continue to apply.
+
+A mobile backend runs in process on the device: provenance gains `backend_kind = mobile_cpu | mobile_gpu` and `invocation_kind = in_process_mobile`. `framework` is a free string naming the implementation's framework or compute API; the `pytorch` requirement applies only to the Phase 1b desktop GPU worker. No Python runtime is shipped on device.
+
+The evaluated mobile workload is the stewardship set from `UBU-D0126` and DESIGN.md §16.5: deterministic skeletonization, exact hard-constraint checks, local repair recipes and a short-horizon branch cache. It is explicitly not the desktop's full chunked search. Mobile compute API selection remains undecided in `UBU-Q0160`, gated on on-device parity measurements against the CPU reference path rather than a preferred library.
+
+`UBU-D0283`'s parity requirements apply unchanged: exact agreement on schema decoding, chunk partitioning, task-slot masks, dependency feasibility, hard-constraint feasibility, rejection classes and CPU-certified Plan validity; named absolute/relative tolerances or statistical acceptance criteria for floating-point scores and rollout estimates. Applicable stages are exercised by shared parity fixtures even though the evaluated workload is stewardship, not global search. A mobile-produced Plan is CPU-certified on the device before becoming user-visible, just as a desktop GPU candidate is certified before presentation.
+
+Validation uses a physically connected device over `adb`, not an emulator. An AVD executes graphics through host hardware or software rendering; it cannot supply the target phone's driver, thermal, timing or vendor-extension evidence. A rooted LineageOS test device supplies the actual stack and local diagnostics without routing test data through a vendor telemetry service. Build capabilities and recovery paths must be checked by the device gate; root alone does not imply every diagnostic or reboot transport is available.
+
+Consequences:
+
+- `DESIGN.md` §16.10 gains a mobile execution-profile subsection while cloud and the full mobile planner remain deferred.
+- `PLANNING_KERNEL_CONTRACT.md` §4 gains the provenance enum members and scopes framework identity to the backend.
+- `OPEN_QUESTIONS.md` gains `UBU-Q0160`, dependent on `UBU-Q0156` and blocked on the real-device parity harness.
+- `docs/MOBILE_DEVICE_TESTING.md` defines the pre-flight and the rule that no procedure may leave the phone needing a cable to recover.
+
+---
