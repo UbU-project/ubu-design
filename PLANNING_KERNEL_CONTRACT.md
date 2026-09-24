@@ -222,12 +222,12 @@ Phase 1 rules:
 - `generated_at`
 - `status`: enum, one of `ok`, `partial`, `rejected`, `engine_error`. `partial` means at least one PlanCandidate is returned but optional Dynamic work is reported in `diagnostics.unplaced_tasks`.
 - `engine_provenance`:
-  - `backend_kind`: enum, one of `cpu_reference`, `gpu_worker`.
-  - `invocation_kind`: enum, one of `in_process_cpu`, `persistent_python_worker`.
+  - `backend_kind`: enum, one of `cpu_reference`, `gpu_worker`, `mobile_cpu`, `mobile_gpu`.
+  - `invocation_kind`: enum, one of `in_process_cpu`, `persistent_python_worker`, `in_process_mobile`.
   - `engine_version`: implementation version string.
-  - `framework`: optional string, required as `pytorch` for the Phase 1b GPU worker.
+  - `framework`: optional free string; required as `pytorch` only for the Phase 1b desktop GPU worker. A mobile backend names its own framework or compute API.
   - `framework_version`: optional string.
-  - `device_summary`: optional compact local hardware/runtime summary, for example GPU model or `cpu`.
+  - `device_summary`: optional compact local hardware/runtime summary, for example GPU model, `cpu`, or mobile SoC/GPU such as `Snapdragon 8 Elite / Adreno 830`.
   - `tolerance_profile`: optional name of the numeric tolerance profile used for parity checks.
   - `cpu_certification_status`: enum, one of `not_yet_certified`, `certified`, `rejected_by_cpu`.
 - `plan_candidates`: ranked list of `PlanCandidate` objects.
@@ -353,6 +353,12 @@ Chunk-result partial responses may include outcome-continuation summaries and re
 A `final_response` frame carries exactly one complete `PlanningResponse`. `engine_error` and `cancelled` frames are transport outcomes and do not certify a Plan. The CPU may surface a streamed chunk only after CPU certification of that frame's partial response.
 
 ---
+
+The `UBU-D0290` mobile provenance members are additive on a contract-only field;
+no implementation reads `engine_provenance` yet. They introduce no version bump.
+The Phase 1 baseline remains `planning-kernel-contract/0.1`, and the already
+recorded Phase 1b split-policy/partial-placement version remains
+`planning-kernel-contract/0.2` (`UBU-D0289`).
 
 ## 5. GPU pipeline stage boundaries
 
