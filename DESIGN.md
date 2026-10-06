@@ -1001,6 +1001,8 @@ Exit criterion:
 
 > The switch: the dogfooding user's primary daily planning runs on mainline UbU.
 
+The switch waits on the desktop GPU planner and CPU reference/certification path, and on ratification or retirement of every provisional subject root before the store becomes non-disposable (`UBU-D0291`). No switch date is set.
+
 Until the switch, Quick UbU remains the primary tool and mainline is exercised against non-primary test data.
 
 **The Phase 1b rule.** Every Quick UbU feature merged into mainline adopts the restrictions, forms, and functional boundaries of the MVP design it corresponds to, even when that design's implementation phase is later. Open questions that block Phase 1b are answered during Phase 1b whatever phase they were previously tagged, and the items they pull forward are re-tagged Phase 1b.
@@ -1825,7 +1827,11 @@ MVP value discipline:
 - default keys should use a lightweight namespace convention;
 - values are text / JSON-like payloads.
 
-**Namespace convention (`UBU-D0243`).** A target is `<collection>.<subject>(.<entity-path>)?.<predicate>`: the first segment after the collection is a `<subject>` drawn from a controlled vocabulary (an entity or domain root), optionally followed by an entity/instance path, with a snake_case `<predicate>` leaf. The initial controlled subject vocabulary is `operator`, `project`, `github`, `affect`, `relationship`. Adding a subject root requires a recorded decision, governed like the closed enums: a snake_case singular noun naming an entity or domain, never an instance, attribute, source, or reverse-DNS prefix. The organization/worker-mode intrinsic-affect rejection keys off `<subject> == affect`.
+**Namespace convention (`UBU-D0243`, amended by `UBU-D0291`).** A target is `<collection>.<subject>(.<entity-path>)?.<predicate>`. The first segment after the collection is a permanent top-level taxonomy referenced by every fact, precondition and mutation, so it remains governed and reviewed. Its effective vocabulary is the governed set union one visible operator-authored provisional registry. The governed set remains `operator`, `project`, `github`, `affect`, `relationship`, and only a recorded amending decision extends it. Minting a provisional root is an explicit operator act, never a side effect of recording a fact and never available to an advisor; producers may use only the effective vocabulary. Every root is a snake_case singular noun naming an entity or domain, never an instance, attribute, provenance/source or reverse-DNS authority prefix. Predicates and entity paths retain their existing rules. `affect` retains its reserved meaning, and `UBU-D0242`'s intrinsic-affect rejection keys off `<subject> == affect` unchanged.
+
+Every provisional root must be ratified by an amending decision or retired before the switch; the registry is that agenda. The store is disposable until the switch, making that the last cheap rename point before UniverseState keys, fact_provenance keys and Task precondition strings require rewriting without migration tooling. No root is proposed here. Registry, minting and validator/advisor enforcement are follow-up orchestrator work, not implemented by this ticket.
+
+The Phase 1b Tasks form reads requirements in words and authors a single leaf. Boolean trees remain readable and clearable, and authorable through the existing routes; a tree editor is outside the form's scope.
 
 A stricter ontology can be added later.
 
@@ -3440,7 +3446,7 @@ Derived artifacts such as Plans, Calendars, reports, risk summaries, and project
 
 Phase 1b deletion of canonical objects is lifecycle mutation, not row removal. Retired Tasks, removed Tasks, decomposition-retired parents, and admitted discarded candidates become tombstones with stable object id, object kind, current version reference, lifecycle state/reason code, envelope/provenance reference, created/effective/recorded lifecycle timestamps, policy-safe Compartment refs needed for local enforcement, and any decomposition, supersession, audit, or projection-deletion refs needed for replay. Tombstones do not retain active payload fields, private evidence, cached explanations, human-readable Compartment labels, or sensitive reason text after those fields are redacted or purged.
 
-A decomposition that retires a parent Task records the parent as tombstoned and relies on the decomposition record's parent snapshot as the restore source. Undo is a new admitted mutation that observes the tombstone and snapshot, un-tombstones the parent only when policy permits and the snapshot payload still exists, and refuses to resurrect content that was physically purged or redacted beyond restoration. Projection deletions caused by tombstones are queued idempotent obligations in `projection_state`; their retry or confirmation status never replaces the canonical tombstone.
+Decomposition undo follows `UBU-D0278` and §9.4, superseding `UBU-D0259`'s former un-tombstoning rule. Undo is another admitted structural replacement: it creates a restored Task with a new handle carrying the original intent and valid prior schedulable fields, marks the Container and children superseded or moot, and retains the original Task's retirement and history. Purged or redacted payload is never reconstructed without an authorized restore source. Projection deletions caused by tombstones remain queued idempotent obligations in projection_state; their retry or confirmation never replaces the canonical tombstone.
 
 ### 23.2 Zone
 

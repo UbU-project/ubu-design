@@ -3989,7 +3989,9 @@ The Phase 1b tombstone record retains only policy-safe structure: `object_id`, `
 
 Every tombstone is admitted through the `UBU-D0258` mutation-envelope path. The envelope belongs to the tombstone mutation; the durable tombstone stores or references the envelope fields needed for replay and audit rather than existing as an unenveloped side table update. Replaying the same tombstone idempotency key with the same canonical tombstone payload returns the existing result and must not emit duplicate projection deletion attempts.
 
-Decomposition parent retirement becomes a tombstone of the parent Task plus the existing decomposition record's parent snapshot. Undo is an admitted mutation that observes the tombstone and the decomposition record, clears the tombstone only if policy still permits restoration and an authorized restorable snapshot payload is still present, and increments the parent object's version. If the parent payload or snapshot has been physically purged or redacted beyond restoration, undo must not synthesize the old payload from the tombstone; it may instead create a repair or clarification path requiring new user input.
+**Decomposition-undo rule deprecated by `UBU-D0278`.** The paragraph below is retained as the superseded rule, not an instruction to clear a parent's tombstone. Undo is a new admitted structural replacement: it creates a restored Task with a new handle, marks the Container and children superseded or moot, and retains the original Task's retirement and history. The remaining tombstone and purge policy in this record stands.
+
+> Decomposition parent retirement becomes a tombstone of the parent Task plus the existing decomposition record's parent snapshot. Undo is an admitted mutation that observes the tombstone and the decomposition record, clears the tombstone only if policy still permits restoration and an authorized restorable snapshot payload is still present, and increments the parent object's version. If the parent payload or snapshot has been physically purged or redacted beyond restoration, undo must not synthesize the old payload from the tombstone; it may instead create a repair or clarification path requiring new user input.
 
 A best-effort physical purge may remove payload blobs, snapshots, derived caches, local projection payload, and external-handle material after or alongside tombstoning, but it does not erase the minimal tombstone while that record is needed for causality, idempotency, audit, or retry. If policy later requires the tombstone itself to be redacted for a Device, the Device receives only an allowed structural representation or an opaque redacted handle; it must not receive forbidden Compartment ids or labels.
 
@@ -4277,7 +4279,7 @@ Review ordering does not affect state category. Proposed and resurfaced candidat
 
 Phase 1b is the phase in which mainline UbU reproduces the practical features of Quick UbU, the dogfooding user's working personal planner, so that Quick UbU can become legacy software. Its exit criterion is the switch: the dogfooding user's primary daily planning runs on mainline UbU. Until the switch, Quick UbU remains the primary tool and mainline is exercised against non-primary test data.
 
-The switch requires planning that places routine and decomposed work better than the greedy baseline, so the planner belongs to Phase 1b. In addition to the feature ports, Phase 1b therefore includes decomposition into Containers (§9.4) whose ordered child Tasks are grouped into segments that stay together; an allowed time range on Tasks; Task value and priority inputs to Plan scoring; routines as evergreen-Objective recurrence that instantiates Tasks; partial placement when not every Dynamic Task fits the planning horizon; and the desktop GPU backend of §16.10, which was already the Phase 1 performance target and is delivered in Phase 1b together with its CPU reference path. Calendar-style recurrence (§7.4.1) moves to Phase 1b with this decision. The Phase 1b slice of recurrence and Task synthesis is carved out of `UBU-Q0125` when the Phase 1b planner questions are recorded.
+Live Phase 1b rehearsals established that the greedy baseline already meets the earlier practical switch bar. The desktop GPU backend remains in Phase 1b because the operator raised the planning expectation on 2026-10-05: automated results requiring minimal human-labor ordering, rather than the ordering work of the previous personal planner. This corrects the justification, not the scope. The switch has no scheduled date and waits on that planner. In addition to the feature ports, Phase 1b therefore includes decomposition into Containers (§9.4) whose ordered child Tasks are grouped into segments that stay together; an allowed time range on Tasks; Task value and priority inputs to Plan scoring; routines as evergreen-Objective recurrence that instantiates Tasks; partial placement when not every Dynamic Task fits the planning horizon; and the desktop GPU backend of §16.10, which was already the Phase 1 performance target and is delivered in Phase 1b together with its CPU reference path. Calendar-style recurrence (§7.4.1) moves to Phase 1b with this decision. The Phase 1b slice of recurrence and Task synthesis is carved out of `UBU-Q0125` when the Phase 1b planner questions are recorded.
 
 The planner precedes multi-device sync, which remains Phase 2. Neither constrains the other. The planning engine is a pure function over `PlanningRequest` and `PlanningResponse` (§16.10.1) and never sees replicas, Devices, mutation envelopes, or Compartments; sync carries canonical state and the Plan artifacts already specified for Phase 1. Sync is not needed for the switch, because the dogfooding configuration is one desktop Device with Google Calendar as a projection surface, which is not a Device (`UBU-D0257`). Building the planner first shortens the path to the switch, starts full dogfooding of mainline sooner, and returns time to the user through more efficient daily planning.
 
@@ -4295,6 +4297,8 @@ Phase 0, Phase 1, Phase 1b, Phase 2, Phase 3+, and Post-MVP keep their labels an
 A phase label names the phase that implements an item. Pulling an individual item forward, as the Phase 1b rule does, re-tags that item to the implementing phase and never renumbers phases. Build order follows the phase table in §4.7.
 
 Consequences:
+
+- The switch waits on the desktop GPU planner and CPU reference/certification path, and on ratification or retirement of every provisional subject root before the store becomes non-disposable (`UBU-D0291`). No switch date is set.
 
 - `DESIGN.md` §4 gains a Phase 1b section (§4.2) and a phase map (§4.7); Phase 2 and Phase 3 move to §4.3 and §4.4, and Phase 4 and Phase 5+ receive §4.5 and §4.6.
 - The `model-committee` phase vocabulary adds `Phase 4` and `Phase 5` so that Open Questions can carry the new labels.
@@ -4666,3 +4670,26 @@ Consequences:
 - `docs/MOBILE_DEVICE_TESTING.md` defines the pre-flight and the rule that no procedure may leave the phone needing a cable to recover.
 
 ---
+
+---
+
+## UBU-D0291: Subject vocabulary is governed by ratification before the switch
+
+**Status:** Accepted → DESIGN.md §11.2. Amends UBU-D0243.
+
+Accepted on 2026-10-06. The first segment after a collection is a permanent top-level taxonomy referenced by every fact, precondition and mutation. It stays governed and reviewed. This amendment changes when a root must be ratified; it does not repeal the namespace grammar or its governance.
+
+The effective subject vocabulary a target's `<subject>` must belong to is the governed set union the provisional registry. The governed set is unchanged: `operator`, `project`, `github`, `affect`, `relationship`. Extending that governed set still requires a recorded amending `UBU-D` decision. `affect` remains reserved, and `UBU-D0242`'s organization/worker-mode intrinsic-affect rejection keyed on `<subject> == affect` is untouched.
+
+The provisional registry is operator-authored and visible in one place. Minting a provisional root is an explicit operator act, never a side effect of authoring a fact and never available to an advisor. A producer may propose a subject only from the effective vocabulary; a model can never mint a root. This follows the same constraint that limits the precondition advisor to recorded targets.
+
+A root's shape is enforced on minting: a snake_case singular noun naming an entity or domain, never an instance, an attribute, a provenance or source, or a reverse-DNS authority prefix. The root rule is unchanged from `UBU-D0243`. Predicates and entity-path segments retain their existing discipline. No subject root is proposed by this record.
+
+Ratification is due before the switch. Every provisional root must either be promoted into the governed set by an amending `UBU-D` record or retired. The registry is that decision's agenda. The switch is when the operator's store stops being disposable; it is the last moment when a rename is cheap. Afterward a rename rewrites UniverseState keys, fact_provenance keys and every precondition target string in Task payloads, with no migration tooling. Backward compatibility is not required while the store is disposable.
+
+Consequences:
+
+- The switch waits on the desktop GPU planner and CPU reference/certification path, and on ratification or retirement of every provisional subject root before the store becomes non-disposable. No switch date is set. This adds ratification to `UBU-D0275`'s exit conditions without changing the planner's Phase 1b scope.
+- `DESIGN.md` §4.2 records those switch conditions; §11.2 records the two-tier vocabulary and preserved namespace invariants.
+- The provisional registry, explicit minting act, orchestrator validator and advisor subject constraint are follow-up implementation work in `ubu-orchestrator`. This ticket implements none of them and adds no root.
+- Phase 1b's Tasks form authors single precondition leaves. Nonempty all_of/any_of trees are readable and clearable; tree authoring remains available through the existing routes and is outside that form's scope.
