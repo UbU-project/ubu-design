@@ -1908,9 +1908,11 @@ A failed precondition makes the Task blocked for planning and execution. It does
 
 ---
 
-## UBU-D0132: Realtime multimodal LLMs are optional interaction backends, not authoritative planners
+## UBU-D0132: Multimodal interaction is primary; models remain subordinate to planning
 
 **Status:** Accepted → DESIGN.md §21
+
+Amended by `UBU-D0292`: local camera-and-voice perception is the primary interaction surface and part of the MVP release. The former optional-surface priority is superseded; cognitive backends remain replaceable, and the planning, consent, provenance and admission rules below remain in force.
 
 Realtime multimodal LLMs may power live voice, video, interruption detection, meeting capture, discovery mode, pronunciation or activity feedback, and short-horizon task monitoring. They are interaction backends and perceptual/extraction aids, not the authoritative UbU planner.
 
@@ -4477,7 +4479,9 @@ Consequences:
 
 Phase 1b invokes the desktop GPU engine through a persistent local Python worker process, not through an in-process Rust-to-Python call and not through a network service. The CPU kernel starts and owns the worker as a child process for the duration of a planning session or bounded worker lifetime. The worker communicates over length-prefixed JSON frames on local pipes. Startup cost is amortized by worker reuse; crash isolation is explicit because a Python, CUDA, or PyTorch fault can terminate the child without corrupting the CPU kernel; and the interpreter lock remains inside the worker instead of entering the Rust desktop process. The worker has no listening socket and receives only the already-minimized planning payload, so it is an invocation boundary, not a new trust or sync boundary.
 
-The semantic contract remains a pure planning function over `PlanningRequest` and `PlanningResponse`. `ubu_core::worker::GpuAdvisoryRequest` and `GpuAdvisoryResponse` may exist only as implementation envelopes for spawning, framing, cancellation, error reporting, and telemetry; they must carry exactly one `PlanningRequest`, `PlanningResponse`, or stream frame and must not become a second planning schema. Time values crossing the semantic boundary use the contract's RFC 3339 UTC timestamps. Rust may store Unix-second coordinates internally, and the Python/PyTorch implementation may lower timestamps to integer offsets or seconds inside tensors, but that lowering is implementation-local and is replayable from the request.
+The semantic contract remains a pure planning function over `PlanningRequest` and `PlanningResponse`. Except for the explicitly approved internal `stage1-atomic-v1` profile below, `ubu_core::worker::GpuAdvisoryRequest` and `GpuAdvisoryResponse` may exist only as implementation envelopes for spawning, framing, cancellation, error reporting, and telemetry; they must carry exactly one `PlanningRequest`, `PlanningResponse`, or stream frame and must not become a second planning schema. Time values crossing the semantic boundary use the contract's RFC 3339 UTC timestamps. Rust may store Unix-second coordinates internally, and the Python/PyTorch implementation may lower timestamps to integer offsets or seconds inside tensors, but that lowering is implementation-local and is replayable from the request.
+
+**Approved atomic Stage 1 exception.** `stage1-atomic-v1` is an internal stage handoff, carrying a minimized request plus CPU-derived topological order, Task/slot masks and a tagged sampling source, and returning padded structural arrays for CPU interpretation and certification. It is the bounded exception to the complete-object envelope restriction, not another public planning schema. The canonical `PlanningStreamFrame` is unchanged. CPU-owned request construction, backend selection, pure planning semantics, exact structural/hard-constraint parity and final CPU certification remain authoritative. This profile neither authorizes worker admission nor implements canonical chunk streaming or the full planning contract. The existing legacy invocation can transport a completed CPU answer; reaching a strategy/framework gate does not establish a completed tensor exchange or GPU planning parity.
 
 PyTorch is confirmed for the Phase 1b GPU backend. The CPU reference path remains the built-in authoritative certification path and the no-GPU fallback. Backend selection is CPU-owned: use the GPU worker only when policy allows it, a compatible local Python/PyTorch/CUDA environment is available, and the compute budget justifies it; otherwise use the CPU reference path. Every returned response and committed Plan records backend provenance, including backend kind, invocation kind, engine version, framework, device summary when available, request id, RNG seed, and CPU certification status.
 
@@ -4693,3 +4697,109 @@ Consequences:
 - `DESIGN.md` §4.2 records those switch conditions; §11.2 records the two-tier vocabulary and preserved namespace invariants.
 - The provisional registry, explicit minting act, orchestrator validator and advisor subject constraint are follow-up implementation work in `ubu-orchestrator`. This ticket implements none of them and adds no root.
 - Phase 1b's Tasks form authors single precondition leaves. Nonempty all_of/any_of trees are readable and clearable; tree authoring remains available through the existing routes and is outside that form's scope.
+
+---
+
+## UBU-D0292: Camera-and-voice perception is the primary MVP interaction surface
+
+**Status:** Accepted → DESIGN.md §2.13, §4.2, §12.2, §21; MULTIMODAL_INTERACTION.md. Amends `UBU-D0132` and supersedes `UBU-Q0128`'s Phase 3 release gate.
+
+Multimodal perception becomes the primary interaction surface without becoming an authoritative planner. The camera proposes candidate state; the kernel still plans; admission is still the operator's.
+
+Local camera-and-voice interaction is part of the MVP release, rather than an optional post-MVP input feature. This extends release scope without retrospectively changing the frozen Phase 1 dogfooding implementation. The work belongs in the Phase 1b MVP-release backlog; `UBU-Q0183` asks for its exact delivery sequence, capture-mode coverage and relationship to the switch and device waves. A Phase 3 question cannot gate this release commitment. `UBU-Q0128` now carries Phase 1b and answers the architecture while retaining unresolved restricted-attention details and naming.
+
+The camera is a perception layer: show the world, resolve candidate objects and facts against permitted persistent context, ask for consequential ambiguity, and admit only validated operator-approved updates. Voice is ordinary interaction; text and forms remain available for preference, accessibility, privacy, precision and context. Primary does not mean mandatory capture or always-on consent. Raw images in this primary path are processed on the operator's own hardware, without upload to a hosted model. Any later export is a separate policy-governed operator choice.
+
+The observation/admission mechanism of `UBU-D0132` is preserved. Backend choice remains replaceable; neither confidence, conversational fluency nor observed elapsed time confers planning authority. Continuous AV refines the existing explicit-mode, Compartment-review, routing-disclosure and approval boundary in §12.2. `UBU-D0290` is unchanged: camera-first mobile interaction's roadmap implication is a question in `UBU-Q0160`, not an implied choice of mobile planner or compute API. Rich Resource/Skill/Technique examples retain their existing later-phase dependencies.
+
+---
+
+## UBU-D0293: Perceptual evidence maps onto the existing provenance enum
+
+**Status:** Accepted → DESIGN.md §11.2, §21.1; MULTIMODAL_INTERACTION.md. Refines `UBU-D0132` as amended by `UBU-D0292`.
+
+Keep the closed `ProvenanceKind` vocabulary `asserted / measured / derived / proposed`. The perceptual vocabulary describes evidence and review operations, not an ordered confidence ladder and not new enum variants. The mapping is explicit and conditional on how a value was established:
+
+| Perceptual term | Existing kind and admission meaning |
+|---|---|
+| `observed` | An unconfirmed visual interpretation is a `proposed` candidate. An actual instrument reading can support `measured`; a person's report of what they saw is `asserted`. Observation alone does not admit state. |
+| `inferred` | An unconfirmed perceptual value is `proposed`. `derived` is reserved for a computation from other facts, with its inputs and derivation evidenced; a model's guess is not such a computation. |
+| `operator_confirmed` | An admitted personal assertion is `asserted`; an operator recording an instrument reading may choose `measured`. Confirmation does not automatically make an inference a measurement. |
+| `externally_verified` | Verification is an evidence qualifier. An attested statement maps to `asserted`, an instrument reading to `measured`, or a computation from facts to `derived`, according to the underlying source. Verification alone neither selects a kind nor admits a value. |
+| perceptual `measured` | Map to enum `measured` only for an instrument or reading. The proposed ladder's strongest-confidence meaning is not adopted. |
+
+The enum member is `ProvenanceKind::Proposed`, stored on `FactProvenance.kind`; `FactProvenance` is a struct, not an enum. It remains unused by the current advisory value policy: existing advisors propose no fact values (`UBU-D0296`). A future unconfirmed perceptual value is the first legitimate prospective use of that member. Such a value stays in candidate state; it is not a write into canonical UniverseState. This records a future mapping, not an implemented perception producer or permission for existing advisors to propose values.
+
+Keep confidence, observation source, corroboration and verification qualifiers in existing candidate/evidence records, including `DiscoveryEvidenceItem`, and link admission to that evidence. Do not add fields to `FactProvenance`, whose current shape is only `kind` and `recorded_at`. Exact evidence sufficiency and admission profiles remain questions (`UBU-Q0165`, `UBU-Q0166`, `UBU-Q0167`, `UBU-Q0172`). No enum, schema, pin or migration changes here; `UBU-D0291`'s vocabulary governance is preserved.
+
+---
+
+## UBU-D0294: Review of admitted requirements has finite escalating holds; rejected proposals are suppressed durably
+
+**Status:** Accepted → DESIGN.md §21.2.2. Records baseline A2+A3.
+
+Every admitted value is open to advisory review; a review is a candidate and admission is the operator's act. The implemented `precondition_review` producer starts this general pattern: replace or explicitly clear an admitted requirement, carrying the reviewed value and a reason. Admission rechecks that value and versions atomically. Reasons belong in candidates, not diagnostics. Other field reviewers are future work, not implied implementations.
+
+Deferring or rejecting an admitted-precondition review creates a finite hold. The default span doubles from 7 days through 14, 28, 56, 112 and 224 to a 365-day ceiling. Configurable whole-day seed and ceiling obey `1 <= seed <= ceiling <= 365`. A precondition false at dismissal caps the actual span at the seed, including when facts changed after the operator chose a longer span; a shorter choice stays shorter. Admission resets escalation. The hold identifies Task, field and reviewed value; escalation identifies Task and field, so edits invalidate the old hold but preserve escalation. Saved decisions and return dates remain immutable despite later Settings changes. Explicit reconsideration may bypass a hold; rejection expiry creates a fresh candidate rather than reviving a rejected one.
+
+Rejecting a newly proposed precondition is different: it durably suppresses that normalized proposal for that Task; a different proposal may still arrive. It is not a finite review snooze. Next-action snooze is a separate interaction again. Later admitted-value reviewers inherit this review contract unless an amending decision explicitly changes it.
+
+---
+
+## UBU-D0295: Precondition advice uses recorded target names and bounds attention per producer
+
+**Status:** Accepted → DESIGN.md §21.2.2. Records baseline A1+A7.
+
+A local precondition advisor receives a Task's title and optional nonblank description plus supported, recorded UniverseState target names. It receives no fact values or fact provenance. It proposes a validated precondition as an advisory candidate; explicit operator admission alone writes the Task requirement. Every proposed leaf must name an existing target, even `absent`. A replacement carries the current condition read by the controller for review and stale-value checking, not a model-authored claim about prior state. The advisor creates no facts and cannot mint a subject root (`UBU-D0291`).
+
+The precondition and vocabulary proposal producers each consider at most 25 Tasks and return at most three proposals per run. Each refuses a run when ten or more candidates of its own kind are `proposed` or `resurfaced`; deferred candidates do not count. This is a refusal threshold, not a hard queue ceiling: a permitted run can add three to nine and leave twelve awaiting review. A full precondition queue does not block vocabulary advice. Admission review has its own finite-hold policy (`UBU-D0294`); these implemented attention bounds do not claim every future producer is already bounded identically.
+
+---
+
+## UBU-D0296: UniverseTarget advice names a fact; only the operator supplies its value
+
+**Status:** Accepted → DESIGN.md §11.2, §21.2.2. Records baseline A4.
+
+`CandidateKind::UniverseTarget` proposes a target name and carries no value. UbU may name a fact; only the operator may value it. Admission requires an operator-supplied value, written through the ordinary UniverseState mutation path with `asserted` provenance. No existing advisor proposes, defaults, guesses or admits a fact value. The operator may instead record a measurement through ordinary human authoring (`UBU-D0300`).
+
+Names must obey the collection/namespace contract and effective subject vocabulary; a model never mints a root. `ProvenanceKind::Proposed` remains unused by this value-proposal policy. `UBU-D0293` describes a future perceptual candidate use, without broadening the current vocabulary advisor's authority or silently admitting inferred state.
+
+---
+
+## UBU-D0297: Future stochastic Stage 1 has an exact counter-based duration stream
+
+**Status:** Accepted → DESIGN.md §16.10. Refines `UBU-D0171`; records baseline B1, decided but not implemented.
+
+Before enabling worker-generated `duration_samples`, freeze the same CPU/worker duration stream and uniform-to-duration transform. A sampled duration controls whether a placement fits a window and therefore structural validity; a statistical similarity test cannot replace exact Stage 1 duration, mask, dependency and hard-constraint parity. Current `stage1-atomic-v1` still uses CPU-provided deterministic fixed/mode `placement_seconds`. This decision neither activates sampling nor changes the current Stage 4 correlated sampler.
+
+Use stateless **Philox4x32-10**, keyed by `(rng_seed, candidate_index, task_index, draw_index)`. The key is low/high 32-bit seed words; the counter is candidate index, Task index and low/high draw-index words. Candidate/Task indices are unsigned 32-bit; seed/draw are unsigned 64-bit. Words wrap at 32 bits. Multiply counter words zero and two by `0xD2511F53` and `0xCD9E8D57`; each round returns `(high(product2) xor word1 xor key0, low(product2), high(product0) xor word3 xor key1, low(product0))`. Run ten rounds, incrementing keys between rounds by `0x9E3779B9` and `0xBB67AE85`. This slot addressing is independent of evaluation or batching order.
+
+From output words `r0,r1`, use the open-unit binary64 uniform `u = (((r0 >> 6) * 2^26 + (r1 >> 6)) + 0.5) / 2^52`. Transform with **Wichura AS241 inverse standard-normal CDF**, its published coefficient tables, binary64 Horner order, round-to-nearest ties-to-even and no FMA substitution. Use **fdlibm 5.3** log/sqrt/exp on both sides. With `a=mode-min`, `b=p95-min`, `z95=1.6448536269514722`, use `sigma=(-z95+sqrt(z95*z95+4*log(b/a)))/2`, `mu=log(a)+sigma*sigma`, and `duration=min+exp(mu+sigma*AS241(u))`. Fixed durations stay fixed. Occupied seconds use ceil with checked int64 range; overflow is an explicit unsupported-profile fallback. Device-library math, Box–Muller and Ziggurat are not interchangeable choices under this profile.
+
+Freeze boundary and transform golden vectors, including near-window placements, and certify both implementations before activation. Existing named numeric/statistical profiles still govern floating scores, diversity, rollout frequencies and intervals in later stages; no tolerance is widened. Probabilities come from duration/outcome simulations, not merely composite-score reductions. Detailed implementations remain outside this repository.
+
+---
+
+## UBU-D0298: Calendar notes may initialize an empty Task description, without reverse export
+
+**Status:** Accepted → DESIGN.md §9.2. Records baseline A5.
+
+Capture can copy an event's description only when the Task description is absent or whitespace-only. Preserve existing interview knowledge and operator text. Trim leading/trailing whitespace, preserve interior text and markup literally, and bound the result to 16,384 UTF-8 bytes. Refuse overlong notes whole with `capture_description_too_large`; do not truncate, skip the otherwise capturable title, or overwrite a populated description on later capture. Blank notes add no description. Notes never return to Google Calendar: insert/PATCH omit description, and notes alone cause no projection drift or updated capture count. Description remains private source content, not a diagnostic explanation.
+
+---
+
+## UBU-D0299: Producer grammars must be safe for their validators
+
+**Status:** Accepted → DESIGN.md §21.2. Records baseline A8 with the approved conservative-subset correction.
+
+Every output admitted by the structured grammar handed to a producer must satisfy the unchanged semantic validator for the matching vocabulary and instance mode. Intentional producer restrictions may form a documented, tested conservative subset; literal equality with the full validator is not required. Keep the validator authoritative and test grammar membership independently against validation. Do not make a producer appear unreliable by offering a shape its validator necessarily refuses.
+
+The scar matters: three precondition rehearsals produced nothing because the offered grammar permitted rejected leaves. The correction preserved full authoring/admission semantics while restricting small-model output to supported collection/predicate combinations, scalar expectations and bounded trees. P1B-73 repeated the boundary mismatch in four rehearsal-driver gates; P1B-74 corrected those gates by deriving them from their validators. That experience records a general producer-boundary rule, not a requirement to adopt the rehearsal driver or other devshell machinery as product architecture. Changing the validator to fit a weaker producer or pretending a subset is equality would both erase a legitimate contract.
+
+---
+
+## UBU-D0300: Human fact authoring distinguishes assertion from measurement
+
+**Status:** Accepted → DESIGN.md §11.2. Records baseline B2's implemented form policy.
+
+The UniverseState form offers `asserted` and `measured`: a person can report a statement or record an instrument/reading. It does not offer `derived`, which would claim a computation UbU performed, or `proposed`, which would claim an unconfirmed advisor value. This is the human form's policy, not removal of enum members or a restriction on every core mutation caller. UniverseTarget admission continues to require an operator-authored assertion (`UBU-D0296`).

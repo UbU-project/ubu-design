@@ -24,6 +24,10 @@ Even the newer apps that promise to *automatically* arrange your day live on the
 
 UbU is built to be a GPS for your life.
 
+The MVP release will include camera and voice as the primary way to use it. Show the world, let UbU propose what it means in your private context, and review the ambiguity that matters. The camera is a perception layer, not an upload field. Ask for bits of uncertainty, not records: you should not need to maintain an inventory database to get help. Value-producing onboarding means your first photograph or spoken concern should produce your first useful result. Voice is ordinary control, while text and forms remain available when you prefer them or the situation calls for precision.
+
+That interaction is a release target, not a shipped feature. Its images stay on your own hardware for local inference, without upload to a hosted model. You decide what enters the model and what, if anything, is shared later; UbU's explicit planner still builds the plan. Cameras, speech, vision models and databases already exist. The ambition is to compose them into useful navigation under your control. The richer household, learning and expertise examples below describe the future product: they depend on later phased Resource, Skill and Technique work, rather than features a camera alone makes available. [The interaction design](MULTIMODAL_INTERACTION.md) explains that boundary.
+
 It takes in everything relevant to your situation — your goals, your ongoing work, your commitments, how much energy you have today, even the fact that you barely slept last night — and figures out what you should do next. Not "here are all your tasks." One clear answer: *this, now, here's why.* And when things change — a deadline moves, an appointment runs long, your afternoon falls apart — it recalculates.
 
 That's a real shift. But it's only the beginning. Because a GPS for your life needs to know something that a GPS for your car doesn't: whether you're actually *capable* of taking the route it's suggesting — and whether everything you need is actually in place.
@@ -80,7 +84,7 @@ And crucially: *UbU is not running your life.* This is not a system that makes c
 
 For anyone who is rightfully skeptical of the direction technology has been heading — the surveillance, the manipulation, the slow erosion of autonomy — UbU is something different. It was designed to give power *to* the person using it, not to extract value *from* them.
 
-There's a quiet consequence of building it this way. Because UbU runs on the device already in your pocket — no data center, no subscription to a remote brain, no fleet of servers someone has to pay for — it can reach people the big systems have no reason to serve. The most capable personal AI is being built for people who can pay for it. UbU is built to give a version of that same capability to anyone with a modern phone, including the people large companies will never find profitable enough to bother with. Self-governance shouldn't be a luxury good.
+There's a quiet consequence of building it this way. By targeting useful local operation on hardware people already own, UbU aims to reach people whom expensive hosted assistance may exclude. Supported devices and lower-cost compute paths still need to be established. The most capable personal AI is being built for people who can pay for it. UbU is built to give a version of that same capability to people with suitable local hardware, including people poorly served by expensive assistance. Self-governance shouldn't be a luxury good.
 
 ---
 

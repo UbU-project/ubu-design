@@ -2133,7 +2133,7 @@ Open.
 
 ## UBU-Q0128: Embodied Audio Interaction
 
-Status: Open Priority: MVP important Phase: Phase 3 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Commute Mode, restricted-attention interaction, audio-only task capture, audio-safe messaging, media-state routing, exercise/rest/walking interaction modes Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: Commute Mode, restricted-attention interaction, audio-only task capture, audio-safe messaging, media-state routing, exercise/rest/walking interaction modes Resolved by: None Last scored: Never Scored from commit: None
 
 Depends on unregistered areas: Affect model, Compartment policy, audio I/O policy,
 MCP/tool harness policy, device context model.
@@ -2163,11 +2163,15 @@ UbU may support Embodied Audio Interaction: audio-first or audio-only interactio
 17. How should Embodied Audio Interaction interact with local-first architecture, cross-device sync, car audio systems, headphones, watches, phones, and future wearable devices?
 18. What audit trail should UbU preserve for audio interactions, especially when external actions were proposed, confirmed, deferred, or rejected?
 19. How should UbU avoid becoming an attention-extraction system or productivity grinder, and instead act as an attention steward that sometimes recommends silence, music, rest, or non-intellectual content?
-20. What minimum version of Embodied Audio Interaction, if any, belongs in earlier phases as audio note capture or voice-to-task capture, while preserving the full feature galaxy for Phase 3?
+20. Given the primary camera-and-voice MVP release commitment in `UBU-D0292`, which restricted-attention primitives must be delivered first, and which richer media/narration integrations remain later work? Phase 3 is no longer a gate on the primary surface.
 
 ### Current direction
 
-Embodied Audio Interaction is accepted as the better name for this future feature galaxy. It generalizes the earlier Commute Mode concept beyond driving to any situation where audio interaction is available while hands, visuals, attention, or intellectual bandwidth are constrained. Driving and bicycling are the most safety-critical cases, but walking, running, gym use, physical resting, cooking, housework, and similar contexts share the same architectural pattern.
+**Architectural answer and MVP scope (`UBU-D0292`, `UBU-D0293`).** The primary surface is local camera-and-voice perception: observation → reviewable candidate state → resolution against permitted persistent context → consequential clarification → CPU semantic/policy/conflict validation → operator admission → planning from admitted state. Model-time evidence never substitutes for planner-time semantics. Voice is ordinary interaction; forms and text remain available for precision, context, preference and accessibility. Capture is mode-bound, visible, source-scoped and pausable; continuous AV requires the existing explicit mode, Compartment review, routing disclosure and user approval. Raw-media minimization/deletion is distinct from append-only correction and evidence metadata. Intent and affect remain user-declared. These answers refine the already-licensed mechanism, rather than making a model the planner.
+
+**Naming (absorbs delta §17.2).** Embodied Audio Interaction remains the recorded name for the restricted-attention audio subset. No name for the broader camera-and-voice surface has been selected; neither working proposal is adopted. Should this wider interaction model receive a distinct canonical name, or should the existing label remain only the narrower mode? Keep this as an operator naming choice, not a new decision record.
+
+Embodied Audio Interaction is the recorded name for the restricted-attention audio subset. It generalizes the earlier Commute Mode concept beyond driving to any situation where audio interaction is available while hands, visuals, attention, or intellectual bandwidth are constrained. Driving and bicycling are the most safety-critical cases, but walking, running, gym use, physical resting, cooking, housework, and similar contexts share the same architectural pattern. The broader primary camera-and-voice surface is MVP release scope; its naming remains open above.
 
 UbU should not merely provide “ChatGPT in the car” or generic voice chat. UbU should remain the harness, context controller, policy layer, and action authority. STT, TTS, MCP, LLMs, media apps, and device integrations should be subordinate components. UbU should decide what context is exposed, what actions are allowed, how much complexity the user can handle, when confirmation is required, and when work should be deferred.
 
@@ -2177,7 +2181,7 @@ The affect model is central. UbU may know that the user is not in the right stat
 
 ### Resolution
 
-Open.
+Architecture and MVP-release priority are answered by `UBU-D0292` and `UBU-D0293`; the former Phase 3 release gate is superseded. This question remains Open for the naming choice and the detailed restricted-attention policies above. The capture delivery sequence is `UBU-Q0183`; related evidence, latency, retention and hardware questions are `UBU-Q0164`–`UBU-Q0182`. No generic voice confirmation authorizes a consequential external action.
 
 ---
 
@@ -2705,7 +2709,7 @@ How does Phase 1b represent a decomposed Task as a Container whose ordered child
 3. **Gap semantics.** Quick UbU chains decomposed children with `offset_minutes`, which is only a minimum gap, so other Tasks can slide between them and scatter the checklist. Within a segment, are children strictly back-to-back, or bounded by a maximum gap?
 4. **Planner handoff.** Either the orchestrator sends each segment to the kernel as one placement unit and splits it back into child steps afterwards, or the kernel contract gains a native no-gap edge. The first keeps the contract unchanged. Its duration is exact for fixed durations and a conservative sum for stochastic ones (minimum, mode, and p95 each summed), with one rollout sample per segment. The second samples each child. Which applies in Phase 1b?
 5. **Constraints inside a segment.** How are children with their own static window, allowed time range, preconditions, or dependencies outside the segment handled: split the segment there, reject the decomposition, or constrain the whole unit?
-6. **Proposal shape.** What is the normalized proposal of a `Decomposition` advisory candidate: ordered children with titles, durations, and split markers? How does the decomposition advisor propose natural split points, and how does review edit them?
+6. **Proposal shape.** What is the normalized proposal of a `Decomposition` advisory candidate: ordered children with titles, durations, and split markers? How does the decomposition advisor propose natural split points, and how does review edit them? **Operator answer:** the ordered child list should mark natural pause/split points, editable during review. The CPU-equivalent fallback is no split points: keep children in one contiguous sequence so fixed-duration timing remains equivalent to the original Task; stochastic summaries use the already-recorded conservative approximation. This is decomposition advice, not a claim that the Clarify interview currently produces or admits split markers. `UBU-D0278` already records this answer; its resolution is preserved.
 7. **Progress and repair.** When a child finishes early or late, how does repair treat the rest of its segment?
 8. **Undo.** Under §9.4 structural replacement the original Task becomes moot with `replaced_by_new_plan_structure`. What does undoing a decomposition restore, and what history is retained?
 
@@ -2972,7 +2976,7 @@ Resolved by `UBU-D0288`: routine occurrences are mandatory and carry no priority
 
 ## UBU-Q0160: Which mobile compute API should the mobile GPU backend target?
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0156 Blocks: mobile GPU backend selection Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0156 Blocks: mobile GPU backend selection, mobile interaction/workload roadmap Resolved by: None Last scored: Never Scored from commit: None
 
 Defining context: DESIGN.md §16.5, §16.10.6; PLANNING_KERNEL_CONTRACT.md §4; `UBU-D0126`, `UBU-D0256`, `UBU-D0283`, `UBU-D0290`.
 
@@ -2987,10 +2991,429 @@ Which compute API should implement the in-process mobile GPU backend while prese
 3. What latency, memory, energy and sustained thermal behavior does each exhibit for deterministic skeletonization, hard checks, local repair recipes and a short-horizon branch cache?
 4. Which APIs and operations are actually available on the selected LineageOS build, and what CPU fallback is required?
 
+5. With `UBU-D0292` making the smartphone camera a primary MVP surface, does `UBU-D0290`'s stewardship execution-profile framing survive, or must mobile's product role and planning workload change? Distinguish where the user interacts from where full search executes: a primary mobile client does not by itself require a full mobile planner.
+6. What local perception, voice, battery, privacy and CPU-certification requirements must the camera-first mobile client meet, and how are they sequenced with MVP capture and device synchronization (`UBU-Q0183`)?
+
 ### Current direction
+
+The camera-first roadmap implication requires an operator decision. `UBU-D0290` is questioned, not amended; neither a broader mobile workload nor a compute API is selected. Existing parity measurements remain necessary for any selected planning backend, and perception-model suitability needs its own evidence.
 
 No compute API is selected. `UBU-Q0156` settled the desktop invocation boundary; it does not select a mobile backend. This question is blocked on the on-device parity harness producing measurements. The gate is satisfied only once the stewardship workload has been measured against the CPU reference path on physically connected real hardware under the `UBU-D0283` parity rule. Emulator timings and desktop full-search benchmarks do not answer it.
 
 ### Resolution
 
 Open pending that measurement gate; no hardware result is inferred from API availability alone.
+
+---
+
+## UBU-Q0161: Task descriptions as lossless prose after Clarify
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should an additional local model round turn Clarify answers into readable Task-description prose while retaining all acquired knowledge for subsequent Clarify rounds?
+
+### Current direction
+
+The operator wants a lore field, not an accumulating Q&A transcript. Prose must preserve every answer, qualification and unresolved issue; it must not invent agreement. Decide how original answers, synthesis, corrections and later interview context are retained, reviewed and bounded. The retention mechanism and acceptance criterion remain open; this is not permission to replace existing descriptions lossy.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0162: Enforce append-only Log correction rather than in-place editing
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Where does the operator-reported editable Log violate the existing append-only contract, and what minimum implementation correction closes it?
+
+### Current direction
+
+Append-only Logs and linked corrections are already design rules, not a newly adopted requirement. Audit edit paths and distinguish annotation, corrected query views and compensating entries from changing admitted history. Preserve original assertions, correction/revocation links and privacy-minimized media-deletion metadata. The affected implementation paths and remediation ticket are unresolved; this documentation ticket changes no store or UI behavior.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0163: Retire the uncaptured recurring-busy capacity workaround
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What verified capture/occupancy behavior allows removal of the temporary manual blocking Static event used for uncaptured recurring busy time during the Phase 1b-to-Phase 2 transition?
+
+### Current direction
+
+Recorded operator-reported limitation: uncaptured busy time is invisible to the planner, so a manual capacity blocker can prevent placement there but can also collide with subsequently captured commitments. Timed expanded recurrence instances already capture as individual Tasks; do not describe all recurrence as unsupported. Series semantics, unsupported inputs and missed/on-demand capture still need review. Remove the workaround only when relevant recurring commitments demonstrably occupy the correct capacity, without duplicates or double counting. No operator event or collision tally is reproduced here.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0164: Deliver the primary camera-and-voice surface with usable alternatives
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How does the MVP realize its already-decided primary camera-and-voice surface while keeping text/forms useful for preference, privacy, precision and context?
+
+### Current direction
+
+Delta §17.1 is answered at the scope level by `UBU-D0292`. Remaining work is interaction coverage and acceptance, not reopening whether the primary surface belongs in the MVP. Camera unavailable, unusable or declined must leave a useful alternative.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0165: Observation-to-candidate contract and admission reuse
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What exact observation-to-candidate contract reuses existing advisory and Discovery admission machinery without introducing automatic canonical mutation?
+
+### Current direction
+
+Delta §17.3. Specify source/session refs, identity ambiguity, candidate object/value links, observed versions, evidence, idempotency, corrections and review presentation. The architectural pipeline is answered in DESIGN.md §21.1.1; concrete payload coverage and fixtures are unresolved. Do not invent new FactProvenance fields.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0166: Preserve perceptual qualifiers alongside the closed provenance enum
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Can existing candidate/evidence records preserve observation, inference, confirmation and external-verification qualifications losslessly under `UBU-D0293`?
+
+### Current direction
+
+Delta §17.4. The kind mapping is decided and the enum stays fixed. Identify evidence fields and links needed by real perception proposals; measured remains an instrument/reading, derived a computation from facts, and proposed an unconfirmed candidate. If a schema gap is demonstrated, propose a separate versioned chain change for review; none is made here.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0167: Consequence-sensitive corroboration before planning influence
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should consequence and uncertainty determine corroboration and human review before a visual interpretation can influence planning or execution?
+
+### Current direction
+
+Delta §17.5. Keep ordinary clarification proportionate while requiring stronger evidence for consequential transitions. Model confidence is not independent corroboration. Specify unknown/conflicting-source behavior, operator correction and the boundary between admission and external-action permission; no automatic confidence threshold is selected.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0168: Snapshot, conversational, streamed and retrospective latency classes
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Which latency classes and degradation behavior are required for snapshots, conversational interaction, streamed supervision and retrospective analysis?
+
+### Current direction
+
+Delta §17.6. Decide user-visible deadlines, stale-context handling, offline/battery/thermal limits and interruption semantics through measured local-device evidence. Capture latency is distinct from planner streaming and from proof of execution. No performance numbers or supported-hardware claims are established.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0169: Local AV segmentation and bounded agent/tool interfaces
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How are local audio/video streams segmented, and what scoped interfaces expose frame extraction, event detection and relevant-section isolation?
+
+### Current direction
+
+Delta §17.7. Decide buffering, timestamps, cancellation, source boundaries, access grants and retention of intermediate artifacts. Tools receive only purpose-required media/context; interpreted scene text is data, never a capability grant. No MCP or agent interface is implemented by this record.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0170: Default raw-media retention for consented perception
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What default retention applies to raw media in an explicitly enabled continuous or near-continuous perception session?
+
+### Current direction
+
+Delta §17.8. Minimize retained raw surveillance under DESIGN.md §12.2. Decide transient buffers, purposeful clips, local storage eligibility and expiry, without confusing deletion of media with editing append-only historical evidence. Do not promise automated retention enforcement before implementation.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0171: Operator controls over discard, summarize, hash, clip and export
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How does the operator inspect and control raw-AV discard, summaries, hashes, clips and any permitted subsequent export?
+
+### Current direction
+
+Delta §17.9. Controls must show capture state, destination and retention effects, obey hard Compartment denials and preserve minimized correction/deletion metadata. Hashes and summaries can still expose sensitive context; no blanket permission to export them follows from deleting raw media.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0172: Evidence compatible with completion versus proof of an effect
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What evidence semantics distinguish an observation compatible with completion from evidence sufficient to claim the modeled effect occurred?
+
+### Current direction
+
+Delta §17.10. Specify visibility limits, source reliability, independent corroboration, operator confirmation, contradictory evidence and later revocation. Inference must not self-certify by flowing through a plan or summary. Consequential examples remain withheld until these semantics are decided and implemented.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0173: Skill evidence without equating observed success with competence
+
+Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should guided Technique execution update Skill evidence without overstating competence from sparse or assisted successes?
+
+### Current direction
+
+Delta §17.11. Distinguish independent performance, assistance, context, recency, failures and uncertainty. This depends on minimal Skill/readiness objects and later Technique integration; observation is evidence for review, not an automatic credential or a measure of time spent learning.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0174: Realtime guidance stop and professional-escalation conditions
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Which safety and uncertainty conditions stop realtime guidance and require an appropriate human professional?
+
+### Current direction
+
+Delta §17.12. Specify domain limits, missing context, hazardous uncertainty, contradictory observations and user-visible stop behavior. Camera access is not domain competence. Rich Technique execution depends on later objects; a release must accurately bound any guidance it does offer rather than imply professional replacement.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0175: Minimal expert-handoff packets from a local session
+
+Status: Open Priority: Post-MVP Phase: Phase 4 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How can a live session assemble a minimal, operator-approved evidence packet for expert escalation?
+
+### Current direction
+
+Delta §17.13. Decide permitted source selection, unresolved questions, provenance, retention, recipient scope and explicit export review. Delegation/Technique integration is later work, and gathering a packet neither licenses the model to diagnose nor grants ambient access to a professional or funder.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0176: Observed procedures as draft Techniques with uncertainty
+
+Status: Open Priority: Post-MVP Phase: Phase 3 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How can observed expert/user procedures become draft Techniques while preserving uncertainty and safety conditions?
+
+### Current direction
+
+Delta §17.14. Identify author review, step provenance, prerequisites, limitations, missing observations and generalization limits. The draft is a candidate, not an accepted procedure or Skill attestation. Minimal Technique-based expansion is phased; richer capture/integration details are still undecided.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0177: Minimum viable secure local hardware for multimodal interaction
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What measured local hardware profile can deliver the MVP multimodal experience securely and usefully?
+
+### Current direction
+
+Delta §17.15. Evaluate model quality, memory, latency, energy, sustained thermal behavior, endpoint security and local storage on supported devices. Distinguish primary mobile interaction from mobile planning workload (`UBU-Q0160`). No modern-phone universality or cloud-versus-local quality ranking is assumed.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0178: Economically accessible local compute paths
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Which lower-cost local compute paths prevent economically precarious users from being excluded from the multimodal experience?
+
+### Current direction
+
+Delta §17.16. Consider smaller local models, bounded snapshots, CPU fallback, reduced latency classes and operator-controlled trusted hardware without a hidden hosted-model dependency. Measure the useful tradeoffs before claiming reach or costs. Compute accessibility is part of the mission, not a promised device minimum.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0179: Audience routing for the social-impact thesis
+
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Which additional parts of the social-impact thesis belong in public overview, funder, nonprofit/government outreach and canonical design material?
+
+### Current direction
+
+Delta §17.17. Initial routing is carried by P1B-75; later claims need evidence labels, dependency scope and operator review. Keep the scenario library held, unverified statistics embargoed, and private material excluded. General user-authorized records for professional preparation are distinct from monitoring or diagnosis claims.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0180: Measure economic benefit rather than forecast scenarios
+
+Status: Open Priority: Research Phase: Post-MVP Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Which economic-benefit claims can be evaluated empirically instead of remaining qualitative scenarios?
+
+### Current direction
+
+Delta §17.18. Define attribution, counterfactuals, time burden, avoided costs, benefit access and Skill gains without turning working scenarios into forecasts. No figures or savings guarantees are adopted. Reducing coordination friction does not remove poverty, eligibility rules, scarce resources or the need for professionals.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0181: Local metrics and opt-in research without privacy erosion
+
+Status: Open Priority: Research Phase: Post-MVP Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What purely local metrics or separately consented, opt-in research could evaluate benefit without undermining user sovereignty?
+
+### Current direction
+
+Delta §17.19 and baseline D5. Decide consent/revocation, minimization, validity, selection bias, governance, Compartment boundaries and inference risks before any study or export. Privacy-preserving field research is speculative; it does not replace controlled trials, establish clinical efficacy or grant researchers access to private life records.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0182: Guided camera accessibility without a narrow product category
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should camera-positioning guidance and voice/text/form alternatives improve accessibility without positioning UbU primarily as an accessibility product?
+
+### Current direction
+
+Delta §17.20. Test framing/label acquisition, unavailable vision or speech, restricted attention, assistive technologies and privacy constraints with users. Describe access benefits as part of ordinary life logistics; do not infer universal accessibility from having a camera.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0183: Full realtime capture phase and MVP delivery sequence
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Scope Auto-choice eligibility: Human only Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+How should full realtime multimodal capture be sequenced in the Phase 1b MVP-release backlog, and which mode/device slices must precede release?
+
+### Current direction
+
+The release commitment and Phase 1b backlog assignment are recorded by `UBU-D0292`; the exact implementation sequence is not settled. Decide snapshot/voice first slices, explicitly consented streaming coverage, local hardware, evidence/retention gates and coordination with the switch and Phase 2 device wave. Do not restore a Phase 3 release gate, infer always-on consent, or amend mobile stewardship without the operator roadmap decision in `UBU-Q0160`. This is a scope-allocation question, not an implementation claim or a change to existing switch criteria.
+
+### Resolution
+
+Open.

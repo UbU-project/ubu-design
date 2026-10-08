@@ -310,7 +310,7 @@ This metadata must be intentionally bounded. UbU should not leak private Relatio
 
 ### 2.13 Realtime and agentic AI boundary
 
-Realtime multimodal LLMs are optional interaction backends. They may listen, speak, watch, transcribe, translate, detect interruptions, monitor Task progress, assist meeting capture, or generate candidate UI, but they do not become UbU's authoritative planner.
+Local camera-and-voice perception is the primary interaction surface and part of the MVP release (`UBU-D0292`, amending `UBU-D0132`). Realtime multimodal models remain replaceable perceptual/extraction backends: they may listen, speak, watch, transcribe, translate, detect interruptions, monitor Task progress, assist meeting capture, or generate candidate UI, but they do not become UbU's authoritative planner. Text and forms remain available, and primary interaction never implies continuous-capture consent.
 
 UbU distinguishes **model-time awareness** from **planner-time semantics**. A model may notice elapsed time, silence, overlapping speech, or changed conditions; UbU decides whether those observations update a Task, Log, Snapshot, Calendar, Objective, or recalculation trigger.
 
@@ -801,15 +801,16 @@ Phase 3 still defers:
 
 Phase 1 keeps these abstractions documented for compatibility but does not implement them:
 
-- Technique as a first-class planning object;
-- Resource and Skill as first-class planning objects beyond lightweight compatibility placeholders;
+- Technique as a first-class planning object (minimal Technique-based Objective expansion in Phase 3, richer integration in Phase 4);
+- Resource and Skill as first-class planning objects beyond lightweight compatibility placeholders (minimal readiness in Phase 3; richer integration in Phase 4);
 - full Compact Calendar planner grammar and high-coverage transport format;
 - complete Zone and Device system beyond the current local execution enclave;
 - organization-mode and worker-mode web admin consoles;
 - richer relationship-management, personal CRM, and longitudinal affect/growth models;
 - full Release Outreach Pipeline video generation, rendering, and publication workflow;
 - broad email, text-message, file, invoice, note, or personal-data ingestion outside narrow approved dogfooding fixtures;
-- full realtime multimodal capture, always-on assistant behavior, public Skill Barter marketplace operation, payment/settlement flows, reputation markets, dispute resolution, and General Contractor subdelegation workflows;
+- full realtime multimodal capture (now Phase 1b MVP-release scope under `UBU-D0292`, with mode/device coverage and delivery sequencing open in `UBU-Q0183`); always-on assistant behavior remains outside this release commitment;
+- public Skill Barter marketplace operation, payment/settlement flows, reputation markets, dispute resolution, and General Contractor subdelegation workflows;
 - adaptive model-committee weighting, automatic patch application, GitHub mutation, and direct cloud-provider APIs.
 
 Stop rule:
@@ -1012,6 +1013,10 @@ Phase 1b includes:
 - the Phase 1b foundations already decided, including sync-ready mutation envelopes, the Device registry, tombstones, redacted Handles, projection-conflict repair, Device-local credentials, the local advisory worker, advisory batches, and first-class advisory candidate review;
 - the Quick UbU practical features, ported under the Phase 1b rule;
 - the planner the switch requires: decomposition into Containers whose ordered child Tasks are grouped into segments that stay together (§9.4); an allowed time range on Tasks; Task value and priority inputs to Plan scoring; routines as evergreen-Objective recurrence that instantiates Tasks (§7.4.1); partial placement when not every Dynamic Task fits the planning horizon; and the desktop GPU backend with its CPU reference path (§16.10).
+
+**MVP-release scope amendment (`UBU-D0292`).** Local camera-and-voice interaction, including explicitly enabled realtime capture, enters the Phase 1b release backlog. This is a release commitment, not a claim that capture is implemented or a retroactive change to frozen Phase 1. `UBU-Q0183` leaves the exact capture modes, supported devices and sequence relative to the switch and existing device waves to an operator roadmap decision. The switch criterion above is unchanged; release completion cannot be inferred from switching daily planning alone. `UBU-Q0128` is re-tagged Phase 1b, so Phase 3 no longer gates the primary interaction surface. Always-on behavior is not required. Mobile interaction versus mobile planning workload remains open in `UBU-Q0160`, without amending `UBU-D0290`.
+
+The richer household apprentice, maintenance triage, purchasing defense, Skill evidence and tacit-expertise examples depend on first-class Technique, Resource and Skill implementations. They are phased but unimplemented dependencies: Phase 3 supplies minimal readiness and Technique-based Objective expansion, and Phase 4 supplies richer integration. Evidence semantics, hardware suitability and scenario-specific scope remain unresolved. Camera-first MVP scope does not promise that those later planning objects or scenarios are MVP-ready.
 
 Phase 1b defers multi-device sync and everything else assigned to Phase 2 and later.
 
@@ -1513,6 +1518,10 @@ Dynamic Tasks may have:
 
 **Phase 1b split policy (`UBU-D0284`).** A schedulable Task has `split_policy`, defaulting to `atomic`. A splittable Task declares `splittable { min_piece_seconds, resume_overhead_seconds, max_pieces }`; all three fields are admitted Task inputs rather than silent category defaults. Advisors may propose defaults for review, but admission records the explicit policy. Pieces are Plan placements of the same Task, not child WorkItems, and actual partial execution is recorded as Log evidence plus a remaining-work estimate on that Task rather than a Container replacement.
 
+**Operator-authored preconditions (baseline A6).** The expanded Tasks row reads its precondition in words and lets the operator author a single leaf over a recorded target, with predicates constrained by that target's collection. Clearing is an explicit act that explains removal of the planning requirement. Boolean trees are readable and clearable; their authoring remains available through existing routes, outside this form. Operator authorship does not depend on admitting a model proposal.
+
+**Captured notes (`UBU-D0298`).** Calendar event notes may initialize an absent/blank Task description after edge trimming, within 16,384 UTF-8 bytes, preserving interior text. Existing interview knowledge and operator edits are never overwritten. Overlong notes are refused whole while the otherwise capturable Task/title remains; description is never exported back to Google Calendar. Lossless prose synthesis of later Clarify answers remains open in `UBU-Q0161`.
+
 ### 9.3 MVP Task schedulability invariant
 
 A Task is schedulable in MVP if it has:
@@ -1835,6 +1844,10 @@ The Phase 1b Tasks form reads requirements in words and authors a single leaf. B
 
 A stricter ontology can be added later.
 
+**Human authoring and target advice (`UBU-D0296`, `UBU-D0300`).** The UniverseState form offers `asserted` for a person's statement and `measured` for an instrument/reading; it does not offer `derived` or `proposed`. A UniverseTarget advisor proposes only a target name, without a value. Its admission requires the operator's own value and records an assertion through the ordinary mutation path. No current advisor suggests values.
+
+**Perceptual provenance (`UBU-D0293`).** The closed enum remains `asserted / measured / derived / proposed`, not a confidence ladder. Unconfirmed visual observation or inference maps to a `proposed` candidate, never a canonical value. Personal confirmation maps to `asserted`, instrument/reading evidence to `measured`, and an actual computation from facts to `derived`. External verification qualifies the evidence and keeps the underlying source kind. Candidate/Discovery evidence carries observation, confidence and corroboration qualifiers; `FactProvenance` remains only `{kind, recorded_at}`. This future perceptual mapping does not implement value proposals or broaden the existing advisors' authority.
+
 ### 11.3 Mutation vocabulary
 
 MVP mutations support:
@@ -1915,6 +1928,10 @@ Allowed Phase 1 discovery inputs are intentionally narrow:
 - device state needed for interpretation, such as screen on/off or network/offline state.
 
 Phase 1 discovery excludes covert or broad capture by default: continuous microphone, camera, screen recording, keystroke logging, raw message bodies, raw file contents, raw GPS trails, and cross-Identity sharing are outside the default discovery input set. Any later use of those sources requires a separate explicit mode, Compartment review, routing disclosure, and user approval.
+
+**AV refinement for the MVP interaction surface (`UBU-D0292`).** The primary camera-and-voice surface does not enable continuous sources implicitly. A consented capture session remains visible, source-scoped, pausable and inspectable under the clause above. Process raw AV locally on the operator's own hardware, minimize context and retain only material justified by its purpose. Selective clips, summaries, hashes or deletion are operator-controlled under Compartment policy; subsequent export needs its own allowed route and approval. No-cloud/no-export denials remain hard. Exact defaults, segmentation and deletion mechanics remain open in `UBU-Q0169`–`UBU-Q0171`; recording a policy does not claim its enforcement has shipped.
+
+Selective raw-media retention and append-only evidence are distinct. Discarding a raw stream or deleting an authorized clip does not edit an admitted historical claim in place: append minimized correction, revocation, deletion or tombstone metadata with the appropriate links. The immutable Log retains evidence about what was asserted, reviewed or withdrawn, not an automatic reconstructible copy of private raw media. A hash is not proof of an event and can itself leak correlation; policy must govern it. Later views can mark deleted evidence unavailable without inventing a replacement observation. `UBU-Q0162` tracks the reported Log-editability enforcement gap.
 
 Admission rules:
 
@@ -2514,6 +2531,10 @@ In Phase 1b the engine is invoked through a persistent local Python worker proce
 
 The CPU/GPU semantic boundary is defined by two typed objects: `PlanningRequest` and `PlanningResponse`, specified in `PLANNING_KERNEL_CONTRACT.md`. Worker-spawn envelopes such as `GpuAdvisoryRequest` and `GpuAdvisoryResponse` may wrap those objects for process management, framing, cancellation, and telemetry, but they do not define separate planning semantics. Time values crossing the semantic boundary use the contract's RFC 3339 UTC timestamps; integer Unix seconds and tensor offsets are implementation-local lowerings.
 
+`UBU-D0283` now records the explicitly approved internal `stage1-atomic-v1` exception: a minimized request, CPU-derived order/masks and tagged sampling source cross the stage boundary; padded structural arrays return for CPU certification. The canonical `PlanningStreamFrame` and pure semantic boundary are unchanged. The atomic profile does not implement public chunk streaming or the full response contract, and a fallback gate is not evidence of successful tensor computation.
+
+`UBU-D0297` specifies the future worker-derived duration stream: stateless Philox4x32-10 with seed/candidate/Task/draw addressing, an exact open-unit uniform and AS241/fdlibm transform. Both implementations and near-window golden vectors must be frozen and certified before activation. The current atomic profile still receives deterministic fixed/mode placement seconds from CPU; neither the new stream nor expanded Stage 1 stochastic behavior is implemented by this design ticket. Exact duration/window/mask parity remains distinct from the unchanged named numeric/statistical profiles for later-stage scores and rollouts.
+
 `PlanningRequest` includes schema version, planner version, request ID, effective time, generated-at time, mode, RNG seed, time-window policy, horizon policy, compute budget, task graph with CPU-provided `topological_order`, UniverseState snapshot, AffectProfile, scoring policy, constraint policy, payload policy summary, and privacy/provenance payload-safety proof. Optional fields include external event assumptions, repair context, explanation request, and debug flags.
 
 `PlanningResponse` returns ranked PlanCandidates plus diagnostics, rejection counts, warnings, probability-quality metadata, optional coverage estimate, optional compute telemetry, and stage funnel counts. `K=3` PlanCandidates is the Phase 1 default:
@@ -3049,7 +3070,7 @@ Realtime sessions may produce candidate updates, but they do not directly mutate
 
 A realtime model's sense of elapsed time is evidence. Planner-time semantics are determined by UbU's explicit Task, Plan, Calendar, Log, Snapshot, and recalculation rules.
 
-Realtime models are optional interaction backends for conversation, capture, triage, and short-horizon repair. UbU represents a realtime run as a lightweight `RealtimeInteractionSession`, not as a Task, Calendar event, canonical Log entry, or raw sensor stream. A session records the consented interaction context and source boundary; the model's outputs are `RealtimeCandidateUpdate` records until admitted through the ordinary planner, Log, Snapshot, Compartment, and review rules.
+Realtime models are replaceable interaction backends for the primary MVP camera-and-voice surface (`UBU-D0292`), including conversation, capture, triage and short-horizon repair. UbU represents a realtime run as a lightweight `RealtimeInteractionSession`, not as a Task, Calendar event, canonical Log entry, or raw sensor stream. A session records the consented interaction context and source boundary; the model's outputs are `RealtimeCandidateUpdate` records until admitted through the ordinary planner, Log, Snapshot, Compartment, and review rules.
 
 The minimum `RealtimeInteractionSession` record contains `interaction_session_id`, `schema_version`, `instance_id`, `actor_identity_ref`, `device_ref`, `started_at`, optional `ended_at`, `session_state`, `source_modes`, `backend_ref`, `model_or_tool_ref`, prompt or template version, enabled input sources, `compartment_ids`, `disclosure_policy`, retention or redaction policy, routing mode, evidence item refs, candidate update refs, provenance, review status, and correction or revocation links. Session states align with discovery mode where applicable: `inactive`, `active`, `paused`, `ended`, and `pending_review`.
 
@@ -3062,6 +3083,14 @@ Model-noticed elapsed time is represented as evidence or a candidate interval, n
 Mandatory provenance for realtime observations includes source kind, capture or observation interval, device and backend refs, model or tool identifier, prompt or template digest where applicable, parser or schema version, evidence refs or payload hashes, source Compartment, redaction level, processing route, confidence, and review status. Audio, video, screen, keystroke, raw message, raw file, raw GPS, and similarly sensitive sources also require explicit source enablement and policy-visible capture state before they can produce candidates.
 
 Routing defaults are conservative. Local-only processing is required for raw sensitive capture, `no_cloud_llm` Compartments, and sources whose policy denies external processing. Cloud processing is optional only for policy-approved, user-visible, redacted or intentionally provided inputs. Cross-user projection, external export, covert capture, broad background capture, hidden persuasion timing, and automatic external mutation are prohibited unless a later explicit mode, Compartment policy, capability grant, and user approval allow that exact behavior.
+
+#### 21.1.1 Observation, context and closed-loop execution
+
+The architecture is observation → candidate objects/facts → Identity and object resolution against permitted persistent context → candidate UniverseState/Resource implications → proposed preconditions or constraints → CPU semantic/policy/conflict validation and operator admission → planning or recalculation over admitted state. Ambiguous identity matches remain alternatives, not merged objects. The camera can suggest the relevance of an observed object to the user's life; it cannot infer intent, affect, Preference changes or ownership as self-certifying truth.
+
+Confidence helps choose high-information clarification, not bypass admission. Corroboration is consequence-sensitive: escalate evidence and human review when an interpretation could change a consequential action; unknown or incompatible evidence stays unresolved. An observation consistent with completion is not proof that the modeled effect occurred. `UBU-D0293` defines source-kind mapping; `UBU-Q0165`–`UBU-Q0167` and `UBU-Q0172` define remaining evidence-contract questions. Existing candidate/Discovery records are the reuse point, not newly implemented perception schemas.
+
+The execution loop is **See → understand → plan → direct → observe → verify → learn → update**. Understanding proposes interpretations; planning remains the kernel's; direction presents an inspectable next action; new observations prompt reconciliation; verification uses the required evidence and operator review; learning proposes model corrections; only admitted updates close the loop. Inference never certifies itself by being repeated downstream. Technique guidance, observed Skill development and procedure-to-Technique capture depend on the later-phase objects and unresolved evidence/safety questions, not merely access to a camera. See [the interaction document](MULTIMODAL_INTERACTION.md) and [the security boundary](MULTIMODAL_SECURITY.md).
 
 ### 21.2 Structured-output admission pipeline
 
@@ -3079,6 +3108,8 @@ output
 ```
 
 This applies to structured message extraction, realtime observations, AssociationAttestations, Tasks, Log candidates, Plan repairs, Delegation Substrate packets, and agent outputs.
+
+**Producer grammar rule (`UBU-D0299`).** Every shape offered to a producer must satisfy its unchanged semantic validator for the matching context. An intentional, documented and independently tested conservative subset is allowed; the producer grammar need not equal the full authoring validator. Schema membership is only the first gate, and does not confer canonical truth or authority.
 
 #### 21.2.1 Phase 1b advisory candidate lifecycle
 
@@ -3099,6 +3130,12 @@ Rejection is durable correction metadata. A rejected candidate retains a privacy
 Admission, rejection, deferral, resurfacing, supersession, and archival decisions are first-class review events carrying actor Identity, `authority_source`, origin Device, observed candidate version, observed policy versions when policy is relied on, effective time, recorded time, idempotency key, and links to resulting canonical mutations or replacement candidates. Admission emits the ordinary sync-ready mutation envelope for the admitted object change; rejection emits the decision event and suppression record without creating the proposed canonical state.
 
 Review order never changes state category. Proposed and resurfaced candidates may be prioritized ahead of deferred or archived records, but a contested region remains `candidate_state` or `pending_state` until an admission or conflict-resolution event is itself admitted. UI, APIs, derived previews, and reports must label candidate diffs as candidate or preview material and must not present them as `admitted_state` merely because they are high priority, old, repeated, or uncontested in the queue.
+
+#### 21.2.2 Implemented precondition and vocabulary advice
+
+`UBU-D0294` records admitted-precondition review: explicit replacement/clear candidates, stale-value checks, finite escalating holds, admission-reset escalation and the blocking-now seed cap. Rejecting a newly proposed precondition instead durably suppresses that proposal for that Task. These are separate dismissal semantics. Later field reviewers inherit the contract; only precondition review is implemented today.
+
+`UBU-D0295` records the local precondition producer's title/optional-description and recorded-target-name inputs, with no fact values/provenance sent. Every leaf names an existing target, including `absent`; the controller validates before enqueue and admission. Precondition and vocabulary proposal producers consider at most 25 Tasks, return at most three proposals, and refuse when ten or more of their own kind are proposed/resurfaced. Deferred candidates do not count; a permitted batch can cross the refusal threshold, which is not a hard queue ceiling. `UBU-D0296` keeps UniverseTarget proposals name-only, with only operator-authored values admitted.
 
 ### 21.3 ContextBundle
 

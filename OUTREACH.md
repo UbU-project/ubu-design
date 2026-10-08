@@ -24,6 +24,20 @@ Phase 1 feels like UbU to a nontechnical user: it asks a few bootstrapping quest
 
 ---
 
+## Show it, tell it, do it: an MVP release target
+
+Local camera-and-voice interaction is now part of the MVP release and its intended primary surface. The camera is a perception layer, not an upload field: the person shows the world, UbU proposes candidate state, resolves it against permitted persistent context, and asks only high-information clarifications. Ask for bits of uncertainty, not records. Value-producing onboarding aims for the first photograph or spoken concern to produce the first useful result, while the person reviews what enters the model. Voice is ordinary interaction; forms and text remain useful choices.
+
+This is target behavior, not shipped perception. Images stay on the operator's own hardware for local inference, without upload to a hosted model; any later disclosure is a separate governed choice. Models propose, the operator admits, and the kernel plans. The enabling technologies already exist; the ambitious composition is a private, persistent life model that turns perception into inspectable plans. Its richer Resource, Skill and Technique examples retain later-phase dependencies. See [the interaction model](MULTIMODAL_INTERACTION.md).
+
+### Sequencing the bureaucratic gauntlet
+
+A travel document needed before a trip, or a registration requiring an inspection that itself requires a repair, is a dependency problem with hard lead times and an immovable deadline. Knowing the procedure is insufficient if the prerequisites happen in the wrong order. This qualitative example motivates explicit preconditions, operator-authored facts and inspectable plans; domain-specific ingestion remains future work.
+
+Other future examples include maintenance deferred until damage grows, move-in/move-out condition evidence, learning judged by demonstrated readiness rather than time spent, weather-dependent work, and repair-versus-replacement choices converted into executable steps. Their full realization requires the phased Resource, Skill and Technique implementations and appropriate evidence. They illustrate value without adding requirements to the held multimodal scenario library.
+
+---
+
 ## Why UbU matters
 
 Most productivity systems fail because they treat the user like a machine. They assume that if a task appears on a list or calendar, the user can simply execute it.

@@ -46,6 +46,14 @@ GitHub is not the whole project model. It is one external surface where selected
 
 ---
 
+## Primary interaction in the MVP release
+
+Camera and voice are part of the MVP release target, rather than shipped project telemetry. The camera is a perception layer, not an upload field: show a permitted situation, propose candidate state, resolve against persistent context, and ask only high-information clarifications. Ask for bits of uncertainty, not records; value-producing onboarding makes the first useful result part of building context rather than a reward for completing forms. Voice is ordinary control, with text and forms available for preference and precision.
+
+Images in this primary path stay on the operator's hardware for local inference, without upload to a hosted model. Perception does not authorize a project-state change or expose a contributor's private context: the operator reviews candidates and the kernel plans from admitted state. The ambition is the composition of existing camera, speech, model, database and planner capabilities under these boundaries. Richer Resource, Skill and Technique examples depend on later phased work. See [the interaction model](MULTIMODAL_INTERACTION.md).
+
+---
+
 ## Resource and Skill readiness for project work
 
 Although UbU's root product is individual life logistics, the same primitives matter to project work. A Task can be blocked because a contributor lacks a credential, file, hardware device, test fixture, API key, review authority, budget, or necessary Skill. Resource and Skill readiness make those blockers explicit instead of leaving them hidden in chat history or a maintainer's head.

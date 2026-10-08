@@ -26,6 +26,14 @@ LLMs, realtime models, local agents, cloud models, and external tools may help e
 
 ---
 
+## A primary camera-and-voice surface under personal authority
+
+The MVP release now targets camera and voice as its primary interaction surface. The camera is a perception layer, not an upload field: show the world, propose candidate state, resolve against permitted persistent context, and ask only high-information clarifications. Ask for bits of uncertainty, not records; value-producing onboarding means the first photograph or spoken concern should deliver the first useful result while building private context. Voice is ordinary control, with text and forms retained for preference, accessibility and precision.
+
+This target is not shipped perception or permission for always-on capture. Images stay on the operator's hardware for local inference, without upload to a hosted model. Operator admission, CPU validation, explicit capture modes and Compartment egress rules remain the authority boundaries; any later export is a separate user choice. The enabling technologies exist. Their composition could make capable life logistics available without a hosted sensory corpus, but local processing still needs endpoint security and measured hardware suitability. Rich Resource, Skill and Technique scenarios retain phased future dependencies. See [the interaction model](MULTIMODAL_INTERACTION.md) and [the security boundary](MULTIMODAL_SECURITY.md).
+
+---
+
 ## The layer UbU occupies, and why it must be sovereign
 
 It is worth being precise about which layer UbU is. A governance ecosystem is forming around AI agents — authorization, identity, action auditing, and personalized oversight that checks an agent's plan against declared values before it acts. UbU is not that layer. Those systems are *reactive*: they bound or audit what an agent already decided to do. UbU is *generative*: it originates what is worth doing from the user's own goals, values, affect, and attention, and treats agents as executors of a plan it produced. It also works from *introspected* state — what the user reports and reconciles about themselves — rather than inferred sensor state, because intent and affect are not sensor-readable. The problem is not novel; the open, user-owned, generative integration of it is.

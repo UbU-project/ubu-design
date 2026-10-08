@@ -25,6 +25,14 @@ The first MVP is deliberately narrow: use UbU to coordinate the design, developm
 
 ---
 
+## Primary MVP interaction: show it, tell it, review it
+
+The MVP release now includes local camera-and-voice interaction as its primary surface. This is a release target, not a shipped perception feature; the working dogfooding loop is the base from which it will be built. The camera is a perception layer, not an upload field: show the world, propose candidate state, resolve against permitted persistent context, and ask only high-information clarifications. Ask for bits of uncertainty, not records. Value-producing onboarding means the first photograph or spoken concern should produce the first useful result while the private model grows.
+
+Voice is ordinary control; text and forms remain available for preference, context, accessibility and precision. Images in the primary inference path stay on the operator's own hardware, without upload to a hosted model. Candidates still require validation and operator admission; the kernel remains the planner. Continuous capture requires an explicit, visible, pausable mode. Cameras, vision, speech, planners and databases already exist: assembling them into an inspectable, user-owned life model is the ambition, not a claim of an unprecedented component or proven market exclusivity. Rich Resource, Skill and Technique scenarios still depend on later phased implementations. See [the interaction design](MULTIMODAL_INTERACTION.md) and [the local security boundary](MULTIMODAL_SECURITY.md).
+
+---
+
 ## Core philosophy
 
 UbU is based on several design principles.
@@ -472,3 +480,5 @@ Useful contributor roles currently include:
 - `SOVEREIGN_COORDINATION.md` - derived brief for cypherpunks, privacy builders, and sovereign-coordination audiences
 - `ORG_INTROSPECTION_BRIEF.md` - derived brief for mission-driven projects and organizational introspection
 - `WHAT_IS_UBU.md` - derived mass-consumption public explanation of UbU's purpose and user-facing value proposition
+- `MULTIMODAL_INTERACTION.md` - primary camera-and-voice interaction design and release boundaries
+- `MULTIMODAL_SECURITY.md` - local capture, context, egress, retention and future agent boundaries

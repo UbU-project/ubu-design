@@ -18,6 +18,14 @@ Funding is harmful when it pulls UbU into a bespoke private workflow, surveillan
 
 ---
 
+## Camera and voice enter the MVP release
+
+The MVP release includes local camera-and-voice interaction as its primary surface. This is a release commitment, not a claim that the perception stack has shipped. The camera is a perception layer, not an upload field: a person shows the world, UbU proposes candidate state, resolves against permitted persistent context, and asks only high-information clarifications. Ask for bits of uncertainty, not records. Value-producing onboarding makes the first photograph or spoken concern produce the first useful result while building the private model; voice is ordinary control and forms/text remain context and precision choices.
+
+Cameras, local vision, speech, planners and databases already exist. The ambition is their composition into a persistent, inspectable life model whose images stay on the operator's hardware for local inference, without upload to a hosted model. If this composition succeeds, sophisticated logistical competence could become easier to access without making intimate context a hosted data asset. This is a conditional impact thesis, not proof of unprecedented technology, market exclusivity, universal device support or demonstrated savings. See [the interaction design](MULTIMODAL_INTERACTION.md).
+
+---
+
 ## Why now
 
 UbU has moved through pure concept work, active design dogfooding, and is now entering its first runnable milestone.
@@ -181,7 +189,7 @@ The key investor insight is that UbU creates demand from inside the user's actua
 
 ## New market opportunities the full product unlocks
 
-**Benefits and public resource navigation.** Billions of dollars in unclaimed benefits, grants, tax credits, weatherization programs, and public services go unused annually because navigation is cognitively overwhelming. UbU's government/public-resource symmetry model turns program eligibility into prerequisite Tasks with evidence requirements and deadlines — the difference between knowing a program exists and having a plan to get it.
+**Benefits and public resource navigation.** Eligible people can miss benefits, grants, tax credits, weatherization programs and public services because navigation is cognitively overwhelming. UbU's government/public-resource symmetry model turns program eligibility into prerequisite Tasks with evidence requirements and deadlines — the difference between knowing a program exists and having a plan to get it.
 
 **Remote diagnosis and expert knowledge packaging.** A Technique Request lets a user submit evidence about a specific problem; a skilled expert returns a custom Technique Package: diagnosis, parts list, step-by-step instructions, safety notes. This is a new market tier between generic guides and full-service labor. Retired tradespeople, experienced professionals, and domain experts can monetize situated knowledge without performing physical work.
 
@@ -190,6 +198,18 @@ The key investor insight is that UbU creates demand from inside the user's actua
 **Economic mobility and life transition support.** Career change, relocation, recovery, new child, aging parents — these are situations where Resource, Skill, financial, and institutional pictures change simultaneously. UbU's planning model is designed for exactly this kind of multi-variable constraint navigation.
 
 **Community and cooperative resource networks.** Library tool loans, makerspaces, repair cafés, seed libraries, and community workshops are Resources most planning tools ignore. UbU's Library and Community Resource Mode makes these first-class inputs.
+
+---
+
+## Economic access and professional amplification
+
+The existing benefits-navigation, economic-mobility and Expert-Guided DIY directions become easier to use if people can show a problem and ask for help rather than encode its dependencies manually. Institutional paperwork is often a sequencing problem: evidence, prerequisite actions, lead times and deadlines must line up. Future maintenance triage, condition evidence, weather-constrained work and repair-versus-replacement planning could make available resources more usable instead of merely reminding people what remains undone.
+
+These richer household, purchasing, Skill-evidence and expertise-capture examples depend on first-class Resource, Skill and Technique implementations in the existing later-phase roadmap. They are not available merely because multimodal interaction enters the MVP. The held scenario library remains illustration rather than adopted requirements. Expert guidance should amplify professional judgment through preparation and appropriate escalation, not claim to replace it.
+
+A future care-packet workflow could help a person assemble user-authorized records, a history and questions for a primary-care professional. The person reviews the packet and approves its recipient and disclosure; the professional evaluates it. This is preparation, not diagnosis or a claim that observation proves a health outcome. Privacy-preserving field research is a separately consented, speculative direction with unresolved validity, governance and privacy questions; it neither replaces controlled trials nor establishes clinical efficacy.
+
+Economic accessibility of compute is part of the mission. Useful local operation must be evaluated on affordable hardware and graceful reduced-capability paths, without making a subscription or hosted sensory model the hidden price of participation. Cheaper coordination can help people turn available opportunities into outcomes; it cannot remove poverty, eligibility limits, scarce resources or the need for qualified work. Funding should test this composition and its boundaries through honest evidence, rather than treating qualitative possibilities as savings forecasts.
 
 ---
 
@@ -217,7 +237,7 @@ The following directions are important but should not be confused with Phase 1 c
 - Skill Barter marketplace;
 - high-privacy compute using FHE, ZK, secure hardware, or other privacy-preserving techniques;
 - user-owned worker devices and compute markets;
-- richer realtime multimodal interaction;
+- richer realtime interaction beyond the primary MVP surface, with capture coverage scoped in the release roadmap;
 - a UbU Corp premium long-horizon, high-granularity, high-compute planning tier;
 - food, nutrition, and physiological-health planning;
 - asset economics and true cost-of-ownership analysis;

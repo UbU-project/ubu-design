@@ -26,6 +26,14 @@ The organizational case becomes stronger when the same model can ask whether a p
 
 ---
 
+## Multimodal input without organizational surveillance
+
+The MVP release target includes camera and voice as the primary personal interaction surface; this is not a claim of shipped capture or organizational monitoring. The camera is a perception layer, not an upload field: a person shows permitted context, UbU proposes candidate state, resolves it against persistent context, and asks only high-information clarifications. Ask for bits of uncertainty, not records. Value-producing onboarding aims to make the first photograph or spoken concern useful while the private model grows. Voice, text and forms remain choices appropriate to the person and situation.
+
+Images stay on the operator's own hardware for local inference, without upload to a hosted model. A perception candidate is not an AssociationAttestation, proof of motive or permission to share. Operator admission and Compartment disclosure gates remain separate. Existing technologies make the composition plausible; its public-good ambition is an inspectable personal model whose selected evidence can support coordination without making private life organizational telemetry. Richer Resource, Skill and Technique use retains later-phase dependencies. See [the interaction design](MULTIMODAL_INTERACTION.md).
+
+---
+
 ## Distinction from personal introspection
 
 Organizational introspection is not the whole introspection story in UbU.
