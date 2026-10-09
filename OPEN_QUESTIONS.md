@@ -3422,7 +3422,7 @@ Open.
 
 ## UBU-Q0184: Missing-prerequisite candidate feasibility
 
-Status: Open Priority: MVP important Phase: Phase 1b Decision type: Semantics Auto-choice eligibility: Human only Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Data model Auto-choice eligibility: Human only Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
