@@ -4815,3 +4815,15 @@ The UniverseState form offers `asserted` and `measured`: a person can report a s
 An exact-parity requirement over a derived field is not enforceable until that field is defined by enumeration. A field named in a parity clause must be enumerated in the stage that produces it. Preserve the comparison's authority; record the semantics before bringing implementations into agreement, rather than choosing a predicate by matching one implementation to the other.
 
 The consequence was paid in P1B-79's eleven-ticket history: two implementations conforming to an underspecified contract diverged, and live contact alone surfaced it. Stage 1's hard-constraint parity clause omitted its producing field and its checks; Rust and Python computed different subsets. The recorded definition includes pairwise disjointness, and the sanctioned generator correction bounds perturbations by occupancy. Removing Python's disjointness term would permit a double-booking; widening comparison would conceal the disagreement. Neither is an acceptable repair. This lesson shares `UBU-D0299`'s producer-boundary discipline without changing final CPU authority or numeric tolerances.
+
+---
+
+## UBU-D0302: Producer grammars must bound repeated structures as well as satisfy validators
+
+**Status:** Accepted → UBU-D0299's producer-boundary policy. Records P1B-80's approved attribution correction.
+
+A producer grammar must be bounded as well as safe: a schema permitting unbounded item repetition permits a non-terminating generation, whose failure can surface as an upstream abort before any result reaches validation. Bound proposal collections from the selected input and existing producer limits; encode finite category choices in the grammar. Preserve the admission validator and use documented conservative producer subsets. A repetition penalty fights legitimately repetitive output and is not a substitute for a bounded grammar.
+
+A live vocabulary failure reporting a token-repeat abort on 2026-10-09 triggered the audit, not a test: no test reaches a real model. Grounding found the unbounded proposals array and unrestricted category tag in SuggestTags, not Vocabulary. Vocabulary already limits proposals to three and target strings to 128; precondition proposals, review verdicts and clarification questions also have structural bounds. P1B-80 bounds SuggestTags by selected Task count and its existing named categories, with selected Task identities enumerated and `undefined` retained as the existing unknown-category choice. Clarification text adopts its existing 400-character validator limit.
+
+The SuggestTags finding is not evidence that it caused the reported Vocabulary abort. Structural bounds do not guarantee a model/runtime completes, and scalar/text generation can still fail upstream. Keep that distinction visible instead of reporting a live cause that the source does not establish. No decode parameter, Setting, sampler policy or validator relaxation is adopted; the broader decode surface remains open in `UBU-Q0185`.

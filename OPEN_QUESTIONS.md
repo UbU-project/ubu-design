@@ -3435,3 +3435,21 @@ P1B-79 records, but does not resolve, this separate boundary. Rust reports `depe
 ### Resolution
 
 Open.
+
+---
+
+## UBU-Q0185: Advisory decode controls or operator-owned runtime policy
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Architecture Auto-choice eligibility: Human only Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Should the advisory boundary expose decode parameters, or is the model's generation behavior deliberately the operator's to configure in their own runtime?
+
+### Current direction
+
+The advisory Settings expose model, endpoint, timeout and review seed/ceiling, with no decode parameter. P1B-80's live Vocabulary abort prompted an audit that found a separate unbounded SuggestTags grammar (`UBU-D0302`). Correcting that grammar before changing the sampler is evidence on the deliberately-outside side; it does not prove the cause of the already-bounded Vocabulary failure or settle runtime control across models. No repeat penalty, temperature, Setting or other decode control is added. Keep the question Open and unanswered.
+
+### Resolution
+
+Open.
