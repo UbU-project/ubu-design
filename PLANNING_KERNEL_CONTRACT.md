@@ -402,7 +402,20 @@ Produces:
 - candidate `validity_mask`;
 - per-placement `piece_index` and `piece_count` metadata;
 - dependency-slack summary;
+- `dependency_feasibility`;
+- `hard_constraint_feasibility`;
 - rejection/failure code per invalid candidate.
+
+`dependency_feasibility` reports whether each prerequisite finishes at or before its dependent placement starts for candidates whose prerequisites are present. The meaning of a candidate missing a prerequisite remains open in `UBU-Q0184`; this definition does not settle that case.
+
+`hard_constraint_feasibility` is the conjunction of:
+
+- plan validity: a non-empty candidate, no Task placed twice, every placement with `start < end`, and every dependency present in the candidate and earlier in its declared placement order;
+- dependency feasibility by time, as reported by `dependency_feasibility`;
+- containment: every placement inside the plan window, inside its Task window when declared, and starting exactly at its Static anchor when declared;
+- pairwise disjointness: no two placements overlap in time. Overlap means `start < other.end && end > other.start`; touching endpoints are allowed.
+
+`feasible_mask` is the Stage 2 name, not Stage 1's `hard_constraint_feasibility`. A field named in an exact-parity clause must be enumerated at the stage that produces it (`UBU-D0301`).
 
 ### Stage 2: `affect_legitimacy_filter`
 

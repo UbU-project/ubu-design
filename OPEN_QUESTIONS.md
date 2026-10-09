@@ -3417,3 +3417,21 @@ The release commitment and Phase 1b backlog assignment are recorded by `UBU-D029
 ### Resolution
 
 Open.
+
+---
+
+## UBU-Q0184: Missing-prerequisite candidate feasibility
+
+Status: Open Priority: MVP important Phase: Phase 1b Decision type: Semantics Auto-choice eligibility: Human only Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Does a candidate that omits a prerequisite report infeasible, or incomplete?
+
+### Current direction
+
+P1B-79 records, but does not resolve, this separate boundary. Rust reports `dependency_feasibility = false` when a prerequisite is absent. Python directly indexes prerequisite placements when computing dependency margins; an absent prerequisite raises `KeyError`, rather than being skipped or reporting true. Its placement path also directly indexes prerequisites. Neither computation changes in P1B-79. No live run has exercised a candidate that retains a dependent while omitting its prerequisite. Stage 1's hard-constraint plan-validity conjunct already requires dependency presence; the distinct dependency field's missing-prerequisite meaning still needs a semantic decision (`UBU-D0171`, `UBU-D0301`).
+
+### Resolution
+
+Open.

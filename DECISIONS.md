@@ -2610,6 +2610,8 @@ The design contract specifies the semantic data each stage consumes and produces
 
 Stage 1 consumes a CPU-provided `topological_order`; the GPU engine does not discover graph order. Stage 4 uses deterministic rollout seed derivation from the request seed. The Phase 1 default rollout budget is `n_rollouts = 1000` per finalist unless overridden by the CPU kernel's compute budget.
 
+Stage 1 produces both `dependency_feasibility` and `hard_constraint_feasibility`. The former reports prerequisite completion at or before dependent starts where prerequisites are present; missing-prerequisite semantics remain unanswered in `UBU-Q0184`. The latter is the conjunction of plan validity (non-empty, no duplicate Task, `start < end`, every dependency present and earlier in declared placement order), dependency feasibility by time, plan/Task-window containment and exact Static-anchor starts, and pairwise placement disjointness. Overlap uses `start < other.end && end > other.start`; touching endpoints are allowed. Stage 2's `feasible_mask` is a different field. This enumeration records the P1B-79 definition before either implementation changes, without widening exact comparison.
+
 `PLANNING_KERNEL_CONTRACT.md` includes a Phase 1 recommended tensor profile using implementation-facing names such as `start_time_offsets`, `validity_mask`, `feasible_mask`, `surviving_indices`, `feasibility_scores`, `composite_scores`, `top_k_indices`, and probability intervals. These names guide implementation and tests without turning `ubu-design` into the PyTorch source tree.
 
 **Consequences:**
@@ -4803,3 +4805,13 @@ The scar matters: three precondition rehearsals produced nothing because the off
 **Status:** Accepted → DESIGN.md §11.2. Records baseline B2's implemented form policy.
 
 The UniverseState form offers `asserted` and `measured`: a person can report a statement or record an instrument/reading. It does not offer `derived`, which would claim a computation UbU performed, or `proposed`, which would claim an unconfirmed advisor value. This is the human form's policy, not removal of enum members or a restriction on every core mutation caller. UniverseTarget admission continues to require an operator-authored assertion (`UBU-D0296`).
+
+---
+
+## UBU-D0301: Exact parity requires an enumerated derived field
+
+**Status:** Accepted → PLANNING_KERNEL_CONTRACT.md §5. Refines `UBU-D0171`.
+
+An exact-parity requirement over a derived field is not enforceable until that field is defined by enumeration. A field named in a parity clause must be enumerated in the stage that produces it. Preserve the comparison's authority; record the semantics before bringing implementations into agreement, rather than choosing a predicate by matching one implementation to the other.
+
+The consequence was paid in P1B-79's eleven-ticket history: two implementations conforming to an underspecified contract diverged, and live contact alone surfaced it. Stage 1's hard-constraint parity clause omitted its producing field and its checks; Rust and Python computed different subsets. The recorded definition includes pairwise disjointness, and the sanctioned generator correction bounds perturbations by occupancy. Removing Python's disjointness term would permit a double-booking; widening comparison would conceal the disagreement. Neither is an acceptable repair. This lesson shares `UBU-D0299`'s producer-boundary discipline without changing final CPU authority or numeric tolerances.
