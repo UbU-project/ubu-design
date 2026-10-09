@@ -1002,7 +1002,7 @@ Exit criterion:
 
 > The switch: the dogfooding user's primary daily planning runs on mainline UbU.
 
-The switch waits on the desktop GPU planner and CPU reference/certification path, and on ratification or retirement of every provisional subject root before the store becomes non-disposable (`UBU-D0291`). No switch date is set.
+The switch waits on ratification or retirement of every provisional subject root before the store becomes non-disposable (`UBU-D0291`); the planner condition is discharged by the greedy Stage 1 certification under the CPU tensor-worker profile (`UBU-D0303`). No switch date is set.
 
 Until the switch, Quick UbU remains the primary tool and mainline is exercised against non-primary test data.
 

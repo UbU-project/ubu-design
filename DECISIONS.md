@@ -4827,3 +4827,15 @@ A producer grammar must be bounded as well as safe: a schema permitting unbounde
 A live vocabulary failure reporting a token-repeat abort on 2026-10-09 triggered the audit, not a test: no test reaches a real model. Grounding found the unbounded proposals array and unrestricted category tag in SuggestTags, not Vocabulary. Vocabulary already limits proposals to three and target strings to 128; precondition proposals, review verdicts and clarification questions also have structural bounds. P1B-80 bounds SuggestTags by selected Task count and its existing named categories, with selected Task identities enumerated and `undefined` retained as the existing unknown-category choice. Clarification text adopts its existing 400-character validator limit.
 
 The SuggestTags finding is not evidence that it caused the reported Vocabulary abort. Structural bounds do not guarantee a model/runtime completes, and scalar/text generation can still fail upstream. Keep that distinction visible instead of reporting a live cause that the source does not establish. No decode parameter, Setting, sampler policy or validator relaxation is adopted; the broader decode surface remains open in `UBU-Q0185`.
+
+---
+
+## UBU-D0303: The greedy certification discharges the planner exit condition; the chunked mirror is deferred
+
+**Status:** Accepted → DESIGN.md §4.2. Amends the exit conditions of `UBU-D0275` as restated by `UBU-D0291`.
+
+Records the operator's reading on 2026-10-09: the switch's planner condition is met by the Stage 1 certification of the greedy strategy against the CPU reference on the operator's own week, under the CPU tensor-worker profile. CUDA parity is not certified and is not an exit condition.
+
+The ChunkedSweep GPU mirror is deferred. The operator's offline comparison over the dumped request found identical schedules under uniform values. Under dense seeded values the strategies differ in at most three of 42 Dynamic placements, while the ranking itself moves 40 to 42. A mirror that buys certification and no plan quality on present data is not an exit condition. These are the operator's supplied measurements and reading, not a new measurement by this ticket.
+
+The switch now waits on `UBU-D0291` ratification alone: every provisional subject root must be promoted into the governed set or retired before the store becomes non-disposable. No switch date is set. The deferral is revisited only when a measured input separates the strategies. The historical records and consequence bullets of `UBU-D0275` and `UBU-D0291` remain unchanged; this appended record amends their exit conditions.
