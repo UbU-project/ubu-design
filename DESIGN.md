@@ -992,7 +992,7 @@ Phase 1 implementation proceeds in this priority order:
 
 The remaining §4.1 frozen-set items follow in bootstrap-dependency-driven ordering: persistence and vocabulary precede the features that must reference them.
 
-**Phase 1 realization (`UBU-D0241`).** Step 3 (UniverseState facts) is foundationally realized, together with the accepted mutation vocabulary and deterministic precondition evaluation named in step 4, implemented as the §11 container and pure `ubu-core` semantics and persisted by `ubu-store`. The precondition, effect, and bootstrap-fact wiring of these facts into the loop is realized across Wiring-A/B/C (`UBU-D0242`): preconditions gate planning, a completed Task's effects mutate the facts, and the bootstrap records the initial facts under the `UBU-D0243` namespace convention. Step 4's affect-Snapshot content and step 5's interactive bootstrap interview remain.
+**Phase 1 realization (`UBU-D0241`).** Step 3 (UniverseState facts) is foundationally realized, together with the accepted mutation vocabulary and deterministic precondition evaluation named in step 4, implemented as the §11 container and pure `ubu-core` semantics and persisted by `ubu-store`. The precondition, effect, and bootstrap-fact wiring of these facts into the loop is realized across Wiring-A/B/C (`UBU-D0242`): preconditions gate planning, a completed Task's effects mutate the facts, and the bootstrap records the initial facts under the `UBU-D0243` namespace convention. Step 4's affect-Snapshot content is realized by the affect observation route (`UBU-D0304`); step 5's interactive bootstrap interview remains.
 
 ### 4.2 Phase 1b: Quick UbU merge through the switch
 
@@ -1963,21 +1963,13 @@ MVP uses simplified user-reportable dimensions:
 
 - energy / tiredness
 - stress level
-- mood
+- mood intensity (arousal or volatility)
 
-Values are reported in the range `0.0` to `1.0`.
+Values are reported on the user-facing scale from `0` to `10` (`UBU-D0304`). The sigmoid satisfaction score is separately in `[0, 1]`.
 
 ### 13.2 Mood
 
-Mood is represented as:
-
-- categorical trinary state:
-  - `happy`
-  - `sad`
-  - `angry`
-- intensity scalar from `0.0` to `1.0`
-
-`interested/bored` is an independent derived dimension.
+Phase 1 collects `mood_intensity` on the user-facing 0 to 10 scale. It means arousal or volatility, not whether a mood is good or bad (`UBU-D0173`, `UBU-D0304`). Mood valence — the earlier categorical `happy`, `sad`, `angry` description — is not collected in Phase 1. `interested/bored` remains a proposed independent derived dimension, not an implemented observation field.
 
 ### 13.3 Affect snapshots
 
@@ -1991,13 +1983,13 @@ They include:
 
 Phase 1 separates the affect **observation** from the affect **profile** (`UBU-D0236`). The snapshot is the observation: a per-dimension value, a `source_kind` of `live_observation` or `bootstrap_default_profile`, and `observed_at`. The standing per-dimension tolerances — `direction`, `location`, `scale`, `threshold`, and `freshness_seconds` — live in the AffectProfile, not on the observation; the planning kernel evaluates the profile against the observation, and the snapshot never carries the sigmoid parameters.
 
+The user records a check-in through `POST /affect/observation`, which writes a new immutable Snapshot with `source_kind: live_observation`, the three values, and a server-stamped `observed_at` (`UBU-D0304`). `GET /affect/observation` and store-built planning select the newest active Snapshot carrying `affect`; a newer Snapshot without affect does not hide the reading. The next explicit `POST /planning/generate` reads it; recording does not recalculate a Plan.
+
+An observation is current until replaced when no freshness limit is configured; a store that holds one, or a supplied request, still goes stale. No freshness Setting writer is added. Missing, incomplete or stale observations retain the marked stand-in fallback in `warn_only`.
+
 ### 13.4 Affect confidence
 
-In MVP, affect confidence decays with age.
-
-Low confidence is determined by algorithm configuration.
-
-Confidence is global across affect dimensions in MVP and may become per-dimension later.
+`UBU-D0039` describes age-dependent confidence decay, which remains unimplemented in Phase 1. The frozen Snapshot core and schema have no snapshot-level confidence field: this is the named **UBU-D0100 confidence gap**. The check-in implements an immutable user-declared observed assertion, not the full Snapshot confidence policy. Freshness checks in the planner are separate from confidence decay and still apply when a limit is configured. No new confidence field or decay algorithm is introduced by `UBU-D0304`.
 
 ### 13.5 Affect collection Objective
 
@@ -2200,7 +2192,7 @@ Partial placement (`UBU-D0289`) refines the insufficient-window case for optiona
 
 Full legitimization records the constraints it enforced and any support Tasks or buffers it inserted. Its hard result is `passed`, `failed`, or `needs_clarification`. Graded fields such as `legitimacy_score`, `legitimacy_margin`, and `legitimacy_delta_from_baseline` are advisory comparison signals, not permission to violate hard legitimacy.
 
-In Phase 1, `full_legitimize` implements the **affect-feasibility filter** (`UBU-D0236`). It computes each active dimension's sigmoid satisfaction from the AffectProfile and the affect observation, marks the candidate affect-feasible only when every dimension meets its threshold, and records per-dimension satisfaction, the `violated_dimensions`, and an `affect_margin` that is the legitimacy margin while affect is the only enforced constraint. It runs in `enforce` for user-facing planning and `warn_only` for onboarding, test, and stale or missing affect. Support-task insertion — breaks, recovery, meals, sleep, and transition buffers — and `semi_legitimize` are deferred follow-ons within full legitimization; Phase 1 legitimization is the affect filter only.
+In Phase 1, `full_legitimize` implements the **affect-feasibility filter** (`UBU-D0236`). It computes each active dimension's sigmoid satisfaction from the AffectProfile and the affect observation, marks the candidate affect-feasible only when every dimension meets its threshold, and records per-dimension satisfaction, the `violated_dimensions`, and an `affect_margin` that is the legitimacy margin while affect is the only enforced constraint. Store-built planning runs in `warn_only` while none of the calibration Settings checked by `build_affect_profile` is present, whether the observation is live or a stand-in (`UBU-D0304`); uncalibrated priors do not block an otherwise feasible Plan. Presence of any such floor or ceiling Setting makes the profile calibrated and keeps `enforce`, including an explicit value equal to a default. Missing or stale affect still falls back in `warn_only`. A supplied full request retains its own mode and freshness limits. Support-task insertion — breaks, recovery, meals, sleep, and transition buffers — and `semi_legitimize` are deferred follow-ons within full legitimization; Phase 1 legitimization is the affect filter only.
 
 The Phase 1 semi-legitimization heuristic set is affect budget, slack preservation, dependency fragility, user-mode compatibility, local repair viability, and legitimacy-delta estimate. Semi-legitimization returns `passes_cheap_checks`, `reject_obvious`, or `needs_full_legitimization`; it is not sufficient to certify a default Plan.
 
