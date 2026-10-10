@@ -1002,9 +1002,9 @@ Exit criterion:
 
 > The switch: the dogfooding user's primary daily planning runs on mainline UbU.
 
-The switch waits on ratification or retirement of every provisional subject root before the store becomes non-disposable (`UBU-D0291`); the planner condition is discharged by the greedy Stage 1 certification under the CPU tensor-worker profile (`UBU-D0303`). No switch date is set.
+Phase 1b closed by decision on 2026-10-10 (`UBU-D0305`), with its planner condition discharged by the greedy Stage 1 certification under the CPU tensor-worker profile (`UBU-D0303`). The ratification gate of `UBU-D0291` was met with no provisional subject root; its registry remains the standing agenda, evaluated at the deferred switch. The switch is not in force and follows the completion of Phase 2.
 
-Until the switch, Quick UbU remains the primary tool and mainline is exercised against non-primary test data.
+Until the switch, Quick UbU remains the primary tool and mainline is exercised against non-primary test data. (The switch is deferred until Phase 2 is complete (`UBU-D0305`).)
 
 **The Phase 1b rule.** Every Quick UbU feature merged into mainline adopts the restrictions, forms, and functional boundaries of the MVP design it corresponds to, even when that design's implementation phase is later. Open questions that block Phase 1b are answered during Phase 1b whatever phase they were previously tagged, and the items they pull forward are re-tagged Phase 1b.
 
@@ -1014,7 +1014,7 @@ Phase 1b includes:
 - the Quick UbU practical features, ported under the Phase 1b rule;
 - the planner the switch requires: decomposition into Containers whose ordered child Tasks are grouped into segments that stay together (§9.4); an allowed time range on Tasks; Task value and priority inputs to Plan scoring; routines as evergreen-Objective recurrence that instantiates Tasks (§7.4.1); partial placement when not every Dynamic Task fits the planning horizon; and the desktop GPU backend with its CPU reference path (§16.10).
 
-**MVP-release scope amendment (`UBU-D0292`).** Local camera-and-voice interaction, including explicitly enabled realtime capture, enters the Phase 1b release backlog. This is a release commitment, not a claim that capture is implemented or a retroactive change to frozen Phase 1. `UBU-Q0183` leaves the exact capture modes, supported devices and sequence relative to the switch and existing device waves to an operator roadmap decision. The switch criterion above is unchanged; release completion cannot be inferred from switching daily planning alone. `UBU-Q0128` is re-tagged Phase 1b, so Phase 3 no longer gates the primary interaction surface. Always-on behavior is not required. Mobile interaction versus mobile planning workload remains open in `UBU-Q0160`, without amending `UBU-D0290`.
+**MVP-release scope amendment (`UBU-D0292`).** Local camera-and-voice interaction, including explicitly enabled realtime capture, enters the Phase 1b release backlog. This is a release commitment, not a claim that capture is implemented or a retroactive change to frozen Phase 1. `UBU-Q0183` leaves the exact capture modes, supported devices and sequence relative to the switch and existing device waves to an operator roadmap decision. `UBU-D0305` amends the Phase 1b exit criterion; release completion cannot be inferred from closing Phase 1b alone. `UBU-Q0128` is re-tagged Phase 1b, so Phase 3 no longer gates the primary interaction surface. Always-on behavior is not required. Mobile interaction versus mobile planning workload remains open in `UBU-Q0160`, without amending `UBU-D0290`.
 
 The richer household apprentice, maintenance triage, purchasing defense, Skill evidence and tacit-expertise examples depend on first-class Technique, Resource and Skill implementations. They are phased but unimplemented dependencies: Phase 3 supplies minimal readiness and Technique-based Objective expansion, and Phase 4 supplies richer integration. Evidence semantics, hardware suitability and scenario-specific scope remain unresolved. Camera-first MVP scope does not promise that those later planning objects or scenarios are MVP-ready.
 
@@ -1023,6 +1023,8 @@ Phase 1b defers multi-device sync and everything else assigned to Phase 2 and la
 ### 4.3 Phase 2: Single-user multi-device synchronization
 
 A single user runs UbU across multiple Devices / execution enclaves.
+
+Phase 2 is in development from 2026-10-10 (`UBU-D0305`), and the switch of `UBU-D0275` follows its completion.
 
 Phase 2 validates:
 
@@ -1059,8 +1061,8 @@ Phase 5+ continues the full version 1.0+ track with mature inventory, financial-
 |---|---|---|
 | Phase 0 | ETHConf NYC demo | Complete |
 | Phase 1 | Single-user GitHub dogfooding (§4.1) | Feature-complete |
-| Phase 1b | Quick UbU merge through the switch, including the planner (§4.2) | In progress |
-| Phase 2 | Single-user multi-device synchronization (§4.3) | Next |
+| Phase 1b | Quick UbU merge through the switch, including the planner (§4.2) | Complete (closed by decision 2026-10-10, UBU-D0305; switch deferred until Phase 2 is complete) |
+| Phase 2 | Single-user multi-device synchronization (§4.3) | In development (from 2026-10-10, UBU-D0305) |
 | Phase 3 | Minimal multi-user / Identity coordination and Resource/Skill task readiness (§4.4) | Planned |
 | Phase 4 | Version 1.0 release track (§4.5) | Planned |
 | Phase 5+ | Version 1.0+ release track (§4.6) | Planned |

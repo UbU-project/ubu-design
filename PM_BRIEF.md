@@ -1,6 +1,6 @@
 # UbU for Project Leads and Technical PMs
 
-**Status:** Derived audience-facing brief — Phase 1 feature-complete; canonical design files win on any conflict  
+**Status:** Derived audience-facing brief — Phase 1 feature-complete; Phase 1b complete, closed by decision 2026-10-10 (`UBU-D0305`); Phase 2 in development; canonical design files win on any conflict  
 **Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`  
 **Audience:** Ethereum project leads, protocol leads, FOSS maintainers with coordination duties, engineering managers, release coordinators, grants/milestone coordinators, and technical PMs who coordinate autonomous contributors
 
