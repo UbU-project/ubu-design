@@ -1,6 +1,6 @@
 # UbU
 
-**Status:** Phase 0 complete — demonstrated at ETHConf NYC, June 8–10, 2026 / **Phase 1 is feature-complete.** The `UbU-project` constellation is store-backed and the live GitHub path is symmetric and closed: at bootstrap UbU ingests its own real GitHub issues as Tasks behind a deliberate server-side ingest mode, records the initial UniverseState facts, gates planning by preconditions, recommends the next Task from a Monte-Carlo-rollout-ranked affect-legitimized Calendar with humane risk and plan-quality feedback, mutates the facts on completion, and projects its managed labels back to live GitHub behind a deny-by-default export gate — the recursive dogfood, actualized on real infrastructure. Phase 1 hardening and outreach remain, and **Phase 1b is in progress**: mainline is being extended to replace Quick UbU through the switch, including the planner, before Phase 2 sync (`UBU-D0275`).  
+**Status:** Phase 0 complete — demonstrated at ETHConf NYC, June 8–10, 2026 / **Phase 1 is feature-complete.** The `UbU-project` constellation is store-backed and the live GitHub path is symmetric and closed: at bootstrap UbU ingests its own real GitHub issues as Tasks behind a deliberate server-side ingest mode, records the initial UniverseState facts, gates planning by preconditions, recommends the next Task from a Monte-Carlo-rollout-ranked affect-legitimized Calendar with humane risk and plan-quality feedback, mutates the facts on completion, and projects its managed labels back to live GitHub behind a deny-by-default export gate — the recursive dogfood, actualized on real infrastructure. Phase 1 hardening and outreach remain, and **Phase 1b is complete**: the switch happened on 2026-10-10 and the author's primary daily planning runs on mainline UbU, Quick UbU being legacy (`UBU-D0275`, `UBU-D0305`); Phase 2 sync is next.  
 **Repository:** `ubu-design`  
 **Primary purpose:** Canonical public design state for the UbU project  
 **Derived file:** This README is a technical contributor entry point. The canonical design authority is `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`.
@@ -193,9 +193,11 @@ The operational target remains:
 
 The project is seeking a small core cohort of serious, self-directed builders. It does not need popularity for its own sake. It needs concrete patches, test fixtures, design review, workflow examples, prototype funding, and sustained subsystem ownership.
 
-### Phase 1b: Quick UbU merge through the switch (in progress)
+### Phase 1b: Quick UbU merge through the switch (complete, 2026-10-10)
 
 Phase 1b extends the feature-complete Phase 1 system until it can replace Quick UbU, the separately developed personal planner used for daily planning, so that Quick UbU becomes legacy software (`DESIGN.md` §4.2, `UBU-D0275`). Every merged Quick UbU feature adopts the forms and boundaries of the MVP design it corresponds to (the Phase 1b rule). Phase 1b ends at the switch, when primary daily planning runs on mainline UbU, and therefore includes the planner the switch requires, including the desktop GPU backend. Multi-device sync remains Phase 2 and follows Phase 1b.
+
+The switch is recorded by `UBU-D0305`. What landed includes the certified greedy planner under the CPU tensor-worker profile (`UBU-D0303`), routines as evergreen-Objective recurrence (`UBU-D0286`), partial placement (`UBU-D0289`), pairwise Task Preferences as the ordering input (`UBU-D0282`), the affect observation route (`UBU-D0304`), the governed subject vocabulary and its standing ratification agenda (`UBU-D0291`, `UBU-D0305`), bounded advisory producers (`UBU-D0299`, `UBU-D0302`), and the live rehearsal as the operator instrument (`UBU-D0305`). The MVP-release camera-and-voice commitment continues (`UBU-D0292`), with its delivery sequence still the operator's roadmap decision under `UBU-Q0183`; completion of Phase 1b does not claim release completion.
 
 ### Phase 2 sync and Compartment contract
 
@@ -256,6 +258,13 @@ The Phase 1 design baseline is frozen and implementation-first Phase 1 work has 
 - [x] Wiring-C — the bootstrap records the initial UniverseState facts (`operator`/`project` subjects under the `UBU-D0243` namespace convention), making the loop self-sustaining from onboarding; preconditions then gate and effects then mutate those bootstrap-seeded facts (`UBU-D0242`).
 - [ ] The bootstrap interview, Calendar preview, one-next-Task view, and Log review loop are implemented in the main UbU app. *(Partial: bootstrap interview, the Compact Calendar preview, and one-next-Task view implemented; a Log review view is pending.)*
 - [ ] Release Outreach Pipeline artifacts are generated from implemented release state.
+
+### Phase 1b readiness (complete)
+
+- [x] The planner exit condition is discharged (`UBU-D0303`).
+- [x] The ordering and affect inputs reach the kernel in the rehearsal, one as a marked stand-in and one as the operator's reading (P1B-81, P1B-82).
+- [x] The switch was performed on 2026-10-10 with the operator's own release and prepared de-install path (`UBU-D0305`).
+- [ ] The MVP-release camera-and-voice surface (`UBU-D0292`); its sequence remains open in `UBU-Q0183`.
 
 ---
 

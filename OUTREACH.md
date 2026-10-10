@@ -1,6 +1,6 @@
 # UbU Outreach
 
-**Status:** Derived public-facing outreach document — Phase 1 feature-complete; canonical design files win on any conflict  
+**Status:** Derived public-facing outreach document — Phase 1 feature-complete; Phase 1b complete, switch 2026-10-10 (`UBU-D0305`); canonical design files win on any conflict  
 **Source of truth:** `DESIGN.md`, `DECISIONS.md`, `OPEN_QUESTIONS.md`, `PLANNING_KERNEL_CONTRACT.md`, and `DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md`  
 **Audience:** FOSS developers, project maintainers, Ethereum project leads, privacy engineers, automation builders, planning-tool researchers, independent technical consultants, prototype funders, and technically curious contributors
 
@@ -330,7 +330,7 @@ Professional and FOSS use cases are valuable when they help build the same primi
 
 UbU is at a concrete inflection point. Phase 1 design is frozen, and Phase 1 is now feature-complete across the `UbU-project` repo constellation. Phase 0 — a live, runnable demo — was demonstrated at ETHConf NYC, June 8–10, 2026, frozen at `ubu-phase0-demo` commit `9daffa7`; the Phase 1 feature set has since been built out in full, and UbU now runs its own development loop on real infrastructure.
 
-This is the moment when early contributors can engage with a working end-to-end system that runs its own development loop, meet the project in person, and shape the hardening, the Phase 1b planner, and the Phase 2 expansion. The design is coherent and the Phase 1 feature set is complete enough to build on; the project is early enough that concrete contributions still matter.
+This is the moment when early contributors can engage with a working end-to-end system that runs its own development loop, meet the project in person, and shape the hardening, the MVP-release interaction surface (`UBU-D0292`), and the Phase 2 expansion. The design is coherent and the Phase 1 feature set is complete enough to build on, and Phase 1b's switch has happened on 2026-10-10 (`UBU-D0305`); the project is early enough that concrete contributions still matter.
 
 ---
 

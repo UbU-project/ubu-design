@@ -996,15 +996,15 @@ The remaining §4.1 frozen-set items follow in bootstrap-dependency-driven order
 
 ### 4.2 Phase 1b: Quick UbU merge through the switch
 
-Phase 1b extends the Phase 1 system until it can replace Quick UbU, the separately developed personal planner that serves as the dogfooding user's working daily tool, so that Quick UbU becomes legacy software (`UBU-D0275`).
+Phase 1b extends the Phase 1 system until it can replace Quick UbU, the separately developed personal planner that served as the dogfooding user's working daily tool until the switch on 2026-10-10, so that Quick UbU becomes legacy software (`UBU-D0275`, `UBU-D0305`).
 
 Exit criterion:
 
 > The switch: the dogfooding user's primary daily planning runs on mainline UbU.
 
-The switch waits on ratification or retirement of every provisional subject root before the store becomes non-disposable (`UBU-D0291`); the planner condition is discharged by the greedy Stage 1 certification under the CPU tensor-worker profile (`UBU-D0303`). No switch date is set.
+The switch happened on 2026-10-10 (`UBU-D0305`); the planner condition was discharged by the greedy Stage 1 certification under the CPU tensor-worker profile (`UBU-D0303`), and the ratification gate of `UBU-D0291` was met with no provisional subject root in the switched store; the registry remains the standing agenda for any root minted later.
 
-Until the switch, Quick UbU remains the primary tool and mainline is exercised against non-primary test data.
+From 2026-10-10, mainline UbU is the primary daily planning tool, Quick UbU is legacy software, and the store is no longer disposable (`UBU-D0305`).
 
 **The Phase 1b rule.** Every Quick UbU feature merged into mainline adopts the restrictions, forms, and functional boundaries of the MVP design it corresponds to, even when that design's implementation phase is later. Open questions that block Phase 1b are answered during Phase 1b whatever phase they were previously tagged, and the items they pull forward are re-tagged Phase 1b.
 
@@ -1059,7 +1059,7 @@ Phase 5+ continues the full version 1.0+ track with mature inventory, financial-
 |---|---|---|
 | Phase 0 | ETHConf NYC demo | Complete |
 | Phase 1 | Single-user GitHub dogfooding (§4.1) | Feature-complete |
-| Phase 1b | Quick UbU merge through the switch, including the planner (§4.2) | In progress |
+| Phase 1b | Quick UbU merge through the switch, including the planner (§4.2) | Complete (switch 2026-10-10, UBU-D0305) |
 | Phase 2 | Single-user multi-device synchronization (§4.3) | Next |
 | Phase 3 | Minimal multi-user / Identity coordination and Resource/Skill task readiness (§4.4) | Planned |
 | Phase 4 | Version 1.0 release track (§4.5) | Planned |
@@ -1838,7 +1838,7 @@ MVP value discipline:
 
 **Namespace convention (`UBU-D0243`, amended by `UBU-D0291`).** A target is `<collection>.<subject>(.<entity-path>)?.<predicate>`. The first segment after the collection is a permanent top-level taxonomy referenced by every fact, precondition and mutation, so it remains governed and reviewed. Its effective vocabulary is the governed set union one visible operator-authored provisional registry. The governed set remains `operator`, `project`, `github`, `affect`, `relationship`, and only a recorded amending decision extends it. Minting a provisional root is an explicit operator act, never a side effect of recording a fact and never available to an advisor; producers may use only the effective vocabulary. Every root is a snake_case singular noun naming an entity or domain, never an instance, attribute, provenance/source or reverse-DNS authority prefix. Predicates and entity paths retain their existing rules. `affect` retains its reserved meaning, and `UBU-D0242`'s intrinsic-affect rejection keys off `<subject> == affect` unchanged.
 
-Every provisional root must be ratified by an amending decision or retired before the switch; the registry is that agenda. The store is disposable until the switch, making that the last cheap rename point before UniverseState keys, fact_provenance keys and Task precondition strings require rewriting without migration tooling. No root is proposed here. Registry, minting and validator/advisor enforcement are follow-up orchestrator work, not implemented by this ticket.
+Before the 2026-10-10 switch, every provisional root had to be ratified by an amending decision or retired; the registry remains the standing agenda for roots minted later (`UBU-D0305`). The store became non-disposable on 2026-10-10 (`UBU-D0305`), and the last cheap rename point has passed: UniverseState keys, fact_provenance keys and Task precondition strings require rewriting without migration tooling. No root is proposed here. Registry, minting and validator/advisor enforcement are follow-up orchestrator work, not implemented by this ticket.
 
 The Phase 1b Tasks form reads requirements in words and authors a single leaf. Boolean trees remain readable and clearable, and authorable through the existing routes; a tree editor is outside the form's scope.
 
