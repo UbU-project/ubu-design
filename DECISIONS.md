@@ -4875,3 +4875,15 @@ Phase 1b's open questions have their `Phase 1b` tag changed to `Phase 2`.
 **Status:** Accepted → OPEN_QUESTIONS.md. Amends `UBU-D0305`: its sentence that Phase 1b's open questions keep their tag no longer holds.
 
 On 2026-10-10 the 20 open questions tagged `Phase 1b` were re-tagged `Phase 2` so the Phase 2 ranking selects them. Their origin is recorded by this decision.
+
+---
+
+## UBU-D0307: Waiting-for is a Phase 2 Task lifecycle status with explicit release and review rules
+
+**Status:** Accepted → DESIGN.md §9.5–§9.6. Resolves `UBU-Q0112`; extends `UBU-D0227` for Phase 2 and follows `UBU-D0228`'s wire convention.
+
+`WAITING_FOR` (`waiting_for` on the wire) retains the user's responsibility for an existing Task while a human response or outside action is awaited. Its single current waiting record carries an episode id, entry time, reason and release criterion, optional counterparty Identity ref and expected-by estimate, explicit reminder policy, optional local escalation time, and evidence refs. Deterministic automatic restoration requires an explicitly accepted predicate rule over admitted state; dates and raw arrivals are insufficient. Existing preconditions remain independent and worker assignment/polling remains a separate lifecycle.
+
+Waiting Tasks and their blocked dependents are excluded before kernel dispatch. The horizon shows blocked waits and derived lateness/dependency risk; Calendar preview uses a waiting list and non-occupying review markers. Follow-up work is separately admitted and scheduled. Expected-by estimates neither reserve time nor certify readiness.
+
+Entry, edits, and exit are version-checked, idempotent, and logged atomically; terminal exits also retain the ordinary outcome event. Recalculation, Compartment policy, worker admission, and multi-device conflict rules retain their existing authority. Review and escalation never imply permission to send a message. This decision specifies Phase 2 behavior and makes no implementation claim.
