@@ -3404,7 +3404,7 @@ Open.
 
 ## UBU-Q0183: Full realtime capture phase and MVP delivery sequence
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Scope Auto-choice eligibility: Human only Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Scope Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -3422,7 +3422,7 @@ Open.
 
 ## UBU-Q0184: Missing-prerequisite candidate feasibility
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human only Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -3440,7 +3440,7 @@ Open.
 
 ## UBU-Q0185: Advisory decode controls or operator-owned runtime policy
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human only Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
@@ -3448,7 +3448,7 @@ Should the advisory boundary expose decode parameters, or is the model's generat
 
 ### Current direction
 
-The advisory Settings expose model, endpoint, timeout and review seed/ceiling, with no decode parameter. P1B-80's live Vocabulary abort prompted an audit that found a separate unbounded SuggestTags grammar (`UBU-D0302`). Correcting that grammar before changing the sampler is evidence on the deliberately-outside side; it does not prove the cause of the already-bounded Vocabulary failure or settle runtime control across models. No repeat penalty, temperature, Setting or other decode control is added. Keep the question Open and unanswered.
+The advisory Settings expose model, endpoint, timeout and review seed/ceiling, with no decode parameter. P1B-80's live Vocabulary abort prompted an audit that found a separate unbounded SuggestTags grammar (`UBU-D0302`). Correcting that grammar before changing the sampler is evidence on the deliberately-outside side; it does not prove the cause of the already-bounded Vocabulary failure or settle runtime control across models. No repeat penalty, temperature, Setting or other decode control is added.
 
 ### Resolution
 
@@ -3483,7 +3483,7 @@ Open.
 
 ## UBU-Q0187: Policy and execution separation for local maintenance actions
 
-Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Security Auto-choice eligibility: Human only Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
 
 ### Question
 
