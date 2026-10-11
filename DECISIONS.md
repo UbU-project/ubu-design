@@ -4865,3 +4865,9 @@ On 2026-10-10 the operator performed the switch with his own release and prepare
 Until the switch, Quick UbU remains the operator's primary daily planner, mainline is exercised against non-primary test data through the live rehearsal, the store stays disposable, and data backward compatibility is neither required nor supported. The store the operator switched to held no provisional subject root, so `UBU-D0291`'s ratification gate was met with nothing to ratify; the registry remains the standing agenda and is evaluated at the deferred switch, which is still the last cheap rename point.
 
 Phase 2, single-user multi-device synchronization (§4.3), opens on 2026-10-10 and is in development. Phase 1b's open questions keep their `Phase 1b` tag as a record of origin and are not re-tagged. The MVP-release commitment of `UBU-D0292`, the camera-and-voice interaction surface, is not inferred from this closure and continues, with its sequence the operator's roadmap decision under `UBU-Q0183`. CUDA parity is not certified; the deferred ChunkedSweep mirror and the unimplemented confidence decay are not claimed by this record.
+
+---
+
+## UBU-D0306: Phase 1b open questions are re-tagged to Phase 2.
+
+Phase 1b's open questions have their `Phase 1b` tag changed to `Phase 2`.
