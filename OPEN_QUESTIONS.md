@@ -905,7 +905,7 @@ Deferred due to lack to preparation time.
 
 ## UBU-Q0076: Planning horizon, early-preparation bias, and short-horizon time discounting
 
-Status: Open Priority: Research Phase: Phase 2 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016, UBU-Q0051 Blocks: detailed planning horizon policy, premium planning horizon design Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: Research Phase: Phase 2 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0016, UBU-Q0051 Blocks: detailed planning horizon policy, premium planning horizon design Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -960,7 +960,7 @@ Resolved by `UBU-D0272`: realtime interaction is represented by a lightweight `R
 
 ## UBU-Q0078: Interruption, escalation, and discovery-mode consent policy
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0052, UBU-Q0077 Blocks: realtime UX, discovery mode, short-horizon reactive repair Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0052, UBU-Q0077 Blocks: realtime UX, discovery mode, short-horizon reactive repair Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -994,7 +994,7 @@ Resolved. See UBU-D0177.
 
 ## UBU-Q0080: Delegation Substrate MVP schema and self-reminder use
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0032, UBU-Q0060, UBU-Q0079 Blocks: Task delegation, Automation Worker assignment, solo Task formalization, future Skill Barter marketplace Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0032, UBU-Q0060, UBU-Q0079 Blocks: Task delegation, Automation Worker assignment, solo Task formalization, future Skill Barter marketplace Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -1020,7 +1020,7 @@ Open.
 
 ## UBU-Q0081: General Contractor role and subdelegation semantics
 
-Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0080, UBU-Q0061 Blocks: multi-executor coordination, Skill Barter marketplace, larger Association workflows Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0080, UBU-Q0061 Blocks: multi-executor coordination, Skill Barter marketplace, larger Association workflows Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -1046,7 +1046,7 @@ Open.
 
 ## UBU-Q0082: Skill Barter marketplace outreach, privacy tech, and MVP boundary
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0065, UBU-Q0080, UBU-Q0081 Blocks: EthConf cypherpunk outreach, Skill Barter future roadmap, privacy-tech positioning Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0065, UBU-Q0080, UBU-Q0081 Blocks: EthConf cypherpunk outreach, Skill Barter future roadmap, privacy-tech positioning Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -1108,7 +1108,7 @@ Resolved. See UBU-D0263.
 
 ## UBU-Q0085: State-transition cockpit UX model
 
-Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0050, UBU-Q0077, UBU-Q0080 Blocks: post-MVP UX, generative UI, review workflows, candidate/canonical distinction Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0050, UBU-Q0077, UBU-Q0080 Blocks: post-MVP UX, generative UI, review workflows, candidate/canonical distinction Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -1134,7 +1134,7 @@ Open.
 
 ## UBU-Q0086: Counterparty-perspective hypothesis model for extrospection
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0026, UBU-Q0067 Blocks: extrospection, Relationship review, relationship-scope transitions Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0026, UBU-Q0067 Blocks: extrospection, Relationship review, relationship-scope transitions Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -1160,7 +1160,7 @@ Open.
 
 ## UBU-Q0087: Relationship declaration versioning and scope drift
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0026 Blocks: Relationship model, extrospection, RelationshipScopeTransition Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0026 Blocks: Relationship model, extrospection, RelationshipScopeTransition Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -1214,7 +1214,7 @@ Resolved by `UBU-D0273`: `ExtrospectionFinding` records use the lifecycle states
 
 ## UBU-Q0089: Extrospection safety thresholds and anti-paranoia design
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0086, UBU-Q0088 Blocks: proactive extrospection, scope-drift prompts, rumination detection Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0086, UBU-Q0088 Blocks: proactive extrospection, scope-drift prompts, rumination detection Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -1240,7 +1240,7 @@ Open.
 
 ## UBU-Q0090: User-accepted discomfort and value-aligned negative affect
 
-Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0050, UBU-Q0089 Blocks: affective assessment, extrospection, relationship review Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0050, UBU-Q0089 Blocks: affective assessment, extrospection, relationship review Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -1292,7 +1292,7 @@ Open.
 
 ## UBU-Q0092: Typed Relationship evidence policies
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0028, UBU-Q0083 Blocks: extrospection evidence, Relationship evidence retention, compartment-aware review Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0028, UBU-Q0083 Blocks: extrospection evidence, Relationship evidence retention, compartment-aware review Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -1318,7 +1318,7 @@ Open.
 
 ## UBU-Q0093: Extrospection-to-introspection handoff
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0050, UBU-Q0088 Blocks: introspection UX, extrospection UX, relationship review Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0050, UBU-Q0088 Blocks: introspection UX, extrospection UX, relationship review Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -1344,7 +1344,7 @@ Open.
 
 ## UBU-Q0094: RelationshipScopeTransition model boundary and reverse references
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0026, UBU-Q0087 Blocks: RelationshipScopeTransition, Objective targeting, Relationship history Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0026, UBU-Q0087 Blocks: RelationshipScopeTransition, Objective targeting, Relationship history Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -1370,7 +1370,7 @@ Open.
 
 ## UBU-Q0095: Process success and outcome observations in RelationshipScopeTransition
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0094 Blocks: consent-dependent transitions, Objective status, graceful nonachievement Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0094 Blocks: consent-dependent transitions, Objective status, graceful nonachievement Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -1396,7 +1396,7 @@ Open.
 
 ## UBU-Q0096: RelationshipScopeTransition type taxonomy and review gates
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0094 Blocks: transition planning, review checkpoints, RelationshipScopeTransition UX Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0094 Blocks: transition planning, review checkpoints, RelationshipScopeTransition UX Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -1422,7 +1422,7 @@ Open.
 
 ## UBU-Q0097: RelationshipScopeTransition step validation and counterparty autonomy
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0095 Blocks: Technique generation, Step validation, autonomy-preserving relationship planning Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0095 Blocks: Technique generation, Step validation, autonomy-preserving relationship planning Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -1448,7 +1448,7 @@ Open.
 
 ## UBU-Q0098: Manipulation-prevention taxonomy and affect-knowledge firewall
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0097 Blocks: RelationshipScopeTransition Technique generation, extrospection safety, relationship safeguards Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0097 Blocks: RelationshipScopeTransition Technique generation, extrospection safety, relationship safeguards Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -1474,7 +1474,7 @@ Open.
 
 ## UBU-Q0099: Power, vulnerability, pacing, and graceful nonachievement
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0094, UBU-Q0098 Blocks: romantic transitions, professional transitions, dependency-heavy transitions, graceful failure UX Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 0 Depends on: UBU-Q0094, UBU-Q0098 Blocks: romantic transitions, professional transitions, dependency-heavy transitions, graceful failure UX Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -1508,7 +1508,7 @@ Resolved. See UBU-D0165.
 
 ## UBU-Q0101: Advisory safeguard uncertainty, override, and introspection consequences
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0100 Blocks: safeguard UX, introspection, relationship-transition UX Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0100 Blocks: safeguard UX, introspection, relationship-transition UX Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -1688,7 +1688,7 @@ Open.
 
 ## UBU-Q0112: Waiting-for as an explicit task state
 
-Status: Resolved Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: delegation tracking, planning horizon accuracy Resolved by: UBU-D0307 Last scored: 2026-10-10 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: delegation tracking, planning horizon accuracy Resolved by: UBU-D0307 Last scored: 2026-10-10 Scored from commit: None
 
 ### Question
 
@@ -1715,7 +1715,7 @@ Resolved by `UBU-D0307` (DESIGN.md §9.6): Phase 2 adds canonical `waiting_for` 
 
 ## UBU-Q0113: Friction annotation on Log entries
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0107 Blocks: duration model improvement, introspection quality Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0107 Blocks: duration model improvement, introspection quality Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -1811,7 +1811,7 @@ Open.
 
 ## UBU-Q0117: deferred_intent task status and dismissal review
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: planning horizon clarity, introspection completeness Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: planning horizon clarity, introspection completeness Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -2133,7 +2133,7 @@ Open.
 
 ## UBU-Q0128: Embodied Audio Interaction
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Commute Mode, restricted-attention interaction, audio-only task capture, audio-safe messaging, media-state routing, exercise/rest/walking interaction modes Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Commute Mode, restricted-attention interaction, audio-only task capture, audio-safe messaging, media-state routing, exercise/rest/walking interaction modes Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 Depends on unregistered areas: Affect model, Compartment policy, audio I/O policy,
 MCP/tool harness policy, device context model.
@@ -2480,7 +2480,7 @@ Resolved by `UBU-D0274`: Phase 1b advisory proposals are first-class `AdvisoryCa
 
 ## UBU-Q0139: Phase 2 sync topology: peer-to-peer mesh or single-live-session
 
-Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2 sync topology Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2 sync topology Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 Formerly UBU-QSYNC-001 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §3, §25, §26.
 
@@ -2516,7 +2516,7 @@ This rejects a pure Lamport clock because wall-time adjacency is useful for oper
 
 ## UBU-Q0141: Minimum acceptable encrypted indirect sync transport
 
-Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2 sync transport Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2 sync transport Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 Formerly UBU-QSYNC-003 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §8, §27.
 
@@ -2533,7 +2533,7 @@ Open.
 
 ## UBU-Q0142: Device disconnection midway through a sync session
 
-Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2 sync session recovery Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2 sync session recovery Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 Formerly UBU-QSYNC-004 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §16, §17.
 
@@ -2606,7 +2606,7 @@ Resolved by `UBU-D0250`: Phase 2 worker Devices use a scoped request/response pr
 
 ## UBU-Q0146: Sync-state warnings without the one-device-at-a-time anti-pattern
 
-Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2 sync-state surfacing Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2 sync-state surfacing Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 Formerly UBU-QSYNC-008 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §23.
 
@@ -2623,7 +2623,7 @@ Open.
 
 ## UBU-Q0147: Schedulable syncable manual-review Task and the causal regress
 
-Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2+ manual-review Task scheduling Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2+ manual-review Task scheduling Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 Formerly UBU-QSYNC-009 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §17.
 
@@ -2976,7 +2976,7 @@ Resolved by `UBU-D0288`: routine occurrences are mandatory and carry no priority
 
 ## UBU-Q0160: Which mobile compute API should the mobile GPU backend target?
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0156 Blocks: mobile GPU backend selection, mobile interaction/workload roadmap Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 90 Depends on: UBU-Q0156 Blocks: mobile GPU backend selection, mobile interaction/workload roadmap Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 Defining context: DESIGN.md §16.5, §16.10.6; PLANNING_KERNEL_CONTRACT.md §4; `UBU-D0126`, `UBU-D0256`, `UBU-D0283`, `UBU-D0290`.
 
@@ -3008,7 +3008,7 @@ Open pending that measurement gate; no hardware result is inferred from API avai
 
 ## UBU-Q0161: Task descriptions as lossless prose after Clarify
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3026,7 +3026,7 @@ Open.
 
 ## UBU-Q0162: Enforce append-only Log correction rather than in-place editing
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3044,7 +3044,7 @@ Open.
 
 ## UBU-Q0163: Retire the uncaptured recurring-busy capacity workaround
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3062,7 +3062,7 @@ Open.
 
 ## UBU-Q0164: Deliver the primary camera-and-voice surface with usable alternatives
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3080,7 +3080,7 @@ Open.
 
 ## UBU-Q0165: Observation-to-candidate contract and admission reuse
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3098,7 +3098,7 @@ Open.
 
 ## UBU-Q0166: Preserve perceptual qualifiers alongside the closed provenance enum
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3116,7 +3116,7 @@ Open.
 
 ## UBU-Q0167: Consequence-sensitive corroboration before planning influence
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3134,7 +3134,7 @@ Open.
 
 ## UBU-Q0168: Snapshot, conversational, streamed and retrospective latency classes
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3152,7 +3152,7 @@ Open.
 
 ## UBU-Q0169: Local AV segmentation and bounded agent/tool interfaces
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3170,7 +3170,7 @@ Open.
 
 ## UBU-Q0170: Default raw-media retention for consented perception
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3188,7 +3188,7 @@ Open.
 
 ## UBU-Q0171: Operator controls over discard, summarize, hash, clip and export
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Security Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3206,7 +3206,7 @@ Open.
 
 ## UBU-Q0172: Evidence compatible with completion versus proof of an effect
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3242,7 +3242,7 @@ Open.
 
 ## UBU-Q0174: Realtime guidance stop and professional-escalation conditions
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3296,7 +3296,7 @@ Open.
 
 ## UBU-Q0177: Minimum viable secure local hardware for multimodal interaction
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3314,7 +3314,7 @@ Open.
 
 ## UBU-Q0178: Economically accessible local compute paths
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3386,7 +3386,7 @@ Open.
 
 ## UBU-Q0182: Guided camera accessibility without a narrow product category
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3404,7 +3404,7 @@ Open.
 
 ## UBU-Q0183: Full realtime capture phase and MVP delivery sequence
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Scope Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Scope Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3422,7 +3422,7 @@ Open.
 
 ## UBU-Q0184: Missing-prerequisite candidate feasibility
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3440,7 +3440,7 @@ Open.
 
 ## UBU-Q0185: Advisory decode controls or operator-owned runtime policy
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-10 Scored from commit: None
+Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
