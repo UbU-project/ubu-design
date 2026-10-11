@@ -3453,3 +3453,129 @@ The advisory Settings expose model, endpoint, timeout and review seed/ceiling, w
 ### Resolution
 
 Open.
+
+---
+
+## UBU-Q0186: Device provisioning as the first run of the admission loop
+
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What is the provisioning lifecycle of a new UbU Device, from install through registration to a trusted and maintained member of the user's Zone, and does its first act, the hardware and runtime inventory, enter canonical state through the ordinary observation → candidate → admission path as Resource facts rather than through a provisioning subsystem beside it?
+
+### Subquestions
+
+1. Which install-time facts (hardware, storage, inference runtime, model availability, network posture) are observations producing candidate Resource facts (DESIGN.md §10.4, §11, §21.2), and which are Device registration material (DESIGN.md §23.1; DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §5)?
+2. How does provisioning relate to the bootstrap interview (DESIGN.md §2.7, §4.1), which is the only current meaning of "bootstrap" in the corpus, and what does the user see first?
+3. What trust state does a freshly provisioned Device hold before the user has admitted anything, and what promotes it (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §5, §19, §20)?
+4. Does a device-repair or maintenance Technique (UBU-Q0190) have a role at provisioning time?
+
+### Current direction
+
+Filed 2026-10-10 from the operator's routing of the 8 October 2026 discussion memo; the memo's own text is not retained, so the question stands as routed rather than as the memo asked it. The corpus has no provisioning lifecycle: "bootstrap" means the interview, Resource is a compatibility placeholder until Phase 3 (DESIGN.md §4.1), and the Phase 1b Device registry has one entry. The routed direction is that provisioning is the first run of the canonical loop, not a subsystem beside it: the install-time inventory enters as ordinary observations producing candidate Resource facts, admitted by the ordinary path, so the user's first interaction demonstrates observation → candidate → admission on something safe and legible before any of their life is in the store. That is also the smallest first slice. Self-maintenance must not become an unreviewable exception to admission; the human form's assertion/measurement distinction (`UBU-D0300`) and the operator-supplied-value rule (`UBU-D0296`) apply to inventory facts as to any other. Related: UBU-Q0188 (the runtime as a Resource), UBU-Q0139 (sync topology).
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0187: Policy and execution separation for local maintenance actions
+
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Security Auto-choice eligibility: Human only Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Does the shape `UBU-D0234` enforces for export, a single deny-by-default adjudicator that is the only issuer of a permit, a narrow writer that cannot act without presenting one, and a re-read verification before the action counts as done, extend to a second operation class, the actions a Device takes on itself for maintenance and security posture, and what changes when the action mutates the local runtime rather than emitting to an external surface?
+
+### Subquestions
+
+1. What is the permit for a local maintenance action, who constructs it, and what makes it unforgeable by the writer, as the export permit is constructible only by the gate (`UBU-D0234`)?
+2. What is the re-read step when the surface is the Device itself rather than a managed GitHub surface (DESIGN.md §27.3, §27.4)?
+3. May an Automation Worker or a worker Device propose a maintenance action, and under which `WorkerAuthority` (DESIGN.md §25.1.1; DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §20), given that worker Devices may not expand their own authority?
+4. Which maintenance actions remain human-only, and how is that boundary enforced before it is documented?
+
+### Current direction
+
+Filed 2026-10-10 from the operator's routing of the 8 October 2026 discussion memo; the memo's own text is not retained, so the question stands as routed. The routing's finding is that this is an extension of a proven pattern, not a new architecture: `UBU-D0234`'s three-way separation is built and property-tested for export, and framing the maintenance case as the same shape applied to a second operation class is more accurate and cheaper than specifying a new boundary. Nothing is added to `MULTIMODAL_SECURITY.md` until a maintenance capability exists; its statement that no agent is implemented or activated must remain true. Related: UBU-Q0186, UBU-Q0188.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0188: UbU's own runtime as a Resource and its upkeep as Dynamic work
+
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: None Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+Is the UbU runtime on each Device, its inference models, storage, backups and security posture, a Resource in the sense of DESIGN.md §10.4, so that its upkeep ("update the inference runtime", "test the restore") becomes Tasks with durations, windows and value that the planner ranks against everything else in the user's week, and so that a deferred upkeep Task is carried as an explicit risk finding rather than a nag?
+
+### Subquestions
+
+1. Which upkeep items are Tasks under an evergreen Objective (DESIGN.md §7.4; `UBU-D0286`) and which are preconditions on other Tasks (DESIGN.md §10.1, §10.4)?
+2. How is "not this month" recorded as the owner exercising sovereignty (DESIGN.md §2.1), and which risk finding (DESIGN.md §28) carries the consequence?
+3. What may a worker Device do about its own upkeep without admission (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §20)?
+4. Where do the Resource facts come from: provisioning observations (UBU-Q0186) and later measurements, through the admission pipeline (DESIGN.md §21.2)?
+
+### Current direction
+
+Filed 2026-10-10 from the operator's routing of the 8 October 2026 discussion memo; the memo's own text is not retained, so the question stands as routed. The corpus has no self-as-Resource concept. The routed direction is what the routing calls the honest form of a zero-maintenance promise: maintenance does not vanish, it becomes scheduled and deprioritizable by the owner, and nothing in the corpus today lets UbU's self-care contend for the same hours as the user's obligations. Resource remains a compatibility placeholder until Phase 3 (DESIGN.md §4.1, §10.4), so this question is sequenced behind that boundary. Related: UBU-Q0187 for how an upkeep action is permitted and verified.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0189: Workflow crystallization from repeated Tasks into Techniques
+
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0176 Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+By what path does a sequence of the user's own Tasks that has succeeded repeatedly become a reusable Technique, a promotion from Log evidence to a modeled procedure, as distinct from the static execution tiering of `UBU-D0141` and from the observed third-party procedures of UBU-Q0176?
+
+### Subquestions
+
+1. What evidence qualifies: how many completions, over which Log event types (DESIGN.md §17.2), with which outcome and friction data, before a pattern is proposed?
+2. Is the proposal an `AdvisoryCandidate` (DESIGN.md §21.2.1) reviewed in the Log review Task (DESIGN.md §17.8), and does the admitted Technique become the Objective's default Technique for expansion (DESIGN.md §15.2.1.1)?
+3. What does the crystallized Technique carry from its source Tasks: Steps with durations, Resource and Skill requirements (DESIGN.md §10.4, §10.5, §10.6), and provenance back to the Log entries?
+4. How does the no-invention rule of DESIGN.md §15.2.2 apply: crystallization creates a Technique only through admission, never during planning?
+
+### Current direction
+
+Filed 2026-10-10 from the operator's routing of the 8 October 2026 discussion memo; the memo's own text is not retained, so the question stands as routed. The routing marks the concept absent and the question a strong candidate: `UBU-D0141` places deterministic local code at Tier 0 of a static execution hierarchy and defines no path by which a repeated workflow is promoted into it, and UBU-Q0176 concerns observed human procedures becoming draft Techniques with uncertainty. Crystallization is the same destination reached from the user's own completed work. Technique is a compatibility placeholder until Phase 3 (DESIGN.md §4.1), so the question is sequenced behind UBU-Q0176.
+
+### Resolution
+
+Open.
+
+---
+
+## UBU-Q0190: Portable Technique interchange format between UbU instances
+
+Status: Open Priority: Post-MVP Phase: Post-MVP Decision type: Data model Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: TBD Depends on: UBU-Q0122, UBU-Q0176 Blocks: None Resolved by: None Last scored: Never Scored from commit: None
+
+### Question
+
+What is the interchange format in which a Technique leaves one UbU instance and enters another, signed, reviewable and importable, carrying its applicability conditions, Resource and Skill requirements, Steps, evidence and provenance while carrying no trace of the life it was learned in, and how is it distinct from the commissioned Technique Package of UBU-Q0122?
+
+### Subquestions
+
+1. Which fields are the portable core (DESIGN.md §10.6) and which are instance-local and stripped on export under the Compartment and source-taint rules (DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §7, §12)?
+2. Does export pass through the `UBU-D0234` gate as an export-class operation, and does publication reuse the sanitized review-package pipeline of `UBU-D0179` (DESIGN.md §3.1.3) pointed at Techniques?
+3. Can the same format carry a counter-Technique, an applicability exclusion with its evidence ("this part is not sold separately", "this permit is not issued for this use"), which is a single predicate and carries far less personal trace than a full procedure?
+4. Is a device-repair Technique ("this failure, on this distribution, with this hardware") the first use, given that it describes machines rather than lives?
+5. What does import admit: the Technique as `candidate_state` for review (DESIGN.md §21.2), never as an accepted procedure or Skill attestation (UBU-Q0176)?
+
+### Current direction
+
+Filed 2026-10-10 from the operator's routing of the 8 October 2026 discussion memo; the memo's own text is not retained, so the question stands as routed. The routing separates the interchange format (this question) from a publishing format and a catalog, which are later distribution decisions, and from UBU-Q0122, whose Technique Package is a commissioned marketplace artifact. Two routed extensions belong here: publishing dead ends as counter-Techniques, cheaper to review than procedures; and device-repair Techniques as a commons with a clean privacy profile, an adoption entrance built from mechanisms already proposed. Technique is a compatibility placeholder until Phase 3 (DESIGN.md §4.1).
+
+### Resolution
+
+Open.
