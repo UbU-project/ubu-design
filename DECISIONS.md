@@ -4887,3 +4887,17 @@ On 2026-10-10 the 20 open questions tagged `Phase 1b` were re-tagged `Phase 2` s
 Waiting Tasks and their blocked dependents are excluded before kernel dispatch. The horizon shows blocked waits and derived lateness/dependency risk; Calendar preview uses a waiting list and non-occupying review markers. Follow-up work is separately admitted and scheduled. Expected-by estimates neither reserve time nor certify readiness.
 
 Entry, edits, and exit are version-checked, idempotent, and logged atomically; terminal exits also retain the ordinary outcome event. Recalculation, Compartment policy, worker admission, and multi-device conflict rules retain their existing authority. Review and escalation never imply permission to send a message. This decision specifies Phase 2 behavior and makes no implementation claim.
+
+---
+
+## UBU-D0308: Deferred intent is retained work excluded from planning and resolved through explicit review
+
+**Status:** Accepted → DESIGN.md §9.5, §9.7, §17.8. Resolves `UBU-Q0117`; completes its existing planning-exclusion direction, extends `UBU-D0227` for Phase 2, and follows `UBU-D0228`'s wire convention.
+
+`DEFERRED_INTENT` (`deferred_intent` on the wire) requires explicit user deferral, preserves Task identity and history, and carries one current record with episode id, entry time, optional reason and tagged defer-until boundary, review interval, last explicit review, and finite next review time. Capture needs no creation-time Preference; promotion supplies ordinary schedulability fields and cites an enabled, explicitly user-accepted pairwise Task or linked-Objective Preference. Low priority, missed execution, and inferred value cannot create deferral or commitment. Mandatory routine occurrences retain their existing skip/move controls.
+
+The CPU excludes deferred work and dependents with unsatisfied required dependencies before kernel dispatch. Deferred work cannot become filler, occupy Calendar time, earn effect credit, or contribute deferral time to duration learning. Ordinary Plan repair preserves execution history and external obligations; no `TaskSpec` extension is needed.
+
+Default review interval is 30 days, surfaced at Log review or startup when due; a chosen date delays ordinary review and a material admitted Objective change can surface it earlier. Dates never reactivate work. The four actions are promote, keep deferred with a future review, dismiss permanently through the existing narrow `moot_reason_code`, and review the linked Objective while retaining deferral. Keep, skip, and Objective review do not discharge an unresolved Preference requirement; the review cycle continues without forced expiry or inferred acceptance.
+
+Entry, edits, exit, and review decisions are version-checked, idempotent, and append-only logged under §9.7; terminal exits also retain their ordinary outcome Log. Attention requests are coalesced per episode and respect existing Compartment, authority, worker-admission, recalculation, and device-sync rules. This decision specifies Phase 2 behavior and makes no implementation claim.

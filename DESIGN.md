@@ -1663,7 +1663,7 @@ Readiness and execution states such as proposed, ready, blocked, and in-progress
 
 **Phase 2 status additions (not in Phase 1):**
 
-`DEFERRED_INTENT` — the user has decided not to plan this Task now but wants to retain it for future consideration. Distinct from low-priority (which remains eligible for planning) and from cancelled (which is terminal). Tasks in `DEFERRED_INTENT` are invisible to the skeleton sampler. The Log review introspection cycle periodically surfaces them for review and structured dismissal. See `UBU-Q0117`.
+`DEFERRED_INTENT` — a Phase 2 nonterminal Task status, with wire value `deferred_intent`, for an explicit user decision to retain an idea without planning it. The complete deferral record, planning exclusion, review cadence, promotion, and dismissal rules are defined in §9.7 (`UBU-D0308`).
 
 `WAITING_FOR` — a Phase 2 nonterminal Task status for a personally retained Task awaiting a human response or outside action. The complete waiting record, release rules, worker boundary, planning visibility, and Logs are defined in §9.6 (`UBU-D0307`).
 
@@ -1713,6 +1713,53 @@ Phase 2 adds `task_waiting_entered`, `task_waiting_updated`, and `task_waiting_e
 Exit records whether the release was evidence-confirmed, an explicit user override, or a terminal outcome. A terminal exit also writes the existing `task_completed`, `task_failed`, or `task_moot` entry with its normal payload in the same admitted transaction. Waiting-state updates and their Log entries are atomic; corrected interpretations use §17.3 correction links. Rejected or stale worker requests use existing rejection Logs and cannot emit a successful exit.
 
 Entry and exit invalidate affected Plans and risk views and produce the existing `recalculation_triggered` entry: `user_override`, `external_event`, or `worker_request` identifies the actual authority/evidence path; terminal outcomes use their existing trigger kinds. Metadata changes and due reviews normally mark derived views stale; changes affecting current/next work or hard feasibility require immediate recalculation under §29. Batching retains all source event refs.
+
+### 9.7 Deferred-intent lifecycle (Phase 2)
+
+`DEFERRED_INTENT` (`deferred_intent` on the wire) is a nonterminal Task status for an explicit user choice to remember work without committing to plan it (`UBU-D0308`). It extends `UBU-D0227` for Phase 2 and follows `UBU-D0228`. Low-priority `active` Tasks remain planning candidates; deferred Tasks do not. Dismissal uses terminal `moot` with an existing §9.5 reason code, never a new `cancelled` status.
+
+#### Deferral record and admission
+
+A Task has exactly one `deferred_intent` record while its status is `deferred_intent`, and the field is absent otherwise. The record carries:
+
+- `deferral_id`: a new opaque episode id for each entry, retained across edits and reviews in that episode; it is not a separate WorkItem.
+- `since`: effective UTC entry time, preserved across keep-deferred choices and schedule edits.
+- `reason`: optional user explanation; omission is valid and does not invite an inferred canonical reason.
+- `defer_until`: optional tagged review boundary, either `{ kind: instant, at: UTC timestamp }` or `{ kind: local_date, date: YYYY-MM-DD, time_zone: IANA zone, review_at: resolved UTC timestamp }`. For a local date, admission resolves and retains the UTC start of that date in the stated zone. It controls ordinary review timing, not an allowed range, deadline, promised start, or automatic reactivation.
+- `review_interval_seconds`: positive interval, default `2592000` (30 days). Cadence configuration is a Setting, not a Preference; the admitted record retains the effective interval for replay.
+- `last_review_at`: optional UTC time of the latest explicit review action. Merely displaying, closing, or ignoring a prompt does not set it.
+- `next_review_at`: required finite UTC instant, initially the future `defer_until` boundary when supplied, otherwise `since + review_interval_seconds`. An explicit keep-deferred or Objective-review action records `last_review_at` and uses a newly chosen or retained future `defer_until` boundary; if none remains, it clears an expired date and sets `last_review_at + review_interval_seconds`. An explicit date/interval edit recomputes the boundary from the retained future date or the edit time plus the interval. Reason-only edits do not postpone review; no edit resets `since`.
+
+Entry requires an explicit user deferral action. It may admit a newly captured deferred Task with stable id, title, and ordinary provenance before an Objective link, duration, or Preference is supplied, or move an admitted `active` Task to `deferred_intent`. Existing Task identity, intent, dependencies, effects, constraints, Preferences, and remaining-work evidence are retained. Advisors and workers may propose deferral but cannot infer or admit it from low priority, missed execution, or missing Preference. A waiting Task must first leave `waiting_for` under §9.6; the two current records never coexist. Terminal Tasks remain terminal; reconsideration creates a new linked Task through ordinary admission.
+
+Started work records a stopping boundary and partial-work evidence before entry. Conflicting running assignments, fixed commitments, or override placements must be resolved through their existing admission and repair rules before deferral is admitted. Deferral grants no authority to cancel an external event or stop a worker. Routine occurrence Tasks retain §7.4.1's mandatory semantics and use explicit skip, move, or recurrence-edit controls; deferral cannot replace those controls. A someday idea about a routine may be captured as a separate non-occurrence Task.
+
+#### Planning boundary
+
+The CPU excludes deferred Tasks from the executable task graph before kernel dispatch, including skeleton sampling, optional gap-fill selection, duration sampling, capacity budgets, and completion/effect credit. It also excludes dependents with required, unsatisfied dependencies on them, transitively, preserving those blockers in explanations rather than deleting edges. Unrelated eligible work remains available. No `TaskSpec` field or priority floor is added, and elapsed deferral time is not execution duration or duration-learning evidence.
+
+Entry invalidates future placements through ordinary Plan repair while preserving actual execution history. Deferred Tasks remain accessible in a separate retained ideas view and review report, with age, reason, next review, linked Objective, and affected downstream work. They reserve no Calendar slot. Promotion re-evaluates ordinary schedulability fields, dependencies, and preconditions; an `active` Task may still be blocked. Neither a review date nor an Objective change promotes the Task.
+
+#### Review cadence and actions
+
+Regular Log review (§17.8) includes due deferred Tasks; default deferred-item cadence is 30 days, independently of the more frequent Log-review Task. A chosen `defer_until` postpones ordinary surfacing until that boundary. If review was skipped or the Device was offline, the next Log review or startup surfaces one overdue attention item per current episode, without replaying missed reminders. A material admitted change to a linked Objective's status or desired outcome queues an earlier review even before `defer_until`; it cannot cancel, complete, or promote the Task by itself. Manual review is always available.
+
+Scheduled review requests use `(task_ref, deferral_id, next_review_at)` as an idempotency key; Objective-triggered requests use `(task_ref, deferral_id, objective_change_log_ref)`. Coalesce outstanding causes into one attention item per current episode under existing sync admission. Due boundaries use the existing `elapsed_time`/`log_review_due` paths. A stale request for an earlier episode or superseded review boundary cannot mutate the Task. A review action that retains deferral acknowledges the presented cause refs and leaves only the next future boundary and any unresolved Objective-review request. Attention items occupy no time; any additional review/follow-up Task is separately admitted and scheduled.
+
+The prompt shows current intent, attainability, desirability, and whether explicit Preference commitment remains unresolved, and offers:
+
+- **Promote to active:** supply ordinary §9.3 schedulability fields and explicitly confirm/cite an enabled, user-accepted pairwise Preference involving this Task or its linked Objective, or admit that comparison during review. Record the Preference refs with the promotion decision. An inferred ranking, scalar priority, or unary commitment flag is insufficient; if no relevant comparison can yet be made, keep deferred or open Objective review. Dependencies and preconditions remain independently evaluated.
+- **Keep deferred:** optionally edit the reason, date, or interval and record a finite future `next_review_at` under the record's scheduling rule. Without a retained/chosen future date, use the admitted interval after review (30 days by default). Keeping an idea does not create a Preference commitment.
+- **Dismiss permanently:** explicitly transition to `moot` using the narrowest existing reason, such as `no_longer_relevant`, `invalidated_by_universe_change`, or `user_declared_moot`. Retain the Task and its history; do not delete it or assert completion.
+- **Review linked Objective:** keep the Task deferred and record the next review boundary while coalescing an unresolved Objective-review request for this episode and Objective. If no Objective is linked, offer normal Objective creation/linking review. This action does not declare a Preference or create a time reservation by itself.
+
+The Phase 2 Preference declaration requirement is enforced at review and promotion, not at idea creation. Keep-deferred, Objective-review, skipped, or ignored prompts do not resolve a missing commitment; it remains flagged for later review. There is no automatic dismissal after an age or number of missed reviews. Closing or ignoring the prompt leaves the attention request pending and retains `next_review_at`; a due boundary remains overdue. It cannot stand in for an explicit keep-deferred action or acceptance. Compartment policy applies to records and reports; missing, redacted, or stale Replica data cannot establish infeasibility, user acceptance, or a lifecycle transition.
+
+#### Phase 2 Log events
+
+Phase 2 adds `task_deferred_intent_entered`, `task_deferred_intent_updated`, and `task_deferred_intent_exited` using the §17 envelope. Each accepted change atomically records Task ref, `deferral_id`, expected/resulting Task version, old/new status, effective time, actor and authority source, idempotency key, optional reason/evidence refs, and before/after record fields or policy-permitted protected references. Entry records the explicit deferral action; updates include keep-deferred and review-schedule edits; exit records promotion or the admitted terminal outcome and clears the current record and pending review requests. Existing completion/failure/moot admission remains applicable; a terminal exit also appends its ordinary outcome event in the same transaction.
+
+Review choices use `decision_recorded` with Phase 2 `decision_kind: deferred_intent_review` and the §17.0 payload, including review ref, available actions, chosen action, optional reason capture, and any accepted Preference or Objective refs. An accepted review action records its decision atomically with any Task change, newly accepted Preference, and review-request update. Skipping or ignoring records no acceptance and no invented Preference. Every mutation checks the current Task version and episode id and uses existing idempotency, authority, worker-candidate, and sync-conflict rules. Corrections append §17.3 correction links. Entry and exit invalidate affected Plans and reports and use existing §29 recalculation triggers; metadata-only review edits normally mark derived views stale.
 
 ---
 
@@ -2836,7 +2883,7 @@ Log review should not become a blame ritual. It is a model-maintenance Task for 
 
 - Friction annotations: when actual Task duration significantly exceeds planned duration, the review should prompt the user for an optional friction note explaining the cause. Friction notes feed the Bayesian duration learning system. See `UBU-Q0113`, `UBU-Q0116`.
 - Streak surfacing: recurring Task completion chains are surfaced as motivational signals. See `UBU-Q0111`.
-- Deferred-intent review: Tasks in `DEFERRED_INTENT` status are periodically surfaced with a structured dismissal prompt. Tasks that are no longer attainable or desirable should be dismissed rather than accumulating indefinitely. See `UBU-Q0117`.
+- Deferred-intent review: due `deferred_intent` Tasks surface on Log review or startup, with a default 30-day item interval and earlier review for material linked-Objective changes. The prompt offers promotion with explicit Preference commitment, keep deferred with a next review, permanent dismissal through `moot`, or Objective review; missed prompts never imply acceptance or dismissal. See §9.7 and `UBU-D0308`.
 - Circadian affect pattern report: after sufficient Log history, time-of-day patterns in affect state may be surfaced as a standard report to inform planning priors.
 
 ### 17.9 Authority source metadata

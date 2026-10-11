@@ -1811,7 +1811,7 @@ Open.
 
 ## UBU-Q0117: deferred_intent task status and dismissal review
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: planning horizon clarity, introspection completeness Resolved by: None Last scored: 2026-10-11 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Auto eligible Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: planning horizon clarity, introspection completeness Resolved by: UBU-D0308 Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -1831,7 +1831,11 @@ UbU needs a named Task status for ideas that are not yet commitments and not can
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0308`; see DESIGN.md §9.7 and §17.8.
+
+Phase 2 `deferred_intent` records an explicit user deferral with an episode id, entry time, optional reason and defer-until boundary, and finite next review time. It is excluded before kernel dispatch, including filler work and dependents with unsatisfied required dependencies. Deferral, edits, exits, and review choices are logged atomically under the existing authority and sync rules.
+
+The default item review interval is 30 days, surfaced on due Log review/startup or earlier after a material linked-Objective change. Dates request review and never reactivate work. Review offers promotion with explicit accepted pairwise Preference commitment, keep deferred with a future review, terminal dismissal through an existing moot reason, or Objective review while retaining deferral. Preference is required through review/promotion rather than idea creation; ignored or postponed prompts cannot imply commitment or automatic dismissal.
 
 ---
 
