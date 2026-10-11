@@ -4913,3 +4913,15 @@ Keep activity mode separate from Compartment and realtime source/routing mode. A
 The initial restricted-attention profile permits user-initiated candidate capture, bounded acknowledgments, pause/stop/silence and explicitly scoped media transport. Driving, bicycling and uncertain high-risk activity defer consequential actions and prohibit drafting/coaching dialogue and visually dependent review. Spoken confirmation cannot override that restriction. Interruption and material context changes invalidate pending approval; returning to ordinary review never executes deferred work automatically.
 
 Reuse existing evidence, candidate, ContextBundle, admission and append-only audit boundaries. Device handoff and offline failure cannot expand capture, disclosure or action authority. This specifies behavior, not implementation. Quantitative profiles, exact audio-output/confirmation schemas, richer integrations and broader-surface naming remain in `UBU-Q0128`; `UBU-Q0183` retains the release sequence.
+
+---
+
+## UBU-D0310: Restricted-attention interpretations use a closed, request-bound JSON contract
+
+**Status:** Accepted → DESIGN.md §21.1.2. Partially answers `UBU-Q0128` subquestion 6; refines `UBU-D0309` under `UBU-D0299`'s producer grammar rule.
+
+`AudioInterpretationV1` supplies a closed, bounded JSON grammar for the initial candidate-capture, local session-control and scoped media-transport envelope. It carries intent, permitted entity aliases, confidence, ambiguity, load/risk estimates, a typed action or null, confirmation/clarification advice, defer reason and advisory mode safety. Capture references current STT evidence rather than model-written replacement text. Unsupported operations defer; no result can carry an arbitrary tool call, external-message payload or direct speech.
+
+UbU binds each invocation outside the model result to current evidence, context, budget/policy/grant versions, Device, playback state, interaction epoch, finite deadline and idempotency key. It validates the echoed request id against that binding and rechecks freshness and authority before output or dispatch. Interruptions and material changes invalidate late replies. Malformed or inconsistent output cannot be repaired into an action; duplicates and uncertain relative-media outcomes cannot cause automatic repeated transport.
+
+Model estimates never authorize action. Clarification and acknowledgment use bounded controller templates; pause/stop/silence remain available without waiting for a model. Candidate capture retains existing review/admission and provenance rules, and the initial envelope still defers consequential external requests. This specifies behavior, not implementation or driving-safety validation. Quantitative profiles, the serialized budget, external-action confirmation grammar, richer integrations, device-specific behavior and naming remain open in `UBU-Q0128`; `UBU-Q0183` retains the release sequence.
