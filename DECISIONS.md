@@ -4871,3 +4871,7 @@ Phase 2, single-user multi-device synchronization (§4.3), opens on 2026-10-10 a
 ## UBU-D0306: Phase 1b open questions are re-tagged to Phase 2.
 
 Phase 1b's open questions have their `Phase 1b` tag changed to `Phase 2`.
+
+**Status:** Accepted → OPEN_QUESTIONS.md. Amends `UBU-D0305`: its sentence that Phase 1b's open questions keep their tag no longer holds.
+
+On 2026-10-10 the 20 open questions tagged `Phase 1b` were re-tagged `Phase 2` so the Phase 2 ranking selects them. Their origin is recorded by this decision.
