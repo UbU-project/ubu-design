@@ -4901,3 +4901,15 @@ The CPU excludes deferred work and dependents with unsatisfied required dependen
 Default review interval is 30 days, surfaced at Log review or startup when due; a chosen date delays ordinary review and a material admitted Objective change can surface it earlier. Dates never reactivate work. The four actions are promote, keep deferred with a future review, dismiss permanently through the existing narrow `moot_reason_code`, and review the linked Objective while retaining deferral. Keep, skip, and Objective review do not discharge an unresolved Preference requirement; the review cycle continues without forced expiry or inferred acceptance.
 
 Entry, edits, exit, and review decisions are version-checked, idempotent, and append-only logged under §9.7; terminal exits also retain their ordinary outcome Log. Attention requests are coalesced per episode and respect existing Compartment, authority, worker-admission, recalculation, and device-sync rules. This decision specifies Phase 2 behavior and makes no implementation claim.
+
+---
+
+## UBU-D0309: Restricted-attention audio starts with a controller-enforced capture envelope
+
+**Status:** Accepted → DESIGN.md §21.1.2. Partially answers `UBU-Q0128`; refines `UBU-D0292` without changing its MVP-release commitment or `UBU-D0293`'s provenance mapping.
+
+Keep activity mode separate from Compartment and realtime source/routing mode. A session-local `InteractionBudget` bounds channels, attention, turn complexity, operation classes and deferral; UbU computes permissions from current policy and grants, rather than accepting a model's safety or confidence judgment. Intent, capacity and affect remain user-declared or unknown.
+
+The initial restricted-attention profile permits user-initiated candidate capture, bounded acknowledgments, pause/stop/silence and explicitly scoped media transport. Driving, bicycling and uncertain high-risk activity defer consequential actions and prohibit drafting/coaching dialogue and visually dependent review. Spoken confirmation cannot override that restriction. Interruption and material context changes invalidate pending approval; returning to ordinary review never executes deferred work automatically.
+
+Reuse existing evidence, candidate, ContextBundle, admission and append-only audit boundaries. Device handoff and offline failure cannot expand capture, disclosure or action authority. This specifies behavior, not implementation. Quantitative profiles, exact audio-output/confirmation schemas, richer integrations and broader-surface naming remain in `UBU-Q0128`; `UBU-Q0183` retains the release sequence.
