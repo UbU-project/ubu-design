@@ -3018,7 +3018,7 @@ Open pending that measurement gate; no hardware result is inferred from API avai
 
 ## UBU-Q0161: Task descriptions as lossless prose after Clarify
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: UBU-D0317 Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3030,7 +3030,7 @@ The operator wants a lore field, not an accumulating Q&A transcript. Prose must 
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0317`: Task descriptions become readable, explicitly reviewed prose backed by exact per-Task source history. Original lore, answers, context and linked corrections remain queryable; a bidirectional coverage map and source-by-source operator review preserve every answer, qualification and unresolved issue without inventing agreement. Approval is bound to current source/description versions, and failures or exceeded limits keep prior prose and saved answers. Later Clarify retrieves originals; privacy/retention policy also governs derived prose and any completeness claims. This resolves the product contract; implementation and behavioral evidence remain outstanding.
 
 ---
 

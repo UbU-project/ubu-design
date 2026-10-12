@@ -5033,3 +5033,21 @@ Before enabling this optional extension, version and align the Task, sync-admiss
 - Competing/stale resolutions, resolution before Task creation, a failed completion update, Device revocation, and policy/visibility changes on partial replicas: independent resolution, blocking review, current authority, and protection of denied payload, source identity, and Compartment identity remain intact.
 
 These are future implementation gates, not completed evidence and not additional gates for the diagnostic-only Phase 2 release.
+
+---
+
+## UBU-D0317: Clarify produces reviewed Task lore backed by exact source history
+
+**Status:** Accepted → DESIGN.md §1. Resolves `UBU-Q0161`; uses `UBU-D0274`'s candidate/admission boundary.
+
+Adopt readable Task-description prose backed by separate durable per-Task records of original lore, operator edits, exact Clarify questions/answers, necessary context and linked corrections. Save submitted answers through ordinary admission independently of the additional local synthesis job. Originals and admitted revision provenance remain queryable while the Task is retained, subject to current privacy and retention policy.
+
+Synthesis is an advisory candidate with a complete source manifest and bidirectional coverage. Every answer, qualification, correction and unresolved issue must survive in prose; superseded claims retain their temporal meaning. Structural validation supports explicit source-by-source operator review and cannot prove semantic losslessness. Version-bound approval admits only the description revision and provenance; failures preserve the prior description and answers. Later Clarify retrieves originals rather than treating the narrative as its sole memory. Finite budgets fail without truncation or silent eviction; policy-directed deletion also governs derivatives.
+
+Before enabling this workflow, demonstrate:
+
+- Existing lore and answers containing negation, quantities, conditions, uncertainty, contradictions and corrections survive synthesis and a later Clarify round; omitted qualifications and invented agreement fail acceptance.
+- Model failure/rejection, operator prose edits and concurrent source/description changes preserve saved answers and require fresh coverage review before replacement.
+- Long or oversized histories, exhausted storage and queryable archival respect finite limits without silent loss; restricted replicas and policy-directed purge cannot disclose or reconstruct denied source content through prose, coverage or cached context.
+
+These are required implementation checks, not evidence of completed implementation or a claim that arbitrary model paraphrase is provably lossless.
