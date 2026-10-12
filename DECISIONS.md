@@ -5051,3 +5051,20 @@ Before enabling this workflow, demonstrate:
 - Long or oversized histories, exhausted storage and queryable archival respect finite limits without silent loss; restricted replicas and policy-directed purge cannot disclose or reconstruct denied source content through prose, coverage or cached context.
 
 These are required implementation checks, not evidence of completed implementation or a claim that arbitrary model paraphrase is provably lossless.
+
+---
+
+## UBU-D0318: Recurring-busy blockers retire only after scoped capture and occupancy verification
+
+**Status:** Accepted → DESIGN.md §1. Specifies the retirement process for `UBU-Q0163`; implementation evidence and the operator's scoped retirement remain open.
+
+Adopt the coverage manifest, stable occurrence lineage, capacity checks and reviewed blocker handoff in DESIGN.md §1. Existing timed expanded-instance capture is the baseline, not evidence that all recurrence is unsupported or that every relevant commitment is covered. Series-level import is optional when expanded instances demonstrably cover the reviewed scope. Keep residual blockers for unsupported or unverified intervals.
+
+Before any scoped retirement, attach revision-pinned behavioral evidence demonstrating:
+
+- Expanded-instance capture and repeated/on-demand capture preserve one Task lineage per occurrence across retry and restart. Different occurrences remain distinct; single-occurrence and series edits, cancellations and explicit exceptions used by the reviewed scope remove stale future occupancy without rewriting logged history.
+- Timezone/DST resolution and horizon-crossing intervals match expected UTC occupancy. All-day, floating-time, unexpanded series and other unsupported inputs produce explicit outcomes with retained protection; interrupted or incomplete capture cannot certify coverage. Horizon advancement repeats the coverage check.
+- The CPU reference path and enabled planner backends agree on busy/free capacity and reject flexible placement inside fixed commitments. Replacement Tasks, their projections and workaround blockers are not counted twice; genuine commitment overlaps remain conflicts.
+- A mixed covered/uncovered blocker retains exactly the required residual protection. Approved handoff, interrupted handoff, stale-version refusal, restart and replay preserve reservations, invalidate old Plans and prevent reuse/projection until recalculation is certified.
+
+These are required implementation and retirement checks, not passing results. Closing `UBU-Q0163` requires the source/path inventory, these results and the recorded operator-approved handoff for the identified workaround.

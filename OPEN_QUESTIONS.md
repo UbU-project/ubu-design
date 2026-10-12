@@ -3081,11 +3081,13 @@ What verified capture/occupancy behavior allows removal of the temporary manual 
 
 ### Current direction
 
+`UBU-D0318` specifies the scoped capture, capacity and blocker-handoff gates in DESIGN.md §1. Remaining work is the actual source/series inventory, implementation-path references, revision-pinned passing checks and operator approval for the identified blocker replacements. Unsupported or incomplete coverage retains residual blocking.
+
 Recorded operator-reported limitation: uncaptured busy time is invisible to the planner, so a manual capacity blocker can prevent placement there but can also collide with subsequently captured commitments. Timed expanded recurrence instances already capture as individual Tasks; do not describe all recurrence as unsupported. Series semantics, unsupported inputs and missed/on-demand capture still need review. Remove the workaround only when relevant recurring commitments demonstrably occupy the correct capacity, without duplicates or double counting. No operator event or collision tally is reproduced here.
 
 ### Resolution
 
-Open.
+Open. `UBU-D0318` specifies the retirement process; verified implementation evidence and the scoped operator-approved blocker handoff remain outstanding. This specification removes no blocker and makes no claim that recurring-busy coverage is complete.
 
 ---
 
