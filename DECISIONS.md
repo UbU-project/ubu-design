@@ -5082,3 +5082,15 @@ Require visible source controls, optional speech output, keyboard/screen-reader 
 Before claiming delivery, attach the revision-pinned real-hardware scenario evidence specified in DESIGN.md §21.1.3, including camera-and-voice usefulness, text/form completion, denied/failed sources, accessibility, capture/route enforcement, stale/duplicate results and uncertainty/restricted-attention boundaries.
 
 This resolves the product contract, not implementation or release acceptance. Exact capture slices and sequence remain `UBU-Q0183`; mobile workload/API, richer audio profiles, evidence, latency and retention questions retain their existing scope and gates.
+
+---
+
+## UBU-D0320: Observation bindings reuse Discovery evidence and advisory admission
+
+**Status:** Accepted → DESIGN.md §21.1.1. Resolves `UBU-Q0165`; specifies the payload/admission contract without enabling a perception producer or changing existing advisor authority.
+
+Adopt the `observation-admission/1` binding profile and required fixtures in DESIGN.md §21.1.1. Capture and unresolved interpretations use existing `DiscoveryEvidenceItem` records; supported native proposals use per-object `AdvisoryCandidate` records, lifecycle/review events and ordinary CPU admission. Bind source/session/evidence/context refs, ambiguity alternatives, proposed-object/value dependencies, observed versions and policies, corrections and separately scoped replay keys. Unsupported or lossy mappings stay unresolved and require separate versioned review.
+
+Operator review binds the exact diff, resolved targets and dependency batch. Admission rechecks those bindings and current authority/policy, then atomically records canonical changes, ordinary review/Log links and idempotency. Candidate/evidence storage never admits world state or authorizes projection/external action. Exact replay has one effect; changed-content key reuse rejects; stale results and corrections require fresh review and append-only history.
+
+`FactProvenance` remains only `{kind, recorded_at}` under `UBU-D0293`, and `UniverseTarget` advice remains name-only under `UBU-D0296`. Qualifier fidelity, corroboration sufficiency, capture/retention mechanics and proof of effects remain under `UBU-Q0166`, `UBU-Q0167`, `UBU-Q0169`–`UBU-Q0172`. The fixtures are implementation gates, not reported passing results.

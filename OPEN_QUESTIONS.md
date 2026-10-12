@@ -3111,7 +3111,7 @@ Resolved by `UBU-D0319`: the primary camera-and-voice surface covers the core pl
 
 ## UBU-Q0165: Observation-to-candidate contract and admission reuse
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: UBU-D0320 Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3119,11 +3119,11 @@ What exact observation-to-candidate contract reuses existing advisory and Discov
 
 ### Current direction
 
-Delta §17.3. Specify source/session refs, identity ambiguity, candidate object/value links, observed versions, evidence, idempotency, corrections and review presentation. The architectural pipeline is answered in DESIGN.md §21.1.1; concrete payload coverage and fixtures are unresolved. Do not invent new FactProvenance fields.
+Delta §17.3. The architectural pipeline is answered in DESIGN.md §21.1.1. `UBU-D0320` specifies source/session and context bindings, identity alternatives, object/value links, observed versions, evidence, idempotency, corrections, review and required fixtures. Qualifier fidelity, corroboration and proof-of-effect semantics remain `UBU-Q0166`, `UBU-Q0167` and `UBU-Q0172`. Do not invent new FactProvenance fields.
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0320`: DESIGN.md §21.1.1 defines the `observation-admission/1` payload binding profile over existing DiscoveryEvidenceItem and AdvisoryCandidate records, supported-operation gating, explicit version-bound review, ordinary atomic admission, replay/suppression and append-only correction, plus required fixtures. Unsupported or unresolved interpretations stay review evidence; `UniverseTarget` remains name-only and `FactProvenance` keeps `{kind, recorded_at}`. This resolves the contract, not implemented support or passing fixture evidence; `UBU-Q0166`, `UBU-Q0167` and `UBU-Q0169`–`UBU-Q0172` remain open.
 
 ---
 
