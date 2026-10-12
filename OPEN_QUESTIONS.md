@@ -2633,7 +2633,7 @@ Resolved by `UBU-D0315`: Phase 2 uses scoped non-blocking sync status, evidence-
 
 ## UBU-Q0147: Schedulable syncable manual-review Task and the causal regress
 
-Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2+ manual-review Task scheduling Resolved by: None Last scored: 2026-10-11 Scored from commit: None
+Status: Solved Priority: Post-MVP Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2+ manual-review Task scheduling Resolved by: UBU-D0316 Last scored: 2026-10-11 Scored from commit: None
 
 Formerly UBU-QSYNC-009 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §17.
 
@@ -2645,7 +2645,7 @@ the review Task does not depend on the coherence it exists to restore?
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0316`: a future versioned extension may admit a shared Dynamic manual-review Task with independent coherent planning inputs and a protected conflict-episode identity. Contested effects remain pending; resolution never depends on Task creation, placement, or completion. Review-workflow conflicts terminate at the existing diagnostic/prompt without spawning another review Task. Placement requires validated unaffected capacity, and current authority/privacy checks remain mandatory. The first Phase 2 sync release retains its diagnostic-only baseline; the optional extension requires contract alignment and behavioral evidence before enablement.
 
 ---
 
