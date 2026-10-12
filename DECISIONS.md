@@ -4974,3 +4974,21 @@ Before freeze, extend §27's fixtures and `UBU-D0312`'s required three-Device di
 - Altered ciphertext/manifests, wrong or unauthorized recipient keys, stale object/policy versions, and revoked origin/recipient Devices, including restricted relays and `full`, `metadata_only`, and `none` replicas. Denied payload and Compartment identity remain inaccessible, conflicts follow ordinary review rules, and admitted changes trigger required Plan invalidation.
 
 Failure blocks the Phase 2 freeze. This decision records the required transport floor; implementation and certification evidence remain outstanding.
+
+---
+
+## UBU-D0314: Interrupted sync preserves durable admissions and resumes idempotently
+
+**Status:** Accepted → DESIGN.md §1. Resolves `UBU-Q0142`; clarifies DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §16, §17 under `UBU-D0248`, `UBU-D0312`, and `UBU-D0313`.
+
+The existing incomplete-sync safeguards become an explicit recovery process: retain a durable, policy-protected progress record; release the failed live-session slot; preserve independently admitted statements; and stage incomplete or dependency-blocked material. Completion requires durable admission of a checkpoint/manifest bound to the declared transfer scope and required inventory. Local completion and authenticated recipient acknowledgment are distinct; a lost acknowledgment permits idempotent replay, never rollback or inferred delivery.
+
+Resume or replay on the next authorized exchange using original statement identities and fresh admission/policy checks. Discard removes unfinished incoming staging, preserving admitted history, locally authored queued work, and required permitted causality/idempotency metadata. Existing redaction/purge rules still apply. Incomplete/stale diagnostics expose recovery options without leaking denied payload or Compartment identity; authority conflicts retain the existing blocking review flow. Admitted changes invalidate affected Plans even when the session is incomplete.
+
+Before Phase 2 freeze, extend §27 and `UBU-D0312`/`UBU-D0313` recovery checks through direct and encrypted-bundle paths with:
+
+- Disconnect/restart before receipt, during statement/payload receipt, with missing causal dependencies, and during final checkpoint receipt: no false completion or dependent admission.
+- Failure after an independent admission and after durable checkpoint admission but before acknowledgment: admitted effects survive restart, replay has no duplicate effects, and the sender preserves unknown-delivery work until authenticated acknowledgment.
+- Resume/retry/discard after intervening offline writes, policy changes, and Device revocation, including restricted replicas: ordinary conflicts and Plan invalidation hold, discard preserves admitted/queued work, and neither recovery nor diagnostics disclose denied payload or Compartment identity.
+
+These are required implementation/certification checks, not evidence that they have passed. Failure blocks Phase 2 freeze.

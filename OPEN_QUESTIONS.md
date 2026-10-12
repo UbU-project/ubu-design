@@ -2543,7 +2543,7 @@ Resolved by `UBU-D0313`: the first Phase 2 sync release requires implemented enc
 
 ## UBU-Q0142: Device disconnection midway through a sync session
 
-Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2 sync session recovery Resolved by: None Last scored: 2026-10-11 Scored from commit: None
+Status: Solved Priority: Post-MVP Phase: Phase 2 Decision type: Process Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2 sync session recovery Resolved by: UBU-D0314 Last scored: 2026-10-11 Scored from commit: None
 
 Formerly UBU-QSYNC-004 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §16, §17.
 
@@ -2553,7 +2553,7 @@ What should happen if a Device disconnects midway through a sync session?
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0314`: disconnect or restart before the declared scope's durable checkpoint leaves a recoverable incomplete exchange. Fully admitted statements survive; incomplete/dependency-blocked material remains staged. Release the live-session slot, resume or replay original statements with current trust/policy/admission checks, and treat lost acknowledgment as unknown sender delivery. Discard removes unfinished incoming staging while preserving admitted history, locally authored queued work, and required permitted causality/idempotency metadata. Completion is local and scope-bound; diagnostics remain Compartment-safe and admitted changes still invalidate Plans. Phase 2 interruption/restart/replay/discard certification is required; implementation evidence remains outstanding.
 
 ---
 
