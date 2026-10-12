@@ -2526,7 +2526,7 @@ This rejects a pure Lamport clock because wall-time adjacency is useful for oper
 
 ## UBU-Q0141: Minimum acceptable encrypted indirect sync transport
 
-Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2 sync transport Resolved by: None Last scored: 2026-10-11 Scored from commit: None
+Status: Solved Priority: Post-MVP Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2 sync transport Resolved by: UBU-D0313 Last scored: 2026-10-11 Scored from commit: None
 
 Formerly UBU-QSYNC-003 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §8, §27.
 
@@ -2537,7 +2537,7 @@ compatible storage be an MVP-supported path or only design-compatible?
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0313`: the first Phase 2 sync release requires implemented encrypted bundle export/import over a user-selected file store, with at least one documented rclone or rsync copy workflow certified before freeze. Manual export/copy/import suffices; built-in clients and additional backends are optional, and unimplemented transports remain design-compatible. Authenticated encryption, policy-scoped recipient access, and ordinary statement admission/completion rules are mandatory. The earlier single-Device MVP retains its scope, and `UBU-D0312`'s three-Device research gate remains required. Implementation and certification evidence remain outstanding.
 
 ---
 

@@ -4955,3 +4955,22 @@ Before final Phase 2 freeze, record topology research comparing serialized direc
 - Partial-replica fixtures covering `full`, `metadata_only`, and `none`, including policy changes and restricted relay/recipient Devices. Forwarding, conflict diagnostics, and redacted views must preserve payload and Compartment-identity denial under current policy.
 
 These are required research and implementation checks, not a claim that they have passed. Failure blocks the Phase 2 freeze until the topology or delivery implementation is corrected. Higher session concurrency or optional mesh may later be added while preserving the same statement and authority semantics.
+
+---
+
+## UBU-D0313: Phase 2 requires encrypted bundle store-and-forward with one certified file-copy workflow
+
+**Status:** Accepted → DESIGN.md §1. Resolves `UBU-Q0141`; specifies the indirect transport minimum under DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §8, §27 and `UBU-D0312`.
+
+The first Phase 2 sync release must implement export and import of immutable encrypted SyncStatement bundles through a user-selected file store. Manual export/copy/import is sufficient. Before Phase 2 freeze, at least one documented external rclone or rsync copy workflow must be exercised with the actual exporter and importer through a user-controlled store. Schema-only compatibility or fixture-only bundles do not satisfy this gate. Built-in clients, background delivery, and additional backends are optional; unimplemented transports remain design-compatible and must be labeled accordingly. The earlier single-Device MVP retains its existing scope.
+
+Encrypt and authenticate bundle contents on an authorized exporting Device before shared-store writes, including statements, referenced payloads, and manifest/checkpoint metadata. Recipient/key scope must enforce Device, Zone, Compartment, routing, and retention policy; storage access or a common store password must not grant a restricted Device denied payload or Compartment identity. Once an exporter admits revocation, new exports must exclude that Device from decryption grants; previously delivered content retains the existing best-effort exposure/deletion limits. Decryption keys stay in authorized Device custody or policy-authorized encrypted recipient envelopes, never plaintext in the store. Outer filenames and transport diagnostics must expose no plaintext object or Compartment ids or labels. TLS or provider-side encryption alone is insufficient, and encryption does not authorize a forbidden export route. Document visible ciphertext sizes and transfer timing without claiming traffic-analysis protection or retroactive deletion of previously disclosed content.
+
+Forwarding preserves original statement identity, authorship, causal parents, observed object/policy versions, and idempotency. Import uses the same integrity, Device trust, policy, admission, conflict, and Plan-invalidation rules as direct sync. Store ordering, modification times, overwrites, deletions, and copy success cannot admit, supersede, or tombstone canonical state. Completion requires an admitted checkpoint or equivalent authenticated manifest commit; partial receipt must not admit dependent payloads without required statements. Incomplete delivery remains detectable and recoverable, repeated import is idempotent, and queued statements and causal dependencies remain recoverable across sessions subject to policy, as required by `UBU-D0312`.
+
+Before freeze, extend §27's fixtures and `UBU-D0312`'s required three-Device direct/store-and-forward research and implementation checks with:
+
+- An actual export/store/import round trip through the documented copy workflow, including reordered and duplicate bundles, interrupted/retried delivery, missing dependencies/checkpoints, an unavailable store, and a late rejoining Device. Equivalent policy-permitted statements must yield equivalent admitted state; copy success must never be reported as admission or global freshness.
+- Altered ciphertext/manifests, wrong or unauthorized recipient keys, stale object/policy versions, and revoked origin/recipient Devices, including restricted relays and `full`, `metadata_only`, and `none` replicas. Denied payload and Compartment identity remain inaccessible, conflicts follow ordinary review rules, and admitted changes trigger required Plan invalidation.
+
+Failure blocks the Phase 2 freeze. This decision records the required transport floor; implementation and certification evidence remain outstanding.
