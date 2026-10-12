@@ -4992,3 +4992,19 @@ Before Phase 2 freeze, extend §27 and `UBU-D0312`/`UBU-D0313` recovery checks t
 - Resume/retry/discard after intervening offline writes, policy changes, and Device revocation, including restricted replicas: ordinary conflicts and Plan invalidation hold, discard preserves admitted/queued work, and neither recovery nor diagnostics disclose denied payload or Compartment identity.
 
 These are required implementation/certification checks, not evidence that they have passed. Failure blocks Phase 2 freeze.
+
+---
+
+## UBU-D0315: Phase 2 sync warnings preserve concurrent Device use and surface relevant uncertainty
+
+**Status:** Accepted → DESIGN.md §1. Resolves `UBU-Q0146`; applies DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §10, §17, §23 under `UBU-D0248`, `UBU-D0312`, and `UBU-D0314`.
+
+Phase 2 uses one scoped, non-blocking sync status, contextual Plan freshness and visibility explanations, and a per-operation or reviewed-batch stale-state choice before external projection. Concurrent Device use and ordinary offline work remain normal. Checkpoints prove only their completed local scope; pending exchange, unconfirmed delivery, and unknown peer freshness are distinct. Dismissal/snooze survives restart, with recurrence tied to material permitted changes or user-selected reminders. Existing blocking conflict, policy, and authority checks remain mandatory. Privacy governs text, counts, urgency, and recurrence.
+
+Before Phase 2 freeze, demonstrate:
+
+- Three Devices used concurrently with offline mutations and serialized direct/encrypted-bundle exchanges: no power-off/single-primary instructions, modal merely for peer absence, or false global-freshness status after copy success, interruption, or lost acknowledgment.
+- Repeated view opens, aging, and restart preserve discoverable status and advisory suppression until material change or an explicitly chosen reminder/snooze deadline; relevant input changes resurface explanations. External projection offers exchange, a logged version-bound stale-state choice when eligible, or cancellation, with one choice per reviewed batch.
+- Partial/restricted replicas expose only permitted diagnostics, including counts and recurrence; intentional visibility limits survive successful exchange. Stale-state acceptance or dismissal cannot bypass policy denial or required `manual_decision` review.
+
+These are required behavior checks, not evidence of implementation or completed certification.

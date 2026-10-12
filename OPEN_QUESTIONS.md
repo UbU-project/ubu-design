@@ -2616,7 +2616,7 @@ Resolved by `UBU-D0250`: Phase 2 worker Devices use a scoped request/response pr
 
 ## UBU-Q0146: Sync-state warnings without the one-device-at-a-time anti-pattern
 
-Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2 sync-state surfacing Resolved by: None Last scored: 2026-10-11 Scored from commit: None
+Status: Solved Priority: Post-MVP Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2 sync-state surfacing Resolved by: UBU-D0315 Last scored: 2026-10-11 Scored from commit: None
 
 Formerly UBU-QSYNC-008 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §23.
 
@@ -2627,7 +2627,7 @@ without becoming annoying or paternalistic?
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0315`: Phase 2 uses scoped non-blocking sync status, evidence-based Plan freshness and visibility explanations, and an explicit operation/batch-bound stale-state choice before external projection. Concurrent powered-on Devices and ordinary offline work remain normal. Advisory dismissal/snooze persists across restart; only material permitted changes or user-selected reminder/snooze deadlines resurface it. Completion/delivery claims stay scoped and evidence-based, diagnostics obey replication/privacy policy, and stale-state acceptance cannot bypass authority checks or blocking conflict review.
 
 ---
 
