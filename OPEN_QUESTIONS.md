@@ -2490,7 +2490,7 @@ Resolved by `UBU-D0274`: Phase 1b advisory proposals are first-class `AdvisoryCa
 
 ## UBU-Q0139: Phase 2 sync topology: peer-to-peer mesh or single-live-session
 
-Status: Open Priority: Post-MVP Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2 sync topology Resolved by: None Last scored: 2026-10-11 Scored from commit: None
+Status: Solved Priority: Post-MVP Phase: Phase 2 Decision type: Architecture Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: Phase 2 sync topology Resolved by: UBU-D0312 Last scored: 2026-10-11 Scored from commit: None
 
 Formerly UBU-QSYNC-001 (retired from DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md section 28). Defining context: DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §3, §25, §26.
 
@@ -2501,7 +2501,7 @@ sufficient if the sync statement format is N-device compatible and transport-ind
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0312`: a single-live-session implementation is sufficient for Phase 2; full automatic peer mesh is optional. The existing §3/§25 allowance retains an arbitrary-N Device model and transport-independent statement, causality, policy, and conflict semantics, without a permanent primary or single-writer requirement. §26's pre-freeze topology research remains mandatory, with three-Device serialized direct/store-and-forward, recovery, convergence/conflict, and partial-replication evidence required before freeze. This resolves topology scope and does not claim implementation or certification.
 
 ---
 

@@ -4937,3 +4937,21 @@ Model estimates never authorize action. Clarification and acknowledgment use bou
 Validate current references, expiry and high-risk invariants before model/tool dispatch or speech. Counters and deadlines belong to the original user turn; clarification and budget renewal cannot reset them. Zero disables the associated resource, while local pause/stop/silence remains available. Clock discontinuity, restart, handoff or material changes invalidate live bindings; synchronized snapshots and audit copies cannot restore authority. Model estimates never widen permissions or certify capacity.
 
 This answers the exact initial-envelope serialization, not quantitative profile defaults or driving-safety validation. `UBU-Q0128` remains Open for profile values, richer interpretation/action shapes, external-action confirmation grammar, messaging/media/coaching integration, device-specific behavior and naming. `UBU-Q0183` retains the delivery sequence. This decision specifies behavior and makes no implementation claim.
+
+---
+
+## UBU-D0312: Phase 2 accepts single-live-session sync with an arbitrary-Device model
+
+**Status:** Accepted → DESIGN.md §1. Resolves `UBU-Q0139`; applies DEVICE_SYNC_AND_COMPARTMENT_CONTRACT.md §3, §25, §26 and preserves `UBU-D0247` and `UBU-D0248`.
+
+Phase 2 may ship with no more than one live synchronization session at a time; full automatic peer-to-peer mesh is optional. This selects the implementation already permitted by §3 and §25, subject to §26's pre-freeze topology research. Session serialization limits transport concurrency; it does not impose a single writer, single planner, permanent primary Device, or centralized canonical server. Existing operation-specific authority and freshness rules still apply.
+
+Device registration, identifiers, causality metadata, conflict handling, Compartment policy, and SyncStatement formats must support arbitrary N Devices. Direct exchange, imported bundles, and user-selected encrypted stores use the same integrity, admission, and conflict semantics. Forwarding preserves statement identity, original Device authorship, causal parents, observed object/policy versions, and idempotency; a relay or store gains no authority over the statements it carries. Queued statements and causal dependencies must remain recoverable across sessions, subject to Zone and Compartment policy, without requiring all Devices to be online together.
+
+Before final Phase 2 freeze, record topology research comparing serialized direct exchange and encrypted store-and-forward, including delivery latency, backlog, availability, and recovery limits. The freeze evidence must include:
+
+- Schema/identifier review for fixed Device-count assumptions, plus at least three registered Devices performing concurrent offline mutations and sequential fan-in/fan-out, including a late rejoining Device and operation without a permanent always-online coordinator.
+- Delivery of equivalent policy-permitted statement sets through both paths, in differing orders with duplicates and interrupted/retried transfers: replicas with equivalent admitted statements and policies produce the same admitted state; unresolved authority conflicts remain pending until the ordinary conflict-resolution statement is admitted. Incomplete transfers must not be reported complete, and admitted changes must trigger required Plan invalidation.
+- Partial-replica fixtures covering `full`, `metadata_only`, and `none`, including policy changes and restricted relay/recipient Devices. Forwarding, conflict diagnostics, and redacted views must preserve payload and Compartment-identity denial under current policy.
+
+These are required research and implementation checks, not a claim that they have passed. Failure blocks the Phase 2 freeze until the topology or delivery implementation is corrected. Higher session concurrency or optional mesh may later be added while preserving the same statement and authority semantics.
