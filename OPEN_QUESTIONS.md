@@ -3133,15 +3133,15 @@ Status: Open Priority: MVP important Phase: Phase 2 Decision type: Data model Au
 
 ### Question
 
-Can existing candidate/evidence records preserve observation, inference, confirmation and external-verification qualifications losslessly under `UBU-D0293`?
+Which revision-pinned host mappings preserve the claim-level qualifications specified by `UBU-D0321` through validation, serialization, storage, review and authorized exchange, and does a failed mapping demonstrate a schema gap requiring separate versioned review?
 
 ### Current direction
 
-Delta §17.4. The kind mapping is decided and the enum stays fixed. Identify evidence fields and links needed by real perception proposals; measured remains an instrument/reading, derived a computation from facts, and proposed an unconfirmed candidate. If a schema gap is demonstrated, propose a separate versioned chain change for review; none is made here.
+Delta §17.4. `UBU-D0293` decides kind mapping; `UBU-D0320` decides observation/admission bindings; `UBU-D0321` specifies claim-level qualifier content, field/evidence links and fidelity fixtures. The remaining work is a revision-pinned host field/payload mapping and round-trip evidence from the actual validators, serializers, store/review and exchange paths. Measured remains an instrument/reading, derived a computation from facts, and proposed an unconfirmed candidate. Do not infer host compatibility from prose payload slots. A demonstrated gap requires separate versioned chain review; no schema, pin or migration change is made here.
 
 ### Resolution
 
-Open.
+Open. `UBU-D0321` answers the preservation requirements, not whether a particular host implementation preserves them. Close this question only with the pinned mapping and fixture outcomes, or an explicit demonstrated gap routed to a separate versioned change. No passing adapter or actual schema gap is established by the design contract.
 
 ---
 

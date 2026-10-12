@@ -5094,3 +5094,15 @@ Adopt the `observation-admission/1` binding profile and required fixtures in DES
 Operator review binds the exact diff, resolved targets and dependency batch. Admission rechecks those bindings and current authority/policy, then atomically records canonical changes, ordinary review/Log links and idempotency. Candidate/evidence storage never admits world state or authorizes projection/external action. Exact replay has one effect; changed-content key reuse rejects; stale results and corrections require fresh review and append-only history.
 
 `FactProvenance` remains only `{kind, recorded_at}` under `UBU-D0293`, and `UniverseTarget` advice remains name-only under `UBU-D0296`. Qualifier fidelity, corroboration sufficiency, capture/retention mechanics and proof of effects remain under `UBU-Q0166`, `UBU-Q0167`, `UBU-Q0169`–`UBU-Q0172`. The fixtures are implementation gates, not reported passing results.
+
+---
+
+## UBU-D0321: Perceptual qualifiers retain claim-level evidence and source history
+
+**Status:** Accepted → DESIGN.md §21.1.1. Narrows `UBU-Q0166`; specifies preservation requirements alongside `UBU-D0293` and `UBU-D0320` without asserting host compatibility or enabling a producer.
+
+Adopt the companion `perceptual-qualifiers/1` payload requirements over existing Discovery evidence payloads and advisory evidence/per-field slots. Preserve scoped claims, separately attributed observation/inference/confirmation/verification entries, confidence meaning, source basis, contradictions and source ancestry. Map each proposed field to exact evidence revisions and claim keys. Confirmation and verification create linked evidence rather than relabeling an original inference; admission links the reviewed candidate/field/evidence versions to ordinary review and canonical-effect records.
+
+Keep `ProvenanceKind` and `{kind, recorded_at}` FactProvenance unchanged. Actual assertions, instrument readings and computations from facts determine admitted kind; confidence and verification labels confer no admission or external-action authority. `UniverseTarget` remains name-only. Preservation is bounded by current disclosure/retention policy, with explicit permitted gaps after purge or partial replication.
+
+Require the revision-pinned host-path inventory and fidelity fixtures in DESIGN.md §21.1.1 before enabling an adapter. `UBU-Q0166` remains open for that compatibility evidence; no actual schema gap or passing mapping is claimed. Unsupported/lossy mappings stay unresolved. A demonstrated gap requires a separate reviewed versioned schema/type/store chain change; no schema, pin or migration changes here. Corroboration sufficiency and proof of effects remain `UBU-Q0167` and `UBU-Q0172`.
