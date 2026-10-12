@@ -5068,3 +5068,17 @@ Before any scoped retirement, attach revision-pinned behavioral evidence demonst
 - A mixed covered/uncovered blocker retains exactly the required residual protection. Approved handoff, interrupted handoff, stale-version refusal, restart and replay preserve reservations, invalidate old Plans and prevent reuse/projection until recalculation is certified.
 
 These are required implementation and retirement checks, not passing results. Closing `UBU-Q0163` requires the source/path inventory, these results and the recorded operator-approved handoff for the identified workaround.
+
+---
+
+## UBU-D0319: Primary camera-and-voice interaction has useful text and form alternatives
+
+**Status:** Accepted → DESIGN.md §21.1.3. Resolves `UBU-Q0164`; refines `UBU-D0292`'s product contract without changing its release commitment.
+
+Adopt a common planning/review surface with independent camera, microphone and speech-output choices and text/forms available before capture. Cover first useful capture, clarification/correction, next-action explanation, candidate review, action/override reconciliation and explicit pairwise Preferences. Alternative routes preserve exact entry, permitted drafts, candidate links and ordinary validation/admission, while provenance follows the actual source. Declined or unusable capture and local-model failure must leave manual workflows useful.
+
+Require visible source controls, optional speech output, keyboard/screen-reader review, guided acquisition with an exit, and safe continuity across channel changes. A channel choice grants no capture, disclosure, admission or external-action authority. Late interpretations cannot overwrite corrections; retries and channel changes cannot duplicate canonical effects.
+
+Before claiming delivery, attach the revision-pinned real-hardware scenario evidence specified in DESIGN.md §21.1.3, including camera-and-voice usefulness, text/form completion, denied/failed sources, accessibility, capture/route enforcement, stale/duplicate results and uncertainty/restricted-attention boundaries.
+
+This resolves the product contract, not implementation or release acceptance. Exact capture slices and sequence remain `UBU-Q0183`; mobile workload/API, richer audio profiles, evidence, latency and retention questions retain their existing scope and gates.

@@ -3093,7 +3093,7 @@ Open. `UBU-D0318` specifies the retirement process; verified implementation evid
 
 ## UBU-Q0164: Deliver the primary camera-and-voice surface with usable alternatives
 
-Status: Open Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: None Last scored: 2026-10-11 Scored from commit: None
+Status: Solved Priority: MVP important Phase: Phase 2 Decision type: Product Auto-choice eligibility: Human approval required Importance score: TBD Automation-likelihood score: TBD Risk score: TBD Answerability score: 100 Depends on: None Blocks: None Resolved by: UBU-D0319 Last scored: 2026-10-11 Scored from commit: None
 
 ### Question
 
@@ -3101,11 +3101,11 @@ How does the MVP realize its already-decided primary camera-and-voice surface wh
 
 ### Current direction
 
-Delta §17.1 is answered at the scope level by `UBU-D0292`. Remaining work is interaction coverage and acceptance, not reopening whether the primary surface belongs in the MVP. Camera unavailable, unusable or declined must leave a useful alternative.
+`UBU-D0292` answers Delta §17.1 at the scope level. `UBU-D0319` specifies interaction coverage and acceptance in DESIGN.md §21.1.3. Camera unavailable, unusable or declined must leave a useful alternative. Implementation evidence, capture-mode/device allocation and release sequencing remain outstanding under their existing questions.
 
 ### Resolution
 
-Open.
+Resolved by `UBU-D0319`: the primary camera-and-voice surface covers the core planning/review workflows with directly reachable text/form alternatives, independent source controls, precise correction, accessible review and continuity under failure or channel changes. DESIGN.md §21.1.3 defines revision-pinned behavioral acceptance, including admission, privacy and restricted-attention boundaries. This resolves the product contract; implementation and passing release evidence remain outstanding, and the existing evidence/retention and device-sequencing questions stay open.
 
 ---
 
