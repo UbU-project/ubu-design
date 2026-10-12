@@ -4925,3 +4925,15 @@ Reuse existing evidence, candidate, ContextBundle, admission and append-only aud
 UbU binds each invocation outside the model result to current evidence, context, budget/policy/grant versions, Device, playback state, interaction epoch, finite deadline and idempotency key. It validates the echoed request id against that binding and rechecks freshness and authority before output or dispatch. Interruptions and material changes invalidate late replies. Malformed or inconsistent output cannot be repaired into an action; duplicates and uncertain relative-media outcomes cannot cause automatic repeated transport.
 
 Model estimates never authorize action. Clarification and acknowledgment use bounded controller templates; pause/stop/silence remain available without waiting for a model. Candidate capture retains existing review/admission and provenance rules, and the initial envelope still defers consequential external requests. This specifies behavior, not implementation or driving-safety validation. Quantitative profiles, the serialized budget, external-action confirmation grammar, richer integrations, device-specific behavior and naming remain open in `UBU-Q0128`; `UBU-Q0183` retains the release sequence.
+
+---
+
+## UBU-D0311: Restricted-attention budgets use an immutable controller-bound serialization
+
+**Status:** Accepted → DESIGN.md §21.1.2. Partially answers `UBU-Q0128` subquestions 2 and 16; refines `UBU-D0309` and `UBU-D0310` without widening the initial envelope.
+
+`InteractionBudgetV1` is a closed controller-owned JSON snapshot binding the session, Device and interaction epoch to versioned profile, context, policy, grant and endpoint references. It records activity, channels, declared-or-unknown readiness, attention bounds, explicit finite byte/time/choice/clarification caps, closed operation names and fixed review/deferral policies. It is neither an LLM result nor capture consent, a grant or transferable execution approval.
+
+Validate current references, expiry and high-risk invariants before model/tool dispatch or speech. Counters and deadlines belong to the original user turn; clarification and budget renewal cannot reset them. Zero disables the associated resource, while local pause/stop/silence remains available. Clock discontinuity, restart, handoff or material changes invalidate live bindings; synchronized snapshots and audit copies cannot restore authority. Model estimates never widen permissions or certify capacity.
+
+This answers the exact initial-envelope serialization, not quantitative profile defaults or driving-safety validation. `UBU-Q0128` remains Open for profile values, richer interpretation/action shapes, external-action confirmation grammar, messaging/media/coaching integration, device-specific behavior and naming. `UBU-Q0183` retains the delivery sequence. This decision specifies behavior and makes no implementation claim.
